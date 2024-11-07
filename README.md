@@ -18,13 +18,13 @@ In all of the above, and many others, we hope users () can **gain insights** abo
 
 We are releasing *TinyTroupe* at a relativelly early stage, with considerable work still to be done, because we are looking for feedback and contributions to steer development in productive directions. We are particularly interested in finding new potential use cases, for instance in specific industries. 
 
->[!WARNING] Read the Legal Disclaimer
->
+>[!WARNING] 
+>**Read the legal disclaimer:**
 >TinyTroupe is for research and simulation only. You are fully responsible for any use you make of the generated outputs. Various important additional legal considerations apply and constrain its use, please read the full [Legal Disclaimer](#legal-disclaimer) section below before using TinyTroupe.
 
 
->[!NOTE] API stability
->
+>[!NOTE] 
+>**API stability**:
 >TinyTroupe is an ongoing research project, and the API is still subject to frequent changes. We are working to stabilize the API and provide a more consistent and user-friendly experience. We appreciate your patience and feedback as we continue to improve the library.
 
 
