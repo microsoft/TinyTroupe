@@ -11,8 +11,8 @@ sys.path.append('..')
 import tinytroupe
 from tinytroupe.agent import TinyPerson
 from tinytroupe.environment import TinyWorld, TinySocialNetwork
-from tinytroupe.personfactory import TinyPersonFactory
-from tinytroupe.extraction import InteractionResultsExtractor
+from tinytroupe.factory import TinyPersonFactory
+from tinytroupe.extraction import ResultsExtractor
 
 from tinytroupe.examples import create_lisa_the_data_scientist, create_oscar_the_architect, create_marcos_the_physician
 from tinytroupe.extraction import default_extractor as extractor

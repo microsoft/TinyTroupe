@@ -10,7 +10,7 @@ logger = logging.getLogger("tinytroupe")
 
 import tinytroupe.utils as utils
 from tinytroupe.extraction import ArtifactExporter
-from tinytroupe.enrichment import Enricher
+from tinytroupe.enrichment import TinyEnricher
 from tinytroupe.utils import JsonSerializableRegistry
 
 

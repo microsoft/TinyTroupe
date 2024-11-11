@@ -1,10 +1,9 @@
-# TinyTroupe
-*LLM-powered multiagent persona simulation for imagination enhancement and insight generation.*
+# TinyTroupe 🤠🤓🥸🧐
+*LLM-powered multiagent persona simulation for imagination enhancement and business insights.*
 
 <p align="center">
   <img src="./docs/tinytroupe_stage.png" alt="A tiny office with tiny people doing some tiny jobs.">
 </p>
-
 
 *TinyTroupe* is an experimental Python library that allows the **simulation** of people with specific personalities, interests, and goals. These artificial agents - `TinyPerson`s - can listen to us and one another, reply back, and go about their lives in simulated `TinyWorld` environments. This is achieved by leveraging the power of Large Language Models (LLMs), notably GPT-4, to generate realistic simulated behavior. This allow us to investigate a wide range of **convincing interactions** and **consumer types**, with **highly customizable personas**, under **conditions of our choosing**. The focus is thus on *understanding* human behavior and not on directly *supporting it* (like, say, AI assistants do) -- this results in, among other things, specialized mechanisms that make sense only in a simulation setting. Further, unlike other *game-like* LLM-based simulation approaches, TinyTroupe aims at enlightening productivity and business scenarios, thereby contributing to more successful projects and products. Here are some application ideas to **enhance human imagination**:
 
@@ -14,27 +13,91 @@
   - **Product and project management:** TinyTroupe can **read project or product proposals** and **give feedback** from the perspective of **specific personas** (e.g., physicians, lawyers, and knowledge workers in general).
   - **Brainstorming:** TinyTroupe can simulate **focus groups** and deliver great product feedback at a fraction of the cost!
 
-In all of the above, and many others, we hope users () can **gain insights** about their domain of interest, and thus make better decisions.
+In all of the above, and many others, we hope experimenters can **gain insights** about their domain of interest, and thus make better decisions. 
 
 We are releasing *TinyTroupe* at a relativelly early stage, with considerable work still to be done, because we are looking for feedback and contributions to steer development in productive directions. We are particularly interested in finding new potential use cases, for instance in specific industries. 
 
->[!WARNING] 
->**Read the legal disclaimer:**
+>[!NOTE] 
+>🚧 **WORK IN PROGRESS: expect frequent changes**.
+>TinyTroupe is an ongoing research project, still under **very significant development** and requiring further **tidying up**. In particular, the API is still subject to frequent changes. Experimenting with API variations is essential to shape it correctly, but we are working to stabilize it and provide a more consistent and friendly experience over time. We appreciate your patience and feedback as we continue to improve the library.
+
+>[!CAUTION] 
+>⚖️ **Read the LEGAL DISCLAIMER.**
 >TinyTroupe is for research and simulation only. You are fully responsible for any use you make of the generated outputs. Various important additional legal considerations apply and constrain its use, please read the full [Legal Disclaimer](#legal-disclaimer) section below before using TinyTroupe.
 
 
->[!NOTE] 
->**API stability**:
->TinyTroupe is an ongoing research project, and the API is still subject to frequent changes. We are working to stabilize the API and provide a more consistent and user-friendly experience. We appreciate your patience and feedback as we continue to improve the library.
+## Contents
+
+- 📚 [Examples](#examples)
+- 🛠️ [Pre-requisites](#pre-requisites)
+- 📥 [Installation](#installation)
+- 🌟 [Principles](#principles)
+- 🏗️ [Project Structure](#project-structure)
+- 📖 [Using the Library](#using-the-library)
+- 🤝 [Contributing](#contributing)
+- 🙏 [Acknowledgements](#acknowledgements)
+- 📜 [Citing TinyTroupe](#how-to-cite-tinytroupe)
+- ⚖️ [Legal Disclaimer](#legal-disclaimer)
+- ™️ [Trademarks](#trademarks)
+
+
+## Examples
+
+To get a sense of what TinyTroupe can do, here are some examples of its use. These examples are available in the [examples/](./examples/) folder, and you can either inspect the pre-compiled Jupyter notebooks or run them yourself locally. Notice the interactive nature of TinyTroupe experiments -- just like you use Jupyter notebooks to interact with data, you can use TinyTroupe to interact with simulated people and environments, for the purpose of gaining insights.
+
+>[!NOTE]
+> Currently, simulation outputs are better visualized against dark backgrounds, so we recommend using a dark theme in your Jupyter notebook client.
+
+### 🧪**Example 1** *(from [interview_with_customer.ipynb](./examples/interview_with_customer.ipynb))*
+Let's begin with a simple customer interview scenario, where a business consultant approaches a banker:
+<p align="center">
+  <img src="./docs/example_screenshot_customer-interview-1.png" alt="An example.">
+</p>
+
+The conversation can go on for a few steps to dig deeper and deeper until the consultant is satisfied with the information gathered, for instance a concrete project idea:
+<p align="center">
+  <img src="./docs/example_screenshot_customer-interview-2.png" alt="An example.">
+</p>
+
+
+
+### 🧪**EXAMPLE 2** *(from [advertisement_for_tv.ipynb](./examples/advertisement_for_tv.ipynb))*
+Let's evaluate some online ads options to pick the best one. Here's one example output for TV ad evaluation:
+
+<p align="center">
+  <img src="./docs/example_screenshot_tv-ad-1.png" alt="An example.">
+</p>
+
+Now, instead of having to carefully read what the agents said, we can extract the choice of each agent and compute the overall preference in an automated manner:
+
+<p align="center">
+  <img src="./docs/example_screenshot_tv-ad-2.png" alt="An example.">
+</p>
+
+### 🧪 **EXAMPLES 3** *(from [product_brainstorming.ipynb](./examples/product_brainstorming.ipynb))*
+And here's a focus group starting to brainstorm about new AI features for Microsoft Word. Instead of interacting with each agent individually, we manipulate the environment to make them interact with each other:
+
+<p align="center">
+  <img src="./docs/example_screenshot_brainstorming-1.png" alt="An example.">
+</p>
+
+After running a simulation, we can extract the results in a machine-readable manner, to reuse elsewhere (e.g., a report generator); here's what we get for the above brainstorming session:
+
+<p align="center">
+  <img src="./docs/example_screenshot_brainstorming-2.png" alt="An example.">
+</p>
+
+You can find other examples in the [examples/](./examples/) folder.
 
 
 ## Pre-requisites
 
 To run the library, you need:
-  - Python 3.10 or higher.
+  - Python 3.10 or higher. We'll assume you are using [Anaconda](https://docs.anaconda.com/anaconda/install/), but you can use other Python distributions.
   - Access to Azure OpenAI Service or Open AI GPT-4 APIs. You can get access to the Azure OpenAI Service [here](https://azure.microsoft.com/en-us/products/ai-services/openai-service), and to the OpenAI API [here](https://platform.openai.com/). 
       * For Azure OpenAI Service, you will need to set the `AZURE_OPENAI_KEY` and `AZURE_OPENAI_ENDPOINT` environment variables to your API key and endpoint, respectively.
       * For OpenAI, you will need to set the `OPENAI_API_KEY` environment variable to your API key.
+  - By default, TinyTroupe `config.ini` is set to use some specific API, model and related parameters. You can customize these values by including your own `config.ini` file in the same folder as the program or notebook you are running. An example of a `config.ini` file is provided in the [examples/](./examples/) folder.
 
 >[!IMPORTANT]
 > **Content Filters**: To ensure no harmful content is generated during simulations, it is strongly recommended to use content filters whenever available at the API level. In particular, **if using Azure OpenAI, there's extensive support for content moderation, and we urge you to use it.** For details about how to do so, please consult [the corresponding Azure OpenAI documentation](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/content-filter). If content filters are in place, and an API call is rejected by them, the library will raise an exception, as it will be unable to proceed with the simulation at that point.
@@ -42,34 +105,53 @@ To run the library, you need:
 
 ## Installation
 
-Currently, the official recommended way to install the library is directly from this repository, not PyPI. 
+**Currently, the officially recommended way to install the library is directly from this repository, not PyPI.** You can follow these steps:
 
-### From the GitHub repository
-To install the library directly from the GitHub repository::
+1. If Conda is not installed, you can get it from [here](https://docs.anaconda.com/anaconda/install/). You can also use other Python distributions, but we'll assume Conda here for simplicity.
+2. Create a new Python environment: 
+      ```bash
+      conda create -n tinytroupe python=3.10
+      ```
+3. Activate the environment: 
+      ```bash
+      conda activate tinytroupe
+      ```
+4. Make sure you have eihter Azure OpenAI or OpenAI API keys set as environment variables, as described in the [Pre-requisites](#pre-requisites) section.
+5. Install the library **from this repository, not PyPI**: 
+      ```bash   
+      pip install git+https://github.com/microsoft/tinytroupe.git
+      ```
+6. You can now use TinyTroupe to create your simulations 🥳. If you want to run the examples in the 
+   [examples/](./examples/) folder or modify TinyTroupe itself, however, you should clone the repository as described below.
 
+
+### Cloning the repository: examples and local development
+
+If you want to run the examples in the [examples/](./examples/) folder, you can simply clone the repository and run the examples directly from there:
 ```bash
-$ pip install git+https://github.com/microsoft/tinytroupe.git
+git clone https://github.com/microsoft/tinytroupe
+cd tinytroupe
 ```
 
-### From the local repository
-If you want to make changes to the library and test them locally, you can also of course clone the repository first:
-
+Further, if you want to modify TinyTroupe itself, you can install it from the local clone:
 ```bash
-$ git clone https://github.com/microsoft/tinytroupe
-$ cd tinytroupe
-$ pip install .
+pip install .
 ```
 
+or, in editable mode (i.e., changes to the code will be reflected immediately):
+```bash
+pip install -e .
+```
 
 ## Principles 
-Recently, we have seen LLMs used to simulate people (such as [this](https://github.com/joonspk-research/generative_agents)), but largely in a “game-like” setting for contemplative or entertainment purposes. What if we try instead to simulate people to support productivity tasks? TinyTroupe is our attempt. To do so, it follows these principles:
+Recently, we have seen LLMs used to simulate people (such as [this](https://github.com/joonspk-research/generative_agents)), but largely in a “game-like” setting for contemplative or entertainment purposes. There are also libraries for building multiagent systems for proble-solving and assitive AI, like [Autogen](https://microsoft.github.io/) and [Crew AI](https://docs.crewai.com/). What if we combine these ideas and simulate people to support productivity tasks? TinyTroupe is our attempt. To do so, it follows these principles:
 
   1. **Programmatic**: agents and environments are defined programmatically (in Python and JSON), allowing very flexible uses. They can also thus underpin other software apps!
-  2. **Analytical**: meant to improve our understanding of people, users and society. Unlike entertainment applications, this is one aspect that is critical for business and productivity use cases.
+  2. **Analytical**: meant to improve our understanding of people, users and society. Unlike entertainment applications, this is one aspect that is critical for business and productivity use cases. This is also why we recommend using Jupyter notebooks for simulations, just like one uses them for data analysis.
   3. **Persona-based**: agents are meant to be archetypical representation of people; for greater realism and control, detailed specification of such personas is encouraged: age, occupation, skills, tastes, opinions, etc.
   4. **Multiagent**: allows multiagent interaction under well-defined environmental constraints.
   5. **Utilities-heavy**: provides many mechanisms to facilitate specifications, simulations, extractions, reports, validations, etc. This is one area in which dealing with *simulations* differs significantly from *assistance* tools.
-  6. **Experiment-oriented**: simulations are defined, run, analyzed and refined by an *experimenter* iteratively; suitable experimentation tools are thus provided.
+  6. **Experiment-oriented**: simulations are defined, run, analyzed and refined by an *experimenter* iteratively; suitable experimentation tools are thus provided. *See one of our [previous paper](https://www.microsoft.com/en-us/research/publication/the-case-for-experiment-oriented-computing/) for more on this.*
 
 Together, these are meant to make TinyTroupe a powerful and flexible **imagination enhancement tool** for business and productivity scenarios.
 
@@ -93,7 +175,6 @@ One common source of confusion is to think all such AI agents are meant for assi
 The project is structured as follows:
   - `/tinytroupe`: contains the Python library itself. In particular:
     * `/tinytroupe/prompts`  contains the prompts used to call the LLMs.
-    * `/tinytroupe/microsoft` contains elements specific to the _public_ Microsoft ecosystem.
   - `/tests`: contains the unit tests for the library. You can use the `test.bat` script to run these.
   - `/examples`: contains examples that show how to use the library, mainly using Jupyter notebooks (for greater readability), but also as pure Python scripts.
   - `/data`: any data used by the examples or the library.
@@ -154,7 +235,7 @@ lisa.define_several("personality_traits",
 `TinyTroupe` also provides a clever way to obtain new agents, using LLMs to generate their specification for you, through the `TinyPersonFactory` class.
 
 ```python
-from tinytroupe.personfactory import TinyPersonFactory
+from tinytroupe.factory import TinyPersonFactory
 
 factory = TinyPersonFactory("Create a Brazilian person that is a doctor, like pets and the nature and love heavy metal.")
 person = factory.generate_person()
@@ -218,10 +299,11 @@ TinyTroupe provides a number of utilities and conveniences to help you create si
   - `TinyPersonFactory`: helps you generate new `TinyPerson`s using LLMs.
   - `TinyTool`: simulated tools that can be used by `TinyPerson`s.
   - `TinyStory`: helps you create and manage the story told through simulations.
-  - `InteractionResultsExtractor` and `InteractionResultsReducer`: extract and reduce the results of interactions between agents.
-  - `TinyPersonChecker`: helps you validate the behavior of your `TinyPerson`s.
+  - `TinyPersonValidator`: helps you validate the behavior of your `TinyPerson`s.
+  - `ResultsExtractor` and `ResultsReducer`: extract and reduce the results of interactions between agents.
   - ... and more ...
   
+In general, elements that represent simulated entities or complementary mechanisms are prefixed with `Tiny`, while those that are more infrastructural are not. This is to emphasize the simulated nature of the elements that are part of the simulation itself.
 
 ### Caching
 Calling LLM APIs can be expensive, thus caching strategies are important to help reduce that cost.
@@ -251,7 +333,7 @@ when a new call comes and is identical to a previous one, the cached value is re
 
 ### Config.ini
 
-The `config.ini` file contains various parameters that can be used to customize the behavior of the library, such as model parameters and logging level. Please pay special attention to `API_TYPE` parameter, which defines whether you are using the Azure OpenAI Service or the OpenAI API.
+The `config.ini` file contains various parameters that can be used to customize the behavior of the library, such as model parameters and logging level. Please pay special attention to `API_TYPE` parameter, which defines whether you are using the Azure OpenAI Service or the OpenAI API. We provide an example of a `config.ini` file, [./examples/config.ini](./examples/config.ini), which you can use as a template for your own, or just modify to run the examples.
 
 ## Contributing
 
@@ -268,9 +350,9 @@ For more information see the [Code of Conduct FAQ](https://opensource.microsoft.
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 ### What and How to Contribute
-We need all sorts of things, like:
-  - New interesting use cases demonstrations, or even just domain-specific application ideas. 
-    If you are a domain expert in some area that could benefit from TinyTroupe, we'd love to hear from you.
+We need all sorts of things, but we are looking mainly for new interesting use cases demonstrations, or even just domain-specific application ideas. If you are a domain expert in some area that could benefit from TinyTroupe, we'd love to hear from you.
+
+Beyond that, many other aspects can be improved, such as:
   - Memory mechanisms.
   - Data grounding mechanisms.
   - Reasoning mechanisms.
@@ -281,7 +363,7 @@ We need all sorts of things, like:
 Please note that anything that you contribute might be released as open-source (under MIT license).
 
 If you would like to make a contribution, please try to follow these general guidelines:
-  - **Tiny-everything**: If you are implementing a user-facing element (e.g., an agent or environment type), and it sounds good, call your new _X_ as _TinyX_ :-)
+  - **Tiny naming convention**: If you are implementing a experimenter-facing simulated element (e.g., an agent or environment type) or closely related (e.g., agent factories, or content enrichers), and it sounds good, call your new *XYZ* as *TinyXYZ* :-) On the other hand, auxiliary and infrastructural mechanisms should not start with the "Tiny" prefix. The idea is to emphasize the simulated nature of the elements that are part of the simulation itself.
   - **Tests:** If you are writing some new mechanism, please also create at least a unit test `tests/unit/`, and if you can a functional scenario test (`tests/scenarios/`).
   - **Demonstrations:** If you'd like to demonstrate a new scenario, please design it preferably as a new Jupyter notebook within `examples/`.
   - **Microsoft:** If you are implementing anything that is Microsoft-specific and non-confidential, please put it under a `.../microsoft/` folder.
@@ -308,13 +390,11 @@ Other special contributions were made by:
   
  ... are you missing here? Please remind us!
 
-## How to Cite TinyTroupe
+## Citing TinyTroupe
 
-We are working in an introductory paper that will be the official academic citation for TinyTroupe. In the meantime, please just cite this repository including the core team members as authors. For instance:
+We are working on an introductory paper that will be the official academic citation for TinyTroupe. In the meantime, please just cite this repository including the core team members as authors. For instance:
 
-
-
->Paulo Salem, Christopher Olsen, Paulo Freire, Yi Ding, Prerit Saxena (2024). **TinyTroupe: LLM-powered multiagent persona simulation for imagination enhancement and insight generation.** [Computer software]. GitHub repository. https://github.com/microsoft/tinytroupe
+>Paulo Salem, Christopher Olsen, Paulo Freire, Yi Ding, Prerit Saxena (2024). **TinyTroupe: LLM-powered multiagent persona simulation for imagination enhancement and business insights.** [Computer software]. GitHub repository. https://github.com/microsoft/tinytroupe
 
 
 Or as bibtex:
@@ -322,7 +402,7 @@ Or as bibtex:
   ```bibtex
   @misc{tinytroupe,
     author = {Paulo Salem and Christopher Olsen and Paulo Freire and Yi Ding and Prerit Saxena},
-    title = {TinyTroupe: LLM-powered multiagent persona simulation for imagination enhancement and insight generation},
+    title = {TinyTroupe: LLM-powered multiagent persona simulation for imagination enhancement and business insights},
     year = {2024},
     howpublished = {\url{https://github.com/microsoft/tinytroupe}},
     note = {GitHub repository}

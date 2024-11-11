@@ -284,28 +284,41 @@ def read_config_file(use_cache=True, verbose=True) -&gt; configparser.ConfigPars
     else:
         config = configparser.ConfigParser()
 
-        # first, try the directory of the current main program
+        # Read the default values in the module directory.
+        config_file_path = Path(__file__).parent.absolute() / &#39;config.ini&#39;
+        print(f&#34;Looking for default config on: {config_file_path}&#34;) if verbose else None
+        if config_file_path.exists():
+            config.read(config_file_path)
+            _config = config
+        else:
+            raise ValueError(f&#34;Failed to find default config on: {config_file_path}&#34;)
+
+        # Now, let&#39;s override any specific default value, if there&#39;s a custom .ini config. 
+        # Try the directory of the current main program
         config_file_path = Path.cwd() / &#34;config.ini&#34;
         if config_file_path.exists():
-            
-            config.read(config_file_path)
+            print(f&#34;Found custom config on: {config_file_path}&#34;) if verbose else None
+            config.read(config_file_path) # this only overrides the values that are present in the custom config
             _config = config
             return config
         else:
             if verbose:
-                print(f&#34;Failed to find custom config on: {config_file_path}&#34;)
-                print(&#34;Now switching to default config file...&#34;)
+                print(f&#34;Failed to find custom config on: {config_file_path}&#34;) if verbose else None
+                print(&#34;Will use only default values. IF THINGS FAIL, TRY CUSTOMIZING MODEL, API TYPE, etc.&#34;) if verbose else None
+        
+        return config
 
-        # if nothing there, use the default one in the module directory
-        config_file_path = Path(__file__).parent.absolute() / &#39;config.ini&#39;
-        print(f&#34;Looking for config on: {config_file_path}&#34;) if verbose else None
-        if config_file_path.exists():
-            config.read(config_file_path)
-            _config = config
-            return config
-        else:
-            raise ValueError(&#34;Could not find config.ini file anywhere&#34;)
-    
+def pretty_print_config(config):
+    print()
+    print(&#34;=================================&#34;)
+    print(&#34;Current TinyTroupe configuration &#34;)
+    print(&#34;=================================&#34;)
+    for section in config.sections():
+        print(f&#34;[{section}]&#34;)
+        for key, value in config.items(section):
+            print(f&#34;{key} = {value}&#34;)
+        print()
+
 def start_logger(config: configparser.ConfigParser):
     # create logger
     logger = logging.getLogger(&#34;tinytroupe&#34;)
@@ -859,6 +872,27 @@ The method must be named <code>_post_init</code>.</p></div>
     return dt.strftime(&#34;%Y-%m-%d %H:%M&#34;)</code></pre>
 </details>
 </dd>
+<dt id="tinytroupe.utils.pretty_print_config"><code class="name flex">
+<span>def <span class="ident">pretty_print_config</span></span>(<span>config)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pretty_print_config(config):
+    print()
+    print(&#34;=================================&#34;)
+    print(&#34;Current TinyTroupe configuration &#34;)
+    print(&#34;=================================&#34;)
+    for section in config.sections():
+        print(f&#34;[{section}]&#34;)
+        for key, value in config.items(section):
+            print(f&#34;{key} = {value}&#34;)
+        print()</code></pre>
+</details>
+</dd>
 <dt id="tinytroupe.utils.read_config_file"><code class="name flex">
 <span>def <span class="ident">read_config_file</span></span>(<span>use_cache=True, verbose=True) ‑> configparser.ConfigParser</span>
 </code></dt>
@@ -877,27 +911,29 @@ The method must be named <code>_post_init</code>.</p></div>
     else:
         config = configparser.ConfigParser()
 
-        # first, try the directory of the current main program
+        # Read the default values in the module directory.
+        config_file_path = Path(__file__).parent.absolute() / &#39;config.ini&#39;
+        print(f&#34;Looking for default config on: {config_file_path}&#34;) if verbose else None
+        if config_file_path.exists():
+            config.read(config_file_path)
+            _config = config
+        else:
+            raise ValueError(f&#34;Failed to find default config on: {config_file_path}&#34;)
+
+        # Now, let&#39;s override any specific default value, if there&#39;s a custom .ini config. 
+        # Try the directory of the current main program
         config_file_path = Path.cwd() / &#34;config.ini&#34;
         if config_file_path.exists():
-            
-            config.read(config_file_path)
+            print(f&#34;Found custom config on: {config_file_path}&#34;) if verbose else None
+            config.read(config_file_path) # this only overrides the values that are present in the custom config
             _config = config
             return config
         else:
             if verbose:
-                print(f&#34;Failed to find custom config on: {config_file_path}&#34;)
-                print(&#34;Now switching to default config file...&#34;)
-
-        # if nothing there, use the default one in the module directory
-        config_file_path = Path(__file__).parent.absolute() / &#39;config.ini&#39;
-        print(f&#34;Looking for config on: {config_file_path}&#34;) if verbose else None
-        if config_file_path.exists():
-            config.read(config_file_path)
-            _config = config
-            return config
-        else:
-            raise ValueError(&#34;Could not find config.ini file anywhere&#34;)</code></pre>
+                print(f&#34;Failed to find custom config on: {config_file_path}&#34;) if verbose else None
+                print(&#34;Will use only default values. IF THINGS FAIL, TRY CUSTOMIZING MODEL, API TYPE, etc.&#34;) if verbose else None
+        
+        return config</code></pre>
 </details>
 </dd>
 <dt id="tinytroupe.utils.repeat_on_error"><code class="name flex">
@@ -1188,9 +1224,9 @@ exception is raised. If no exception occurs, the function returns normally.</p>
 </details>
 <h3>Subclasses</h3>
 <ul class="hlist">
-<li><a title="tinytroupe.agent.Faculty" href="agent.html#tinytroupe.agent.Faculty">Faculty</a></li>
+<li><a title="tinytroupe.agent.TinyMentalFaculty" href="agent.html#tinytroupe.agent.TinyMentalFaculty">TinyMentalFaculty</a></li>
 <li><a title="tinytroupe.agent.TinyPerson" href="agent.html#tinytroupe.agent.TinyPerson">TinyPerson</a></li>
-<li><a title="tinytroupe.enrichment.Enricher" href="enrichment.html#tinytroupe.enrichment.Enricher">Enricher</a></li>
+<li><a title="tinytroupe.enrichment.TinyEnricher" href="enrichment.html#tinytroupe.enrichment.TinyEnricher">TinyEnricher</a></li>
 <li><a title="tinytroupe.extraction.ArtifactExporter" href="extraction.html#tinytroupe.extraction.ArtifactExporter">ArtifactExporter</a></li>
 <li><a title="tinytroupe.tools.TinyTool" href="tools.html#tinytroupe.tools.TinyTool">TinyTool</a></li>
 </ul>
@@ -1384,6 +1420,7 @@ def from_json(cls, json_dict_or_path, suppress: list = None, post_init_params: d
 <li><code><a title="tinytroupe.utils.name_or_empty" href="#tinytroupe.utils.name_or_empty">name_or_empty</a></code></li>
 <li><code><a title="tinytroupe.utils.post_init" href="#tinytroupe.utils.post_init">post_init</a></code></li>
 <li><code><a title="tinytroupe.utils.pretty_datetime" href="#tinytroupe.utils.pretty_datetime">pretty_datetime</a></code></li>
+<li><code><a title="tinytroupe.utils.pretty_print_config" href="#tinytroupe.utils.pretty_print_config">pretty_print_config</a></code></li>
 <li><code><a title="tinytroupe.utils.read_config_file" href="#tinytroupe.utils.read_config_file">read_config_file</a></code></li>
 <li><code><a title="tinytroupe.utils.repeat_on_error" href="#tinytroupe.utils.repeat_on_error">repeat_on_error</a></code></li>
 <li><code><a title="tinytroupe.utils.sanitize_dict" href="#tinytroupe.utils.sanitize_dict">sanitize_dict</a></code></li>

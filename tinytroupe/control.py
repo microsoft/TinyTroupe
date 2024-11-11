@@ -72,7 +72,7 @@ class Simulation:
         # local import to avoid circular dependencies
         from tinytroupe.agent import TinyPerson
         from tinytroupe.environment import TinyWorld
-        from tinytroupe.personfactory import TinyFactory
+        from tinytroupe.factory import TinyFactory
 
         if self.status == Simulation.STATUS_STOPPED:
             self.status = Simulation.STATUS_STARTED
@@ -379,7 +379,7 @@ class Transaction:
         # local import to avoid circular dependencies
         from tinytroupe.agent import TinyPerson
         from tinytroupe.environment import TinyWorld
-        from tinytroupe.personfactory import TinyFactory
+        from tinytroupe.factory import TinyFactory
 
         self.obj_under_transaction = obj_under_transaction
         self.simulation = simulation
@@ -484,7 +484,7 @@ class Transaction:
         # local import to avoid circular dependencies
         from tinytroupe.agent import TinyPerson
         from tinytroupe.environment import TinyWorld
-        from tinytroupe.personfactory import TinyFactory
+        from tinytroupe.factory import TinyFactory
 
 
         # if the output is a TinyPerson, encode it
@@ -512,7 +512,7 @@ class Transaction:
         # local import to avoid circular dependencies
         from tinytroupe.agent import TinyPerson
         from tinytroupe.environment import TinyWorld
-        from tinytroupe.personfactory import TinyFactory
+        from tinytroupe.factory import TinyFactory
 
         if encoded_output is None:
             return None

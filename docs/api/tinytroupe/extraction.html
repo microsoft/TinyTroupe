@@ -58,14 +58,14 @@ logger = logging.getLogger(&#34;tinytroupe&#34;)
 
 from tinytroupe.agent import TinyPerson
 from tinytroupe.environment import TinyWorld
-from tinytroupe.personfactory import TinyPersonFactory
+from tinytroupe.factory import TinyPersonFactory
 from tinytroupe.utils import JsonSerializableRegistry
 
 
 from tinytroupe import openai_utils
 import tinytroupe.utils as utils
 
-class InteractionResultsExtractor:
+class ResultsExtractor:
 
     def __init__(self):
         self._extraction_prompt_template_path = os.path.join(os.path.dirname(__file__), &#39;prompts/interaction_results_extractor.mustache&#39;)
@@ -80,6 +80,7 @@ class InteractionResultsExtractor:
                         extraction_objective:str=&#34;The main points present in the agent&#39;s interactions history.&#34;, 
                         situation:str = &#34;&#34;, 
                         fields:list=None,
+                        fields_hints:dict=None,
                         verbose:bool=False):
         &#34;&#34;&#34;
         Extracts results from a TinyPerson instance.
@@ -98,6 +99,9 @@ class InteractionResultsExtractor:
         rendering_configs = {}
         if fields is not None:
             rendering_configs[&#34;fields&#34;] = &#34;, &#34;.join(fields)
+        
+        if fields_hints is not None:
+            rendering_configs[&#34;fields_hints&#34;] = list(fields_hints.items())
         
         messages.append({&#34;role&#34;: &#34;system&#34;, 
                          &#34;content&#34;: chevron.render(
@@ -149,6 +153,7 @@ performed.
                                    extraction_objective:str=&#34;The main points that can be derived from the agents conversations and actions.&#34;, 
                                    situation:str=&#34;&#34;, 
                                    fields:list=None,
+                                   fields_hints:dict=None,
                                    verbose:bool=False):
         &#34;&#34;&#34;
         Extracts results from a TinyWorld instance.
@@ -167,6 +172,9 @@ performed.
         rendering_configs = {}
         if fields is not None:
             rendering_configs[&#34;fields&#34;] = &#34;, &#34;.join(fields)
+        
+        if fields_hints is not None:
+            rendering_configs[&#34;fields_hints&#34;] = list(fields_hints.items())
         
         messages.append({&#34;role&#34;: &#34;system&#34;, 
                          &#34;content&#34;: chevron.render(
@@ -229,7 +237,7 @@ Each interaction history includes stimuli the corresponding agent received as we
 
 
 
-class InteractionResultsReducer:
+class ResultsReducer:
 
     def __init__(self):
         self.results = {}
@@ -538,7 +546,7 @@ class Normalizer:
 ################################################################################
 
 # default extractor
-default_extractor = InteractionResultsExtractor()</code></pre>
+default_extractor = ResultsExtractor()</code></pre>
 </details>
 </section>
 <section>
@@ -796,533 +804,6 @@ If a string is given, it will be saved as is.</dd>
 </li>
 </ul>
 </dd>
-<dt id="tinytroupe.extraction.InteractionResultsExtractor"><code class="flex name class">
-<span>class <span class="ident">InteractionResultsExtractor</span></span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class InteractionResultsExtractor:
-
-    def __init__(self):
-        self._extraction_prompt_template_path = os.path.join(os.path.dirname(__file__), &#39;prompts/interaction_results_extractor.mustache&#39;)
-
-        # we&#39;ll cache the last extraction results for each type of extraction, so that we can use them to
-        # generate reports or other additional outputs.
-        self.agent_extraction = {}
-        self.world_extraction = {}
-
-    def extract_results_from_agent(self, 
-                        tinyperson:TinyPerson, 
-                        extraction_objective:str=&#34;The main points present in the agent&#39;s interactions history.&#34;, 
-                        situation:str = &#34;&#34;, 
-                        fields:list=None,
-                        verbose:bool=False):
-        &#34;&#34;&#34;
-        Extracts results from a TinyPerson instance.
-
-        Args:
-            tinyperson (TinyPerson): The TinyPerson instance to extract results from.
-            extraction_objective (str): The extraction objective.
-            situation (str): The situation to consider.
-            fields (list, optional): The fields to extract. If None, the extractor will decide what names to use. 
-                Defaults to None.
-            verbose (bool, optional): Whether to print debug messages. Defaults to False.
-        &#34;&#34;&#34;
-
-        messages = []
-
-        rendering_configs = {}
-        if fields is not None:
-            rendering_configs[&#34;fields&#34;] = &#34;, &#34;.join(fields)
-        
-        messages.append({&#34;role&#34;: &#34;system&#34;, 
-                         &#34;content&#34;: chevron.render(
-                             open(self._extraction_prompt_template_path).read(), 
-                             rendering_configs)})
-
-
-        interaction_history = tinyperson.pretty_current_interactions(max_content_length=None)
-
-        extraction_request_prompt = \
-f&#34;&#34;&#34;
-## Extraction objective
-
-{extraction_objective}
-
-## Situation
-You are considering a single agent, named {tinyperson.name}. Your objective thus refers to this agent specifically.
-{situation}
-
-## Agent Interactions History
-
-You will consider an agent&#39;s history of interactions, which include stimuli it received as well as actions it 
-performed.
-
-{interaction_history}
-&#34;&#34;&#34;
-        messages.append({&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: extraction_request_prompt})
-
-        next_message = openai_utils.client().send_message(messages, temperature=0.0)
-        
-        debug_msg = f&#34;Extraction raw result message: {next_message}&#34;
-        logger.debug(debug_msg)
-        if verbose:
-            print(debug_msg)
-
-        if next_message is not None:
-            result = utils.extract_json(next_message[&#34;content&#34;])
-        else:
-            result = None
-        
-        # cache the result
-        self.agent_extraction[tinyperson.name] = result
-
-        return result
-    
-
-    def extract_results_from_world(self, 
-                                   tinyworld:TinyWorld, 
-                                   extraction_objective:str=&#34;The main points that can be derived from the agents conversations and actions.&#34;, 
-                                   situation:str=&#34;&#34;, 
-                                   fields:list=None,
-                                   verbose:bool=False):
-        &#34;&#34;&#34;
-        Extracts results from a TinyWorld instance.
-
-        Args:
-            tinyworld (TinyWorld): The TinyWorld instance to extract results from.
-            extraction_objective (str): The extraction objective.
-            situation (str): The situation to consider.
-            fields (list, optional): The fields to extract. If None, the extractor will decide what names to use. 
-                Defaults to None.
-            verbose (bool, optional): Whether to print debug messages. Defaults to False.
-        &#34;&#34;&#34;
-
-        messages = []
-
-        rendering_configs = {}
-        if fields is not None:
-            rendering_configs[&#34;fields&#34;] = &#34;, &#34;.join(fields)
-        
-        messages.append({&#34;role&#34;: &#34;system&#34;, 
-                         &#34;content&#34;: chevron.render(
-                             open(self._extraction_prompt_template_path).read(), 
-                             rendering_configs)})
-
-        # TODO: either summarize first or break up into multiple tasks
-        interaction_history = tinyworld.pretty_current_interactions(max_content_length=None)
-
-        extraction_request_prompt = \
-f&#34;&#34;&#34;
-## Extraction objective
-
-{extraction_objective}
-
-## Situation
-You are considering various agents.
-{situation}
-
-## Agents Interactions History
-
-You will consider the history of interactions from various agents that exist in an environment called {tinyworld.name}. 
-Each interaction history includes stimuli the corresponding agent received as well as actions it performed.
-
-{interaction_history}
-&#34;&#34;&#34;
-        messages.append({&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: extraction_request_prompt})
-
-        next_message = openai_utils.client().send_message(messages, temperature=0.0)
-        
-        debug_msg = f&#34;Extraction raw result message: {next_message}&#34;
-        logger.debug(debug_msg)
-        if verbose:
-            print(debug_msg)
-
-        if next_message is not None:
-            result = utils.extract_json(next_message[&#34;content&#34;])
-        else:
-            result = None
-        
-        # cache the result
-        self.world_extraction[tinyworld.name] = result
-
-        return result
-    
-    def save_as_json(self, filename:str, verbose:bool=False):
-        &#34;&#34;&#34;
-        Saves the last extraction results as JSON.
-
-        Args:
-            filename (str): The filename to save the JSON to.
-            verbose (bool, optional): Whether to print debug messages. Defaults to False.
-        &#34;&#34;&#34;
-        with open(filename, &#39;w&#39;) as f:
-            json.dump({&#34;agent_extractions&#34;: self.agent_extraction, 
-                       &#34;world_extraction&#34;: self.world_extraction}, f, indent=4)
-        
-        if verbose:
-            print(f&#34;Saved extraction results to {filename}&#34;)</code></pre>
-</details>
-<h3>Methods</h3>
-<dl>
-<dt id="tinytroupe.extraction.InteractionResultsExtractor.extract_results_from_agent"><code class="name flex">
-<span>def <span class="ident">extract_results_from_agent</span></span>(<span>self, tinyperson: <a title="tinytroupe.agent.TinyPerson" href="agent.html#tinytroupe.agent.TinyPerson">TinyPerson</a>, extraction_objective: str = "The main points present in the agent's interactions history.", situation: str = '', fields: list = None, verbose: bool = False)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Extracts results from a TinyPerson instance.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>tinyperson</code></strong> :&ensp;<code>TinyPerson</code></dt>
-<dd>The TinyPerson instance to extract results from.</dd>
-<dt><strong><code>extraction_objective</code></strong> :&ensp;<code>str</code></dt>
-<dd>The extraction objective.</dd>
-<dt><strong><code>situation</code></strong> :&ensp;<code>str</code></dt>
-<dd>The situation to consider.</dd>
-<dt><strong><code>fields</code></strong> :&ensp;<code>list</code>, optional</dt>
-<dd>The fields to extract. If None, the extractor will decide what names to use.
-Defaults to None.</dd>
-<dt><strong><code>verbose</code></strong> :&ensp;<code>bool</code>, optional</dt>
-<dd>Whether to print debug messages. Defaults to False.</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">    def extract_results_from_agent(self, 
-                        tinyperson:TinyPerson, 
-                        extraction_objective:str=&#34;The main points present in the agent&#39;s interactions history.&#34;, 
-                        situation:str = &#34;&#34;, 
-                        fields:list=None,
-                        verbose:bool=False):
-        &#34;&#34;&#34;
-        Extracts results from a TinyPerson instance.
-
-        Args:
-            tinyperson (TinyPerson): The TinyPerson instance to extract results from.
-            extraction_objective (str): The extraction objective.
-            situation (str): The situation to consider.
-            fields (list, optional): The fields to extract. If None, the extractor will decide what names to use. 
-                Defaults to None.
-            verbose (bool, optional): Whether to print debug messages. Defaults to False.
-        &#34;&#34;&#34;
-
-        messages = []
-
-        rendering_configs = {}
-        if fields is not None:
-            rendering_configs[&#34;fields&#34;] = &#34;, &#34;.join(fields)
-        
-        messages.append({&#34;role&#34;: &#34;system&#34;, 
-                         &#34;content&#34;: chevron.render(
-                             open(self._extraction_prompt_template_path).read(), 
-                             rendering_configs)})
-
-
-        interaction_history = tinyperson.pretty_current_interactions(max_content_length=None)
-
-        extraction_request_prompt = \
-f&#34;&#34;&#34;
-## Extraction objective
-
-{extraction_objective}
-
-## Situation
-You are considering a single agent, named {tinyperson.name}. Your objective thus refers to this agent specifically.
-{situation}
-
-## Agent Interactions History
-
-You will consider an agent&#39;s history of interactions, which include stimuli it received as well as actions it 
-performed.
-
-{interaction_history}
-&#34;&#34;&#34;
-        messages.append({&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: extraction_request_prompt})
-
-        next_message = openai_utils.client().send_message(messages, temperature=0.0)
-        
-        debug_msg = f&#34;Extraction raw result message: {next_message}&#34;
-        logger.debug(debug_msg)
-        if verbose:
-            print(debug_msg)
-
-        if next_message is not None:
-            result = utils.extract_json(next_message[&#34;content&#34;])
-        else:
-            result = None
-        
-        # cache the result
-        self.agent_extraction[tinyperson.name] = result
-
-        return result</code></pre>
-</details>
-</dd>
-<dt id="tinytroupe.extraction.InteractionResultsExtractor.extract_results_from_world"><code class="name flex">
-<span>def <span class="ident">extract_results_from_world</span></span>(<span>self, tinyworld: <a title="tinytroupe.environment.TinyWorld" href="environment.html#tinytroupe.environment.TinyWorld">TinyWorld</a>, extraction_objective: str = 'The main points that can be derived from the agents conversations and actions.', situation: str = '', fields: list = None, verbose: bool = False)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Extracts results from a TinyWorld instance.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>tinyworld</code></strong> :&ensp;<code>TinyWorld</code></dt>
-<dd>The TinyWorld instance to extract results from.</dd>
-<dt><strong><code>extraction_objective</code></strong> :&ensp;<code>str</code></dt>
-<dd>The extraction objective.</dd>
-<dt><strong><code>situation</code></strong> :&ensp;<code>str</code></dt>
-<dd>The situation to consider.</dd>
-<dt><strong><code>fields</code></strong> :&ensp;<code>list</code>, optional</dt>
-<dd>The fields to extract. If None, the extractor will decide what names to use.
-Defaults to None.</dd>
-<dt><strong><code>verbose</code></strong> :&ensp;<code>bool</code>, optional</dt>
-<dd>Whether to print debug messages. Defaults to False.</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">    def extract_results_from_world(self, 
-                                   tinyworld:TinyWorld, 
-                                   extraction_objective:str=&#34;The main points that can be derived from the agents conversations and actions.&#34;, 
-                                   situation:str=&#34;&#34;, 
-                                   fields:list=None,
-                                   verbose:bool=False):
-        &#34;&#34;&#34;
-        Extracts results from a TinyWorld instance.
-
-        Args:
-            tinyworld (TinyWorld): The TinyWorld instance to extract results from.
-            extraction_objective (str): The extraction objective.
-            situation (str): The situation to consider.
-            fields (list, optional): The fields to extract. If None, the extractor will decide what names to use. 
-                Defaults to None.
-            verbose (bool, optional): Whether to print debug messages. Defaults to False.
-        &#34;&#34;&#34;
-
-        messages = []
-
-        rendering_configs = {}
-        if fields is not None:
-            rendering_configs[&#34;fields&#34;] = &#34;, &#34;.join(fields)
-        
-        messages.append({&#34;role&#34;: &#34;system&#34;, 
-                         &#34;content&#34;: chevron.render(
-                             open(self._extraction_prompt_template_path).read(), 
-                             rendering_configs)})
-
-        # TODO: either summarize first or break up into multiple tasks
-        interaction_history = tinyworld.pretty_current_interactions(max_content_length=None)
-
-        extraction_request_prompt = \
-f&#34;&#34;&#34;
-## Extraction objective
-
-{extraction_objective}
-
-## Situation
-You are considering various agents.
-{situation}
-
-## Agents Interactions History
-
-You will consider the history of interactions from various agents that exist in an environment called {tinyworld.name}. 
-Each interaction history includes stimuli the corresponding agent received as well as actions it performed.
-
-{interaction_history}
-&#34;&#34;&#34;
-        messages.append({&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: extraction_request_prompt})
-
-        next_message = openai_utils.client().send_message(messages, temperature=0.0)
-        
-        debug_msg = f&#34;Extraction raw result message: {next_message}&#34;
-        logger.debug(debug_msg)
-        if verbose:
-            print(debug_msg)
-
-        if next_message is not None:
-            result = utils.extract_json(next_message[&#34;content&#34;])
-        else:
-            result = None
-        
-        # cache the result
-        self.world_extraction[tinyworld.name] = result
-
-        return result</code></pre>
-</details>
-</dd>
-<dt id="tinytroupe.extraction.InteractionResultsExtractor.save_as_json"><code class="name flex">
-<span>def <span class="ident">save_as_json</span></span>(<span>self, filename: str, verbose: bool = False)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Saves the last extraction results as JSON.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>filename</code></strong> :&ensp;<code>str</code></dt>
-<dd>The filename to save the JSON to.</dd>
-<dt><strong><code>verbose</code></strong> :&ensp;<code>bool</code>, optional</dt>
-<dd>Whether to print debug messages. Defaults to False.</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def save_as_json(self, filename:str, verbose:bool=False):
-    &#34;&#34;&#34;
-    Saves the last extraction results as JSON.
-
-    Args:
-        filename (str): The filename to save the JSON to.
-        verbose (bool, optional): Whether to print debug messages. Defaults to False.
-    &#34;&#34;&#34;
-    with open(filename, &#39;w&#39;) as f:
-        json.dump({&#34;agent_extractions&#34;: self.agent_extraction, 
-                   &#34;world_extraction&#34;: self.world_extraction}, f, indent=4)
-    
-    if verbose:
-        print(f&#34;Saved extraction results to {filename}&#34;)</code></pre>
-</details>
-</dd>
-</dl>
-</dd>
-<dt id="tinytroupe.extraction.InteractionResultsReducer"><code class="flex name class">
-<span>class <span class="ident">InteractionResultsReducer</span></span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class InteractionResultsReducer:
-
-    def __init__(self):
-        self.results = {}
-
-        self.rules = {}
-    
-    def add_reduction_rule(self, trigger: str, func: callable):
-        if trigger in self.rules:
-            raise Exception(f&#34;Rule for {trigger} already exists.&#34;)
-        
-        self.rules[trigger] = func
-    
-    def reduce_agent(self, agent: TinyPerson) -&gt; list:
-        reduction = []
-        for message in agent.episodic_memory.retrieve_all():
-            if message[&#39;role&#39;] == &#39;system&#39;:
-                continue # doing nothing for `system` role yet at least
-
-            elif message[&#39;role&#39;] == &#39;user&#39;:
-                # User role is related to stimuli only
-                stimulus_type = message[&#39;content&#39;][&#39;stimuli&#39;][0][&#39;type&#39;]
-                stimulus_content = message[&#39;content&#39;][&#39;stimuli&#39;][0][&#39;content&#39;]
-                stimulus_source = message[&#39;content&#39;][&#39;stimuli&#39;][0][&#39;source&#39;]
-                stimulus_timestamp = message[&#39;simulation_timestamp&#39;]
-
-                if stimulus_type in self.rules:
-                    extracted = self.rules[stimulus_type](focus_agent=agent, source_agent=TinyPerson.get_agent_by_name(stimulus_source), target_agent=agent, kind=&#39;stimulus&#39;, event=stimulus_type, content=stimulus_content, timestamp=stimulus_timestamp)
-                    if extracted is not None:
-                        reduction.append(extracted)
-
-            elif message[&#39;role&#39;] == &#39;assistant&#39;:
-                # Assistant role is related to actions only
-                if &#39;action&#39; in message[&#39;content&#39;]: 
-                    action_type = message[&#39;content&#39;][&#39;action&#39;][&#39;type&#39;]
-                    action_content = message[&#39;content&#39;][&#39;action&#39;][&#39;content&#39;]
-                    action_target = message[&#39;content&#39;][&#39;action&#39;][&#39;target&#39;]
-                    action_timestamp = message[&#39;simulation_timestamp&#39;]
-                    
-                    if action_type in self.rules:
-                        extracted = self.rules[action_type](focus_agent=agent, source_agent=agent, target_agent=TinyPerson.get_agent_by_name(action_target), kind=&#39;action&#39;, event=action_type, content=action_content, timestamp=action_timestamp)
-                        if extracted is not None:
-                            reduction.append(extracted)
-            
-        return reduction
-
-    def reduce_agent_to_dataframe(self, agent: TinyPerson, column_names: list=None) -&gt; pd.DataFrame:
-        reduction = self.reduce_agent(agent)
-        return pd.DataFrame(reduction, columns=column_names)</code></pre>
-</details>
-<h3>Methods</h3>
-<dl>
-<dt id="tinytroupe.extraction.InteractionResultsReducer.add_reduction_rule"><code class="name flex">
-<span>def <span class="ident">add_reduction_rule</span></span>(<span>self, trigger: str, func: <built-in function callable>)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def add_reduction_rule(self, trigger: str, func: callable):
-    if trigger in self.rules:
-        raise Exception(f&#34;Rule for {trigger} already exists.&#34;)
-    
-    self.rules[trigger] = func</code></pre>
-</details>
-</dd>
-<dt id="tinytroupe.extraction.InteractionResultsReducer.reduce_agent"><code class="name flex">
-<span>def <span class="ident">reduce_agent</span></span>(<span>self, agent: <a title="tinytroupe.agent.TinyPerson" href="agent.html#tinytroupe.agent.TinyPerson">TinyPerson</a>) ‑> list</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def reduce_agent(self, agent: TinyPerson) -&gt; list:
-    reduction = []
-    for message in agent.episodic_memory.retrieve_all():
-        if message[&#39;role&#39;] == &#39;system&#39;:
-            continue # doing nothing for `system` role yet at least
-
-        elif message[&#39;role&#39;] == &#39;user&#39;:
-            # User role is related to stimuli only
-            stimulus_type = message[&#39;content&#39;][&#39;stimuli&#39;][0][&#39;type&#39;]
-            stimulus_content = message[&#39;content&#39;][&#39;stimuli&#39;][0][&#39;content&#39;]
-            stimulus_source = message[&#39;content&#39;][&#39;stimuli&#39;][0][&#39;source&#39;]
-            stimulus_timestamp = message[&#39;simulation_timestamp&#39;]
-
-            if stimulus_type in self.rules:
-                extracted = self.rules[stimulus_type](focus_agent=agent, source_agent=TinyPerson.get_agent_by_name(stimulus_source), target_agent=agent, kind=&#39;stimulus&#39;, event=stimulus_type, content=stimulus_content, timestamp=stimulus_timestamp)
-                if extracted is not None:
-                    reduction.append(extracted)
-
-        elif message[&#39;role&#39;] == &#39;assistant&#39;:
-            # Assistant role is related to actions only
-            if &#39;action&#39; in message[&#39;content&#39;]: 
-                action_type = message[&#39;content&#39;][&#39;action&#39;][&#39;type&#39;]
-                action_content = message[&#39;content&#39;][&#39;action&#39;][&#39;content&#39;]
-                action_target = message[&#39;content&#39;][&#39;action&#39;][&#39;target&#39;]
-                action_timestamp = message[&#39;simulation_timestamp&#39;]
-                
-                if action_type in self.rules:
-                    extracted = self.rules[action_type](focus_agent=agent, source_agent=agent, target_agent=TinyPerson.get_agent_by_name(action_target), kind=&#39;action&#39;, event=action_type, content=action_content, timestamp=action_timestamp)
-                    if extracted is not None:
-                        reduction.append(extracted)
-        
-    return reduction</code></pre>
-</details>
-</dd>
-<dt id="tinytroupe.extraction.InteractionResultsReducer.reduce_agent_to_dataframe"><code class="name flex">
-<span>def <span class="ident">reduce_agent_to_dataframe</span></span>(<span>self, agent: <a title="tinytroupe.agent.TinyPerson" href="agent.html#tinytroupe.agent.TinyPerson">TinyPerson</a>, column_names: list = None) ‑> pandas.core.frame.DataFrame</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def reduce_agent_to_dataframe(self, agent: TinyPerson, column_names: list=None) -&gt; pd.DataFrame:
-    reduction = self.reduce_agent(agent)
-    return pd.DataFrame(reduction, columns=column_names)</code></pre>
-</details>
-</dd>
-</dl>
-</dd>
 <dt id="tinytroupe.extraction.Normalizer"><code class="flex name class">
 <span>class <span class="ident">Normalizer</span></span>
 <span>(</span><span>elements: List[str], n: int, verbose: bool = False)</span>
@@ -1536,6 +1017,549 @@ list in the same order.</p>
 </dd>
 </dl>
 </dd>
+<dt id="tinytroupe.extraction.ResultsExtractor"><code class="flex name class">
+<span>class <span class="ident">ResultsExtractor</span></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ResultsExtractor:
+
+    def __init__(self):
+        self._extraction_prompt_template_path = os.path.join(os.path.dirname(__file__), &#39;prompts/interaction_results_extractor.mustache&#39;)
+
+        # we&#39;ll cache the last extraction results for each type of extraction, so that we can use them to
+        # generate reports or other additional outputs.
+        self.agent_extraction = {}
+        self.world_extraction = {}
+
+    def extract_results_from_agent(self, 
+                        tinyperson:TinyPerson, 
+                        extraction_objective:str=&#34;The main points present in the agent&#39;s interactions history.&#34;, 
+                        situation:str = &#34;&#34;, 
+                        fields:list=None,
+                        fields_hints:dict=None,
+                        verbose:bool=False):
+        &#34;&#34;&#34;
+        Extracts results from a TinyPerson instance.
+
+        Args:
+            tinyperson (TinyPerson): The TinyPerson instance to extract results from.
+            extraction_objective (str): The extraction objective.
+            situation (str): The situation to consider.
+            fields (list, optional): The fields to extract. If None, the extractor will decide what names to use. 
+                Defaults to None.
+            verbose (bool, optional): Whether to print debug messages. Defaults to False.
+        &#34;&#34;&#34;
+
+        messages = []
+
+        rendering_configs = {}
+        if fields is not None:
+            rendering_configs[&#34;fields&#34;] = &#34;, &#34;.join(fields)
+        
+        if fields_hints is not None:
+            rendering_configs[&#34;fields_hints&#34;] = list(fields_hints.items())
+        
+        messages.append({&#34;role&#34;: &#34;system&#34;, 
+                         &#34;content&#34;: chevron.render(
+                             open(self._extraction_prompt_template_path).read(), 
+                             rendering_configs)})
+
+
+        interaction_history = tinyperson.pretty_current_interactions(max_content_length=None)
+
+        extraction_request_prompt = \
+f&#34;&#34;&#34;
+## Extraction objective
+
+{extraction_objective}
+
+## Situation
+You are considering a single agent, named {tinyperson.name}. Your objective thus refers to this agent specifically.
+{situation}
+
+## Agent Interactions History
+
+You will consider an agent&#39;s history of interactions, which include stimuli it received as well as actions it 
+performed.
+
+{interaction_history}
+&#34;&#34;&#34;
+        messages.append({&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: extraction_request_prompt})
+
+        next_message = openai_utils.client().send_message(messages, temperature=0.0)
+        
+        debug_msg = f&#34;Extraction raw result message: {next_message}&#34;
+        logger.debug(debug_msg)
+        if verbose:
+            print(debug_msg)
+
+        if next_message is not None:
+            result = utils.extract_json(next_message[&#34;content&#34;])
+        else:
+            result = None
+        
+        # cache the result
+        self.agent_extraction[tinyperson.name] = result
+
+        return result
+    
+
+    def extract_results_from_world(self, 
+                                   tinyworld:TinyWorld, 
+                                   extraction_objective:str=&#34;The main points that can be derived from the agents conversations and actions.&#34;, 
+                                   situation:str=&#34;&#34;, 
+                                   fields:list=None,
+                                   fields_hints:dict=None,
+                                   verbose:bool=False):
+        &#34;&#34;&#34;
+        Extracts results from a TinyWorld instance.
+
+        Args:
+            tinyworld (TinyWorld): The TinyWorld instance to extract results from.
+            extraction_objective (str): The extraction objective.
+            situation (str): The situation to consider.
+            fields (list, optional): The fields to extract. If None, the extractor will decide what names to use. 
+                Defaults to None.
+            verbose (bool, optional): Whether to print debug messages. Defaults to False.
+        &#34;&#34;&#34;
+
+        messages = []
+
+        rendering_configs = {}
+        if fields is not None:
+            rendering_configs[&#34;fields&#34;] = &#34;, &#34;.join(fields)
+        
+        if fields_hints is not None:
+            rendering_configs[&#34;fields_hints&#34;] = list(fields_hints.items())
+        
+        messages.append({&#34;role&#34;: &#34;system&#34;, 
+                         &#34;content&#34;: chevron.render(
+                             open(self._extraction_prompt_template_path).read(), 
+                             rendering_configs)})
+
+        # TODO: either summarize first or break up into multiple tasks
+        interaction_history = tinyworld.pretty_current_interactions(max_content_length=None)
+
+        extraction_request_prompt = \
+f&#34;&#34;&#34;
+## Extraction objective
+
+{extraction_objective}
+
+## Situation
+You are considering various agents.
+{situation}
+
+## Agents Interactions History
+
+You will consider the history of interactions from various agents that exist in an environment called {tinyworld.name}. 
+Each interaction history includes stimuli the corresponding agent received as well as actions it performed.
+
+{interaction_history}
+&#34;&#34;&#34;
+        messages.append({&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: extraction_request_prompt})
+
+        next_message = openai_utils.client().send_message(messages, temperature=0.0)
+        
+        debug_msg = f&#34;Extraction raw result message: {next_message}&#34;
+        logger.debug(debug_msg)
+        if verbose:
+            print(debug_msg)
+
+        if next_message is not None:
+            result = utils.extract_json(next_message[&#34;content&#34;])
+        else:
+            result = None
+        
+        # cache the result
+        self.world_extraction[tinyworld.name] = result
+
+        return result
+    
+    def save_as_json(self, filename:str, verbose:bool=False):
+        &#34;&#34;&#34;
+        Saves the last extraction results as JSON.
+
+        Args:
+            filename (str): The filename to save the JSON to.
+            verbose (bool, optional): Whether to print debug messages. Defaults to False.
+        &#34;&#34;&#34;
+        with open(filename, &#39;w&#39;) as f:
+            json.dump({&#34;agent_extractions&#34;: self.agent_extraction, 
+                       &#34;world_extraction&#34;: self.world_extraction}, f, indent=4)
+        
+        if verbose:
+            print(f&#34;Saved extraction results to {filename}&#34;)</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="tinytroupe.extraction.ResultsExtractor.extract_results_from_agent"><code class="name flex">
+<span>def <span class="ident">extract_results_from_agent</span></span>(<span>self, tinyperson: <a title="tinytroupe.agent.TinyPerson" href="agent.html#tinytroupe.agent.TinyPerson">TinyPerson</a>, extraction_objective: str = "The main points present in the agent's interactions history.", situation: str = '', fields: list = None, fields_hints: dict = None, verbose: bool = False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Extracts results from a TinyPerson instance.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>tinyperson</code></strong> :&ensp;<code>TinyPerson</code></dt>
+<dd>The TinyPerson instance to extract results from.</dd>
+<dt><strong><code>extraction_objective</code></strong> :&ensp;<code>str</code></dt>
+<dd>The extraction objective.</dd>
+<dt><strong><code>situation</code></strong> :&ensp;<code>str</code></dt>
+<dd>The situation to consider.</dd>
+<dt><strong><code>fields</code></strong> :&ensp;<code>list</code>, optional</dt>
+<dd>The fields to extract. If None, the extractor will decide what names to use.
+Defaults to None.</dd>
+<dt><strong><code>verbose</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Whether to print debug messages. Defaults to False.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">    def extract_results_from_agent(self, 
+                        tinyperson:TinyPerson, 
+                        extraction_objective:str=&#34;The main points present in the agent&#39;s interactions history.&#34;, 
+                        situation:str = &#34;&#34;, 
+                        fields:list=None,
+                        fields_hints:dict=None,
+                        verbose:bool=False):
+        &#34;&#34;&#34;
+        Extracts results from a TinyPerson instance.
+
+        Args:
+            tinyperson (TinyPerson): The TinyPerson instance to extract results from.
+            extraction_objective (str): The extraction objective.
+            situation (str): The situation to consider.
+            fields (list, optional): The fields to extract. If None, the extractor will decide what names to use. 
+                Defaults to None.
+            verbose (bool, optional): Whether to print debug messages. Defaults to False.
+        &#34;&#34;&#34;
+
+        messages = []
+
+        rendering_configs = {}
+        if fields is not None:
+            rendering_configs[&#34;fields&#34;] = &#34;, &#34;.join(fields)
+        
+        if fields_hints is not None:
+            rendering_configs[&#34;fields_hints&#34;] = list(fields_hints.items())
+        
+        messages.append({&#34;role&#34;: &#34;system&#34;, 
+                         &#34;content&#34;: chevron.render(
+                             open(self._extraction_prompt_template_path).read(), 
+                             rendering_configs)})
+
+
+        interaction_history = tinyperson.pretty_current_interactions(max_content_length=None)
+
+        extraction_request_prompt = \
+f&#34;&#34;&#34;
+## Extraction objective
+
+{extraction_objective}
+
+## Situation
+You are considering a single agent, named {tinyperson.name}. Your objective thus refers to this agent specifically.
+{situation}
+
+## Agent Interactions History
+
+You will consider an agent&#39;s history of interactions, which include stimuli it received as well as actions it 
+performed.
+
+{interaction_history}
+&#34;&#34;&#34;
+        messages.append({&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: extraction_request_prompt})
+
+        next_message = openai_utils.client().send_message(messages, temperature=0.0)
+        
+        debug_msg = f&#34;Extraction raw result message: {next_message}&#34;
+        logger.debug(debug_msg)
+        if verbose:
+            print(debug_msg)
+
+        if next_message is not None:
+            result = utils.extract_json(next_message[&#34;content&#34;])
+        else:
+            result = None
+        
+        # cache the result
+        self.agent_extraction[tinyperson.name] = result
+
+        return result</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.extraction.ResultsExtractor.extract_results_from_world"><code class="name flex">
+<span>def <span class="ident">extract_results_from_world</span></span>(<span>self, tinyworld: <a title="tinytroupe.environment.TinyWorld" href="environment.html#tinytroupe.environment.TinyWorld">TinyWorld</a>, extraction_objective: str = 'The main points that can be derived from the agents conversations and actions.', situation: str = '', fields: list = None, fields_hints: dict = None, verbose: bool = False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Extracts results from a TinyWorld instance.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>tinyworld</code></strong> :&ensp;<code>TinyWorld</code></dt>
+<dd>The TinyWorld instance to extract results from.</dd>
+<dt><strong><code>extraction_objective</code></strong> :&ensp;<code>str</code></dt>
+<dd>The extraction objective.</dd>
+<dt><strong><code>situation</code></strong> :&ensp;<code>str</code></dt>
+<dd>The situation to consider.</dd>
+<dt><strong><code>fields</code></strong> :&ensp;<code>list</code>, optional</dt>
+<dd>The fields to extract. If None, the extractor will decide what names to use.
+Defaults to None.</dd>
+<dt><strong><code>verbose</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Whether to print debug messages. Defaults to False.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">    def extract_results_from_world(self, 
+                                   tinyworld:TinyWorld, 
+                                   extraction_objective:str=&#34;The main points that can be derived from the agents conversations and actions.&#34;, 
+                                   situation:str=&#34;&#34;, 
+                                   fields:list=None,
+                                   fields_hints:dict=None,
+                                   verbose:bool=False):
+        &#34;&#34;&#34;
+        Extracts results from a TinyWorld instance.
+
+        Args:
+            tinyworld (TinyWorld): The TinyWorld instance to extract results from.
+            extraction_objective (str): The extraction objective.
+            situation (str): The situation to consider.
+            fields (list, optional): The fields to extract. If None, the extractor will decide what names to use. 
+                Defaults to None.
+            verbose (bool, optional): Whether to print debug messages. Defaults to False.
+        &#34;&#34;&#34;
+
+        messages = []
+
+        rendering_configs = {}
+        if fields is not None:
+            rendering_configs[&#34;fields&#34;] = &#34;, &#34;.join(fields)
+        
+        if fields_hints is not None:
+            rendering_configs[&#34;fields_hints&#34;] = list(fields_hints.items())
+        
+        messages.append({&#34;role&#34;: &#34;system&#34;, 
+                         &#34;content&#34;: chevron.render(
+                             open(self._extraction_prompt_template_path).read(), 
+                             rendering_configs)})
+
+        # TODO: either summarize first or break up into multiple tasks
+        interaction_history = tinyworld.pretty_current_interactions(max_content_length=None)
+
+        extraction_request_prompt = \
+f&#34;&#34;&#34;
+## Extraction objective
+
+{extraction_objective}
+
+## Situation
+You are considering various agents.
+{situation}
+
+## Agents Interactions History
+
+You will consider the history of interactions from various agents that exist in an environment called {tinyworld.name}. 
+Each interaction history includes stimuli the corresponding agent received as well as actions it performed.
+
+{interaction_history}
+&#34;&#34;&#34;
+        messages.append({&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: extraction_request_prompt})
+
+        next_message = openai_utils.client().send_message(messages, temperature=0.0)
+        
+        debug_msg = f&#34;Extraction raw result message: {next_message}&#34;
+        logger.debug(debug_msg)
+        if verbose:
+            print(debug_msg)
+
+        if next_message is not None:
+            result = utils.extract_json(next_message[&#34;content&#34;])
+        else:
+            result = None
+        
+        # cache the result
+        self.world_extraction[tinyworld.name] = result
+
+        return result</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.extraction.ResultsExtractor.save_as_json"><code class="name flex">
+<span>def <span class="ident">save_as_json</span></span>(<span>self, filename: str, verbose: bool = False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Saves the last extraction results as JSON.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>filename</code></strong> :&ensp;<code>str</code></dt>
+<dd>The filename to save the JSON to.</dd>
+<dt><strong><code>verbose</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Whether to print debug messages. Defaults to False.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def save_as_json(self, filename:str, verbose:bool=False):
+    &#34;&#34;&#34;
+    Saves the last extraction results as JSON.
+
+    Args:
+        filename (str): The filename to save the JSON to.
+        verbose (bool, optional): Whether to print debug messages. Defaults to False.
+    &#34;&#34;&#34;
+    with open(filename, &#39;w&#39;) as f:
+        json.dump({&#34;agent_extractions&#34;: self.agent_extraction, 
+                   &#34;world_extraction&#34;: self.world_extraction}, f, indent=4)
+    
+    if verbose:
+        print(f&#34;Saved extraction results to {filename}&#34;)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="tinytroupe.extraction.ResultsReducer"><code class="flex name class">
+<span>class <span class="ident">ResultsReducer</span></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ResultsReducer:
+
+    def __init__(self):
+        self.results = {}
+
+        self.rules = {}
+    
+    def add_reduction_rule(self, trigger: str, func: callable):
+        if trigger in self.rules:
+            raise Exception(f&#34;Rule for {trigger} already exists.&#34;)
+        
+        self.rules[trigger] = func
+    
+    def reduce_agent(self, agent: TinyPerson) -&gt; list:
+        reduction = []
+        for message in agent.episodic_memory.retrieve_all():
+            if message[&#39;role&#39;] == &#39;system&#39;:
+                continue # doing nothing for `system` role yet at least
+
+            elif message[&#39;role&#39;] == &#39;user&#39;:
+                # User role is related to stimuli only
+                stimulus_type = message[&#39;content&#39;][&#39;stimuli&#39;][0][&#39;type&#39;]
+                stimulus_content = message[&#39;content&#39;][&#39;stimuli&#39;][0][&#39;content&#39;]
+                stimulus_source = message[&#39;content&#39;][&#39;stimuli&#39;][0][&#39;source&#39;]
+                stimulus_timestamp = message[&#39;simulation_timestamp&#39;]
+
+                if stimulus_type in self.rules:
+                    extracted = self.rules[stimulus_type](focus_agent=agent, source_agent=TinyPerson.get_agent_by_name(stimulus_source), target_agent=agent, kind=&#39;stimulus&#39;, event=stimulus_type, content=stimulus_content, timestamp=stimulus_timestamp)
+                    if extracted is not None:
+                        reduction.append(extracted)
+
+            elif message[&#39;role&#39;] == &#39;assistant&#39;:
+                # Assistant role is related to actions only
+                if &#39;action&#39; in message[&#39;content&#39;]: 
+                    action_type = message[&#39;content&#39;][&#39;action&#39;][&#39;type&#39;]
+                    action_content = message[&#39;content&#39;][&#39;action&#39;][&#39;content&#39;]
+                    action_target = message[&#39;content&#39;][&#39;action&#39;][&#39;target&#39;]
+                    action_timestamp = message[&#39;simulation_timestamp&#39;]
+                    
+                    if action_type in self.rules:
+                        extracted = self.rules[action_type](focus_agent=agent, source_agent=agent, target_agent=TinyPerson.get_agent_by_name(action_target), kind=&#39;action&#39;, event=action_type, content=action_content, timestamp=action_timestamp)
+                        if extracted is not None:
+                            reduction.append(extracted)
+            
+        return reduction
+
+    def reduce_agent_to_dataframe(self, agent: TinyPerson, column_names: list=None) -&gt; pd.DataFrame:
+        reduction = self.reduce_agent(agent)
+        return pd.DataFrame(reduction, columns=column_names)</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="tinytroupe.extraction.ResultsReducer.add_reduction_rule"><code class="name flex">
+<span>def <span class="ident">add_reduction_rule</span></span>(<span>self, trigger: str, func: <built-in function callable>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_reduction_rule(self, trigger: str, func: callable):
+    if trigger in self.rules:
+        raise Exception(f&#34;Rule for {trigger} already exists.&#34;)
+    
+    self.rules[trigger] = func</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.extraction.ResultsReducer.reduce_agent"><code class="name flex">
+<span>def <span class="ident">reduce_agent</span></span>(<span>self, agent: <a title="tinytroupe.agent.TinyPerson" href="agent.html#tinytroupe.agent.TinyPerson">TinyPerson</a>) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reduce_agent(self, agent: TinyPerson) -&gt; list:
+    reduction = []
+    for message in agent.episodic_memory.retrieve_all():
+        if message[&#39;role&#39;] == &#39;system&#39;:
+            continue # doing nothing for `system` role yet at least
+
+        elif message[&#39;role&#39;] == &#39;user&#39;:
+            # User role is related to stimuli only
+            stimulus_type = message[&#39;content&#39;][&#39;stimuli&#39;][0][&#39;type&#39;]
+            stimulus_content = message[&#39;content&#39;][&#39;stimuli&#39;][0][&#39;content&#39;]
+            stimulus_source = message[&#39;content&#39;][&#39;stimuli&#39;][0][&#39;source&#39;]
+            stimulus_timestamp = message[&#39;simulation_timestamp&#39;]
+
+            if stimulus_type in self.rules:
+                extracted = self.rules[stimulus_type](focus_agent=agent, source_agent=TinyPerson.get_agent_by_name(stimulus_source), target_agent=agent, kind=&#39;stimulus&#39;, event=stimulus_type, content=stimulus_content, timestamp=stimulus_timestamp)
+                if extracted is not None:
+                    reduction.append(extracted)
+
+        elif message[&#39;role&#39;] == &#39;assistant&#39;:
+            # Assistant role is related to actions only
+            if &#39;action&#39; in message[&#39;content&#39;]: 
+                action_type = message[&#39;content&#39;][&#39;action&#39;][&#39;type&#39;]
+                action_content = message[&#39;content&#39;][&#39;action&#39;][&#39;content&#39;]
+                action_target = message[&#39;content&#39;][&#39;action&#39;][&#39;target&#39;]
+                action_timestamp = message[&#39;simulation_timestamp&#39;]
+                
+                if action_type in self.rules:
+                    extracted = self.rules[action_type](focus_agent=agent, source_agent=agent, target_agent=TinyPerson.get_agent_by_name(action_target), kind=&#39;action&#39;, event=action_type, content=action_content, timestamp=action_timestamp)
+                    if extracted is not None:
+                        reduction.append(extracted)
+        
+    return reduction</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.extraction.ResultsReducer.reduce_agent_to_dataframe"><code class="name flex">
+<span>def <span class="ident">reduce_agent_to_dataframe</span></span>(<span>self, agent: <a title="tinytroupe.agent.TinyPerson" href="agent.html#tinytroupe.agent.TinyPerson">TinyPerson</a>, column_names: list = None) ‑> pandas.core.frame.DataFrame</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reduce_agent_to_dataframe(self, agent: TinyPerson, column_names: list=None) -&gt; pd.DataFrame:
+    reduction = self.reduce_agent(agent)
+    return pd.DataFrame(reduction, columns=column_names)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
 </dl>
 </section>
 </article>
@@ -1559,25 +1583,25 @@ list in the same order.</p>
 </ul>
 </li>
 <li>
-<h4><code><a title="tinytroupe.extraction.InteractionResultsExtractor" href="#tinytroupe.extraction.InteractionResultsExtractor">InteractionResultsExtractor</a></code></h4>
-<ul class="">
-<li><code><a title="tinytroupe.extraction.InteractionResultsExtractor.extract_results_from_agent" href="#tinytroupe.extraction.InteractionResultsExtractor.extract_results_from_agent">extract_results_from_agent</a></code></li>
-<li><code><a title="tinytroupe.extraction.InteractionResultsExtractor.extract_results_from_world" href="#tinytroupe.extraction.InteractionResultsExtractor.extract_results_from_world">extract_results_from_world</a></code></li>
-<li><code><a title="tinytroupe.extraction.InteractionResultsExtractor.save_as_json" href="#tinytroupe.extraction.InteractionResultsExtractor.save_as_json">save_as_json</a></code></li>
-</ul>
-</li>
-<li>
-<h4><code><a title="tinytroupe.extraction.InteractionResultsReducer" href="#tinytroupe.extraction.InteractionResultsReducer">InteractionResultsReducer</a></code></h4>
-<ul class="">
-<li><code><a title="tinytroupe.extraction.InteractionResultsReducer.add_reduction_rule" href="#tinytroupe.extraction.InteractionResultsReducer.add_reduction_rule">add_reduction_rule</a></code></li>
-<li><code><a title="tinytroupe.extraction.InteractionResultsReducer.reduce_agent" href="#tinytroupe.extraction.InteractionResultsReducer.reduce_agent">reduce_agent</a></code></li>
-<li><code><a title="tinytroupe.extraction.InteractionResultsReducer.reduce_agent_to_dataframe" href="#tinytroupe.extraction.InteractionResultsReducer.reduce_agent_to_dataframe">reduce_agent_to_dataframe</a></code></li>
-</ul>
-</li>
-<li>
 <h4><code><a title="tinytroupe.extraction.Normalizer" href="#tinytroupe.extraction.Normalizer">Normalizer</a></code></h4>
 <ul class="">
 <li><code><a title="tinytroupe.extraction.Normalizer.normalize" href="#tinytroupe.extraction.Normalizer.normalize">normalize</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="tinytroupe.extraction.ResultsExtractor" href="#tinytroupe.extraction.ResultsExtractor">ResultsExtractor</a></code></h4>
+<ul class="">
+<li><code><a title="tinytroupe.extraction.ResultsExtractor.extract_results_from_agent" href="#tinytroupe.extraction.ResultsExtractor.extract_results_from_agent">extract_results_from_agent</a></code></li>
+<li><code><a title="tinytroupe.extraction.ResultsExtractor.extract_results_from_world" href="#tinytroupe.extraction.ResultsExtractor.extract_results_from_world">extract_results_from_world</a></code></li>
+<li><code><a title="tinytroupe.extraction.ResultsExtractor.save_as_json" href="#tinytroupe.extraction.ResultsExtractor.save_as_json">save_as_json</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="tinytroupe.extraction.ResultsReducer" href="#tinytroupe.extraction.ResultsReducer">ResultsReducer</a></code></h4>
+<ul class="">
+<li><code><a title="tinytroupe.extraction.ResultsReducer.add_reduction_rule" href="#tinytroupe.extraction.ResultsReducer.add_reduction_rule">add_reduction_rule</a></code></li>
+<li><code><a title="tinytroupe.extraction.ResultsReducer.reduce_agent" href="#tinytroupe.extraction.ResultsReducer.reduce_agent">reduce_agent</a></code></li>
+<li><code><a title="tinytroupe.extraction.ResultsReducer.reduce_agent_to_dataframe" href="#tinytroupe.extraction.ResultsReducer.reduce_agent_to_dataframe">reduce_agent_to_dataframe</a></code></li>
 </ul>
 </li>
 </ul>

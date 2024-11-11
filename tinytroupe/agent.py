@@ -1243,9 +1243,9 @@ class TinyPerson(JsonSerializableRegistry):
 # Mental faculties
 #######################################################################################################################
     
-class Faculty(JsonSerializableRegistry):
+class TinyMentalFaculty(JsonSerializableRegistry):
     """
-    Represents an optional mental faculty of an agent. Mental faculties are the cognitive abilities that an agent has.
+    Represents a mental faculty of an agent. Mental faculties are the cognitive abilities that an agent has.
     """
 
     def __init__(self, name: str, requires_faculties: list=None) -> None:
@@ -1264,10 +1264,10 @@ class Faculty(JsonSerializableRegistry):
             self.requires_faculties = requires_faculties
 
     def __str__(self) -> str:
-        return f"Faculty: {self.name}"
+        return f"Mental Faculty: {self.name}"
     
     def __eq__(self, other):
-        if isinstance(other, Faculty):
+        if isinstance(other, TinyMentalFaculty):
             return self.name == other.name
         return False
     
@@ -1296,7 +1296,7 @@ class Faculty(JsonSerializableRegistry):
         raise NotImplementedError("Subclasses must implement this method.")
 
 
-class RecallFaculty(Faculty):
+class RecallFaculty(TinyMentalFaculty):
 
     def __init__(self):
         super().__init__("Memory Recall")
@@ -1375,7 +1375,7 @@ class RecallFaculty(Faculty):
         return textwrap.dedent(prompt)
     
 
-class FilesAndWebGroundingFaculty(Faculty):
+class FilesAndWebGroundingFaculty(TinyMentalFaculty):
     """
     Allows the agent to access local files and web pages to ground its knowledge.
     """
@@ -1452,7 +1452,7 @@ class FilesAndWebGroundingFaculty(Faculty):
 
         return textwrap.dedent(prompt)
     
-class ToolUse(Faculty):
+class TinyToolUse(TinyMentalFaculty):
     """
     Allows the agent to use tools to accomplish tasks. Tool usage is one of the most important cognitive skills
     humans and primates have as we know.
@@ -1491,7 +1491,7 @@ class ToolUse(Faculty):
 # Memory mechanisms 
 #######################################################################################################################
 
-class Memory(Faculty):
+class TinyMemory(TinyMentalFaculty):
     """
     Base class for different types of memory.
     """
@@ -1537,7 +1537,7 @@ class Memory(Faculty):
 
 
 
-class EpisodicMemory(Memory):
+class EpisodicMemory(TinyMemory):
     """
     Provides episodic memory capabilities to an agent. Cognitively, episodic memory is the ability to remember specific events,
     or episodes, in the past. This class provides a simple implementation of episodic memory, where the agent can store and retrieve
@@ -1651,7 +1651,7 @@ class EpisodicMemory(Memory):
         return omisssion_info + self.memory[-n:]
 
 
-class SemanticMemory(Memory):
+class SemanticMemory(TinyMemory):
     """
     Semantic memory is the memory of meanings, understandings, and other concept-based knowledge unrelated to specific experiences.
     It is not ordered temporally, and it is not about remembering specific events or episodes. This class provides a simple implementation

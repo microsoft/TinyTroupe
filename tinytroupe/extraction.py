@@ -22,14 +22,14 @@ logger = logging.getLogger("tinytroupe")
 
 from tinytroupe.agent import TinyPerson
 from tinytroupe.environment import TinyWorld
-from tinytroupe.personfactory import TinyPersonFactory
+from tinytroupe.factory import TinyPersonFactory
 from tinytroupe.utils import JsonSerializableRegistry
 
 
 from tinytroupe import openai_utils
 import tinytroupe.utils as utils
 
-class InteractionResultsExtractor:
+class ResultsExtractor:
 
     def __init__(self):
         self._extraction_prompt_template_path = os.path.join(os.path.dirname(__file__), 'prompts/interaction_results_extractor.mustache')
@@ -44,6 +44,7 @@ class InteractionResultsExtractor:
                         extraction_objective:str="The main points present in the agent's interactions history.", 
                         situation:str = "", 
                         fields:list=None,
+                        fields_hints:dict=None,
                         verbose:bool=False):
         """
         Extracts results from a TinyPerson instance.
@@ -62,6 +63,9 @@ class InteractionResultsExtractor:
         rendering_configs = {}
         if fields is not None:
             rendering_configs["fields"] = ", ".join(fields)
+        
+        if fields_hints is not None:
+            rendering_configs["fields_hints"] = list(fields_hints.items())
         
         messages.append({"role": "system", 
                          "content": chevron.render(
@@ -113,6 +117,7 @@ performed.
                                    extraction_objective:str="The main points that can be derived from the agents conversations and actions.", 
                                    situation:str="", 
                                    fields:list=None,
+                                   fields_hints:dict=None,
                                    verbose:bool=False):
         """
         Extracts results from a TinyWorld instance.
@@ -131,6 +136,9 @@ performed.
         rendering_configs = {}
         if fields is not None:
             rendering_configs["fields"] = ", ".join(fields)
+        
+        if fields_hints is not None:
+            rendering_configs["fields_hints"] = list(fields_hints.items())
         
         messages.append({"role": "system", 
                          "content": chevron.render(
@@ -193,7 +201,7 @@ Each interaction history includes stimuli the corresponding agent received as we
 
 
 
-class InteractionResultsReducer:
+class ResultsReducer:
 
     def __init__(self):
         self.results = {}
@@ -502,4 +510,4 @@ class Normalizer:
 ################################################################################
 
 # default extractor
-default_extractor = InteractionResultsExtractor()
+default_extractor = ResultsExtractor()

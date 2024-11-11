@@ -37,13 +37,6 @@ import sys
 sys.path.append(&#39;.&#39;)
 from tinytroupe import utils # now we can import our utils
 
-config = utils.read_config_file()
-utils.start_logger(config)
-
-# fix an issue in the rich library: we don&#39;t want margins in Jupyter!
-rich.jupyter.JUPYTER_HTML_FORMAT = \
-    utils.inject_html_css_style_prefix(rich.jupyter.JUPYTER_HTML_FORMAT, &#34;margin:0px;&#34;)
-
 # AI disclaimers
 print(\
 &#34;&#34;&#34;
@@ -52,7 +45,15 @@ DISCLAIMER: TinyTroupe relies on Artificial Intelligence (AI) models to generate
 The AI models are not perfect and may produce inappropriate or inacurate results. 
 For any serious or consequential use, please review the generated content before using it.
 !!!!
-&#34;&#34;&#34;)</code></pre>
+&#34;&#34;&#34;)
+
+config = utils.read_config_file()
+utils.pretty_print_config(config)
+utils.start_logger(config)
+
+# fix an issue in the rich library: we don&#39;t want margins in Jupyter!
+rich.jupyter.JUPYTER_HTML_FORMAT = \
+    utils.inject_html_css_style_prefix(rich.jupyter.JUPYTER_HTML_FORMAT, &#34;margin:0px;&#34;)</code></pre>
 </details>
 </section>
 <section>
@@ -90,15 +91,11 @@ agents.</p></div>
 <div class="desc"><p>Simulations produce a lot of data, and it is often useful to extract these data in a structured way. For instance, you might wish to:
 - Extract the …</p></div>
 </dd>
+<dt><code class="name"><a title="tinytroupe.factory" href="factory.html">tinytroupe.factory</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
 <dt><code class="name"><a title="tinytroupe.openai_utils" href="openai_utils.html">tinytroupe.openai_utils</a></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt><code class="name"><a title="tinytroupe.personchecker" href="personchecker.html">tinytroupe.personchecker</a></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt><code class="name"><a title="tinytroupe.personfactory" href="personfactory.html">tinytroupe.personfactory</a></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -118,6 +115,10 @@ their age distribution, typical interests, and so on …</p></div>
 <dt><code class="name"><a title="tinytroupe.utils" href="utils.html">tinytroupe.utils</a></code></dt>
 <dd>
 <div class="desc"><p>General utilities and convenience functions.</p></div>
+</dd>
+<dt><code class="name"><a title="tinytroupe.validation" href="validation.html">tinytroupe.validation</a></code></dt>
+<dd>
+<div class="desc"></div>
 </dd>
 </dl>
 </section>
@@ -143,13 +144,13 @@ their age distribution, typical interests, and so on …</p></div>
 <li><code><a title="tinytroupe.examples" href="examples.html">tinytroupe.examples</a></code></li>
 <li><code><a title="tinytroupe.experimentation" href="experimentation.html">tinytroupe.experimentation</a></code></li>
 <li><code><a title="tinytroupe.extraction" href="extraction.html">tinytroupe.extraction</a></code></li>
+<li><code><a title="tinytroupe.factory" href="factory.html">tinytroupe.factory</a></code></li>
 <li><code><a title="tinytroupe.openai_utils" href="openai_utils.html">tinytroupe.openai_utils</a></code></li>
-<li><code><a title="tinytroupe.personchecker" href="personchecker.html">tinytroupe.personchecker</a></code></li>
-<li><code><a title="tinytroupe.personfactory" href="personfactory.html">tinytroupe.personfactory</a></code></li>
 <li><code><a title="tinytroupe.profiling" href="profiling.html">tinytroupe.profiling</a></code></li>
 <li><code><a title="tinytroupe.story" href="story.html">tinytroupe.story</a></code></li>
 <li><code><a title="tinytroupe.tools" href="tools.html">tinytroupe.tools</a></code></li>
 <li><code><a title="tinytroupe.utils" href="utils.html">tinytroupe.utils</a></code></li>
+<li><code><a title="tinytroupe.validation" href="validation.html">tinytroupe.validation</a></code></li>
 </ul>
 </li>
 </ul>

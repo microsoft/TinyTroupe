@@ -101,7 +101,7 @@ class Simulation:
         # local import to avoid circular dependencies
         from tinytroupe.agent import TinyPerson
         from tinytroupe.environment import TinyWorld
-        from tinytroupe.personfactory import TinyFactory
+        from tinytroupe.factory import TinyFactory
 
         if self.status == Simulation.STATUS_STOPPED:
             self.status = Simulation.STATUS_STARTED
@@ -408,7 +408,7 @@ class Transaction:
         # local import to avoid circular dependencies
         from tinytroupe.agent import TinyPerson
         from tinytroupe.environment import TinyWorld
-        from tinytroupe.personfactory import TinyFactory
+        from tinytroupe.factory import TinyFactory
 
         self.obj_under_transaction = obj_under_transaction
         self.simulation = simulation
@@ -513,7 +513,7 @@ class Transaction:
         # local import to avoid circular dependencies
         from tinytroupe.agent import TinyPerson
         from tinytroupe.environment import TinyWorld
-        from tinytroupe.personfactory import TinyFactory
+        from tinytroupe.factory import TinyFactory
 
 
         # if the output is a TinyPerson, encode it
@@ -541,7 +541,7 @@ class Transaction:
         # local import to avoid circular dependencies
         from tinytroupe.agent import TinyPerson
         from tinytroupe.environment import TinyWorld
-        from tinytroupe.personfactory import TinyFactory
+        from tinytroupe.factory import TinyFactory
 
         if encoded_output is None:
             return None
@@ -901,7 +901,7 @@ reset() # initialize the control state</code></pre>
         # local import to avoid circular dependencies
         from tinytroupe.agent import TinyPerson
         from tinytroupe.environment import TinyWorld
-        from tinytroupe.personfactory import TinyFactory
+        from tinytroupe.factory import TinyFactory
 
         if self.status == Simulation.STATUS_STOPPED:
             self.status = Simulation.STATUS_STARTED
@@ -1303,7 +1303,7 @@ defaults to the default cache path defined in the class.</dd>
     # local import to avoid circular dependencies
     from tinytroupe.agent import TinyPerson
     from tinytroupe.environment import TinyWorld
-    from tinytroupe.personfactory import TinyFactory
+    from tinytroupe.factory import TinyFactory
 
     if self.status == Simulation.STATUS_STOPPED:
         self.status = Simulation.STATUS_STARTED
@@ -1455,7 +1455,7 @@ defaults to the default cache path defined in the class.</dd>
         # local import to avoid circular dependencies
         from tinytroupe.agent import TinyPerson
         from tinytroupe.environment import TinyWorld
-        from tinytroupe.personfactory import TinyFactory
+        from tinytroupe.factory import TinyFactory
 
         self.obj_under_transaction = obj_under_transaction
         self.simulation = simulation
@@ -1560,7 +1560,7 @@ defaults to the default cache path defined in the class.</dd>
         # local import to avoid circular dependencies
         from tinytroupe.agent import TinyPerson
         from tinytroupe.environment import TinyWorld
-        from tinytroupe.personfactory import TinyFactory
+        from tinytroupe.factory import TinyFactory
 
 
         # if the output is a TinyPerson, encode it
@@ -1588,7 +1588,7 @@ defaults to the default cache path defined in the class.</dd>
         # local import to avoid circular dependencies
         from tinytroupe.agent import TinyPerson
         from tinytroupe.environment import TinyWorld
-        from tinytroupe.personfactory import TinyFactory
+        from tinytroupe.factory import TinyFactory
 
         if encoded_output is None:
             return None

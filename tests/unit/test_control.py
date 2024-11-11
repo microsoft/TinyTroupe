@@ -8,12 +8,12 @@ sys.path.append('..')
 
 
 from tinytroupe.examples import create_oscar_the_architect, create_lisa_the_data_scientist
-from tinytroupe.agent import TinyPerson, ToolUse
+from tinytroupe.agent import TinyPerson, TinyToolUse
 from tinytroupe.environment import TinyWorld
 from tinytroupe.control import Simulation
 import tinytroupe.control as control
-from tinytroupe.personfactory import TinyPersonFactory
-from tinytroupe.enrichment import Enricher
+from tinytroupe.factory import TinyPersonFactory
+from tinytroupe.enrichment import TinyEnricher
 from tinytroupe.extraction import ArtifactExporter
 from tinytroupe.tools import TinyWordProcessor
 
@@ -40,8 +40,8 @@ def test_begin_checkpoint_end_with_agent_only(setup):
 
 
     exporter = ArtifactExporter(base_output_folder="./synthetic_data_exports_3/")
-    enricher = Enricher()
-    tooluse_faculty = ToolUse(tools=[TinyWordProcessor(exporter=exporter, enricher=enricher)])
+    enricher = TinyEnricher()
+    tooluse_faculty = TinyToolUse(tools=[TinyWordProcessor(exporter=exporter, enricher=enricher)])
 
     agent_1 = create_oscar_the_architect()
     agent_1.add_mental_faculties([tooluse_faculty])

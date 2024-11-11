@@ -255,28 +255,41 @@ def read_config_file(use_cache=True, verbose=True) -> configparser.ConfigParser:
     else:
         config = configparser.ConfigParser()
 
-        # first, try the directory of the current main program
+        # Read the default values in the module directory.
+        config_file_path = Path(__file__).parent.absolute() / 'config.ini'
+        print(f"Looking for default config on: {config_file_path}") if verbose else None
+        if config_file_path.exists():
+            config.read(config_file_path)
+            _config = config
+        else:
+            raise ValueError(f"Failed to find default config on: {config_file_path}")
+
+        # Now, let's override any specific default value, if there's a custom .ini config. 
+        # Try the directory of the current main program
         config_file_path = Path.cwd() / "config.ini"
         if config_file_path.exists():
-            
-            config.read(config_file_path)
+            print(f"Found custom config on: {config_file_path}") if verbose else None
+            config.read(config_file_path) # this only overrides the values that are present in the custom config
             _config = config
             return config
         else:
             if verbose:
-                print(f"Failed to find custom config on: {config_file_path}")
-                print("Now switching to default config file...")
+                print(f"Failed to find custom config on: {config_file_path}") if verbose else None
+                print("Will use only default values. IF THINGS FAIL, TRY CUSTOMIZING MODEL, API TYPE, etc.") if verbose else None
+        
+        return config
 
-        # if nothing there, use the default one in the module directory
-        config_file_path = Path(__file__).parent.absolute() / 'config.ini'
-        print(f"Looking for config on: {config_file_path}") if verbose else None
-        if config_file_path.exists():
-            config.read(config_file_path)
-            _config = config
-            return config
-        else:
-            raise ValueError("Could not find config.ini file anywhere")
-    
+def pretty_print_config(config):
+    print()
+    print("=================================")
+    print("Current TinyTroupe configuration ")
+    print("=================================")
+    for section in config.sections():
+        print(f"[{section}]")
+        for key, value in config.items(section):
+            print(f"{key} = {value}")
+        print()
+
 def start_logger(config: configparser.ConfigParser):
     # create logger
     logger = logging.getLogger("tinytroupe")

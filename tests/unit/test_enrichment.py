@@ -11,7 +11,7 @@ sys.path.append('..')
 
 from testing_utils import *
 
-from tinytroupe.enrichment import Enricher
+from tinytroupe.enrichment import TinyEnricher
 
 def test_enrich_content():
 
@@ -50,7 +50,7 @@ def test_enrich_content():
     The result **MUST** be at least 3 times larger than the original content in terms of characters - do whatever it takes to make it this long and detailed.
     """).strip()
     
-    result = Enricher().enrich_content(requirements=requirements, 
+    result = TinyEnricher().enrich_content(requirements=requirements, 
                                        content=content_to_enrich, 
                                        content_type="Document", 
                                        context_info="WonderCode was approached by Microsoft to for a partnership.",

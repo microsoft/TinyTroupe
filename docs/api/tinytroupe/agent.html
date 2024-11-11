@@ -1283,9 +1283,9 @@ class TinyPerson(JsonSerializableRegistry):
 # Mental faculties
 #######################################################################################################################
     
-class Faculty(JsonSerializableRegistry):
+class TinyMentalFaculty(JsonSerializableRegistry):
     &#34;&#34;&#34;
-    Represents an optional mental faculty of an agent. Mental faculties are the cognitive abilities that an agent has.
+    Represents a mental faculty of an agent. Mental faculties are the cognitive abilities that an agent has.
     &#34;&#34;&#34;
 
     def __init__(self, name: str, requires_faculties: list=None) -&gt; None:
@@ -1304,10 +1304,10 @@ class Faculty(JsonSerializableRegistry):
             self.requires_faculties = requires_faculties
 
     def __str__(self) -&gt; str:
-        return f&#34;Faculty: {self.name}&#34;
+        return f&#34;Mental Faculty: {self.name}&#34;
     
     def __eq__(self, other):
-        if isinstance(other, Faculty):
+        if isinstance(other, TinyMentalFaculty):
             return self.name == other.name
         return False
     
@@ -1336,7 +1336,7 @@ class Faculty(JsonSerializableRegistry):
         raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)
 
 
-class RecallFaculty(Faculty):
+class RecallFaculty(TinyMentalFaculty):
 
     def __init__(self):
         super().__init__(&#34;Memory Recall&#34;)
@@ -1415,7 +1415,7 @@ class RecallFaculty(Faculty):
         return textwrap.dedent(prompt)
     
 
-class FilesAndWebGroundingFaculty(Faculty):
+class FilesAndWebGroundingFaculty(TinyMentalFaculty):
     &#34;&#34;&#34;
     Allows the agent to access local files and web pages to ground its knowledge.
     &#34;&#34;&#34;
@@ -1492,7 +1492,7 @@ class FilesAndWebGroundingFaculty(Faculty):
 
         return textwrap.dedent(prompt)
     
-class ToolUse(Faculty):
+class TinyToolUse(TinyMentalFaculty):
     &#34;&#34;&#34;
     Allows the agent to use tools to accomplish tasks. Tool usage is one of the most important cognitive skills
     humans and primates have as we know.
@@ -1531,7 +1531,7 @@ class ToolUse(Faculty):
 # Memory mechanisms 
 #######################################################################################################################
 
-class Memory(Faculty):
+class TinyMemory(TinyMentalFaculty):
     &#34;&#34;&#34;
     Base class for different types of memory.
     &#34;&#34;&#34;
@@ -1577,7 +1577,7 @@ class Memory(Faculty):
 
 
 
-class EpisodicMemory(Memory):
+class EpisodicMemory(TinyMemory):
     &#34;&#34;&#34;
     Provides episodic memory capabilities to an agent. Cognitively, episodic memory is the ability to remember specific events,
     or episodes, in the past. This class provides a simple implementation of episodic memory, where the agent can store and retrieve
@@ -1691,7 +1691,7 @@ class EpisodicMemory(Memory):
         return omisssion_info + self.memory[-n:]
 
 
-class SemanticMemory(Memory):
+class SemanticMemory(TinyMemory):
     &#34;&#34;&#34;
     Semantic memory is the memory of meanings, understandings, and other concept-based knowledge unrelated to specific experiences.
     It is not ordered temporally, and it is not about remembering specific events or episodes. This class provides a simple implementation
@@ -1863,7 +1863,7 @@ messages from memory.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class EpisodicMemory(Memory):
+<pre><code class="python">class EpisodicMemory(TinyMemory):
     &#34;&#34;&#34;
     Provides episodic memory capabilities to an agent. Cognitively, episodic memory is the ability to remember specific events,
     or episodes, in the past. This class provides a simple implementation of episodic memory, where the agent can store and retrieve
@@ -1978,8 +1978,8 @@ messages from memory.</p>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="tinytroupe.agent.Memory" href="#tinytroupe.agent.Memory">Memory</a></li>
-<li><a title="tinytroupe.agent.Faculty" href="#tinytroupe.agent.Faculty">Faculty</a></li>
+<li><a title="tinytroupe.agent.TinyMemory" href="#tinytroupe.agent.TinyMemory">TinyMemory</a></li>
+<li><a title="tinytroupe.agent.TinyMentalFaculty" href="#tinytroupe.agent.TinyMentalFaculty">TinyMentalFaculty</a></li>
 <li><a title="tinytroupe.utils.JsonSerializableRegistry" href="utils.html#tinytroupe.utils.JsonSerializableRegistry">JsonSerializableRegistry</a></li>
 </ul>
 <h3>Class variables</h3>
@@ -2046,176 +2046,18 @@ messages from memory.</p>
 </dl>
 <h3>Inherited members</h3>
 <ul class="hlist">
-<li><code><b><a title="tinytroupe.agent.Memory" href="#tinytroupe.agent.Memory">Memory</a></b></code>:
+<li><code><b><a title="tinytroupe.agent.TinyMemory" href="#tinytroupe.agent.TinyMemory">TinyMemory</a></b></code>:
 <ul class="hlist">
-<li><code><a title="tinytroupe.agent.Memory.actions_constraints_prompt" href="#tinytroupe.agent.Faculty.actions_constraints_prompt">actions_constraints_prompt</a></code></li>
-<li><code><a title="tinytroupe.agent.Memory.actions_definitions_prompt" href="#tinytroupe.agent.Faculty.actions_definitions_prompt">actions_definitions_prompt</a></code></li>
-<li><code><a title="tinytroupe.agent.Memory.from_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.from_json">from_json</a></code></li>
-<li><code><a title="tinytroupe.agent.Memory.process_action" href="#tinytroupe.agent.Faculty.process_action">process_action</a></code></li>
-<li><code><a title="tinytroupe.agent.Memory.retrieve" href="#tinytroupe.agent.Memory.retrieve">retrieve</a></code></li>
-<li><code><a title="tinytroupe.agent.Memory.retrieve_all" href="#tinytroupe.agent.Memory.retrieve_all">retrieve_all</a></code></li>
-<li><code><a title="tinytroupe.agent.Memory.retrieve_recent" href="#tinytroupe.agent.Memory.retrieve_recent">retrieve_recent</a></code></li>
-<li><code><a title="tinytroupe.agent.Memory.retrieve_relevant" href="#tinytroupe.agent.Memory.retrieve_relevant">retrieve_relevant</a></code></li>
-<li><code><a title="tinytroupe.agent.Memory.store" href="#tinytroupe.agent.Memory.store">store</a></code></li>
-<li><code><a title="tinytroupe.agent.Memory.to_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.to_json">to_json</a></code></li>
-</ul>
-</li>
-</ul>
-</dd>
-<dt id="tinytroupe.agent.Faculty"><code class="flex name class">
-<span>class <span class="ident">Faculty</span></span>
-<span>(</span><span>name: str, requires_faculties: list = None)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Represents an optional mental faculty of an agent. Mental faculties are the cognitive abilities that an agent has.</p>
-<p>Initializes the mental faculty.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the mental faculty.</dd>
-<dt><strong><code>requires_faculties</code></strong> :&ensp;<code>list</code></dt>
-<dd>A list of mental faculties that this faculty requires to function properly.</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class Faculty(JsonSerializableRegistry):
-    &#34;&#34;&#34;
-    Represents an optional mental faculty of an agent. Mental faculties are the cognitive abilities that an agent has.
-    &#34;&#34;&#34;
-
-    def __init__(self, name: str, requires_faculties: list=None) -&gt; None:
-        &#34;&#34;&#34;
-        Initializes the mental faculty.
-
-        Args:
-            name (str): The name of the mental faculty.
-            requires_faculties (list): A list of mental faculties that this faculty requires to function properly.
-        &#34;&#34;&#34;
-        self.name = name
-        
-        if requires_faculties is None:
-            self.requires_faculties = []
-        else:
-            self.requires_faculties = requires_faculties
-
-    def __str__(self) -&gt; str:
-        return f&#34;Faculty: {self.name}&#34;
-    
-    def __eq__(self, other):
-        if isinstance(other, Faculty):
-            return self.name == other.name
-        return False
-    
-    def process_action(self, agent, action: dict) -&gt; bool:
-        &#34;&#34;&#34;
-        Processes an action related to this faculty.
-
-        Args:
-            action (dict): The action to process.
-        
-        Returns:
-            bool: True if the action was successfully processed, False otherwise.
-        &#34;&#34;&#34;
-        raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)
-    
-    def actions_definitions_prompt(self) -&gt; str:
-        &#34;&#34;&#34;
-        Returns the prompt for defining a actions related to this faculty.
-        &#34;&#34;&#34;
-        raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)
-
-    def actions_constraints_prompt(self) -&gt; str:
-        &#34;&#34;&#34;
-        Returns the prompt for defining constraints on actions related to this faculty.
-        &#34;&#34;&#34;
-        raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)</code></pre>
-</details>
-<h3>Ancestors</h3>
-<ul class="hlist">
-<li><a title="tinytroupe.utils.JsonSerializableRegistry" href="utils.html#tinytroupe.utils.JsonSerializableRegistry">JsonSerializableRegistry</a></li>
-</ul>
-<h3>Subclasses</h3>
-<ul class="hlist">
-<li><a title="tinytroupe.agent.FilesAndWebGroundingFaculty" href="#tinytroupe.agent.FilesAndWebGroundingFaculty">FilesAndWebGroundingFaculty</a></li>
-<li><a title="tinytroupe.agent.Memory" href="#tinytroupe.agent.Memory">Memory</a></li>
-<li><a title="tinytroupe.agent.RecallFaculty" href="#tinytroupe.agent.RecallFaculty">RecallFaculty</a></li>
-<li><a title="tinytroupe.agent.ToolUse" href="#tinytroupe.agent.ToolUse">ToolUse</a></li>
-</ul>
-<h3>Methods</h3>
-<dl>
-<dt id="tinytroupe.agent.Faculty.actions_constraints_prompt"><code class="name flex">
-<span>def <span class="ident">actions_constraints_prompt</span></span>(<span>self) ‑> str</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Returns the prompt for defining constraints on actions related to this faculty.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def actions_constraints_prompt(self) -&gt; str:
-    &#34;&#34;&#34;
-    Returns the prompt for defining constraints on actions related to this faculty.
-    &#34;&#34;&#34;
-    raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)</code></pre>
-</details>
-</dd>
-<dt id="tinytroupe.agent.Faculty.actions_definitions_prompt"><code class="name flex">
-<span>def <span class="ident">actions_definitions_prompt</span></span>(<span>self) ‑> str</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Returns the prompt for defining a actions related to this faculty.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def actions_definitions_prompt(self) -&gt; str:
-    &#34;&#34;&#34;
-    Returns the prompt for defining a actions related to this faculty.
-    &#34;&#34;&#34;
-    raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)</code></pre>
-</details>
-</dd>
-<dt id="tinytroupe.agent.Faculty.process_action"><code class="name flex">
-<span>def <span class="ident">process_action</span></span>(<span>self, agent, action: dict) ‑> bool</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Processes an action related to this faculty.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>action</code></strong> :&ensp;<code>dict</code></dt>
-<dd>The action to process.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>bool</code></dt>
-<dd>True if the action was successfully processed, False otherwise.</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def process_action(self, agent, action: dict) -&gt; bool:
-    &#34;&#34;&#34;
-    Processes an action related to this faculty.
-
-    Args:
-        action (dict): The action to process.
-    
-    Returns:
-        bool: True if the action was successfully processed, False otherwise.
-    &#34;&#34;&#34;
-    raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)</code></pre>
-</details>
-</dd>
-</dl>
-<h3>Inherited members</h3>
-<ul class="hlist">
-<li><code><b><a title="tinytroupe.utils.JsonSerializableRegistry" href="utils.html#tinytroupe.utils.JsonSerializableRegistry">JsonSerializableRegistry</a></b></code>:
-<ul class="hlist">
-<li><code><a title="tinytroupe.utils.JsonSerializableRegistry.from_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.from_json">from_json</a></code></li>
-<li><code><a title="tinytroupe.utils.JsonSerializableRegistry.to_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.to_json">to_json</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMemory.actions_constraints_prompt" href="#tinytroupe.agent.TinyMentalFaculty.actions_constraints_prompt">actions_constraints_prompt</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMemory.actions_definitions_prompt" href="#tinytroupe.agent.TinyMentalFaculty.actions_definitions_prompt">actions_definitions_prompt</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMemory.from_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.from_json">from_json</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMemory.process_action" href="#tinytroupe.agent.TinyMentalFaculty.process_action">process_action</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMemory.retrieve" href="#tinytroupe.agent.TinyMemory.retrieve">retrieve</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMemory.retrieve_all" href="#tinytroupe.agent.TinyMemory.retrieve_all">retrieve_all</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMemory.retrieve_recent" href="#tinytroupe.agent.TinyMemory.retrieve_recent">retrieve_recent</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMemory.retrieve_relevant" href="#tinytroupe.agent.TinyMemory.retrieve_relevant">retrieve_relevant</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMemory.store" href="#tinytroupe.agent.TinyMemory.store">store</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMemory.to_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.to_json">to_json</a></code></li>
 </ul>
 </li>
 </ul>
@@ -2237,7 +2079,7 @@ messages from memory.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class FilesAndWebGroundingFaculty(Faculty):
+<pre><code class="python">class FilesAndWebGroundingFaculty(TinyMentalFaculty):
     &#34;&#34;&#34;
     Allows the agent to access local files and web pages to ground its knowledge.
     &#34;&#34;&#34;
@@ -2316,209 +2158,18 @@ messages from memory.</p>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="tinytroupe.agent.Faculty" href="#tinytroupe.agent.Faculty">Faculty</a></li>
+<li><a title="tinytroupe.agent.TinyMentalFaculty" href="#tinytroupe.agent.TinyMentalFaculty">TinyMentalFaculty</a></li>
 <li><a title="tinytroupe.utils.JsonSerializableRegistry" href="utils.html#tinytroupe.utils.JsonSerializableRegistry">JsonSerializableRegistry</a></li>
 </ul>
 <h3>Inherited members</h3>
 <ul class="hlist">
-<li><code><b><a title="tinytroupe.agent.Faculty" href="#tinytroupe.agent.Faculty">Faculty</a></b></code>:
+<li><code><b><a title="tinytroupe.agent.TinyMentalFaculty" href="#tinytroupe.agent.TinyMentalFaculty">TinyMentalFaculty</a></b></code>:
 <ul class="hlist">
-<li><code><a title="tinytroupe.agent.Faculty.actions_constraints_prompt" href="#tinytroupe.agent.Faculty.actions_constraints_prompt">actions_constraints_prompt</a></code></li>
-<li><code><a title="tinytroupe.agent.Faculty.actions_definitions_prompt" href="#tinytroupe.agent.Faculty.actions_definitions_prompt">actions_definitions_prompt</a></code></li>
-<li><code><a title="tinytroupe.agent.Faculty.from_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.from_json">from_json</a></code></li>
-<li><code><a title="tinytroupe.agent.Faculty.process_action" href="#tinytroupe.agent.Faculty.process_action">process_action</a></code></li>
-<li><code><a title="tinytroupe.agent.Faculty.to_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.to_json">to_json</a></code></li>
-</ul>
-</li>
-</ul>
-</dd>
-<dt id="tinytroupe.agent.Memory"><code class="flex name class">
-<span>class <span class="ident">Memory</span></span>
-<span>(</span><span>name: str, requires_faculties: list = None)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Base class for different types of memory.</p>
-<p>Initializes the mental faculty.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the mental faculty.</dd>
-<dt><strong><code>requires_faculties</code></strong> :&ensp;<code>list</code></dt>
-<dd>A list of mental faculties that this faculty requires to function properly.</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class Memory(Faculty):
-    &#34;&#34;&#34;
-    Base class for different types of memory.
-    &#34;&#34;&#34;
-
-    def store(self, value: Any) -&gt; None:
-        &#34;&#34;&#34;
-        Stores a value in memory.
-        &#34;&#34;&#34;
-        raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)
-
-    def retrieve(self, first_n: int, last_n: int, include_omission_info:bool=True) -&gt; list:
-        &#34;&#34;&#34;
-        Retrieves the first n and/or last n values from memory. If n is None, all values are retrieved.
-
-        Args:
-            first_n (int): The number of first values to retrieve.
-            last_n (int): The number of last values to retrieve.
-            include_omission_info (bool): Whether to include an information message when some values are omitted.
-
-        Returns:
-            list: The retrieved values.
-        
-        &#34;&#34;&#34;
-        raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)
-
-    def retrieve_recent(self) -&gt; list:
-        &#34;&#34;&#34;
-        Retrieves the n most recent values from memory.
-        &#34;&#34;&#34;
-        raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)
-
-    def retrieve_all(self) -&gt; list:
-        &#34;&#34;&#34;
-        Retrieves all values from memory.
-        &#34;&#34;&#34;
-        raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)
-
-    def retrieve_relevant(self, relevance_target:str, top_k=5) -&gt; list:
-        &#34;&#34;&#34;
-        Retrieves all values from memory that are relevant to a given target.
-        &#34;&#34;&#34;
-        raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)</code></pre>
-</details>
-<h3>Ancestors</h3>
-<ul class="hlist">
-<li><a title="tinytroupe.agent.Faculty" href="#tinytroupe.agent.Faculty">Faculty</a></li>
-<li><a title="tinytroupe.utils.JsonSerializableRegistry" href="utils.html#tinytroupe.utils.JsonSerializableRegistry">JsonSerializableRegistry</a></li>
-</ul>
-<h3>Subclasses</h3>
-<ul class="hlist">
-<li><a title="tinytroupe.agent.EpisodicMemory" href="#tinytroupe.agent.EpisodicMemory">EpisodicMemory</a></li>
-<li><a title="tinytroupe.agent.SemanticMemory" href="#tinytroupe.agent.SemanticMemory">SemanticMemory</a></li>
-</ul>
-<h3>Methods</h3>
-<dl>
-<dt id="tinytroupe.agent.Memory.retrieve"><code class="name flex">
-<span>def <span class="ident">retrieve</span></span>(<span>self, first_n: int, last_n: int, include_omission_info: bool = True) ‑> list</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Retrieves the first n and/or last n values from memory. If n is None, all values are retrieved.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>first_n</code></strong> :&ensp;<code>int</code></dt>
-<dd>The number of first values to retrieve.</dd>
-<dt><strong><code>last_n</code></strong> :&ensp;<code>int</code></dt>
-<dd>The number of last values to retrieve.</dd>
-<dt><strong><code>include_omission_info</code></strong> :&ensp;<code>bool</code></dt>
-<dd>Whether to include an information message when some values are omitted.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>list</code></dt>
-<dd>The retrieved values.</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def retrieve(self, first_n: int, last_n: int, include_omission_info:bool=True) -&gt; list:
-    &#34;&#34;&#34;
-    Retrieves the first n and/or last n values from memory. If n is None, all values are retrieved.
-
-    Args:
-        first_n (int): The number of first values to retrieve.
-        last_n (int): The number of last values to retrieve.
-        include_omission_info (bool): Whether to include an information message when some values are omitted.
-
-    Returns:
-        list: The retrieved values.
-    
-    &#34;&#34;&#34;
-    raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)</code></pre>
-</details>
-</dd>
-<dt id="tinytroupe.agent.Memory.retrieve_all"><code class="name flex">
-<span>def <span class="ident">retrieve_all</span></span>(<span>self) ‑> list</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Retrieves all values from memory.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def retrieve_all(self) -&gt; list:
-    &#34;&#34;&#34;
-    Retrieves all values from memory.
-    &#34;&#34;&#34;
-    raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)</code></pre>
-</details>
-</dd>
-<dt id="tinytroupe.agent.Memory.retrieve_recent"><code class="name flex">
-<span>def <span class="ident">retrieve_recent</span></span>(<span>self) ‑> list</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Retrieves the n most recent values from memory.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def retrieve_recent(self) -&gt; list:
-    &#34;&#34;&#34;
-    Retrieves the n most recent values from memory.
-    &#34;&#34;&#34;
-    raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)</code></pre>
-</details>
-</dd>
-<dt id="tinytroupe.agent.Memory.retrieve_relevant"><code class="name flex">
-<span>def <span class="ident">retrieve_relevant</span></span>(<span>self, relevance_target: str, top_k=5) ‑> list</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Retrieves all values from memory that are relevant to a given target.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def retrieve_relevant(self, relevance_target:str, top_k=5) -&gt; list:
-    &#34;&#34;&#34;
-    Retrieves all values from memory that are relevant to a given target.
-    &#34;&#34;&#34;
-    raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)</code></pre>
-</details>
-</dd>
-<dt id="tinytroupe.agent.Memory.store"><code class="name flex">
-<span>def <span class="ident">store</span></span>(<span>self, value: Any) ‑> None</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Stores a value in memory.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def store(self, value: Any) -&gt; None:
-    &#34;&#34;&#34;
-    Stores a value in memory.
-    &#34;&#34;&#34;
-    raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)</code></pre>
-</details>
-</dd>
-</dl>
-<h3>Inherited members</h3>
-<ul class="hlist">
-<li><code><b><a title="tinytroupe.agent.Faculty" href="#tinytroupe.agent.Faculty">Faculty</a></b></code>:
-<ul class="hlist">
-<li><code><a title="tinytroupe.agent.Faculty.actions_constraints_prompt" href="#tinytroupe.agent.Faculty.actions_constraints_prompt">actions_constraints_prompt</a></code></li>
-<li><code><a title="tinytroupe.agent.Faculty.actions_definitions_prompt" href="#tinytroupe.agent.Faculty.actions_definitions_prompt">actions_definitions_prompt</a></code></li>
-<li><code><a title="tinytroupe.agent.Faculty.from_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.from_json">from_json</a></code></li>
-<li><code><a title="tinytroupe.agent.Faculty.process_action" href="#tinytroupe.agent.Faculty.process_action">process_action</a></code></li>
-<li><code><a title="tinytroupe.agent.Faculty.to_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.to_json">to_json</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMentalFaculty.actions_constraints_prompt" href="#tinytroupe.agent.TinyMentalFaculty.actions_constraints_prompt">actions_constraints_prompt</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMentalFaculty.actions_definitions_prompt" href="#tinytroupe.agent.TinyMentalFaculty.actions_definitions_prompt">actions_definitions_prompt</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMentalFaculty.from_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.from_json">from_json</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMentalFaculty.process_action" href="#tinytroupe.agent.TinyMentalFaculty.process_action">process_action</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMentalFaculty.to_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.to_json">to_json</a></code></li>
 </ul>
 </li>
 </ul>
@@ -2527,7 +2178,7 @@ messages from memory.</p>
 <span>class <span class="ident">RecallFaculty</span></span>
 </code></dt>
 <dd>
-<div class="desc"><p>Represents an optional mental faculty of an agent. Mental faculties are the cognitive abilities that an agent has.</p>
+<div class="desc"><p>Represents a mental faculty of an agent. Mental faculties are the cognitive abilities that an agent has.</p>
 <p>Initializes the mental faculty.</p>
 <h2 id="args">Args</h2>
 <dl>
@@ -2540,7 +2191,7 @@ messages from memory.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class RecallFaculty(Faculty):
+<pre><code class="python">class RecallFaculty(TinyMentalFaculty):
 
     def __init__(self):
         super().__init__(&#34;Memory Recall&#34;)
@@ -2620,18 +2271,18 @@ messages from memory.</p>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="tinytroupe.agent.Faculty" href="#tinytroupe.agent.Faculty">Faculty</a></li>
+<li><a title="tinytroupe.agent.TinyMentalFaculty" href="#tinytroupe.agent.TinyMentalFaculty">TinyMentalFaculty</a></li>
 <li><a title="tinytroupe.utils.JsonSerializableRegistry" href="utils.html#tinytroupe.utils.JsonSerializableRegistry">JsonSerializableRegistry</a></li>
 </ul>
 <h3>Inherited members</h3>
 <ul class="hlist">
-<li><code><b><a title="tinytroupe.agent.Faculty" href="#tinytroupe.agent.Faculty">Faculty</a></b></code>:
+<li><code><b><a title="tinytroupe.agent.TinyMentalFaculty" href="#tinytroupe.agent.TinyMentalFaculty">TinyMentalFaculty</a></b></code>:
 <ul class="hlist">
-<li><code><a title="tinytroupe.agent.Faculty.actions_constraints_prompt" href="#tinytroupe.agent.Faculty.actions_constraints_prompt">actions_constraints_prompt</a></code></li>
-<li><code><a title="tinytroupe.agent.Faculty.actions_definitions_prompt" href="#tinytroupe.agent.Faculty.actions_definitions_prompt">actions_definitions_prompt</a></code></li>
-<li><code><a title="tinytroupe.agent.Faculty.from_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.from_json">from_json</a></code></li>
-<li><code><a title="tinytroupe.agent.Faculty.process_action" href="#tinytroupe.agent.Faculty.process_action">process_action</a></code></li>
-<li><code><a title="tinytroupe.agent.Faculty.to_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.to_json">to_json</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMentalFaculty.actions_constraints_prompt" href="#tinytroupe.agent.TinyMentalFaculty.actions_constraints_prompt">actions_constraints_prompt</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMentalFaculty.actions_definitions_prompt" href="#tinytroupe.agent.TinyMentalFaculty.actions_definitions_prompt">actions_definitions_prompt</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMentalFaculty.from_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.from_json">from_json</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMentalFaculty.process_action" href="#tinytroupe.agent.TinyMentalFaculty.process_action">process_action</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMentalFaculty.to_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.to_json">to_json</a></code></li>
 </ul>
 </li>
 </ul>
@@ -2656,7 +2307,7 @@ of semantic memory, where the agent can store and retrieve semantic information.
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class SemanticMemory(Memory):
+<pre><code class="python">class SemanticMemory(TinyMemory):
     &#34;&#34;&#34;
     Semantic memory is the memory of meanings, understandings, and other concept-based knowledge unrelated to specific experiences.
     It is not ordered temporally, and it is not about remembering specific events or episodes. This class provides a simple implementation
@@ -2799,8 +2450,8 @@ of semantic memory, where the agent can store and retrieve semantic information.
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="tinytroupe.agent.Memory" href="#tinytroupe.agent.Memory">Memory</a></li>
-<li><a title="tinytroupe.agent.Faculty" href="#tinytroupe.agent.Faculty">Faculty</a></li>
+<li><a title="tinytroupe.agent.TinyMemory" href="#tinytroupe.agent.TinyMemory">TinyMemory</a></li>
+<li><a title="tinytroupe.agent.TinyMentalFaculty" href="#tinytroupe.agent.TinyMentalFaculty">TinyMentalFaculty</a></li>
 <li><a title="tinytroupe.utils.JsonSerializableRegistry" href="utils.html#tinytroupe.utils.JsonSerializableRegistry">JsonSerializableRegistry</a></li>
 </ul>
 <h3>Class variables</h3>
@@ -2937,18 +2588,367 @@ of semantic memory, where the agent can store and retrieve semantic information.
 </dl>
 <h3>Inherited members</h3>
 <ul class="hlist">
-<li><code><b><a title="tinytroupe.agent.Memory" href="#tinytroupe.agent.Memory">Memory</a></b></code>:
+<li><code><b><a title="tinytroupe.agent.TinyMemory" href="#tinytroupe.agent.TinyMemory">TinyMemory</a></b></code>:
 <ul class="hlist">
-<li><code><a title="tinytroupe.agent.Memory.actions_constraints_prompt" href="#tinytroupe.agent.Faculty.actions_constraints_prompt">actions_constraints_prompt</a></code></li>
-<li><code><a title="tinytroupe.agent.Memory.actions_definitions_prompt" href="#tinytroupe.agent.Faculty.actions_definitions_prompt">actions_definitions_prompt</a></code></li>
-<li><code><a title="tinytroupe.agent.Memory.from_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.from_json">from_json</a></code></li>
-<li><code><a title="tinytroupe.agent.Memory.process_action" href="#tinytroupe.agent.Faculty.process_action">process_action</a></code></li>
-<li><code><a title="tinytroupe.agent.Memory.retrieve" href="#tinytroupe.agent.Memory.retrieve">retrieve</a></code></li>
-<li><code><a title="tinytroupe.agent.Memory.retrieve_all" href="#tinytroupe.agent.Memory.retrieve_all">retrieve_all</a></code></li>
-<li><code><a title="tinytroupe.agent.Memory.retrieve_recent" href="#tinytroupe.agent.Memory.retrieve_recent">retrieve_recent</a></code></li>
-<li><code><a title="tinytroupe.agent.Memory.retrieve_relevant" href="#tinytroupe.agent.Memory.retrieve_relevant">retrieve_relevant</a></code></li>
-<li><code><a title="tinytroupe.agent.Memory.store" href="#tinytroupe.agent.Memory.store">store</a></code></li>
-<li><code><a title="tinytroupe.agent.Memory.to_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.to_json">to_json</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMemory.actions_constraints_prompt" href="#tinytroupe.agent.TinyMentalFaculty.actions_constraints_prompt">actions_constraints_prompt</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMemory.actions_definitions_prompt" href="#tinytroupe.agent.TinyMentalFaculty.actions_definitions_prompt">actions_definitions_prompt</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMemory.from_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.from_json">from_json</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMemory.process_action" href="#tinytroupe.agent.TinyMentalFaculty.process_action">process_action</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMemory.retrieve" href="#tinytroupe.agent.TinyMemory.retrieve">retrieve</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMemory.retrieve_all" href="#tinytroupe.agent.TinyMemory.retrieve_all">retrieve_all</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMemory.retrieve_recent" href="#tinytroupe.agent.TinyMemory.retrieve_recent">retrieve_recent</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMemory.retrieve_relevant" href="#tinytroupe.agent.TinyMemory.retrieve_relevant">retrieve_relevant</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMemory.store" href="#tinytroupe.agent.TinyMemory.store">store</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMemory.to_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.to_json">to_json</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="tinytroupe.agent.TinyMemory"><code class="flex name class">
+<span>class <span class="ident">TinyMemory</span></span>
+<span>(</span><span>name: str, requires_faculties: list = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Base class for different types of memory.</p>
+<p>Initializes the mental faculty.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the mental faculty.</dd>
+<dt><strong><code>requires_faculties</code></strong> :&ensp;<code>list</code></dt>
+<dd>A list of mental faculties that this faculty requires to function properly.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TinyMemory(TinyMentalFaculty):
+    &#34;&#34;&#34;
+    Base class for different types of memory.
+    &#34;&#34;&#34;
+
+    def store(self, value: Any) -&gt; None:
+        &#34;&#34;&#34;
+        Stores a value in memory.
+        &#34;&#34;&#34;
+        raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)
+
+    def retrieve(self, first_n: int, last_n: int, include_omission_info:bool=True) -&gt; list:
+        &#34;&#34;&#34;
+        Retrieves the first n and/or last n values from memory. If n is None, all values are retrieved.
+
+        Args:
+            first_n (int): The number of first values to retrieve.
+            last_n (int): The number of last values to retrieve.
+            include_omission_info (bool): Whether to include an information message when some values are omitted.
+
+        Returns:
+            list: The retrieved values.
+        
+        &#34;&#34;&#34;
+        raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)
+
+    def retrieve_recent(self) -&gt; list:
+        &#34;&#34;&#34;
+        Retrieves the n most recent values from memory.
+        &#34;&#34;&#34;
+        raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)
+
+    def retrieve_all(self) -&gt; list:
+        &#34;&#34;&#34;
+        Retrieves all values from memory.
+        &#34;&#34;&#34;
+        raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)
+
+    def retrieve_relevant(self, relevance_target:str, top_k=5) -&gt; list:
+        &#34;&#34;&#34;
+        Retrieves all values from memory that are relevant to a given target.
+        &#34;&#34;&#34;
+        raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="tinytroupe.agent.TinyMentalFaculty" href="#tinytroupe.agent.TinyMentalFaculty">TinyMentalFaculty</a></li>
+<li><a title="tinytroupe.utils.JsonSerializableRegistry" href="utils.html#tinytroupe.utils.JsonSerializableRegistry">JsonSerializableRegistry</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="tinytroupe.agent.EpisodicMemory" href="#tinytroupe.agent.EpisodicMemory">EpisodicMemory</a></li>
+<li><a title="tinytroupe.agent.SemanticMemory" href="#tinytroupe.agent.SemanticMemory">SemanticMemory</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="tinytroupe.agent.TinyMemory.retrieve"><code class="name flex">
+<span>def <span class="ident">retrieve</span></span>(<span>self, first_n: int, last_n: int, include_omission_info: bool = True) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retrieves the first n and/or last n values from memory. If n is None, all values are retrieved.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>first_n</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of first values to retrieve.</dd>
+<dt><strong><code>last_n</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of last values to retrieve.</dd>
+<dt><strong><code>include_omission_info</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether to include an information message when some values are omitted.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list</code></dt>
+<dd>The retrieved values.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def retrieve(self, first_n: int, last_n: int, include_omission_info:bool=True) -&gt; list:
+    &#34;&#34;&#34;
+    Retrieves the first n and/or last n values from memory. If n is None, all values are retrieved.
+
+    Args:
+        first_n (int): The number of first values to retrieve.
+        last_n (int): The number of last values to retrieve.
+        include_omission_info (bool): Whether to include an information message when some values are omitted.
+
+    Returns:
+        list: The retrieved values.
+    
+    &#34;&#34;&#34;
+    raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.agent.TinyMemory.retrieve_all"><code class="name flex">
+<span>def <span class="ident">retrieve_all</span></span>(<span>self) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retrieves all values from memory.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def retrieve_all(self) -&gt; list:
+    &#34;&#34;&#34;
+    Retrieves all values from memory.
+    &#34;&#34;&#34;
+    raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.agent.TinyMemory.retrieve_recent"><code class="name flex">
+<span>def <span class="ident">retrieve_recent</span></span>(<span>self) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retrieves the n most recent values from memory.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def retrieve_recent(self) -&gt; list:
+    &#34;&#34;&#34;
+    Retrieves the n most recent values from memory.
+    &#34;&#34;&#34;
+    raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.agent.TinyMemory.retrieve_relevant"><code class="name flex">
+<span>def <span class="ident">retrieve_relevant</span></span>(<span>self, relevance_target: str, top_k=5) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retrieves all values from memory that are relevant to a given target.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def retrieve_relevant(self, relevance_target:str, top_k=5) -&gt; list:
+    &#34;&#34;&#34;
+    Retrieves all values from memory that are relevant to a given target.
+    &#34;&#34;&#34;
+    raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.agent.TinyMemory.store"><code class="name flex">
+<span>def <span class="ident">store</span></span>(<span>self, value: Any) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Stores a value in memory.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def store(self, value: Any) -&gt; None:
+    &#34;&#34;&#34;
+    Stores a value in memory.
+    &#34;&#34;&#34;
+    raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="tinytroupe.agent.TinyMentalFaculty" href="#tinytroupe.agent.TinyMentalFaculty">TinyMentalFaculty</a></b></code>:
+<ul class="hlist">
+<li><code><a title="tinytroupe.agent.TinyMentalFaculty.actions_constraints_prompt" href="#tinytroupe.agent.TinyMentalFaculty.actions_constraints_prompt">actions_constraints_prompt</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMentalFaculty.actions_definitions_prompt" href="#tinytroupe.agent.TinyMentalFaculty.actions_definitions_prompt">actions_definitions_prompt</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMentalFaculty.from_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.from_json">from_json</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMentalFaculty.process_action" href="#tinytroupe.agent.TinyMentalFaculty.process_action">process_action</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMentalFaculty.to_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.to_json">to_json</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="tinytroupe.agent.TinyMentalFaculty"><code class="flex name class">
+<span>class <span class="ident">TinyMentalFaculty</span></span>
+<span>(</span><span>name: str, requires_faculties: list = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Represents a mental faculty of an agent. Mental faculties are the cognitive abilities that an agent has.</p>
+<p>Initializes the mental faculty.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the mental faculty.</dd>
+<dt><strong><code>requires_faculties</code></strong> :&ensp;<code>list</code></dt>
+<dd>A list of mental faculties that this faculty requires to function properly.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TinyMentalFaculty(JsonSerializableRegistry):
+    &#34;&#34;&#34;
+    Represents a mental faculty of an agent. Mental faculties are the cognitive abilities that an agent has.
+    &#34;&#34;&#34;
+
+    def __init__(self, name: str, requires_faculties: list=None) -&gt; None:
+        &#34;&#34;&#34;
+        Initializes the mental faculty.
+
+        Args:
+            name (str): The name of the mental faculty.
+            requires_faculties (list): A list of mental faculties that this faculty requires to function properly.
+        &#34;&#34;&#34;
+        self.name = name
+        
+        if requires_faculties is None:
+            self.requires_faculties = []
+        else:
+            self.requires_faculties = requires_faculties
+
+    def __str__(self) -&gt; str:
+        return f&#34;Mental Faculty: {self.name}&#34;
+    
+    def __eq__(self, other):
+        if isinstance(other, TinyMentalFaculty):
+            return self.name == other.name
+        return False
+    
+    def process_action(self, agent, action: dict) -&gt; bool:
+        &#34;&#34;&#34;
+        Processes an action related to this faculty.
+
+        Args:
+            action (dict): The action to process.
+        
+        Returns:
+            bool: True if the action was successfully processed, False otherwise.
+        &#34;&#34;&#34;
+        raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)
+    
+    def actions_definitions_prompt(self) -&gt; str:
+        &#34;&#34;&#34;
+        Returns the prompt for defining a actions related to this faculty.
+        &#34;&#34;&#34;
+        raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)
+
+    def actions_constraints_prompt(self) -&gt; str:
+        &#34;&#34;&#34;
+        Returns the prompt for defining constraints on actions related to this faculty.
+        &#34;&#34;&#34;
+        raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="tinytroupe.utils.JsonSerializableRegistry" href="utils.html#tinytroupe.utils.JsonSerializableRegistry">JsonSerializableRegistry</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="tinytroupe.agent.FilesAndWebGroundingFaculty" href="#tinytroupe.agent.FilesAndWebGroundingFaculty">FilesAndWebGroundingFaculty</a></li>
+<li><a title="tinytroupe.agent.RecallFaculty" href="#tinytroupe.agent.RecallFaculty">RecallFaculty</a></li>
+<li><a title="tinytroupe.agent.TinyMemory" href="#tinytroupe.agent.TinyMemory">TinyMemory</a></li>
+<li><a title="tinytroupe.agent.TinyToolUse" href="#tinytroupe.agent.TinyToolUse">TinyToolUse</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="tinytroupe.agent.TinyMentalFaculty.actions_constraints_prompt"><code class="name flex">
+<span>def <span class="ident">actions_constraints_prompt</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the prompt for defining constraints on actions related to this faculty.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def actions_constraints_prompt(self) -&gt; str:
+    &#34;&#34;&#34;
+    Returns the prompt for defining constraints on actions related to this faculty.
+    &#34;&#34;&#34;
+    raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.agent.TinyMentalFaculty.actions_definitions_prompt"><code class="name flex">
+<span>def <span class="ident">actions_definitions_prompt</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the prompt for defining a actions related to this faculty.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def actions_definitions_prompt(self) -&gt; str:
+    &#34;&#34;&#34;
+    Returns the prompt for defining a actions related to this faculty.
+    &#34;&#34;&#34;
+    raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.agent.TinyMentalFaculty.process_action"><code class="name flex">
+<span>def <span class="ident">process_action</span></span>(<span>self, agent, action: dict) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Processes an action related to this faculty.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>action</code></strong> :&ensp;<code>dict</code></dt>
+<dd>The action to process.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>bool</code></dt>
+<dd>True if the action was successfully processed, False otherwise.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def process_action(self, agent, action: dict) -&gt; bool:
+    &#34;&#34;&#34;
+    Processes an action related to this faculty.
+
+    Args:
+        action (dict): The action to process.
+    
+    Returns:
+        bool: True if the action was successfully processed, False otherwise.
+    &#34;&#34;&#34;
+    raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="tinytroupe.utils.JsonSerializableRegistry" href="utils.html#tinytroupe.utils.JsonSerializableRegistry">JsonSerializableRegistry</a></b></code>:
+<ul class="hlist">
+<li><code><a title="tinytroupe.utils.JsonSerializableRegistry.from_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.from_json">from_json</a></code></li>
+<li><code><a title="tinytroupe.utils.JsonSerializableRegistry.to_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.to_json">to_json</a></code></li>
 </ul>
 </li>
 </ul>
@@ -5245,8 +5245,8 @@ This is meant for serialization and caching purposes, not for exporting the stat
 </li>
 </ul>
 </dd>
-<dt id="tinytroupe.agent.ToolUse"><code class="flex name class">
-<span>class <span class="ident">ToolUse</span></span>
+<dt id="tinytroupe.agent.TinyToolUse"><code class="flex name class">
+<span>class <span class="ident">TinyToolUse</span></span>
 <span>(</span><span>tools: list)</span>
 </code></dt>
 <dd>
@@ -5264,7 +5264,7 @@ humans and primates have as we know.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class ToolUse(Faculty):
+<pre><code class="python">class TinyToolUse(TinyMentalFaculty):
     &#34;&#34;&#34;
     Allows the agent to use tools to accomplish tasks. Tool usage is one of the most important cognitive skills
     humans and primates have as we know.
@@ -5300,18 +5300,18 @@ humans and primates have as we know.</p>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="tinytroupe.agent.Faculty" href="#tinytroupe.agent.Faculty">Faculty</a></li>
+<li><a title="tinytroupe.agent.TinyMentalFaculty" href="#tinytroupe.agent.TinyMentalFaculty">TinyMentalFaculty</a></li>
 <li><a title="tinytroupe.utils.JsonSerializableRegistry" href="utils.html#tinytroupe.utils.JsonSerializableRegistry">JsonSerializableRegistry</a></li>
 </ul>
 <h3>Inherited members</h3>
 <ul class="hlist">
-<li><code><b><a title="tinytroupe.agent.Faculty" href="#tinytroupe.agent.Faculty">Faculty</a></b></code>:
+<li><code><b><a title="tinytroupe.agent.TinyMentalFaculty" href="#tinytroupe.agent.TinyMentalFaculty">TinyMentalFaculty</a></b></code>:
 <ul class="hlist">
-<li><code><a title="tinytroupe.agent.Faculty.actions_constraints_prompt" href="#tinytroupe.agent.Faculty.actions_constraints_prompt">actions_constraints_prompt</a></code></li>
-<li><code><a title="tinytroupe.agent.Faculty.actions_definitions_prompt" href="#tinytroupe.agent.Faculty.actions_definitions_prompt">actions_definitions_prompt</a></code></li>
-<li><code><a title="tinytroupe.agent.Faculty.from_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.from_json">from_json</a></code></li>
-<li><code><a title="tinytroupe.agent.Faculty.process_action" href="#tinytroupe.agent.Faculty.process_action">process_action</a></code></li>
-<li><code><a title="tinytroupe.agent.Faculty.to_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.to_json">to_json</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMentalFaculty.actions_constraints_prompt" href="#tinytroupe.agent.TinyMentalFaculty.actions_constraints_prompt">actions_constraints_prompt</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMentalFaculty.actions_definitions_prompt" href="#tinytroupe.agent.TinyMentalFaculty.actions_definitions_prompt">actions_definitions_prompt</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMentalFaculty.from_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.from_json">from_json</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMentalFaculty.process_action" href="#tinytroupe.agent.TinyMentalFaculty.process_action">process_action</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMentalFaculty.to_json" href="utils.html#tinytroupe.utils.JsonSerializableRegistry.to_json">to_json</a></code></li>
 </ul>
 </li>
 </ul>
@@ -5342,25 +5342,7 @@ humans and primates have as we know.</p>
 </ul>
 </li>
 <li>
-<h4><code><a title="tinytroupe.agent.Faculty" href="#tinytroupe.agent.Faculty">Faculty</a></code></h4>
-<ul class="">
-<li><code><a title="tinytroupe.agent.Faculty.actions_constraints_prompt" href="#tinytroupe.agent.Faculty.actions_constraints_prompt">actions_constraints_prompt</a></code></li>
-<li><code><a title="tinytroupe.agent.Faculty.actions_definitions_prompt" href="#tinytroupe.agent.Faculty.actions_definitions_prompt">actions_definitions_prompt</a></code></li>
-<li><code><a title="tinytroupe.agent.Faculty.process_action" href="#tinytroupe.agent.Faculty.process_action">process_action</a></code></li>
-</ul>
-</li>
-<li>
 <h4><code><a title="tinytroupe.agent.FilesAndWebGroundingFaculty" href="#tinytroupe.agent.FilesAndWebGroundingFaculty">FilesAndWebGroundingFaculty</a></code></h4>
-</li>
-<li>
-<h4><code><a title="tinytroupe.agent.Memory" href="#tinytroupe.agent.Memory">Memory</a></code></h4>
-<ul class="">
-<li><code><a title="tinytroupe.agent.Memory.retrieve" href="#tinytroupe.agent.Memory.retrieve">retrieve</a></code></li>
-<li><code><a title="tinytroupe.agent.Memory.retrieve_all" href="#tinytroupe.agent.Memory.retrieve_all">retrieve_all</a></code></li>
-<li><code><a title="tinytroupe.agent.Memory.retrieve_recent" href="#tinytroupe.agent.Memory.retrieve_recent">retrieve_recent</a></code></li>
-<li><code><a title="tinytroupe.agent.Memory.retrieve_relevant" href="#tinytroupe.agent.Memory.retrieve_relevant">retrieve_relevant</a></code></li>
-<li><code><a title="tinytroupe.agent.Memory.store" href="#tinytroupe.agent.Memory.store">store</a></code></li>
-</ul>
 </li>
 <li>
 <h4><code><a title="tinytroupe.agent.RecallFaculty" href="#tinytroupe.agent.RecallFaculty">RecallFaculty</a></code></h4>
@@ -5375,6 +5357,24 @@ humans and primates have as we know.</p>
 <li><code><a title="tinytroupe.agent.SemanticMemory.list_documents_names" href="#tinytroupe.agent.SemanticMemory.list_documents_names">list_documents_names</a></code></li>
 <li><code><a title="tinytroupe.agent.SemanticMemory.retrieve_document_content_by_name" href="#tinytroupe.agent.SemanticMemory.retrieve_document_content_by_name">retrieve_document_content_by_name</a></code></li>
 <li><code><a title="tinytroupe.agent.SemanticMemory.suppress_attributes_from_serialization" href="#tinytroupe.agent.SemanticMemory.suppress_attributes_from_serialization">suppress_attributes_from_serialization</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="tinytroupe.agent.TinyMemory" href="#tinytroupe.agent.TinyMemory">TinyMemory</a></code></h4>
+<ul class="">
+<li><code><a title="tinytroupe.agent.TinyMemory.retrieve" href="#tinytroupe.agent.TinyMemory.retrieve">retrieve</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMemory.retrieve_all" href="#tinytroupe.agent.TinyMemory.retrieve_all">retrieve_all</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMemory.retrieve_recent" href="#tinytroupe.agent.TinyMemory.retrieve_recent">retrieve_recent</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMemory.retrieve_relevant" href="#tinytroupe.agent.TinyMemory.retrieve_relevant">retrieve_relevant</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMemory.store" href="#tinytroupe.agent.TinyMemory.store">store</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="tinytroupe.agent.TinyMentalFaculty" href="#tinytroupe.agent.TinyMentalFaculty">TinyMentalFaculty</a></code></h4>
+<ul class="">
+<li><code><a title="tinytroupe.agent.TinyMentalFaculty.actions_constraints_prompt" href="#tinytroupe.agent.TinyMentalFaculty.actions_constraints_prompt">actions_constraints_prompt</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMentalFaculty.actions_definitions_prompt" href="#tinytroupe.agent.TinyMentalFaculty.actions_definitions_prompt">actions_definitions_prompt</a></code></li>
+<li><code><a title="tinytroupe.agent.TinyMentalFaculty.process_action" href="#tinytroupe.agent.TinyMentalFaculty.process_action">process_action</a></code></li>
 </ul>
 </li>
 <li>
@@ -5433,7 +5433,7 @@ humans and primates have as we know.</p>
 </ul>
 </li>
 <li>
-<h4><code><a title="tinytroupe.agent.ToolUse" href="#tinytroupe.agent.ToolUse">ToolUse</a></code></h4>
+<h4><code><a title="tinytroupe.agent.TinyToolUse" href="#tinytroupe.agent.TinyToolUse">TinyToolUse</a></code></h4>
 </li>
 </ul>
 </li>
