@@ -198,10 +198,10 @@ A `TinyPerson` is a simulated person with specific personality traits, interests
 
 Each such agent contains a lot of unique details, which is the source of its realistic behavior. This, however, means that it takes significant effort to specify an agent manually. Hence, for convenience, `TinyTroupe` provide some easier ways to get started or generate new agents.
 
-To begin with, `tinytroupe.examples` contains some pre-defined agents that you can use. For example, `tinytroupe.examples.lisa` contains a `TinyPerson` that represents a data scientist. You can use it as follows:
+To begin with, `tinytroupe.examples` contains some pre-defined agent builders that you can use. For example, `tinytroupe.examples.create_lisa_the_data_scientist` creates a `TinyPerson` that represents a data scientist called Lisa. You can use it as follows:
 
 ```python
-from tinytroupe.examples import lisa
+from tinytroupe.examples import create_lisa_the_data_scientist
 
 lisa = create_lisa_the_data_scientist() # instantiate a Lisa from the example builder
 lisa.listen_and_act("Tell me about your life.")
@@ -237,8 +237,8 @@ lisa.define_several("personality_traits",
 ```python
 from tinytroupe.factory import TinyPersonFactory
 
-factory = TinyPersonFactory("Create a Brazilian person that is a doctor, like pets and the nature and love heavy metal.")
-person = factory.generate_person()
+factory = TinyPersonFactory("A hospital in São Paulo.")
+person = factory.generate_person("Create a Brazilian person that is a doctor, like pets and the nature and love heavy metal.")
 ```
 
 ### TinyWorld

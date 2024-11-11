@@ -30,7 +30,7 @@ def test_notebook_execution(notebook_path):
     """Execute a Jupyter notebook and assert that no exceptions occur."""
     with open(notebook_path, "r", encoding="utf-8") as nb_file:
         notebook = nbformat.read(nb_file, as_version=4)
-        print(f"Executing notebook: {notebook_path} with kernl: {KERNEL_NAME}")
+        print(f"Executing notebook: {notebook_path} with kernel: {KERNEL_NAME}")
         ep = ExecutePreprocessor(timeout=TIMEOUT, kernel_name=KERNEL_NAME)
 
         try:
