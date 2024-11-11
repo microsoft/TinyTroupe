@@ -117,28 +117,23 @@ To run the library, you need:
       conda activate tinytroupe
       ```
 4. Make sure you have eihter Azure OpenAI or OpenAI API keys set as environment variables, as described in the [Pre-requisites](#pre-requisites) section.
-5. Install the library **from this repository, not PyPI**: 
+5. Clone the repository, as we'll perform a local install (we **will not install from PyPI**):
+    ```bash
+    git clone https://github.com/microsoft/tinytroupe
+    cd tinytroupe
+    ```
+  
+6. Install the library **from this repository, not PyPI**: 
       ```bash   
-      pip install git+https://github.com/microsoft/tinytroupe.git
+      pip install .
       ```
-6. You can now use TinyTroupe to create your simulations 🥳. If you want to run the examples in the 
+7. You can now run the examples in the [examples/](./examples/) folder or use TinyTroupe to create your simulations 🥳. If you want to run the examples in the 
    [examples/](./examples/) folder or modify TinyTroupe itself, however, you should clone the repository as described below.
 
 
-### Cloning the repository: examples and local development
+### Local development
 
-If you want to run the examples in the [examples/](./examples/) folder, you can simply clone the repository and run the examples directly from there:
-```bash
-git clone https://github.com/microsoft/tinytroupe
-cd tinytroupe
-```
-
-Further, if you want to modify TinyTroupe itself, you can install it from the local clone:
-```bash
-pip install .
-```
-
-or, in editable mode (i.e., changes to the code will be reflected immediately):
+If you want to modify TinyTroupe itself, you can install it in editable mode (i.e., changes to the code will be reflected immediately):
 ```bash
 pip install -e .
 ```
