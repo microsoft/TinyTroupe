@@ -4,6 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
 packages = ["tinytroupe"]
+include-package-data = true
 
 [project]
 name = "tinytroupe"
