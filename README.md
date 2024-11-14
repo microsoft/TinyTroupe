@@ -116,7 +116,7 @@ To run the library, you need:
       ```bash
       conda activate tinytroupe
       ```
-4. Make sure you have eihter Azure OpenAI or OpenAI API keys set as environment variables, as described in the [Pre-requisites](#pre-requisites) section.
+4. Make sure you have either Azure OpenAI or OpenAI API keys set as environment variables, as described in the [Pre-requisites](#pre-requisites) section.
 5. Clone the repository, as we'll perform a local install (we **will not install from PyPI**):
     ```bash
     git clone https://github.com/microsoft/tinytroupe
