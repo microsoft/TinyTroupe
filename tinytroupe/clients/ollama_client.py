@@ -51,13 +51,17 @@ class OllamaClient:
         chat_api_params = {
             "model": model,
             "messages": current_messages,
-            "temperature": temperature,
-            "top_p": top_p,
-            "frequency_penalty": frequency_penalty,
-            "presence_penalty": presence_penalty,
-            "stop": stop,
+            "options":{
+                "temperature": temperature,
+                "top_p": top_p,
+                "frequency_penalty": frequency_penalty,
+                "presence_penalty": presence_penalty,
+                "stop": stop,
+            },
+           
             "stream": False,
             "n": n
+            
         }
 
         i = 0
