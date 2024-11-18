@@ -3,7 +3,7 @@ import json
 import chevron
 import logging
 
-from tinytroupe import openai_utils
+from tinytroupe.clients import client
 from tinytroupe.agent import TinyPerson
 from tinytroupe import config
 import tinytroupe.utils as utils
@@ -66,7 +66,7 @@ class TinyPersonValidator:
         current_messages.append({"role": "system", "content": system_prompt})
         current_messages.append({"role": "user", "content": user_prompt})
 
-        message = openai_utils.client().send_message(current_messages)
+        message = client().send_message(current_messages)
 
         # What string to look for to terminate the conversation
         termination_mark = "```json"
@@ -84,7 +84,7 @@ class TinyPersonValidator:
 
             # Appending the responses to the current conversation and checking the next message
             current_messages.append({"role": "user", "content": responses})
-            message = openai_utils.client().send_message(current_messages)
+            message = client().send_message(current_messages)
 
         if message is not None:
             json_content = utils.extract_json(message['content'])

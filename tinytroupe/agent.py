@@ -64,7 +64,7 @@ Settings.embed_model = llmaindex_openai_embed_model
 ###############################################################################
 
 
-from tinytroupe import openai_utils
+from tinytroupe.clients import client
 from tinytroupe.utils import name_or_empty, break_text_at_length, repeat_on_error
 
 
@@ -743,9 +743,10 @@ class TinyPerson(JsonSerializableRegistry):
         logger.debug(f"[{self.name}] Sending messages to OpenAI API")
         logger.debug(f"[{self.name}] Last interaction: {messages[-1]}")
 
-        next_message = openai_utils.client().send_message(messages)
+        next_message = client().send_message(messages)
 
         logger.debug(f"[{self.name}] Received message: {next_message}")
+        
 
         return next_message["role"], utils.extract_json(next_message["content"])
 

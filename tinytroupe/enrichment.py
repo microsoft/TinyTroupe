@@ -11,7 +11,7 @@ from tinytroupe.factory import TinyPersonFactory
 from tinytroupe.utils import JsonSerializableRegistry
 
 
-from tinytroupe import openai_utils
+from tinytroupe.clients import client
 import tinytroupe.utils as utils
 
 class TinyEnricher(JsonSerializableRegistry):
@@ -30,7 +30,7 @@ class TinyEnricher(JsonSerializableRegistry):
                              "context_cache": context_cache}
 
         messages = utils.compose_initial_LLM_messages_with_templates("enricher.system.mustache", "enricher.user.mustache", rendering_configs)
-        next_message = openai_utils.client().send_message(messages, temperature=0.4)
+        next_message = client().send_message(messages, temperature=0.4)
         
         debug_msg = f"Enrichment result message: {next_message}"
         logger.debug(debug_msg)

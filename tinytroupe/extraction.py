@@ -26,7 +26,7 @@ from tinytroupe.factory import TinyPersonFactory
 from tinytroupe.utils import JsonSerializableRegistry
 
 
-from tinytroupe import openai_utils
+from tinytroupe.clients import client
 import tinytroupe.utils as utils
 
 class ResultsExtractor:
@@ -94,7 +94,7 @@ performed.
 """
         messages.append({"role": "user", "content": extraction_request_prompt})
 
-        next_message = openai_utils.client().send_message(messages, temperature=0.0)
+        next_message = client().send_message(messages, temperature=0.0)
         
         debug_msg = f"Extraction raw result message: {next_message}"
         logger.debug(debug_msg)
@@ -167,7 +167,7 @@ Each interaction history includes stimuli the corresponding agent received as we
 """
         messages.append({"role": "user", "content": extraction_request_prompt})
 
-        next_message = openai_utils.client().send_message(messages, temperature=0.0)
+        next_message = client().send_message(messages, temperature=0.0)
         
         debug_msg = f"Extraction raw result message: {next_message}"
         logger.debug(debug_msg)
@@ -431,7 +431,7 @@ class Normalizer:
                              "elements": self.elements}
 
         messages = utils.compose_initial_LLM_messages_with_templates("normalizer.system.mustache", "normalizer.user.mustache", rendering_configs)
-        next_message = openai_utils.client().send_message(messages, temperature=0.1)
+        next_message = client().send_message(messages, temperature=0.1)
         
         debug_msg = f"Normalization result message: {next_message}"
         logger.debug(debug_msg)
@@ -484,7 +484,7 @@ class Normalizer:
                                     "elements": elements_to_normalize}
             
             messages = utils.compose_initial_LLM_messages_with_templates("normalizer.applier.system.mustache", "normalizer.applier.user.mustache", rendering_configs)
-            next_message = openai_utils.client().send_message(messages, temperature=0.1)
+            next_message = client().send_message(messages, temperature=0.1)
             
             debug_msg = f"Normalization result message: {next_message}"
             logger.debug(debug_msg)
