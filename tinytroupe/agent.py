@@ -44,11 +44,17 @@ config = utils.read_config_file()
 default = {}
 default["embedding_model"] = config["OpenAI"].get("EMBEDDING_MODEL", "text-embedding-3-small")
 default["max_content_display_length"] = config["OpenAI"].getint("MAX_CONTENT_DISPLAY_LENGTH", 1024)
+if config["OpenAI"].get("API_TYPE") == "azure":
+    default["embedding_model_api_version"] = config["OpenAI"].get("EMBEDDING_MODEL_API_VERSION", "2023-05-15")
 
 
 ## LLaMa-Index configs ########################################################
 #from llama_index.embeddings.huggingface import HuggingFaceEmbedding
-from llama_index.embeddings.openai import OpenAIEmbedding
+if config["OpenAI"].get("API_TYPE") == "azure":
+    from llama_index.embeddings.azure_openai import AzureOpenAIEmbedding
+else:
+    from llama_index.embeddings.openai import OpenAIEmbedding
+
 from llama_index.core import Settings, VectorStoreIndex, SimpleDirectoryReader
 from llama_index.readers.web import SimpleWebPageReader
 
@@ -59,7 +65,13 @@ from llama_index.readers.web import SimpleWebPageReader
 ##    model_name="BAAI/bge-small-en-v1.5"
 ##)
 
-llmaindex_openai_embed_model = OpenAIEmbedding(model=default["embedding_model"], embed_batch_size=10)
+if config["OpenAI"].get("API_TYPE") == "azure":
+    llmaindex_openai_embed_model = AzureOpenAIEmbedding(model=default["embedding_model"],
+                                                        deployment_name=default["embedding_model"],
+                                                        api_version=default["embedding_model_api_version"],
+                                                        embed_batch_size=10)
+else:
+    llmaindex_openai_embed_model = OpenAIEmbedding(model=default["embedding_model"], embed_batch_size=10)
 Settings.embed_model = llmaindex_openai_embed_model
 ###############################################################################
 
