@@ -1398,7 +1398,7 @@ class FilesAndWebGroundingFaculty(TinyMentalFaculty):
             return True
         
         elif action['type'] == "LIST_DOCUMENTS" and action['content'] is not None:
-            documents_names = self.semantic_memory.list_documents_names()
+            documents_names = agent.semantic_memory.list_documents_names()
 
             if len(documents_names) > 0:
                 agent.think(f"I have the following documents available to me: {documents_names}")
