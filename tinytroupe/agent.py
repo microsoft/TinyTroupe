@@ -458,7 +458,8 @@ class TinyPerson(JsonSerializableRegistry):
 
         # Aux function to perform exactly one action.
         # Occasionally, the model will return JSON missing important keys, so we just ask it to try again
-        @repeat_on_error(retries=5, exceptions=[KeyError])
+        # Sometimes `content` contains EpisodicMemory's MEMORY_BLOCK_OMISSION_INFO message, which raises a TypeError on line 443
+        @repeat_on_error(retries=5, exceptions=[KeyError, TypeError])
         def aux_act_once():
             role, content = self._produce_message()
 
