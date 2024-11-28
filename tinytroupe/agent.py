@@ -45,7 +45,7 @@ default = {}
 default["embedding_model"] = config["OpenAI"].get("EMBEDDING_MODEL", "text-embedding-3-small")
 default["max_content_display_length"] = config["OpenAI"].getint("MAX_CONTENT_DISPLAY_LENGTH", 1024)
 if config["OpenAI"].get("API_TYPE") == "azure":
-    default["embedding_model_api_version"] = config["OpenAI"].get("EMBEDDING_MODEL_API_VERSION", "2023-05-15")
+    default["azure_embedding_model_api_version"] = config["OpenAI"].get("AZURE_EMBEDDING_MODEL_API_VERSION", "2023-05-15")
 
 
 ## LLaMa-Index configs ########################################################
@@ -68,7 +68,7 @@ from llama_index.readers.web import SimpleWebPageReader
 if config["OpenAI"].get("API_TYPE") == "azure":
     llmaindex_openai_embed_model = AzureOpenAIEmbedding(model=default["embedding_model"],
                                                         deployment_name=default["embedding_model"],
-                                                        api_version=default["embedding_model_api_version"],
+                                                        api_version=default["azure_embedding_model_api_version"],
                                                         embed_batch_size=10)
 else:
     llmaindex_openai_embed_model = OpenAIEmbedding(model=default["embedding_model"], embed_batch_size=10)
