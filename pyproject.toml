@@ -37,3 +37,27 @@ dependencies = [
 [project.urls]
 "Homepage" = "https://github.com/microsoft/tinytroupe"
 
+[tool.poetry]
+name = "tinytroupe"
+version = "0.3.0"
+description = "LLM-based people simulation for design, validation and insight generation in business."
+authors = ["Paulo Salem <paulo.salem@microsoft.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pandas = "^2.2.3"
+pytest = "^8.3.3"
+openai = "^1.54.4"
+tiktoken = "^0.8.0"
+msal = "^1.31.0"
+rich = "^13.9.4"
+requests = "^2.32.3"
+chevron = "^0.14.0"
+llama-index = "^0.11.23"
+llama-index-embeddings-huggingface = "^0.3.1"
+llama-index-readers-web = "^0.2.4"
+pypandoc = "^1.14"
+docx = "^0.2.4"
+markdown = "^3.7"
+jupyter = "^1.1.1"
+ipykernel = "^6.29.5"
