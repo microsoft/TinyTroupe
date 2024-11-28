@@ -68,13 +68,14 @@ from llama_index.readers.web import SimpleWebPageReader
 ##)
 
 if config["OpenAI"].get("API_TYPE") == "azure":
-    llmaindex_openai_embed_model = AzureOpenAIEmbedding(model=default["embedding_model"],
+    llamaindex_openai_embed_model = AzureOpenAIEmbedding(model=default["embedding_model"],
                                                         deployment_name=default["embedding_model"],
                                                         api_version=default["azure_embedding_model_api_version"],
                                                         embed_batch_size=10)
 else:
-    llmaindex_openai_embed_model = OpenAIEmbedding(model=default["embedding_model"], embed_batch_size=10)
-Settings.embed_model = llmaindex_openai_embed_model
+    llamaindex_openai_embed_model = OpenAIEmbedding(model=default["embedding_model"], embed_batch_size=10)
+Settings.embed_model = llamaindex_openai_embed_model
+
 ###############################################################################
 
 
