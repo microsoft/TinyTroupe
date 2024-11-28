@@ -85,6 +85,7 @@ def test_repeat_on_error():
         decorated_function()
     assert dummy_function.call_count == 1
 
+
 # TODO
 #def test_json_serializer():
     

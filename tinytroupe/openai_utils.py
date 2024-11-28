@@ -8,6 +8,7 @@ import logging
 import configparser
 import tiktoken
 from tinytroupe import utils
+from tinytroupe.control import transactional
 
 logger = logging.getLogger("tinytroupe")
 
@@ -18,16 +19,16 @@ config = utils.read_config_file()
 # Default parameter values
 ###########################################################################
 default = {}
-default["model"] = config["OpenAI"].get("MODEL", "gpt-4")
+default["model"] = config["OpenAI"].get("MODEL", "gpt-4o")
 default["max_tokens"] = int(config["OpenAI"].get("MAX_TOKENS", "1024"))
-default["temperature"] = float(config["OpenAI"].get("TEMPERATURE", "0.3"))
+default["temperature"] = float(config["OpenAI"].get("TEMPERATURE", "1.0"))
 default["top_p"] = int(config["OpenAI"].get("TOP_P", "0"))
 default["frequency_penalty"] = float(config["OpenAI"].get("FREQ_PENALTY", "0.0"))
 default["presence_penalty"] = float(
     config["OpenAI"].get("PRESENCE_PENALTY", "0.0"))
 default["timeout"] = float(config["OpenAI"].get("TIMEOUT", "30.0"))
 default["max_attempts"] = float(config["OpenAI"].get("MAX_ATTEMPTS", "0.0"))
-default["waiting_time"] = float(config["OpenAI"].get("WAITING_TIME", "0.5"))
+default["waiting_time"] = float(config["OpenAI"].get("WAITING_TIME", "1"))
 default["exponential_backoff_factor"] = float(config["OpenAI"].get("EXPONENTIAL_BACKOFF_FACTOR", "5"))
 
 default["embedding_model"] = config["OpenAI"].get("EMBEDDING_MODEL", "text-embedding-3-small")
@@ -39,26 +40,48 @@ default["cache_file_name"] = config["OpenAI"].get("CACHE_FILE_NAME", "openai_api
 # Model calling helpers
 ###########################################################################
 
-# TODO under development
-class LLMCall:
+class LLMRequest:
     """
     A class that represents an LLM model call. It contains the input messages, the model configuration, and the model output.
     """
-    def __init__(self, system_template_name:str, user_template_name:str=None, **model_params):
+    def __init__(self, system_template_name:str=None, system_prompt:str=None, 
+                 user_template_name:str=None, user_prompt:str=None, **model_params):
         """
-        Initializes an LLMCall instance with the specified system and user templates.
+        Initializes an LLMCall instance with the specified system and user templates, or the system and user prompts.
+        If a template is specified, the corresponding prompt must be None, and vice versa.
         """
+        if (system_template_name is not None and system_prompt is not None) or \
+        (user_template_name is not None and user_prompt is not None) or\
+        (system_template_name is None and system_prompt is None) or \
+        (user_template_name is None and user_prompt is None):
+            raise ValueError("Either the template or the prompt must be specified, but not both.") 
+        
         self.system_template_name = system_template_name
+        self.system_prompt = system_prompt
         self.user_template_name = user_template_name
+        self.user_prompt = user_prompt
+
         self.model_params = model_params
-    
+        self.model_output = None
+
+        self.messages = []
+
     def call(self, **rendering_configs):
         """
         Calls the LLM model with the specified rendering configurations.
-        """
-        self.messages = utils.compose_initial_LLM_messages_with_templates(self.system_template_name, self.user_template_name, rendering_configs)
-        
 
+        Args:
+            rendering_configs: The rendering configurations (template variables) to use when composing the initial messages.
+        
+        Returns:
+            The content of the model response.
+        """
+        if self.system_template_name is not None and self.user_template_name is not None:
+            self.messages = utils.compose_initial_LLM_messages_with_templates(self.system_template_name, self.user_template_name, rendering_configs)
+        else:
+            self.messages = [{"role": "system", "content": self.system_prompt}, 
+                             {"role": "user", "content": self.user_prompt}]
+        
         # call the LLM model
         self.model_output = client().send_message(self.messages, **self.model_params)
 
@@ -70,7 +93,7 @@ class LLMCall:
 
 
     def __repr__(self):
-        return f"LLMCall(messages={self.messages}, model_config={self.model_config}, model_output={self.model_output})"
+        return f"LLMRequest(messages={self.messages}, model_params={self.model_params}, model_output={self.model_output})"
 
 
 ###########################################################################
@@ -122,6 +145,7 @@ class OpenAIClient:
                      waiting_time=default["waiting_time"],
                      exponential_backoff_factor=default["exponential_backoff_factor"],
                      n = 1,
+                     response_format=None,
                      echo=False):
         """
         Sends a message to the OpenAI API and returns the response.
@@ -137,6 +161,10 @@ class OpenAIClient:
         stop (str): A string that, if encountered in the generated response, will cause the generation to stop.
         max_attempts (int): The maximum number of attempts to make before giving up on generating a response.
         timeout (int): The maximum number of seconds to wait for a response from the API.
+        waiting_time (int): The number of seconds to wait between requests.
+        exponential_backoff_factor (int): The factor by which to increase the waiting time between requests.
+        n (int): The number of completions to generate.
+        response_format (str): The format of the response. If None, the response is returned as a dictionary.
 
         Returns:
         A dictionary representing the generated response.
@@ -144,18 +172,23 @@ class OpenAIClient:
 
         def aux_exponential_backoff():
             nonlocal waiting_time
+
+            # in case waiting time was initially set to 0
+            if waiting_time <= 0:
+                waiting_time = 2
+
             logger.info(f"Request failed. Waiting {waiting_time} seconds between requests...")
             time.sleep(waiting_time)
 
             # exponential backoff
             waiting_time = waiting_time * exponential_backoff_factor
-        
 
         # setup the OpenAI configurations for this client.
         self._setup_from_config()
         
         # We need to adapt the parameters to the API type, so we create a dictionary with them first
         chat_api_params = {
+            "model": model,
             "messages": current_messages,
             "temperature": temperature,
             "max_tokens":max_tokens,
@@ -168,6 +201,8 @@ class OpenAIClient:
             "n": n,
         }
 
+        if response_format is not None:
+            chat_api_params["response_format"] = response_format
 
         i = 0
         while i < max_attempts:
@@ -189,8 +224,9 @@ class OpenAIClient:
                 if self.cache_api_calls and (cache_key in self.api_cache):
                     response = self.api_cache[cache_key]
                 else:
-                    logger.info(f"Waiting {waiting_time} seconds before next API request (to avoid throttling)...")
-                    time.sleep(waiting_time)
+                    if waiting_time > 0:
+                        logger.info(f"Waiting {waiting_time} seconds before next API request (to avoid throttling)...")
+                        time.sleep(waiting_time)
                     
                     response = self._raw_model_call(model, chat_api_params)
                     if self.cache_api_calls:
@@ -201,7 +237,7 @@ class OpenAIClient:
                 logger.debug(f"Got response from API: {response}")
                 end_time = time.monotonic()
                 logger.debug(
-                    f"Got response in {end_time - start_time:.2f} seconds after {i + 1} attempts.")
+                    f"Got response in {end_time - start_time:.2f} seconds after {i} attempts.")
 
                 return utils.sanitize_dict(self._raw_model_response_extractor(response))
 
@@ -238,12 +274,21 @@ class OpenAIClient:
         """
         Calls the OpenAI API with the given parameters. Subclasses should
         override this method to implement their own API calls.
-        """
-        
-        chat_api_params["model"] = model # OpenAI API uses this parameter name
-        return self.client.chat.completions.create(
+        """   
+
+        if "response_format" in chat_api_params:
+            # to enforce the response format, we need to use a different method
+
+            del chat_api_params["stream"]
+
+            return self.client.beta.chat.completions.parse(
                     **chat_api_params
                 )
+        
+        else:
+            return self.client.chat.completions.create(
+                        **chat_api_params
+                    )
 
     def _raw_model_response_extractor(self, response):
         """
@@ -369,17 +414,10 @@ class AzureClient(OpenAIClient):
                                   api_version = config["OpenAI"]["AZURE_API_VERSION"],
                                   api_key = os.getenv("AZURE_OPENAI_KEY"))
     
-    def _raw_model_call(self, model, chat_api_params):
-        """
-        Calls the Azue OpenAI Service API with the given parameters.
-        """
-        chat_api_params["model"] = model 
 
-        return self.client.chat.completions.create(
-                    **chat_api_params
-                )
-
-
+###########################################################################
+# Exceptions
+###########################################################################
 class InvalidRequestError(Exception):
     """
     Exception raised when the request to the OpenAI API is invalid.
@@ -463,22 +501,6 @@ def force_api_cache(cache_api_calls, cache_file_name=default["cache_file_name"])
     # set the cache parameters on all clients
     for client in _api_type_to_client.values():
         client.set_api_cache(cache_api_calls, cache_file_name)
-
-def force_default_value(key, value):
-    """
-    Forces the use of the given default configuration value for the specified key, thus overriding any other configuration.
-
-    Args:
-    key (str): The key to override.
-    value: The value to use for the key.
-    """
-    global default
-
-    # check if the key actually exists
-    if key in default:
-        default[key] = value
-    else:
-        raise ValueError(f"Key {key} is not a valid configuration key.")
 
 # default client
 register_client("openai", OpenAIClient())

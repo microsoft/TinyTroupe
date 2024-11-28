@@ -52,6 +52,9 @@ class Simulation:
             self.cached_trace = []
         else:
             self.cached_trace = cached_trace
+        
+        self.cache_misses = 0
+        self.cache_hits = 0
 
         # Execution chain mechanism.
         #
@@ -69,6 +72,9 @@ class Simulation:
                     defaults to the default cache path defined in the class.
             auto_checkpoint (bool, optional): Whether to automatically checkpoint at the end of each transaction. Defaults to False.
         """
+
+        logger.debug(f"Starting simulation, cache_path={cache_path}, auto_checkpoint={auto_checkpoint}.")
+
         # local import to avoid circular dependencies
         from tinytroupe.agent import TinyPerson
         from tinytroupe.environment import TinyWorld
@@ -101,6 +107,7 @@ class Simulation:
         """
         Marks the end of the simulation being controlled.
         """
+        logger.debug("Ending simulation.")
         if self.status == Simulation.STATUS_STARTED:
             self.status = Simulation.STATUS_STOPPED
             self.checkpoint()
@@ -111,6 +118,7 @@ class Simulation:
         """
         Saves current simulation trace to a file.
         """
+        logger.debug("Checkpointing simulation state.")
         # save the cache file
         if self.has_unsaved_cache_changes:
             self._save_cache_file(self.cache_path)
@@ -432,6 +440,8 @@ class Transaction:
 
             # Check if the event hash is in the cache
             if self.simulation._is_transaction_event_cached(event_hash):
+                self.simulation.cache_hits += 1
+
                 # Restore the full state and return the cached output
                 logger.info(f"Skipping execution of {self.function_name} with args {self.args} and kwargs {self.kwargs} because it is already cached.")
 
@@ -446,6 +456,7 @@ class Transaction:
                 output = self._decode_function_output(encoded_output)
 
             else: # not cached
+                self.simulation.cache_misses += 1
                 
                 # reentrant transactions are not cached, since what matters is the final result of
                 # the top-level transaction
@@ -617,5 +628,17 @@ def current_simulation():
         return _simulation(_current_simulation_id)
     else:
         return None
+
+def cache_hits(id="default"):
+    """
+    Returns the number of cache hits.
+    """
+    return _simulation(id).cache_hits
+
+def cache_misses(id="default"):
+    """
+    Returns the number of cache misses.
+    """
+    return _simulation(id).cache_misses
     
 reset() # initialize the control state

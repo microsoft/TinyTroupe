@@ -15,7 +15,7 @@ default_max_content_display_length = config["OpenAI"].getint("MAX_CONTENT_DISPLA
 class TinyPersonValidator:
 
     @staticmethod
-    def validate_person(person, expectations=None, include_agent_spec=True, max_content_length=default_max_content_display_length):
+    def validate_person(person, expectations=None, include_agent_spec=True, max_content_length=default_max_content_display_length) -> tuple[float, str]:
         """
         Validate a TinyPerson instance using OpenAI's LLM.
 
@@ -26,7 +26,7 @@ class TinyPersonValidator:
         Args:
             person (TinyPerson): The TinyPerson instance to be validated.
             expectations (str, optional): The expectations to be used in the validation process. Defaults to None.
-            include_agent_spec (bool, optional): Whether to include the agent specification in the prompt. Defaults to True.
+            include_agent_spec (bool, optional): Whether to include the agent specification in the prompt. Defaults to False.
             max_content_length (int, optional): The maximum length of the content to be displayed when rendering the conversation.
 
         Returns:
@@ -53,7 +53,7 @@ class TinyPersonValidator:
         """)
 
         if include_agent_spec:
-            user_prompt += f"\n\n{person.generate_agent_specification()}"
+            user_prompt += f"\n\n{person.generate_agent_system_prompt()}"
         else:
             user_prompt += f"\n\nMini-biography of the person being interviewed: {person.minibio()}"
 
