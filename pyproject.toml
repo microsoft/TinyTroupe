@@ -8,7 +8,7 @@ include-package-data = true
 
 [project]
 name = "tinytroupe"
-version = "0.3.0"
+version = "0.3.1"
 authors = [
   { name="Paulo Salem", email="paulo.salem@microsoft.com" }
 ]
@@ -30,7 +30,8 @@ dependencies = [
     "rich", "requests", "chevron",
     "llama-index", "llama-index-embeddings-huggingface", "llama-index-readers-web",
     "pypandoc", "docx", "markdown",
-    "jupyter"
+    "jupyter",
+    "pydantic"
 ]
 
 [project.urls]

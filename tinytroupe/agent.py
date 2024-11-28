@@ -20,6 +20,7 @@ import ast
 import textwrap  # to dedent strings
 import datetime  # to get current datetime
 import chevron  # to parse Mustache templates
+from pydantic import BaseModel
 import logging
 logger = logging.getLogger("tinytroupe")
 import tinytroupe.utils as utils
@@ -30,7 +31,7 @@ from rich import print
 import copy
 from tinytroupe.utils import JsonSerializableRegistry
 
-from typing import Any, TypeVar, Union
+from typing import Any, Callable, TypeVar, Union
 
 Self = TypeVar("Self", bound="TinyPerson")
 AgentOrWorld = Union[Self, "TinyWorld"]
@@ -49,7 +50,7 @@ default["max_content_display_length"] = config["OpenAI"].getint("MAX_CONTENT_DIS
 ## LLaMa-Index configs ########################################################
 #from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.embeddings.openai import OpenAIEmbedding
-from llama_index.core import Settings, VectorStoreIndex, SimpleDirectoryReader
+from llama_index.core import Settings, VectorStoreIndex, SimpleDirectoryReader, Document
 from llama_index.readers.web import SimpleWebPageReader
 
 
@@ -188,8 +189,12 @@ class TinyPerson(JsonSerializableRegistry):
                 "current_attention": None,
                 "current_goals": [],
                 "current_emotions": "Currently you feel calm and friendly.",
+                "current_memory_context": None,
                 "currently_accessible_agents": [],  # [{"agent": agent_1, "relation": "My friend"}, {"agent": agent_2, "relation": "My colleague"}, ...]
             }
+        
+        if not hasattr(self, '_extended_agent_summary'):
+            self._extended_agent_summary = None
 
         self._prompt_template_path = os.path.join(
             os.path.dirname(__file__), "prompts/tinyperson.mustache"
@@ -238,7 +243,7 @@ class TinyPerson(JsonSerializableRegistry):
         self._configuration["name"] = self.name
 
 
-    def generate_agent_prompt(self):
+    def generate_agent_system_prompt(self):
         with open(self._prompt_template_path, "r") as f:
             agent_prompt_template = f.read()
 
@@ -252,9 +257,10 @@ class TinyPerson(JsonSerializableRegistry):
             actions_definitions_prompt += f"{faculty.actions_definitions_prompt()}\n"
             actions_constraints_prompt += f"{faculty.actions_constraints_prompt()}\n"
         
-        # make the additional prompt pieces available to the template
-        template_variables['actions_definitions_prompt'] = textwrap.indent(actions_definitions_prompt, "")
-        template_variables['actions_constraints_prompt'] = textwrap.indent(actions_constraints_prompt, "")
+        # Make the additional prompt pieces available to the template. 
+        # Identation here is to align with the text structure in the template.
+        template_variables['actions_definitions_prompt'] = textwrap.indent(actions_definitions_prompt.strip(), "  ")
+        template_variables['actions_constraints_prompt'] = textwrap.indent(actions_constraints_prompt.strip(), "  ")
 
         # RAI prompt components, if requested
         template_variables = utils.add_rai_template_variables_if_enabled(template_variables)
@@ -264,7 +270,7 @@ class TinyPerson(JsonSerializableRegistry):
     def reset_prompt(self):
 
         # render the template with the current configuration
-        self._init_system_message = self.generate_agent_prompt()
+        self._init_system_message = self.generate_agent_system_prompt()
 
         # TODO actually, figure out another way to update agent state without "changing history"
 
@@ -274,7 +280,15 @@ class TinyPerson(JsonSerializableRegistry):
         ]
 
         # sets up the actual interaction messages to use for prompting
-        self.current_messages += self.episodic_memory.retrieve_recent()
+        self.current_messages += self.retrieve_recent_memories()
+
+        # add a final user message, which is neither stimuli or action, to instigate the agent to act properly
+        self.current_messages.append({"role": "user", 
+                                      "content": "Now you **must** generate a sequence of actions following your interaction directives, " +\
+                                                 "and complying with **all** instructions and contraints related to the action you use." +\
+                                                 "DO NOT repeat the exact same action more than once in a row!" +\
+                                                 "These actions **MUST** be rendered following the JSON specification perfectly, including all required keys (even if their value is empty), **ALWAYS**."
+                                     })
 
     def get(self, key):
         """
@@ -420,23 +434,33 @@ class TinyPerson(JsonSerializableRegistry):
 
         contents = []
 
+        # A separate function to run before each action, which is not meant to be repeated in case of errors.
+        def aux_pre_act():
+            # TODO maybe we don't need this at all anymore?
+            #
+            # A quick thought before the action. This seems to help with better model responses, perhaps because
+            # it interleaves user with assistant messages.
+            pass # self.think("I will now think, reflect and act a bit, and then issue DONE.")        
+
         # Aux function to perform exactly one action.
         # Occasionally, the model will return JSON missing important keys, so we just ask it to try again
         @repeat_on_error(retries=5, exceptions=[KeyError])
         def aux_act_once():
-            # A quick thought before the action. This seems to help with better model responses, perhaps because
-            # it interleaves user with assistant messages.
-            self.think("I will now act a bit, and then issue DONE.")
-
-          
             role, content = self._produce_message()
-
-            self.episodic_memory.store({'role': role, 'content': content, 'simulation_timestamp': self.iso_datetime()})
 
             cognitive_state = content["cognitive_state"]
 
 
             action = content['action']
+            logger.debug(f"{self.name}'s action: {action}")
+
+            goals = cognitive_state['goals']
+            attention = cognitive_state['attention']
+            emotions = cognitive_state['emotions']
+
+            self.store_in_memory({'role': role, 'content': content, 
+                                  'type': 'action', 
+                                  'simulation_timestamp': self.iso_datetime()})
 
             self._actions_buffer.append(action)
             self._update_cognitive_state(goals=cognitive_state['goals'],
@@ -461,6 +485,7 @@ class TinyPerson(JsonSerializableRegistry):
         ##### Option 1: run N actions ######
         if n is not None:
             for i in range(n):
+                aux_pre_act()
                 aux_act_once()
 
         ##### Option 2: run until DONE ######
@@ -480,6 +505,7 @@ class TinyPerson(JsonSerializableRegistry):
                         logger.warning(f"[{self.name}] Agent {self.name} is acting in a loop. This may be a bug. Let's stop it here anyway.")
                         break
 
+                aux_pre_act()
                 aux_act_once()
 
         if return_actions:
@@ -593,7 +619,9 @@ class TinyPerson(JsonSerializableRegistry):
         # whatever comes from the outside will be interpreted as coming from 'user', simply because
         # this is the counterpart of 'assistant'
 
-        self.episodic_memory.store({'role': 'user', 'content': content, 'simulation_timestamp': self.iso_datetime()})
+        self.store_in_memory({'role': 'user', 'content': content, 
+                              'type': 'stimulus',
+                              'simulation_timestamp': self.iso_datetime()})
 
         if TinyPerson.communication_display:
             self._display_communication(
@@ -660,6 +688,14 @@ class TinyPerson(JsonSerializableRegistry):
 
         self.semantic_memory.add_documents_path(documents_path)
     
+    def read_document_from_file(self, file_path:str):
+        """
+        Reads a document from a file and loads it into the semantic memory.
+        """
+        logger.info(f"Reading document from file: {file_path}")
+
+        self.semantic_memory.add_document_path(file_path)
+    
     def read_documents_from_web(self, web_urls:list):
         """
         Reads documents from web URLs and loads them into the semantic memory.
@@ -667,6 +703,14 @@ class TinyPerson(JsonSerializableRegistry):
         logger.info(f"Reading documents from the following web URLs: {web_urls}")
 
         self.semantic_memory.add_web_urls(web_urls)
+    
+    def read_document_from_web(self, web_url:str):
+        """
+        Reads a document from a web URL and loads it into the semantic memory.
+        """
+        logger.info(f"Reading document from web URL: {web_url}")
+
+        self.semantic_memory.add_web_url(web_url)
     
     @transactional
     def move_to(self, location, context=[]):
@@ -743,7 +787,7 @@ class TinyPerson(JsonSerializableRegistry):
         logger.debug(f"[{self.name}] Sending messages to OpenAI API")
         logger.debug(f"[{self.name}] Last interaction: {messages[-1]}")
 
-        next_message = openai_utils.client().send_message(messages)
+        next_message = openai_utils.client().send_message(messages, response_format=CognitiveActionModel)
 
         logger.debug(f"[{self.name}] Received message: {next_message}")
 
@@ -779,8 +823,70 @@ class TinyPerson(JsonSerializableRegistry):
         # update current emotions
         if emotions is not None:
             self._configuration["current_emotions"] = emotions
+        
+        # update relevant memories for the current situation
+        current_memory_context = self.retrieve_relevant_memories_for_current_context()
+        self._configuration["current_memory_context"] = current_memory_context
 
         self.reset_prompt()
+        
+
+    ###########################################################
+    # Memory management
+    ###########################################################
+    def store_in_memory(self, value: Any) -> list:
+        # TODO find another smarter way to abstract episodic information into semantic memory
+        # self.semantic_memory.store(value)
+
+        self.episodic_memory.store(value)
+
+    def optimize_memory(self):
+        pass #TODO
+
+    def retrieve_memories(self, first_n: int, last_n: int, include_omission_info:bool=True, max_content_length:int=None) -> list:
+        episodes = self.episodic_memory.retrieve(first_n=first_n, last_n=last_n, include_omission_info=include_omission_info)
+
+        if max_content_length is not None:
+            episodes = utils.truncate_actions_or_stimuli(episodes, max_content_length)
+
+        return episodes
+
+
+    def retrieve_recent_memories(self, max_content_length:int=None) -> list:
+        episodes = self.episodic_memory.retrieve_recent()
+
+        if max_content_length is not None:
+            episodes = utils.truncate_actions_or_stimuli(episodes, max_content_length)
+
+        return episodes
+
+    def retrieve_relevant_memories(self, relevance_target:str, top_k=20) -> list:
+        relevant = self.semantic_memory.retrieve_relevant(relevance_target, top_k=top_k)
+
+        return relevant
+
+    def retrieve_relevant_memories_for_current_context(self, top_k=7) -> list:
+        # current context is composed of th recent memories, plus context, goals, attention, and emotions
+        context = self._configuration["current_context"]
+        goals = self._configuration["current_goals"]
+        attention = self._configuration["current_attention"]
+        emotions = self._configuration["current_emotions"]
+        recent_memories = "\n".join([f"  - {m['content']}"  for m in self.retrieve_memories(first_n=0, last_n=10, max_content_length=100)])
+
+        # put everything together in a nice markdown string to fetch relevant memories
+        target = f"""
+        Current Context: {context}
+        Current Goals: {goals}
+        Current Attention: {attention}
+        Current Emotions: {emotions}
+        Recent Memories:
+        {recent_memories}
+        """
+
+        logger.debug(f"Retrieving relevant memories for contextual target: {target}")
+
+        return self.retrieve_relevant_memories(target, top_k=top_k)
+
 
     ###########################################################
     # Inspection conveniences
@@ -803,6 +909,9 @@ class TinyPerson(JsonSerializableRegistry):
                 simplified=simplified,
                 max_content_length=max_content_length,
             )
+            source = content["stimuli"][0]["source"]
+            target = self.name
+            
         elif kind == "action":
             rendering = self._pretty_action(
                 role=role,
@@ -810,6 +919,9 @@ class TinyPerson(JsonSerializableRegistry):
                 simplified=simplified,
                 max_content_length=max_content_length,
             )
+            source = self.name
+            target = content["action"]["target"]
+
         else:
             raise ValueError(f"Unknown communication kind: {kind}")
 
@@ -818,16 +930,16 @@ class TinyPerson(JsonSerializableRegistry):
         # the communication is displayed in the correct order, since environments control the flow of their underlying
         # agents.
         if self.environment is None:
-            self._push_and_display_latest_communication(rendering)
+            self._push_and_display_latest_communication({"kind": kind, "rendering":rendering, "content": content, "source":source, "target": target})
         else:
-            self.environment._push_and_display_latest_communication(rendering)
+            self.environment._push_and_display_latest_communication({"kind": kind, "rendering":rendering, "content": content, "source":source, "target": target})
 
-    def _push_and_display_latest_communication(self, rendering):
+    def _push_and_display_latest_communication(self, communication):
         """
         Pushes the latest communications to the agent's buffer.
         """
-        self._displayed_communications_buffer.append(rendering)
-        print(rendering)
+        self._displayed_communications_buffer.append(communication)
+        print(communication["rendering"])
 
     def pop_and_display_latest_communications(self):
         """
@@ -891,11 +1003,43 @@ class TinyPerson(JsonSerializableRegistry):
     def __repr__(self):
         return f"TinyPerson(name='{self.name}')"
 
-    def minibio(self):
+    @transactional
+    def minibio(self, extended=True):
         """
         Returns a mini-biography of the TinyPerson.
+
+        Args:
+            extended (bool): Whether to include extended information or not.
+
+        Returns:
+            str: The mini-biography.
         """
-        return f"{self.name} is a {self._configuration['age']} year old {self._configuration['occupation']}, {self._configuration['nationality']}, currently living in {self._configuration['country_of_residence']}."
+
+        base_biography = f"{self.name} is a {self._configuration['age']} year old {self._configuration['occupation']}, {self._configuration['nationality']}, currently living in {self._configuration['country_of_residence']}."
+
+        if self._extended_agent_summary is None and extended:
+            logger.debug(f"Generating extended agent summary for {self.name}.")
+            self._extended_agent_summary = openai_utils.LLMRequest(
+                                                system_prompt="""
+                                                You are given a short biography of an agent, as well as a detailed specification of his or her other characteristics
+                                                You must then produce a short paragraph (3 or 4 sentences) that **complements** the short biography, adding details about
+                                                personality, interests, opinions, skills, etc. Do not repeat the information already given in the short biography.
+                                                repeating the information already given. The paragraph should be coherent, consistent and comprehensive. All information
+                                                must be grounded on the specification, **do not** create anything new.
+                                                """, 
+
+                                                user_prompt=f"""
+                                                **Short biography:** {base_biography}
+
+                                                **Detailed specification:** {self._configuration}
+                                                """).call()
+
+        if extended:
+            biography = f"{base_biography} {self._extended_agent_summary}"
+        else:
+            biography = base_biography
+
+        return biography
 
     def pp_current_interactions(
         self,
@@ -1001,13 +1145,8 @@ class TinyPerson(JsonSerializableRegistry):
                 #
                 # Using rich for formatting. Let's make things as readable as possible!
                 #
-                if msg_simplified_type == "CONVERSATION":
-                    rich_style = "bold italic cyan1"
-                elif msg_simplified_type == "THOUGHT":
-                    rich_style = "dim italic cyan1"
-                else:
-                    rich_style = "italic"
 
+                rich_style = utils.RichTextStyle.get_style_for("stimulus", msg_simplified_type)
                 lines.append(
                     f"[{rich_style}][underline]{msg_simplified_actor}[/] --> [{rich_style}][underline]{self.name}[/]: [{msg_simplified_type}] \n{msg_simplified_content}[/]"
                 )
@@ -1044,16 +1183,9 @@ class TinyPerson(JsonSerializableRegistry):
             #
             # Using rich for formatting. Let's make things as readable as possible!
             #
-            if msg_simplified_type == "DONE":
-                rich_style = "grey82"
-            elif msg_simplified_type == "TALK":
-                rich_style = "bold green3"
-            elif msg_simplified_type == "THINK":
-                rich_style = "green"
-            else:
-                rich_style = "purple"
-
+            rich_style = utils.RichTextStyle.get_style_for("action", msg_simplified_type)
             return f"[{rich_style}][underline]{msg_simplified_actor}[/] acts: [{msg_simplified_type}] \n{msg_simplified_content}[/]"
+        
         else:
             return f"{role}: {content}"
     
@@ -1229,6 +1361,13 @@ class TinyPerson(JsonSerializableRegistry):
             return TinyPerson.all_agents[name]
         else:
             return None
+    
+    @staticmethod
+    def all_agents_names():
+        """
+        Returns the names of all agents.
+        """
+        return list(TinyPerson.all_agents.keys())
 
     @staticmethod
     def clear_agents():
@@ -1238,6 +1377,22 @@ class TinyPerson(JsonSerializableRegistry):
         TinyPerson.all_agents = {}        
 
 
+###########################################################################
+# Data structures to enforce output format during LLM API call.
+###########################################################################
+class Action(BaseModel):
+    type: str
+    content: str
+    target: str
+
+class CognitiveState(BaseModel):
+    goals: str
+    attention: str
+    emotions: str
+
+class CognitiveActionModel(BaseModel):
+    action: Action
+    cognitive_state: CognitiveState
 
 #######################################################################################################################
 # Mental faculties
@@ -1296,6 +1451,90 @@ class TinyMentalFaculty(JsonSerializableRegistry):
         raise NotImplementedError("Subclasses must implement this method.")
 
 
+class CustomMentalFaculty(TinyMentalFaculty):
+    """
+    Represents a custom mental faculty of an agent. Custom mental faculties are the cognitive abilities that an agent has
+    and that are defined by the user just by specifying the actions that the faculty can perform or the constraints that
+    the faculty introduces. Constraints might be related to the actions that the faculty can perform or be independent,
+    more general constraints that the agent must follow.
+    """
+
+    def __init__(self, name: str, requires_faculties: list = None,
+                 actions_configs: dict = None, constraints: dict = None):
+        """
+        Initializes the custom mental faculty.
+
+        Args:
+            name (str): The name of the mental faculty.
+            requires_faculties (list): A list of mental faculties that this faculty requires to function properly. 
+              Format is ["faculty1", "faculty2", ...]
+            actions_configs (dict): A dictionary with the configuration of actions that this faculty can perform.
+              Format is {<action_name>: {"description": <description>, "function": <function>}}
+            constraints (dict): A list with the constraints introduced by this faculty.
+              Format is [<constraint1>, <constraint2>, ...]
+        """
+
+        super().__init__(name, requires_faculties)
+
+        # {<action_name>: {"description": <description>, "function": <function>}}
+        if actions_configs is None:
+            self.actions_configs = {}
+        else:
+            self.actions_configs = actions_configs
+        
+        # [<constraint1>, <constraint2>, ...]
+        if constraints is None:
+            self.constraints = {}
+        else:
+            self.constraints = constraints
+    
+    def add_action(self, action_name: str, description: str, function: Callable=None):
+        self.actions_configs[action_name] = {"description": description, "function": function}
+
+    def add_actions(self, actions: dict):
+        for action_name, action_config in actions.items():
+            self.add_action(action_name, action_config['description'], action_config['function'])
+    
+    def add_action_constraint(self, constraint: str):
+        self.constraints.append(constraint)
+    
+    def add_actions_constraints(self, constraints: list):
+        for constraint in constraints:
+            self.add_action_constraint(constraint)
+
+    def process_action(self, agent, action: dict) -> bool:
+        logger.debug(f"Processing action: {action}")
+
+        action_type = action['type']
+        if action_type in self.actions_configs:
+            action_config = self.actions_configs[action_type]
+            action_function = action_config.get("function", None)
+
+            if action_function is not None:
+                action_function(agent, action)
+            
+            # one way or another, the action was processed
+            return True 
+        
+        else:
+            return False
+    
+    def actions_definitions_prompt(self) -> str:
+        prompt = ""
+        for action_name, action_config in self.actions_configs.items():
+            prompt += f"  - {action_name.upper()}: {action_config['description']}\n"
+        
+        return prompt
+
+    def actions_constraints_prompt(self) -> str:
+        prompt = ""
+        for constraint in self.constraints:
+            prompt += f"  - {constraint}\n"
+        
+        return prompt
+
+
+
 class RecallFaculty(TinyMentalFaculty):
 
     def __init__(self):
@@ -1303,10 +1542,14 @@ class RecallFaculty(TinyMentalFaculty):
         
 
     def process_action(self, agent, action: dict) -> bool:
+        logger.debug(f"Processing action: {action}")
+
         if action['type'] == "RECALL" and action['content'] is not None:
             content = action['content']
 
-            semantic_memories = agent.semantic_memory.retrieve_relevant(relevance_target=content)
+            semantic_memories = agent.retrieve_relevant_memories(relevance_target=content)
+
+            logger.info(f"Recalling information related to '{content}'. Found {len(semantic_memories)} relevant memories.")
 
             if len(semantic_memories) > 0:
                 # a string with each element in the list in a new line starting with a bullet point
@@ -1331,6 +1574,7 @@ class RecallFaculty(TinyMentalFaculty):
     def actions_constraints_prompt(self) -> str:
         prompt = \
           """
+            - Before concluding you don't know something or don't have access to some information, you **must** try to RECALL it from your memory.
             - You try to RECALL information from your semantic/factual memory, so that you can have more relevant elements to think and talk about, whenever such an action would be likely
                 to enrich the current interaction. To do so, you must specify able "mental query" that is related to the things you've been thinking, listening and talking about.
                 Example:
@@ -1496,11 +1740,24 @@ class TinyMemory(TinyMentalFaculty):
     Base class for different types of memory.
     """
 
-    def store(self, value: Any) -> None:
+    def _preprocess_value_for_storage(self, value: Any) -> Any:
+        """
+        Preprocesses a value before storing it in memory.
+        """
+        # by default, we don't preprocess the value
+        return value
+
+    def _store(self, value: Any) -> None:
         """
         Stores a value in memory.
         """
         raise NotImplementedError("Subclasses must implement this method.")
+    
+    def store(self, value: dict) -> None:
+        """
+        Stores a value in memory.
+        """
+        self._store(self._preprocess_value_for_storage(value))
 
     def retrieve(self, first_n: int, last_n: int, include_omission_info:bool=True) -> list:
         """
@@ -1529,7 +1786,7 @@ class TinyMemory(TinyMentalFaculty):
         """
         raise NotImplementedError("Subclasses must implement this method.")
 
-    def retrieve_relevant(self, relevance_target:str, top_k=5) -> list:
+    def retrieve_relevant(self, relevance_target:str, top_k=20) -> list:
         """
         Retrieves all values from memory that are relevant to a given target.
         """
@@ -1563,7 +1820,7 @@ class EpisodicMemory(TinyMemory):
 
         self.memory = []
 
-    def store(self, value: Any) -> None:
+    def _store(self, value: Any) -> None:
         """
         Stores a value in memory.
         """
@@ -1627,11 +1884,10 @@ class EpisodicMemory(TinyMemory):
         """
         return copy.copy(self.memory)
 
-    def retrieve_relevant(self, relevance_target: str) -> list:
+    def retrieve_relevant(self, relevance_target: str, top_k:int) -> list:
         """
-        Retrieves all values from memory that are relevant to a given target.
+        Retrieves top-k values from memory that are most relevant to a given target.
         """
-        # TODO
         raise NotImplementedError("Subclasses must implement this method.")
 
     def retrieve_first(self, n: int, include_omission_info:bool=True) -> list:
@@ -1674,24 +1930,47 @@ class SemanticMemory(TinyMemory):
         
         if web_urls is not None:
             self.add_web_urls(web_urls)
+        
+    def _preprocess_value_for_storage(self, value: dict) -> Any:
+        engram = None 
+
+        if value['type'] == 'action':
+            engram = f"# Fact\n" +\
+                     f"I have performed the following action at date and time {value['simulation_timestamp']}:\n\n"+\
+                     f" {value['content']}"
+        
+        elif value['type'] == 'stimulus':
+            engram = f"# Stimulus\n" +\
+                     f"I have received the following stimulus at date and time {value['simulation_timestamp']}:\n\n"+\
+                     f" {value['content']}"
+
+        # else: # Anything else here?
+
+        return engram
+
+    def _store(self, value: Any) -> None:
+        engram_doc = Document(text=str(value))
+        self._add_document(engram_doc)
     
-    def retrieve_relevant(self, relevance_target:str, top_k=5) -> list:
+    def retrieve_relevant(self, relevance_target:str, top_k=20) -> list:
         """
         Retrieves all values from memory that are relevant to a given target.
         """
         if self.index is not None:
             retriever = self.index.as_retriever(similarity_top_k=top_k)
-            nodes = retriever.retrieve("Microsoft's recent major investments")
+            nodes = retriever.retrieve(relevance_target)
         else:
             nodes = []
 
         retrieved = []
         for node in nodes:
-            content = "SOURCE: " + node.metadata['file_name']
+            content = "SOURCE: " + node.metadata.get('file_name', '(unknown)')
             content += "\n" + "SIMILARITY SCORE:" + str(node.score)
             content += "\n" + "RELEVANT CONTENT:" + node.text
             retrieved.append(content)
-        
+
+            logger.debug(f"Semantic memory retrieved: {content[:200]}")
+
         return retrieved
     
     def retrieve_document_content_by_name(self, document_name:str) -> str:
@@ -1725,7 +2004,13 @@ class SemanticMemory(TinyMemory):
 
         if documents_paths is not None:
             for documents_path in documents_paths:
-                self.add_documents_path(documents_path)
+                try:
+                    self.add_documents_path(documents_path)
+                except (FileNotFoundError, ValueError) as e:
+                    print(f"Error: {e}")
+                    print(f"Current working directory: {os.getcwd()}")
+                    print(f"Provided path: {documents_path}")
+                    print("Please check if the path exists and is accessible.")
 
     def add_documents_path(self, documents_path:str) -> None:
         """
@@ -1736,6 +2021,15 @@ class SemanticMemory(TinyMemory):
             self.documents_paths.append(documents_path)
             new_documents = SimpleDirectoryReader(documents_path).load_data()
             self._add_documents(new_documents, lambda doc: doc.metadata["file_name"])
+    
+    def add_document_path(self, document_path:str) -> None:
+        """
+        Adds a path to a document used for semantic memory.
+        """
+        new_documents = SimpleDirectoryReader(input_files=[document_path]).load_data()
+        logger.debug(f"Adding the following document to semantic memory: {new_documents}")
+        self._add_documents(new_documents, lambda doc: doc.metadata["file_name"])
+        
     
     def add_web_urls(self, web_urls:list) -> None:
         """ 
@@ -1756,7 +2050,13 @@ class SemanticMemory(TinyMemory):
         # to implement this one in terms of the other
         self.add_web_urls([web_url])
 
-    def _add_documents(self, new_documents, doc_to_name_func) -> list:
+    def _add_document(self, document, doc_to_name_func=None) -> None:
+        """
+        Adds a document to the semantic memory.
+        """
+        self._add_documents([document], doc_to_name_func)
+
+    def _add_documents(self, new_documents, doc_to_name_func=None) -> list:
         """
         Adds documents to the semantic memory.
         """
@@ -1771,15 +2071,15 @@ class SemanticMemory(TinyMemory):
                 # out of an abundance of caution, we sanitize the text
                 document.text = utils.sanitize_raw_string(document.text)
 
-                name = doc_to_name_func(document)
-                self.filename_to_document[name] = document
+                if doc_to_name_func is not None:
+                    name = doc_to_name_func(document)
+                    self.filename_to_document[name] = document
 
             # index documents for semantic retrieval
             if self.index is None:
                 self.index = VectorStoreIndex.from_documents(self.documents)
             else:
                 self.index.refresh(self.documents)
-
 
 
     ###########################################################
@@ -1789,5 +2089,6 @@ class SemanticMemory(TinyMemory):
     def _post_deserialization_init(self):
         super()._post_deserialization_init()
     
+        self.index = None
         self.add_documents_paths(self.documents_paths)
         self.add_web_urls(self.documents_web_urls)

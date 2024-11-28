@@ -102,6 +102,8 @@ def test_begin_checkpoint_end_with_factory(setup):
     # erase the file if it exists
     remove_file_if_exists("control_test_personfactory.cache.json")
 
+    control.reset()
+
     def aux_simulation_to_repeat(iteration, verbose=False):
         control.reset()
     
@@ -134,11 +136,15 @@ def test_begin_checkpoint_end_with_factory(setup):
 
         return agent
 
+    assert control.cache_misses() == 0, "There should be no cache misses in this test."
+    assert control.cache_hits() == 0, "There should be no cache hits here"
 
     # FIRST simulation ########################################################
     agent_1 = aux_simulation_to_repeat(1, verbose=True)
     age_1 = agent_1.get("age")
     nationality_1 = agent_1.get("nationality")
+    minibio_1 = agent_1.minibio()
+    print("minibio_1 =", minibio_1)
 
 
     # SECOND simulation ########################################################
@@ -146,6 +152,25 @@ def test_begin_checkpoint_end_with_factory(setup):
     agent_2 = aux_simulation_to_repeat(2, verbose=True)
     age_2 = agent_2.get("age")
     nationality_2 = agent_2.get("nationality")
+    minibio_2 = agent_2.minibio()
+    print("minibio_2 =", minibio_2)
+
+    assert control.cache_misses() == 0, "There should be no cache misses in this test."
+    assert control.cache_hits() > 0, "There should be cache hits here."
 
     assert age_1 == age_2, "The age should be the same in both simulations."
     assert nationality_1 == nationality_2, "The nationality should be the same in both simulations."
+    assert minibio_1 == minibio_2, "The minibio should be the same in both simulations."
+
+    #
+    # let's also check the contents of the cache file, as raw text, not dict
+    #
+    with open("control_test_personfactory.cache.json", "r") as f:
+        cache_contents = f.read()
+
+    assert "'_aux_model_call'" in cache_contents, "The cache file should contain the '_aux_model_call' call."
+    assert "'_setup_agent'" in cache_contents, "The cache file should contain the '_setup_agent' call."
+    assert "'define'" not in cache_contents, "The cache file should not contain the 'define' methods, as these are reentrant."
+    assert "'define_several'" not in cache_contents, "The cache file should not contain the 'define_several' methods, as these are reentrant."
+
+        

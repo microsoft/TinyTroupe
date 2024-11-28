@@ -10,6 +10,8 @@ import textwrap
 import logging
 import chevron
 import copy
+from functools import wraps
+from collections import defaultdict
 from typing import Collection
 from datetime import datetime
 from pathlib import Path
@@ -69,6 +71,9 @@ def extract_json(text: str) -> dict:
         # remove invalid escape sequences, which show up sometimes
         # replace \' with just '
         text =  re.sub("\\'", "'", text) #re.sub(r'\\\'', r"'", text)
+
+        # remove new lines, tabs, etc.
+        text = text.replace("\n", "").replace("\t", "").replace("\r", "")
 
         # return the parsed JSON object
         return json.loads(text)
@@ -240,6 +245,79 @@ def dedent(text: str) -> str:
     Dedents the specified text, removing any leading whitespace and identation.
     """
     return textwrap.dedent(text).strip()
+
+class RichTextStyle:
+    STIMULUS_CONVERSATION_STYLE = "bold italic cyan1"
+    STIMULUS_THOUGHT_STYLE = "dim italic cyan1"
+    STIMULUS_DEFAULT_STYLE = "italic"
+    ACTION_DONE_STYLE = "grey82"
+    ACTION_TALK_STYLE = "bold green3"
+    ACTION_THINK_STYLE = "green"
+    ACTION_DEFAULT_STYLE = "purple"
+
+    @classmethod
+    def get_style_for(cls, kind:str, event_type:str):
+        if kind == "stimulus" or kind=="stimuli":
+            if event_type == "CONVERSATION":
+                return cls.STIMULUS_CONVERSATION_STYLE
+            elif event_type == "THOUGHT":
+                return cls.STIMULUS_THOUGHT_STYLE
+            else:
+                return cls.STIMULUS_DEFAULT_STYLE
+            
+        elif kind == "action":
+            if event_type == "DONE":
+                return cls.ACTION_DONE_STYLE
+            elif event_type == "TALK":
+                return cls.ACTION_TALK_STYLE
+            elif event_type == "THINK":
+                return cls.ACTION_THINK_STYLE
+            else:
+                return cls.ACTION_DEFAULT_STYLE
+
+
+################################################################################
+# Truncation
+################################################################################
+
+def truncate_actions_or_stimuli(list_of_actions_or_stimuli: Collection[dict], max_content_length: int) -> Collection[str]:
+    """
+    Truncates the content of actions or stimuli at the specified maximum length. Does not modify the original list.
+
+    Args:
+        list_of_actions_or_stimuli (Collection[dict]): The list of actions or stimuli to truncate.
+        max_content_length (int): The maximum length of the content.
+
+    Returns:
+        Collection[str]: The truncated list of actions or stimuli. It is a new list, not a reference to the original list, 
+        to avoid unexpected side effects.
+    """
+    cloned_list = copy.deepcopy(list_of_actions_or_stimuli)
+    
+    for element in cloned_list:
+        # the external wrapper of the LLM message: {'role': ..., 'content': ...}
+        if "content" in element:
+            msg_content = element["content"] 
+
+            # now the actual action or stimulus content
+
+            # has action, stimuli or stimulus as key?
+            if "action" in msg_content:
+                # is content there?
+                if "content" in msg_content["action"]:
+                    msg_content["action"]["content"] = break_text_at_length(msg_content["action"]["content"], max_content_length)
+            elif "stimulus" in msg_content:
+                # is content there?
+                if "content" in msg_content["stimulus"]:
+                    msg_content["stimulus"]["content"] = break_text_at_length(msg_content["stimulus"]["content"], max_content_length)
+            elif "stimuli" in msg_content:
+                # for each element in the list
+                for stimulus in msg_content["stimuli"]:
+                    # is content there?
+                    if "content" in stimulus:
+                        stimulus["content"] = break_text_at_length(stimulus["content"], max_content_length)
+    
+    return cloned_list
 
 ################################################################################
 # IO and startup utilities

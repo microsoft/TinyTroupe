@@ -31,7 +31,8 @@ class TinyWorld:
 
     def __init__(self, name: str="A TinyWorld", agents=[], 
                  initial_datetime=datetime.datetime.now(),
-                 broadcast_if_no_target=True):
+                 broadcast_if_no_target=True,
+                 max_additional_targets_to_display=3):
         """
         Initializes an environment.
 
@@ -41,6 +42,8 @@ class TinyWorld:
             initial_datetime (datetime): The initial datetime of the environment, or None (i.e., explicit time is optional). 
                 Defaults to the current datetime in the real world.
             broadcast_if_no_target (bool): If True, broadcast actions if the target of an action is not found.
+            max_additional_targets_to_display (int): The maximum number of additional targets to display in a communication. If None, 
+                all additional targets are displayed.
         """
 
         self.name = name
@@ -55,6 +58,10 @@ class TinyWorld:
         # the buffer of communications that have been displayed so far, used for
         # saving these communications to another output form later (e.g., caching)
         self._displayed_communications_buffer = []
+
+        # a temporary buffer for communications target to make rendering easier
+        self._target_display_communications_buffer = []
+        self._max_additional_targets_to_display = max_additional_targets_to_display
 
         self.console = Console()
 
@@ -376,12 +383,16 @@ class TinyWorld:
 
         # This default implementation always allows REACH_OUT to suceed.
         target_agent = self.get_agent_by_name(target)
-        
-        source_agent.make_agent_accessible(target_agent)
-        target_agent.make_agent_accessible(source_agent)
 
-        source_agent.socialize(f"{name_or_empty(target_agent)} was successfully reached out, and is now available for interaction.", source=self)
-        target_agent.socialize(f"{name_or_empty(source_agent)} reached out to you, and is now available for interaction.", source=self)
+        if target_agent is not None:
+            source_agent.make_agent_accessible(target_agent)
+            target_agent.make_agent_accessible(source_agent)
+
+            source_agent.socialize(f"{name_or_empty(target_agent)} was successfully reached out, and is now available for interaction.", source=self)
+            target_agent.socialize(f"{name_or_empty(source_agent)} reached out to you, and is now available for interaction.", source=self)
+        
+        else:
+            logger.debug(f"[{self.name}] REACH_OUT action failed: target agent '{target}' not found.")
 
     @transactional
     def _handle_talk(self, source_agent: TinyPerson, content: str, target: str):
@@ -484,14 +495,86 @@ class TinyWorld:
         else:
             raise ValueError(f"Unknown communication kind: {kind}")
 
-        self._push_and_display_latest_communication({"content": rendering, "kind": kind})
+        self._push_and_display_latest_communication({"kind": kind, "rendering": rendering, "content": None, "source":  None, "target": None})
     
-    def _push_and_display_latest_communication(self, rendering):
+    def _push_and_display_latest_communication(self, communication):
         """
         Pushes the latest communications to the agent's buffer.
         """
-        self._displayed_communications_buffer.append(rendering)
-        self._display(rendering)
+        #
+        # check if the communication is just repeating the last one for a different target
+        #
+        if len(self._displayed_communications_buffer) > 0:
+            # get values from last communication
+            last_communication = self._displayed_communications_buffer[-1]
+            last_kind = last_communication["kind"]
+            last_target = last_communication["target"]
+            last_source = last_communication["source"]
+            if last_kind == 'action':  
+                last_content = last_communication["content"]["action"]["content"]
+                last_type = last_communication["content"]["action"]["type"]
+            elif last_kind == 'stimulus':
+                last_content = last_communication["content"]["stimulus"]["content"]
+                last_type = last_communication["content"]["stimulus"]["type"]
+            elif last_kind == 'stimuli':
+                last_stimulus = last_communication["content"]["stimuli"][0]
+                last_content = last_stimulus["content"]
+                last_type = last_stimulus["type"]
+            else:
+                last_content = None
+                last_type = None
+        
+            # get values from current communication
+            current_kind = communication["kind"]
+            current_target = communication["target"]
+            current_source = communication["source"]
+            if current_kind == 'action':
+                current_content = communication["content"]["action"]["content"]
+                current_type = communication["content"]["action"]["type"]
+            elif current_kind == 'stimulus':
+                current_content = communication["content"]["stimulus"]["content"]
+                current_type = communication["content"]["stimulus"]["type"]
+            elif current_kind == 'stimuli':
+                current_stimulus = communication["content"]["stimuli"][0]
+                current_content = current_stimulus["content"]
+                current_type = current_stimulus["type"]
+            else:
+                current_content = None
+                current_type = None
+
+            # if we are repeating the last communication, let's simplify the rendering
+            if (last_source == current_source) and (last_type == current_type) and (last_kind == current_kind) and \
+               (last_content is not None) and (last_content == current_content) and \
+               (current_target is not None):
+               
+                self._target_display_communications_buffer.append(current_target)
+
+                rich_style = utils.RichTextStyle.get_style_for(last_kind, last_type)
+                
+                # print the additional target a limited number of times if a max is set, or
+                # always if no max is set.
+                if (self._max_additional_targets_to_display is None) or\
+                   len(self._target_display_communications_buffer) < self._max_additional_targets_to_display:
+                    communication["rendering"] = " " * len(last_source) + f"[{rich_style}]       + --> [underline]{current_target}[/][/]"
+
+                elif len(self._target_display_communications_buffer) == self._max_additional_targets_to_display:
+                    communication["rendering"] = " " * len(last_source) + f"[{rich_style}]       + --> ...others...[/]"
+                
+                else: # don't display anything anymore
+                    communication["rendering"] = None
+            
+            else:
+                # no repetition, so just display the communication and reset the targets buffer
+                self._target_display_communications_buffer = [] # resets
+        
+        else:
+            # no repetition, so just display the communication and reset the targets buffer
+            self._target_display_communications_buffer = [] # resets
+
+
+
+        self._displayed_communications_buffer.append(communication)
+        self._display(communication)
 
     def pop_and_display_latest_communications(self):
         """
@@ -505,20 +588,17 @@ class TinyWorld:
 
         return communications    
 
-    def _display(self, communication):
+    def _display(self, communication:dict):
         # unpack the rendering to find more info
-        if isinstance(communication, dict):
-            content = communication["content"]
-            kind = communication["kind"]
-        else:
-            content = communication
-            kind = None
-            
-        # render as appropriate
-        if kind == 'step':
-            self.console.rule(content)
-        else:
-            self.console.print(content)
+        content = communication["rendering"]
+        kind = communication["kind"]
+        
+        if content is not None:
+            # render as appropriate
+            if kind == 'step':
+                self.console.rule(content)
+            else:
+                self.console.print(content)
     
     def clear_communications_buffer(self):
         """

@@ -147,11 +147,15 @@ class TinyWordProcessor(TinyTool):
                                                     context_cache=None, verbose=False)    
             
         if self.exporter is not None:
-            self.exporter.export(artifact_name=f"{title}.{author}", artifact_data= content, content_type="Document", content_format="md", target_format="md")
-            self.exporter.export(artifact_name=f"{title}.{author}", artifact_data= content, content_type="Document", content_format="md", target_format="docx")
+            if author is not None:
+                artifact_name = f"{title}.{author}"
+            else:
+                artifact_name = title
+            self.exporter.export(artifact_name=artifact_name, artifact_data= content, content_type="Document", content_format="md", target_format="md")
+            self.exporter.export(artifact_name=artifact_name, artifact_data= content, content_type="Document", content_format="md", target_format="docx")
 
             json_doc = {"title": title, "content": content, "author": author}
-            self.exporter.export(artifact_name=f"{title}.{author}", artifact_data= json_doc, content_type="Document", content_format="md", target_format="json")
+            self.exporter.export(artifact_name=artifact_name, artifact_data= json_doc, content_type="Document", content_format="md", target_format="json")
 
     def _process_action(self, agent, action) -> bool:
         try:

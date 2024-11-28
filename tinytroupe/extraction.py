@@ -31,21 +31,72 @@ import tinytroupe.utils as utils
 
 class ResultsExtractor:
 
-    def __init__(self):
-        self._extraction_prompt_template_path = os.path.join(os.path.dirname(__file__), 'prompts/interaction_results_extractor.mustache')
+    def __init__(self, 
+                 extraction_prompt_template_path:str = os.path.join(os.path.dirname(__file__), 'prompts/interaction_results_extractor.mustache'),
+                 extraction_objective:str = "The main points present in the agents' interactions history.",
+                 situation:str = "",
+                 fields:List[str] = None,
+                 fields_hints:dict = None,
+                 verbose:bool = False):
+        """
+        Initializes the ResultsExtractor with default parameters.
 
-        # we'll cache the last extraction results for each type of extraction, so that we can use them to
-        # generate reports or other additional outputs.
+        Args:
+            extraction_prompt_template_path (str): The path to the extraction prompt template.
+            extraction_objective (str): The default extraction objective.
+            situation (str): The default situation to consider.
+            fields (List[str], optional): The default fields to extract. Defaults to None.
+            fields_hints (dict, optional): The default hints for the fields to extract. Defaults to None.
+            verbose (bool, optional): Whether to print debug messages by default. Defaults to False.
+        """
+        self._extraction_prompt_template_path = extraction_prompt_template_path
+
+        # Default parameters
+        self.default_extraction_objective = extraction_objective
+        self.default_situation = situation
+        self.default_fields = fields
+        self.default_fields_hints = fields_hints
+        self.default_verbose = verbose
+
+        # Cache for the last extraction results
         self.agent_extraction = {}
         self.world_extraction = {}
 
+    def extract_results_from_agents(self,
+                                    agents:List[TinyPerson],
+                                    extraction_objective:str=None,
+                                    situation:str =None,
+                                    fields:list=None,
+                                    fields_hints:dict=None,
+                                    verbose:bool=None):
+        """
+        Extracts results from a list of TinyPerson instances.
+
+        Args:
+            agents (List[TinyPerson]): The list of TinyPerson instances to extract results from.
+            extraction_objective (str): The extraction objective.
+            situation (str): The situation to consider.
+            fields (list, optional): The fields to extract. If None, the extractor will decide what names to use. 
+                Defaults to None.
+            fields_hints (dict, optional): Hints for the fields to extract. Maps field names to strings with the hints. Defaults to None.
+            verbose (bool, optional): Whether to print debug messages. Defaults to False.
+
+        
+        """
+        results = []
+        for agent in agents:
+            result = self.extract_results_from_agent(agent, extraction_objective, situation, fields, fields_hints, verbose)
+            results.append(result)
+        
+        return results
+        
     def extract_results_from_agent(self, 
                         tinyperson:TinyPerson, 
                         extraction_objective:str="The main points present in the agent's interactions history.", 
                         situation:str = "", 
                         fields:list=None,
                         fields_hints:dict=None,
-                        verbose:bool=False):
+                        verbose:bool=None):
         """
         Extracts results from a TinyPerson instance.
 
@@ -55,8 +106,13 @@ class ResultsExtractor:
             situation (str): The situation to consider.
             fields (list, optional): The fields to extract. If None, the extractor will decide what names to use. 
                 Defaults to None.
+            fields_hints (dict, optional): Hints for the fields to extract. Maps field names to strings with the hints. Defaults to None.
             verbose (bool, optional): Whether to print debug messages. Defaults to False.
         """
+
+        extraction_objective, situation, fields, fields_hints, verbose = self._get_default_values_if_necessary(
+            extraction_objective, situation, fields, fields_hints, verbose
+        )
 
         messages = []
 
@@ -118,7 +174,7 @@ performed.
                                    situation:str="", 
                                    fields:list=None,
                                    fields_hints:dict=None,
-                                   verbose:bool=False):
+                                   verbose:bool=None):
         """
         Extracts results from a TinyWorld instance.
 
@@ -130,6 +186,10 @@ performed.
                 Defaults to None.
             verbose (bool, optional): Whether to print debug messages. Defaults to False.
         """
+
+        extraction_objective, situation, fields, fields_hints, verbose = self._get_default_values_if_necessary(
+            extraction_objective, situation, fields, fields_hints, verbose
+        )
 
         messages = []
 
@@ -198,6 +258,30 @@ Each interaction history includes stimuli the corresponding agent received as we
         
         if verbose:
             print(f"Saved extraction results to {filename}")
+    
+    def _get_default_values_if_necessary(self,
+                            extraction_objective:str,
+                            situation:str,
+                            fields:List[str],
+                            fields_hints:dict,
+                            verbose:bool):
+        
+        if extraction_objective is None:
+            extraction_objective = self.default_extraction_objective
+
+        if situation is None:
+            situation = self.default_situation
+
+        if fields is None:
+            fields = self.default_fields
+
+        if fields_hints is None:
+            fields_hints = self.default_fields_hints
+
+        if verbose is None:
+            verbose = self.default_verbose
+
+        return extraction_objective, situation, fields, fields_hints, verbose
 
 
 
