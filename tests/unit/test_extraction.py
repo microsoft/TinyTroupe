@@ -17,7 +17,7 @@ from tinytroupe import utils
 
 @pytest.fixture
 def exporter():
-    return ArtifactExporter(base_output_folder="./test_exports")
+    return ArtifactExporter(base_output_folder=EXPORT_BASE_FOLDER)
 
 def test_export_json(exporter):
     # Define the artifact data
@@ -32,10 +32,10 @@ def test_export_json(exporter):
     exporter.export("test_artifact", artifact_data, content_type="record", target_format="json")
     
     #check if the JSON file was exported correctly
-    assert os.path.exists("./test_exports/record/test_artifact.json"), "The JSON file should have been exported."
+    assert os.path.exists(f"{EXPORT_BASE_FOLDER}/record/test_artifact.json"), "The JSON file should have been exported."
 
     # does it contain the data?
-    with open("./test_exports/record/test_artifact.json", "r") as f:
+    with open(f"{EXPORT_BASE_FOLDER}/record/test_artifact.json", "r") as f:
         exported_data = json.load(f)
         assert exported_data == artifact_data, "The exported JSON data should match the original data."
 
@@ -47,10 +47,10 @@ def test_export_text(exporter):
     exporter.export("test_artifact", artifact_data, content_type="text", target_format="txt")
     
     # check if the text file was exported correctly
-    assert os.path.exists("./test_exports/text/test_artifact.txt"), "The text file should have been exported."
+    assert os.path.exists(f"{EXPORT_BASE_FOLDER}/text/test_artifact.txt"), "The text file should have been exported."
 
     # does it contain the data?
-    with open("./test_exports/text/test_artifact.txt", "r") as f:
+    with open(f"{EXPORT_BASE_FOLDER}/text/test_artifact.txt", "r") as f:
         exported_data = f.read()
         assert exported_data == artifact_data, "The exported text data should match the original data."
 
@@ -68,11 +68,11 @@ def test_export_docx(exporter):
     exporter.export("test_artifact", artifact_data, content_type="Document", content_format="markdown", target_format="docx")
     
     # check if the docx file was exported correctly
-    assert os.path.exists("./test_exports/Document/test_artifact.docx"), "The docx file should have been exported."
+    assert os.path.exists(f"{EXPORT_BASE_FOLDER}/Document/test_artifact.docx"), "The docx file should have been exported."
 
     # does it contain the data?
     from docx import Document
-    doc = Document("./test_exports/Document/test_artifact.docx")
+    doc = Document(f"{EXPORT_BASE_FOLDER}/Document/test_artifact.docx")
     exported_data = ""
     for para in doc.paragraphs:
         exported_data += para.text

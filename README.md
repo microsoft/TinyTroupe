@@ -5,7 +5,7 @@
   <img src="./docs/tinytroupe_stage.png" alt="A tiny office with tiny people doing some tiny jobs.">
 </p>
 
-*TinyTroupe* is an experimental Python library that allows the **simulation** of people with specific personalities, interests, and goals. These artificial agents - `TinyPerson`s - can listen to us and one another, reply back, and go about their lives in simulated `TinyWorld` environments. This is achieved by leveraging the power of Large Language Models (LLMs), notably GPT-4, to generate realistic simulated behavior. This allow us to investigate a wide range of **convincing interactions** and **consumer types**, with **highly customizable personas**, under **conditions of our choosing**. The focus is thus on *understanding* human behavior and not on directly *supporting it* (like, say, AI assistants do) -- this results in, among other things, specialized mechanisms that make sense only in a simulation setting. Further, unlike other *game-like* LLM-based simulation approaches, TinyTroupe aims at enlightening productivity and business scenarios, thereby contributing to more successful projects and products. Here are some application ideas to **enhance human imagination**:
+*TinyTroupe* is an experimental Python library that allows the **simulation** of people with specific personalities, interests, and goals. These artificial agents - `TinyPerson`s - can listen to us and one another, reply back, and go about their lives in simulated `TinyWorld` environments. This is achieved by leveraging the power of Large Language Models (LLMs), notably GPT-4, to generate realistic simulated behavior. This allows us to investigate a wide range of **convincing interactions** and **consumer types**, with **highly customizable personas**, under **conditions of our choosing**. The focus is thus on *understanding* human behavior and not on directly *supporting it* (like, say, AI assistants do) -- this results in, among other things, specialized mechanisms that make sense only in a simulation setting. Further, unlike other *game-like* LLM-based simulation approaches, TinyTroupe aims at enlightening productivity and business scenarios, thereby contributing to more successful projects and products. Here are some application ideas to **enhance human imagination**:
 
   - **Advertisement:** TinyTroupe can **evaluate digital ads (e.g., Bing Ads)** offline with a simulated audience before spending money on them!
   - **Software Testing:** TinyTroupe can **provide test input** to systems (e.g., search engines, chatbots or copilots) and then **evaluate the results**.
@@ -15,7 +15,7 @@
 
 In all of the above, and many others, we hope experimenters can **gain insights** about their domain of interest, and thus make better decisions. 
 
-We are releasing *TinyTroupe* at a relativelly early stage, with considerable work still to be done, because we are looking for feedback and contributions to steer development in productive directions. We are particularly interested in finding new potential use cases, for instance in specific industries. 
+We are releasing *TinyTroupe* at a relatively early stage, with considerable work still to be done, because we are looking for feedback and contributions to steer development in productive directions. We are particularly interested in finding new potential use cases, for instance in specific industries. 
 
 >[!NOTE] 
 >🚧 **WORK IN PROGRESS: expect frequent changes**.
@@ -23,7 +23,7 @@ We are releasing *TinyTroupe* at a relativelly early stage, with considerable wo
 
 >[!CAUTION] 
 >⚖️ **Read the LEGAL DISCLAIMER.**
->TinyTroupe is for research and simulation only. You are fully responsible for any use you make of the generated outputs. Various important additional legal considerations apply and constrain its use, please read the full [Legal Disclaimer](#legal-disclaimer) section below before using TinyTroupe.
+>TinyTroupe is for research and simulation only. You are fully responsible for any use you make of the generated outputs. Various important additional legal considerations apply and constrain its use. Please read the full [Legal Disclaimer](#legal-disclaimer) section below before using TinyTroupe.
 
 
 ## Contents
@@ -54,7 +54,7 @@ Let's begin with a simple customer interview scenario, where a business consulta
   <img src="./docs/example_screenshot_customer-interview-1.png" alt="An example.">
 </p>
 
-The conversation can go on for a few steps to dig deeper and deeper until the consultant is satisfied with the information gathered, for instance a concrete project idea:
+The conversation can go on for a few steps to dig deeper and deeper until the consultant is satisfied with the information gathered; for instance, a concrete project idea:
 <p align="center">
   <img src="./docs/example_screenshot_customer-interview-2.png" alt="An example.">
 </p>
@@ -116,7 +116,7 @@ To run the library, you need:
       ```bash
       conda activate tinytroupe
       ```
-4. Make sure you have eihter Azure OpenAI or OpenAI API keys set as environment variables, as described in the [Pre-requisites](#pre-requisites) section.
+4. Make sure you have either Azure OpenAI or OpenAI API keys set as environment variables, as described in the [Pre-requisites](#pre-requisites) section.
 5. Clone the repository, as we'll perform a local install (we **will not install from PyPI**):
     ```bash
     git clone https://github.com/microsoft/tinytroupe
@@ -139,20 +139,20 @@ pip install -e .
 ```
 
 ## Principles 
-Recently, we have seen LLMs used to simulate people (such as [this](https://github.com/joonspk-research/generative_agents)), but largely in a “game-like” setting for contemplative or entertainment purposes. There are also libraries for building multiagent systems for proble-solving and assitive AI, like [Autogen](https://microsoft.github.io/) and [Crew AI](https://docs.crewai.com/). What if we combine these ideas and simulate people to support productivity tasks? TinyTroupe is our attempt. To do so, it follows these principles:
+Recently, we have seen LLMs used to simulate people (such as [this](https://github.com/joonspk-research/generative_agents)), but largely in a “game-like” setting for contemplative or entertainment purposes. There are also libraries for building multiagent systems for problem-solving and assistive AI, like [Autogen](https://microsoft.github.io/) and [Crew AI](https://docs.crewai.com/). What if we combine these ideas and simulate people to support productivity tasks? TinyTroupe is our attempt. To do so, it follows these principles:
 
-  1. **Programmatic**: agents and environments are defined programmatically (in Python and JSON), allowing very flexible uses. They can also thus underpin other software apps!
+  1. **Programmatic**: agents and environments are defined programmatically (in Python and JSON), allowing very flexible uses. They can also underpin other software apps!
   2. **Analytical**: meant to improve our understanding of people, users and society. Unlike entertainment applications, this is one aspect that is critical for business and productivity use cases. This is also why we recommend using Jupyter notebooks for simulations, just like one uses them for data analysis.
-  3. **Persona-based**: agents are meant to be archetypical representation of people; for greater realism and control, detailed specification of such personas is encouraged: age, occupation, skills, tastes, opinions, etc.
+  3. **Persona-based**: agents are meant to be archetypical representations of people; for greater realism and control, a detailed specification of such personas is encouraged: age, occupation, skills, tastes, opinions, etc.
   4. **Multiagent**: allows multiagent interaction under well-defined environmental constraints.
   5. **Utilities-heavy**: provides many mechanisms to facilitate specifications, simulations, extractions, reports, validations, etc. This is one area in which dealing with *simulations* differs significantly from *assistance* tools.
-  6. **Experiment-oriented**: simulations are defined, run, analyzed and refined by an *experimenter* iteratively; suitable experimentation tools are thus provided. *See one of our [previous paper](https://www.microsoft.com/en-us/research/publication/the-case-for-experiment-oriented-computing/) for more on this.*
+  6. **Experiment-oriented**: simulations are defined, run, analyzed and refined by an *experimenter* iteratively; suitable experimentation tools are thus provided. *See our [previous paper](https://www.microsoft.com/en-us/research/publication/the-case-for-experiment-oriented-computing/) for more on this.*
 
 Together, these are meant to make TinyTroupe a powerful and flexible **imagination enhancement tool** for business and productivity scenarios.
 
 ### Assistants vs. Simulators
 
-One common source of confusion is to think all such AI agents are meant for assiting humans. How narrow, fellow homosapiens! Have you not considered that perhaps we can simulate artificial people to understand real people? Truly, this is our aim here -- TinyTroup is meant to simulate and help understand people! To further clarify this point, consider the following differences:
+One common source of confusion is to think all such AI agents are meant for assisting humans. How narrow, fellow homosapiens! Have you not considered that perhaps we can simulate artificial people to understand real people? Truly, this is our aim here -- TinyTroup is meant to simulate and help understand people! To further clarify this point, consider the following differences:
 
 | Helpful AI Assistants | AI Simulations of Actual Humans (TinyTroupe)                                                          |
 |----------------------------------------------|--------------------------------------------------------------------------------|
@@ -191,7 +191,7 @@ Let's see some examples of how to use these and also learn about other mechanism
 A `TinyPerson` is a simulated person with specific personality traits, interests, and goals. As each such simulated agent progresses through its life, it receives stimuli from the environment and acts upon them. The stimuli are received through the `listen`, `see` and other similar methods, and the actions are performed through the `act` method. Convenience methods like `listen_and_act` are also provided.
 
 
-Each such agent contains a lot of unique details, which is the source of its realistic behavior. This, however, means that it takes significant effort to specify an agent manually. Hence, for convenience, `TinyTroupe` provide some easier ways to get started or generate new agents.
+Each such agent contains a lot of unique details, which is the source of its realistic behavior. This, however, means that it takes significant effort to specify an agent manually. Hence, for convenience, `TinyTroupe` provides some easier ways to get started or generate new agents.
 
 To begin with, `tinytroupe.examples` contains some pre-defined agent builders that you can use. For example, `tinytroupe.examples.create_lisa_the_data_scientist` creates a `TinyPerson` that represents a data scientist called Lisa. You can use it as follows:
 
@@ -285,7 +285,7 @@ Oscar --> Lisa: [CONVERSATION]
            > exotic places, playing the guitar, and reading science fiction books. How about you?
 ```
 
-`TinyWorld` enforces very little constraints on the possible interactions. Subclasses, however, are supposed to provide more strucutred environments. 
+`TinyWorld` enforces very little constraints on the possible interactions. Subclasses, however, are supposed to provide more structured environments. 
 
 ### Utilities
 
@@ -310,21 +310,19 @@ TinyTroupe comes with two such mechanisms: one for the simulation state, another
 Imagine you have a scenario with 10 different steps, you've worked hard in 9 steps, and now you are
 just tweaking the 10th step. To properly validate your modifications, you need to rerun the whole
 simulation of course. However, what's the point in re-executing the first 9, and incur the LLM cost, when you are 
-already satisified with them and did not modify them? For situations like this, the module `tinytroupe.control`
-provide useful simulation management methods:
+already satisfied with them and did not modify them? For situations like this, the module `tinytroupe.control`
+provides useful simulation management methods:
 
   - `control.begin("<CACHE_FILE_NAME>.cache.json")`: begins recording the state changes of a simulation, to be saved to
     the specified file on disk.
   - `control.checkpoint()`: saves the simulation state at this point.
-  - `control.end()`: terminates the simulation recording scope that had be started by `control.begin()`.
+  - `control.end()`: terminates the simulation recording scope that had been started by `control.begin()`.
 
 #### Caching LLM API Calls
 
-This is enabled preferably in the `config.ini` file, and alternativelly via the `openai_utils.force_api_cache()`.
+This is enabled preferably in the `config.ini` file, and alternatively via the `openai_utils.force_api_cache()`.
 
-LLM API caching, when enabled, works at a lower and simpler level than simulation state caching. Here,
-what happens is a very straightforward: every LLM call is kept in a map from the input to the generated output;
-when a new call comes and is identical to a previous one, the cached value is returned.
+LLM API caching, when enabled, works at a lower and simpler level than simulation state caching. Here, what happens is very straightforward: every LLM call is kept in a map from the input to the generated output; when a new call comes and is identical to a previous one, the cached value is returned.
 
 ### Config.ini
 
