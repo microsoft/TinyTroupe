@@ -7,56 +7,98 @@ plotting.
 """
 import pandas as pd
 import matplotlib.pyplot as plt
-from typing import List
 from tinytroupe.agent import TinyPerson
 
 
-def plot_age_distribution(agents:List[TinyPerson], title:str="Age Distribution", show:bool=True):
-    """
-    Plots the age distribution of the given agents.
+import pandas as pd
+import matplotlib.pyplot as plt
+from typing import List
 
-    Args:
-        agents (List[TinyPerson]): The agents whose age distribution is to be plotted.
-        title (str, optional): The title of the plot. Defaults to "Age Distribution".
-        show (bool, optional): Whether to show the plot. Defaults to True.
+
+class Profiler:
+
+    def __init__(self, attributes: List[str]=["age", "occupation", "nationality"]) -> None: 
+        self.attributes = attributes
+        
+        self.attributes_distributions = {} # attribute -> Dataframe
+
+    def profile(self, agents: List[dict]) -> dict:   
+        """
+        Profiles the given agents.
+
+        Args:
+            agents (List[dict]): The agents to be profiled.
+        
+        """
+
+        self.attributes_distributions = self._compute_attributes_distributions(agents)
+        return self.attributes_distributions
+
+    def render(self) -> None:
+        """
+        Renders the profile of the agents.
+        """
+        return self._plot_attributes_distributions()
+        
+
+    def _compute_attributes_distributions(self, agents:list) -> dict:
+        """
+        Computes the distributions of the attributes for the agents.
+
+        Args:
+            agents (list): The agents whose attributes distributions are to be computed.
+        
+        Returns:
+            dict: The distributions of the attributes.
+        """
+        distributions = {}
+        for attribute in self.attributes:
+            distributions[attribute] = self._compute_attribute_distribution(agents, attribute)
+        
+        return distributions
     
-    Returns:
-        pd.DataFrame: The data used for plotting.
-    """
-    ages = [agent.get("age") for agent in agents]
+    def _compute_attribute_distribution(self, agents: list, attribute: str) -> pd.DataFrame:
+        """
+        Computes the distribution of a given attribute for the agents and plots it.
 
-    # corresponding dataframe
-    df = pd.DataFrame(ages, columns=["Age"])
-    df["Age"].plot.hist(bins=20, title=title)
-    if show:
+        Args:
+            agents (list): The agents whose attribute distribution is to be plotted.
+        
+        Returns:
+            pd.DataFrame: The data used for plotting.
+        """
+        values = [agent.get(attribute) for agent in agents]
+
+        # corresponding dataframe of the value counts. Must be ordered by value, not counts 
+        df = pd.DataFrame(values, columns=[attribute]).value_counts().sort_index()
+
+        return df
+    
+    def _plot_attributes_distributions(self) -> None:
+        """
+        Plots the distributions of the attributes for the agents.
+        """
+
+        for attribute in self.attributes:
+            self._plot_attribute_distribution(attribute)
+        
+    def _plot_attribute_distribution(self, attribute: str) -> pd.DataFrame:
+        """
+        Plots the distribution of a given attribute for the agents.
+
+        Args:
+            attribute (str): The attribute whose distribution is to be plotted.
+        
+        Returns:
+            pd.DataFrame: The data used for plotting.
+        """
+
+        df = self.attributes_distributions[attribute]
+        df.plot(kind='bar', title=f"{attribute.capitalize()} distribution")
         plt.show()
 
-    return df
-    
 
 
-def plot_interest_distribution(agents:List[TinyPerson], title:str="Interest Distribution", show:bool=True):
-    """
-    Plots the interest distribution of the given agents.
+        
 
-    Args:
-        agents (List[TinyPerson]): The agents whose interest distribution is to be plotted.
-        title (str, optional): The title of the plot. Defaults to "Interest Distribution".
-        show (bool, optional): Whether to show the plot. Defaults to True.
-    
-    Returns:
-        pd.DataFrame: The data used for plotting.
-    """
-    interests = [agent.get("interests") for agent in agents]
 
-    # corresponding dataframe
-    df = pd.DataFrame(interests, columns=["Interests"])
-
-    # let's plot a pie chart
-    df["Interests"].value_counts().plot.pie(title=title)
-    if show:
-        plt.show()
-
-    return df
-
-    

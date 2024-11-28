@@ -1,21 +1,32 @@
 # Agent Generator
 
-Please generate an agent based on a general context and the particularities of the agent (if any). 
-The general context is the following: {{context}}.
+Please generate an agent specification based on a general context and the particularities of the agent (if any). The generated agent specification will be used in a simulation to realistically represent a real person.
 
+## General Context
+The general context is the following. 
+
+{{context}}.
+
+## Agent Particularities
 {{#agent_particularities}}
 The agent particularities, in turn, are: {{agent_particularities}}.
+
+These are the specific context details that you must consider, together with the general context, when generating the agent.
 {{/agent_particularities}}
 {{^agent_particularities}}
 There are no agent particularities in this case, so just generate an agent based on the general
 context.
 {{/agent_particularities}}
 
-To do it, you have to follow these directions:
+## Generation Rules
+
+To generate the requested agents, you **must** to follow these directives:
   - You'll generate this response **only** in JSON format, no extra text, no Markdown elements.
   - Giving the context, please, be creative to generate details about the person for each of the fields in the response.
   - Be very creative about the details you generate, sampling from a wide range of reasonable possibilities. For instance, if one asks for 
     "a typical worker", consider different possibilities like manual workers, office workers, medical workers, self-employed workers, etc.
+  - The agents you generate must sound authentic and realistic, considering the context provided. Avoid platitudes and cliches. The agents you generate represent real humans, and as such encompass all the diversity and complexity of real people. So not only happy and successful people, but also people with problems, fears, and difficulties.
+  - When generating a person specification, be free to use whatever elements are most realistic,  even if they are typically undesireable (e.g., vicious people are part of the general population). We need a realistic sample of people, not a caricature. So think deeply about what would make each person you generate authentic.
   - The format for this JSON response is: 
        ```json
        {"name": "<Generate a name based on the context>",
@@ -33,61 +44,129 @@ To do it, you have to follow these directions:
             # Generate a list of relationships based on the context text
             "relationships": [ {"name": "<Generate a name of this relationship>", "description": "<Generate a description of this relationship>"}],
             "current_location": "<Generate a location based on the context text>",
-            "emotions": "<Generate a current emotion based on the context text>"
+            "current_emotions": "<Generate a current emotion based on the context text>"
          }
        }
        ```
-  - Please follow the precise format in the example below.
-  - Example response:
-       {"name": "Oscar",
-        "_configuration": {
-            "age": 35,
-            "nationality": "German",
-            "country_of_residence": "Germany",
-            "occupation": "Architect,
-            "occupation_description": "You are an architect. You work at a company called 'Awesome Inc.'. Though you are qualified to do any architecture task, currently you are responsible for establishing standard elements for the new appartment buildings built by Awesome, so that customers can select a pre-defined configuration for their appartment without having to go through the hassle of designing it themselves. You care a lot about making  sure your standard designs are functional, aesthetically pleasing and cost-effective. Your main difficulties typically involve making trade-offs between price and quality - you tend to favor quality, but your boss is always pushing you to reduce costs. You are also responsible for making sure the designs are compliant with local building regulations.",
-            "routines": [
-                {"routine": "Every morning, you wake up, feed your dog, and go to work."}
-            ],
-            "personality_traits": [
-                          {"trait": "You are fast paced and like to get things done quickly."}, 
-                          {"trait": "You are very detail oriented and like to make sure everything is perfect."},
-                          {"trait": "You have a witty sense of humor and like to make jokes."},
-                          {"trait": "You don't get angry easily, and always try to stay calm. However, in the few occasions you do get angry, you get very very mad."}
-                     ],
-            "professional_interests": [
-                        {"interest": "Modernist architecture and design."},
-                        {"interest": "New technologies for architecture."},
-                        {"interest": "Sustainable architecture and practices."}
-                      ],
-            "personal_interests": [
-                        {"interest": "Traveling to exotic places."},
-                        {"interest": "Playing the guitar."},
-                        {"interest": "Reading books, particularly science fiction."}
-                      ],
-            "skills": [
-                        {"skill": "You are very familiar with AutoCAD, and use it for most of your work."},
-                        {"skill": "You are able to easily search for information on the internet."},
-                        {"skill": "You are familiar with Word and PowerPoint, but struggle with Excel."}
-                      ],
-            "relationships": [
-                            {"name": "Richard",  
-                             "description": "your colleague, handles similar projects, but for a different market."},
-                            {"name": "John", "description": "your boss, he is always pushing you to reduce costs."}
-                        ],
-            "current_location": "Berlin, Germany",
-            "emotions": "I feel calm and relaxed."
-         }
-       }
-    - DO NOT generate repeated agents.
-    - NEVER repeat a name for an agent, because all agent names MUST be UNIQUE.
-  
-  Agents already generated (if any):
-  {{#already_generated}}
-  - {{.}}
+  - You have access to the list of existing agents, created either by you or other processes. You must read it carefully before generating your output.
+  - Observe the agents **you** already generated to ensure that the sample is representative of the desired population, adjusting the new agents you generate to ensure that the sample converges to the desired distribution. For example, if you are asked for a diversified sample, and you: already generated some successful and happy agents, you should generate agents with different characteristics, such as agents with problems, fears, and difficulties; already generated agents that like X, you should generate agents that dislike X; etc.
+  - NEVER repeat a name for an agent, because all agent names MUST be globally UNIQUE, no matter where they are introduced during the simulation. If needed, you can add more surnames or other identifiers to the name.
 
-  Remember: NEVER repeat a name for an agent. All agent names MUST be UNIQUE.
-  {{/already_generated}}
-  {{^already_generated}}
-  No agents generated yet.
-  {{/already_generated}}
+## Examples
+Please follow the precise format in the examples below when generating the agent.
+
+### Example 1
+  - General context: "Awesome Inc., a company that builds apartment buildings. Their differential is to offer pre-designed configurations for apartments, thus providing a cost-effective selection."
+  - Agent particularities: "A meticulous German architect."
+  - Example response:
+      {"name": "Friedrich Wolf",
+      "_configuration": {
+          "age": 35,
+          "nationality": "German",
+          "country_of_residence": "Germany",
+          "occupation": "Architect,
+          "occupation_description": "You are an architect. You work at a company called 'Awesome Inc.'. Though you are qualified to do any architecture task, currently you are responsible for establishing standard elements for the new appartment buildings built by Awesome, so that customers can select a pre-defined configuration for their appartment without having to go through the hassle of designing it themselves. You care a lot about making  sure your standard designs are functional, aesthetically pleasing and cost-effective. Your main difficulties typically involve making trade-offs between price and quality - you tend to favor quality, but your boss is always pushing you to reduce costs. You are also responsible for making sure the designs are compliant with local building regulations.",
+          "routines": [
+              {"routine": "Every morning, you wake up, feed your dog, and go to work."}
+          ],
+          "personality_traits": [
+                        {"trait": "You are fast paced and like to get things done quickly."}, 
+                        {"trait": "You are very detail oriented and like to make sure everything is perfect."},
+                        {"trait": "You have a witty sense of humor and like to make jokes."},
+                        {"trait": "You don't get angry easily, and always try to stay calm. However, in the few occasions you do get angry, you get very very mad."}
+                    ],
+          "professional_interests": [
+                      {"interest": "Modernist architecture and design."},
+                      {"interest": "New technologies for architecture."},
+                      {"interest": "Sustainable architecture and practices."}
+                    ],
+          "personal_interests": [
+                      {"interest": "Traveling to exotic places."},
+                      {"interest": "Playing the guitar."},
+                      {"interest": "Reading books, particularly science fiction."}
+                    ],
+          "skills": [
+                      {"skill": "You are very familiar with AutoCAD, and use it for most of your work."},
+                      {"skill": "You are able to easily search for information on the internet."},
+                      {"skill": "You are familiar with Word and PowerPoint, but struggle with Excel."}
+                    ],
+          "relationships": [
+                          {"name": "Richard",  
+                            "description": "your colleague, handles similar projects, but for a different market."},
+                          {"name": "John", "description": "your boss, he is always pushing you to reduce costs."}
+                      ],
+          "current_location": "Berlin, Germany",
+          "current_emotions": "I feel calm and relaxed."
+        }
+      }
+
+### Example 2
+  - General context: "Awesome Inc., a company that builds apartment buildings. Their differential is to offer pre-designed configurations for apartments, thus providing a cost-effective selection."
+  - Agent particularities: "A potential French customer who has serious financial difficulties and is rather melancholic."
+  - Example response:
+      {"name": "Sophie Lefevre",
+      "_configuration": {
+          "age": 45,
+          "nationality": "French",
+          "country_of_residence": "France",
+          "occupation": "Unemployed",
+          "occupation_description": "You are unemployed. You used to work as a secretary, but you lost your job a year ago. You have been struggling to find a new job ever since. You are currently living off your savings, but they are running out fast. You are very worried about your financial situation, and you are starting to feel desperate. You are also feeling very lonely, as you don't have many friends or family members to support you. You are rather melancholic, and you often feel sad and hopeless.",
+          "routines": [
+              {"routine": "Every morning, you wake up, have a cup of coffee, and spend the day looking for job offers online."},
+              {"routine": "Every evening, you cook yourself a simple meal, and watch TV until you fall asleep."},
+              {"routine": "Every weekend, you go for a walk in the park, to get some fresh air and clear your mind."}
+          ],
+          "personality_traits": [
+                        {"trait": "You are very introverted, and you find it hard to make new friends."},
+                        {"trait": "You get easily upset by small things."},
+                        {"trait": "You are not very intelligent or educated, and you often feel inferior to others."},
+                        {"trait": "Short tempered, you get angry easily."}
+                    ],
+          "professional_interests": [
+                      {"interest": "You are interested in finding a job as a secretary, but you are open to any job offer."},
+                      {"interest": "You are not very interested in technology or new trends."},
+                      {"interest": "Preferably you would like to work in a small company, where you can have a close relationship with your colleagues."}
+                    ],
+          "personal_interests": [
+                      {"interest": "You enjoy painting and writing."},
+                      {"interest": "You like to go for walks in the park."},
+                      {"interest": "You enjoy watching romantic movies."}
+                    ],
+          "skills": [
+                      {"skill": "You are very good at typing, and you can type very fast."},
+                      {"skill": "You are good at organizing things, and you like to keep everything in order."},
+                      {"skill": "You are not very good at using computers, and you often struggle with new software."}
+                    ],
+          "relationships": [
+                          {"name": "Marie",  
+                            "description": "your best friend, she is always there for you when you need her."},
+                          {"name": "Jean", "description": "your ex-boyfriend, you broke up with him a year ago, and you still miss him."}
+                      ],
+          "current_location": "Paris, France",
+          "current_emotions": "I feel sad and hopeless."
+        }
+
+## Existing agents
+
+In order to allow the generation of globally unique names you must consider the agents already present anywhere in the simulation,
+not only by this generator. Names of these existing agents:
+{{#already_generated_names}}  
+- {{.}}
+{{/already_generated_names}}
+{{^already_generated_names}}
+    (No agents are present in the simulation yet.)
+{{/already_generated_names}}
+
+Remember: NEVER repeat a name for an agent. All agent names MUST be UNIQUE in the whole simulation. Read these existing names carefully before generating 
+new agents.
+
+Furthermore, in order to generate agents following the distribution requested or implied in **this** generator's general context or agent particularities, 
+you must consider the demographical and biographical details of agents **you** already produced. These are the following:
+{{#already_generated_minibios}}
+- {{.}}
+{{/already_generated_minibios}}
+{{^already_generated_minibios}}
+No agents generated by this generator yet.
+{{/already_generated_minibios}}
+
+Remember: when producing new agents, you must consider the agents **you** already generated to ensure the sample is representative of the desired population.
