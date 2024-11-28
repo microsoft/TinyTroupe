@@ -14,9 +14,47 @@ from tinytroupe.environment import TinyWorld, TinySocialNetwork
 import pytest
 import importlib
 
-# force caching, in order to save on API usage
-openai_utils.force_api_cache(True, "tests_cache.pickle")
+import conftest
 
+##################################################
+# global constants
+##################################################
+CACHE_FILE_NAME = "tests_cache.pickle"
+EXPORT_BASE_FOLDER = "./outputs/exports"
+TEMP_SIMULATION_CACHE_FILE_NAME = "simulation_test_case.cache.json"
+
+
+##################################################
+# Caching, in order to save on API usage
+##################################################
+if conftest.refresh_cache:
+    # DELETE the cache file tests_cache.pickle
+    os.remove(CACHE_FILE_NAME)
+
+if conftest.use_cache:
+    openai_utils.force_api_cache(True, CACHE_FILE_NAME)
+else:
+    openai_utils.force_api_cache(False, CACHE_FILE_NAME)
+
+
+##################################################
+# File management
+##################################################
+
+def remove_file_if_exists(file_path):
+    """
+    Removes the file at the given path if it exists.
+    """
+    if os.path.exists(file_path):
+        os.remove(file_path)
+
+# remove temporary files
+remove_file_if_exists(TEMP_SIMULATION_CACHE_FILE_NAME)
+
+
+##################################################
+# Simulation checks utilities
+##################################################
 def contains_action_type(actions, action_type):
     """
     Checks if the given list of actions contains an action of the given type.
@@ -143,14 +181,6 @@ def agents_configs_are_equal(agent1, agent2, ignore_name=False):
 ############################################################################################################
 # I/O utilities
 ############################################################################################################
-
-def remove_file_if_exists(file_path):
-    """
-    Removes the file at the given path if it exists.
-    """
-    
-    if os.path.exists(file_path):
-        os.remove(file_path)
 
 def get_relative_to_test_path(path_suffix):
     """

@@ -36,12 +36,18 @@ def test_derandomize_name():
     randomizer = ABRandomizer()
 
     for i in range(20):
-        a, b = randomizer.randomize(i, "A", "B")
-        real_name = randomizer.derandomize_name(i, a)
+        a, b = randomizer.randomize(i, "cats", "dogs")
+        real_name = randomizer.derandomize_name(i, "A")
 
         if randomizer.choices[i] == (0, 1):
+            # "Favorite pet? A: cats, B: dogs"
+            # user selects "A"
+            # user selected the control group 
             assert real_name == "control"
         elif randomizer.choices[i] == (1, 0):
+            # "Favorite pet? A: dogs, B: cats"
+            # user selects "A"
+            # user selected the treatment group
             assert real_name == "treatment"
         else:
             raise Exception(f"No randomization found for item {i}")

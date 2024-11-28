@@ -97,11 +97,12 @@ def test_think(setup):
 def test_internalize_goal(setup):
     # Test that internalizing a goal works as expected
     for agent in [create_oscar_the_architect(), create_lisa_the_data_scientist()]:
-        agent.internalize_goal("I want to learn more about GPT-3.")
+        agent.internalize_goal("I want to compose in my head a wonderful poem about how cats are glorious creatures.")
         actions = agent.act(return_actions=True)
         assert len(actions) >= 1, f"{agent.name} should have at least one action to perform."
-        assert contains_action_type(actions, "SEARCH"), f"{agent.name} should have at least one SEARCH action to perform, since they have a learning goal."
-        assert contains_action_content(actions, "GPT-3"), f"{agent.name} should mention GPT-3 in the SEARCH action, since they want to learn more about it."
+        assert contains_action_type(actions, "THINK"), f"{agent.name} should have at least one THINK action to perform, since they internalized a goal."
+        assert contains_action_content(actions, "cats"), f"{agent.name} should mention cats in the THINK action, since they internalized a goal about them."
+
 
 def test_move_to(setup):
     # Test that moving to a new location works as expected
@@ -123,14 +124,14 @@ def test_change_context(setup):
 def test_save_spec(setup):   
     for agent in [create_oscar_the_architect(), create_lisa_the_data_scientist()]:
         # save to a file
-        agent.save_spec(get_relative_to_test_path(f"test_exports/serialization/{agent.name}.tinyperson.json"), include_memory=True)
+        agent.save_spec(get_relative_to_test_path(f"{EXPORT_BASE_FOLDER}/serialization/{agent.name}.tinyperson.json"), include_memory=True)
 
         # check that the file exists
-        assert os.path.exists(get_relative_to_test_path(f"test_exports/serialization/{agent.name}.tinyperson.json")), f"{agent.name} should have saved the file."
+        assert os.path.exists(get_relative_to_test_path(f"{EXPORT_BASE_FOLDER}/serialization/{agent.name}.tinyperson.json")), f"{agent.name} should have saved the file."
 
         # load the file to see if the agent is the same. The agent name should be different because it TinyTroupe does not allow two agents with the same name.
         loaded_name = f"{agent.name}_loaded"
-        loaded_agent = TinyPerson.load_spec(get_relative_to_test_path(f"test_exports/serialization/{agent.name}.tinyperson.json"), new_agent_name=loaded_name)
+        loaded_agent = TinyPerson.load_spec(get_relative_to_test_path(f"{EXPORT_BASE_FOLDER}/serialization/{agent.name}.tinyperson.json"), new_agent_name=loaded_name)
 
         # check that the loaded agent is the same as the original
         assert loaded_agent.name == loaded_name, f"{agent.name} should have the same name as the loaded agent."
