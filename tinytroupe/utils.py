@@ -399,14 +399,14 @@ class JsonSerializableRegistry:
         Returns a JSON representation of the object.
         
         Args:
-            include (list, optional): Attributes to include in the serialization.
-            suppress (list, optional): Attributes to suppress from the serialization.
+            include (list, optional): Attributes to include in the serialization. Will override the default behavior.
+            suppress (list, optional): Attributes to suppress from the serialization. Will override the default behavior.
             file_path (str, optional): Path to a file where the JSON will be written.
         """
         # Gather all serializable attributes from the class hierarchy
         serializable_attrs = set()
         suppress_attrs = set()
-        for cls in self.__class__.__mro__:
+        for cls in self.__class__.__mro__:  # Traverse the class hierarchy
             if hasattr(cls, 'serializable_attributes') and isinstance(cls.serializable_attributes, list):
                 serializable_attrs.update(cls.serializable_attributes)
             if hasattr(cls, 'suppress_attributes_from_serialization') and isinstance(cls.suppress_attributes_from_serialization, list):
@@ -541,8 +541,8 @@ def post_init(cls):
 
     def new_init(self, *args, **kwargs):
         original_init(self, *args, **kwargs)
-        if hasattr(self, '_post_init'):
-            self._post_init()
+        if hasattr(cls, '_post_init'):
+            cls._post_init(self)
 
     cls.__init__ = new_init
     return cls

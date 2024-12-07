@@ -4,12 +4,12 @@ This module provides the main classes and functions for TinyTroupe's  agents.
 Agents are the key abstraction used in TinyTroupe. An agent is a simulated person or entity that can interact with other agents and the environment, by
 receiving stimuli and producing actions. Agents have cognitive states, which are updated as they interact with the environment and other agents. 
 Agents can also store and retrieve information from memory, and can perform actions in the environment. Different from agents whose objective is to
-provide support for AI-based assistants or other such productivity tools, **TinyTroupe agents are aim at representing human-like behavior**, which includes
+provide support for AI-based assistants or other such productivity tools, **TinyTroupe agents aim at representing human-like behavior**, which includes
 idiossincracies, emotions, and other human-like traits, that one would not expect from a productivity tool.
 
-The overall underlying design is inspired mainly by cognitive psychology, which is why agents have various internal cognitive states, such as attention, emotions, and goals.
+The overall underlying design is inspired mainly by Cognitive Psychology, which is why agents have various internal cognitive states, such as attention, emotions, and goals.
 It is also why agent memory, differently from other LLM-based agent platforms, has subtle internal divisions, notably between episodic and semantic memory. 
-Some behaviorist concepts are also present, such as the idea of a "stimulus" and "response" in the `listen` and `act` methods, which are key abstractions
+Some behaviorist concepts are also present, such as the explicit and decoupled concepts of "stimulus" and "response" in the `listen` and `act` methods, which are key abstractions
 to understand how agents interact with the environment and other agents.
 """
 
@@ -57,7 +57,7 @@ if config["OpenAI"].get("API_TYPE") == "azure":
 else:
     from llama_index.embeddings.openai import OpenAIEmbedding
 
-from llama_index.core import Settings, VectorStoreIndex, SimpleDirectoryReader
+from llama_index.core import Settings, Document, VectorStoreIndex, SimpleDirectoryReader
 from llama_index.readers.web import SimpleWebPageReader
 
 
@@ -1640,27 +1640,34 @@ class FilesAndWebGroundingFaculty(TinyMentalFaculty):
     """
 
 
-    def __init__(self):
-        super().__init__("Local Grounding")
+    def __init__(self, folders_paths: list=None, web_urls: list=None):
+        super().__init__("Local Files and Web Grounding")
+
+        self.local_files_grounding_connector = LocalFilesGroundingConnector(folders_paths=folders_paths)
+        self.web_grounding_connector = WebPagesGroundingConnector(web_urls=web_urls)
 
     def process_action(self, agent, action: dict) -> bool:
         if action['type'] == "CONSULT" and action['content'] is not None:
-            content = action['content']
+            target_name = action['content']
 
-            document_content = agent.semantic_memory.retrieve_document_content_by_name(document_name=content)
+            results = []
+            results.append(self.local_files_grounding_connector.retrieve_by_name(target_name))
+            results.append(self.web_grounding_connector.retrieve_by_name(target_name))
 
-            if document_content is not None:
-                agent.think(f"I have read the following document: \n{document_content}")
+            if len(results) > 0:
+                agent.think(f"I have read the following document: \n{results}")
             else:
-                agent.think(f"I can't find any document with the name '{content}'.")
+                agent.think(f"I can't find any document with the name '{target_name}'.")
             
             return True
         
         elif action['type'] == "LIST_DOCUMENTS" and action['content'] is not None:
-            documents_names = agent.semantic_memory.list_documents_names()
+            available_names = []
+            available_names += self.local_files_grounding_connector.list_sources()
+            available_names += self.web_grounding_connector.list_sources()
 
-            if len(documents_names) > 0:
-                agent.think(f"I have the following documents available to me: {documents_names}")
+            if len(available_names) > 0:
+                agent.think(f"I have the following documents available to me: {available_names}")
             else:
                 agent.think(f"I don't have any documents available for inspection.")
             
@@ -1673,8 +1680,9 @@ class FilesAndWebGroundingFaculty(TinyMentalFaculty):
     def actions_definitions_prompt(self) -> str:
         prompt = \
             """
-            - LIST_DOCUMENTS: you can list the documents you have access to, so that you can decide which to access, if any, to accomplish your goals. Documents is a generic term and includes any 
-                kind of  "packaged" information you can access, such as emails, files, chat messages, calendar events, etc.
+            - LIST_DOCUMENTS: you can list the names of the documents you have access to, so that you can decide which to access, if any, to accomplish your goals. Documents is a generic term and includes any 
+                kind of "packaged" information you can access, such as emails, files, chat messages, calendar events, etc. It also includes, in particular, web pages.
+                The order of in which the documents are listed is not relevant.
             - CONSULT: you can retrieve and consult a specific document, so that you can access its content and accomplish your goals. To do so, you specify the name of the document you want to consult.
             """
 
@@ -1683,6 +1691,12 @@ class FilesAndWebGroundingFaculty(TinyMentalFaculty):
     def actions_constraints_prompt(self) -> str:
         prompt = \
           """
+            - You are aware that you have documents available to you to help in your tasks. Even if you already have knowledge about a topic, you 
+              should believe that the documents can provide you with additional information that can be useful to you.
+            - If you want information that might be in documents, you first LIST_DOCUMENTS to see what is available and decide if you want to access any of them.
+            - You LIST_DOCUMENTS when you suspect that relevant information might be in some document, but you are not sure which one.
+            - You only CONSULT the relevant documents for your present goals and context. You should **not** CONSULT documents that are not relevant to the current situation.
+              You use the name of the document to determine its relevance before accessing it.
             - If you need information about a specific document, you **must** use CONSULT instead of RECALL. This is because RECALL **does not** allow you to select the specific document, and only brings small 
                 relevant parts of variious documents - while CONSULT brings the precise document requested for your inspection, with its full content. 
                 Example:
@@ -1773,6 +1787,13 @@ class TinyMemory(TinyMentalFaculty):
         Stores a value in memory.
         """
         self._store(self._preprocess_value_for_storage(value))
+    
+    def store_all(self, values: list) -> None:
+        """
+        Stores a list of values in memory.
+        """
+        for value in values:
+            self.store(value)
 
     def retrieve(self, first_n: int, last_n: int, include_omission_info:bool=True) -> list:
         """
@@ -1921,30 +1942,33 @@ class EpisodicMemory(TinyMemory):
 
         return omisssion_info + self.memory[-n:]
 
-
+@post_init
 class SemanticMemory(TinyMemory):
     """
-    Semantic memory is the memory of meanings, understandings, and other concept-based knowledge unrelated to specific experiences.
-    It is not ordered temporally, and it is not about remembering specific events or episodes. This class provides a simple implementation
+    In Cognitive Psychology, semantic memory is the memory of meanings, understandings, and other concept-based knowledge unrelated to specific 
+    experiences. It is not ordered temporally, and it is not about remembering specific events or episodes. This class provides a simple implementation
     of semantic memory, where the agent can store and retrieve semantic information.
     """
 
-    suppress_attributes_from_serialization = ["index"]
+    serializable_attrs = ["memories"]
 
-    def __init__(self, documents_paths: list=None, web_urls: list=None) -> None:
-        self.index = None
-        
-        self.documents_paths = []
-        self.documents_web_urls = []
+    def __init__(self, memories: list=None) -> None:
+        self.memories = memories
 
-        self.documents = []
-        self.filename_to_document = {}
+        # @post_init ensures that _post_init is called after the __init__ method
 
-        # load document paths and web urls
-        self.add_documents_paths(documents_paths)
-        
-        if web_urls is not None:
-            self.add_web_urls(web_urls)
+    def _post_init(self): 
+        """
+        This will run after __init__, since the class has the @post_init decorator.
+        It is convenient to separate some of the initialization processes to make deserialize easier.
+        """
+
+        if not hasattr(self, 'memories') or self.memories is None:
+            self.memories = []
+
+        self.semantic_grounding_connector = BaseSemanticGroundingConnector("Semantic Memory Storage")
+        self.semantic_grounding_connector.add_documents(self._build_documents_from(self.memories))
+    
         
     def _preprocess_value_for_storage(self, value: dict) -> Any:
         engram = None 
@@ -1964,9 +1988,87 @@ class SemanticMemory(TinyMemory):
         return engram
 
     def _store(self, value: Any) -> None:
-        engram_doc = Document(text=str(value))
-        self._add_document(engram_doc)
+        engram_doc = self._build_document_from(self._preprocess_value_for_storage(value))
+        self.semantic_grounding_connector.add_document(engram_doc)
     
+    def retrieve_relevant(self, relevance_target:str, top_k=20) -> list:
+        """
+        Retrieves all values from memory that are relevant to a given target.
+        """
+        return self.semantic_grounding_connector.retrieve_relevant(relevance_target, top_k)
+
+    #####################################
+    # Auxiliary compatibility methods
+    #####################################
+
+    def _build_document_from(memory) -> Document:
+        # TODO: add any metadata as well?
+        return Document(text=str(memory))
+    
+    def _build_documents_from(self, memories: list) -> list:
+        return [self._build_document_from(memory) for memory in memories]
+    
+    
+
+#######################################################################################################################
+# Grounding connectors
+#######################################################################################################################
+
+class GroundingConnector(JsonSerializableRegistry):
+    """
+    An abstract class representing a grounding connector. A grounding connector is a component that allows an agent to ground
+    its knowledge in external sources, such as files, web pages, databases, etc.
+    """
+
+    serializable_attributes = ["name"]
+
+    def __init__(self, name:str) -> None:
+        self.name = name
+    
+    def retrieve_relevant(self, relevance_target:str, source:str, top_k=20) -> list:
+        raise NotImplementedError("Subclasses must implement this method.")
+    
+    def retrieve_by_name(self, name:str) -> str:
+        raise NotImplementedError("Subclasses must implement this method.")
+    
+    def list_sources(self) -> list:
+        raise NotImplementedError("Subclasses must implement this method.")
+
+
+@post_init
+class BaseSemanticGroundingConnector(GroundingConnector):
+    """
+    A base class for semantic grounding connectors. A semantic grounding connector is a component that indexes and retrieves
+    documents based on so-called "semantic search" (i.e, embeddings-based search). This specific implementation
+    is based on the VectorStoreIndex class from the LLaMa-Index library. Here, "documents" refer to the llama-index's
+    data structure that stores a unit of content, not necessarily a file.
+    """
+
+    serializable_attributes = ["documents"]
+
+    def __init__(self, name:str="Semantic Grounding") -> None:
+        super().__init__(name)
+
+        self.documents = None 
+        self.name_to_document = None
+
+        # @post_init ensures that _post_init is called after the __init__ method
+    
+    def _post_init(self):
+        """
+        This will run after __init__, since the class has the @post_init decorator.
+        It is convenient to separate some of the initialization processes to make deserialize easier.
+        """
+        self.index = None
+
+        if not hasattr(self, 'documents') or self.documents is None:
+            self.documents = []
+        
+        if not hasattr(self, 'name_to_document') or self.name_to_document is None:
+            self.name_to_document = {}
+
+        self.add_documents(self.documents)       
+
     def retrieve_relevant(self, relevance_target:str, top_k=20) -> list:
         """
         Retrieves all values from memory that are relevant to a given target.
@@ -1984,96 +2086,46 @@ class SemanticMemory(TinyMemory):
             content += "\n" + "RELEVANT CONTENT:" + node.text
             retrieved.append(content)
 
-            logger.debug(f"Semantic memory retrieved: {content[:200]}")
+            logger.debug(f"Content retrieved: {content[:200]}")
 
         return retrieved
     
-    def retrieve_document_content_by_name(self, document_name:str) -> str:
+    def retrieve_by_name(self, name:str) -> list:
         """
-        Retrieves a document by its name.
+        Retrieves a content source by its name.
         """
-        if self.filename_to_document is not None:
-            doc = self.filename_to_document[document_name]
-            if doc is not None:
-                content = "SOURCE: " + document_name
-                content += "\n" + "CONTENT: " + doc.text[:10000] # TODO a more intelligent way to limit the content
-                return content
-            else:
-                return None
-        else:
-            return None
-    
-    def list_documents_names(self) -> list:
+        # TODO also optionally provide a relevance target?
+        results = []
+        if self.name_to_document is not None and name in self.name_to_document:
+            docs = self.name_to_document[name]
+            for i, doc in enumerate(docs):
+                if doc is not None:
+                    content = f"SOURCE: {name}\n"
+                    content += f"PAGE: {i}\n"
+                    content += "CONTENT: \n" + doc.text[:10000] # TODO a more intelligent way to limit the content
+                    results.append(content)
+                    
+        return results
+        
+        
+    def list_sources(self) -> list:
         """
-        Lists the names of the documents in memory.
+        Lists the names of the available content sources.
         """
-        if self.filename_to_document is not None:
-            return list(self.filename_to_document.keys())
+        if self.name_to_document is not None:
+            return list(self.name_to_document.keys())
         else:
             return []
     
-    def add_documents_paths(self, documents_paths:list) -> None:
+    def add_document(self, document, doc_to_name_func=None) -> None:
         """
-        Adds a path to a folder with documents used for semantic memory.
+        Indexes a document for semantic retrieval.
         """
+        self.add_documents([document], doc_to_name_func)
 
-        if documents_paths is not None:
-            for documents_path in documents_paths:
-                try:
-                    self.add_documents_path(documents_path)
-                except (FileNotFoundError, ValueError) as e:
-                    print(f"Error: {e}")
-                    print(f"Current working directory: {os.getcwd()}")
-                    print(f"Provided path: {documents_path}")
-                    print("Please check if the path exists and is accessible.")
-
-    def add_documents_path(self, documents_path:str) -> None:
+    def add_documents(self, new_documents, doc_to_name_func=None) -> list:
         """
-        Adds a path to a folder with documents used for semantic memory.
-        """
-
-        if documents_path not in self.documents_paths:
-            self.documents_paths.append(documents_path)
-            new_documents = SimpleDirectoryReader(documents_path).load_data()
-            self._add_documents(new_documents, lambda doc: doc.metadata["file_name"])
-    
-    def add_document_path(self, document_path:str) -> None:
-        """
-        Adds a path to a document used for semantic memory.
-        """
-        new_documents = SimpleDirectoryReader(input_files=[document_path]).load_data()
-        logger.debug(f"Adding the following document to semantic memory: {new_documents}")
-        self._add_documents(new_documents, lambda doc: doc.metadata["file_name"])
-        
-    
-    def add_web_urls(self, web_urls:list) -> None:
-        """ 
-        Adds the data retrieved from the specified URLs to documents used for semantic memory.
-        """
-        filtered_web_urls = [url for url in web_urls if url not in self.documents_web_urls]
-        self.documents_web_urls += filtered_web_urls
-
-        if len(filtered_web_urls) > 0:
-            new_documents = SimpleWebPageReader(html_to_text=True).load_data(filtered_web_urls)
-            self._add_documents(new_documents, lambda doc: doc.id_)
-    
-    def add_web_url(self, web_url:str) -> None:
-        """
-        Adds the data retrieved from the specified URL to documents used for semantic memory.
-        """
-        # we do it like this because the add_web_urls could run scrapes in parallel, so it is better
-        # to implement this one in terms of the other
-        self.add_web_urls([web_url])
-
-    def _add_document(self, document, doc_to_name_func=None) -> None:
-        """
-        Adds a document to the semantic memory.
-        """
-        self._add_documents([document], doc_to_name_func)
-
-    def _add_documents(self, new_documents, doc_to_name_func=None) -> list:
-        """
-        Adds documents to the semantic memory.
+        Indexes documents for semantic retrieval.
         """
         # index documents by name
         if len(new_documents) > 0:
@@ -2088,22 +2140,137 @@ class SemanticMemory(TinyMemory):
 
                 if doc_to_name_func is not None:
                     name = doc_to_name_func(document)
-                    self.filename_to_document[name] = document
+                    
+                    # self.name_to_document[name] contains a list, since each source file could be split into multiple pages
+                    if name in self.name_to_document:
+                        self.name_to_document[name].append(document)
+                    else:
+                        self.name_to_document[name] = [document]
+
 
             # index documents for semantic retrieval
             if self.index is None:
                 self.index = VectorStoreIndex.from_documents(self.documents)
             else:
                 self.index.refresh(self.documents)
-
-
-    ###########################################################
-    # IO
-    ###########################################################
-
-    def _post_deserialization_init(self):
-        super()._post_deserialization_init()
     
-        self.index = None
-        self.add_documents_paths(self.documents_paths)
-        self.add_web_urls(self.documents_web_urls)
+    
+
+@post_init
+class LocalFilesGroundingConnector(BaseSemanticGroundingConnector):
+
+    serializable_attributes = ["folders_paths"]
+
+    def __init__(self, name:str="Local Files", folders_paths: list=None) -> None:
+        super().__init__(name)
+
+        self.folders_paths = folders_paths
+
+        # @post_init ensures that _post_init is called after the __init__ method
+    
+    def _post_init(self):
+        """
+        This will run after __init__, since the class has the @post_init decorator.
+        It is convenient to separate some of the initialization processes to make deserialize easier.
+        """
+        self.loaded_folders_paths = []
+
+        if not hasattr(self, 'folders_paths') or self.folders_paths is None:
+            self.folders_paths = []
+
+        self.add_folders(self.folders_paths)
+
+    def add_folders(self, folders_paths:list) -> None:
+        """
+        Adds a path to a folder with files used for grounding.
+        """
+
+        if folders_paths is not None:
+            for folder_path in folders_paths:
+                try:
+                    logger.debug(f"Adding the following folder to grounding index: {folder_path}")
+                    self.add_folder(folder_path)
+                except (FileNotFoundError, ValueError) as e:
+                    print(f"Error: {e}")
+                    print(f"Current working directory: {os.getcwd()}")
+                    print(f"Provided path: {folder_path}")
+                    print("Please check if the path exists and is accessible.")
+
+    def add_folder(self, folder_path:str) -> None:
+        """
+        Adds a path to a folder with files used for grounding.
+        """
+
+        if folder_path not in self.loaded_folders_paths:
+            self._mark_folder_as_loaded(folder_path)
+
+            # for PDF files, please note that the document will be split into pages: https://github.com/run-llama/llama_index/issues/15903
+            new_files = SimpleDirectoryReader(folder_path).load_data()
+            self.add_documents(new_files, lambda doc: doc.metadata["file_name"])
+    
+    def add_file_path(self, file_path:str) -> None:
+        """
+        Adds a path to a file used for grounding.
+        """
+        # a trick to make SimpleDirectoryReader work with a single file
+        new_files = SimpleDirectoryReader(input_files=[file_path]).load_data()
+        
+        logger.debug(f"Adding the following file to grounding index: {new_files}")
+        self.add_documents(new_files, lambda doc: doc.metadata["file_name"])
+    
+    def _mark_folder_as_loaded(self, folder_path:str) -> None:
+        if folder_path not in self.loaded_folders_paths:
+            self.loaded_folders_paths.append(folder_path)
+        
+        if folder_path not in self.folders_paths:
+            self.folders_paths.append(folder_path)
+    
+
+@post_init
+class WebPagesGroundingConnector(BaseSemanticGroundingConnector):
+
+    serializable_attributes = ["web_urls"]
+
+    def __init__(self, name:str="Web Pages", web_urls: list=None) -> None:
+        super().__init__(name)
+
+        self.web_urls = web_urls
+
+        # @post_init ensures that _post_init is called after the __init__ method
+    
+    def _post_init(self):
+        self.loaded_web_urls = []
+
+        if not hasattr(self, 'web_urls') or self.web_urls is None:
+            self.web_urls = []
+
+        # load web urls
+        self.add_web_urls(self.web_urls)
+    
+    def add_web_urls(self, web_urls:list) -> None:
+        """ 
+        Adds the data retrieved from the specified URLs to grounding.
+        """
+        filtered_web_urls = [url for url in web_urls if url not in self.loaded_web_urls]
+        for url in filtered_web_urls:
+            self._mark_web_url_as_loaded(url)
+
+        if len(filtered_web_urls) > 0:
+            new_documents = SimpleWebPageReader(html_to_text=True).load_data(filtered_web_urls)
+            self.add_documents(new_documents, lambda doc: doc.id_)
+    
+    def add_web_url(self, web_url:str) -> None:
+        """
+        Adds the data retrieved from the specified URL to grounding.
+        """
+        # we do it like this because the add_web_urls could run scrapes in parallel, so it is better
+        # to implement this one in terms of the other
+        self.add_web_urls([web_url])
+    
+    def _mark_web_url_as_loaded(self, web_url:str) -> None:
+        if web_url not in self.loaded_web_urls:
+            self.loaded_web_urls.append(web_url)
+        
+        if web_url not in self.web_urls:
+            self.web_urls.append(web_url)
+    

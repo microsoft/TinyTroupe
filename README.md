@@ -117,26 +117,39 @@ To run the library, you need:
       conda activate tinytroupe
       ```
 4. Make sure you have either Azure OpenAI or OpenAI API keys set as environment variables, as described in the [Pre-requisites](#pre-requisites) section.
-5. Clone the repository, as we'll perform a local install (we **will not install from PyPI**):
+5. Use `pip` to install the library **directly from this repository** (we **will not install from PyPI**):
+   ```bash
+   pip install git+https://github.com/microsoft/TinyTroupe.git@main
+   ```
+
+Now you should be able to `import tinytroupe` in your Python code or Jupyter notebooks. 🥳
+
+*Note: If you have any issues, try to clone the repository and install from the local repository, as described below.*
+
+
+### Running the examples after installation
+To actually run the examples, you need to download them to your local machine. You can do this by cloning the repository:
+
+1. Clone the repository, as we'll perform a local install (we **will not install from PyPI**):
     ```bash
     git clone https://github.com/microsoft/tinytroupe
     cd tinytroupe
     ```
-  
-6. Install the library **from this repository, not PyPI**: 
-      ```bash   
-      pip install .
-      ```
-7. You can now run the examples in the [examples/](./examples/) folder or use TinyTroupe to create your simulations 🥳. If you want to run the examples in the 
-   [examples/](./examples/) folder or modify TinyTroupe itself, however, you should clone the repository as described below.
+2. You can now run the examples in the [examples/](./examples/) folder, or adapt them to create your own custom simulations. 
 
 
 ### Local development
 
 If you want to modify TinyTroupe itself, you can install it in editable mode (i.e., changes to the code will be reflected immediately):
-```bash
-pip install -e .
-```
+1. Clone the repository, as we'll perform a local install (we **will not install from PyPI**):
+    ```bash
+    git clone https://github.com/microsoft/tinytroupe
+    cd tinytroupe
+    ```
+2. Install the library in editable mode:
+    ```bash
+    pip install -e .
+    ```
 
 ## Principles 
 Recently, we have seen LLMs used to simulate people (such as [this](https://github.com/joonspk-research/generative_agents)), but largely in a “game-like” setting for contemplative or entertainment purposes. There are also libraries for building multiagent systems for problem-solving and assistive AI, like [Autogen](https://microsoft.github.io/) and [Crew AI](https://docs.crewai.com/). What if we combine these ideas and simulate people to support productivity tasks? TinyTroupe is our attempt. To do so, it follows these principles:
@@ -408,7 +421,7 @@ Or as bibtex:
  TinyTroupe is for research and simulation only. TinyTroupe is a research and experimental technology, which relies on Artificial Intelligence (AI) models to generate text  content. The AI system output may include unrealistic, inappropriate, harmful or inaccurate results, including factual errors. You are responsible for reviewing the generated content (and adapting it if necessary) before using it, as you are fully responsible for determining its accuracy and fit for purpose. We advise using TinyTroupe’s outputs for insight generation and not for direct decision-making. Generated outputs do not reflect the opinions of Microsoft. You are fully responsible for any use you make of the generated outputs. For more information regarding the responsible use of this technology, see the [RESPONSIBLE_AI_FAQ.md](./RESPONSIBLE_AI_FAQ.md).
 
  **PROHIBITED USES**:
-TinyTroupe  is not intended to simulate sensitive (e.g. violent or sexual) situations. Moreover, outputs must not be used to deliberately deceive, mislead or harm people in any way. You are fully responsible for any use you make and must comply with all applicable laws and regulations.”
+TinyTroupe  is not intended to simulate sensitive (e.g. violent or sexual) situations. Moreover, outputs must not be used to deliberately deceive, mislead or harm people in any way. You are fully responsible for any use you make and must comply with all applicable laws and regulations.
 
 ## Trademarks
 
