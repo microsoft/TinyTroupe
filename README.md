@@ -15,7 +15,7 @@
 
 In all of the above, and many others, we hope experimenters can **gain insights** about their domain of interest, and thus make better decisions. 
 
-We are releasing *TinyTroupe* at a relativelly early stage, with considerable work still to be done, because we are looking for feedback and contributions to steer development in productive directions. We are particularly interested in finding new potential use cases, for instance in specific industries. 
+We are releasing *TinyTroupe* at a relatively early stage, with considerable work still to be done, because we are looking for feedback and contributions to steer development in productive directions. We are particularly interested in finding new potential use cases, for instance in specific industries. 
 
 >[!NOTE] 
 >🚧 **WORK IN PROGRESS: expect frequent changes**.
