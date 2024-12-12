@@ -124,7 +124,6 @@ class TinyCalendar(TinyTool):
         return textwrap.dedent(prompt)
     
 
-
 class TinyWordProcessor(TinyTool):
 
     def __init__(self, owner=None, exporter=None, enricher=None):

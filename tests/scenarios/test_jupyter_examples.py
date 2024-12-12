@@ -8,6 +8,8 @@ sys.path.insert(0, '../../tinytroupe/') # ensures that the package is imported f
 sys.path.insert(0, '../../') # ensures that the package is imported from the parent directory, not the Python installation
 sys.path.insert(0, '..') # ensures that the package is imported from the parent directory, not the Python installation
 
+from conftest import test_examples
+
 # Set the folder containing the notebooks
 NOTEBOOK_FOLDER = "../examples/"  # Update this path
 
@@ -28,22 +30,26 @@ def get_notebooks(folder):
 @pytest.mark.parametrize("notebook_path", get_notebooks(NOTEBOOK_FOLDER))
 def test_notebook_execution(notebook_path):
     """Execute a Jupyter notebook and assert that no exceptions occur."""
-    with open(notebook_path, "r", encoding="utf-8") as nb_file:
-        notebook = nbformat.read(nb_file, as_version=4)
-        print(f"Executing notebook: {notebook_path} with kernel: {KERNEL_NAME}")
-        ep = ExecutePreprocessor(timeout=TIMEOUT, kernel_name=KERNEL_NAME)
 
-        try:
-            ep.preprocess(notebook, {'metadata': {'path': NOTEBOOK_FOLDER}})
-            print(f"Notebook {notebook_path} executed successfully.")
+    if test_examples:
+        with open(notebook_path, "r", encoding="utf-8") as nb_file:
+            notebook = nbformat.read(nb_file, as_version=4)
+            print(f"Executing notebook: {notebook_path} with kernel: {KERNEL_NAME}")
+            ep = ExecutePreprocessor(timeout=TIMEOUT, kernel_name=KERNEL_NAME)
 
-        except Exception as e:
-            pytest.fail(f"Notebook {notebook_path} raised an exception: {e}")
-        
-        finally:
-            # save a copy of the executed notebook
-            output_path = notebook_path.replace(".ipynb", ".executed.local.ipynb")
-            with open(output_path, "w", encoding="utf-8") as out_file:
-                nbformat.write(notebook, out_file)
+            try:
+                ep.preprocess(notebook, {'metadata': {'path': NOTEBOOK_FOLDER}})
+                print(f"Notebook {notebook_path} executed successfully.")
+
+            except Exception as e:
+                pytest.fail(f"Notebook {notebook_path} raised an exception: {e}")
             
-            print(f"Executed notebook saved as: {output_path}")
+            finally:
+                # save a copy of the executed notebook
+                output_path = notebook_path.replace(".ipynb", ".executed.local.ipynb")
+                with open(output_path, "w", encoding="utf-8") as out_file:
+                    nbformat.write(notebook, out_file)
+                
+                print(f"Executed notebook saved as: {output_path}")
+    else:
+        print(f"Skipping notebooks executions for {notebook_path}.")

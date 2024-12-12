@@ -1,2 +1,2 @@
 cd tests
-pytest -s --refresh_cache
+pytest -s --refresh_cache --test_examples
