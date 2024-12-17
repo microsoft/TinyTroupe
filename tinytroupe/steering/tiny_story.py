@@ -1,14 +1,16 @@
-"""
-Every simulation tells a story. This module provides helper mechanisms to help with crafting appropriate stories in TinyTroupe.
-"""
-
 from typing import List
+
+from tinytroupe.extraction import logger
 from tinytroupe.agent import TinyPerson
 from tinytroupe.environment import TinyWorld
 import tinytroupe.utils as utils
 from tinytroupe import openai_utils
 
 class TinyStory:
+    """
+    Every simulation tells a story. This class provides helper mechanisms to help with crafting appropriate stories in TinyTroupe.
+    """
+
 
     def __init__(self, environment:TinyWorld=None, agent:TinyPerson=None, purpose:str="Be a realistic simulation.", context:str="",
                  first_n=10, last_n=20, include_omission_info:bool=True) -> None:
@@ -57,7 +59,9 @@ class TinyStory:
                              "include_plot_twist": include_plot_twist
                             }
 
-        messages = utils.compose_initial_LLM_messages_with_templates("story.start.system.mustache", "story.start.user.mustache", rendering_configs)
+        messages = utils.compose_initial_LLM_messages_with_templates("story.start.system.mustache", "story.start.user.mustache", 
+                                                                     base_module_folder="steering",
+                                                                     rendering_configs=rendering_configs)
         next_message = openai_utils.client().send_message(messages, temperature=1.5)
 
         start = next_message["content"]
@@ -87,7 +91,9 @@ class TinyStory:
                              "include_plot_twist": include_plot_twist
                             }
 
-        messages = utils.compose_initial_LLM_messages_with_templates("story.continuation.system.mustache", "story.continuation.user.mustache", rendering_configs)
+        messages = utils.compose_initial_LLM_messages_with_templates("story.continuation.system.mustache", "story.continuation.user.mustache", 
+                                                                     base_module_folder="steering",
+                                                                     rendering_configs=rendering_configs)
         next_message = openai_utils.client().send_message(messages, temperature=1.5)
 
         continuation = next_message["content"]

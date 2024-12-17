@@ -1,13 +1,4 @@
-import os
-import json
-import chevron
-import logging
-logger = logging.getLogger("tinytroupe")
-import pandas as pd
-
-from tinytroupe.agent import TinyPerson
-from tinytroupe.environment import TinyWorld
-from tinytroupe.factory import TinyPersonFactory
+from tinytroupe.enrichment import logger
 from tinytroupe.utils import JsonSerializableRegistry
 
 
@@ -29,7 +20,10 @@ class TinyEnricher(JsonSerializableRegistry):
                              "context_info": context_info,
                              "context_cache": context_cache}
 
-        messages = utils.compose_initial_LLM_messages_with_templates("enricher.system.mustache", "enricher.user.mustache", rendering_configs)
+        messages = utils.compose_initial_LLM_messages_with_templates("enricher.system.mustache", "enricher.user.mustache", 
+                                                                     base_module_folder = "enrichment",
+                                                                     rendering_configs=rendering_configs)
+        
         next_message = openai_utils.client().send_message(messages, temperature=0.4)
         
         debug_msg = f"Enrichment result message: {next_message}"

@@ -11,7 +11,7 @@ sys.path.insert(0, '..') # ensures that the package is imported from the parent 
 from conftest import test_examples
 
 # Set the folder containing the notebooks
-NOTEBOOK_FOLDER = "../examples/"  # Update this path
+NOTEBOOK_FOLDER = os.path.join(os.path.dirname(__file__), "../../examples/")  # Update this path
 
 # Set a timeout for long-running notebooks
 TIMEOUT = 600

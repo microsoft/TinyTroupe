@@ -23,7 +23,7 @@ classifiers = [
 
 dependencies = [
     "pandas", 
-    "pytest",                      
+    "pytest", "pytest-cov",
     "openai >= 1.40", 
     "tiktoken",
     "msal",
@@ -38,3 +38,8 @@ dependencies = [
 [project.urls]
 "Homepage" = "https://github.com/microsoft/tinytroupe"
 
+[tool.pytest.ini_options]
+pythonpath = [
+  "."
+]
+addopts = "--cov=. --cov-report=html --cov-report=xml"

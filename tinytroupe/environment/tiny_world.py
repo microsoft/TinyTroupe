@@ -7,6 +7,7 @@ from tinytroupe.agent import *
 from tinytroupe.utils import name_or_empty, pretty_datetime
 import tinytroupe.control as control
 from tinytroupe.control import transactional
+from tinytroupe import utils
  
 from rich.console import Console
 

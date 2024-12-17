@@ -4,9 +4,10 @@ Testing utilities.
 import os
 import sys
 from time import sleep
-sys.path.append('../../tinytroupe/')
-sys.path.append('../../')
-sys.path.append('..')
+
+sys.path.insert(0, '../../tinytroupe/')
+sys.path.insert(0, '../../')
+sys.path.insert(0, '..')
 
 import tinytroupe.openai_utils as openai_utils
 from tinytroupe.agent import TinyPerson
@@ -20,8 +21,8 @@ import conftest
 # global constants
 ##################################################
 CACHE_FILE_NAME = "tests_cache.pickle"
-EXPORT_BASE_FOLDER = "./outputs/exports"
-TEMP_SIMULATION_CACHE_FILE_NAME = "simulation_test_case.cache.json"
+EXPORT_BASE_FOLDER = os.path.join(os.path.dirname(__file__), "outputs/exports")
+TEMP_SIMULATION_CACHE_FILE_NAME = os.path.join(os.path.dirname(__file__), "simulation_test_case.cache.json")
 
 
 ##################################################

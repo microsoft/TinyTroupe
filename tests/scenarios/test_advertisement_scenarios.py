@@ -15,11 +15,12 @@ from tinytroupe.factory import TinyPersonFactory
 from tinytroupe.extraction import ResultsExtractor
 
 from tinytroupe.examples import create_lisa_the_data_scientist, create_oscar_the_architect, create_marcos_the_physician
-from tinytroupe.extraction import default_extractor as extractor
+
 import tinytroupe.control as control
 from tinytroupe.control import Simulation
 
 from testing_utils import *
+
 
 def test_ad_evaluation_scenario(setup):
     # user search query: "europe travel package"
@@ -205,6 +206,7 @@ def test_ad_creation_scenario(setup, focus_group_world):
 
     focus_group.run(2)
 
+    extractor = ResultsExtractor()
     res = extractor.extract_results_from_world(focus_group, verbose=True)
 
     assert proposition_holds(f"The following contains ideas for an apartment advertisement: '{res}'"), f"Proposition is false according to the LLM."

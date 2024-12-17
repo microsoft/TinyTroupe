@@ -144,7 +144,7 @@ class TinyPerson(JsonSerializableRegistry):
             self._extended_agent_summary = None
 
         self._prompt_template_path = os.path.join(
-            os.path.dirname(__file__), "../prompts/tinyperson.mustache"
+            os.path.dirname(__file__), "prompts/tinyperson.mustache"
         )
         self._init_system_message = None  # initialized later
 

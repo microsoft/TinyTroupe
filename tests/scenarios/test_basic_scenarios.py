@@ -1,5 +1,6 @@
 import pytest
 import logging
+
 logger = logging.getLogger("tinytroupe")
 
 import sys
@@ -19,7 +20,6 @@ from tinytroupe.extraction import ArtifactExporter
 from tinytroupe.tools import TinyWordProcessor
 
 from tinytroupe.examples import create_lisa_the_data_scientist, create_oscar_the_architect, create_marcos_the_physician
-from tinytroupe.extraction import default_extractor as extractor
 import tinytroupe.control as control
 from tinytroupe.control import Simulation
 

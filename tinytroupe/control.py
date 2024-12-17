@@ -78,7 +78,7 @@ class Simulation:
         # local import to avoid circular dependencies
         from tinytroupe.agent import TinyPerson
         from tinytroupe.environment import TinyWorld
-        from tinytroupe.factory import TinyFactory
+        from tinytroupe.factory.tiny_factory import TinyFactory
 
         if self.status == Simulation.STATUS_STOPPED:
             self.status = Simulation.STATUS_STARTED
@@ -97,7 +97,7 @@ class Simulation:
         TinyFactory.clear_factories()
 
         # All automated fresh ids will start from 0 again for this simulation
-        utils._fresh_id_counter = 0
+        utils.reset_fresh_id()
 
         # load the cache file, if any
         if self.cache_path is not None:
@@ -387,7 +387,7 @@ class Transaction:
         # local import to avoid circular dependencies
         from tinytroupe.agent import TinyPerson
         from tinytroupe.environment import TinyWorld
-        from tinytroupe.factory import TinyFactory
+        from tinytroupe.factory.tiny_factory import TinyFactory
 
         self.obj_under_transaction = obj_under_transaction
         self.simulation = simulation
@@ -495,7 +495,7 @@ class Transaction:
         # local import to avoid circular dependencies
         from tinytroupe.agent import TinyPerson
         from tinytroupe.environment import TinyWorld
-        from tinytroupe.factory import TinyFactory
+        from tinytroupe.factory.tiny_factory import TinyFactory
 
 
         # if the output is a TinyPerson, encode it
@@ -523,7 +523,7 @@ class Transaction:
         # local import to avoid circular dependencies
         from tinytroupe.agent import TinyPerson
         from tinytroupe.environment import TinyWorld
-        from tinytroupe.factory import TinyFactory
+        from tinytroupe.factory.tiny_factory import TinyFactory
 
         if encoded_output is None:
             return None
