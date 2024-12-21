@@ -278,8 +278,8 @@ class OpenAIClient:
 
         if "response_format" in chat_api_params:
             # to enforce the response format, we need to use a different method
-
-            del chat_api_params["stream"]
+            if "stream" in chat_api_params:
+                del chat_api_params["stream"]
 
             return self.client.beta.chat.completions.parse(
                     **chat_api_params
