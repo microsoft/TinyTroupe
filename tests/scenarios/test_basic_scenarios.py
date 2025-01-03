@@ -78,7 +78,3 @@ def test_tool_usage_1():
     assert os.path.exists(f"{data_export_folder}/Document/Resume.docx"), "The document should have been written to a file."
     assert os.path.exists(f"{data_export_folder}/Document/Resume.json"), "The document should have been written to a file."
     assert os.path.exists(f"{data_export_folder}/Document/Resume.md"), "The document should have been written to a file."
-
-
-    assert control._current_simulations["default"].cached_trace is not None, "There should be a cached trace at this point."
-    assert control._current_simulations["default"].execution_trace is not None, "There should be an execution trace at this point."

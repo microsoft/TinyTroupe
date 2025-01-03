@@ -162,7 +162,7 @@ def create_test_system_user_message(user_prompt, system_prompt="You are a helpfu
     
     return messages
 
-def agents_configs_are_equal(agent1, agent2, ignore_name=False):
+def agents_personas_are_equal(agent1, agent2, ignore_name=False):
     """
     Checks if the configurations of two agents are equal.
     """
@@ -171,14 +171,20 @@ def agents_configs_are_equal(agent1, agent2, ignore_name=False):
     if ignore_name:
         ignore_keys.append("name")
     
-    for key in agent1._configuration.keys():
+    for key in agent1._persona.keys():
         if key in ignore_keys:
             continue
         
-        if agent1._configuration[key] != agent2._configuration[key]:
+        if agent1._persona[key] != agent2._persona[key]:
             return False
     
     return True
+
+def agent_first_name(agent):
+    """
+    Returns the first name of the agent.
+    """
+    return agent.name.split()[0]
 ############################################################################################################
 # I/O utilities
 ############################################################################################################

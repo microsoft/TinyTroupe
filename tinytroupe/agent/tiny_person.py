@@ -29,7 +29,9 @@ class TinyPerson(JsonSerializableRegistry):
 
     PP_TEXT_WIDTH = 100
 
-    serializable_attributes = ["name", "episodic_memory", "semantic_memory", "_mental_faculties", "_configuration"]
+    serializable_attributes = ["_persona", "_mental_state", "_mental_faculties", "episodic_memory", "semantic_memory"]
+    serializable_attributes_renaming = {"_mental_faculties": "mental_faculties", "_persona": "persona", "_mental_state": "mental_state"}
+
 
     # A dict of all agents instantiated so far.
     all_agents = {}  # name -> agent
@@ -115,9 +117,9 @@ class TinyPerson(JsonSerializableRegistry):
             # This default value MUST NOT be in the method signature, otherwise it will be shared across all instances.
             self._mental_faculties = []
 
-        # create the configuration dictionary
-        if not hasattr(self, '_configuration'):          
-            self._configuration = {
+        # create the persona configuration dictionary
+        if not hasattr(self, '_persona'):          
+            self._persona = {
                 "name": self.name,
                 "age": None,
                 "nationality": None,
@@ -129,22 +131,30 @@ class TinyPerson(JsonSerializableRegistry):
                 "professional_interests": [],
                 "personal_interests": [],
                 "skills": [],
-                "relationships": [],
-                "current_datetime": None,
-                "current_location": None,
-                "current_context": [],
-                "current_attention": None,
-                "current_goals": [],
-                "current_emotions": "Currently you feel calm and friendly.",
-                "current_memory_context": None,
-                "currently_accessible_agents": [],  # [{"agent": agent_1, "relation": "My friend"}, {"agent": agent_2, "relation": "My colleague"}, ...]
+                "relationships": []
+            }
+        
+        if not hasattr(self, 'name'): 
+            self.name = self._persona["name"]
+
+        # create the mental state dictionary
+        if not hasattr(self, '_mental_state'):
+            self._mental_state = {
+                "datetime": None,
+                "location": None,
+                "context": [],
+                "goals": [],
+                "attention": None,
+                "emotions": "Feeling nothing in particular, just calm.",
+                "memory_context": None,
+                "accessible_agents": []  # [{"agent": agent_1, "relation": "My friend"}, {"agent": agent_2, "relation": "My colleague"}, ...]
             }
         
         if not hasattr(self, '_extended_agent_summary'):
             self._extended_agent_summary = None
 
         self._prompt_template_path = os.path.join(
-            os.path.dirname(__file__), "prompts/tinyperson.mustache"
+            os.path.dirname(__file__), "prompts/tiny_person.mustache"
         )
         self._init_system_message = None  # initialized later
 
@@ -187,7 +197,7 @@ class TinyPerson(JsonSerializableRegistry):
     
     def _rename(self, new_name:str):    
         self.name = new_name
-        self._configuration["name"] = self.name
+        self._persona["name"] = self.name
 
 
     def generate_agent_system_prompt(self):
@@ -195,7 +205,8 @@ class TinyPerson(JsonSerializableRegistry):
             agent_prompt_template = f.read()
 
         # let's operate on top of a copy of the configuration, because we'll need to add more variables, etc.
-        template_variables = self._configuration.copy()    
+        template_variables = self._persona.copy()    
+        template_variables["persona"] = json.dumps(self._persona.copy(), indent=4)    
 
         # Prepare additional action definitions and constraints
         actions_definitions_prompt = ""
@@ -234,6 +245,7 @@ class TinyPerson(JsonSerializableRegistry):
                                       "content": "Now you **must** generate a sequence of actions following your interaction directives, " +\
                                                  "and complying with **all** instructions and contraints related to the action you use." +\
                                                  "DO NOT repeat the exact same action more than once in a row!" +\
+                                                 "DO NOT keep saying or doing very similar things, but instead try to adapt and make the interactions look natural." +\
                                                  "These actions **MUST** be rendered following the JSON specification perfectly, including all required keys (even if their value is empty), **ALWAYS**."
                                      })
 
@@ -241,40 +253,77 @@ class TinyPerson(JsonSerializableRegistry):
         """
         Returns the definition of a key in the TinyPerson's configuration.
         """
-        return self._configuration.get(key, None)
+        return self._persona.get(key, None)
     
     @transactional
-    def define(self, key, value, group=None):
+    def import_fragment(self, path):
         """
-        Define a value to the TinyPerson's configuration.
-        If group is None, the value is added to the top level of the configuration.
-        Otherwise, the value is added to the specified group.
+        Imports a fragment of a persona configuration from a JSON file.
+        """
+        with open(path, "r") as f:
+            fragment = json.load(f)
+
+        # check the type is "Fragment" and that there's also a "persona" key
+        if fragment.get("type", None) == "Fragment" and fragment.get("persona", None) is not None:
+            self.include_persona_definitions(fragment)
+        else:
+            raise ValueError("The imported JSON file must be a valid fragment of a persona configuration.")
+        
+        # must reset prompt after adding to configuration
+        self.reset_prompt()
+
+    @transactional
+    def include_persona_definitions(self, additional_definitions: dict):
+        """
+        Imports a set of definitions into the TinyPerson. They will be merged with the current configuration.
+        It is also a convenient way to include multiple bundled definitions into the agent.
+
+        Args:
+            additional_definitions (dict): The additional definitions to import.
+        """
+
+        self._persona = utils.merge_dicts(self._persona, additional_definitions)
+
+        # must reset prompt after adding to configuration
+        self.reset_prompt()
+        
+    
+    @transactional
+    def define(self, key, value, merge=True, overwrite_scalars=True):
+        """
+        Define a value to the TinyPerson's persona configuration. Value can either be a scalar or a dictionary.
+        If the value is a dictionary or list, you can choose to merge it with the existing value or replace it. 
+        If the value is a scalar, you can choose to overwrite the existing value or not.
+
+        Args:
+            key (str): The key to define.
+            value (Any): The value to define.
+            merge (bool, optional): Whether to merge the dict/list values with the existing values or replace them. Defaults to True.
+            overwrite_scalars (bool, optional): Whether to overwrite scalar values or not. Defaults to True.
         """
 
         # dedent value if it is a string
         if isinstance(value, str):
             value = textwrap.dedent(value)
 
-        if group is None:
-            # logger.debug(f"[{self.name}] Defining {key}={value} in the person.")
-            self._configuration[key] = value
-        else:
-            if key is not None:
-                # logger.debug(f"[{self.name}] Adding definition to {group} += [ {key}={value} ] in the person.")
-                self._configuration[group].append({key: value})
+        # if the value is a dictionary, we can choose to merge it with the existing value or replace it
+        if isinstance(value, dict) or isinstance(value, list):
+            if merge:
+                self._persona = utils.merge_dicts(self._persona, {key: value})
             else:
-                # logger.debug(f"[{self.name}] Adding definition to {group} += [ {value} ] in the person.")
-                self._configuration[group].append(value)
+                self._persona[key] = value
 
+        # if the value is a scalar, we can choose to overwrite it or not
+        elif overwrite_scalars or (key not in self._persona):
+            self._persona[key] = value
+        
+        else:
+            raise ValueError(f"The key '{key}' already exists in the persona configuration and overwrite_scalars is set to False.")
+
+            
         # must reset prompt after adding to configuration
         self.reset_prompt()
 
-    def define_several(self, group, records):
-        """
-        Define several values to the TinyPerson's configuration, all belonging to the same group.
-        """
-        for record in records:
-            self.define(key=None, value=record, group=group)
     
     @transactional
     def define_relationships(self, relationships, replace=True):
@@ -288,10 +337,10 @@ class TinyPerson(JsonSerializableRegistry):
         """
         
         if (replace == True) and (isinstance(relationships, list)):
-            self._configuration['relationships'] = relationships
+            self._persona['relationships'] = relationships
 
         elif replace == False:
-            current_relationships = self._configuration['relationships']
+            current_relationships = self._persona['relationships']
             if isinstance(relationships, list):
                 for r in relationships:
                     current_relationships.append(r)
@@ -310,7 +359,7 @@ class TinyPerson(JsonSerializableRegistry):
         """
         Clears the TinyPerson's relationships.
         """
-        self._configuration['relationships'] = []  
+        self._persona['relationships'] = []  
 
         return self      
     
@@ -665,7 +714,7 @@ class TinyPerson(JsonSerializableRegistry):
         """
         Moves to a new location and updates its internal cognitive state.
         """
-        self._configuration["current_location"] = location
+        self._mental_state["location"] = location
 
         # context must also be updated when moved, since we assume that context is dictated partly by location.
         self.change_context(context)
@@ -675,7 +724,7 @@ class TinyPerson(JsonSerializableRegistry):
         """
         Changes the context and updates its internal cognitive state.
         """
-        self._configuration["current_context"] = {
+        self._mental_state["context"] = {
             "description": item for item in context
         }
 
@@ -692,7 +741,7 @@ class TinyPerson(JsonSerializableRegistry):
         """
         if agent not in self._accessible_agents:
             self._accessible_agents.append(agent)
-            self._configuration["currently_accessible_agents"].append(
+            self._mental_state["accessible_agents"].append(
                 {"name": agent.name, "relation_description": relation_description}
             )
         else:
@@ -718,7 +767,7 @@ class TinyPerson(JsonSerializableRegistry):
         Makes all agents inaccessible to this agent.
         """
         self._accessible_agents = []
-        self._configuration["currently_accessible_agents"] = []
+        self._mental_state["accessible_agents"] = []
 
     @transactional
     def _produce_message(self):
@@ -754,27 +803,27 @@ class TinyPerson(JsonSerializableRegistry):
 
         # Update current datetime. The passage of time is controlled by the environment, if any.
         if self.environment is not None and self.environment.current_datetime is not None:
-            self._configuration["current_datetime"] = utils.pretty_datetime(self.environment.current_datetime)
+            self._mental_state["datetime"] = utils.pretty_datetime(self.environment.current_datetime)
 
         # update current goals
         if goals is not None:
-            self._configuration["current_goals"] = goals
+            self._mental_state["goals"] = goals
 
         # update current context
         if context is not None:
-            self._configuration["current_context"] = context
+            self._mental_state["context"] = context
 
         # update current attention
         if attention is not None:
-            self._configuration["current_attention"] = attention
+            self._mental_state["attention"] = attention
 
         # update current emotions
         if emotions is not None:
-            self._configuration["current_emotions"] = emotions
+            self._mental_state["emotions"] = emotions
         
         # update relevant memories for the current situation
         current_memory_context = self.retrieve_relevant_memories_for_current_context()
-        self._configuration["current_memory_context"] = current_memory_context
+        self._mental_state["memory_context"] = current_memory_context
 
         self.reset_prompt()
         
@@ -815,10 +864,10 @@ class TinyPerson(JsonSerializableRegistry):
 
     def retrieve_relevant_memories_for_current_context(self, top_k=7) -> list:
         # current context is composed of th recent memories, plus context, goals, attention, and emotions
-        context = self._configuration["current_context"]
-        goals = self._configuration["current_goals"]
-        attention = self._configuration["current_attention"]
-        emotions = self._configuration["current_emotions"]
+        context = self._mental_state["context"]
+        goals = self._mental_state["goals"]
+        attention = self._mental_state["attention"]
+        emotions = self._mental_state["emotions"]
         recent_memories = "\n".join([f"  - {m['content']}"  for m in self.retrieve_memories(first_n=0, last_n=10, max_content_length=100)])
 
         # put everything together in a nice markdown string to fetch relevant memories
@@ -963,7 +1012,7 @@ class TinyPerson(JsonSerializableRegistry):
             str: The mini-biography.
         """
 
-        base_biography = f"{self.name} is a {self._configuration['age']} year old {self._configuration['occupation']}, {self._configuration['nationality']}, currently living in {self._configuration['country_of_residence']}."
+        base_biography = f"{self.name} is a {self._persona['age']} year old {self._persona['occupation']['title']}, {self._persona['nationality']}, currently living in {self._persona['residence']}."
 
         if self._extended_agent_summary is None and extended:
             logger.debug(f"Generating extended agent summary for {self.name}.")
@@ -979,7 +1028,7 @@ class TinyPerson(JsonSerializableRegistry):
                                                 user_prompt=f"""
                                                 **Short biography:** {base_biography}
 
-                                                **Detailed specification:** {self._configuration}
+                                                **Detailed specification:** {self._persona}
                                                 """).call()
 
         if extended:
@@ -1163,7 +1212,7 @@ class TinyPerson(JsonSerializableRegistry):
     # IO
     ###########################################################
 
-    def save_spec(self, path, include_mental_faculties=True, include_memory=False):
+    def save_specification(self, path, include_mental_faculties=True, include_memory=False):
         """
         Saves the current configuration to a JSON file.
         """
@@ -1179,16 +1228,17 @@ class TinyPerson(JsonSerializableRegistry):
         if not include_mental_faculties:
             suppress_attributes.append("_mental_faculties")
 
-        self.to_json(suppress=suppress_attributes, file_path=path)
+        self.to_json(suppress=suppress_attributes, file_path=path,
+                     serialization_type_field_name="type")
 
     
     @staticmethod
-    def load_spec(path, suppress_mental_faculties=False, suppress_memory=False, auto_rename_agent=False, new_agent_name=None):
+    def load_specification(path_or_dict, suppress_mental_faculties=False, suppress_memory=False, auto_rename_agent=False, new_agent_name=None):
         """
         Loads a JSON agent specification.
 
         Args:
-            path (str): The path to the JSON file containing the agent specification.
+            path_or_dict (str or dict): The path to the JSON file or the dictionary itself.
             suppress_mental_faculties (bool, optional): Whether to suppress loading the mental faculties. Defaults to False.
             suppress_memory (bool, optional): Whether to suppress loading the memory. Defaults to False.
         """
@@ -1204,7 +1254,8 @@ class TinyPerson(JsonSerializableRegistry):
             suppress_attributes.append("episodic_memory")
             suppress_attributes.append("semantic_memory")
 
-        return TinyPerson.from_json(json_dict_or_path=path, suppress=suppress_attributes, 
+        return TinyPerson.from_json(json_dict_or_path=path_or_dict, suppress=suppress_attributes, 
+                                    serialization_type_field_name="type",
                                     post_init_params={"auto_rename_agent": auto_rename_agent, "new_agent_name": new_agent_name})
 
 
@@ -1264,10 +1315,10 @@ class TinyPerson(JsonSerializableRegistry):
         """
         new_agent = TinyPerson(name=new_name, spec_path=None)
         
-        new_config = copy.deepcopy(self._configuration)
-        new_config['name'] = new_name
+        new_persona = copy.deepcopy(self._persona)
+        new_persona['name'] = new_name
 
-        new_agent._configuration = new_config
+        new_agent._persona = new_persona
 
         return new_agent
         

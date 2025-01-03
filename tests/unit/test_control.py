@@ -132,7 +132,7 @@ def test_begin_checkpoint_end_with_factory(setup):
 
         if verbose:
             logger.debug(f"###################################################################################### Sim Iteration:{iteration}")
-            logger.debug(f"###################################################################################### Agent configs:{agent._configuration}")
+            logger.debug(f"###################################################################################### Agent persona configs:{agent._persona}")
 
         return agent
 

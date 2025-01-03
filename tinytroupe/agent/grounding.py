@@ -2,6 +2,7 @@ from tinytroupe.utils import JsonSerializableRegistry
 import tinytroupe.utils as utils
 
 from tinytroupe.agent import logger
+from llama_index.core import  VectorStoreIndex, SimpleDirectoryReader
 
 
 

@@ -24,7 +24,7 @@ def test_brainstorming_scenario(setup, focus_group_world):
     
     world.run(1)
 
-    agent = TinyPerson.get_agent_by_name("Lisa")
+    agent = TinyPerson.get_agent_by_name("Lisa Carter")
 
     agent.listen_and_act("Can you please summarize the ideas that the group came up with?")
 

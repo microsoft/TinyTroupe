@@ -53,7 +53,7 @@ class TinyPersonValidator:
         """)
 
         if include_agent_spec:
-            user_prompt += f"\n\n{person.generate_agent_system_prompt()}"
+            user_prompt += f"\n\n{json.dumps(person._persona, indent=4)}"
         else:
             user_prompt += f"\n\nMini-biography of the person being interviewed: {person.minibio()}"
 

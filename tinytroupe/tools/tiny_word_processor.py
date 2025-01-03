@@ -43,7 +43,7 @@ class TinyWordProcessor(TinyTool):
             if action['type'] == "WRITE_DOCUMENT" and action['content'] is not None:
                 # parse content json
                 if isinstance(action['content'], str):
-                    doc_spec = json.loads(action['content'])  
+                    doc_spec = utils.extract_json(action['content'])
                 else:
                     doc_spec = action['content']
                 
@@ -61,11 +61,14 @@ class TinyWordProcessor(TinyTool):
         except json.JSONDecodeError as e:
             logger.error(f"Error parsing JSON content: {e}. Original content: {action['content']}")
             return False
+        except Exception as e:
+            logger.error(f"Error processing action: {e}")
+            return False
 
     def actions_definitions_prompt(self) -> str:
         prompt = \
             """
-            - WRITE_DOCUMENT: you can create a new document. The content of the document has many fields, and you should use a JSON format to specify them. Here are the possible fields:
+            - WRITE_DOCUMENT: you can create a new document. The content of the document has many fields, and you **must** use a JSON format to specify them. Here are the possible fields:
                 * title: The title of the document. Mandatory.
                 * content: The actual content of the document. You **must** use Markdown to format this content. Mandatory.
                 * author: The author of the document. You should put your own name. Optional.
@@ -77,6 +80,7 @@ class TinyWordProcessor(TinyTool):
         prompt = \
             """
             - Whenever you WRITE_DOCUMENT, you write all the content at once. Moreover, the content should be long and detailed, unless there's a good reason for it not to be.
+            - Whenever you WRITE_DOCUMENT, you **must** embed the content in a JSON object. Use only valid escape sequences in the JSON content.
             - When you WRITE_DOCUMENT, you follow these additional guidelines:
                 * For any milestones or timelines mentioned, try mentioning specific owners or partner teams, unless there's a good reason not to do so.
             """
