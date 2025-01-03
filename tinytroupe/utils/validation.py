@@ -1,5 +1,6 @@
 import json 
 import sys
+import unicodedata
 
 from tinytroupe.utils import logger
 
@@ -26,6 +27,9 @@ def sanitize_raw_string(value: str) -> str:
     # remove any invalid characters by making sure it is a valid UTF-8 string
     value = value.encode("utf-8", "ignore").decode("utf-8")
 
+    value = unicodedata.normalize("NFC", value)
+
+
     # ensure it is not longer than the maximum Python string length
     return value[:sys.maxsize]
 
@@ -37,9 +41,9 @@ def sanitize_dict(value: dict) -> dict:
     """
 
     # sanitize the string representation of the dictionary
-    tmp_str = sanitize_raw_string(json.dumps(value, ensure_ascii=False))
-
-    value = json.loads(tmp_str)
+    for k, v in value.items():
+        if isinstance(v, str):
+            value[k] = sanitize_raw_string(v)
 
     # ensure that the dictionary is not too deeply nested
     return value

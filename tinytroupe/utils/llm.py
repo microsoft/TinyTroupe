@@ -64,16 +64,17 @@ def extract_json(text: str) -> dict:
         text  =  re.sub(r'(}|\])(?!.*(\]|\})).*$', r'\1', text, flags=re.DOTALL)
         
         # remove invalid escape sequences, which show up sometimes
-        # replace \' with just '
-        text =  re.sub("\\'", "'", text) #re.sub(r'\\\'', r"'", text)
+        text = re.sub("\\'", "'", text) # replace \' with just '
+        text = re.sub("\\,", ",", text)
 
-        # remove new lines, tabs, etc.
-        text = text.replace("\n", "").replace("\t", "").replace("\r", "")
-
+        # use strict=False to correctly parse new lines, tabs, etc.
+        parsed = json.loads(text, strict=False)
+        
         # return the parsed JSON object
-        return json.loads(text)
+        return parsed
     
-    except Exception:
+    except Exception as e:
+        logger.error(f"Error occurred while extracting JSON: {e}")
         return {}
 
 def extract_code_block(text: str) -> str:

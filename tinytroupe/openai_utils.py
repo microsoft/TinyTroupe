@@ -6,6 +6,8 @@ import json
 import pickle
 import logging
 import configparser
+from pydantic import BaseModel
+
 import tiktoken
 from tinytroupe import utils
 from tinytroupe.control import transactional
@@ -164,7 +166,7 @@ class OpenAIClient:
         waiting_time (int): The number of seconds to wait between requests.
         exponential_backoff_factor (int): The factor by which to increase the waiting time between requests.
         n (int): The number of completions to generate.
-        response_format (str): The format of the response. If None, the response is returned as a dictionary.
+        response_format: The format of the response, if any.
 
         Returns:
         A dictionary representing the generated response.
@@ -277,7 +279,7 @@ class OpenAIClient:
         """   
 
         if "response_format" in chat_api_params:
-            # to enforce the response format, we need to use a different method
+            # to enforce the response format via pydantic, we need to use a different method
 
             del chat_api_params["stream"]
 
