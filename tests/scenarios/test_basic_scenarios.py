@@ -68,13 +68,13 @@ def test_tool_usage_1():
     actions = lisa.listen_and_act(\
                             """
                             You have just been fired and need to find a new job. You decide to think about what you 
-                            want in life and then write a resume. The file must be titled 'Resume'.
+                            want in life and then write a resume. The file must be titled **exactly** 'Resume'.
                             Don't stop until you actually write the resume.
                             """, return_actions=True)
     
     assert contains_action_type(actions, "WRITE_DOCUMENT"), "There should be a WRITE_DOCUMENT action in the actions list."
 
     # check that the document was written to a file
-    assert os.path.exists(f"{data_export_folder}/Document/Resume.docx"), "The document should have been written to a file."
-    assert os.path.exists(f"{data_export_folder}/Document/Resume.json"), "The document should have been written to a file."
-    assert os.path.exists(f"{data_export_folder}/Document/Resume.md"), "The document should have been written to a file."
+    assert os.path.exists(f"{data_export_folder}/Document/Resume.Lisa Carter.docx"), "The document should have been written to a file."
+    assert os.path.exists(f"{data_export_folder}/Document/Resume.Lisa Carter.json"), "The document should have been written to a file."
+    assert os.path.exists(f"{data_export_folder}/Document/Resume.Lisa Carter.md"), "The document should have been written to a file."
