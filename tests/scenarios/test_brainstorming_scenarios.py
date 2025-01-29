@@ -7,17 +7,7 @@ sys.path.append('../../tinytroupe/')
 sys.path.append('../../')
 sys.path.append('..')
 
-
-import tinytroupe
 from tinytroupe.agent import TinyPerson
-from tinytroupe.environment import TinyWorld, TinySocialNetwork
-from tinytroupe.factory import TinyPersonFactory
-from tinytroupe.extraction import ResultsExtractor
-
-from tinytroupe.examples import create_lisa_the_data_scientist, create_oscar_the_architect, create_marcos_the_physician
-from tinytroupe.extraction import default_extractor as extractor
-import tinytroupe.control as control
-from tinytroupe.control import Simulation
 
 from testing_utils import *
 
@@ -34,7 +24,7 @@ def test_brainstorming_scenario(setup, focus_group_world):
     
     world.run(1)
 
-    agent = TinyPerson.get_agent_by_name("Lisa")
+    agent = TinyPerson.get_agent_by_name("Lisa Carter")
 
     agent.listen_and_act("Can you please summarize the ideas that the group came up with?")
 
