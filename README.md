@@ -28,6 +28,7 @@ We are releasing *TinyTroupe* at a relatively early stage, with considerable wor
 
 ## Contents
 
+- 📰 [Latest News](#latest-news)
 - 📚 [Examples](#examples)
 - 🛠️ [Pre-requisites](#pre-requisites)
 - 📥 [Installation](#installation)
@@ -40,6 +41,17 @@ We are releasing *TinyTroupe* at a relatively early stage, with considerable wor
 - ⚖️ [Legal Disclaimer](#legal-disclaimer)
 - ™️ [Trademarks](#trademarks)
 
+
+## LATEST NEWS
+**[2025-29-01] Release 0.4.0 with various improvements. Some highlights:**
+  - Personas have deeper specifications now, including  personality traits, preferences, beliefs, and more. It is likely we'll further expand this in the future. 
+  - `TinyPerson`s can now be defined as JSON files as well, and loaded via the `TinyPerson.load_specification()`, for greater convenience. After loading the JSON file, you can still modify the agent programmatically. See the [examples/agents/](./examples/agents/) folder for examples.
+  - Introduces the concept of *fragments* to allow the reuse of persona elements across different agents. See the [examples/fragments/](./examples/fragments/) folder for examples, and the notebook [Political Compass (customizing agents with fragments)](<./examples/Political Compass (customizing agents with fragments).ipynb>) for a demonstration.
+  - Introduces LLM-based logical `Proposition`s, to facilitate the monitoring of agent behavior.
+  - Introduces `Intervention`s, to allow the specification of event-based modifications to the simulation.
+  - Submodules have their own folders now, to allow better organization and growth.
+  
+  **Note: this will likely break some existing programs, as the API has changed in some places.**
 
 ## Examples
 
@@ -182,7 +194,7 @@ One common source of confusion is to think all such AI agents are meant for assi
 
 The project is structured as follows:
   - `/tinytroupe`: contains the Python library itself. In particular:
-    * `/tinytroupe/prompts`  contains the prompts used to call the LLMs.
+    * Each submodule here might contain a `prompts/` folder with the prompts used to call the LLMs.
   - `/tests`: contains the unit tests for the library. You can use the `test.bat` script to run these.
   - `/examples`: contains examples that show how to use the library, mainly using Jupyter notebooks (for greater readability), but also as pure Python scripts.
   - `/data`: any data used by the examples or the library.
