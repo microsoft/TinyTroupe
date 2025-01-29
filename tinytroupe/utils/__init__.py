@@ -14,3 +14,4 @@ from tinytroupe.utils.llm import *
 from tinytroupe.utils.misc import *
 from tinytroupe.utils.rendering import *
 from tinytroupe.utils.validation import *
+from tinytroupe.utils.semantics import *

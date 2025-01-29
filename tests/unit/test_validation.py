@@ -20,13 +20,19 @@ def test_validate_person(setup):
     ##########################
     # Banker
     ##########################
+    bank_spec =\
+    """
+    A large brazillian bank. It has a lot of branches and a large number of employees. It is facing a lot of competition from fintechs.
+    """
+
     banker_spec =\
     """
-    A vice-president of one of the largest brazillian banks. Has a degree in engineering and an MBA in finance. 
-    Is facing a lot of pressure from the board of directors to fight off the competition from the fintechs.    
+    A vice-president of one of the largest brazillian banks. Has a degree in engineering and an MBA in finance.
     """
-    banker_factory = TinyPersonFactory(banker_spec)
-    banker = banker_factory.generate_person()
+    
+    banker_factory = TinyPersonFactory(bank_spec)
+    banker = banker_factory.generate_person(banker_spec)
+
     banker_expectations =\
     """
     He/she is:
@@ -54,14 +60,17 @@ def test_validate_person(setup):
 
 
     ##########################
-    # Busy Knowledge Worker   
+    # Monk  
     ########################## 
+    monastery_spec = "A remote monastery in the Himalayas, where only spiritual seekers are allowed."
+
     monk_spec =\
     """
     A poor buddhist monk living alone and isolated in a remote montain.
     """
-    monk_spec_factory = TinyPersonFactory(monk_spec)
-    monk = monk_spec_factory.generate_person()
+    monk_spec_factory = TinyPersonFactory(monastery_spec)
+    monk = monk_spec_factory.generate_person(monk_spec)
+    
     monk_expectations =\
     """
     Some characteristics of this person:
@@ -79,7 +88,7 @@ def test_validate_person(setup):
 
     assert monk_score > 0.5, f"Validation score is too low: {monk_score:.2f}"
 
-    # Now, let's check the score for the busy knowledge worker with the wrong expectations! It has to be low!
+    # Now, let's check the score for the monk with the wrong expectations! It has to be low!
     wrong_expectations_score, wrong_expectations_justification = TinyPersonValidator.validate_person(monk, expectations=banker_expectations, include_agent_spec=False, max_content_length=None)
 
     assert wrong_expectations_score < 0.5, f"Validation score is too high: {wrong_expectations_score:.2f}"

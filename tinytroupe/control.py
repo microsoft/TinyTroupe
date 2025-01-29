@@ -30,7 +30,7 @@ class Simulation:
         self.name_to_environment = {} # {environment_name: environment, ...}
         self.status = Simulation.STATUS_STOPPED
 
-        self.cache_path = f"./tinytroupe-cache-{id}.json" # default cache path
+        self.cache_path = f"./tinytroupe-{id}.cache.json" # default cache path
         
         # should we always automatically checkpoint at the every transaction?
         self.auto_checkpoint = False

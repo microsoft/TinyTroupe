@@ -2,6 +2,7 @@ from tinytroupe.environment import logger, default
 
 import copy
 from datetime import datetime, timedelta
+import textwrap
 
 from tinytroupe.agent import *
 from tinytroupe.utils import name_or_empty, pretty_datetime
@@ -27,6 +28,7 @@ class TinyWorld:
 
     def __init__(self, name: str="A TinyWorld", agents=[], 
                  initial_datetime=datetime.now(),
+                 interventions=[],
                  broadcast_if_no_target=True,
                  max_additional_targets_to_display=3):
         """
@@ -37,6 +39,7 @@ class TinyWorld:
             agents (list): A list of agents to add to the environment.
             initial_datetime (datetime): The initial datetime of the environment, or None (i.e., explicit time is optional). 
                 Defaults to the current datetime in the real world.
+            interventions (list): A list of interventions to apply in the environment at each simulation step.
             broadcast_if_no_target (bool): If True, broadcast actions if the target of an action is not found.
             max_additional_targets_to_display (int): The maximum number of additional targets to display in a communication. If None, 
                 all additional targets are displayed.
@@ -47,9 +50,10 @@ class TinyWorld:
         self.broadcast_if_no_target = broadcast_if_no_target
         self.simulation_id = None # will be reset later if the agent is used within a specific simulation scope
         
-        
         self.agents = []
         self.name_to_agent = {} # {agent_name: agent, agent_name_2: agent_2, ...}
+
+        self._interventions = interventions
 
         # the buffer of communications that have been displayed so far, used for
         # saving these communications to another output form later (e.g., caching)
@@ -82,6 +86,16 @@ class TinyWorld:
         # in the correct time, particularly if only one step is being run.
         self._advance_datetime(timedelta_per_step)
 
+        # apply interventions
+        for intervention in self._interventions:
+            should_apply_intervention = intervention.check_precondition()
+            if should_apply_intervention:
+                if TinyWorld.communication_display:
+                    self._display_intervention_communication(intervention)
+                intervention.apply_effect()
+                
+                logger.debug(f"[{self.name}] Intervention '{intervention.name}' was applied.")
+
         # agents can act
         agents_actions = {}
         for agent in self.agents:
@@ -92,6 +106,7 @@ class TinyWorld:
             self._handle_actions(agent, agent.pop_latest_actions())
         
         return agents_actions
+        
 
     def _advance_datetime(self, timedelta):
         """
@@ -124,7 +139,7 @@ class TinyWorld:
             logger.info(f"[{self.name}] Running world simulation step {i+1} of {steps}.")
 
             if TinyWorld.communication_display:
-                self._display_communication(cur_step=i+1, total_steps=steps, kind='step', timedelta_per_step=timedelta_per_step)
+                self._display_step_communication(cur_step=i+1, total_steps=steps, timedelta_per_step=timedelta_per_step)
 
             agents_actions = self._step(timedelta_per_step=timedelta_per_step)
             agents_actions_over_time.append(agents_actions)
@@ -333,7 +348,19 @@ class TinyWorld:
             return self.name_to_agent[name]
         else:
             return None
-        
+    
+    #######################################################################
+    # Intervention management methods
+    #######################################################################
+
+    def add_intervention(self, intervention):
+        """
+        Adds an intervention to the environment.
+
+        Args:
+            intervention: The intervention to add to the environment.
+        """
+        self._interventions.append(intervention)
 
     #######################################################################
     # Action handlers
@@ -482,16 +509,20 @@ class TinyWorld:
     ###########################################################
 
     # TODO better names for these "display" methods
-    def _display_communication(self, cur_step, total_steps, kind, timedelta_per_step=None):
+    def _display_step_communication(self, cur_step, total_steps, timedelta_per_step=None):
         """
         Displays the current communication and stores it in a buffer for later use.
         """
-        if kind == 'step':
-            rendering = self._pretty_step(cur_step=cur_step, total_steps=total_steps, timedelta_per_step=timedelta_per_step) 
-        else:
-            raise ValueError(f"Unknown communication kind: {kind}")
+        rendering = self._pretty_step(cur_step=cur_step, total_steps=total_steps, timedelta_per_step=timedelta_per_step) 
 
-        self._push_and_display_latest_communication({"kind": kind, "rendering": rendering, "content": None, "source":  None, "target": None})
+        self._push_and_display_latest_communication({"kind": 'step', "rendering": rendering, "content": None, "source":  None, "target": None})
+    
+    def _display_intervention_communication(self, intervention):
+        """
+        Displays the current intervention communication and stores it in a buffer for later use.
+        """
+        rendering = self._pretty_intervention(intervention)
+        self._push_and_display_latest_communication({"kind": 'intervention', "rendering": rendering, "content": None, "source":  None, "target": None})
     
     def _push_and_display_latest_communication(self, communication):
         """
@@ -612,6 +643,22 @@ class TinyWorld:
 
         return rendering
 
+    def _pretty_intervention(self, intervention):
+        indent = "          > "
+        justification = textwrap.fill(
+            intervention.precondition_justification(),
+            width=TinyPerson.PP_TEXT_WIDTH,
+            initial_indent=indent,
+            subsequent_indent=indent,
+        )
+        
+        rich_style = utils.RichTextStyle.get_style_for("intervention")
+        rendering = f"[{rich_style}] :zap: [bold] <<{intervention.name}>> Triggered, effects are being applied...[/] \n" + \
+                    f"[italic]{justification}[/][/]"
+        # TODO add details about why the intervention was applied
+
+        return rendering
+
     def pp_current_interactions(self, simplified=True, skip_system=True):
         """
         Pretty prints the current messages from agents in this environment.
@@ -651,6 +698,7 @@ class TinyWorld:
         del to_copy['agents']
         del to_copy['name_to_agent']
         del to_copy['current_datetime']
+        del to_copy['_interventions'] # TODO: encode interventions
 
         state = copy.deepcopy(to_copy)
 

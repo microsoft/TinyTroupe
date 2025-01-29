@@ -44,17 +44,29 @@ def dedent(text: str) -> str:
     """
     return textwrap.dedent(text).strip()
 
+def wrap_text(text: str, width: int=100) -> str:
+    """
+    Wraps the text at the specified width.
+    """
+    return textwrap.fill(text, width=width)
+
 class RichTextStyle:
+    
+    # Consult color options here: https://rich.readthedocs.io/en/stable/appendix/colors.html
+
     STIMULUS_CONVERSATION_STYLE = "bold italic cyan1"
     STIMULUS_THOUGHT_STYLE = "dim italic cyan1"
     STIMULUS_DEFAULT_STYLE = "italic"
+    
     ACTION_DONE_STYLE = "grey82"
     ACTION_TALK_STYLE = "bold green3"
     ACTION_THINK_STYLE = "green"
     ACTION_DEFAULT_STYLE = "purple"
 
+    INTERVENTION_DEFAULT_STYLE = "bright_magenta"
+
     @classmethod
-    def get_style_for(cls, kind:str, event_type:str):
+    def get_style_for(cls, kind:str, event_type:str=None):
         if kind == "stimulus" or kind=="stimuli":
             if event_type == "CONVERSATION":
                 return cls.STIMULUS_CONVERSATION_STYLE
@@ -72,4 +84,7 @@ class RichTextStyle:
                 return cls.ACTION_THINK_STYLE
             else:
                 return cls.ACTION_DEFAULT_STYLE
+        
+        elif kind == "intervention":
+            return cls.INTERVENTION_DEFAULT_STYLE
 

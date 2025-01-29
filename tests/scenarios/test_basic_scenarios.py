@@ -44,7 +44,7 @@ def test_basic_scenario_1():
     control.checkpoint()
     # TODO check file creation
 
-    agent.listen_and_act("How are you doing?")
+    agent.listen_and_act("How are you doing??")
     agent.define("occupation", "Engineer")
 
     control.checkpoint()

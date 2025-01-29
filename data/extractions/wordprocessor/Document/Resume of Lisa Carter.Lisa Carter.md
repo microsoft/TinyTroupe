@@ -7,84 +7,50 @@
 - **LinkedIn:** [linkedin.com/in/lisacarter](https://linkedin.com/in/lisacarter)
 
 ## Summary
-Lisa Carter is a highly skilled Data Scientist with a Master's degree in Data Science from the prestigious University of Toronto. With a specialization in improving search relevance through context-aware models, Lisa has developed a deep understanding of the intricacies involved in data analysis and model development. Her passion for artificial intelligence and machine learning drives her to continuously seek innovative solutions to complex problems. Lisa possesses a strong analytical mindset, enabling her to derive meaningful insights from large datasets and contribute effectively to her team's objectives.
+Lisa Carter is a highly skilled Data Scientist with a Master's degree in Data Science from the prestigious University of Toronto. With a specialization in artificial intelligence (AI) and machine learning, Lisa has a proven track record of significantly improving search relevance and enhancing user experience through meticulous data analysis and innovative model development. Her analytical prowess and technical expertise have enabled her to contribute effectively to various projects, making her a valuable asset in any data-driven environment.
 
 ## Education
 **University of Toronto**  
-Master's in Data Science  
+*Master's in Data Science*  
+*Graduation Date: Month Year*  
 **Thesis:** Improving Search Relevance Using Context-Aware Models  
-**Graduation Date:** June 2020  
-**Relevant Coursework:**
-- Machine Learning
-- Data Mining
-- Statistical Analysis
-- Natural Language Processing
-- Big Data Technologies
+Lisa's thesis focused on developing advanced algorithms that leverage contextual information to enhance the accuracy and relevance of search results. This research not only contributed to her academic growth but also provided practical insights applicable in real-world scenarios.
 
-**Bachelor of Science in Computer Science**  
-**University of British Columbia**  
-Graduated: May 2018  
-**Key Projects:**
-- Developed a web application for data visualization using Python and JavaScript.
-- Conducted research on the impact of social media on public opinion.
-
-## Skills
-- **Programming Languages:** Proficient in Python, with extensive experience in data analysis and machine learning libraries such as pandas, scikit-learn, TensorFlow, and Azure ML.
-- **Database Management:** Familiar with SQL for database querying and management, as well as Power BI for data visualization and reporting.
-- **Analytical Skills:** Strong analytical and problem-solving skills, with the ability to interpret complex data sets and provide actionable insights.
-- **Machine Learning:** Experienced in building and testing machine learning models, including supervised and unsupervised learning techniques.
-- **Communication:** Excellent verbal and written communication skills, with the ability to present technical information to non-technical stakeholders.
+**Relevant Coursework:**  
+- **Machine Learning:** Explored supervised and unsupervised learning techniques, including regression, classification, clustering, and neural networks.
+- **Natural Language Processing:** Studied the intricacies of language processing, including sentiment analysis, text classification, and language generation.
+- **Data Visualization:** Learned to effectively communicate data insights through visual representation using tools like Matplotlib and Seaborn.
 
 ## Work Experience
-**Microsoft, M365 Search Team**  
+### Microsoft, M365 Search Team  
 *Data Scientist*  
-*June 2020 - Present*  
-- Analyzed user behavior and feedback data to enhance search result relevance, leading to improved user engagement and satisfaction.
-- Built and tested machine learning models for natural language understanding and query expansion, resulting in a more intuitive search experience.
-- Collaborated with cross-functional teams, including product managers, software engineers, and UX designers, to debug issues and brainstorm innovative ideas for product enhancements.
-- Conducted A/B testing to evaluate the effectiveness of new features and algorithms, providing data-driven recommendations for future developments.
+*Date: Month Year - Present*  
+In her current role at Microsoft, Lisa plays a pivotal role in enhancing the search functionality of the M365 suite. Her responsibilities include:
 
-**Internship Experience:**
-**Data Science Intern, XYZ Analytics**  
-*May 2019 - August 2019*  
-- Assisted in the development of predictive models for client projects, utilizing machine learning techniques to forecast sales trends.
-- Conducted exploratory data analysis to identify patterns and anomalies in client datasets, presenting findings to senior analysts.
+- **User Behavior Analysis:** Analyzed user behavior and feedback data to identify patterns and trends that inform search result enhancements. This involved utilizing A/B testing and user surveys to gather actionable insights.
+- **Model Development:** Developed and tested machine learning models for natural language understanding and query expansion, resulting in a 20% increase in user satisfaction scores.
+- **Cross-Functional Collaboration:** Collaborated with cross-functional teams, including product managers, software engineers, and UX designers, to address data quality issues and improve model accuracy. This collaboration ensured that the models were not only technically sound but also aligned with user needs.
 
-## Projects
-- **Search Ranking Improvement Model:** Developed a machine learning model to improve search ranking accuracy, resulting in a 20% increase in user satisfaction. This project involved extensive data preprocessing, feature engineering, and model evaluation.
-- **Data Noise Mitigation Strategies:** Conducted a comprehensive analysis of noisy data and implemented strategies to mitigate its impact on model performance. This included the use of advanced filtering techniques and outlier detection methods.
-- **Sentiment Analysis Tool:** Created a sentiment analysis tool using natural language processing techniques to analyze customer feedback and reviews, providing valuable insights for product development teams.
+### Tech Startup (Internship)  
+*Data Science Intern*  
+*Date: Month Year - Month Year*  
+During her internship at a dynamic tech startup, Lisa gained hands-on experience in the field of data science. Her key contributions included:
+
+- **Conversational AI Models:** Assisted in building conversational AI models that improved user interaction and engagement. This involved training models on diverse datasets to ensure robustness and reliability.
+- **Data Cleaning and Preprocessing:** Conducted extensive data cleaning and preprocessing to ensure high-quality datasets, which are crucial for effective model training and evaluation. This included handling missing values, outlier detection, and normalization.
+
+## Skills
+- **Programming Languages:** Proficient in Python, with extensive experience in libraries such as pandas, scikit-learn, and TensorFlow. Familiar with R for statistical analysis.
+- **Data Management:** Strong knowledge of SQL for database management and data retrieval. Experienced in using Power BI for data visualization and reporting.
+- **Analytical Skills:** Exceptional analytical and problem-solving skills, with a keen ability to interpret complex data sets and derive meaningful insights.
+- **Machine Learning Frameworks:** Experienced in using Azure ML for deploying machine learning models in cloud environments.
 
 ## Interests
-- **Artificial Intelligence and Machine Learning:** Actively follows the latest trends and advancements in AI and ML, participating in online courses and workshops to enhance her knowledge.
-- **Natural Language Processing:** Passionate about exploring the capabilities of NLP in understanding human language and improving user interactions with technology.
-- **Cooking and Trying New Recipes:** Enjoys experimenting with different cuisines and sharing her culinary creations with friends and family.
-- **Playing the Piano:** Avid piano player, often performing at local community events and gatherings.
+- **Artificial Intelligence and Machine Learning:** Passionate about exploring the latest advancements in AI and machine learning technologies, and their applications in various industries.
+- **Natural Language Processing:** Enthusiastic about developing conversational agents and improving human-computer interaction through NLP techniques.
+- **Culinary Arts:** Enjoys cooking and experimenting with new recipes, often drawing inspiration from different cultures and cuisines.
+- **Music:** Plays the piano and enjoys composing music, finding it a great way to express creativity and unwind.
 
 ## References
-Available upon request.
-
-## Additional Information
-### Certifications
-- **Certified Data Scientist** - Data Science Council of America (DASCA)
-- **Microsoft Certified: Azure Data Scientist Associate**
-
-### Professional Affiliations
-- Member of the Association for Computing Machinery (ACM)
-- Member of the Data Science Society
-
-### Publications
-- Carter, L. (2021). "Enhancing Search Relevance: A Context-Aware Approach." *Journal of Data Science and Analytics*, 15(3), 45-60.
-- Carter, L. (2020). "Machine Learning Techniques for Natural Language Processing." *International Conference on Artificial Intelligence*, 12(1), 78-85.
-
-### Volunteer Experience
-- **Data Science Mentor, Code for Good**  
-*January 2021 - Present*  
-Mentoring aspiring data scientists through workshops and one-on-one sessions, helping them develop their skills and navigate their career paths.
-
-### Personal Projects
-- **Personal Blog:** Maintains a blog where she shares insights on data science, machine learning, and personal experiences in the tech industry. The blog has gained a following for its practical tips and engaging content.
-- **Open Source Contributions:** Actively contributes to open-source data science projects on GitHub, collaborating with other developers to improve tools and libraries used in the field.
-
-This comprehensive overview of Lisa Carter's professional background, skills, and interests highlights her qualifications as a Data Scientist and her commitment to continuous learning and community engagement.
+References are available upon request. Lisa is happy to provide contacts from her academic and professional network who can speak to her skills, work ethic, and contributions in the field of data science.
 ```

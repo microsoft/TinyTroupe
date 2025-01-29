@@ -4,6 +4,9 @@ import os
 import chevron
 from typing import Collection
 import copy
+import functools
+import inspect
+from tinytroupe.openai_utils import LLMRequest
 
 from tinytroupe.utils import logger
 from tinytroupe.utils.rendering import break_text_at_length
@@ -47,6 +50,40 @@ def compose_initial_LLM_messages_with_templates(system_template_name:str, user_t
                                     rendering_configs)})
     return messages
 
+
+def llm(**model_overrides):
+    """
+    Decorator that turns the decorated function into an LLM-based function.
+    The decorated function must either return a string (the instruction to the LLM),
+    or the parameters of the function will be used instead as the instruction to the LLM.
+    The LLM response is coerced to the function's annotated return type, if present.
+
+    Usage example:
+    @llm(model="gpt-4-0613", temperature=0.5, max_tokens=100)
+    def joke():
+        return "Tell me a joke."
+    
+    """
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            sig = inspect.signature(func)
+            return_type = sig.return_annotation if sig.return_annotation != inspect.Signature.empty else str
+            system_prompt = func.__doc__.strip() if func.__doc__ else "You are an AI system that executes a computation as requested."
+            
+            if isinstance(result, str):
+                user_prompt = "EXECUTE THE INSTRUCTIONS BELOW:\n\n " + result
+            else:
+                user_prompt = f"Execute your function as best as you can using the following parameters: {kwargs}"
+            
+            llm_req = LLMRequest(system_prompt=system_prompt,
+                                 user_prompt=user_prompt,
+                                 output_type=return_type,
+                                 **model_overrides)
+            return llm_req.call()
+        return wrapper
+    return decorator
 
 ################################################################################	
 # Model output utilities
