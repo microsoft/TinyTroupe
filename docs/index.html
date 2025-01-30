@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to TinyTroupe</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(to bottom, #f0e6d2, #f0f8ff);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        header {
+            background: linear-gradient(to right, #ff6f61, #ffcc00);
+            color: #333;
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 5px solid #cc5500;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 3em;
+            font-family: 'Luckiest Guy', cursive;
+            color: #fff;
+            text-shadow: 2px 2px 4px #000;
+        }
+        header p {
+            font-size: 1.2em;
+            margin: 10px 0 0;
+            color: #fff;
+        }
+        .buttons {
+            text-align: center;
+            margin: 0;
+        }
+        .buttons a {
+            display: inline-block;
+            background: #cc5500;
+            color: #fff;
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 1.5em;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+        .buttons a:hover {
+            background: #b34700;
+        }
+        .hero {
+            text-align: center;
+            margin: 0;
+            overflow: hidden;
+            height: 30vh; /* Show only the top portion of the image */
+            position: relative;
+        }
+        .hero img {
+            max-width: 100%;
+            height: auto;
+            position: absolute;
+            bottom: -60%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .content {
+            padding: 20px;
+            background: #fff;
+            margin: 0;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .content p {
+            font-size: 1.2em;
+        }
+        .content a {
+            color: #cc5500;
+        }
+        .warning {
+            background: #ffdddd;
+            border-left: 6px solid #f44336;
+            padding: 10px;
+            margin: 20px 0;
+            border-radius: 10px;
+            font-size: 0.9em; /* Smaller font size */
+        }
+        .info {
+            background: #fff3cd;
+            border-left: 6px solid #ffecb5;
+            padding: 10px;
+            margin: 20px 0;
+            border-radius: 10px;
+            font-size: 0.9em;
+        }
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .flex-item-main {
+            width: 66%;
+        }
+        .flex-item-json {
+            width: 32%;
+        }
+        .flex-item-json h2 {
+            color: #cc5500;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 1em;
+            color: #333;
+        }
+        .json-key {
+            color: #d14;
+        }
+        .json-string {
+            color: #1a1aa6;
+        }
+        .json-number {
+            color: #1c00cf;
+        }
+        .code-snippet {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 1em;
+            color: #333;
+            margin-top: 10px;
+        }
+        .code-keyword {
+            color: #d14;
+        }
+        .code-string {
+            color: #1a1aa6;
+        }
+        .code-comment {
+            color: #999;
+        }
+        .code-function {
+            color: #795da3;
+        }
+        .mosaic {
+            background: linear-gradient(45deg, #ff6f61, #ffcc00, #f0e6d2, #cc5500, #b34700);
+            height: 10px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>TinyTroupe 🤠🤓🥸🧐</h1>
+            <p>LLM-powered multiagent persona simulation for imagination enhancement and business insights.</p>
+        </div>
+    </header>
+    <div class="buttons">
+        <a href="https://github.com/microsoft/tinytroupe" target="_blank">GitHub Repo 📂</a>
+        <a href="./api/tinytroupe/index.html">API Docs 📑</a>
+    </div>
+    <section class="hero">
+        <div class="container">
+            <img src="./tinytroupe_stage.png" alt="A tiny office with tiny people doing some tiny jobs.">
+        </div>
+    </section>
+    <section class="content">
+        <div class="container">
+            <div class="info">
+                <h2>Get Started with TinyTroupe</h2>
+                <p>Visit our <a href="https://github.com/microsoft/tinytroupe" target="_blank">GitHub repository</a> to get started with TinyTroupe. You'll find installation instructions, documentation, and examples to help you begin your journey with TinyTroupe.</p>
+            </div>
+            <div class="flex-container">
+                <div class="flex-item-main">
+
+                    <p>TinyTroupe is an experimental Python library that allows the <strong>simulation</strong> of people with specific personalities, interests, and goals. These artificial agents - <strong>TinyPerson</strong>s - can listen to us and one another, reply back, and go about their lives in simulated <strong>TinyWorld</strong> environments. This is achieved by leveraging the power of Large Language Models (LLMs), notably GPT-4, to generate realistic simulated behavior.</p>
+                    <p>Here are some application ideas to <strong>enhance human imagination</strong>:</p>
+                    <ul>
+                        <li><strong>Advertisement:</strong> Evaluate digital ads offline with a simulated audience before spending money on them! 📺</li>
+                        <li><strong>Software Testing:</strong> Provide test input to systems and evaluate the results. 🧪</li>
+                        <li><strong>Training and exploratory data:</strong> Generate realistic synthetic data for training models or opportunity analyses. 📊</li>
+                        <li><strong>Product and project management:</strong> Read project or product proposals and give feedback from the perspective of specific personas. 📋</li>
+                        <li><strong>Brainstorming:</strong> Simulate focus groups and deliver great product feedback at a fraction of the cost! 💡</li>
+                    </ul>
+                    <p><i>P.S.: We know Comic Sans is a terrible font choice, except for fun projects like this one!</i> 😜</p>
+                </div>
+                <div class="flex-item-json">
+                    <h2>Some code snippets 👇</h2>
+                    <pre>
+<span class="json-key">{
+    "type"</span>: <span class="json-string">"TinyPerson"</span>,
+    <span class="json-key">"persona"</span>: {
+        <span class="json-key">"name"</span>: <span class="json-string">"Lisa Carter"</span>,
+        <span class="json-key">"age"</span>: <span class="json-number">28</span>,
+        <span class="json-key">"occupation"</span>: {
+            <span class="json-key">"title"</span>: <span class="json-string">"Data Scientist"</span>,
+            <span class="json-key">"organization"</span>: <span class="json-string">"Microsoft"</span>
+        },
+        <span class="json-key">"personality"</span>: {
+            <span class="json-key">"traits"</span>: [
+                <span class="json-string">"You are curious."</span>,
+                <span class="json-string">"You are analytical."</span>,
+                <span class="json-string">"You are friendly."</span>,
+                <span class="json-string">"You don't give up."</span>
+            ]
+        }
+        (...)
+    }
+}</pre>
+                    <div class="code-snippet">
+                        <code>
+<span class="code-comment"># Interact with a TinyPerson</span><br>
+lisa.<span class="code-function">listen_and_act</span>(<span class="code-string">"Tell me about your life."</span>)
+                        </code>
+                    </div>
+                    <div class="code-snippet">
+                        <code>
+<span class="code-comment"># Define a TinyWorld</span><br>
+world = TinyWorld(<span class="code-string">"Chat Room"</span>, [lisa, oscar])<br>
+world.<span class="code-function">make_everyone_accessible</span>()<br>
+world.<span class="code-function">run</span>(<span class="code-number">4</span>)
+                        </code>
+                    </div>
+                    <div class="code-snippet">
+                        <code>
+<span class="code-comment"># Generate a new TinyPerson using TinyPersonFactory</span><br>
+
+factory = TinyPersonFactory(<span class="code-string">"A hospital in São Paulo."</span>)<br>
+person = factory.<span class="code-function">generate_person</span>(<span class="code-string">"Create a Brazilian doctor who loves pets and nature."</span>)
+                        </code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Remove the mosaic section -->
+    <!-- <div class="mosaic"></div> -->
+    <section class="content warning">
+        <div class="container">
+            <h2>Legal Disclaimer ⚖️</h2>
+            <p>TinyTroupe is for research and simulation only. TinyTroupe is a research and experimental technology, which relies on Artificial Intelligence (AI) models to generate text content. The AI system output may include unrealistic, inappropriate, harmful or inaccurate results, including factual errors. You are responsible for reviewing the generated content (and adapting it if necessary) before using it, as you are fully responsible for determining its accuracy and fit for purpose. We advise using TinyTroupe’s outputs for insight generation and not for direct decision-making. Generated outputs do not reflect the opinions of Microsoft. You are fully responsible for any use you make of the generated outputs. For more information regarding the responsible use of this technology, see the <a href="./../RESPONSIBLE_AI_FAQ.md">RESPONSIBLE_AI_FAQ.md</a>.</p>
+            <p><strong>PROHIBITED USES:</strong> TinyTroupe is not intended to simulate sensitive (e.g. violent or sexual) situations. Moreover, outputs must not be used to deliberately deceive, mislead or harm people in any way. You are fully responsible for any use you make and must comply with all applicable laws and regulations.</p>
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 TinyTroupe. All rights reserved.</p>
+            <p>This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow <a href="https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general" target="_blank">Microsoft's Trademark & Brand Guidelines</a>. Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.</p>
+        </div>
+    </footer>
+</body>
+</html>
