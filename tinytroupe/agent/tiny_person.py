@@ -265,7 +265,7 @@ class TinyPerson(JsonSerializableRegistry):
 
         # check the type is "Fragment" and that there's also a "persona" key
         if fragment.get("type", None) == "Fragment" and fragment.get("persona", None) is not None:
-            self.include_persona_definitions(fragment)
+            self.include_persona_definitions(fragment["persona"])
         else:
             raise ValueError("The imported JSON file must be a valid fragment of a persona configuration.")
         
