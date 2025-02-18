@@ -131,11 +131,11 @@ class EpisodicMemory(TinyMemory):
 
         # use the other methods in the class to implement
         if first_n is not None and last_n is not None:
-            return self.retrieve_first(first_n) + omisssion_info + self.retrieve_last(last_n)
+            return self.retrieve_first(first_n, False) + omisssion_info + self.retrieve_last(last_n, False)
         elif first_n is not None:
-            return self.retrieve_first(first_n)
+            return self.retrieve_first(first_n, include_omission_info)
         elif last_n is not None:
-            return self.retrieve_last(last_n)
+            return self.retrieve_last(last_n, include_omission_info)
         else:
             return self.retrieve_all()
 
