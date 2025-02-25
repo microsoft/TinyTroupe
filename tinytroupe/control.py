@@ -71,19 +71,31 @@ class Simulation:
             cache_path (str): The path to the cache file. If not specified, 
                     defaults to the default cache path defined in the class.
             auto_checkpoint (bool, optional): Whether to automatically checkpoint at the end of each transaction. Defaults to False.
+        
+        Raises:
+            ValueError: If the simulation is already started.
+            Exception: For any other unexpected errors during startup.
         """
+        try:
+            logger.debug(f"Attempting to start simulation with cache_path={cache_path}, auto_checkpoint={auto_checkpoint}")
 
-        logger.debug(f"Starting simulation, cache_path={cache_path}, auto_checkpoint={auto_checkpoint}.")
+            # local import to avoid circular dependencies
+            from tinytroupe.agent import TinyPerson
+            from tinytroupe.environment import TinyWorld
+            from tinytroupe.factory.tiny_factory import TinyFactory
 
-        # local import to avoid circular dependencies
-        from tinytroupe.agent import TinyPerson
-        from tinytroupe.environment import TinyWorld
-        from tinytroupe.factory.tiny_factory import TinyFactory
-
-        if self.status == Simulation.STATUS_STOPPED:
-            self.status = Simulation.STATUS_STARTED
-        else:
-            raise ValueError("Simulation is already started.")
+            if self.status == Simulation.STATUS_STOPPED:
+                self.status = Simulation.STATUS_STARTED
+                logger.info("Simulation started successfully")
+            else:
+                logger.error("Failed to start simulation: simulation is already running")
+                raise ValueError("Cannot start simulation - a simulation is already running")
+        except ImportError as e:
+            logger.error(f"Failed to import required modules: {str(e)}")
+            raise
+        except Exception as e:
+            logger.error(f"Unexpected error while starting simulation: {str(e)}")
+            raise
         
         if cache_path is not None:
             self.cache_path = cache_path
@@ -106,13 +118,23 @@ class Simulation:
     def end(self):
         """
         Marks the end of the simulation being controlled.
+        
+        Raises:
+            ValueError: If the simulation is already stopped.
+            Exception: For any other unexpected errors during shutdown.
         """
-        logger.debug("Ending simulation.")
-        if self.status == Simulation.STATUS_STARTED:
-            self.status = Simulation.STATUS_STOPPED
-            self.checkpoint()
-        else:
-            raise ValueError("Simulation is already stopped.")
+        try:
+            logger.debug("Attempting to end simulation")
+            if self.status == Simulation.STATUS_STARTED:
+                self.status = Simulation.STATUS_STOPPED
+                self.checkpoint()
+                logger.info("Simulation ended successfully")
+            else:
+                logger.error("Failed to end simulation: simulation is not running")
+                raise ValueError("Cannot end simulation - no simulation is currently running")
+        except Exception as e:
+            logger.error(f"Unexpected error while ending simulation: {str(e)}")
+            raise
 
     def checkpoint(self):
         """
@@ -128,12 +150,37 @@ class Simulation:
     def add_agent(self, agent):
         """
         Adds an agent to the simulation.
+        
+        Args:
+            agent: The agent to add to the simulation.
+            
+        Raises:
+            ValueError: If an agent with the same name already exists.
+            TypeError: If the agent is None or invalid.
+            Exception: For any other unexpected errors.
         """
-        if agent.name in self.name_to_agent:
-            raise ValueError(f"Agent names must be unique, but '{agent.name}' is already defined.")
-        agent.simulation_id = self.id
-        self.agents.append(agent)
-        self.name_to_agent[agent.name] = agent
+        try:
+            if agent is None:
+                logger.error("Failed to add agent: agent parameter is None")
+                raise TypeError("Cannot add None as an agent")
+                
+            logger.debug(f"Attempting to add agent '{agent.name}' to simulation")
+            
+            if agent.name in self.name_to_agent:
+                logger.error(f"Failed to add agent: agent name '{agent.name}' is already in use")
+                raise ValueError(f"Cannot add agent - name '{agent.name}' is already in use")
+                
+            agent.simulation_id = self.id
+            self.agents.append(agent)
+            self.name_to_agent[agent.name] = agent
+            logger.info(f"Successfully added agent '{agent.name}' to simulation")
+            
+        except AttributeError as e:
+            logger.error(f"Failed to add agent: invalid agent object - {str(e)}")
+            raise TypeError("Invalid agent object - must have 'name' attribute") from e
+        except Exception as e:
+            logger.error(f"Unexpected error while adding agent: {str(e)}")
+            raise
 
     
     def add_environment(self, environment):
