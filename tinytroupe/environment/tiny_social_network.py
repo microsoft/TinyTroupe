@@ -29,7 +29,7 @@ class TinySocialNetwork(TinyWorld):
 
         self.relations = {}
     
-    @transactional
+    @transactional()
     def add_relation(self, agent_1, agent_2, name="default"):
         """
         Adds a relation between two agents.
@@ -55,7 +55,7 @@ class TinySocialNetwork(TinyWorld):
 
         return self # for chaining
     
-    @transactional
+    @transactional()
     def _update_agents_contexts(self):
         """
         Updates the agents' observations based on the current state of the world.
@@ -72,14 +72,14 @@ class TinySocialNetwork(TinyWorld):
                 agent_1.make_agent_accessible(agent_2)
                 agent_2.make_agent_accessible(agent_1)
 
-    @transactional
+    @transactional()
     def _step(self):
         self._update_agents_contexts()
 
         #call super
         super()._step()
     
-    @transactional
+    @transactional()
     def _handle_reach_out(self, source_agent: TinyPerson, content: str, target: str):
         """
         Handles the REACH_OUT action. This social network implementation only allows

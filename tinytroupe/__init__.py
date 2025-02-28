@@ -34,6 +34,7 @@ default["max_content_display_length"] = config["OpenAI"].getint("MAX_CONTENT_DIS
 if config["OpenAI"].get("API_TYPE") == "azure":
     default["azure_embedding_model_api_version"] = config["OpenAI"].get("AZURE_EMBEDDING_MODEL_API_VERSION", "2023-05-15")
 
+default["parallel_agent_actions"] = config["Simulation"].getboolean("PARALLEL_AGENT_ACTIONS", True)
 
 ## LLaMa-Index configs ########################################################
 #from llama_index.embeddings.huggingface import HuggingFaceEmbedding

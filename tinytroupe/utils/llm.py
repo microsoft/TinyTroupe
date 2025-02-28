@@ -7,6 +7,7 @@ import copy
 import functools
 import inspect
 from tinytroupe.openai_utils import LLMRequest
+import pprint
 
 from tinytroupe.utils import logger
 from tinytroupe.utils.rendering import break_text_at_length
@@ -54,14 +55,27 @@ def compose_initial_LLM_messages_with_templates(system_template_name:str, user_t
 def llm(**model_overrides):
     """
     Decorator that turns the decorated function into an LLM-based function.
-    The decorated function must either return a string (the instruction to the LLM),
-    or the parameters of the function will be used instead as the instruction to the LLM.
+    The decorated function must either return a string (the instruction to the LLM)
+    or a one-argument function that will be used to post-process the LLM response.
+
+    If the function returns a string, the function's docstring will be used as the system prompt,
+    and the returned string will be used as the user prompt. If the function returns a function,
+    the parameters of the function will be used instead as the system instructions to the LLM,
+    and the returned function will be used to post-process the LLM response.
+
+
     The LLM response is coerced to the function's annotated return type, if present.
 
     Usage example:
-    @llm(model="gpt-4-0613", temperature=0.5, max_tokens=100)
-    def joke():
-        return "Tell me a joke."
+        @llm(model="gpt-4-0613", temperature=0.5, max_tokens=100)
+        def joke():
+            return "Tell me a joke."
+    
+    Usage example with post-processing:
+        @llm()
+        def unique_joke_list():
+            \"\"\"Creates a list of unique jokes.\"\"\"
+            return lambda x: list(set(x.split("\n")))
     
     """
     def decorator(func):
@@ -70,18 +84,46 @@ def llm(**model_overrides):
             result = func(*args, **kwargs)
             sig = inspect.signature(func)
             return_type = sig.return_annotation if sig.return_annotation != inspect.Signature.empty else str
-            system_prompt = func.__doc__.strip() if func.__doc__ else "You are an AI system that executes a computation as requested."
+            postprocessing_func = lambda x: x # by default, no post-processing
             
+            system_prompt = "You are an AI system that executes a computation as defined below.\n\n"
+            if func.__doc__ is not None:
+                system_prompt += func.__doc__.strip() 
+            
+            #
+            # Setup user prompt
+            #
             if isinstance(result, str):
                 user_prompt = "EXECUTE THE INSTRUCTIONS BELOW:\n\n " + result
+            
             else:
-                user_prompt = f"Execute your function as best as you can using the following parameters: {kwargs}"
+                # if there's a parameter named "self" in the function signature, remove it from args
+                if "self" in sig.parameters:
+                    args = args[1:]
+                
+                # if we are relying on parameters, they must be named
+                if len(args) > 0:
+                    raise ValueError("Positional arguments are not allowed in LLM-based functions whose body does not return a string.")               
+
+                user_prompt  = f"Execute your computation as best as you can using the following input parameter values: \n"
+                user_prompt += f"  {json.dumps(kwargs, indent=4)}" 
+            
+            #
+            # Set the post-processing function if the function returns a function
+            #
+            if inspect.isfunction(result):
+                # uses the returned function as a post-processing function
+                postprocessing_func = result
+            
             
             llm_req = LLMRequest(system_prompt=system_prompt,
                                  user_prompt=user_prompt,
                                  output_type=return_type,
                                  **model_overrides)
-            return llm_req.call()
+            
+            llm_result = postprocessing_func(llm_req.call())
+            
+            return llm_result
         return wrapper
     return decorator
 
@@ -94,24 +136,41 @@ def extract_json(text: str) -> dict:
     opening curly brace; and any Markdown opening (```json) or closing(```) tags.
     """
     try:
+        logger.debug(f"Extracting JSON from text: {text}")
+
+        # if it already is a dictionary or list, return it
+        if isinstance(text, dict) or isinstance(text, list):
+
+            # validate that all the internal contents are indeed JSON-like
+            try:
+                json.dumps(text)
+            except Exception as e:
+                logger.error(f"Error occurred while validating JSON: {e}. Input text: {text}.")
+                return {}
+
+            logger.debug(f"Text is already a dictionary. Returning it.")
+            return text
+
+        filtered_text = ""
+
         # remove any text before the first opening curly or square braces, using regex. Leave the braces.
-        text = re.sub(r'^.*?({|\[)', r'\1', text, flags=re.DOTALL)
+        filtered_text = re.sub(r'^.*?({|\[)', r'\1', text, flags=re.DOTALL)
 
         # remove any trailing text after the LAST closing curly or square braces, using regex. Leave the braces.
-        text  =  re.sub(r'(}|\])(?!.*(\]|\})).*$', r'\1', text, flags=re.DOTALL)
+        filtered_text  =  re.sub(r'(}|\])(?!.*(\]|\})).*$', r'\1', filtered_text, flags=re.DOTALL)
         
         # remove invalid escape sequences, which show up sometimes
-        text = re.sub("\\'", "'", text) # replace \' with just '
-        text = re.sub("\\,", ",", text)
+        filtered_text = re.sub("\\'", "'", filtered_text) # replace \' with just '
+        filtered_text = re.sub("\\,", ",", filtered_text)
 
         # use strict=False to correctly parse new lines, tabs, etc.
-        parsed = json.loads(text, strict=False)
+        parsed = json.loads(filtered_text, strict=False)
         
         # return the parsed JSON object
         return parsed
     
     except Exception as e:
-        logger.error(f"Error occurred while extracting JSON: {e}")
+        logger.error(f"Error occurred while extracting JSON: {e}. Input text: {text}. Filtered text: {filtered_text}")
         return {}
 
 def extract_code_block(text: str) -> str:
@@ -159,6 +218,24 @@ def repeat_on_error(retries:int, exceptions:list):
                         continue
         return wrapper
     return decorator
+
+ 
+def try_function(func, postcond_func=None, retries=5, exceptions=[Exception]):
+
+    @repeat_on_error(retries=retries, exceptions=exceptions)
+    def aux_apply_func():
+        logger.debug(f"Trying function {func.__name__}...")
+        result = func()
+        logger.debug(f"Result of function {func.__name__}: {result}")
+        
+        if postcond_func is not None:
+            if not postcond_func(result):
+                # must raise an exception if the postcondition is not met.
+                raise ValueError(f"Postcondition not met for function {func.__name__}!")
+
+        return result
+    
+    return aux_apply_func()
    
 ################################################################################
 # Prompt engineering

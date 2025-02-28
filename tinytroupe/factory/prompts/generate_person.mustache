@@ -3,31 +3,33 @@
 Please generate an agent specification based on a general context and the particularities of the agent (if any). The generated agent specification will be used in a simulation to realistically represent a real person.
 
 ## General Context
-The general context is the following. 
 
-{{context}}.
+{{#context}}
+The general context is the following: {{context}}.
+{{/context}}
+{{^context}}
+No general context was specified. 
+{{/context}}
+
 
 ## Agent Particularities
 {{#agent_particularities}}
 The agent particularities, in turn, are: {{agent_particularities}}.
 
-These are the specific context details that you must consider, together with the general context, when generating the agent.
+These are the specific requirements that you must consider, together with the general context, when generating the agent.
 {{/agent_particularities}}
 {{^agent_particularities}}
 There are no agent particularities in this case, so just generate an agent based on the general
-context.
+context (if any).
 {{/agent_particularities}}
 
 ## Generation Rules
 
 To generate the requested agents, you **must** to follow these directives:
-  - Given the context, please, be creative to generate details about the person for each of the fields in the response.
-  - Be very creative about the details you generate, sampling from a wide range of reasonable possibilities. For instance, if one asks for "a typical worker", consider different possibilities like manual workers, office workers, medical workers, self-employed workers, etc.
-  - The agents you generate must sound authentic and realistic, considering the context provided. Avoid platitudes and cliches. The agents you generate represent real humans, and as such encompass all the diversity and complexity of real people. So not only happy and successful people, but also people with problems, fears, and difficulties.
-  - When generating a person specification, be free to use whatever elements are most realistic,  even if they are typically undesireable (e.g., vicious people are part of the general population). We need a realistic sample of people, not a caricature. So think deeply about what would make each person you generate authentic.
-  - You have access to the list of existing agents, created either by you or other processes. You must read it carefully before generating your output.
-  - Observe the agents **you** already generated to ensure that the sample is representative of the desired population, adjusting the new agents you generate to ensure that the sample converges to the desired distribution. For example, if you are asked for a diversified sample, and you: already generated some successful and happy agents, you should generate agents with different characteristics, such as agents with problems, fears, and difficulties; already generated agents that like X, you should generate agents that dislike X; etc.
-  - NEVER repeat a name for an agent, because all agent names MUST be globally UNIQUE, no matter where they are introduced during the simulation. If needed, you can add more surnames or other identifiers to the name.
+  - If a general context is provided, you must ensure the generated agent has relevant details that will allow the a realistic simulation of a real person in that context. To do so, you should include nunanced details that could be relevant for the simulation in that context.
+  - Given the context and agent particularities, please, be creative to generate details about the person for each of the fields in the response. Sample from a wide range of reasonable possibilities. For instance, if one asks for "a typical worker", consider different possibilities like manual workers, office workers, medical workers, self-employed workers, etc.
+  - The agents you generate must sound authentic and realistic, considering the context and particularities provided. Avoid platitudes and cliches. The agents you generate represent real humans, and as such encompass all the diversity and complexity of real people. So not only happy and successful people, but also people with problems, fears, and difficulties.
+  - When generating a person specification, be free to use whatever elements are most realistic, even if they are typically considered undesireable (e.g., vicious people are part of the general population). We need a realistic sample of people, not a caricature. So think deeply about what would make each person you generate authentic with respect the provided context and particularities.
 
 ## Output Format Rules
 Your output **must** follow these rules:
@@ -52,9 +54,6 @@ Your output **must** follow these rules:
     * "relationships"
     * "other_facts": anything that doesn't fit in the other fields and sections.
 
-
-
-## Sampling Guidelines
 
 ## Examples
 Please follow the precise format in the examples below when generating the agent. Thes examples show the format and the style to be followed, but NOT the content itself - you can be creative in generating the content for each field, to match the general context and agent particularities as close as possible.
@@ -87,27 +86,3 @@ Please follow the precise format in the examples below when generating the agent
 No other examples available.
 {{/other_examples}}
 
-## Existing agents
-
-In order to allow the generation of globally unique names you must consider the agents already present anywhere in the simulation,
-not only by this generator. Names of these existing agents:
-{{#already_generated_names}}  
-- {{.}}
-{{/already_generated_names}}
-{{^already_generated_names}}
-    (No agents are present in the simulation yet.)
-{{/already_generated_names}}
-
-Remember: NEVER repeat a name for an agent. All agent names MUST be UNIQUE in the whole simulation. Read these existing names carefully before generating 
-new agents.
-
-Furthermore, in order to generate agents following the distribution requested or implied in **this** generator's general context or agent particularities, 
-you must consider the demographical and biographical details of agents **you** already produced. These are the following:
-{{#already_generated_minibios}}
-- {{.}}
-{{/already_generated_minibios}}
-{{^already_generated_minibios}}
-No agents generated by this generator yet.
-{{/already_generated_minibios}}
-
-Remember: when producing new agents, you must consider the agents **you** already generated to ensure the sample is representative of the desired population.

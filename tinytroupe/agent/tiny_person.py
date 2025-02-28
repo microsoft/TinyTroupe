@@ -13,8 +13,10 @@ import textwrap  # to dedent strings
 import chevron  # to parse Mustache templates
 from typing import Any
 from rich import print
+import threading
 
-
+# to protect from race conditions when running agents in parallel
+concurrent_agent_action_lock = threading.Lock()
 
 #######################################################################################################################
 # TinyPerson itself
@@ -249,13 +251,51 @@ class TinyPerson(JsonSerializableRegistry):
                                                  "These actions **MUST** be rendered following the JSON specification perfectly, including all required keys (even if their value is empty), **ALWAYS**."
                                      })
 
+    #########################################################################
+    # Persona definitions
+    #########################################################################
+    
+    # 
+    # Conveniences to access the persona configuration via dictionary-like syntax using
+    # the [] operator. e.g., agent["nationality"] = "American"
+    #
+    def __getitem__(self, key):
+        return self.get(key)
+
+    def __setitem__(self, key, value):
+        self.define(key, value)
+
+    #
+    # Conveniences to import persona definitions via the '+' operator, 
+    #  e.g., agent + {"nationality": "American", ...}
+    #
+    #  e.g., agent + "path/to/fragment.json"
+    #
+    def __add__(self, other):
+        """
+        Allows using the '+' operator to add persona definitions or import a fragment.
+        If 'other' is a dict, calls include_persona_definitions().
+        If 'other' is a string, calls import_fragment().
+        """
+        if isinstance(other, dict):
+            self.include_persona_definitions(other)
+        elif isinstance(other, str):
+            self.import_fragment(other)
+        else:
+            raise TypeError("Unsupported operand type for +. Must be a dict or a string path to fragment.")
+        return self
+
+    #
+    # Various other conveniences to manipulate the persona configuration
+    #
+
     def get(self, key):
         """
-        Returns the definition of a key in the TinyPerson's configuration.
+        Returns the definition of a key in the TinyPerson's perosna configuration.
         """
         return self._persona.get(key, None)
     
-    @transactional
+    @transactional()
     def import_fragment(self, path):
         """
         Imports a fragment of a persona configuration from a JSON file.
@@ -265,14 +305,14 @@ class TinyPerson(JsonSerializableRegistry):
 
         # check the type is "Fragment" and that there's also a "persona" key
         if fragment.get("type", None) == "Fragment" and fragment.get("persona", None) is not None:
-            self.include_persona_definitions(fragment)
+            self.include_persona_definitions(fragment["persona"])
         else:
             raise ValueError("The imported JSON file must be a valid fragment of a persona configuration.")
         
         # must reset prompt after adding to configuration
         self.reset_prompt()
 
-    @transactional
+    @transactional()
     def include_persona_definitions(self, additional_definitions: dict):
         """
         Imports a set of definitions into the TinyPerson. They will be merged with the current configuration.
@@ -288,8 +328,8 @@ class TinyPerson(JsonSerializableRegistry):
         self.reset_prompt()
         
     
-    @transactional
-    def define(self, key, value, merge=True, overwrite_scalars=True):
+    @transactional()
+    def define(self, key, value, merge=False, overwrite_scalars=True):
         """
         Define a value to the TinyPerson's persona configuration. Value can either be a scalar or a dictionary.
         If the value is a dictionary or list, you can choose to merge it with the existing value or replace it. 
@@ -298,7 +338,7 @@ class TinyPerson(JsonSerializableRegistry):
         Args:
             key (str): The key to define.
             value (Any): The value to define.
-            merge (bool, optional): Whether to merge the dict/list values with the existing values or replace them. Defaults to True.
+            merge (bool, optional): Whether to merge the dict/list values with the existing values or replace them. Defaults to False.
             overwrite_scalars (bool, optional): Whether to overwrite scalar values or not. Defaults to True.
         """
 
@@ -325,7 +365,7 @@ class TinyPerson(JsonSerializableRegistry):
         self.reset_prompt()
 
     
-    @transactional
+    @transactional()
     def define_relationships(self, relationships, replace=True):
         """
         Defines or updates the TinyPerson's relationships.
@@ -354,7 +394,11 @@ class TinyPerson(JsonSerializableRegistry):
         else:
             raise Exception("Invalid arguments for define_relationships.")
 
-    @transactional
+    ##############################################################################
+    # Relationships
+    ##############################################################################
+
+    @transactional()
     def clear_relationships(self):
         """
         Clears the TinyPerson's relationships.
@@ -363,7 +407,7 @@ class TinyPerson(JsonSerializableRegistry):
 
         return self      
     
-    @transactional
+    @transactional()
     def related_to(self, other_agent, description, symmetric_description=None):
         """
         Defines a relationship between this agent and another agent.
@@ -382,6 +426,8 @@ class TinyPerson(JsonSerializableRegistry):
             other_agent.define_relationships([{"Name": self.name, "Description": symmetric_description}], replace=False)
         
         return self
+    
+    ############################################################################
     
     def add_mental_faculties(self, mental_faculties):
         """
@@ -404,7 +450,7 @@ class TinyPerson(JsonSerializableRegistry):
         
         return self
 
-    @transactional
+    @transactional()
     def act(
         self,
         until_done=True,
@@ -450,10 +496,6 @@ class TinyPerson(JsonSerializableRegistry):
 
             action = content['action']
             logger.debug(f"{self.name}'s action: {action}")
-
-            goals = cognitive_state['goals']
-            attention = cognitive_state['attention']
-            emotions = cognitive_state['emotions']
 
             self.store_in_memory({'role': role, 'content': content, 
                                   'type': 'action', 
@@ -508,7 +550,7 @@ class TinyPerson(JsonSerializableRegistry):
         if return_actions:
             return contents
 
-    @transactional
+    @transactional()
     def listen(
         self,
         speech,
@@ -605,7 +647,7 @@ class TinyPerson(JsonSerializableRegistry):
             max_content_length=max_content_length,
         )
 
-    @transactional
+    @transactional()
     def _observe(self, stimulus, max_content_length=default["max_content_display_length"]):
         stimuli = [stimulus]
 
@@ -631,7 +673,7 @@ class TinyPerson(JsonSerializableRegistry):
 
         return self  # allows easier chaining of methods
 
-    @transactional
+    @transactional()
     def listen_and_act(
         self,
         speech,
@@ -647,7 +689,7 @@ class TinyPerson(JsonSerializableRegistry):
             return_actions=return_actions, max_content_length=max_content_length
         )
 
-    @transactional
+    @transactional()
     def see_and_act(
         self,
         visual_description,
@@ -663,7 +705,7 @@ class TinyPerson(JsonSerializableRegistry):
             return_actions=return_actions, max_content_length=max_content_length
         )
 
-    @transactional
+    @transactional()
     def think_and_act(
         self,
         thought,
@@ -709,7 +751,7 @@ class TinyPerson(JsonSerializableRegistry):
 
         self.semantic_memory.add_web_url(web_url)
     
-    @transactional
+    @transactional()
     def move_to(self, location, context=[]):
         """
         Moves to a new location and updates its internal cognitive state.
@@ -719,7 +761,7 @@ class TinyPerson(JsonSerializableRegistry):
         # context must also be updated when moved, since we assume that context is dictated partly by location.
         self.change_context(context)
 
-    @transactional
+    @transactional()
     def change_context(self, context: list):
         """
         Changes the context and updates its internal cognitive state.
@@ -730,7 +772,7 @@ class TinyPerson(JsonSerializableRegistry):
 
         self._update_cognitive_state(context=context)
 
-    @transactional
+    @transactional()
     def make_agent_accessible(
         self,
         agent: Self,
@@ -749,7 +791,7 @@ class TinyPerson(JsonSerializableRegistry):
                 f"[{self.name}] Agent {agent.name} is already accessible to {self.name}."
             )
 
-    @transactional
+    @transactional()
     def make_agent_inaccessible(self, agent: Self):
         """
         Makes an agent inaccessible to this agent.
@@ -761,7 +803,7 @@ class TinyPerson(JsonSerializableRegistry):
                 f"[{self.name}] Agent {agent.name} is already inaccessible to {self.name}."
             )
 
-    @transactional
+    @transactional()
     def make_all_agents_inaccessible(self):
         """
         Makes all agents inaccessible to this agent.
@@ -769,7 +811,7 @@ class TinyPerson(JsonSerializableRegistry):
         self._accessible_agents = []
         self._mental_state["accessible_agents"] = []
 
-    @transactional
+    @transactional()
     def _produce_message(self):
         # logger.debug(f"Current messages: {self.current_messages}")
 
@@ -793,7 +835,7 @@ class TinyPerson(JsonSerializableRegistry):
     ###########################################################
     # Internal cognitive state changes
     ###########################################################
-    @transactional
+    @transactional()
     def _update_cognitive_state(
         self, goals=None, context=None, attention=None, emotions=None
     ):
@@ -899,37 +941,39 @@ class TinyPerson(JsonSerializableRegistry):
         """
         Displays the current communication and stores it in a buffer for later use.
         """
-        if kind == "stimuli":
-            rendering = self._pretty_stimuli(
-                role=role,
-                content=content,
-                simplified=simplified,
-                max_content_length=max_content_length,
-            )
-            source = content["stimuli"][0]["source"]
-            target = self.name
-            
-        elif kind == "action":
-            rendering = self._pretty_action(
-                role=role,
-                content=content,
-                simplified=simplified,
-                max_content_length=max_content_length,
-            )
-            source = self.name
-            target = content["action"]["target"]
+        # CONCURRENT PROTECTION, as we'll access shared display buffers
+        with concurrent_agent_action_lock:
+            if kind == "stimuli":
+                rendering = self._pretty_stimuli(
+                    role=role,
+                    content=content,
+                    simplified=simplified,
+                    max_content_length=max_content_length,
+                )
+                source = content["stimuli"][0]["source"]
+                target = self.name
+                
+            elif kind == "action":
+                rendering = self._pretty_action(
+                    role=role,
+                    content=content,
+                    simplified=simplified,
+                    max_content_length=max_content_length,
+                )
+                source = self.name
+                target = content["action"]["target"]
 
-        else:
-            raise ValueError(f"Unknown communication kind: {kind}")
+            else:
+                raise ValueError(f"Unknown communication kind: {kind}")
 
-        # if the agent has no parent environment, then it is a free agent and we can display the communication.
-        # otherwise, the environment will display the communication instead. This is important to make sure that
-        # the communication is displayed in the correct order, since environments control the flow of their underlying
-        # agents.
-        if self.environment is None:
-            self._push_and_display_latest_communication({"kind": kind, "rendering":rendering, "content": content, "source":source, "target": target})
-        else:
-            self.environment._push_and_display_latest_communication({"kind": kind, "rendering":rendering, "content": content, "source":source, "target": target})
+            # if the agent has no parent environment, then it is a free agent and we can display the communication.
+            # otherwise, the environment will display the communication instead. This is important to make sure that
+            # the communication is displayed in the correct order, since environments control the flow of their underlying
+            # agents.
+            if self.environment is None:
+                self._push_and_display_latest_communication({"kind": kind, "rendering":rendering, "content": content, "source":source, "target": target})
+            else:
+                self.environment._push_and_display_latest_communication({"kind": kind, "rendering":rendering, "content": content, "source":source, "target": target})
 
     def _push_and_display_latest_communication(self, communication):
         """
@@ -956,7 +1000,7 @@ class TinyPerson(JsonSerializableRegistry):
         """
         self._displayed_communications_buffer = []
 
-    @transactional
+    @transactional()
     def pop_latest_actions(self) -> list:
         """
         Returns the latest actions performed by this agent. Typically used
@@ -967,7 +1011,7 @@ class TinyPerson(JsonSerializableRegistry):
         self._actions_buffer = []
         return actions
 
-    @transactional
+    @transactional()
     def pop_actions_and_get_contents_for(
         self, action_type: str, only_last_action: bool = True
     ) -> list:
@@ -1000,7 +1044,7 @@ class TinyPerson(JsonSerializableRegistry):
     def __repr__(self):
         return f"TinyPerson(name='{self.name}')"
 
-    @transactional
+    @transactional()
     def minibio(self, extended=True):
         """
         Returns a mini-biography of the TinyPerson.

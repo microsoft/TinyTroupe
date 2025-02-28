@@ -9,6 +9,8 @@ import configparser
 from pydantic import BaseModel
 from typing import Union
 import textwrap  # to dedent strings
+from typing import List, Dict
+
 
 import tiktoken
 from tinytroupe import utils
@@ -106,11 +108,13 @@ class LLMRequest:
         # Setup typing for the output
         #
         if self.output_type is not None:
-            # specify the structured output
+            # specify the default structured output. We can change it below if needed.
             self.model_params["response_format"] = LLMScalarWithJustificationResponse
-            self.messages.append({"role": "user", 
-                                  "content": "In your response, you **MUST** provide a value, along with a justification and your confidence level that the value and justification are correct (0.0 means no confidence, 1.0 means complete confidence)."+
-                                             "Furtheremore, your response **MUST** be a JSON object with the following structure: {\"value\": value, \"justification\": justification, \"confidence\": confidence}."})
+            extra_messages = [{"role": "system", 
+                               "content": "In your response, you **MUST** provide a value, along with a justification and your confidence level that the value and justification are correct (0.0 means no confidence, 1.0 means complete confidence)."+
+                                             "Furtheremore, your response **MUST** be a JSON object with the following structure: {\"justification\": justification, \"value\": value,  \"confidence\": confidence}." +
+                                             "Note that \"justification\" comes first, this is to allow you to think through before providing the value."}]
+            
 
             # specify the value type
             if self.output_type == bool:
@@ -119,12 +123,36 @@ class LLMRequest:
                 self.messages.append(self._request_integer_llm_message())
             elif self.output_type == float:
                 self.messages.append(self._request_float_llm_message())
-            elif self.output_type == list and all(isinstance(option, str) for option in self.output_type):
+            elif isinstance(self.output_type, list) and all(isinstance(option, str) for option in self.output_type):
                 self.messages.append(self._request_enumerable_llm_message(self.output_type))
             elif self.output_type == str:
                 pass
+            elif self.output_type == List[Dict[str, any]]:
+                # override the response format, because the pydantic model is not compatible with the arbitrary list of dict type
+                self.model_params["response_format"] = {"type": "json_object"}
+                self.messages.append(self._request_list_of_dict_llm_message())
+            elif self.output_type == dict or self.output_type == "json":
+                # override the response format, because the pydantic model is not compatible with the arbitrary dict type
+                self.model_params["response_format"] = {"type": "json_object"}
+                self.messages.append(self._request_dict_llm_message())
+            
+            elif self.output_type == list:
+                # override the response format, because the pydantic model is not compatible with the arbitrary list type
+                self.model_params["response_format"] = {"type": "json_object"}
+                self.messages.append(self._request_list_llm_message())  
+            
+            # check if it is actually a pydantic model
+            elif issubclass(self.output_type, BaseModel):
+                # completely override the response format
+                self.model_params["response_format"] = self.output_type
+
+                # replace formatting instruction
+                extra_messages = [{"role": "system",
+                                      "content": "Your response **MUST** be a JSON object."}]
             else:
                 raise ValueError(f"Unsupported output type: {self.output_type}")
+
+            self.messages += extra_messages
         
         #
         # call the LLM model
@@ -148,10 +176,19 @@ class LLMRequest:
                     self.response_value = self._coerce_to_integer(self.response_value)
                 elif self.output_type == float:
                     self.response_value = self._coerce_to_float(self.response_value)
-                elif self.output_type == list and all(isinstance(option, str) for option in self.output_type):
+                elif isinstance(self.output_type, list) and all(isinstance(option, str) for option in self.output_type):
                     self.response_value = self._coerce_to_enumerable(self.response_value, self.output_type)
+                elif self.output_type == List[Dict[str, any]]:
+                    self.response_value = self._coerce_to_dict_or_list(self.response_value)
                 elif self.output_type == str:
                     pass
+                elif self.output_type == dict or self.output_type == "json":
+                    self.response_value = self._coerce_to_dict_or_list(self.response_value)
+                elif self.output_type == list:
+                    self.response_value = self._coerce_to_list(self.response_value)
+                # check if it is actually a pydantic model
+                elif issubclass(self.output_type, BaseModel):
+                    self.response_value = self.output_type.parse_obj(self.response_json)
                 else:
                     raise ValueError(f"Unsupported output type: {self.output_type}")
             
@@ -293,6 +330,66 @@ class LLMRequest:
         options_list_as_string = ', '.join([f"'{o}'" for o in options])
         return {"role": "user", 
                 "content": f"The `value` field you generate **must** be exactly one of the following strings: {options_list_as_string}. This is critical for later processing."}
+
+    def _coerce_to_dict_or_list(self, llm_output:str):
+        """
+        Coerces the LLM output to a list or dictionary, i.e., a JSON structure.
+
+        This method looks for a JSON object in the LLM output, such that
+          - the JSON object is considered;
+          - if no JSON object is found, the method raises an error. So it is important that the prompts actually requests a JSON object. 
+
+        Args:
+            llm_output (str): The LLM output to coerce.
+        
+        Returns:
+            The dictionary value of the LLM output.
+        """
+
+        # if the LLM output is already a dictionary, we return it
+        if isinstance(llm_output, dict):
+            return llm_output
+
+        return utils.extract_json(llm_output)   
+
+    def _request_dict_llm_message(self):
+            return {"role": "user", 
+                    "content": "The `value` field you generate **must** be a JSON structure embedded in a string. This is critical for later processing."}    
+    
+    def _request_list_of_dict_llm_message(self):
+            return {"role": "user", 
+                    "content": "The `value` field you generate **must** be a list of dictionaries, specified as a JSON structure embedded in a string. For example, `[\{...\}, \{...\}, ...]`. This is critical for later processing."}    
+
+    def _coerce_to_list(self, llm_output:str):
+        """
+        Coerces the LLM output to a list.
+
+        This method looks for a list in the LLM output, such that
+          - the list is considered;
+          - if no list is found, the method raises an error. So it is important that the prompts actually requests a list. 
+
+        Args:
+            llm_output (str): The LLM output to coerce.
+        
+        Returns:
+            The list value of the LLM output.
+        """
+
+        # if the LLM output is already a list, we return it
+        if isinstance(llm_output, list):
+            return llm_output
+
+        # must make sure there's actually a list. Let's start with regex
+        import re
+        match = re.search(r'\[.*\]', llm_output)
+        if match:
+            return json.loads(match.group(0))
+        
+        raise ValueError("The LLM output does not contain a recognizable list value.")
+
+    def _request_list_llm_message(self):
+        return {"role": "user", 
+                "content": "The `value` field you generate **must** be a JSON **list** (e.g., [\"apple\", 1, 0.9]), NOT a dictionary, always embedded in a string. This is critical for later processing."}    
     
     def __repr__(self):
         return f"LLMRequest(messages={self.messages}, model_params={self.model_params}, model_output={self.model_output})"
@@ -304,11 +401,11 @@ class LLMScalarWithJustificationResponse(BaseModel):
     """
     LLMTypedResponse represents a typed response from an LLM (Language Learning Model).
     Attributes:
-        value (str, int, float, list): The value of the response.
+        value (str, int, float, bool): The value of the response.
         justification (str): The justification or explanation for the response.
     """
+    justification: str # comes first to allow thinking before providing the value
     value: Union[str, int, float, bool]
-    justification: str
     confidence: float
 
 

@@ -3,6 +3,8 @@ from tinytroupe.environment import logger, default
 import copy
 from datetime import datetime, timedelta
 import textwrap
+import random
+import concurrent.futures
 
 from tinytroupe.agent import *
 from tinytroupe.utils import name_or_empty, pretty_datetime
@@ -73,20 +75,27 @@ class TinyWorld:
     #######################################################################
     # Simulation control methods
     #######################################################################
-    @transactional
-    def _step(self, timedelta_per_step=None):
+    @transactional()
+    def _step(self, 
+              timedelta_per_step=None, 
+              randomize_agents_order=True,
+              parallelize=True): # TODO have a configuration for parallelism?
         """
         Performs a single step in the environment. This default implementation
         simply calls makes all agents in the environment act and properly
         handle the resulting actions. Subclasses might override this method to implement 
         different policies.
         """
-        # increase current datetime if timedelta is given. This must happen before
+        
+        # Increase current datetime if timedelta is given. This must happen before
         # any other simulation updates, to make sure that the agents are acting
         # in the correct time, particularly if only one step is being run.
         self._advance_datetime(timedelta_per_step)
 
-        # apply interventions
+        # Apply interventions. 
+        # 
+        # Why not in parallel? Owing to the very general nature of their potential effects,
+        # interventions are never parallelized, since that could introduce unforeseen race conditions.
         for intervention in self._interventions:
             should_apply_intervention = intervention.check_precondition()
             if should_apply_intervention:
@@ -96,9 +105,28 @@ class TinyWorld:
                 
                 logger.debug(f"[{self.name}] Intervention '{intervention.name}' was applied.")
 
+        # Agents can act in parallel or sequentially
+        if parallelize:
+            agents_actions = self._step_in_parallel(timedelta_per_step=timedelta_per_step)
+        else:
+            agents_actions = self._step_sequentially(timedelta_per_step=timedelta_per_step, 
+                                                 randomize_agents_order=randomize_agents_order)
+        
+        return agents_actions
+        
+    def _step_sequentially(self, timedelta_per_step=None, randomize_agents_order=True):
+        """
+        The sequential version of the _step method to request agents to act. 
+        """
+        
+        # agents can act in a random order
+        reordered_agents = copy.copy(self.agents)
+        if randomize_agents_order:
+            random.shuffle(reordered_agents)
+
         # agents can act
         agents_actions = {}
-        for agent in self.agents:
+        for agent in reordered_agents:
             logger.debug(f"[{self.name}] Agent {name_or_empty(agent)} is acting.")
             actions = agent.act(return_actions=True)
             agents_actions[agent.name] = actions
@@ -106,6 +134,26 @@ class TinyWorld:
             self._handle_actions(agent, agent.pop_latest_actions())
         
         return agents_actions
+
+    def _step_in_parallel(self, timedelta_per_step=None):
+        """
+        A parallelized version of the _step method to request agents to act.
+        """
+
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            futures = {executor.submit(agent.act, return_actions=True): agent for agent in self.agents}
+            agents_actions = {}
+            for future in concurrent.futures.as_completed(futures):
+                agent = futures[future]
+                try:
+                    actions = future.result()
+                    agents_actions[agent.name] = actions
+                    self._handle_actions(agent, agent.pop_latest_actions())
+                except Exception as exc:
+                    logger.error(f"[{self.name}] Agent {name_or_empty(agent)} generated an exception: {exc}")
+
+        return agents_actions
+
         
 
     def _advance_datetime(self, timedelta):
@@ -120,8 +168,8 @@ class TinyWorld:
         else:
             logger.info(f"[{self.name}] No timedelta provided, so the datetime was not advanced.")
 
-    @transactional
-    def run(self, steps: int, timedelta_per_step=None, return_actions=False):
+    @transactional()
+    def run(self, steps: int, timedelta_per_step=None, return_actions=False, randomize_agents_order=True, parallelize=default["parallel_agent_actions"]):
         """
         Runs the environment for a given number of steps.
 
@@ -129,6 +177,8 @@ class TinyWorld:
             steps (int): The number of steps to run the environment for.
             timedelta_per_step (timedelta, optional): The time interval between steps. Defaults to None.
             return_actions (bool, optional): If True, returns the actions taken by the agents. Defaults to False.
+            randomize_agents_order (bool, optional): If True, randomizes the order in which agents act. Defaults to True.
+            parallelize (bool, optional): If True, agents act in parallel. Defaults to True.
         
         Returns:
             list: A list of actions taken by the agents over time, if return_actions is True. The list has this format:
@@ -141,13 +191,13 @@ class TinyWorld:
             if TinyWorld.communication_display:
                 self._display_step_communication(cur_step=i+1, total_steps=steps, timedelta_per_step=timedelta_per_step)
 
-            agents_actions = self._step(timedelta_per_step=timedelta_per_step)
+            agents_actions = self._step(timedelta_per_step=timedelta_per_step, randomize_agents_order=randomize_agents_order, parallelize=parallelize)
             agents_actions_over_time.append(agents_actions)
         
         if return_actions:
             return agents_actions_over_time
     
-    @transactional
+    @transactional()
     def skip(self, steps: int, timedelta_per_step=None):
         """
         Skips a given number of steps in the environment. That is to say, time shall pass, but no actions will be taken
@@ -159,14 +209,14 @@ class TinyWorld:
         """
         self._advance_datetime(steps * timedelta_per_step)
 
-    def run_minutes(self, minutes: int):
+    def run_minutes(self, minutes: int, randomize_agents_order=True, parallelize=True):
         """
         Runs the environment for a given number of minutes.
 
         Args:
             minutes (int): The number of minutes to run the environment for.
         """
-        self.run(steps=minutes, timedelta_per_step=timedelta(minutes=1))
+        self.run(steps=minutes, timedelta_per_step=timedelta(minutes=1), randomize_agents_order=randomize_agents_order, parallelize=parallelize)
     
     def skip_minutes(self, minutes: int):
         """
@@ -177,14 +227,14 @@ class TinyWorld:
         """
         self.skip(steps=minutes, timedelta_per_step=timedelta(minutes=1))
     
-    def run_hours(self, hours: int):
+    def run_hours(self, hours: int, randomize_agents_order=True, parallelize=True):
         """
         Runs the environment for a given number of hours.
 
         Args:
             hours (int): The number of hours to run the environment for.
         """
-        self.run(steps=hours, timedelta_per_step=timedelta(hours=1))
+        self.run(steps=hours, timedelta_per_step=timedelta(hours=1), randomize_agents_order=randomize_agents_order, parallelize=parallelize)
     
     def skip_hours(self, hours: int):
         """
@@ -195,14 +245,14 @@ class TinyWorld:
         """
         self.skip(steps=hours, timedelta_per_step=timedelta(hours=1))
     
-    def run_days(self, days: int):
+    def run_days(self, days: int, randomize_agents_order=True, parallelize=True):
         """
         Runs the environment for a given number of days.
 
         Args:
             days (int): The number of days to run the environment for.
         """
-        self.run(steps=days, timedelta_per_step=timedelta(days=1))
+        self.run(steps=days, timedelta_per_step=timedelta(days=1), randomize_agents_order=randomize_agents_order, parallelize=parallelize)
     
     def skip_days(self, days: int):
         """
@@ -213,14 +263,15 @@ class TinyWorld:
         """
         self.skip(steps=days, timedelta_per_step=timedelta(days=1))
     
-    def run_weeks(self, weeks: int):
+    def run_weeks(self, weeks: int, randomize_agents_order=True, parallelize=True):
         """
         Runs the environment for a given number of weeks.
 
         Args:
             weeks (int): The number of weeks to run the environment for.
+            randomize_agents_order (bool, optional): If True, randomizes the order in which agents act. Defaults to True.
         """
-        self.run(steps=weeks, timedelta_per_step=timedelta(weeks=1))
+        self.run(steps=weeks, timedelta_per_step=timedelta(weeks=1), randomize_agents_order=randomize_agents_order, parallelize=parallelize)
     
     def skip_weeks(self, weeks: int):
         """
@@ -231,14 +282,15 @@ class TinyWorld:
         """
         self.skip(steps=weeks, timedelta_per_step=timedelta(weeks=1))
     
-    def run_months(self, months: int):
+    def run_months(self, months: int, randomize_agents_order=True, parallelize=True):
         """
         Runs the environment for a given number of months.
 
         Args:
             months (int): The number of months to run the environment for.
+            randomize_agents_order (bool, optional): If True, randomizes the order in which agents act. Defaults to True.
         """
-        self.run(steps=months, timedelta_per_step=timedelta(weeks=4))
+        self.run(steps=months, timedelta_per_step=timedelta(weeks=4), randomize_agents_order=randomize_agents_order, parallelize=parallelize)
     
     def skip_months(self, months: int):
         """
@@ -249,14 +301,15 @@ class TinyWorld:
         """
         self.skip(steps=months, timedelta_per_step=timedelta(weeks=4))
     
-    def run_years(self, years: int):
+    def run_years(self, years: int, randomize_agents_order=True, parallelize=True):
         """
         Runs the environment for a given number of years.
 
         Args:
             years (int): The number of years to run the environment for.
+            randomize_agents_order (bool, optional): If True, randomizes the order in which agents act. Defaults to True.
         """
-        self.run(steps=years, timedelta_per_step=timedelta(days=365))
+        self.run(steps=years, timedelta_per_step=timedelta(days=365), randomize_agents_order=randomize_agents_order, parallelize=parallelize)
     
     def skip_years(self, years: int):
         """
@@ -368,7 +421,7 @@ class TinyWorld:
     # Specific actions issued by agents are handled by the environment,
     # because they have effects beyond the agent itself.
     #######################################################################
-    @transactional
+    @transactional()
     def _handle_actions(self, source: TinyPerson, actions: list):
         """ 
         Handles the actions issued by the agents.
@@ -392,7 +445,7 @@ class TinyWorld:
             elif action_type == "TALK":
                 self._handle_talk(source, content, target)
 
-    @transactional
+    @transactional()
     def _handle_reach_out(self, source_agent: TinyPerson, content: str, target: str):
         """
         Handles the REACH_OUT action. This default implementation always allows REACH_OUT to succeed.
@@ -417,7 +470,7 @@ class TinyWorld:
         else:
             logger.debug(f"[{self.name}] REACH_OUT action failed: target agent '{target}' not found.")
 
-    @transactional
+    @transactional()
     def _handle_talk(self, source_agent: TinyPerson, content: str, target: str):
         """
         Handles the TALK action by delivering the specified content to the specified target.
@@ -439,7 +492,7 @@ class TinyWorld:
     #######################################################################
     # Interaction methods
     #######################################################################
-    @transactional
+    @transactional()
     def broadcast(self, speech: str, source: AgentOrWorld=None):
         """
         Delivers a speech to all agents in the environment.
@@ -455,7 +508,7 @@ class TinyWorld:
             if agent != source:
                 agent.listen(speech, source=source)
     
-    @transactional
+    @transactional()
     def broadcast_thought(self, thought: str, source: AgentOrWorld=None):
         """
         Broadcasts a thought to all agents in the environment.
@@ -468,7 +521,7 @@ class TinyWorld:
         for agent in self.agents:
             agent.think(thought)
     
-    @transactional
+    @transactional()
     def broadcast_internal_goal(self, internal_goal: str):
         """
         Broadcasts an internal goal to all agents in the environment.
@@ -481,7 +534,7 @@ class TinyWorld:
         for agent in self.agents:
             agent.internalize_goal(internal_goal)
     
-    @transactional
+    @transactional()
     def broadcast_context_change(self, context:list):
         """
         Broadcasts a context change to all agents in the environment.
