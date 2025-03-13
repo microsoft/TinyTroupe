@@ -2,8 +2,8 @@ from tinytroupe.utils import JsonSerializableRegistry
 import tinytroupe.utils as utils
 
 from tinytroupe.agent import logger
-from llama_index.core import  VectorStoreIndex, SimpleDirectoryReader
-
+from llama_index.core import  VectorStoreIndex, SimpleDirectoryReader, Document
+from llama_index.readers.web import SimpleWebPageReader
 
 
 #######################################################################################################################
@@ -125,14 +125,14 @@ class BaseSemanticGroundingConnector(GroundingConnector):
         """
         # index documents by name
         if len(new_documents) > 0:
-            # add the new documents to the list of documents
-            self.documents += new_documents
-
-            # process documents individually too
+            # process documents individually
             for document in new_documents:
                 
                 # out of an abundance of caution, we sanitize the text
-                document.text = utils.sanitize_raw_string(document.text)
+                sanitized_text = utils.sanitize_raw_string(document.text)
+                # clone the document with the new text and add it to the list
+                sanitized_document = self.clone_document_with_new_text(document, sanitized_text)
+                self.documents.append(sanitized_document)
 
                 if doc_to_name_func is not None:
                     name = doc_to_name_func(document)
@@ -149,7 +149,24 @@ class BaseSemanticGroundingConnector(GroundingConnector):
                 self.index = VectorStoreIndex.from_documents(self.documents)
             else:
                 self.index.refresh(self.documents)
-    
+
+
+    def clone_document_with_new_text(self, original_doc: Document, new_text: str) -> Document:
+        """
+        Clones the specified document, replacing the text with the new text.
+        Here, "document" refer to the llama-index's data structure that stores a unit of content.
+        """
+        new_doc = Document(
+            text=new_text,  
+            metadata=original_doc.metadata,  # Copy metadata
+            excluded_llm_metadata_keys=original_doc.excluded_llm_metadata_keys,
+            excluded_embed_metadata_keys=original_doc.excluded_embed_metadata_keys,
+            metadata_separator=original_doc.metadata_separator,
+            metadata_template=original_doc.metadata_template,
+            text_template=original_doc.text_template,
+            relationships=original_doc.relationships
+        )
+        return new_doc    
     
 
 @utils.post_init
