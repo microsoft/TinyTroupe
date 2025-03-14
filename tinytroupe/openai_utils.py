@@ -26,7 +26,7 @@ default = {}
 default["model"] = config["OpenAI"].get("MODEL", "gpt-4o")
 default["max_tokens"] = int(config["OpenAI"].get("MAX_TOKENS", "1024"))
 default["temperature"] = float(config["OpenAI"].get("TEMPERATURE", "1.0"))
-default["top_p"] = int(config["OpenAI"].get("TOP_P", "0"))
+default["top_p"] = int(config["OpenAI"].get("TOP_P", "0.7"))
 default["frequency_penalty"] = float(config["OpenAI"].get("FREQ_PENALTY", "0.0"))
 default["presence_penalty"] = float(
     config["OpenAI"].get("PRESENCE_PENALTY", "0.0"))
@@ -345,7 +345,12 @@ class OpenAIClient:
         """
         Sets up the OpenAI API configurations for this client.
         """
-        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        if os.getenv("OPENAI_API_KEY") is None:
+            api_key = config["OpenAI"].get("API_KEY")
+        if os.getenv("OPENAI_API_BASE_URL") is None:
+            base_url = config["OpenAI"].get("BASE_URL")
+
+        self.client = OpenAI(api_key=api_key,base_url=base_url)
 
     def send_message(self,
                     current_messages,
@@ -548,6 +553,9 @@ class OpenAIClient:
             elif ("gpt-4" in model) or ("ppo" in model):
                 logger.debug("Token count: gpt-4 may update over time. Returning num tokens assuming gpt-4-0613.")
                 return self._count_tokens(messages, model="gpt-4-0613")
+                elif model == "deepseek-chat" or "deepseek-coder": 
+                    tokens_per_message = 4
+                     tokens_per_name = -1
             else:
                 raise NotImplementedError(
                     f"""num_tokens_from_messages() is not implemented for model {model}. See https://github.com/openai/openai-python/blob/main/chatml.md for information on how messages are converted to tokens."""
