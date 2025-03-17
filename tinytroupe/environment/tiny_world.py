@@ -147,6 +147,28 @@ class TinyWorld:
         if return_actions:
             return agents_actions_over_time
     
+    async def run_stream(self, steps: int, timedelta_per_step=None):
+        """
+        Runs the environment for a given number of steps, yielding actions after each step.
+        This is an async generator that allows streaming the simulation results in real-time.
+
+        Args:
+            steps (int): The number of steps to run the environment for.
+            timedelta_per_step (timedelta, optional): The time interval between steps. Defaults to None.
+        
+        Yields:
+            dict: A dictionary of actions taken by the agents in the current step, in the format:
+                  {agent_name: [action_1, action_2, ...], agent_name_2: [action_1, action_2, ...]}
+        """
+        for i in range(steps):
+            logger.info(f"[{self.name}] Running world simulation step {i+1} of {steps}.")
+
+            if TinyWorld.communication_display:
+                self._display_step_communication(cur_step=i+1, total_steps=steps, timedelta_per_step=timedelta_per_step)
+
+            agents_actions = self._step(timedelta_per_step=timedelta_per_step)
+            yield agents_actions
+
     @transactional
     def skip(self, steps: int, timedelta_per_step=None):
         """
