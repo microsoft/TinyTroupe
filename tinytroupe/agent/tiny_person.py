@@ -407,7 +407,7 @@ class TinyPerson(JsonSerializableRegistry):
     @transactional
     def act(
         self,
-        until_done=False,
+        until_done=True,
         n=None,
         return_actions=False,
         max_content_length=default["max_content_display_length"],
