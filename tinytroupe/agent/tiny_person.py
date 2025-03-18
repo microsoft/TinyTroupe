@@ -25,7 +25,7 @@ class TinyPerson(JsonSerializableRegistry):
 
     # The maximum number of actions that an agent is allowed to perform before DONE.
     # This prevents the agent from acting without ever stopping.
-    MAX_ACTIONS_BEFORE_DONE = 3
+    MAX_ACTIONS_BEFORE_DONE = 6
 
     PP_TEXT_WIDTH = 100
 
