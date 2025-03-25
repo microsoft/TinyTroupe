@@ -14,6 +14,9 @@ import chevron  # to parse Mustache templates
 from typing import Any
 from rich import print
 import threading
+from tinytroupe.utils import LLMChat  # Import LLMChat from the appropriate module
+
+import tinytroupe.utils.llm
 
 # to protect from race conditions when running agents in parallel
 concurrent_agent_action_lock = threading.Lock()
@@ -29,24 +32,25 @@ class TinyPerson(JsonSerializableRegistry):
     # This prevents the agent from acting without ever stopping.
     MAX_ACTIONS_BEFORE_DONE = 15
 
+    # The maximum similarity between consecutive actions. If the similarity is too high, the action is discarded and replaced by a DONE.
+    # Set this to None to disable the check.
+    MAX_ACTION_SIMILARITY = 0.7
+
     PP_TEXT_WIDTH = 100
 
     serializable_attributes = ["_persona", "_mental_state", "_mental_faculties", "episodic_memory", "semantic_memory"]
     serializable_attributes_renaming = {"_mental_faculties": "mental_faculties", "_persona": "persona", "_mental_state": "mental_state"}
 
-
     # A dict of all agents instantiated so far.
     all_agents = {}  # name -> agent
-
-    # The communication style for all agents: "simplified" or "full".
-    communication_style:str="simplified"
-    
+   
     # Whether to display the communication or not. True is for interactive applications, when we want to see simulation
     # outputs as they are produced.
     communication_display:bool=True
     
 
     def __init__(self, name:str=None, 
+                 action_generator=None,
                  episodic_memory=None,
                  semantic_memory=None,
                  mental_faculties:list=None):
@@ -62,6 +66,9 @@ class TinyPerson(JsonSerializableRegistry):
 
         # NOTE: default values will be given in the _post_init method, as that's shared by 
         #       direct initialization as well as via deserialization.
+
+        if action_generator is not None:
+            self.action_generator = action_generator
 
         if episodic_memory is not None:
             self.episodic_memory = episodic_memory
@@ -85,6 +92,9 @@ class TinyPerson(JsonSerializableRegistry):
         It is convenient to separate some of the initialization processes to make deserialize easier.
         """
 
+        from tinytroupe.agent.action_generator import ActionGenerator # import here to avoid circular import issues
+
+
         ############################################################
         # Default values
         ############################################################
@@ -106,6 +116,15 @@ class TinyPerson(JsonSerializableRegistry):
         # saving these communications to another output form later (e.g., caching)
         self._displayed_communications_buffer = []
 
+        if not hasattr(self, 'action_generator'):
+            # This default value MUST NOT be in the method signature, otherwise it will be shared across all instances.
+            self.action_generator = ActionGenerator(max_attempts=default["action_generator_max_attempts"],
+                                                    enable_quality_checks=default["action_generator_enable_quality_checks"],
+                                                    enable_regeneration=default["action_generator_enable_regeneration"],
+                                                    enable_direct_correction=default["action_generator_enable_direct_correction"],
+                                                    continue_on_failure=default["action_generator_continue_on_failure"],
+                                                    quality_threshold=default["action_generator_quality_threshold"])
+
         if not hasattr(self, 'episodic_memory'):
             # This default value MUST NOT be in the method signature, otherwise it will be shared across all instances.
             self.episodic_memory = EpisodicMemory()
@@ -126,14 +145,7 @@ class TinyPerson(JsonSerializableRegistry):
                 "age": None,
                 "nationality": None,
                 "country_of_residence": None,
-                "occupation": None,
-                "routines": [],
-                "occupation_description": None,
-                "personality_traits": [],
-                "professional_interests": [],
-                "personal_interests": [],
-                "skills": [],
-                "relationships": []
+                "occupation": None
             }
         
         if not hasattr(self, 'name'): 
@@ -154,6 +166,12 @@ class TinyPerson(JsonSerializableRegistry):
         
         if not hasattr(self, '_extended_agent_summary'):
             self._extended_agent_summary = None
+        
+        if not hasattr(self, 'actions_count'):
+            self.actions_count = 0
+        
+        if not hasattr(self, 'stimuli_count'):
+            self.stimuli_count = 0
 
         self._prompt_template_path = os.path.join(
             os.path.dirname(__file__), "prompts/tiny_person.mustache"
@@ -242,14 +260,6 @@ class TinyPerson(JsonSerializableRegistry):
         # sets up the actual interaction messages to use for prompting
         self.current_messages += self.retrieve_recent_memories()
 
-        # add a final user message, which is neither stimuli or action, to instigate the agent to act properly
-        self.current_messages.append({"role": "user", 
-                                      "content": "Now you **must** generate a sequence of actions following your interaction directives, " +\
-                                                 "and complying with **all** instructions and contraints related to the action you use." +\
-                                                 "DO NOT repeat the exact same action more than once in a row!" +\
-                                                 "DO NOT keep saying or doing very similar things, but instead try to adapt and make the interactions look natural." +\
-                                                 "These actions **MUST** be rendered following the JSON specification perfectly, including all required keys (even if their value is empty), **ALWAYS**."
-                                     })
 
     #########################################################################
     # Persona definitions
@@ -291,9 +301,17 @@ class TinyPerson(JsonSerializableRegistry):
 
     def get(self, key):
         """
-        Returns the definition of a key in the TinyPerson's perosna configuration.
+        Returns the value of a key in the TinyPerson's persona configuration.
+        Supports dot notation for nested keys (e.g., "address.city").
         """
-        return self._persona.get(key, None)
+        keys = key.split(".")
+        value = self._persona
+        for k in keys:
+            if isinstance(value, dict):
+                value = value.get(k, None)
+            else:
+                return None  # If the path is invalid, return None
+        return value
     
     @transactional()
     def import_fragment(self, path):
@@ -489,22 +507,55 @@ class TinyPerson(JsonSerializableRegistry):
         # Sometimes `content` contains EpisodicMemory's MEMORY_BLOCK_OMISSION_INFO message, which raises a TypeError on line 443
         @repeat_on_error(retries=5, exceptions=[KeyError, TypeError])
         def aux_act_once():
-            role, content = self._produce_message()
-
-            cognitive_state = content["cognitive_state"]
-
-
-            action = content['action']
+            # ensure we have the latest prompt (initial system message + selected messages from memory)
+            self.reset_prompt()
+            
+            action, role, content, all_negative_feedbacks = self.action_generator.generate_next_action(self, self.current_messages)
             logger.debug(f"{self.name}'s action: {action}")
 
-            self.store_in_memory({'role': role, 'content': content, 
-                                  'type': 'action', 
-                                  'simulation_timestamp': self.iso_datetime()})
+            # check the next action similarity, and if it is too similar, put a system warning instruction in memory too
+            next_action_similarity = utils.next_action_jaccard_similarity(self, action)
 
+            if (TinyPerson.MAX_ACTION_SIMILARITY is not None) and (next_action_similarity > TinyPerson.MAX_ACTION_SIMILARITY):
+                
+                logger.warning(f"[{self.name}] Action similarity is too high ({next_action_similarity}), replacing it with DONE.")
+
+                # replace the action with a DONE
+                action = {"type": "DONE", "content": "", "target": ""}
+                content["action"] = action	
+                content["cognitive_state"] = {}
+
+                self.store_in_memory({'role': 'system', 
+                                    'content': \
+                                        f"""
+                                        # EXCESSIVE ACTION SIMILARITY WARNING
+
+                                        You were about to generate a repetitive action (jaccard similarity = {next_action_similarity}).
+                                        Thus, the action was discarded and replaced by an artificial DONE.
+
+                                        DO NOT BE REPETITIVE. This is not a human-like behavior, therefore you **must** avoid this in the future.
+                                        Your alternatives are:
+                                        - produce more diverse actions.
+                                        - aggregate similar actions into a single, larger, action and produce it all at once.
+                                        - or simply not acting at all by issuing a DONE.
+
+                                        
+                                        """,
+                                    'type': 'feedback',
+                                    'simulation_timestamp': self.iso_datetime()})
+
+            # All checks done, we can commit the action to memory.
+            self.store_in_memory({'role': role, 'content': content, 
+                                    'type': 'action', 
+                                    'simulation_timestamp': self.iso_datetime()})
+                
             self._actions_buffer.append(action)
-            self._update_cognitive_state(goals=cognitive_state['goals'],
-                                        attention=cognitive_state['attention'],
-                                        emotions=cognitive_state['emotions'])
+            
+            if "cognitive_state" in content:
+                cognitive_state = content["cognitive_state"]
+                self._update_cognitive_state(goals=cognitive_state.get("goals", None),
+                                            attention=cognitive_state.get("emotions", None),
+                                            emotions=cognitive_state.get("emotions", None))
             
             contents.append(content)          
             if TinyPerson.communication_display:
@@ -514,7 +565,40 @@ class TinyPerson(JsonSerializableRegistry):
             # Some actions induce an immediate stimulus or other side-effects. We need to process them here, by means of the mental faculties.
             #
             for faculty in self._mental_faculties:
-                faculty.process_action(self, action)             
+                faculty.process_action(self, action)
+            
+            #
+            # turns all_negative_feedbacks list into a system message
+            #
+            # TODO improve this?
+            #
+            ##if len(all_negative_feedbacks) > 0:
+            ##    feedback = """
+            ##    # QUALITY FEEDBACK
+            ##
+            ##    Up to the present moment, we monitored actions and tentative aborted actions (i.e., that were not actually executed), 
+            ##    and some of them were not of good quality.
+            ##    Some of those were replaced by regenerated actions of better quality. In the process of doing so, some
+            ##    important quality feedback was produced, which is now given below.
+            ##    
+            ##    To improve your performance, and prevent future similar quality issues, you **MUST** take into account the following feedback
+            ##    whenever computing your future actions. Note that the feedback might also include the actual action or tentative action
+            ##    that was of low quality, so that you can understand what was wrong with it and avoid similar mistakes in the future.
+            ##
+            ##    """
+            ##    for i, feedback_item in enumerate(all_negative_feedbacks):
+            ##        feedback += f"{feedback_item}\n\n"
+            ##        feedback += f"\n\n *** \n\n"
+            ##
+            ##    self.store_in_memory({'role': 'system', 'content': feedback, 
+            ##                          'type': 'feedback',
+            ##                          'simulation_timestamp': self.iso_datetime()})
+            ##
+
+            
+
+            # count the actions as this can be useful for taking decisions later
+            self.actions_count += 1             
             
 
         #
@@ -670,6 +754,9 @@ class TinyPerson(JsonSerializableRegistry):
                 simplified=True,
                 max_content_length=max_content_length,
             )
+        
+        # count the stimuli as this can be useful for taking decisions later
+        self.stimuli_count += 1
 
         return self  # allows easier chaining of methods
 
@@ -811,27 +898,6 @@ class TinyPerson(JsonSerializableRegistry):
         self._accessible_agents = []
         self._mental_state["accessible_agents"] = []
 
-    @transactional()
-    def _produce_message(self):
-        # logger.debug(f"Current messages: {self.current_messages}")
-
-        # ensure we have the latest prompt (initial system message + selected messages from memory)
-        self.reset_prompt()
-
-        messages = [
-            {"role": msg["role"], "content": json.dumps(msg["content"])}
-            for msg in self.current_messages
-        ]
-
-        logger.debug(f"[{self.name}] Sending messages to OpenAI API")
-        logger.debug(f"[{self.name}] Last interaction: {messages[-1]}")
-
-        next_message = openai_utils.client().send_message(messages, response_format=CognitiveActionModel)
-
-        logger.debug(f"[{self.name}] Received message: {next_message}")
-
-        return next_message["role"], utils.extract_json(next_message["content"])
-
     ###########################################################
     # Internal cognitive state changes
     ###########################################################
@@ -873,6 +939,13 @@ class TinyPerson(JsonSerializableRegistry):
     ###########################################################
     # Memory management
     ###########################################################
+    def clear_episodic_memory(self, max_prefix_to_clear=None, max_suffix_to_clear=None):
+        """
+        Clears the episodic memory, causing a permanent "episodic amnesia". Note that this does not
+        change other memories, such as semantic memory.  
+        """
+        self.episodic_memory.clear(max_prefix_to_clear=max_prefix_to_clear, max_suffix_to_clear=max_suffix_to_clear)
+        
     def store_in_memory(self, value: Any) -> list:
         # TODO find another smarter way to abstract episodic information into semantic memory
         # self.semantic_memory.store(value)
@@ -930,6 +1003,23 @@ class TinyPerson(JsonSerializableRegistry):
     ###########################################################
     # Inspection conveniences
     ###########################################################
+
+    def last_remembered_action(self):
+        """
+        Returns the last remembered action.
+        """
+        actions_list = self.episodic_memory.retrieve_last(n=1, include_omission_info=False, item_type="action")
+
+        if len(actions_list) > 0:
+            return actions_list[0]["content"].get("action", None)
+        else:
+            return None
+
+
+    ###########################################################
+    # Communication display and action execution 
+    ###########################################################
+
     def _display_communication(
         self,
         role,
@@ -990,7 +1080,7 @@ class TinyPerson(JsonSerializableRegistry):
         self._displayed_communications_buffer = []
 
         for communication in communications:
-            print(communication)
+            print(communication["rendering"])
 
         return communications
 
@@ -1060,7 +1150,7 @@ class TinyPerson(JsonSerializableRegistry):
 
         if self._extended_agent_summary is None and extended:
             logger.debug(f"Generating extended agent summary for {self.name}.")
-            self._extended_agent_summary = openai_utils.LLMRequest(
+            self._extended_agent_summary = LLMChat(
                                                 system_prompt="""
                                                 You are given a short biography of an agent, as well as a detailed specification of his or her other characteristics
                                                 You must then produce a short paragraph (3 or 4 sentences) that **complements** the short biography, adding details about
@@ -1256,28 +1346,34 @@ class TinyPerson(JsonSerializableRegistry):
     # IO
     ###########################################################
 
-    def save_specification(self, path, include_mental_faculties=True, include_memory=False):
+    def save_specification(self, path, include_mental_faculties=True, include_memory=False, include_mental_state=False):
         """
         Saves the current configuration to a JSON file.
         """
         
         suppress_attributes = []
 
+        # should we include the mental faculties?
+        if not include_mental_faculties:
+            suppress_attributes.append("_mental_faculties")
+
         # should we include the memory?
         if not include_memory:
             suppress_attributes.append("episodic_memory")
             suppress_attributes.append("semantic_memory")
 
-        # should we include the mental faculties?
-        if not include_mental_faculties:
-            suppress_attributes.append("_mental_faculties")
+        # should we include the mental state?
+        if not include_mental_state:
+            suppress_attributes.append("_mental_state")
+        
 
         self.to_json(suppress=suppress_attributes, file_path=path,
                      serialization_type_field_name="type")
 
     
     @staticmethod
-    def load_specification(path_or_dict, suppress_mental_faculties=False, suppress_memory=False, auto_rename_agent=False, new_agent_name=None):
+    def load_specification(path_or_dict, suppress_mental_faculties=False, suppress_memory=False, suppress_mental_state=False, 
+                           auto_rename_agent=False, new_agent_name=None):
         """
         Loads a JSON agent specification.
 
@@ -1285,6 +1381,10 @@ class TinyPerson(JsonSerializableRegistry):
             path_or_dict (str or dict): The path to the JSON file or the dictionary itself.
             suppress_mental_faculties (bool, optional): Whether to suppress loading the mental faculties. Defaults to False.
             suppress_memory (bool, optional): Whether to suppress loading the memory. Defaults to False.
+            suppress_memory (bool, optional): Whether to suppress loading the memory. Defaults to False.
+            suppress_mental_state (bool, optional): Whether to suppress loading the mental state. Defaults to False.
+            auto_rename_agent (bool, optional): Whether to auto rename the agent. Defaults to False.
+            new_agent_name (str, optional): The new name for the agent. Defaults to None.
         """
 
         suppress_attributes = []
@@ -1297,10 +1397,42 @@ class TinyPerson(JsonSerializableRegistry):
         if suppress_memory:
             suppress_attributes.append("episodic_memory")
             suppress_attributes.append("semantic_memory")
+        
+        # should we suppress the mental state?
+        if suppress_mental_state:
+            suppress_attributes.append("_mental_state")
 
         return TinyPerson.from_json(json_dict_or_path=path_or_dict, suppress=suppress_attributes, 
                                     serialization_type_field_name="type",
                                     post_init_params={"auto_rename_agent": auto_rename_agent, "new_agent_name": new_agent_name})
+    @staticmethod
+    def load_specifications_from_folder(folder_path:str, file_suffix=".agent.json", suppress_mental_faculties=False, 
+                                        suppress_memory=False, suppress_mental_state=False, auto_rename_agent=False, 
+                                        new_agent_name=None) -> list:
+        """	
+        Loads all JSON agent specifications from a folder.
+
+        Args:
+            folder_path (str): The path to the folder containing the JSON files.
+            file_suffix (str, optional): The suffix of the JSON files. Defaults to ".agent.json".
+            suppress_mental_faculties (bool, optional): Whether to suppress loading the mental faculties. Defaults to False.
+            suppress_memory (bool, optional): Whether to suppress loading the memory. Defaults to False.
+            suppress_mental_state (bool, optional): Whether to suppress loading the mental state. Defaults to False.
+            auto_rename_agent (bool, optional): Whether to auto rename the agent. Defaults to False.
+            new_agent_name (str, optional): The new name for the agent. Defaults to None.
+        """
+
+        agents = []
+        for file in os.listdir(folder_path):
+            if file.endswith(file_suffix):
+                file_path = os.path.join(folder_path, file)
+                agent = TinyPerson.load_specification(file_path, suppress_mental_faculties=suppress_mental_faculties,
+                                                      suppress_memory=suppress_memory, suppress_mental_state=suppress_mental_state,
+                                                      auto_rename_agent=auto_rename_agent, new_agent_name=new_agent_name)
+                agents.append(agent)
+
+        return agents
+        
 
 
     def encode_complete_state(self) -> dict:
@@ -1313,6 +1445,7 @@ class TinyPerson(JsonSerializableRegistry):
         # delete the logger and other attributes that cannot be serialized
         del to_copy["environment"]
         del to_copy["_mental_faculties"]
+        del to_copy["action_generator"]
 
         to_copy["_accessible_agents"] = [agent.name for agent in self._accessible_agents]
         to_copy['episodic_memory'] = self.episodic_memory.to_json()
@@ -1417,4 +1550,4 @@ class TinyPerson(JsonSerializableRegistry):
         """
         Clears the global list of agents.
         """
-        TinyPerson.all_agents = {}        
+        TinyPerson.all_agents = {}

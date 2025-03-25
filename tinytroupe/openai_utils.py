@@ -2,412 +2,21 @@ import os
 import openai
 from openai import OpenAI, AzureOpenAI
 import time
-import json
 import pickle
 import logging
 import configparser
-from pydantic import BaseModel
 from typing import Union
-import textwrap  # to dedent strings
-from typing import List, Dict
 
 
 import tiktoken
 from tinytroupe import utils
 from tinytroupe.control import transactional
+from tinytroupe import default
 
 logger = logging.getLogger("tinytroupe")
 
 # We'll use various configuration elements below
 config = utils.read_config_file()
-
-###########################################################################
-# Default parameter values
-###########################################################################
-default = {}
-default["model"] = config["OpenAI"].get("MODEL", "gpt-4o")
-default["max_tokens"] = int(config["OpenAI"].get("MAX_TOKENS", "1024"))
-default["temperature"] = float(config["OpenAI"].get("TEMPERATURE", "1.0"))
-default["top_p"] = int(config["OpenAI"].get("TOP_P", "0"))
-default["frequency_penalty"] = float(config["OpenAI"].get("FREQ_PENALTY", "0.0"))
-default["presence_penalty"] = float(
-    config["OpenAI"].get("PRESENCE_PENALTY", "0.0"))
-default["timeout"] = float(config["OpenAI"].get("TIMEOUT", "30.0"))
-default["max_attempts"] = float(config["OpenAI"].get("MAX_ATTEMPTS", "0.0"))
-default["waiting_time"] = float(config["OpenAI"].get("WAITING_TIME", "1"))
-default["exponential_backoff_factor"] = float(config["OpenAI"].get("EXPONENTIAL_BACKOFF_FACTOR", "5"))
-
-default["embedding_model"] = config["OpenAI"].get("EMBEDDING_MODEL", "text-embedding-3-small")
-
-default["cache_api_calls"] = config["OpenAI"].getboolean("CACHE_API_CALLS", False)
-default["cache_file_name"] = config["OpenAI"].get("CACHE_FILE_NAME", "openai_api_cache.pickle")
-
-###########################################################################
-# Model calling helpers
-###########################################################################
-
-class LLMRequest:
-    """
-    A class that represents an LLM model call. It contains the input messages, the model configuration, and the model output.
-    """
-    def __init__(self, system_template_name:str=None, system_prompt:str=None, 
-                 user_template_name:str=None, user_prompt:str=None, 
-                 output_type=None,
-                 **model_params):
-        """
-        Initializes an LLMCall instance with the specified system and user templates, or the system and user prompts.
-        If a template is specified, the corresponding prompt must be None, and vice versa.
-        """
-        if (system_template_name is not None and system_prompt is not None) or \
-        (user_template_name is not None and user_prompt is not None) or\
-        (system_template_name is None and system_prompt is None) or \
-        (user_template_name is None and user_prompt is None):
-            raise ValueError("Either the template or the prompt must be specified, but not both.") 
-        
-        self.system_template_name = system_template_name
-        self.user_template_name = user_template_name
-        
-        self.system_prompt = textwrap.dedent(system_prompt) # remove identation
-        self.user_prompt = textwrap.dedent(user_prompt) # remove identation
-
-        self.output_type = output_type
-
-        self.model_params = model_params
-        self.model_output = None
-
-        self.messages = []
-
-        #  will be set after the call
-        self.response_raw = None
-        self.response_json = None
-        self.response_value = None
-        self.response_justification = None
-        self.response_confidence = None
-    
-    def __call__(self, *args, **kwds):
-        return self.call(*args, **kwds)
-
-    def call(self, **rendering_configs):
-        """
-        Calls the LLM model with the specified rendering configurations.
-
-        Args:
-            rendering_configs: The rendering configurations (template variables) to use when composing the initial messages.
-        
-        Returns:
-            The content of the model response.
-        """
-        if self.system_template_name is not None and self.user_template_name is not None:
-            self.messages = utils.compose_initial_LLM_messages_with_templates(self.system_template_name, self.user_template_name, rendering_configs)
-        else:
-            self.messages = [{"role": "system", "content": self.system_prompt}, 
-                             {"role": "user", "content": self.user_prompt}]
-        
-        
-        #
-        # Setup typing for the output
-        #
-        if self.output_type is not None:
-            # specify the default structured output. We can change it below if needed.
-            self.model_params["response_format"] = LLMScalarWithJustificationResponse
-            extra_messages = [{"role": "system", 
-                               "content": "In your response, you **MUST** provide a value, along with a justification and your confidence level that the value and justification are correct (0.0 means no confidence, 1.0 means complete confidence)."+
-                                             "Furtheremore, your response **MUST** be a JSON object with the following structure: {\"justification\": justification, \"value\": value,  \"confidence\": confidence}." +
-                                             "Note that \"justification\" comes first, this is to allow you to think through before providing the value."}]
-            
-
-            # specify the value type
-            if self.output_type == bool:
-                self.messages.append(self._request_bool_llm_message())
-            elif self.output_type == int:
-                self.messages.append(self._request_integer_llm_message())
-            elif self.output_type == float:
-                self.messages.append(self._request_float_llm_message())
-            elif isinstance(self.output_type, list) and all(isinstance(option, str) for option in self.output_type):
-                self.messages.append(self._request_enumerable_llm_message(self.output_type))
-            elif self.output_type == str:
-                pass
-            elif self.output_type == List[Dict[str, any]]:
-                # override the response format, because the pydantic model is not compatible with the arbitrary list of dict type
-                self.model_params["response_format"] = {"type": "json_object"}
-                self.messages.append(self._request_list_of_dict_llm_message())
-            elif self.output_type == dict or self.output_type == "json":
-                # override the response format, because the pydantic model is not compatible with the arbitrary dict type
-                self.model_params["response_format"] = {"type": "json_object"}
-                self.messages.append(self._request_dict_llm_message())
-            
-            elif self.output_type == list:
-                # override the response format, because the pydantic model is not compatible with the arbitrary list type
-                self.model_params["response_format"] = {"type": "json_object"}
-                self.messages.append(self._request_list_llm_message())  
-            
-            # check if it is actually a pydantic model
-            elif issubclass(self.output_type, BaseModel):
-                # completely override the response format
-                self.model_params["response_format"] = self.output_type
-
-                # replace formatting instruction
-                extra_messages = [{"role": "system",
-                                      "content": "Your response **MUST** be a JSON object."}]
-            else:
-                raise ValueError(f"Unsupported output type: {self.output_type}")
-
-            self.messages += extra_messages
-        
-        #
-        # call the LLM model
-        #
-        self.model_output = client().send_message(self.messages, **self.model_params)
-
-        if 'content' in self.model_output:
-            self.response_raw = self.response_value = self.model_output['content']            
-
-            # further, if an output type is specified, we need to coerce the result to that type
-            if self.output_type is not None:
-                self.response_json = utils.extract_json(self.response_raw)
-
-                self.response_value = self.response_json["value"]
-                self.response_justification = self.response_json["justification"]
-                self.response_confidence = self.response_json["confidence"]
-
-                if self.output_type == bool:
-                    self.response_value = self._coerce_to_bool(self.response_value)
-                elif self.output_type == int:
-                    self.response_value = self._coerce_to_integer(self.response_value)
-                elif self.output_type == float:
-                    self.response_value = self._coerce_to_float(self.response_value)
-                elif isinstance(self.output_type, list) and all(isinstance(option, str) for option in self.output_type):
-                    self.response_value = self._coerce_to_enumerable(self.response_value, self.output_type)
-                elif self.output_type == List[Dict[str, any]]:
-                    self.response_value = self._coerce_to_dict_or_list(self.response_value)
-                elif self.output_type == str:
-                    pass
-                elif self.output_type == dict or self.output_type == "json":
-                    self.response_value = self._coerce_to_dict_or_list(self.response_value)
-                elif self.output_type == list:
-                    self.response_value = self._coerce_to_list(self.response_value)
-                # check if it is actually a pydantic model
-                elif issubclass(self.output_type, BaseModel):
-                    self.response_value = self.output_type.parse_obj(self.response_json)
-                else:
-                    raise ValueError(f"Unsupported output type: {self.output_type}")
-            
-            return self.response_value
-        
-        else:
-            logger.error(f"Model output does not contain 'content' key: {self.model_output}")
-            return None
-
-    def _coerce_to_bool(self, llm_output):
-        """
-        Coerces the LLM output to a boolean value.
-
-        This method looks for the string "True", "False", "Yes", "No", "Positive", "Negative" in the LLM output, such that
-          - case is neutralized;
-          - the first occurrence of the string is considered, the rest is ignored. For example,  " Yes, that is true" will be considered "Yes";
-          - if no such string is found, the method raises an error. So it is important that the prompts actually requests a boolean value. 
-
-        Args:
-            llm_output (str, bool): The LLM output to coerce.
-        
-        Returns:
-            The boolean value of the LLM output.
-        """
-
-        # if the LLM output is already a boolean, we return it
-        if isinstance(llm_output, bool):
-            return llm_output
-
-        # let's extract the first occurrence of the string "True", "False", "Yes", "No", "Positive", "Negative" in the LLM output.
-        # using a regular expression
-        import re
-        match = re.search(r'\b(?:True|False|Yes|No|Positive|Negative)\b', llm_output, re.IGNORECASE)
-        if match:
-            first_match = match.group(0).lower()
-            if first_match in ["true", "yes", "positive"]:
-                return True
-            elif first_match in ["false", "no", "negative"]:
-                return False
-            
-        raise ValueError("The LLM output does not contain a recognizable boolean value.")
-
-    def _request_bool_llm_message(self):
-        return {"role": "user", 
-                "content": "The `value` field you generate **must** be either 'True' or 'False'. This is critical for later processing. If you don't know the correct answer, just output 'False'."}
-
-
-    def _coerce_to_integer(self, llm_output:str):
-        """
-        Coerces the LLM output to an integer value.
-
-        This method looks for the first occurrence of an integer in the LLM output, such that
-          - the first occurrence of the integer is considered, the rest is ignored. For example,  "There are 3 cats" will be considered 3;
-          - if no integer is found, the method raises an error. So it is important that the prompts actually requests an integer value. 
-
-        Args:
-            llm_output (str, int): The LLM output to coerce.
-        
-        Returns:
-            The integer value of the LLM output.
-        """
-
-        # if the LLM output is already an integer, we return it
-        if isinstance(llm_output, int):
-            return llm_output
-
-        # let's extract the first occurrence of an integer in the LLM output.
-        # using a regular expression
-        import re
-        match = re.search(r'\b\d+\b', llm_output)
-        if match:
-            return int(match.group(0))
-            
-        raise ValueError("The LLM output does not contain a recognizable integer value.")
-
-    def _request_integer_llm_message(self):
-        return {"role": "user", 
-                "content": "The `value` field you generate **must** be an integer number (e.g., '1'). This is critical for later processing.."}
-    
-    def _coerce_to_float(self, llm_output:str):
-        """
-        Coerces the LLM output to a float value.
-
-        This method looks for the first occurrence of a float in the LLM output, such that
-          - the first occurrence of the float is considered, the rest is ignored. For example,  "The price is $3.50" will be considered 3.50;
-          - if no float is found, the method raises an error. So it is important that the prompts actually requests a float value. 
-
-        Args:
-            llm_output (str, float): The LLM output to coerce.
-        
-        Returns:
-            The float value of the LLM output.
-        """
-
-        # if the LLM output is already a float, we return it
-        if isinstance(llm_output, float):
-            return llm_output
-        
-
-        # let's extract the first occurrence of a float in the LLM output.
-        # using a regular expression
-        import re
-        match = re.search(r'\b\d+\.\d+\b', llm_output)
-        if match:
-            return float(match.group(0))
-            
-        raise ValueError("The LLM output does not contain a recognizable float value.")
-
-    def _request_float_llm_message(self):
-        return {"role": "user", 
-                "content": "The `value` field you generate **must** be a float number (e.g., '980.16'). This is critical for later processing."}
-    
-    def _coerce_to_enumerable(self, llm_output:str, options:list):
-        """
-        Coerces the LLM output to one of the specified options.
-
-        This method looks for the first occurrence of one of the specified options in the LLM output, such that
-          - the first occurrence of the option is considered, the rest is ignored. For example,  "I prefer cats" will be considered "cats";
-          - if no option is found, the method raises an error. So it is important that the prompts actually requests one of the specified options. 
-
-        Args:
-            llm_output (str): The LLM output to coerce.
-            options (list): The list of options to consider.
-        
-        Returns:
-            The option value of the LLM output.
-        """
-
-        # let's extract the first occurrence of one of the specified options in the LLM output.
-        # using a regular expression
-        import re
-        match = re.search(r'\b(?:' + '|'.join(options) + r')\b', llm_output, re.IGNORECASE)
-        if match:
-            return match.group(0)
-            
-        raise ValueError("The LLM output does not contain a recognizable option value.")
-
-    def _request_enumerable_llm_message(self, options:list):
-        options_list_as_string = ', '.join([f"'{o}'" for o in options])
-        return {"role": "user", 
-                "content": f"The `value` field you generate **must** be exactly one of the following strings: {options_list_as_string}. This is critical for later processing."}
-
-    def _coerce_to_dict_or_list(self, llm_output:str):
-        """
-        Coerces the LLM output to a list or dictionary, i.e., a JSON structure.
-
-        This method looks for a JSON object in the LLM output, such that
-          - the JSON object is considered;
-          - if no JSON object is found, the method raises an error. So it is important that the prompts actually requests a JSON object. 
-
-        Args:
-            llm_output (str): The LLM output to coerce.
-        
-        Returns:
-            The dictionary value of the LLM output.
-        """
-
-        # if the LLM output is already a dictionary, we return it
-        if isinstance(llm_output, dict):
-            return llm_output
-
-        return utils.extract_json(llm_output)   
-
-    def _request_dict_llm_message(self):
-            return {"role": "user", 
-                    "content": "The `value` field you generate **must** be a JSON structure embedded in a string. This is critical for later processing."}    
-    
-    def _request_list_of_dict_llm_message(self):
-            return {"role": "user", 
-                    "content": "The `value` field you generate **must** be a list of dictionaries, specified as a JSON structure embedded in a string. For example, `[\{...\}, \{...\}, ...]`. This is critical for later processing."}    
-
-    def _coerce_to_list(self, llm_output:str):
-        """
-        Coerces the LLM output to a list.
-
-        This method looks for a list in the LLM output, such that
-          - the list is considered;
-          - if no list is found, the method raises an error. So it is important that the prompts actually requests a list. 
-
-        Args:
-            llm_output (str): The LLM output to coerce.
-        
-        Returns:
-            The list value of the LLM output.
-        """
-
-        # if the LLM output is already a list, we return it
-        if isinstance(llm_output, list):
-            return llm_output
-
-        # must make sure there's actually a list. Let's start with regex
-        import re
-        match = re.search(r'\[.*\]', llm_output)
-        if match:
-            return json.loads(match.group(0))
-        
-        raise ValueError("The LLM output does not contain a recognizable list value.")
-
-    def _request_list_llm_message(self):
-        return {"role": "user", 
-                "content": "The `value` field you generate **must** be a JSON **list** (e.g., [\"apple\", 1, 0.9]), NOT a dictionary, always embedded in a string. This is critical for later processing."}    
-    
-    def __repr__(self):
-        return f"LLMRequest(messages={self.messages}, model_params={self.model_params}, model_output={self.model_output})"
-
-#
-# Data structures to enforce output format during LLM API call.
-#
-class LLMScalarWithJustificationResponse(BaseModel):
-    """
-    LLMTypedResponse represents a typed response from an LLM (Language Learning Model).
-    Attributes:
-        value (str, int, float, bool): The value of the response.
-        justification (str): The justification or explanation for the response.
-    """
-    justification: str # comes first to allow thinking before providing the value
-    value: Union[str, int, float, bool]
-    confidence: float
-
 
 ###########################################################################
 # Client class
@@ -446,6 +55,7 @@ class OpenAIClient:
 
     def send_message(self,
                     current_messages,
+                    dedent_messages=True,
                      model=default["model"],
                      temperature=default["temperature"],
                      max_tokens=default["max_tokens"],
@@ -465,6 +75,7 @@ class OpenAIClient:
 
         Args:
         current_messages (list): A list of dictionaries representing the conversation history.
+        dedent_messages (bool): Whether to dedent the messages before sending them to the API.
         model (str): The ID of the model to use for generating the response.
         temperature (float): Controls the "creativity" of the response. Higher values result in more diverse responses.
         max_tokens (int): The maximum number of tokens (words or punctuation marks) to generate in the response.
@@ -498,6 +109,13 @@ class OpenAIClient:
 
         # setup the OpenAI configurations for this client.
         self._setup_from_config()
+
+        # dedent the messages (field 'content' only) if needed (using textwrap)
+        if dedent_messages:
+            for message in current_messages:
+                if "content" in message:
+                    message["content"] = utils.dedent(message["content"])
+            
         
         # We need to adapt the parameters to the API type, so we create a dictionary with them first
         chat_api_params = {
@@ -578,7 +196,7 @@ class OpenAIClient:
                 aux_exponential_backoff()
                 
             except Exception as e:
-                logger.error(f"[{i}] Error: {e}")
+                logger.error(f"[{i}] {type(e).__name__} Error: {e}")
 
         logger.error(f"Failed to get response after {max_attempts} attempts.")
         return None
@@ -589,19 +207,43 @@ class OpenAIClient:
         override this method to implement their own API calls.
         """   
 
+        # adjust parameters depending on the model
+        if self._is_reasoning_model(model):
+            # Reasoning models have slightly different parameters
+            del chat_api_params["stream"]
+            del chat_api_params["temperature"]
+            del chat_api_params["top_p"]
+            del chat_api_params["frequency_penalty"]
+            del chat_api_params["presence_penalty"]            
+
+            chat_api_params["max_completion_tokens"] = chat_api_params["max_tokens"]
+            del chat_api_params["max_tokens"]
+
+            chat_api_params["reasoning_effort"] = default["reasoning_effort"]
+
+
+        # To make the log cleaner, we remove the messages from the logged parameters
+        logged_params = {k: v for k, v in chat_api_params.items() if k != "messages"} 
+
         if "response_format" in chat_api_params:
             # to enforce the response format via pydantic, we need to use a different method
 
-            del chat_api_params["stream"]
+            if "stream" in chat_api_params:
+                del chat_api_params["stream"]
 
+            logger.info(f"Calling LLM model (using .parse too) with these parameters: {logged_params}. Not showing 'messages' parameter.")
             return self.client.beta.chat.completions.parse(
                     **chat_api_params
                 )
         
         else:
+            logger.info(f"Calling LLM model with these parameters: {logged_params}. Not showing 'messages' parameter.")
             return self.client.chat.completions.create(
                         **chat_api_params
                     )
+
+    def _is_reasoning_model(self, model):
+        return "o1" in model or "o3" in model
 
     def _raw_model_response_extractor(self, response):
         """
@@ -626,6 +268,7 @@ class OpenAIClient:
             except KeyError:
                 logger.debug("Token count: model not found. Using cl100k_base encoding.")
                 encoding = tiktoken.get_encoding("cl100k_base")
+            
             if model in {
                 "gpt-3.5-turbo-0613",
                 "gpt-3.5-turbo-16k-0613",
@@ -633,7 +276,7 @@ class OpenAIClient:
                 "gpt-4-32k-0314",
                 "gpt-4-0613",
                 "gpt-4-32k-0613",
-                }:
+                } or "o1" in model or "o3" in model: # assuming o1/3 models work the same way
                 tokens_per_message = 3
                 tokens_per_name = 1
             elif model == "gpt-3.5-turbo-0301":
@@ -642,13 +285,14 @@ class OpenAIClient:
             elif "gpt-3.5-turbo" in model:
                 logger.debug("Token count: gpt-3.5-turbo may update over time. Returning num tokens assuming gpt-3.5-turbo-0613.")
                 return self._count_tokens(messages, model="gpt-3.5-turbo-0613")
-            elif ("gpt-4" in model) or ("ppo" in model):
+            elif ("gpt-4" in model) or ("ppo" in model) :
                 logger.debug("Token count: gpt-4 may update over time. Returning num tokens assuming gpt-4-0613.")
                 return self._count_tokens(messages, model="gpt-4-0613")
             else:
                 raise NotImplementedError(
-                    f"""num_tokens_from_messages() is not implemented for model {model}. See https://github.com/openai/openai-python/blob/main/chatml.md for information on how messages are converted to tokens."""
+                    f"""_count_tokens() is not implemented for model {model}. See https://github.com/openai/openai-python/blob/main/chatml.md for information on how messages are converted to tokens."""
                 )
+            
             num_tokens = 0
             for message in messages:
                 num_tokens += tokens_per_message

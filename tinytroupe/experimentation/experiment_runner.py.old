@@ -1,0 +1,243 @@
+import multiprocessing
+import time
+import random
+from datetime import timedelta
+import numpy as np
+import concurrent.futures
+from functools import partial
+
+from tinytroupe.experimentation import logger
+from tinytroupe.experimentation.statistical_tests import StatisticalTester
+
+
+class ExperimentRunner:
+    """
+    A class to run independent experiments with sequential code addition,
+    allowing steps to access variables from previous steps.
+    """
+
+    def __init__(self, same_random_seed=True, random_seed=42):
+        self.results = {}
+        self.experiments = {}
+        self.common_functions = {}
+        self.same_random_seed = same_random_seed
+        self.random_seed = random_seed
+
+    def add_experiment(self, experiment_id, first_experiment_step_function=None, *args, **kwargs):
+        """
+        Adds an experiment to the runner, optionally with a first step.
+        """
+        if experiment_id not in self.experiments:
+            self.experiments[experiment_id] = []
+        if first_experiment_step_function:
+            self.add_experiment_step(experiment_id, first_experiment_step_function, *args, **kwargs)
+
+    def add_experiment_step(self, experiment_id, experiment_step_function, *args, **kwargs):
+        """
+        Adds a step to an experiment.
+        """
+        if experiment_id not in self.experiments:
+            raise ValueError(f"Experiment '{experiment_id}' not found. Add the experiment first.")
+        self.experiments[experiment_id].append((experiment_step_function, args, kwargs))
+
+    def add_common_experiment_step(self, experiment_step_function, *args, **kwargs):
+        """
+        Adds a common step to all experiments.
+        """
+        for experiment_id in self.experiments:
+            self.add_experiment_step(experiment_id, experiment_step_function, *args, **kwargs)
+
+    def run_experiments(self):
+        """
+        Runs all experiments added using add_experiment_step.
+        """
+        start_time = time.time()
+        experiment_tasks = []
+        
+        # Using ProcessPoolExecutor instead of direct multiprocessing
+        with concurrent.futures.ProcessPoolExecutor() as executor:
+            futures = []
+            parent_connections = []
+            for experiment_id, steps in self.experiments.items():
+                parent_conn, child_conn = multiprocessing.Pipe()
+                parent_connections.append(parent_conn)
+                future = executor.submit(
+                    _worker,
+                    experiment_id, 
+                    steps,
+                    self.common_functions,
+                    self.get_experiment_functions(experiment_id),
+                    self.get_experiment_variables(experiment_id),
+                    self.same_random_seed,
+                    self.random_seed,
+                    child_conn
+                )
+                futures.append((experiment_id, future))
+            
+            # Collect results as they complete
+            self.results = {}
+            for experiment_id, future in futures:
+                try:
+                    result = future.result()
+                    self.results[experiment_id] = result
+                except Exception as e:
+                    logger.error(f"Error in experiment {experiment_id}: {e}")
+                    self.results[experiment_id] = f"Error: {e}"
+            
+            for parent_conn in parent_connections:
+                while parent_conn.poll():
+                    log_message = parent_conn.recv()
+                    print(log_message)
+        
+        end_time = time.time()
+        elapsed_time = timedelta(seconds=(end_time - start_time))
+        logger.info(f"All experiments finished in {elapsed_time}")
+        
+        return self.results
+
+    def get_results(self):
+        """
+        Retrieves and returns the results of all experiments.
+        """
+        return self.results
+
+    def clear_experiments(self):
+        """
+        Clears all added experiments, results, and processes.
+        """
+        self.experiments = {}
+        self.results = {}
+
+    def add_experiment_function(self, experiment_id, function):
+        """
+        Adds a function to an experiment's available functions.
+        """
+        if experiment_id not in self.experiments:
+            raise ValueError(f"Experiment '{experiment_id}' not found. Add the experiment first.")
+        if not hasattr(self, "_experiment_functions"):
+            self._experiment_functions = {}
+        if experiment_id not in self._experiment_functions:
+            self._experiment_functions[experiment_id] = {}
+        function_name = function.__name__
+        self._experiment_functions[experiment_id][function_name] = function
+
+    def get_experiment_functions(self, experiment_id):
+        if hasattr(self, "_experiment_functions") and experiment_id in self._experiment_functions:
+            return self._experiment_functions[experiment_id]
+        return {}
+
+    def add_common_function(self, function):
+        """
+        Adds a function that will be available to all experiments.
+        """
+        function_name = function.__name__
+        self.common_functions[function_name] = function
+
+    def add_experiment_variable(self, experiment_id, variable_name, variable_value):
+        """
+        Adds a variable to an experiment's available variables.
+        """
+        if experiment_id not in self.experiments:
+            raise ValueError(f"Experiment '{experiment_id}' not found. Add the experiment first.")
+        if not hasattr(self, "_experiment_variables"):
+            self._experiment_variables = {}
+        if experiment_id not in self._experiment_variables:
+            self._experiment_variables[experiment_id] = {}
+        self._experiment_variables[experiment_id][variable_name] = variable_value
+
+    def get_experiment_variables(self, experiment_id):
+        if hasattr(self, "_experiment_variables") and experiment_id in self._experiment_variables:
+            return self._experiment_variables[experiment_id]
+        return {}
+        
+    def run_statistical_test(self, test_type, experiment_ids=None, metric_selector=None, alpha=0.05, **kwargs):
+        """
+        Runs statistical hypothesis tests on selected experiment outputs.
+        
+        Parameters:
+        -----------
+        test_type : str
+            Type of statistical test to run. Supported tests:
+            - 't_test': Independent two-sample t-test
+            - 'paired_t_test': Paired t-test for related samples
+            - 'anova': One-way analysis of variance
+            - 'chi_square': Chi-square test of independence
+            - 'mann_whitney': Non-parametric Mann-Whitney U test
+            - 'wilcoxon': Non-parametric Wilcoxon signed-rank test
+        experiment_ids : list, optional
+            List of experiment IDs to compare. If None, all experiments will be used.
+        metric_selector : callable or int or list, optional
+            Specifies how to extract metrics from experiment results:
+            - If callable: A function that takes a result object and returns a numeric value
+            - If int: Index to select from each experiment's results list
+            - If list of int: Indices to select from each experiment's results list
+            If None, assumes results are directly usable as numeric values.
+        alpha : float, optional
+            Significance level for the test. Default is 0.05.
+        **kwargs : dict
+            Additional arguments to pass to the specific test function.
+            
+        Returns:
+        --------
+        dict
+            Dictionary containing test results, including:
+            - 'test': Name of the test performed
+            - 'statistic': Test statistic value
+            - 'p_value': p-value of the test
+            - 'significant': Boolean indicating if result is significant at alpha level
+            - 'alpha': Significance level used
+            - Additional test-specific results
+        """
+        tester = StatisticalTester(self.results)
+        return tester.run_test(test_type, experiment_ids, metric_selector, alpha, **kwargs)
+
+def _worker(experiment_id, steps, common_functions, experiment_functions, experiment_variables, same_random_seed, random_seed, conn):
+    """
+    Internal worker function to execute the experiment steps sequentially,
+    allowing steps to access variables from previous steps.
+    """
+    try:
+        conn.send(f"Experiment: {experiment_id}, Start")
+        logger.warning(f"Experiment: {experiment_id}, Start")
+        
+        if same_random_seed:
+            random.seed(random_seed)
+            np.random.seed(random_seed)
+        else:
+            random.seed()
+            np.random.seed()
+        state = {}
+        results = []
+
+        # Dynamically define functions and variables using exec (use with caution)
+        function_definitions = ""
+        for func_name, func in {**common_functions, **experiment_functions}.items():
+            function_definitions += f"{func.__name__} = {func}\n"
+        for var_name, var_value in experiment_variables.items():
+            function_definitions += f"{var_name} = {repr(var_value)}\n"
+
+        exec(function_definitions, state)
+
+        for experiment_step_function, args, kwargs in steps:
+            combined_kwargs = {**kwargs, **state}
+            step_name = experiment_step_function.__name__ if hasattr(experiment_step_function, '__name__') else "<lambda>"
+            conn.send(f"Experiment: {experiment_id}, Step: {step_name}, Start, args: {args}, kwargs: {combined_kwargs}")
+            start_time = time.time()
+            result = experiment_step_function(*args, **combined_kwargs)
+            end_time = time.time()
+            elapsed_time = timedelta(seconds=(end_time - start_time))
+            conn.send(f"Experiment: {experiment_id}, Step: {step_name}, End, result: {result}, elapsed: {elapsed_time}")
+            if isinstance(result, dict):
+                state.update(result)
+            results.append(result)
+
+        conn.send(f"Experiment: {experiment_id}, End")
+        conn.close()
+        return results
+    except Exception as e:
+        import traceback
+        error_message = f"Error in experiment {experiment_id}: {str(e)}\n{traceback.format_exc()}"
+        conn.send(error_message)
+        logger.error(error_message)
+        conn.close()
+        return error_message

@@ -28,7 +28,7 @@ class TinyWorld:
     # Whether to display environments communications or not, for all environments. 
     communication_display = True
 
-    def __init__(self, name: str="A TinyWorld", agents=[], 
+    def __init__(self, name: str=None, agents=[], 
                  initial_datetime=datetime.now(),
                  interventions=[],
                  broadcast_if_no_target=True,
@@ -39,7 +39,7 @@ class TinyWorld:
         Args:
             name (str): The name of the environment.
             agents (list): A list of agents to add to the environment.
-            initial_datetime (datetime): The initial datetime of the environment, or None (i.e., explicit time is optional). 
+            initial_datetifme (datetime): The initial datetime of the environment, or None (i.e., explicit time is optional). 
                 Defaults to the current datetime in the real world.
             interventions (list): A list of interventions to apply in the environment at each simulation step.
             broadcast_if_no_target (bool): If True, broadcast actions if the target of an action is not found.
@@ -47,7 +47,11 @@ class TinyWorld:
                 all additional targets are displayed.
         """
 
-        self.name = name
+        if name is not None:
+            self.name = name
+        else:
+            self.name = f"TinyWorld {utils.fresh_id()}"
+            
         self.current_datetime = initial_datetime
         self.broadcast_if_no_target = broadcast_if_no_target
         self.simulation_id = None # will be reset later if the agent is used within a specific simulation scope
@@ -143,7 +147,11 @@ class TinyWorld:
         with concurrent.futures.ThreadPoolExecutor() as executor:
             futures = {executor.submit(agent.act, return_actions=True): agent for agent in self.agents}
             agents_actions = {}
-            for future in concurrent.futures.as_completed(futures):
+
+            # Wait for all futures to complete
+            concurrent.futures.wait(futures.keys())
+
+            for future in futures:
                 agent = futures[future]
                 try:
                     actions = future.result()

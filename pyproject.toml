@@ -24,7 +24,7 @@ classifiers = [
 dependencies = [
     "pandas", 
     "pytest", "pytest-cov",
-    "openai >= 1.40", 
+    "openai >= 1.65", 
     "tiktoken",
     "msal",
     "rich", "requests", "chevron",
@@ -33,7 +33,9 @@ dependencies = [
     "jupyter",
     "matplotlib",
     "pydantic",
-    "pypandoc" 
+    "pypandoc",
+    "textdistance",
+    "scipy"
 ]
 
 [project.urls]

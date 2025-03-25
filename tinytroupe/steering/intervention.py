@@ -7,7 +7,6 @@ from tinytroupe.agent import TinyPerson
 import tinytroupe.utils as utils
 
 
-# TODO under development
 class Intervention:
 
     def __init__(self, targets: Union[TinyPerson, TinyWorld, List[TinyPerson], List[TinyWorld]], 
@@ -46,6 +45,11 @@ class Intervention:
         self._last_text_precondition_proposition = None
         self._last_functional_precondition_check = None
 
+        # propositional precondition (optional)
+        self.propositional_precondition = None
+        self.propositional_precondition_threshold = None
+        self._last_propositional_precondition_check = None
+
     ################################################################################################
     # Intervention flow
     ################################################################################################     
@@ -80,16 +84,38 @@ class Intervention:
         """
         Check if the precondition for the intervention is met.
         """
-        self._last_text_precondition_proposition = Proposition(self.targets, self.text_precondition, first_n=self.first_n, last_n=self.last_n)
+        #
+        # Textual precondition
+        #
+        if self.text_precondition is not None:
+            self._last_text_precondition_proposition = Proposition(claim=self.text_precondition, target=self.targets, first_n=self.first_n, last_n=self.last_n)
+            llm_precondition_check = self._last_text_precondition_proposition.check()
+        else:
+            llm_precondition_check = True
         
+        #
+        # Functional precondition
+        #
         if self.precondition_func is not None:
             self._last_functional_precondition_check = self.precondition_func(self.targets)
         else:
             self._last_functional_precondition_check = True # default to True if no functional precondition is set
         
-        llm_precondition_check = self._last_text_precondition_proposition.check()
+        #
+        # Propositional precondition
+        #
+        self._last_propositional_precondition_check = True
+        if self.propositional_precondition is not None:
+            if self.propositional_precondition_threshold is not None:
+                score = self.propositional_precondition.score(target=self.targets)
+                if score >= self.propositional_precondition_threshold:
+                    self._last_propositional_precondition_check = False
+            else:
+                if not self.propositional_precondition.check(target=self.targets):
+                    self._last_propositional_precondition_check = False
 
-        return llm_precondition_check and self._last_functional_precondition_check
+        return llm_precondition_check and self._last_functional_precondition_check and self._last_propositional_precondition_check
+
 
     def apply_effect(self):
         """
@@ -134,6 +160,16 @@ class Intervention:
         self.effect_func = effect_func
         return self # for chaining
     
+    def set_propositional_precondition(self, proposition:Proposition, threshold:int=None):
+        """
+        Set a propositional precondition using the Proposition class,
+        optionally with a score threshold.
+        """
+        
+        self.propositional_precondition = proposition
+        self.propositional_precondition_threshold = threshold
+        return self
+
     ################################################################################################
     # Inspection
     ################################################################################################
@@ -149,13 +185,23 @@ class Intervention:
             justification += f"{self._last_text_precondition_proposition.justification} (confidence = {self._last_text_precondition_proposition.confidence})\n\n"
         
         # functional precondition justification
-        elif self._last_functional_precondition_check == True:
-            justification += f"Functional precondition was met.\n\n"
+        if self.precondition_func is not None:
+            if self._last_functional_precondition_check == True:
+                justification += f"Functional precondition was met.\n\n"
+            
+            else:
+                justification += "Preconditions do not appear to be met.\n\n"
         
-        else:
-            justification += "Preconditions do not appear to be met.\n\n"
-        
+        # propositional precondition justification
+        if self.propositional_precondition is not None:
+            if self._last_propositional_precondition_check == True:
+                justification += f"Propositional precondition was met.\n\n"
+            else:
+                justification += "Propositional precondition was not met.\n\n"
+
+            return justification
+
         return justification
-        
+
 
 

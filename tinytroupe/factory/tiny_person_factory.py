@@ -335,7 +335,7 @@ class TinyPersonFactory(TinyFactory):
             if self.population_size is None:
                 raise ValueError("Either the number of people to generate or the population size must be specified.")
             number_of_people = self.population_size
-            
+
         elif self.population_size is None:
             self.population_size = number_of_people
 
@@ -895,7 +895,7 @@ class TinyPersonFactory(TinyFactory):
 
         return names
 
-    @utils.llm(temperature=1.9, presence_penalty=1.8, frequency_penalty=1.8)
+    @utils.llm(temperature=1.9, presence_penalty=0.5, frequency_penalty=0.5)
     def _aux_unique_full_names(self, n:int, already_generated_names: list, context:str=None) -> list:
         """
         Generates a list of n unique full names for people. The full names must not be in the list of already generated names.
