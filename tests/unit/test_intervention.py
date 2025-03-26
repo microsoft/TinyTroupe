@@ -18,21 +18,23 @@ from tinytroupe.environment import TinyWorld
 def test_intervention_1():
     oscar = create_oscar_the_architect()
 
-    oscar.think("I am terribly sad, as a dear friend has died. I'm going now to verbalize my sadness.")
+
+    oscar.think("I will talk about my travel preferences so that everyone can know and help me plan a trip.")
     oscar.act()
 
-    assert check_proposition(oscar, "Oscar is talking about something sad or unfortunate.", last_n=3)
+    assert check_proposition(oscar, "Oscar is talking about travel.", last_n=3)
+    assert check_proposition(oscar, "Oscar is not talking about movies.", last_n=3)
 
     intervention = \
         Intervention(oscar)\
-        .set_textual_precondition("Oscar is not very happy.")\
-        .set_effect(lambda target: target.think("Enough sadness. I will now talk about something else that makes me happy."))
+        .set_textual_precondition("Oscar is talking about travel.")\
+        .set_effect(lambda target: target.think("Ok, enough of travel. Now I'll talk about my favorite movies."))\
     
     world = TinyWorld("Test World", [oscar], interventions=[intervention])
 
     world.run(2)
 
-    assert check_proposition(oscar, "Oscar is talking about something that brings joy or happiness to him.", last_n = 3)
+    assert check_proposition(oscar, "Oscar was talking about travel, but then started talking about his favorite movies.", last_n = 5)
 
     # TODO
 

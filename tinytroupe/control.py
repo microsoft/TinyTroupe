@@ -4,12 +4,19 @@ Simulation controlling mechanisms.
 import json
 import os
 import tempfile
+import threading
 
 import tinytroupe
 import tinytroupe.utils as utils
 
+import uuid
+
+
 import logging
 logger = logging.getLogger("tinytroupe")
+
+# to protect from race conditions when running in parallel
+concurrent_execution_lock = threading.Lock()
 
 class Simulation:
 
@@ -40,7 +47,11 @@ class Simulation:
 
         # whether the agent is under a transaction or not, used for managing
         # simulation caching later
-        self._under_transaction = False
+        self._under_transaction = {None: False}
+
+        # whether the agent is under a parallel transactions segment or not, used for managing
+        # simulation caching later
+        self._under_parallel_transactions = False
 
         # Cache chain mechanism.
         # 
@@ -169,7 +180,27 @@ class Simulation:
         """
         Computes the hash of the given function call.
         """
-        event = str((function_name, args, kwargs))
+
+        # if functions are passed as arguments to the function, there's the problem that their
+        # string representation always changes due to memory position (e.g., <function my_function at 0x7f8d1a7b7d30>).
+        # so we need to remove the changing suffix in those cases, while preserving the function name if it exists.
+        
+        # positional arguments
+        # covnerts to a list of string representations first
+        args_str = list(map(str, args))
+        for i, arg in enumerate(args):
+            if callable(arg):
+                args_str[i] = arg.__name__
+            
+        # keyword arguments
+        # converts to a list of string representations first
+        kwargs_str = {k: str(v) for k, v in kwargs.items()}
+        for k, v in kwargs.items():
+            if callable(v):
+                kwargs_str[k] = v.__name__
+                
+        # then, convert to a single string, to obtain a unique hash
+        event = str((function_name, args_str, kwargs_str))
         return event
 
     def _skip_execution_with_cache(self):
@@ -180,33 +211,57 @@ class Simulation:
         
         self.execution_trace.append(self.cached_trace[self._execution_trace_position() + 1])
     
-    def _is_transaction_event_cached(self, event_hash) -> bool:
+    def _is_transaction_event_cached(self, event_hash, parallel=False) -> bool:
         """
         Checks whether the given event hash matches the corresponding cached one, if any.
         If there's no corresponding cached state, returns True.
         """
-        # there's cache that could be used
-        if len(self.cached_trace) > self._execution_trace_position() + 1:
-            if self._execution_trace_position() >= -1:
-                # here's a graphical depiction of the logic:
-                #
-                # Cache:         c0:(c_prev_node_hash_0, c_event_hash_0, _,  c_state_0) ------------------> c1:(c_prev_node_hash_1, c_event_hash_1,  _,  c_state_1) -> ...
-                # Execution:     e0:(e_prev_node_hash_0, e_event_hash_0, _,  e_state_0) -<being computed>-> e1:(e_prev_node_hash_1, <being computed>, <being computed>, <being computed>)
-                #   position = 0 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                #
-                #   Must satisfy: 
-                #     - event_hash == c_event_hash_1
-                #     - hash(e0) == c_prev_node_hash_1
-                event_hash_match = event_hash == self.cached_trace[self._execution_trace_position() + 1][1]
-                prev_node_match = True 
+        if not parallel:
+            # there's cache that could be used
+            if len(self.cached_trace) > self._execution_trace_position() + 1:
+                if self._execution_trace_position() >= -1:
+                    # here's a graphical depiction of the logic:
+                    #
+                    # Cache:         c0:(c_prev_node_hash_0, c_event_hash_0, _,  c_state_0) ------------------> c1:(c_prev_node_hash_1, c_event_hash_1,  _,  c_state_1) -> ...
+                    # Execution:     e0:(e_prev_node_hash_0, e_event_hash_0, _,  e_state_0) -<being computed>-> e1:(e_prev_node_hash_1, <being computed>, <being computed>, <being computed>)
+                    #   position = 0 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    #
+                    #   Must satisfy: 
+                    #     - event_hash == c_event_hash_1
+                    #     - hash(e0) == c_prev_node_hash_1
+                    event_hash_match = event_hash == self.cached_trace[self._execution_trace_position() + 1][1]
+                    prev_node_match = True # TODO implement real check
 
-                return event_hash_match and prev_node_match
+                    return event_hash_match and prev_node_match
+                
+                else: 
+                    raise ValueError("Execution trace position is invalid, must be >= -1, but is ", self._execution_trace_position())
             
-            else: 
-                raise ValueError("Execution trace position is invalid, must be >= -1, but is ", self._execution_trace_position())
+            else: # no cache to use
+                return False
         
-        else: # no cache to use
-            return False
+        else: # parallel
+            if len(self.cached_trace) >= self._execution_trace_position():
+                if self._execution_trace_position() >= 0:
+                    # parallel stores ignore order, so we need to check instead whether the event hash is a key in the parallel store,
+                    # regardless of the order of the events generated the data therein.
+
+                    if isinstance(self.cached_trace[self._execution_trace_position()], dict):
+                        event_hash_match = event_hash in self.cached_trace[self._execution_trace_position()].keys()
+                    else:
+                        event_hash_match = False
+
+                    prev_node_match = True # TODO implement real check
+                    
+                    return event_hash_match and prev_node_match
+
+                else:
+                    raise ValueError("Execution trace position is invalid, must be >= 0, but is ", self._execution_trace_position())
+    
+    def _get_cached_parallel_value(self, event_hash, key):
+        parallel_store = self.cached_trace[self._execution_trace_position()]
+        value = parallel_store[event_hash][key] 
+        return value
     
     def _drop_cached_trace_suffix(self):
         """
@@ -215,7 +270,7 @@ class Simulation:
         """
         self.cached_trace = self.cached_trace[:self._execution_trace_position()+1]
         
-    def _add_to_execution_trace(self, state: dict, event_hash: int, event_output):
+    def _add_to_execution_trace(self, state: dict, event_hash: int, event_output, parallel=False):
         """
         Adds a state to the execution_trace list and computes the appropriate hash.
         The computed hash is compared to the hash of the cached trace at the same position,
@@ -227,10 +282,18 @@ class Simulation:
         # Compute the hash of the previous execution pair, if any
         previous_hash = None
 
-        # Create a tuple of (hash, state) and append it to the execution_trace list
-        self.execution_trace.append((previous_hash, event_hash, event_output, state))
+        if not parallel:
+            # Create a tuple of (hash, state) and append it to the execution_trace list
+            self.execution_trace.append((previous_hash, event_hash, event_output, state))
+        else:
+            with concurrent_execution_lock:
+                # state is not stored in parallel segments, only outputs
+                self.execution_trace[-1][event_hash] = {"prev_node_hash": previous_hash,
+                                                        "encoded_output": event_output}
+            
 
-    def _add_to_cache_trace(self, state: dict, event_hash: int, event_output):
+
+    def _add_to_cache_trace(self, state: dict, event_hash: int, event_output, parallel=False):
         """
         Adds a state to the cached_trace list and computes the appropriate hash.
         """
@@ -239,8 +302,15 @@ class Simulation:
         if self.cached_trace:
             previous_hash = utils.custom_hash(self.cached_trace[-1])
         
-        # Create a tuple of (hash, state) and append it to the cached_trace list
-        self.cached_trace.append((previous_hash, event_hash, event_output, state))
+        if not parallel:
+            # Create a tuple of (hash, state) and append it to the cached_trace list
+            self.cached_trace.append((previous_hash, event_hash, event_output, state))
+        else:
+            with concurrent_execution_lock:
+                # state is not stored in parallel segments, only outputs
+                self.cached_trace[-1][event_hash] = {"prev_node_hash": previous_hash,
+                                                    "encoded_output": event_output}
+
 
         self.has_unsaved_cache_changes = True
     
@@ -276,24 +346,30 @@ class Simulation:
     # Transactional control
     ###################################################################################################
 
-    def begin_transaction(self):
+    #
+    # Regular sequential transactions
+    #
+    def begin_transaction(self, id=None):
         """
         Starts a transaction.
         """
-        self._under_transaction = True
-        self._clear_communications_buffers() # TODO <----------------------------------------------------------------
+        with concurrent_execution_lock:
+            self._under_transaction[id] = True
+            self._clear_communications_buffers() # TODO <----------------------------------------------------------------
     
-    def end_transaction(self):
+    def end_transaction(self, id=None):
         """
         Ends a transaction.
         """
-        self._under_transaction = False
+        with concurrent_execution_lock:
+            self._under_transaction[id] = False
     
-    def is_under_transaction(self):
+    def is_under_transaction(self, id=None):
         """
         Checks if the agent is under a transaction.
         """
-        return self._under_transaction
+        with concurrent_execution_lock:
+            return self._under_transaction.get(id, False)
 
     def _clear_communications_buffers(self):
         """
@@ -304,6 +380,32 @@ class Simulation:
         
         for environment in self.environments:
             environment.clear_communications_buffer()
+    
+    #
+    # Parallel transactions
+    #
+    def begin_parallel_transactions(self):
+        """
+        Starts parallel transactions.
+        """
+        with concurrent_execution_lock:
+            self._under_parallel_transactions = True
+            # add a new parallel segment to the execution and cache traces
+            self.execution_trace.append({}) 
+            self.cached_trace.append({})
+    
+    def end_parallel_transactions(self):
+        """
+        Ends parallel transactions.
+        """
+        self._under_parallel_transactions = False
+
+    def is_under_parallel_transactions(self):
+        """
+        Checks if the agent is under parallel transactions.
+        """
+        return self._under_parallel_transactions
+
     ###################################################################################################
     # Simulation state handling
     ###################################################################################################
@@ -425,7 +527,7 @@ class Transaction:
                     raise ValueError(f"Object {obj_under_transaction} (type = {type(obj_under_transaction)}) is not a TinyPerson or TinyWorld instance, and cannot be captured by the simulation.")
                 
         
-    def execute(self):
+    def execute(self, begin_parallel=False, parallel_id=None):
 
         output = None
 
@@ -438,47 +540,88 @@ class Transaction:
             # Compute the event hash
             event_hash = self.simulation._function_call_hash(self.function_name, *self.args, **self.kwargs)
 
-            # Check if the event hash is in the cache
-            if self.simulation._is_transaction_event_cached(event_hash):
+            # Sequential and parallel transactions are handled in different ways
+            if begin_parallel:
+                self.simulation.begin_parallel_transactions()
+            
+            # CACHED? Check if the event hash is in the cache
+            if self.simulation._is_transaction_event_cached(event_hash, 
+                                                            parallel=self.simulation.is_under_parallel_transactions()):
                 self.simulation.cache_hits += 1
 
                 # Restore the full state and return the cached output
                 logger.info(f"Skipping execution of {self.function_name} with args {self.args} and kwargs {self.kwargs} because it is already cached.")
 
-                self.simulation._skip_execution_with_cache()
-                state = self.simulation.cached_trace[self.simulation._execution_trace_position()][3] # state
-                self.simulation._decode_simulation_state(state)
+                # SEQUENTIAL
+                if not self.simulation.is_under_parallel_transactions():
+                    
+                    self.simulation._skip_execution_with_cache()
+                    state = self.simulation.cached_trace[self.simulation._execution_trace_position()][3] # state
+                    self.simulation._decode_simulation_state(state)
+                    
+                    # Output encoding/decoding is used to preserve references to TinyPerson and TinyWorld instances
+                    # mainly. Scalar values (int, float, str, bool) and composite values (list, dict) are 
+                    # encoded/decoded as is.
+                    encoded_output = self.simulation.cached_trace[self.simulation._execution_trace_position()][2] # output
+                    output = self._decode_function_output(encoded_output)
                 
-                # Output encoding/decoding is used to preserve references to TinyPerson and TinyWorld instances
-                # mainly. Scalar values (int, float, str, bool) and composite values (list, dict) are 
-                # encoded/decoded as is.
-                encoded_output = self.simulation.cached_trace[self.simulation._execution_trace_position()][2] # output
-                output = self._decode_function_output(encoded_output)
+                # PARALLEL
+                else: # is under parallel transactions
+
+                    # in parallel segments, state is not restored, only outputs
+                    encoded_output = self.simulation._get_cached_parallel_value(event_hash, "encoded_output")
+                    output = self._decode_function_output(encoded_output)
 
             else: # not cached
                 self.simulation.cache_misses += 1
                 
-                # reentrant transactions are not cached, since what matters is the final result of
-                # the top-level transaction
-                if not self.simulation.is_under_transaction():
-                    self.simulation.begin_transaction()
-
-                    # immediately drop the cached trace suffix, since we are starting a new execution from this point on
-                    self.simulation._drop_cached_trace_suffix()
+                
+                if not self.simulation.is_under_transaction(id=parallel_id) and not begin_parallel:
                     
-                    # Compute the function, cache the result and return it
-                    output = self.function(*self.args, **self.kwargs)
+                    # BEGIN SEQUENTIAL TRANSACTION ###############################################################
+                    #
+                    # if this is the beginning of a parallel segment, we don't need to begin a transaction, since
+                    # we want to allow additional transactions within the parallel segment (i.e., one-level reentrancy).
+                    if not begin_parallel:
+                        self.simulation.begin_transaction(id=parallel_id)
 
+                    # Compute the function and encode the relevant output and simulation state
+                    output = self.function(*self.args, **self.kwargs)
                     encoded_output = self._encode_function_output(output)
                     state = self.simulation._encode_simulation_state()
-                                  
-                    self.simulation._add_to_cache_trace(state, event_hash, encoded_output)
-                    self.simulation._add_to_execution_trace(state, event_hash, encoded_output)
 
-                    self.simulation.end_transaction()
-                
-                else: # reentrant transactions are just run, but not cached
+                    # immediately drop the cached trace suffix, since we are starting a new execution from this point on.
+                    # in the case of parallel transactions, this will drop everything _after_ the current parallel segment
+                    # (which itself occupies one position only, with a dictionary of event hashes and their outputs).
+                    self.simulation._drop_cached_trace_suffix()
+
+                    # Cache the result and update the current execution trace. If this is a parallel transaction, the
+                    # cache and execution traces will be updated in a different way.
+                    self.simulation._add_to_cache_trace(state, event_hash, encoded_output, 
+                                                        parallel=self.simulation.is_under_parallel_transactions())
+                    self.simulation._add_to_execution_trace(state, event_hash, encoded_output, 
+                                                            parallel=self.simulation.is_under_parallel_transactions())
+
+                    # END TRANSACTION #################################################################
+                    if not begin_parallel:
+                        self.simulation.end_transaction(id=parallel_id)
+                    
+                else: # already under transaction (thus, now a reentrant transaction) OR beginning a parallel segment
+
+                    # NOTES: 
+                    #
+                    #   - Reentrant sequential transactions are not cached, since what matters is the final result of
+                    #     the top-level transaction.
+                    #
+                    #   - The event that starts the parallel transactions segment WILL NOT itself be cached, since
+                    #     it is not part of the parallel segment, but rather the beginning of it. This event will be
+                    #     reconstructed during runtime from the parallel events within the segment.
+
                     output = self.function(*self.args, **self.kwargs)
+
+            if begin_parallel:
+                self.simulation.end_parallel_transactions()
+
         else:
             raise ValueError(f"Simulation status is invalid at this point: {self.simulation.status}")
 
@@ -486,6 +629,8 @@ class Transaction:
         if self.simulation is not None and self.simulation.auto_checkpoint:
             self.simulation.checkpoint()
 
+        # after all the transaction is done, return the output - the client will never know about all the complexity we've
+        # gone through to get here.
         return output
   
     def _encode_function_output(self, output) -> dict:
@@ -497,22 +642,29 @@ class Transaction:
         from tinytroupe.environment import TinyWorld
         from tinytroupe.factory.tiny_factory import TinyFactory
 
-
-        # if the output is a TinyPerson, encode it
+        # if the output is a supported object, encode it
         if output is None:
             return None
         elif isinstance(output, TinyPerson):
             return {"type": "TinyPersonRef", "name": output.name}
-        # if it is a TinyWorld, encode it
         elif isinstance(output, TinyWorld):
             return {"type": "TinyWorldRef", "name": output.name}
-        # if it is a TinyFactory, encode it
         elif isinstance(output, TinyFactory):
             return {"type": "TinyFactoryRef", "name": output.name}
-        # if it is one of the types supported by JSON, encode it as is
-        elif isinstance(output, (int, float, str, bool, list, dict, tuple)):
+        elif isinstance(output, list):
+            encoded_list = []
+            for item in output:
+                if isinstance(item, TinyPerson):
+                    encoded_list.append({"type": "TinyPersonRef", "name": item.name})
+                elif isinstance(item, TinyWorld):
+                    encoded_list.append({"type": "TinyWorldRef", "name": item.name})
+                elif isinstance(item, TinyFactory):
+                    encoded_list.append({"type": "TinyFactoryRef", "name": item.name})
+                else:
+                    encoded_list.append({"type": "JSON", "value": item})
+            return {"type": "List", "value": encoded_list}
+        elif isinstance(output, (int, float, str, bool, dict, tuple)):
             return {"type": "JSON", "value": output}
-        # otherwise, raise an exception
         else:
             raise ValueError(f"Unsupported output type: {type(output)}")
 
@@ -533,27 +685,45 @@ class Transaction:
             return TinyWorld.get_environment_by_name(encoded_output["name"])
         elif encoded_output["type"] == "TinyFactoryRef":
             return TinyFactory.get_factory_by_name(encoded_output["name"])
+        elif encoded_output["type"] == "List":
+            decoded_list = []
+            for item in encoded_output["value"]:
+                if item["type"] == "TinyPersonRef":
+                    decoded_list.append(TinyPerson.get_agent_by_name(item["name"]))
+                elif item["type"] == "TinyWorldRef":
+                    decoded_list.append(TinyWorld.get_environment_by_name(item["name"]))
+                elif item["type"] == "TinyFactoryRef":
+                    decoded_list.append(TinyFactory.get_factory_by_name(item["name"]))
+                else:
+                    decoded_list.append(item["value"])
+            return decoded_list
         elif encoded_output["type"] == "JSON":
             return encoded_output["value"]
         else:
             raise ValueError(f"Unsupported output type: {encoded_output['type']}")
 
-def transactional(func):
+def transactional(parallel=False):
     """
     A helper decorator that makes a function simulation-transactional.
     """
-    def wrapper(*args, **kwargs):
-        obj_under_transaction = args[0]
-        simulation = current_simulation()
-        obj_sim_id = obj_under_transaction.simulation_id if hasattr(obj_under_transaction, 'simulation_id') else None
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            obj_under_transaction = args[0]
+            simulation = current_simulation()
+            obj_sim_id = obj_under_transaction.simulation_id if hasattr(obj_under_transaction, 'simulation_id') else None
 
-        logger.debug(f"-----------------------------------------> Transaction: {func.__name__} with args {args[1:]} and kwargs {kwargs} under simulation {obj_sim_id}.")
+            logger.debug(f"-----------------------------------------> Transaction: {func.__name__} with args {args[1:]} and kwargs {kwargs} under simulation {obj_sim_id}, parallel={parallel}.")
+            
+            parallel_id = str(threading.current_thread())
+            
+            transaction = Transaction(obj_under_transaction, simulation, func, *args, **kwargs)
+            result = transaction.execute(begin_parallel=parallel, parallel_id=parallel_id)
+            
+            return result
         
-        transaction = Transaction(obj_under_transaction, simulation, func, *args, **kwargs)
-        result = transaction.execute()
-        return result
+        return wrapper
     
-    return wrapper
+    return decorator
 
 class SkipTransaction(Exception):
     pass

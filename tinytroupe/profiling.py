@@ -17,12 +17,12 @@ from typing import List
 
 class Profiler:
 
-    def __init__(self, attributes: List[str]=["age", "occupation", "nationality"]) -> None: 
+    def __init__(self, attributes: List[str]=["age", "occupation.title", "nationality"]) -> None: 
         self.attributes = attributes
         
         self.attributes_distributions = {} # attribute -> Dataframe
 
-    def profile(self, agents: List[dict]) -> dict:   
+    def profile(self, agents: List[dict], plot:bool=True) -> dict:   
         """
         Profiles the given agents.
 
@@ -32,6 +32,10 @@ class Profiler:
         """
 
         self.attributes_distributions = self._compute_attributes_distributions(agents)
+
+        if plot:
+            self.render()
+            
         return self.attributes_distributions
 
     def render(self) -> None:

@@ -46,6 +46,11 @@ class CognitiveActionModel(BaseModel):
     action: Action
     cognitive_state: CognitiveState
 
+class CognitiveActionModelWithReasoning(BaseModel):
+    reasoning: str
+    action: Action
+    cognitive_state: CognitiveState
+
 
 ###########################################################################
 # Exposed API

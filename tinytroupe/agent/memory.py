@@ -41,7 +41,7 @@ class TinyMemory(TinyMentalFaculty):
         for value in values:
             self.store(value)
 
-    def retrieve(self, first_n: int, last_n: int, include_omission_info:bool=True) -> list:
+    def retrieve(self, first_n: int, last_n: int, include_omission_info:bool=True, item_type:str=None) -> list:
         """
         Retrieves the first n and/or last n values from memory. If n is None, all values are retrieved.
 
@@ -49,6 +49,7 @@ class TinyMemory(TinyMentalFaculty):
             first_n (int): The number of first values to retrieve.
             last_n (int): The number of last values to retrieve.
             include_omission_info (bool): Whether to include an information message when some values are omitted.
+            item_type (str, optional): If provided, only retrieve memories of this type.
 
         Returns:
             list: The retrieved values.
@@ -56,15 +57,21 @@ class TinyMemory(TinyMentalFaculty):
         """
         raise NotImplementedError("Subclasses must implement this method.")
 
-    def retrieve_recent(self) -> list:
+    def retrieve_recent(self, item_type:str=None) -> list:
         """
         Retrieves the n most recent values from memory.
+
+        Args:
+            item_type (str, optional): If provided, only retrieve memories of this type.
         """
         raise NotImplementedError("Subclasses must implement this method.")
 
-    def retrieve_all(self) -> list:
+    def retrieve_all(self, item_type:str=None) -> list:
         """
         Retrieves all values from memory.
+
+        Args:
+            item_type (str, optional): If provided, only retrieve memories of this type.
         """
         raise NotImplementedError("Subclasses must implement this method.")
 
@@ -73,6 +80,23 @@ class TinyMemory(TinyMentalFaculty):
         Retrieves all values from memory that are relevant to a given target.
         """
         raise NotImplementedError("Subclasses must implement this method.")
+
+    ###################################
+    # Auxiliary methods
+    ###################################
+
+    def filter_by_item_type(self, memories:list, item_type:str) -> list:
+        """
+        Filters a list of memories by item type.
+
+        Args:
+            memories (list): The list of memories to filter.
+            item_type (str): The item type to filter by.
+
+        Returns:
+            list: The filtered list of memories.
+        """
+        return [memory for memory in memories if memory["type"] == item_type]
 
 
 class EpisodicMemory(TinyMemory):
@@ -87,7 +111,7 @@ class EpisodicMemory(TinyMemory):
     MEMORY_BLOCK_OMISSION_INFO = {'role': 'assistant', 'content': "Info: there were other messages here, but they were omitted for brevity.", 'simulation_timestamp': None}
 
     def __init__(
-        self, fixed_prefix_length: int = 100, lookback_length: int = 100
+        self, fixed_prefix_length: int = 10, lookback_length: int = 40
     ) -> None:
         """
         Initializes the memory.
@@ -113,7 +137,7 @@ class EpisodicMemory(TinyMemory):
         """
         return len(self.memory)
 
-    def retrieve(self, first_n: int, last_n: int, include_omission_info:bool=True) -> list:
+    def retrieve(self, first_n: int, last_n: int, include_omission_info:bool=True, item_type:str=None) -> list:
         """
         Retrieves the first n and/or last n values from memory. If n is None, all values are retrieved.
 
@@ -121,6 +145,7 @@ class EpisodicMemory(TinyMemory):
             first_n (int): The number of first values to retrieve.
             last_n (int): The number of last values to retrieve.
             include_omission_info (bool): Whether to include an information message when some values are omitted.
+            item_type (str, optional): If provided, only retrieve memories of this type.
 
         Returns:
             list: The retrieved values.
@@ -131,39 +156,50 @@ class EpisodicMemory(TinyMemory):
 
         # use the other methods in the class to implement
         if first_n is not None and last_n is not None:
-            return self.retrieve_first(first_n) + omisssion_info + self.retrieve_last(last_n)
+            return self.retrieve_first(first_n, include_omission_info=False, item_type=item_type) + omisssion_info + self.retrieve_last(last_n, include_omission_info=False, item_type=item_type)
         elif first_n is not None:
-            return self.retrieve_first(first_n)
+            return self.retrieve_first(first_n, include_omission_info, item_type=item_type)
         elif last_n is not None:
-            return self.retrieve_last(last_n)
+            return self.retrieve_last(last_n, include_omission_info, item_type=item_type)
         else:
-            return self.retrieve_all()
+            return self.retrieve_all(item_type=item_type)
 
-    def retrieve_recent(self, include_omission_info:bool=True) -> list:
+    def retrieve_recent(self, include_omission_info:bool=True, item_type:str=None) -> list:
         """
         Retrieves the n most recent values from memory.
+
+        Args:
+            include_omission_info (bool): Whether to include an information message when some values are omitted.
+            item_type (str, optional): If provided, only retrieve memories of this type.
         """
         omisssion_info = [EpisodicMemory.MEMORY_BLOCK_OMISSION_INFO] if include_omission_info else []
+        
+        # Filter memories if item_type is provided
+        memories = self.memory if item_type is None else self.filter_by_item_type(self.memory, item_type)
 
         # compute fixed prefix
-        fixed_prefix = self.memory[: self.fixed_prefix_length] + omisssion_info
+        fixed_prefix = memories[: self.fixed_prefix_length] + omisssion_info
 
         # how many lookback values remain?
         remaining_lookback = min(
-            len(self.memory) - len(fixed_prefix), self.lookback_length
+            len(memories) - len(fixed_prefix) + (1 if include_omission_info else 0), self.lookback_length
         )
 
         # compute the remaining lookback values and return the concatenation
         if remaining_lookback <= 0:
             return fixed_prefix
         else:
-            return fixed_prefix + self.memory[-remaining_lookback:]
+            return fixed_prefix + memories[-remaining_lookback:]
 
-    def retrieve_all(self) -> list:
+    def retrieve_all(self, item_type:str=None) -> list:
         """
         Retrieves all values from memory.
+
+        Args:
+            item_type (str, optional): If provided, only retrieve memories of this type.
         """
-        return copy.copy(self.memory)
+        memories = self.memory if item_type is None else self.filter_by_item_type(self.memory, item_type)
+        return copy.copy(memories)
 
     def retrieve_relevant(self, relevance_target: str, top_k:int) -> list:
         """
@@ -171,21 +207,55 @@ class EpisodicMemory(TinyMemory):
         """
         raise NotImplementedError("Subclasses must implement this method.")
 
-    def retrieve_first(self, n: int, include_omission_info:bool=True) -> list:
+    def retrieve_first(self, n: int, include_omission_info:bool=True, item_type:str=None) -> list:
         """
         Retrieves the first n values from memory.
+
+        Args:
+            n (int): The number of values to retrieve.
+            include_omission_info (bool): Whether to include an information message when some values are omitted.
+            item_type (str, optional): If provided, only retrieve memories of this type.
         """
         omisssion_info = [EpisodicMemory.MEMORY_BLOCK_OMISSION_INFO] if include_omission_info else []
         
-        return self.memory[:n] + omisssion_info
+        memories = self.memory if item_type is None else self.filter_by_item_type(self.memory, item_type)
+        return memories[:n] + omisssion_info
     
-    def retrieve_last(self, n: int, include_omission_info:bool=True) -> list:
+    def retrieve_last(self, n: int, include_omission_info:bool=True, item_type:str=None) -> list:
         """
         Retrieves the last n values from memory.
+
+        Args:
+            n (int): The number of values to retrieve.
+            include_omission_info (bool): Whether to include an information message when some values are omitted.
+            item_type (str, optional): If provided, only retrieve memories of this type.
         """
         omisssion_info = [EpisodicMemory.MEMORY_BLOCK_OMISSION_INFO] if include_omission_info else []
 
-        return omisssion_info + self.memory[-n:]
+        memories = self.memory if item_type is None else self.filter_by_item_type(self.memory, item_type)
+        return omisssion_info + memories[-n:]
+
+    def clear(self, max_prefix_to_clear:int=None, max_suffix_to_clear:int=None):
+        """
+        Clears the memory, generating a permanent "episodic amnesia". 
+        If max_prefix_to_clear is not None, it clears the first n values from memory.
+        If max_suffix_to_clear is not None, it clears the last n values from memory. If both are None,
+        it clears all values from memory.
+
+        Args:
+            max_prefix_to_clear (int): The number of first values to clear.
+            max_suffix_to_clear (int): The number of last values to clear.
+        """
+
+        if max_prefix_to_clear is not None:
+            self.memory = self.memory[max_prefix_to_clear:]
+
+        if max_suffix_to_clear is not None:
+            self.memory = self.memory[:-max_suffix_to_clear]
+
+        if max_prefix_to_clear is None and max_suffix_to_clear is None:
+            self.memory = []
+        
 
 
 @utils.post_init
@@ -253,5 +323,4 @@ class SemanticMemory(TinyMemory):
     
     def _build_documents_from(self, memories: list) -> list:
         return [self._build_document_from(memory) for memory in memories]
-    
-   
+

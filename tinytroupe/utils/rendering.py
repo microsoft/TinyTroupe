@@ -2,6 +2,7 @@ import json
 import textwrap
 from datetime import datetime
 from typing import Union
+import inspect
 
 from tinytroupe.utils import logger
 
@@ -49,6 +50,27 @@ def wrap_text(text: str, width: int=100) -> str:
     Wraps the text at the specified width.
     """
     return textwrap.fill(text, width=width)
+
+
+def indent_at_current_level(text: str) -> str:
+    """
+    Indents the specified text at the current indentation level, determined dynamically.
+    """
+    frame = inspect.currentframe().f_back
+    line = frame.f_lineno
+    filename = frame.f_code.co_filename
+    with open(filename, 'r') as f:
+        lines = f.readlines()
+    current_line = lines[line - 1]
+    
+    indent= len(current_line) - len(current_line.lstrip())
+
+    # first dedent the text to remove any leading whitespace
+    text = dedent(text)
+
+    # then indent it to the specified level
+    return textwrap.indent(text, ' ' * indent)
+
 
 class RichTextStyle:
     

@@ -67,11 +67,11 @@ def test_proposition_with_tinyperson(setup):
     oscar = create_oscar_the_architect()
     oscar.listen_and_act("Tell me a bit about your travel preferences.")
     
-    true_proposition = Proposition(target=oscar, claim="Oscar mentions his travel preferences.")
-    assert true_proposition.check() == True
+    true_proposition = Proposition(claim="Oscar mentions his travel preferences.")
+    assert true_proposition.check(target=oscar) == True
 
-    false_proposition = Proposition(target=oscar, claim="Oscar writes a novel about how cats are better than dogs.")
-    assert false_proposition.check() == False
+    false_proposition = Proposition(claim="Oscar writes a novel about how cats are better than dogs.")
+    assert false_proposition.check(target=oscar) == False
 
 def test_proposition_with_tinyperson_at_multiple_points(setup):
     oscar = create_oscar_the_architect()
