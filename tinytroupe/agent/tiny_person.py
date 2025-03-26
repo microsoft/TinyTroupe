@@ -1551,3 +1551,4 @@ class TinyPerson(JsonSerializableRegistry):
         Clears the global list of agents.
         """
         TinyPerson.all_agents = {}
+        
