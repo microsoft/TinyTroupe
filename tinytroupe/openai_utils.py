@@ -25,7 +25,6 @@ config = utils.read_config_file()
 default = {}
 default["model"] = config["OpenAI"].get("MODEL", "gpt-4o")
 default["max_completion_tokens"] = int(config["OpenAI"].get("MAX_TOKENS", "1024"))
-default["temperature"] = float(config["OpenAI"].get("TEMPERATURE", "1.0"))
 default["top_p"] = int(config["OpenAI"].get("TOP_P", "0"))
 default["frequency_penalty"] = float(config["OpenAI"].get("FREQ_PENALTY", "0.0"))
 default["presence_penalty"] = float(
@@ -350,7 +349,6 @@ class OpenAIClient:
     def send_message(self,
                     current_messages,
                      model=default["model"],
-                     temperature=default["temperature"],
                      max_completion_tokens=default["max_completion_tokens"],
                      top_p=default["top_p"],
                      frequency_penalty=default["frequency_penalty"],
@@ -406,7 +404,6 @@ class OpenAIClient:
         chat_api_params = {
             "model": model,
             "messages": current_messages,
-            "temperature": temperature,
             "max_completion_tokens":max_completion_tokens,
             "top_p": top_p,
             "frequency_penalty": frequency_penalty,
