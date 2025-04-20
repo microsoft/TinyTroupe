@@ -24,7 +24,7 @@ config = utils.read_config_file()
 ###########################################################################
 default = {}
 default["model"] = config["OpenAI"].get("MODEL", "gpt-4o")
-default["max_tokens"] = int(config["OpenAI"].get("MAX_TOKENS", "1024"))
+default["max_completion_tokens"] = int(config["OpenAI"].get("MAX_TOKENS", "1024"))
 default["temperature"] = float(config["OpenAI"].get("TEMPERATURE", "1.0"))
 default["top_p"] = int(config["OpenAI"].get("TOP_P", "0"))
 default["frequency_penalty"] = float(config["OpenAI"].get("FREQ_PENALTY", "0.0"))
@@ -351,7 +351,7 @@ class OpenAIClient:
                     current_messages,
                      model=default["model"],
                      temperature=default["temperature"],
-                     max_tokens=default["max_tokens"],
+                     max_completion_tokens=default["max_completion_tokens"],
                      top_p=default["top_p"],
                      frequency_penalty=default["frequency_penalty"],
                      presence_penalty=default["presence_penalty"],
@@ -370,7 +370,7 @@ class OpenAIClient:
         current_messages (list): A list of dictionaries representing the conversation history.
         model (str): The ID of the model to use for generating the response.
         temperature (float): Controls the "creativity" of the response. Higher values result in more diverse responses.
-        max_tokens (int): The maximum number of tokens (words or punctuation marks) to generate in the response.
+        max_completion_tokens (int): The maximum number of tokens (words or punctuation marks) to generate in the response.
         top_p (float): Controls the "quality" of the response. Higher values result in more coherent responses.
         frequency_penalty (float): Controls the "repetition" of the response. Higher values result in less repetition.
         presence_penalty (float): Controls the "diversity" of the response. Higher values result in more diverse responses.
@@ -407,7 +407,7 @@ class OpenAIClient:
             "model": model,
             "messages": current_messages,
             "temperature": temperature,
-            "max_tokens":max_tokens,
+            "max_completion_tokens":max_completion_tokens,
             "top_p": top_p,
             "frequency_penalty": frequency_penalty,
             "presence_penalty": presence_penalty,
