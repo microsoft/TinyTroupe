@@ -27,15 +27,95 @@ def test_extract_json():
     result = extract_json(text)
     assert result == {"key": "'value'"}
 
-    # Test with invalid JSON
-    text = 'Some text before {"key": "value",} some text after'
-    result = extract_json(text)
-    assert result == {}
+    # Test with invalid JSON (trailing comma in object) - should now be fixed or return None
+    # The new implementation should parse this successfully due to trailing comma removal.
+    text_trailing_comma_obj = 'Some text before {"key": "value",} some text after'
+    result_trailing_comma_obj = extract_json(text_trailing_comma_obj)
+    assert result_trailing_comma_obj == {"key": "value"}
+
+    # Test with trailing comma in array - should now be fixed
+    text_trailing_comma_array = 'Some text before [{"key": "value"},] some text after'
+    result_trailing_comma_array = extract_json(text_trailing_comma_array)
+    assert result_trailing_comma_array == [{"key": "value"}]
 
     # Test with no JSON
-    text = 'Some text with no JSON'
-    result = extract_json(text)
-    assert result == {}
+    text_no_json = 'Some text with no JSON'
+    result_no_json = extract_json(text_no_json)
+    assert result_no_json is None
+
+    # Test with empty string
+    text_empty = ""
+    result_empty = extract_json(text_empty)
+    assert result_empty is None
+
+    # Test with None input
+    text_none = None
+    result_none = extract_json(text_none)
+    assert result_none is None
+
+    # Test with markdown ```json ... ```
+    text_markdown_json = "Here is the JSON: ```json\n{\"name\": \"Test\", \"version\": 1}\n``` End."
+    result_markdown_json = extract_json(text_markdown_json)
+    assert result_markdown_json == {"name": "Test", "version": 1}
+
+    # Test with markdown ``` ... ``` (generic)
+    text_markdown_generic = "```\n{\"type\": \"generic\", \"payload\": [1, 2]}\n```"
+    result_markdown_generic = extract_json(text_markdown_generic)
+    assert result_markdown_generic == {"type": "generic", "payload": [1, 2]}
+
+    # Test with markdown and trailing comma
+    text_md_trailing_comma = "```json\n{\"item\": \"test\",}\n```"
+    result_md_trailing_comma = extract_json(text_md_trailing_comma)
+    assert result_md_trailing_comma == {"item": "test"}
+
+    # Test with leading/trailing text and complex JSON structure
+    text_complex_fluff = """
+    Sure, here's the data you requested:
+    {
+        "user": "test_user",
+        "data": [
+            {"id": 1, "value": "alpha", "meta": {"tags": ["a", "b"], "active": true,}},
+            {"id": 2, "value": "beta", "meta": {"tags": ["c", "d"], "active": false,}}
+        ],
+        "status": "success",
+    }
+    Let me know if you need more.
+    """
+    result_complex_fluff = extract_json(text_complex_fluff)
+    expected_complex_fluff = {
+        "user": "test_user",
+        "data": [
+            {"id": 1, "value": "alpha", "meta": {"tags": ["a", "b"], "active": True}},
+            {"id": 2, "value": "beta", "meta": {"tags": ["c", "d"], "active": False}}
+        ],
+        "status": "success"
+    }
+    assert result_complex_fluff == expected_complex_fluff
+
+    # Test with only whitespace
+    text_whitespace = "   \n\t   "
+    result_whitespace = extract_json(text_whitespace)
+    assert result_whitespace is None
+
+    # Test with JSON that has internal valid string like "```"
+    text_internal_ticks = '{"comment": "This is not a ```json block", "data": true}'
+    result_internal_ticks = extract_json(text_internal_ticks)
+    assert result_internal_ticks == {"comment": "This is not a ```json block", "data": True}
+
+    # Test with text that looks like a markdown block but isn't JSON
+    text_fake_markdown = "```\nThis is not JSON.\n{\n  key: value\n}\n```"
+    result_fake_markdown = extract_json(text_fake_markdown)
+    # This might parse depending on how robust the inner JSON is, if the "key: value" was valid JSON it would.
+    # Given current implementation, it will try to parse "This is not JSON.\n{\n  key: value\n}"
+    # which will fail. Then it will try to clean the original string.
+    # The cleaning `r"[{[]"` will find `{` and `rfind` will find `}`.
+    # So it will try to parse "{\n  key: value\n}". This is not valid JSON (key not string).
+    assert result_fake_markdown is None
+
+    # Test with a very broken JSON string
+    text_very_broken = 'Here is { "name": "test", "value": [1,2, "unfinished_array", '
+    result_very_broken = extract_json(text_very_broken)
+    assert result_very_broken is None
 
 
 def test_name_or_empty():

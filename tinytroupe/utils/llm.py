@@ -2,7 +2,7 @@ import re
 import json
 import os
 import chevron
-from typing import Collection
+from typing import Collection, Union
 import copy
 import functools
 import inspect
@@ -88,31 +88,86 @@ def llm(**model_overrides):
 ################################################################################	
 # Model output utilities
 ################################################################################
-def extract_json(text: str) -> dict:
+def extract_json(text: str) -> Union[dict, list, None]:
     """
-    Extracts a JSON object from a string, ignoring: any text before the first 
-    opening curly brace; and any Markdown opening (```json) or closing(```) tags.
+    Extracts a JSON object or array from a string using multiple strategies.
+    1. Tries direct parsing.
+    2. Tries to extract from markdown code blocks (e.g., ```json ... ```).
+    3. Tries to clean the string by removing common issues and then re-parses.
     """
+    if not text or not isinstance(text, str):
+        logger.debug("Input text is empty or not a string, cannot extract JSON.")
+        return None
+
+    original_text = text # Keep a copy for logging if all attempts fail
+
+    # Strategy 1: Try direct parsing (with strict=False for flexibility with control characters)
     try:
-        # remove any text before the first opening curly or square braces, using regex. Leave the braces.
-        text = re.sub(r'^.*?({|\[)', r'\1', text, flags=re.DOTALL)
+        return json.loads(text, strict=False)
+    except json.JSONDecodeError:
+        logger.debug(f"Direct JSON parsing failed for: {text[:200]}...") # Log snippet
 
-        # remove any trailing text after the LAST closing curly or square braces, using regex. Leave the braces.
-        text  =  re.sub(r'(}|\])(?!.*(\]|\})).*$', r'\1', text, flags=re.DOTALL)
-        
-        # remove invalid escape sequences, which show up sometimes
-        text = re.sub("\\'", "'", text) # replace \' with just '
-        text = re.sub("\\,", ",", text)
+    # Strategy 2: Extract from markdown code blocks
+    # Common patterns: ```json ... ``` or ``` ... ```
+    code_block_patterns = [
+        r"```json\s*([\s\S]*?)\s*```",  # Explicit json markdown
+        r"```\s*([\s\S]*?)\s*```"       # Generic markdown
+    ]
+    for pattern in code_block_patterns:
+        match = re.search(pattern, text, re.DOTALL)
+        if match:
+            potential_json = match.group(1).strip()
+            try:
+                return json.loads(potential_json, strict=False)
+            except json.JSONDecodeError:
+                logger.debug(f"Parsing from markdown block failed for: {potential_json[:200]}...")
+                # Continue to next pattern or cleaning if this attempt fails
 
-        # use strict=False to correctly parse new lines, tabs, etc.
-        parsed = json.loads(text, strict=False)
-        
-        # return the parsed JSON object
-        return parsed
+    # Strategy 3: Cleaning and Retry
+    cleaned_text = text
+
+    # 3a. Remove text outside the outermost JSON structure (curly braces or square brackets)
+    # Find first '{' or '['
+    first_brace = re.search(r"[{[]", cleaned_text)
+    if not first_brace:
+        logger.debug("No JSON structure found (no '{' or '[').")
+        return None # No JSON structure
     
-    except Exception as e:
-        logger.error(f"Error occurred while extracting JSON: {e}")
-        return {}
+    cleaned_text = cleaned_text[first_brace.start():]
+
+    # Find last '}' or ']'
+    # This requires careful balancing if nested structures exist, but for now, a simpler approach:
+    # Find the last occurrence that seems to correctly close the structure.
+    # This is tricky with regex alone for deeply nested structures.
+    # A common heuristic: find the last brace. If it's part of an incomplete structure, json.loads will fail.
+    last_curly = cleaned_text.rfind('}')
+    last_square = cleaned_text.rfind(']')
+
+    if last_curly == -1 and last_square == -1:
+        logger.debug("No JSON structure found (no '}' or ']').")
+        return None
+
+    # Choose the one that appears later in the string as the potential end
+    end_index = max(last_curly, last_square)
+    cleaned_text = cleaned_text[:end_index+1]
+
+    # 3b. Attempt to fix common issues like trailing commas
+    # Remove trailing commas in objects: ,} -> }
+    cleaned_text = re.sub(r",\s*}", "}", cleaned_text)
+    # Remove trailing commas in arrays: ,] -> ]
+    cleaned_text = re.sub(r",\s*]", "]", cleaned_text)
+
+    # 3c. Remove problematic escape sequences (if truly necessary and well-understood)
+    # The existing ones (\' and \,) are specific. Let's be cautious.
+    # For now, let's keep them if they were solving a known LLM quirk, but they are unusual.
+    cleaned_text = cleaned_text.replace("\\'", "'") # replace \' with just '
+    cleaned_text = cleaned_text.replace("\\,", ",") # replace \, with , (less common)
+
+    try:
+        return json.loads(cleaned_text, strict=False)
+    except json.JSONDecodeError as e:
+        logger.error(f"All JSON extraction strategies failed for input: {original_text[:500]}... Error: {e}")
+        return None
 
 def extract_code_block(text: str) -> str:
     """

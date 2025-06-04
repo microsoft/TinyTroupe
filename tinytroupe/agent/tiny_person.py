@@ -27,6 +27,9 @@ class TinyPerson(JsonSerializableRegistry):
     # This prevents the agent from acting without ever stopping.
     MAX_ACTIONS_BEFORE_DONE = 15
 
+    # The number of identical consecutive actions to detect a loop.
+    LOOP_DETECTION_THRESHOLD = 5
+
     PP_TEXT_WIDTH = 100
 
     serializable_attributes = ["_persona", "_mental_state", "_mental_faculties", "episodic_memory", "semantic_memory"]
@@ -496,10 +499,16 @@ class TinyPerson(JsonSerializableRegistry):
                 if len(contents) > TinyPerson.MAX_ACTIONS_BEFORE_DONE:
                     logger.warning(f"[{self.name}] Agent {self.name} is acting without ever stopping. This may be a bug. Let's stop it here anyway.")
                     break
-                if len(contents) > 4: # just some minimum number of actions to check for repetition, could be anything >= 3
-                    # if the last three actions were the same, then we are probably in a loop
-                    if contents[-1]['action'] == contents[-2]['action'] == contents[-3]['action']:
-                        logger.warning(f"[{self.name}] Agent {self.name} is acting in a loop. This may be a bug. Let's stop it here anyway.")
+                # Check for loops by looking at the last N actions
+                if len(contents) >= TinyPerson.LOOP_DETECTION_THRESHOLD:
+                    last_n_actions = [c['action'] for c in contents[-TinyPerson.LOOP_DETECTION_THRESHOLD:]]
+                    # Check if all actions in the last_n_actions list are identical
+                    if len(set(map(json.dumps, last_n_actions))) == 1:
+                        logger.warning(
+                            f"[{self.name}] Agent {self.name} is acting in a loop (last "
+                            f"{TinyPerson.LOOP_DETECTION_THRESHOLD} actions are identical). "
+                            f"This may be a bug. Let's stop it here anyway."
+                        )
                         break
 
                 aux_pre_act()

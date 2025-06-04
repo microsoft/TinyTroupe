@@ -3,6 +3,8 @@ Simulation controlling mechanisms.
 """
 import json
 import os
+import pickle
+import hashlib
 import tempfile
 
 import tinytroupe
@@ -164,13 +166,52 @@ class Simulation:
         Returns the current position in the execution trace, or -1 if the execution trace is empty.
         """
         return len(self.execution_trace) - 1
-    
-    def _function_call_hash(self, function_name, *args, **kwargs) -> int:
+
+    def _function_call_hash(self, function_name, *args, **kwargs) -> str:
         """
-        Computes the hash of the given function call.
+        Computes a stable hash for the given function call using pickle and SHA256.
         """
-        event = str((function_name, args, kwargs))
-        return event
+        try:
+            # Create a canonical representation of the arguments
+            # For dictionaries, ensure sorted order for consistent pickling
+            # This is a shallow sort; deep sort might be needed for complex nested dicts
+            # if their str/repr changes based on internal dict order.
+            # However, pickle itself is generally good with dict key order.
+
+            # A more robust way to handle kwargs order for pickling consistency
+            # is to convert them to a sorted tuple of items.
+            # We need a deep canonical representation.
+
+            def make_canonical(data):
+                if isinstance(data, dict):
+                    return tuple(sorted((k, make_canonical(v)) for k, v in data.items()))
+                elif isinstance(data, list) or isinstance(data, tuple):
+                    return tuple(make_canonical(elem) for elem in data)
+                elif isinstance(data, set):
+                    return tuple(sorted(make_canonical(elem) for elem in data))
+                # Note: Basic types (int, str, float, bool, None) are returned as is.
+                # Custom objects are returned as is; pickle will handle their __getstate__ or attributes.
+                return data
+
+            canonical_args = make_canonical(args)
+            # Sort kwargs by key, and canonicalize values
+            canonical_kwargs = tuple(sorted((k, make_canonical(v)) for k, v in kwargs.items()))
+
+            representation = (function_name, canonical_args, canonical_kwargs)
+            pickled_representation = pickle.dumps(representation, protocol=pickle.HIGHEST_PROTOCOL)
+            event_hash = hashlib.sha256(pickled_representation).hexdigest()
+            return event_hash
+        except Exception as e:
+            # Simplified error logging to avoid issues with formatting args/kwargs if they are problematic
+            logger.error(f"Error pickling/hashing event for function {function_name}: {e}")
+            # Fallback to string representation if pickling fails, though this is less reliable.
+            # This might happen if args/kwargs contain unpickleable objects.
+            # A truly robust solution might require making those objects pickleable or using a custom serializer.
+            event_str = str((function_name, args, kwargs)) # args and kwargs are still used here for fallback key
+            print(f"DEBUG: About to log fallback warning for {function_name}") # DEBUG PRINT
+            logger.warning(f"FALLBACK_CACHE_KEY_USED for {function_name}.") # Simplified warning
+            print(f"DEBUG: Logged fallback warning for {function_name}") # DEBUG PRINT
+            return hashlib.sha256(event_str.encode('utf-8', 'surrogatepass')).hexdigest()
 
     def _skip_execution_with_cache(self):
         """
@@ -589,8 +630,12 @@ def reset():
 
 def _simulation(id="default"):
     global _current_simulations
+    # Ensure the simulation ID exists in the dictionary before trying to access it
+    if id not in _current_simulations:
+        _current_simulations[id] = None
+
     if _current_simulations[id] is None:
-        _current_simulations[id] = Simulation()
+        _current_simulations[id] = Simulation(id=id) # Pass the id to Simulation constructor
     
     return _current_simulations[id]
 
