@@ -497,7 +497,7 @@ class OpenAIClient:
 
             del chat_api_params["stream"]
 
-            return self.client.beta.chat.completions.parse(
+            return self.client.chat.completions.parse(
                     **chat_api_params
                 )
         
