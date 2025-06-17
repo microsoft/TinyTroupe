@@ -884,6 +884,47 @@ class TinyPerson(JsonSerializableRegistry):
 
         return self.retrieve_relevant_memories(target, top_k=top_k)
 
+    def _calculate_interaction_urgency(self, observation: str) -> int:
+        """
+        Calculates the urgency for the agent to act based on an observation.
+        """
+        relevant_memories_list = self.retrieve_relevant_memories(observation, top_k=5)
+        relevant_memories_str = "\n".join([f"- {memory}" for memory in relevant_memories_list])
+
+        prompt_content = f"""
+        Persona:
+        {json.dumps(self._persona, indent=2)}
+
+        Mental State:
+        {json.dumps(self._mental_state, indent=2)}
+
+        Relevant Memories:
+        {relevant_memories_str}
+
+        Observation:
+        {observation}
+
+        Instruction:
+        Based on the persona, current mental state, relevant memories, and the current observation, provide an integer score from 0 to 100 indicating the urgency for the agent to act. 0 means no urgency, 100 means maximum urgency. Only return the integer score.
+        """
+        try:
+            response_message = openai_utils.client().send_message(
+                messages=[{"role": "user", "content": prompt_content}],
+                # No specific response model, expect plain text.
+            )
+            # Assuming response_message is a dict like {'role': 'assistant', 'content': '75'}
+            urgency_score_str = response_message['content'].strip()
+            urgency_score = int(urgency_score_str)
+            if 0 <= urgency_score <= 100:
+                return urgency_score
+            else:
+                # Score out of range, default to low
+                logger.warning(f"Urgency score {urgency_score} out of range (0-100) for observation: {observation}. Defaulting to 0.")
+                return 0
+        except (ValueError, KeyError, TypeError) as e:
+            # Error in parsing or unexpected response, default to low
+            logger.warning(f"Error parsing urgency score for observation '{observation}': {e}. Defaulting to 0.")
+            return 0
 
     ###########################################################
     # Inspection conveniences

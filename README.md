@@ -317,6 +317,50 @@ The other is by defining the agent programmatically, with statements like these:
 
 You can also combine both approaches, using the JSON file as a base and then adding or modifying details programmatically.
 
+#### Deciding When to Act: Urgency Score
+
+To provide more nuanced control over agent behavior and manage simulation costs (as each agent action can involve an LLM call), TinyTroupe includes an "urgency score" mechanism. This allows an agent to assess how important it is to act upon a given observation or stimulus.
+
+The core of this logic resides in the `TinyPerson` class with the `_calculate_interaction_urgency(observation: str)` method. When called with an `observation` (a string describing the current situation or stimulus), this method:
+
+1.  Retrieves relevant memories for the agent.
+2.  Constructs a prompt including the agent's persona, current mental state, these memories, and the observation.
+3.  Queries the LLM to return an integer "urgency score" (typically between 0 and 100), indicating how critical it is for the agent to respond.
+
+This score is then compared against a threshold. The library provides `URGENCY_TO_ACT_THRESHOLD` (defaulting to 75) in the `tinytroupe.control` module.
+
+To facilitate using this logic in your simulation scripts, `tinytroupe.control` offers a helper function: `handle_agent_action_with_urgency(agent: TinyPerson, observation: str)`.
+
+Here's a conceptual example of how you might use it in a simulation loop:
+
+```python
+from tinytroupe.agent import TinyPerson
+from tinytroupe.control import handle_agent_action_with_urgency, URGENCY_TO_ACT_THRESHOLD
+# Assume 'my_agent' is an initialized TinyPerson instance
+
+observation = "A new critical task has just been assigned to you."
+
+# The handle_agent_action_with_urgency function will internally call
+# my_agent._calculate_interaction_urgency(observation)
+# and then my_agent.act() if the score >= URGENCY_TO_ACT_THRESHOLD.
+handle_agent_action_with_urgency(my_agent, observation)
+
+# If you want to use a custom threshold:
+# (Note: handle_agent_action_with_urgency currently uses the global URGENCY_TO_ACT_THRESHOLD)
+# For more direct control, you could replicate its logic:
+#
+# urgency = my_agent._calculate_interaction_urgency(observation)
+# print(f"Agent {my_agent.name}: Urgency = {urgency} for observation '{observation}'")
+# CUSTOM_THRESHOLD = 80
+# if urgency >= CUSTOM_THRESHOLD:
+# print(f"Agent {my_agent.name} acts.")
+# my_agent.act()
+# else:
+# print(f"Agent {my_agent.name} does not act.")
+```
+
+This mechanism helps ensure that agents only engage in detailed action processing (and thus incur LLM costs) when the situation warrants it, leading to more efficient and focused simulations.
+
 #### Fragments
 
 `TinyPerson`s can also be further enriched via **fragments**, which are sub-specifications that can be added to the main specification. This is useful to reuse common parts across different agents. For example, the following fragment can be used to specify love of travel ([examples/fragments/travel_enthusiast.agent.fragment.json](./examples/fragments/travel_enthusiast.agent.fragment.json)):

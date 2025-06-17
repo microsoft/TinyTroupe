@@ -7,9 +7,13 @@ import tempfile
 
 import tinytroupe
 import tinytroupe.utils as utils
+from tinytroupe.agent.tiny_person import TinyPerson # Added import
+from typing import TYPE_CHECKING # Added import
 
 import logging
 logger = logging.getLogger("tinytroupe")
+
+URGENCY_TO_ACT_THRESHOLD = 75
 
 class Simulation:
 
@@ -642,3 +646,22 @@ def cache_misses(id="default"):
     return _simulation(id).cache_misses
     
 reset() # initialize the control state
+
+
+if TYPE_CHECKING:
+    from tinytroupe.agent.tiny_person import TinyPerson
+
+def handle_agent_action_with_urgency(agent: 'TinyPerson', observation: str):
+    # URGENCY_TO_ACT_THRESHOLD is defined in this module
+
+    # Ensure agent has the _calculate_interaction_urgency method.
+    # This function assumes it's being called with a fully capable TinyPerson instance.
+    urgency = agent._calculate_interaction_urgency(observation)
+
+    print(f"Agent {agent.name}: Urgency = {urgency} for observation '{observation}'")
+
+    if urgency >= URGENCY_TO_ACT_THRESHOLD:
+        print(f"Agent {agent.name} acts.")
+        agent.act()  # Call the existing act method on the agent
+    else:
+        print(f"Agent {agent.name} does not act.")
