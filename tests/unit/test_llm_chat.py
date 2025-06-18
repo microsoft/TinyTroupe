@@ -3,9 +3,10 @@ import pytest
 from typing import List, Dict, Union
 from pydantic import BaseModel
 
-sys.path.append('../../tinytroupe/')
-sys.path.append('../../')
-sys.path.append('..')
+# Insert paths at the beginning of sys.path (position 0)
+sys.path.insert(0, '..')
+sys.path.insert(0, '../../')
+sys.path.insert(0, '../../tinytroupe/')
 
 from tinytroupe.utils.llm import LLMChat
 

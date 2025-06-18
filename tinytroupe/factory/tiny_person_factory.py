@@ -11,7 +11,7 @@ from tinytroupe import openai_utils
 from tinytroupe.agent import TinyPerson
 import tinytroupe.utils as utils
 from tinytroupe.control import transactional
-from tinytroupe.factory import default
+from tinytroupe import config_manager
 
 import concurrent.futures
 import threading
@@ -47,7 +47,6 @@ class TinyPersonFactory(TinyFactory):
         self.sampling_dimensions = None
         self.sampling_plan = None
         self.remaining_characteristics_sample = None
-        self.remaining_unique_names = None
 
         self.generated_minibios = [] # keep track of the generated persons. We keep the minibio to avoid generating the same person twice.
         self.generated_names = []
@@ -167,7 +166,7 @@ class TinyPersonFactory(TinyFactory):
         """
 
         logger.info(f"Starting the person generation based on that context: {self.context_text}")
-
+        fresh_agent_name = None
 
         # are we going to use a pre-computed sample of characteristics too?
         if self.population_size is not None:
@@ -183,7 +182,7 @@ class TinyPersonFactory(TinyFactory):
                     raise ValueError(f"No more agents to sample from the population, all of the {self.population_size} have been sampled.")
                 else:
                     sampled_characteristics = self.remaining_characteristics_sample.pop()
-                    fresh_agent_name = self.remaining_unique_names.pop()
+                    logger.debug(f"Sampled agent: {sampled_characteristics['name']}.")
             
             if agent_particularities is not None:
                 agent_particularities =\
@@ -191,8 +190,7 @@ class TinyPersonFactory(TinyFactory):
                         - Primary characteristics: {agent_particularities}
 
                         - Also use all the following additional characteristics that **do not** conflict with the primary ones:
-                            * Demographics: {json.dumps(sampled_characteristics, indent=4)}
-                            * Full name: {fresh_agent_name}
+                            * Name, demographics and other characteristics: {json.dumps(sampled_characteristics, indent=4)}
 
                         In case one of the additional characteristics conflicts with a primary one, please use the primary one
                         and ignore the additional one.
@@ -201,9 +199,7 @@ class TinyPersonFactory(TinyFactory):
             else:
                 agent_particularities = \
                     f"""
-                    - Full name: {fresh_agent_name}
-
-                    - Demographics: 
+                    - Name, demographics and other characteristics:
                          {json.dumps(sampled_characteristics, indent=4)}
                     """
         else: # no predefined population size, so we generate one-off agents.
@@ -301,8 +297,13 @@ class TinyPersonFactory(TinyFactory):
             return person
         else:
             logger.error(f"Could not generate an agent after {attempts} attempts.")
+            if sampled_characteristics is not None:
+                self.remaining_characteristics_sample.append(sampled_characteristics)
+                logger.error(f"Name {fresh_agent_name} was not used, it will be added back to the pool of names.")
+
             return None
    
+    @config_manager.config_defaults(parallelize="parallel_agent_generation")
     def generate_people(self, number_of_people:int=None, 
                         agent_particularities:str=None, 
                         temperature:float=1.7, 
@@ -310,7 +311,7 @@ class TinyPersonFactory(TinyFactory):
                         presence_penalty:float=0.0,
                         attempts:int=10, 
                         post_processing_func=None,
-                        parallelize=default["parallel_agent_generation"],
+                        parallelize=None,
                         verbose:bool=False) -> list:
         """
         Generate a list of TinyPerson instances using OpenAI's LLM.
@@ -504,21 +505,55 @@ class TinyPersonFactory(TinyFactory):
             self.remaining_characteristics_sample =  utils.try_function(lambda: self._flatten_sampling_plan(sampling_plan=self.sampling_plan))
             logger.debug(f"Remaining characteristics sample: {json.dumps(self.remaining_characteristics_sample, indent=4)}")
 
-            # sample the unique names all together. This seems more effective to ensure generated names are unique.
-            naming_context =\
-            f"""
-            General context: {context}
+            # compute how many of each gender we have, in order to be able to generate names accordingly
+            gender_qty = {'male': 0, 'female': 0, 'other': 0}
+            for sample in self.remaining_characteristics_sample:
+                sample_gender = sample.get("gender", None)
+                if sample_gender is not None:
+                    sample_gender = sample_gender.lower() # to avoid problems with case sensitivity
 
-            Population distribution description: {description}
-            """
+                    if sample_gender == 'male':
+                        gender_qty['male'] += 1
+                    elif sample_gender == 'female':
+                        gender_qty['female'] += 1
+                    else:
+                        gender_qty['other'] += 1
+                        
+
+            # sample the unique names all together. This seems more effective to ensure generated names are unique.
+            def aux_naming_context(gender):
+                f"""
+                Target gender: {gender}
+                
+                General context: {context}
+
+                Population distribution description: {description}
+                """
             
-            self.remaining_unique_names =  self._unique_full_names(n=n, already_generated_names=TinyPersonFactory._all_used_and_precomputed_names(), context=naming_context)
+            unique_names = {"male": [], "female": [], "other": []}
+            unique_names["male"] +=  self._unique_full_names(n=gender_qty["male"], already_generated_names=TinyPersonFactory._all_used_and_precomputed_names(), 
+                                                                    context=aux_naming_context("male"))
+            unique_names["female"] +=  self._unique_full_names(n=gender_qty["female"], already_generated_names=TinyPersonFactory._all_used_and_precomputed_names(), 
+                                                                    context=aux_naming_context("female"))
+            unique_names["other"] +=  self._unique_full_names(n=gender_qty["other"], already_generated_names=TinyPersonFactory._all_used_and_precomputed_names(), 
+                                                                    context=aux_naming_context("any"))
             
-            logger.debug(f"Unique names generated: {json.dumps(self.remaining_unique_names, indent=4)}")
+            all_unique_names = unique_names["male"] + unique_names["female"] + unique_names["other"]
+            
+            logger.debug(f"Unique names generated: {json.dumps(all_unique_names, indent=4)}")
 
             # check that the names are actually unique, considering that the return type is a list
-            if len(set(self.remaining_unique_names)) != len(self.remaining_unique_names):
+            if len(set(all_unique_names)) != len(all_unique_names):
                 raise ValueError("The names generated are not unique. This should not happen.")
+
+            # finally, update the flattened sample with the actual name to use for each sample
+            for i, sample in enumerate(self.remaining_characteristics_sample):
+                if sample.get("gender") == "male":
+                    sample["name"] = unique_names["male"].pop()
+                elif sample.get("gender") == "female":
+                    sample["name"] = unique_names["female"].pop()
+                else:
+                    sample["name"] = unique_names["other"].pop()
             
         else:
             raise ValueError("Sampling plan already initialized. Cannot reinitialize it.")
@@ -546,7 +581,21 @@ class TinyPersonFactory(TinyFactory):
     @utils.llm(temperature=1.2)
     def _compute_sampling_dimensions(self, sampling_space_description:str) -> dict:
         """
-        Given a sampling description, computes the dimensions of the sampling space. 
+        Given a sampling description, computes the dimensions of the sampling space. The sampling space offers a way to sample from a population of people,
+        so each dimension contains values that could be an attribute of a **specific** person. The resulting sampling space must:
+           - contemplate all critical characteristics mentioned in the sampling description, even if this means having a large number of dimensions and
+             complex values for each.
+               * whenever necessary to properly capture the possibilities, you can replace a single dimension by a collection of sub-dimensions
+                 (e.g., instead of "beliefs", you might have "political_beliefs", "economic_beliefs", "consumer_beliefs", etc.)
+           - values for each dimension can range from numbers or single words to large sentences or even paragraphs.
+           - values are **not** distributions, probabilities or other statistics, but rather concrete, specific, people attributes. For example, there can
+             be no "average_age" dimension, but only "age", although the complete set of valies that define a dimension is itself a distribution.
+           - each dimension should be as rich as possible, having as many values as possible, so that the sampling space can be used to generate
+             many nuanced variations of the target population.
+           - in principle, the original sampling description could be approximately rephrased in terms of the dimensions and values generated (i.e., the dimensions are rich enough
+             to capture all relevant information). Howerver, this should not limit the range of values and dimensions used, but rather be a byproduct of the process. For instance,
+             if the original description say "young people", the dimension "age" could be defined as a range of values from 18 to 30, but **not** as a small list with only, say, [18, 25, 30].
+             Always try to be as rich as possible in the values and dimensions, even if this means having a large number of them.
 
         ## On your input
 
@@ -580,6 +629,7 @@ class TinyPersonFactory(TinyFactory):
         ```
 
         Unless values are necessarily numbers (e.g., age), they should be descriptive strings so that it is easy to understand what they mean.
+        These strings can be simple values or long detailed texts, whatever is best to capture the desired characteristic.
         
         ## Example:
         Given the following INPUT sampling space description: "Young Western people of different liberal professions and social classes."
@@ -603,8 +653,16 @@ class TinyPersonFactory(TinyFactory):
                     },
                     {
                         "name": "country",
-                            "values": ["USA", "Canada", "UK", "France", "Germany", "Italy", "Spain", "Portugal", "Netherlands", "Belgium", ...]
-                        }
+                        "values": ["USA", "Canada", "UK", "France", "Germany", "Italy", "Spain", "Portugal", "Netherlands", "Belgium", ...]
+                    },
+                    {
+                        "name": "economic_beliefs",
+                        "values": ["Hard work leads to success", "Wealth is a result of luck", ...]
+                    },
+                    {
+                        "name": "professional_attitudes",
+                        "values": ["Want to have their own company", "Prefers to work for established companies", ...]
+                    }
                     ]
             }
             ```
@@ -613,6 +671,9 @@ class TinyPersonFactory(TinyFactory):
            - Age is given as anumeric range.
            - All other values are descriptive strings, human-friendly, no strange symbols or codes.
            - No value contains internal structure - just a name or short description.
+           - All values are concrete properties, not distributions, probabilities or other statistics.
+           - It has few dimensions because the sampling space description is very short. If the description were longer, the number of dimensions would be larger,
+             and their values more detailed.
         
         Args:
             sampling_space_description (str): A description of the sampling space.
@@ -785,7 +846,11 @@ class TinyPersonFactory(TinyFactory):
         samples = []
         for sample in sampling_plan:
             for _ in range(int(sample["quantity"])):
-                samples.append(sample["sampled_values"])
+                # we need to copy the sample to avoid adding the original sample multiple times,
+                # which would cause problems later when we modify the individual flattened samples
+                cc_sample = copy.deepcopy(sample["sampled_values"]) 
+
+                samples.append(cc_sample)
         
         # randomize
         random.shuffle(samples) #inplace
@@ -858,52 +923,64 @@ class TinyPersonFactory(TinyFactory):
 
         logger.debug(f"Will generate {n} unique full names for people. Already generated names: {already_generated_names}")
         
-        # let's split the n in smaller chunks to make the model's job easier
-        chunk_size = 10
-        chunks = math.ceil(n/chunk_size)
-
-        forbidden_names = copy.deepcopy(already_generated_names)
         names = []
 
-        max_iterations = chunks * 10 
-        cur_iterations = 0
+        if n > 0:
+            # let's split the n in smaller chunks to make the model's job easier
+            chunk_size = min(10, n)  # we generate at most 10 names at a time, to avoid overwhelming the model
+            chunks = math.ceil(n/chunk_size)
 
-        while len(names) < n and cur_iterations < max_iterations:
-            logger.debug(f"Currently already generated names: {forbidden_names}")
-            logger.debug(f"Iteration {cur_iterations} - Generating {chunk_size} names. Currently have {len(names)} names. Max iterations to be allowed: {max_iterations}")
-            temp_names = utils.try_function(\
-                                lambda: \
-                                    self._aux_unique_full_names(n=chunk_size , 
-                                                                already_generated_names=forbidden_names,
-                                                                context=context),
-
-                                                                # checks that result and TinyPerson.all_agents_names() are disjoint sets,
-                                                                # and result has n elements
-                                                                postcond_func = lambda result: len(result) >= chunk_size,
-                                retries=20)
+            forbidden_names = copy.deepcopy(already_generated_names)
             
-            # add the new names to the names list, removing any duplicates from their combination
-            names = list(set(names + temp_names))
-            forbidden_names += names
 
-            cur_iterations += 1
-        
-        if cur_iterations >= max_iterations:
-            logger.error(f"Could not generate the requested number of names after {max_iterations} iterations. Moving on with the {len(names)} names generated.")
-        
-        TinyPersonFactory.all_unique_names += names
+            max_iterations = chunks * 10 
+            cur_iterations = 0
+
+            while len(names) < n and cur_iterations < max_iterations:
+                logger.debug(f"Currently already generated names: {forbidden_names}")
+                logger.debug(f"Iteration {cur_iterations} - Generating {chunk_size} names. Currently have {len(names)} names. Max iterations to be allowed: {max_iterations}")
+                try:
+                    temp_names = utils.try_function(\
+                                        lambda: \
+                                            self._aux_unique_full_names(n=chunk_size , 
+                                                                        already_generated_names=forbidden_names,
+                                                                        context=context),
+
+                                                                        # checks that some new name was produced
+                                                                        postcond_func = lambda result: len(set(forbidden_names).intersection(result)) < len(result),
+                                        retries=3)
+                    
+                    # add the new names to the names list, removing any duplicates from their combination
+                    names = list(set(names + temp_names))
+                    forbidden_names += names
+                except Exception as e:
+                    logger.error(f"Error generating names: {e}")
+                    # if we have an error, we just skip this iteration and try again
+                    # but we need to increment the number of iterations anyway
+                    
+                cur_iterations += 1
+            
+            if cur_iterations >= max_iterations and len(names) < n:
+                logger.error(f"Could not generate the requested number of names after {max_iterations} iterations. Moving on with the {len(names)} names generated.")
+            
+            TinyPersonFactory.all_unique_names = list(set(TinyPersonFactory.all_unique_names + names))
 
         return names
 
     @utils.llm(temperature=1.9, presence_penalty=0.5, frequency_penalty=0.5)
     def _aux_unique_full_names(self, n:int, already_generated_names: list, context:str=None) -> list:
         """
-        Generates a list of n unique full names for people. The full names must not be in the list of already generated names.
-        If necessary, you can generate longer names to ensure they are new. You can also try tweaking the spelling or
-        adding more surnames, so that the names are unique. However, the names **must** sound realistic and not be too far-fetched,
-        not sound as if they were made up.
+        Generates a list of n unique full names for people. The full names must not be in the list of already generated names. You **must** consider **all** reasononable options for names, 
+        not only the common or popular. To ensure that fresh names are really new and do not appear in the list of already generated ones, if necessary you can:
+          - generate longer names to ensure they are new. 
+          - try tweaking the spelling or adding more surnames, so that the names are unique. 
+          - add unusual names or surnames, so that the names are unique.
+          - as a very last resort, you can append a number to the name, so that it is unique, despote being a bit less realistic.
+        
+        Except for the latter option, the names **must** sound realistic and not be too far-fetched, not sound as if they were made up.
 
-        You **must** generate at least n names, and they must all be unique. If necessary, to ensure you get at least n names, you can try to generate more than n, but **never** less.
+        You **must** generate at least n names, and they **must** all be unique. If necessary, to ensure you get at least n names, you can try to generate more than n, 
+        but **never** less, unless you need to avoid a repeated name. If forced to choose, you always prefer to generate unique names, even if that means generating less than n names.
         
         The final result is only the list of names, nothing else:
 
@@ -968,4 +1045,4 @@ class TinyPersonFactory(TinyFactory):
         agent.include_persona_definitions(configuration)
         
         # does not return anything, as we don't want to cache the agent object itself.
-    
+

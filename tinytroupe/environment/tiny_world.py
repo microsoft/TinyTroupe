@@ -11,6 +11,7 @@ from tinytroupe.utils import name_or_empty, pretty_datetime
 import tinytroupe.control as control
 from tinytroupe.control import transactional
 from tinytroupe import utils
+from tinytroupe import config_manager
  
 from rich.console import Console
 
@@ -50,7 +51,7 @@ class TinyWorld:
         if name is not None:
             self.name = name
         else:
-            self.name = f"TinyWorld {utils.fresh_id()}"
+            self.name = f"TinyWorld {utils.fresh_id(self.__class__.__name__)}"
             
         self.current_datetime = initial_datetime
         self.broadcast_if_no_target = broadcast_if_no_target
@@ -177,7 +178,8 @@ class TinyWorld:
             logger.info(f"[{self.name}] No timedelta provided, so the datetime was not advanced.")
 
     @transactional()
-    def run(self, steps: int, timedelta_per_step=None, return_actions=False, randomize_agents_order=True, parallelize=default["parallel_agent_actions"]):
+    @config_manager.config_defaults(parallelize="parallel_agent_actions")
+    def run(self, steps: int, timedelta_per_step=None, return_actions=False, randomize_agents_order=True, parallelize=None):
         """
         Runs the environment for a given number of steps.
 
@@ -217,7 +219,8 @@ class TinyWorld:
         """
         self._advance_datetime(steps * timedelta_per_step)
 
-    def run_minutes(self, minutes: int, randomize_agents_order=True, parallelize=True):
+    @config_manager.config_defaults(parallelize="parallel_agent_actions")
+    def run_minutes(self, minutes: int, randomize_agents_order=True, parallelize=None):
         """
         Runs the environment for a given number of minutes.
 
@@ -235,7 +238,8 @@ class TinyWorld:
         """
         self.skip(steps=minutes, timedelta_per_step=timedelta(minutes=1))
     
-    def run_hours(self, hours: int, randomize_agents_order=True, parallelize=True):
+    @config_manager.config_defaults(parallelize="parallel_agent_actions")
+    def run_hours(self, hours: int, randomize_agents_order=True, parallelize=None):
         """
         Runs the environment for a given number of hours.
 
@@ -253,7 +257,8 @@ class TinyWorld:
         """
         self.skip(steps=hours, timedelta_per_step=timedelta(hours=1))
     
-    def run_days(self, days: int, randomize_agents_order=True, parallelize=True):
+    @config_manager.config_defaults(parallelize="parallel_agent_actions")
+    def run_days(self, days: int, randomize_agents_order=True, parallelize=None):
         """
         Runs the environment for a given number of days.
 
@@ -271,7 +276,8 @@ class TinyWorld:
         """
         self.skip(steps=days, timedelta_per_step=timedelta(days=1))
     
-    def run_weeks(self, weeks: int, randomize_agents_order=True, parallelize=True):
+    @config_manager.config_defaults(parallelize="parallel_agent_actions")
+    def run_weeks(self, weeks: int, randomize_agents_order=True, parallelize=None):
         """
         Runs the environment for a given number of weeks.
 
@@ -290,7 +296,8 @@ class TinyWorld:
         """
         self.skip(steps=weeks, timedelta_per_step=timedelta(weeks=1))
     
-    def run_months(self, months: int, randomize_agents_order=True, parallelize=True):
+    @config_manager.config_defaults(parallelize="parallel_agent_actions")
+    def run_months(self, months: int, randomize_agents_order=True, parallelize=None):
         """
         Runs the environment for a given number of months.
 
@@ -309,7 +316,8 @@ class TinyWorld:
         """
         self.skip(steps=months, timedelta_per_step=timedelta(weeks=4))
     
-    def run_years(self, years: int, randomize_agents_order=True, parallelize=True):
+    @config_manager.config_defaults(parallelize="parallel_agent_actions")
+    def run_years(self, years: int, randomize_agents_order=True, parallelize=None):
         """
         Runs the environment for a given number of years.
 

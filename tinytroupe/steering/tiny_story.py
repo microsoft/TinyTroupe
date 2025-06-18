@@ -94,7 +94,7 @@ class TinyStory:
         messages = utils.compose_initial_LLM_messages_with_templates("story.continuation.system.mustache", "story.continuation.user.mustache", 
                                                                      base_module_folder="steering",
                                                                      rendering_configs=rendering_configs)
-        next_message = openai_utils.client().send_message(messages, temperature=1.5)
+        next_message = openai_utils.client().send_message(messages)#, temperature=1.5)
 
         continuation = next_message["content"]
 
@@ -121,7 +121,8 @@ class TinyStory:
         elif self.environment is not None:
             interaction_history += self.environment.pretty_current_interactions(first_n=self.first_n, last_n=self.last_n, include_omission_info=self.include_omission_info)
 
-        self.current_story += utils.dedent(\
+        tmp_current_story = self.current_story
+        tmp_current_story += utils.dedent(\
             f"""
 
             ## New simulation interactions to consider
@@ -131,7 +132,7 @@ class TinyStory:
             """
             )
             
-        return self.current_story
+        return tmp_current_story
             
         
 

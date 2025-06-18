@@ -100,6 +100,7 @@ class LLMChat:
 
     def __init__(self, system_template_name:str=None, system_prompt:str=None,
                  user_template_name:str=None, user_prompt:str=None,
+                 base_module_folder=None,
                  output_type=None,
                  enable_reasoning_step:bool=False,
                  **model_params):
@@ -112,6 +113,7 @@ class LLMChat:
             system_prompt (str): System prompt content.
             user_template_name (str): Name of the user template file.
             user_prompt (str): User prompt content.
+            base_module_folder (str): Optional subfolder path within the library where templates are located.
             output_type (type): Expected type of the model output.
             enable_reasoning_step (bool): Flag to enable reasoning step in the conversation. This IS NOT the use of "reasoning models" (e.g., o1, o3),
               but rather the use of an additional reasoning step in the regular text completion.
@@ -123,6 +125,8 @@ class LLMChat:
         (system_template_name is None and system_prompt is None) or \
         (user_template_name is None and user_prompt is None):
             raise ValueError("Either the template or the prompt must be specified, but not both.")
+
+        self.base_module_folder = base_module_folder
 
         self.system_template_name = system_template_name
         self.user_template_name = user_template_name
@@ -245,12 +249,13 @@ class LLMChat:
         self.messages.append({"role": "assistant", "content": content})
         return self
 
-    def call(self, output_type=None, **rendering_configs):
+    def call(self, output_type="default", **rendering_configs):
         """
         Initiates or continues the conversation with the LLM model using the current message history.
 
         Args:
-            output_type: Optional parameter to override the output type for this specific call
+            output_type: Optional parameter to override the output type for this specific call. If set to "default", it uses the instance's output_type.
+                         If set to None, removes all output formatting and coercion.
             rendering_configs: The rendering configurations (template variables) to use when composing the initial messages.
 
         Returns:
@@ -264,6 +269,7 @@ class LLMChat:
                 self.messages = utils.compose_initial_LLM_messages_with_templates(
                     self.system_template_name, 
                     self.user_template_name, 
+                    base_module_folder=self.base_module_folder,
                     rendering_configs=rendering_configs
                 )
             else:
@@ -273,66 +279,80 @@ class LLMChat:
                     self.messages.append({"role": "user", "content": self.user_prompt})
 
         # Use the provided output_type if specified, otherwise fall back to the instance's output_type
-        current_output_type = output_type if output_type is not None else self.output_type
+        current_output_type = output_type if output_type != "default" else self.output_type
 
         # Set up typing for the output
         if current_output_type is not None:
-            # Add type coercion instructions if not already added
-            if not any(msg.get("content", "").startswith("In your response, you **MUST** provide a value") 
-                      for msg in self.messages if msg.get("role") == "system"):
+            
+            # TODO obsolete?
+            #
+            ## Add type coercion instructions if not already added
+            #if not any(msg.get("content", "").startswith("In your response, you **MUST** provide a value") 
+            #          for msg in self.messages if msg.get("role") == "system"):
                 
-                if not self.enable_reasoning_step:
-                    # Default structured output
-                    self.model_params["response_format"] = LLMScalarWithJustificationResponse
-                    
-                    typing_instruction = {"role": "system",
-                        "content": "In your response, you **MUST** provide a value, along with a justification and your confidence level that the value and justification are correct (0.0 means no confidence, 1.0 means complete confidence)."+
-                        "Furtheremore, your response **MUST** be a JSON object with the following structure: {\"value\": value, \"justification\": justification, \"confidence\": confidence}."}
+            if not self.enable_reasoning_step:
+                # Default structured output
+                self.model_params["response_format"] = LLMScalarWithJustificationResponse
                 
-                else: 
-                    # Override the response format to also use a reasoning step
-                    self.model_params["response_format"] = LLMScalarWithJustificationAndReasoningResponse
-                    
-                    typing_instruction = {"role": "system",
-                        "content": \
-                            "In your response, you **FIRST** think step-by-step on how you are going to compute the value, and you put this reasoning in the \"reasoning\" field (which must come before all others). "+
-                            "This allows you to think carefully as much as you need to deduce the best and most correct value. "+
-                            "After that, you **MUST** provide the resulting value, along with a justification (which can tap into the previous reasoning), and your confidence level that the value and justification are correct (0.0 means no confidence, 1.0 means complete confidence)."+
-                            "Furtheremore, your response **MUST** be a JSON object with the following structure: {\"reasoning\": reasoning, \"value\": value, \"justification\": justification, \"confidence\": confidence}."}
-                    
+                typing_instruction = {"role": "system",
+                    "content": "In your response, you **MUST** provide a value, along with a justification and your confidence level that the value and justification are correct (0.0 means no confidence, 1.0 means complete confidence)."+
+                    "Furtheremore, your response **MUST** be a JSON object with the following structure: {\"value\": value, \"justification\": justification, \"confidence\": confidence}."}
+            
+            else: 
+                # Override the response format to also use a reasoning step
+                self.model_params["response_format"] = LLMScalarWithJustificationAndReasoningResponse
                 
-                # Specify the value type
-                if current_output_type == bool:
-                    typing_instruction["content"] += " " + self._request_bool_llm_message()["content"]
-                elif current_output_type == int:
-                    typing_instruction["content"] += " " + self._request_integer_llm_message()["content"]
-                elif current_output_type == float:
-                    typing_instruction["content"] += " " + self._request_float_llm_message()["content"]
-                elif isinstance(current_output_type, list) and all(isinstance(option, str) for option in current_output_type):
-                    typing_instruction["content"] += " " + self._request_enumerable_llm_message(current_output_type)["content"]
-                elif current_output_type == List[Dict[str, any]]:
-                    # Override the response format
-                    self.model_params["response_format"] = {"type": "json_object"}
-                    typing_instruction["content"] += " " + self._request_list_of_dict_llm_message()["content"]
-                elif current_output_type == dict or current_output_type == "json":
-                    # Override the response format
-                    self.model_params["response_format"] = {"type": "json_object"}
-                    typing_instruction["content"] += " " + self._request_dict_llm_message()["content"]
-                elif current_output_type == list:
-                    # Override the response format
-                    self.model_params["response_format"] = {"type": "json_object"}
-                    typing_instruction["content"] += " " + self._request_list_llm_message()["content"]
-                # Check if it is actually a pydantic model
-                elif issubclass(current_output_type, BaseModel):
-                    # Completely override the response format
-                    self.model_params["response_format"] = current_output_type
-                    typing_instruction = {"role": "system", "content": "Your response **MUST** be a JSON object."}
-                elif current_output_type == str:
-                    pass # no coercion needed, it is already a string
-                else:
-                    raise ValueError(f"Unsupported output type: {current_output_type}")
+                typing_instruction = {"role": "system",
+                    "content": \
+                        "In your response, you **FIRST** think step-by-step on how you are going to compute the value, and you put this reasoning in the \"reasoning\" field (which must come before all others). "+
+                        "This allows you to think carefully as much as you need to deduce the best and most correct value. "+
+                        "After that, you **MUST** provide the resulting value, along with a justification (which can tap into the previous reasoning), and your confidence level that the value and justification are correct (0.0 means no confidence, 1.0 means complete confidence)."+
+                        "Furtheremore, your response **MUST** be a JSON object with the following structure: {\"reasoning\": reasoning, \"value\": value, \"justification\": justification, \"confidence\": confidence}."}
                 
-                self.messages.append(typing_instruction)
+            
+            # Specify the value type
+            if current_output_type == bool:
+                typing_instruction["content"] += " " + self._request_bool_llm_message()["content"]
+            elif current_output_type == int:
+                typing_instruction["content"] += " " + self._request_integer_llm_message()["content"]
+            elif current_output_type == float:
+                typing_instruction["content"] += " " + self._request_float_llm_message()["content"]
+            elif isinstance(current_output_type, list) and all(isinstance(option, str) for option in current_output_type):
+                typing_instruction["content"] += " " + self._request_enumerable_llm_message(current_output_type)["content"]
+            elif current_output_type == List[Dict[str, any]]:
+                # Override the response format
+                self.model_params["response_format"] = {"type": "json_object"}
+                typing_instruction["content"] += " " + self._request_list_of_dict_llm_message()["content"]
+            elif current_output_type == dict or current_output_type == "json":
+                # Override the response format
+                self.model_params["response_format"] = {"type": "json_object"}
+                typing_instruction["content"] += " " + self._request_dict_llm_message()["content"]
+            elif current_output_type == list:
+                # Override the response format
+                self.model_params["response_format"] = {"type": "json_object"}
+                typing_instruction["content"] += " " + self._request_list_llm_message()["content"]
+            # Check if it is actually a pydantic model
+            elif issubclass(current_output_type, BaseModel):
+                # Completely override the response format
+                self.model_params["response_format"] = current_output_type
+                typing_instruction = {"role": "system", "content": "Your response **MUST** be a JSON object."}
+            elif current_output_type == str:
+                typing_instruction["content"] += " " + self._request_str_llm_message()["content"]
+                #pass # no coercion needed, it is already a string
+            else:
+                raise ValueError(f"Unsupported output type: {current_output_type}")
+            
+            self.messages.append(typing_instruction)
+        
+        else: # output_type is None
+            self.model_params["response_format"] = None
+            typing_instruction = {"role": "system", "content": \
+                                     "If you were given instructions before about the **format** of your response, please ignore them from now on. "+
+                                     "The needs of the user have changed. You **must** now use regular text -- not numbers, not booleans, not JSON. "+
+                                     "There are no fields, no types, no special formats. Just regular text appropriate to respond to the last user request."}
+            self.messages.append(typing_instruction)
+            #pass  # nothing here for now
+
 
         # Call the LLM model with all messages in the conversation
         model_output = client().send_message(self.messages, **self.model_params)
@@ -452,6 +472,11 @@ class LLMChat:
 
         raise ValueError("The LLM output does not contain a recognizable boolean value.")
 
+    def _request_str_llm_message(self):
+        return {"role": "user",
+                "content": "The `value` field you generate from now on has no special format, it can be any string you find appropriate to the current conversation. "+
+                           "Make sure you move to `value` **all** relevant information you used in reasoning or justification, so that it is not lost. "}
+    
     def _request_bool_llm_message(self):
         return {"role": "user",
                 "content": "The `value` field you generate **must** be either 'True' or 'False'. This is critical for later processing. If you don't know the correct answer, just output 'False'."}

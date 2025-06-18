@@ -3,9 +3,10 @@ import logging
 logger = logging.getLogger("tinytroupe")
 
 import sys
-sys.path.append('../../tinytroupe/')
-sys.path.append('../../')
-sys.path.append('..')
+# Insert paths at the beginning of sys.path (position 0)
+sys.path.insert(0, '..')
+sys.path.insert(0, '../../')
+sys.path.insert(0, '../../tinytroupe/')
 
 from tinytroupe.examples import create_lisa_the_data_scientist, create_oscar_the_architect, create_marcos_the_physician
 from tinytroupe.environment import TinyWorld

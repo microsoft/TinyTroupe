@@ -1,0 +1,30 @@
+Now, please apply a concrete style following the specification below.
+
+## Content type 
+{{#content_type}}
+The type of the content is: {{content_type}}
+{{/content_type}}
+{{^content_type}}
+The type of the content is not specified, so please make your best guess about what it is.
+{{/content_type}}
+
+## Style requirements
+{{style}}
+
+{{#contextual_information}}
+## Contextual information (if any)
+{{contextual_information}}
+{{/contextual_information}}
+
+{{#contextual_cache}}
+## Contextual cache (if any)
+
+    - {{cached_type}}: {{cached_content}}
+{{/contextual_cache}}
+
+## CONTENT TO APPLY STYLE
+
+This is the actual content to style:
+```
+{{content}}
+```

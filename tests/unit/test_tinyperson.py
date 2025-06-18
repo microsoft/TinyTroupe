@@ -7,9 +7,6 @@ sys.path.insert(0, '../../tinytroupe/') # ensures that the package is imported f
 sys.path.insert(0, '../../') # ensures that the package is imported from the parent directory, not the Python installation
 sys.path.insert(0, '..') # ensures that the package is imported from the parent directory, not the Python installation
 
-#sys.path.append('../../tinytroupe/')
-#sys.path.append('../../')
-#sys.path.append('..')
 
 from tinytroupe.examples import create_oscar_the_architect, create_oscar_the_architect_2, create_lisa_the_data_scientist, create_lisa_the_data_scientist_2
 

@@ -191,13 +191,14 @@ def post_init(cls):
     cls.__init__ = new_init
     return cls
 
-def merge_dicts(current, additions, overwrite=False, error_on_conflict=True):
+def merge_dicts(current, additions, overwrite=False, error_on_conflict=True, remove_duplicates=True):
     """
     Merges two dictionaries and returns a new dictionary. Works as follows:
     - If a key exists in the additions dictionary but not in the current dictionary, it is added.
     - If a key maps to None in the current dictionary, it is replaced by the value in the additions dictionary.
     - If a key exists in both dictionaries and the values are dictionaries, the function is called recursively.
-    - If a key exists in both dictionaries and the values are lists, the lists are concatenated and duplicates are removed.
+    - If a key exists in both dictionaries and the values are lists, the lists are concatenated and duplicates are removed
+      (if remove_duplicates is True).
     - If the values are of different types, an exception is raised.
     - If the values are of the same type but not both lists/dictionaries, the value from the additions dictionary overwrites the value in the current dictionary based on the overwrite parameter.
     
@@ -206,6 +207,7 @@ def merge_dicts(current, additions, overwrite=False, error_on_conflict=True):
     - additions (dict): The dictionary with values to add.
     - overwrite (bool): Whether to overwrite values if they are of the same type but not both lists/dictionaries.
     - error_on_conflict (bool): Whether to raise an error if there is a conflict and overwrite is False.
+    - remove_duplicates (bool): Whether to remove duplicates from lists when merging.
     
     Returns:
     - dict: A new dictionary with merged values.
@@ -224,7 +226,8 @@ def merge_dicts(current, additions, overwrite=False, error_on_conflict=True):
             elif isinstance(merged[key], list) and isinstance(additions[key], list):
                 merged[key].extend(additions[key])
                 # Remove duplicates while preserving order
-                merged[key] = remove_duplicates(merged[key])
+                if remove_duplicates:
+                    merged[key] = remove_duplicate_items(merged[key])
             # If the values are of different types, raise an exception
             elif type(merged[key]) != type(additions[key]):
                 raise TypeError(f"Cannot merge different types: {type(merged[key])} and {type(additions[key])} for key '{key}'")
@@ -243,7 +246,7 @@ def merge_dicts(current, additions, overwrite=False, error_on_conflict=True):
 
     return merged
 
-def remove_duplicates(lst):
+def remove_duplicate_items(lst):
         """
         Removes duplicates from a list while preserving order.
         Handles unhashable elements by using a list comprehension.

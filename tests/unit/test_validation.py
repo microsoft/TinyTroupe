@@ -2,9 +2,10 @@ import pytest
 import os
 
 import sys
-sys.path.append('../../tinytroupe/')
-sys.path.append('../../')
-sys.path.append('..')
+# Insert paths at the beginning of sys.path (position 0)
+sys.path.insert(0, '..')
+sys.path.insert(0, '../../')
+sys.path.insert(0, '../../tinytroupe/')
 
 
 from tinytroupe.examples import create_oscar_the_architect

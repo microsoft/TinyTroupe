@@ -6,11 +6,50 @@ from tinytroupe.environment import TinyWorld
 from tinytroupe.agent import TinyPerson
 import tinytroupe.utils as utils
 
+DEFAULT_FIRST_N = 10
+DEFAULT_LAST_N = 100
+
+class InterventionBatch:
+    """
+    A wrapper around multiple Intervention instances that allows chaining set_* methods.
+    """
+    
+    def __init__(self, interventions):
+        self.interventions = interventions
+    
+    def __iter__(self):
+        """Makes the batch iterable and compatible with list()"""
+        return iter(self.interventions)
+        
+    def set_textual_precondition(self, text):
+        for intervention in self.interventions:
+            intervention.set_textual_precondition(text)
+        return self
+        
+    def set_functional_precondition(self, func):
+        for intervention in self.interventions:
+            intervention.set_functional_precondition(func)
+        return self
+        
+    def set_effect(self, effect_func):
+        for intervention in self.interventions:
+            intervention.set_effect(effect_func)
+        return self
+        
+    def set_propositional_precondition(self, proposition, threshold=None):
+        for intervention in self.interventions:
+            intervention.set_propositional_precondition(proposition, threshold)
+        return self
+        
+    def as_list(self):
+        """Return the list of individual interventions."""
+        return self.interventions
+
 
 class Intervention:
 
     def __init__(self, targets: Union[TinyPerson, TinyWorld, List[TinyPerson], List[TinyWorld]], 
-                 first_n:int=None, last_n:int=5,
+                 first_n:int=DEFAULT_FIRST_N, last_n:int=DEFAULT_LAST_N,
                  name: str = None):
         """
         Initialize the intervention.
@@ -37,7 +76,7 @@ class Intervention:
 
         # name
         if name is None:
-            self.name = self.name = f"Intervention {utils.fresh_id()}"
+            self.name = self.name = f"Intervention {utils.fresh_id(self.__class__.__name__)}"
         else:
             self.name = name
         
@@ -53,6 +92,27 @@ class Intervention:
     ################################################################################################
     # Intervention flow
     ################################################################################################     
+    @classmethod
+    def create_for_each(cls, targets, first_n=DEFAULT_FIRST_N, last_n=DEFAULT_LAST_N, name=None):
+        """
+        Create separate interventions for each target in the list.
+        
+        Args:
+            targets (list): List of targets (TinyPerson or TinyWorld instances)
+            first_n (int): the number of first interactions to consider in the context
+            last_n (int): the number of last interactions (most recent) to consider in the context
+            name (str): the name of the intervention
+            
+        Returns:
+            InterventionBatch: A wrapper that allows chaining set_* methods that will apply to all interventions
+        """
+        if not isinstance(targets, list):
+            targets = [targets]
+            
+        interventions = [cls(target, first_n=first_n, last_n=last_n, 
+                            name=f"{name}_{i}" if name else None) 
+                        for i, target in enumerate(targets)]
+        return InterventionBatch(interventions)
     
     def __call__(self):
         """

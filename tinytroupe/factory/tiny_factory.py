@@ -19,7 +19,7 @@ class TinyFactory:
         Args:
             simulation_id (str, optional): The ID of the simulation. Defaults to None.
         """
-        self.name = f"Factory {utils.fresh_id()}" # we need a name, but no point in making it customizable
+        self.name = f"Factory {utils.fresh_id(self.__class__.__name__)}" # we need a name, but no point in making it customizable
         self.simulation_id = simulation_id
 
         TinyFactory.add_factory(self)

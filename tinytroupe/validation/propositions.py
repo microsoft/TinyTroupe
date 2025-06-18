@@ -49,20 +49,40 @@ persona_adherence = \
     Proposition(\
         f"""
         THE AGENT ADHERES TO THE PERSONA SPECIFICATION: 
-        the agent behavior seen during the simulation is what is expected from the agent's persona 
-        specification.
+        the agent behavior seen during the simulation is consistent with the agent's persona specification, it is 
+        what is expected from the agent's persona  specification. In particular, consider these criteria:
+          - The personality traits specified in the persona are respected.
+          - The persona style is respected.
+          - The persona beliefs are respected.
+          - The persona behaviors are respected. 
+          - The persona skills are respected.
+          - Any other aspect of the persona specification is respected.
+        
+        How to evaluate adherence:
+          - Each of the above criteria should have equal weight in the evaluation, meaning that the score is the average of the scores of each criterion.
+          - The adherence should be checked against all actions in the simulation trajectory. The final score should be an average of the scores of all 
+            actions in the trajectory.
         """, 
-        include_personas=True)
+        include_personas=True,
+        double_check=True)
 
 action_persona_adherence = \
     Proposition(\
         """
         THE NEXT AGENT ACTION ADHERES TO THE PERSONA SPECIFICATION:
-        the agent's next action is consistent with the agent's persona specification. 
+        the agent's next action is consistent with the agent's persona specification, it is 
+        what is expected from the agent's persona  specification. In particular, consider these criteria:
+          - The personality traits specified in the persona are respected.
+          - The persona style is respected.
+          - The persona beliefs are respected.
+          - The persona behaviors are respected. 
+          - The persona skills are respected.
+          - Any other aspect of the persona specification is respected.
 
         THIS IS THE NEXT ACTION: {{action}}
         
         How to evaluate adherence:
+          - Each of the above criteria should have equal weight in the evaluation, meaning that the score is the average of the scores of each criterion.
           - The adherence is ONLY ABOUT the next action mentioned above and the persona specification. DO NOT take into account previous actions or stimuli.
           - The general situation context is irrelevant to this evaluation, you should ONLY consider the persona specification as context.
           - Do not imagine what would be the next action, but instead judge the proposed next action mentioned above!
@@ -71,8 +91,50 @@ action_persona_adherence = \
 
         """,
         include_personas=True,
+        double_check=False,
         first_n=5, last_n=10,
         precondition_function=_build_precondition_function_for_action_types(["THINK", "TALK"], check_for_presence=True))
+
+
+
+hard_persona_adherence = \
+    Proposition(\
+        f"""
+        THE AGENT FULLY ADHERES TO THE PERSONA SPECIFICATION: 
+        the agent behavior seen during the simulation is completely consistent with the agent's persona specification, it is 
+        exactly what is expected from the agent's persona specification. Nothing at all contradicts the persona specification.
+        
+        How to evaluate adherence:
+          - For any flaw found, you **must** subtract 20% of the score, regardless of its severity. This is to be very harsh and avoid any ambiguity.
+        """, 
+        include_personas=True,
+        double_check=True)
+
+hard_action_persona_adherence = \
+    Proposition(\
+        """
+        THE NEXT AGENT ACTION FULLY ADHERES TO THE PERSONA SPECIFICATION:
+        the agent's next action is completely consistent with the agent's persona specification, it is 
+        what is exactly expected from the agent's persona specification. Nothing at all contradicts the persona specification.
+
+        THIS IS THE NEXT ACTION: {{action}}
+        
+        How to evaluate adherence:
+          - For any flaw found, you **must** subtract 20% of the score, regardless of its severity. This is to be very harsh and avoid any ambiguity.
+          - The adherence is ONLY ABOUT the next action mentioned above and the persona specification. DO NOT take into account previous actions or stimuli.
+          - The general situation context is irrelevant to this evaluation, you should ONLY consider the persona specification as context.
+          - Do not imagine what would be the next action, but instead judge the proposed next action mentioned above!
+          - The simulation trajectories provided in the context DO NOT contain the next action, but only the actions and stimuli
+            that have already happened.
+
+        """,
+        include_personas=True,
+        double_check=False,
+        first_n=5, last_n=10,
+        precondition_function=_build_precondition_function_for_action_types(["THINK", "TALK"], check_for_presence=True))
+
+
+
 
 
 self_consistency = \
@@ -81,7 +143,8 @@ self_consistency = \
         THE AGENT IS SELF-CONSISTENT: 
         the agent never behaves in contradictory or inconsistent ways.
         """, 
-        include_personas=False)
+        include_personas=False,
+        double_check=True)
 
 action_self_consistency = \
     Proposition(
@@ -112,7 +175,8 @@ fluency = \
           - The agent don't use overly repetitive language.
           - The agent's words sound natural and human-like.
         """,
-        include_personas=False)
+        include_personas=False,
+        double_check=True)
 
 action_fluency = \
     Proposition(\
@@ -178,7 +242,8 @@ task_completion = \
           - If the task requires the agent to adopt some specific variations of behavior, the agent does so.
           - If the task includes other specific requirements, the agent observes them.
         """,
-        include_personas=False)
+        include_personas=False,
+        double_check=True)
 
 
 quiet_recently = \
@@ -208,7 +273,8 @@ divergence = \
                 more varied at the end of the simulation than at the beginning. Discussions do not converge to a single topic or perspective
                 at the end.
                 """, 
-                include_personas=False)
+                include_personas=False,
+                double_check=True)
 
 convergence = \
     Proposition("""
@@ -218,4 +284,5 @@ convergence = \
                 more similar at the end of the simulation than at the beginning. Discussions converge to a single topic or perspective
                 at the end.
                 """, 
-                include_personas=False)
+                include_personas=False,
+                double_check=True)

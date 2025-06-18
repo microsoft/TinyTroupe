@@ -3,10 +3,10 @@ import logging
 logger = logging.getLogger("tinytroupe")
 
 import sys
-sys.path.append('../../tinytroupe/')
-sys.path.append('../../')
-sys.path.append('..')
-
+# Insert paths at the beginning of sys.path (position 0)
+sys.path.insert(0, '..')
+sys.path.insert(0, '../../')
+sys.path.insert(0, '../../tinytroupe/')
 
 import tinytroupe
 from tinytroupe.agent import TinyPerson

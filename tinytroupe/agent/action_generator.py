@@ -14,15 +14,16 @@ class ActionGenerator(JsonSerializableRegistry):
     def __init__(self, max_attempts=2, 
                  enable_quality_checks=True,
                  enable_regeneration=True,
-                 enable_direct_correction=False, # TODO not working very well yet
+                 enable_direct_correction=False, # TODO enable_direct_correction not working very well yet
                  enable_quality_check_for_persona_adherence=True,
-                 enable_quality_check_for_selfconsistency=False,
-                 enable_quality_check_for_fluency=False,
+                 enable_quality_check_for_selfconsistency=True,
+                 enable_quality_check_for_fluency=True,
                  enable_quality_check_for_suitability=False,
-                 enable_quality_check_for_similarity=True,
+                 enable_quality_check_for_similarity=False,
                  continue_on_failure=True,
-                 quality_threshold=2,
-                 enable_reasoning_step=False):
+                 quality_threshold=7,
+                 max_action_similarity=0.6,
+                 enable_reasoning_step=False): # TODO enable_reasoning_step not working very well yet
         """
         Initializes the ActionGenerator.
 
@@ -59,8 +60,16 @@ class ActionGenerator(JsonSerializableRegistry):
 
         self.continue_on_failure = continue_on_failure
         self.quality_threshold = quality_threshold
+        self.max_action_similarity = max_action_similarity
 
         self.enable_reasoning_step = enable_reasoning_step
+
+        # This generator has its own copies of the propositions, in order to be able to isolate them
+        # from other agents, particularly when running the simulation in parallel.
+        self.action_persona_adherence = propositions.hard_action_persona_adherence.copy()
+        self.action_self_consistency = propositions.action_self_consistency.copy()
+        self.action_fluency = propositions.action_fluency.copy()
+        self.action_suitability = propositions.action_suitability.copy()
 
         # initialize statistics  
         self.regeneration_failures = 0
@@ -311,19 +320,19 @@ class ActionGenerator(JsonSerializableRegistry):
         # Compute various propositions about the action
         #
         persona_adherence_passed, persona_adherence_score, persona_adherence_feedback = \
-            self._check_proposition(agent, propositions.action_persona_adherence, tentative_action, enable_proposition_check=self.enable_quality_check_for_persona_adherence)
+            self._check_proposition(agent, self.action_persona_adherence, tentative_action, enable_proposition_check=self.enable_quality_check_for_persona_adherence)
         
         selfconsistency_passed, selfconsistency_score, selfconsistency_feedback = \
-            self._check_proposition(agent, propositions.action_self_consistency, tentative_action, minimum_required_qty_of_actions=1, enable_proposition_check=self.enable_quality_check_for_selfconsistency)
+            self._check_proposition(agent, self.action_self_consistency, tentative_action, minimum_required_qty_of_actions=1, enable_proposition_check=self.enable_quality_check_for_selfconsistency)
         
         fluency_passed, fluency_passed_score, fluency_feedback = \
-            self._check_proposition(agent, propositions.action_fluency, tentative_action, enable_proposition_check=self.enable_quality_check_for_fluency)
+            self._check_proposition(agent, self.action_fluency, tentative_action, enable_proposition_check=self.enable_quality_check_for_fluency)
 
         suitability_passed, suitability_score, suitability_feedback = \
-            self._check_proposition(agent, propositions.action_suitability, tentative_action, enable_proposition_check=self.enable_quality_check_for_suitability)
+            self._check_proposition(agent, self.action_suitability, tentative_action, enable_proposition_check=self.enable_quality_check_for_suitability)
         
         similarity_passed, similarity_score, similarity_feedback = \
-            self._check_next_action_similarity(agent, tentative_action, threshold=0.6) # TODO make this a parameter?
+            self._check_next_action_similarity(agent, tentative_action, threshold=self.max_action_similarity, enable_similarity_check=self.enable_quality_check_for_similarity)
 
         # put the results together
         good_quality = persona_adherence_passed and selfconsistency_passed and fluency_passed and suitability_passed and similarity_passed
@@ -355,6 +364,11 @@ class ActionGenerator(JsonSerializableRegistry):
                 ## Problem: The action does not adhere to the persona specification.
                 {persona_adherence_feedback}
 
+                ### RECOMMENDATIONS FOR IMPROVEMENT
+                Please follow the recommendations below when trying to generate this action again.
+
+                {self.action_persona_adherence.recommendations_for_improvement()}
+
                 """
             
             if not selfconsistency_passed:
@@ -362,12 +376,22 @@ class ActionGenerator(JsonSerializableRegistry):
                 ## Problem: The action is not self-consistent.
                 {selfconsistency_feedback}
 
+                ### RECOMMENDATIONS FOR IMPROVEMENT
+                Please follow the recommendations below when trying to generate this action again.
+
+                {self.action_self_consistency.recommendations_for_improvement()}
+
                 """
             
             if not fluency_passed:
                 failure_feedback += f"""
                 ## Problem: The action is not fluent.
                 {fluency_feedback}
+
+                ### RECOMMENDATIONS FOR IMPROVEMENT
+                Please follow the recommendations below when trying to generate this action again.
+
+                {self.action_fluency.recommendations_for_improvement()}
                 
                 """
 
@@ -375,6 +399,18 @@ class ActionGenerator(JsonSerializableRegistry):
                 failure_feedback += f"""
                 ## Problem: The action is not suitable to the situation or task.
                 {suitability_feedback}
+
+                ### RECOMMENDATIONS FOR IMPROVEMENT
+                Please follow the recommendations below when trying to generate this action again.
+
+                {self.action_suitability.recommendations_for_improvement()}
+
+                """
+            
+            if not similarity_passed:
+                failure_feedback += f"""
+                ## Problem: The action is too similar to the previous one.
+                {similarity_feedback}
 
                 """
 
@@ -401,7 +437,7 @@ class ActionGenerator(JsonSerializableRegistry):
             # If the proposition check is disabled, we assume it passed
             return True, Proposition.MAX_SCORE, f"The proposition check is disabled, so it is assumed to have passed."
     
-    def _check_next_action_similarity(self, agent, proposed_next_action, threshold=0.6, enable_similarity_check=True):
+    def _check_next_action_similarity(self, agent, proposed_next_action, threshold, enable_similarity_check=True):
         """
         Checks the similarity between the agent's current action and a proposed next action.
         High similarity indicates that the proposed action is too similar to the current one, and this
@@ -483,6 +519,7 @@ class ActionGenerator(JsonSerializableRegistry):
             "regeneration_success_rate": 1 - regeneration_failure_rate,
             "direct_correction_success_rate": 1 - direct_correction_failure_rate
         }
+    
 
 class PoorQualityActionException(Exception):
     def __init__(self, message="The generated action is of poor quality"):

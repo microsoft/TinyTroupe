@@ -198,6 +198,8 @@ class StatisticalTester:
             'significant': significant,
             'control_sample_size': len(control),
             'treatment_sample_size': len(treatment),
+            'control_std': control_std,
+            'treatment_std': treatment_std,
             'effect_size': cohen_d(control, treatment)
         }
     
@@ -230,6 +232,9 @@ class StatisticalTester:
         ci_lower = mean_diff - margin_error
         ci_upper = mean_diff + margin_error
         
+        control_std = np.std(control, ddof=1)
+        treatment_std = np.std(treatment, ddof=1)
+        
         # Determine if the result is significant
         significant = p_value < alpha
         
@@ -247,6 +252,8 @@ class StatisticalTester:
             'degrees_of_freedom': df,
             'control_sample_size': len(control),
             'treatment_sample_size': len(treatment),
+            'control_std': control_std,
+            'treatment_std': treatment_std,
             'effect_size': cohen_d(control, treatment)
         }
     

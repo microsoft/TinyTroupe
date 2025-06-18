@@ -43,6 +43,18 @@ We are releasing *TinyTroupe* at a relatively early stage, with considerable wor
 
 
 ## LATEST NEWS
+**[2025-06-25] Release 0.5.0 with various improvements. Some highlights:**
+  - Released the first version of the TinyTroupe paper (as a preprint), which describes the library and its use cases in more detail. You can find the related experiments and complementary material in the [publications/](./publications/) folder.
+  - `TinyPerson`s now include action correction mechanisms, allowing better adherence to persona specification, self-consistency and/or fluency (for details, refer to the paper we are releasing at the same time now).
+  - Substantial improvements to the `TinyPersonFactory` class, which now: uses a plan-based approach to generate new agents, allowing better sampling of larger populations; generate agents in parallel.
+  - `TinyWorld` now run agents in parallel within each simulation step, allowing faster simulations.
+  - `InPlaceExperimentRunner` class introduced to allow running controlled experiments (e.g., A/B testing) in a single file (by simply running it multiple times).
+  - Various standard `Proposition`s were introduced to make it easier to run common verifications and monitoring of agent behavior (e.g., `persona_adherence`, `hard_persona_adherence`, `self_consistency`, `fluency`, etc.).
+  - Internal LLM usage is now better supported via the `LLMChat` class, and also the `@llm` decorator, which transform any standard Python function into an LLM-based one (i.e., by using the docstring as part of the prompt, and some other nuances). This is meant to make it easier to continue advancing TinyTroupe and also allow for some creative explorations of LLM tooling possibilities.
+  - Configuration mechanism has been refactored to allow, besides the static `config.ini` file, also the dynamic programmatic reconfiguration.
+  
+  **Note: this will likely break some existing programs, as the API has changed in some places.**
+
 **[2025-01-29] Release 0.4.0 with various improvements. Some highlights:**
   - Personas have deeper specifications now, including  personality traits, preferences, beliefs, and more. It is likely we'll further expand this in the future. 
   - `TinyPerson`s can now be defined as JSON files as well, and loaded via the `TinyPerson.load_specification()`, for greater convenience. After loading the JSON file, you can still modify the agent programmatically. See the [examples/agents/](./examples/agents/) folder for examples.
@@ -199,6 +211,7 @@ The project is structured as follows:
   - `/examples`: contains examples that show how to use the library, mainly using Jupyter notebooks (for greater readability), but also as pure Python scripts.
   - `/data`: any data used by the examples or the library.
   - `/docs`: documentation for the project.
+  - `/publications`: contains artifacts related to research publications associated with the TinyTroupe project.
 
 
 ## Using the Library
@@ -531,23 +544,23 @@ Other special contributions were made by:
 
 ## Citing TinyTroupe
 
-We are working on an introductory paper that will be the official academic citation for TinyTroupe. In the meantime, please just cite this repository including the core team members as authors. For instance:
+Please cite the introductory TinyTroupe paper when using TinyTroupe in your work. The paper is currently under review, but you can find the preprint on Arxiv.
 
->Paulo Salem, Christopher Olsen, Paulo Freire, Yi Ding, Prerit Saxena (2024). **TinyTroupe: LLM-powered multiagent persona simulation for imagination enhancement and business insights.** [Computer software]. GitHub repository. https://github.com/microsoft/tinytroupe
+> Paulo Salem, Robert Sim, Christopher Olsen, Prerit Saxena, Rafael Barcelos, Yi Ding. (2025). **TinyTroupe: An LLM-powered Multiagent Persona Simulation Toolkit**. ArXiv preprint: URL TO BE ADDED. *GitHub repository available at https://github.com/microsoft/TinyTroupe.*
+ 
+In BibTeX format, you can use the following entry:
 
-
-Or as bibtex:
-  
-  ```bibtex
-  @misc{tinytroupe,
-    author = {Paulo Salem and Christopher Olsen and Paulo Freire and Yi Ding and Prerit Saxena},
-    title = {TinyTroupe: LLM-powered multiagent persona simulation for imagination enhancement and business insights},
-    year = {2024},
-    howpublished = {\url{https://github.com/microsoft/tinytroupe}},
-    note = {GitHub repository}
-    }
-
- ```   
+```bibtex
+@article{tinytroupe2025,
+  author       = {Paulo Salem and Robert Sim and Christopher Olsen and Prerit Saxena and Rafael Barcelos and Yi Ding},
+  title        = {TinyTroupe: An LLM-powered Multiagent Persona Simulation Toolkit},
+  journal      = {arXiv preprint arXiv:xxxx.xxxxx},
+  year         = {2025},
+  archivePrefix= {arXiv},
+  eprint       = {xxxx.xxxxx},
+  note         = {GitHub repository: \url{https://github.com/microsoft/TinyTroupe}}
+}
+```
 
 ## Legal Disclaimer
 

@@ -4,6 +4,8 @@ from chevron import render
 from tinytroupe.agent import TinyPerson
 from tinytroupe.environment import TinyWorld
 from tinytroupe.utils import LLMChat, indent_at_current_level
+from tinytroupe.experimentation import logger
+
 
 from tinytroupe import default
 
@@ -11,39 +13,9 @@ class Proposition:
 
     MIN_SCORE = 0
     MAX_SCORE = 9
-    
-    # TODO is this useful?
-    #
-    #SCORE_RANGES_DESCRIPTION = {
-    #    "0": "The proposition is without any doubt completely false.",
-    #    "1, 2, 3": "The proposition has little support and is mostly false.",
-    #    "4, 5": "The evidence is mixed, and the proposition is as much true as it is false.",
-    #    "6, 7, 8": "The proposition is well-supported and is mostly true.",
-    #    "9": "The proposition is without any doubt completely true.",
-    #}
-    #SCORE_RANGES_EXAMPLES = """
-    #  <begin> ----> true ----> true ----> true ----> false ----> true ----> true ----> true ----> false <end> 
-    #        IMPLIES a score of 6
-    #
-    #  <begin> ----> true ----> true ----> true ----> false ----> false ----> false <end>
-    #        IMPLIES a score of 4
-    #    
-    #  <begin> ----> true ----> true ----> true ----> true ----> true ----> true ----> true ----> true <end>
-    #        IMPLIES a score of 9
-    #
-    #  <begin> ----> false ----> false ----> false ----> false ----> false ----> false <end>
-    #        IMPLIES a score of 0
-    #    
-    #  <begin> ----> false ----> true ----> false ----> false ----> false <end>
-    #        IMPLIES a score of 2
-    #  """
-    #assert MAX_SCORE > MIN_SCORE, "MAX_SCORE must be greater than MIN_SCORE"
-    #assert MIN_SCORE in SCORE_RANGES_DESCRIPTION, "MIN_SCORE must be in SCORE_RANGES_DESCRIPTION"
-    #assert MAX_SCORE in SCORE_RANGES_DESCRIPTION, "MAX_SCORE must be in SCORE_RANGES_DESCRIPTION"
-    
 
     def __init__(self, claim:str, target=None, include_personas:bool=False, first_n:int=None, last_n:int=None,
-                 use_reasoning_model:bool=False, precondition_function=None):
+                 double_check:bool=False, use_reasoning_model:bool=False, precondition_function=None):
         """ 
         Define a proposition as a (textual) claim about a target, which can be a TinyWorld, a TinyPerson or several of any.
         The proposition's truth value can then either be checked as a boolean or computed as an integer score denoting the degree of truth.
@@ -64,6 +36,7 @@ class Proposition:
             include_personas (bool): whether to include the persona specifications of the agents in the context
             first_n (int): the number of first interactions to consider in the context
             last_n (int): the number of last interactions (most recent) to consider in the context
+            double_check (bool): whether to ask the LLM to double check its answer. This tends to give more strict answers, but is slower and more expensive.
             use_reasoning_model (bool): whether to use a reasoning model to evaluate the proposition
             precondition_function (function): a Boolean function that indicates whether the proposition can be evaluated or not. This is useful to avoid evaluating propositions that are not relevant for the current context. If the precondition fails, the proposition is always interpreted as true (or with highest score). MUST have named arguments `target`, `additional_context`, and `claim_variables` (note: you can use a lambda for this too, e.g., `lambda target, additional_context, claim_variables: ...`).
 
@@ -76,19 +49,54 @@ class Proposition:
         self.first_n = first_n
         self.last_n = last_n
 
+        self.double_check = double_check
+
         self.use_reasoning_model = use_reasoning_model
 
         self.precondition_function = precondition_function
 
+        # the chat with the LLM is preserved until the proposition is re-evaluated. While it is available,
+        # the chat can be used to follow up on the proposition, e.g., to ask for more details about the evaluation.
+        self.llm_chat = None
+        
         self.value = None
         self.justification = None
         self.confidence = None
+        self.recommendations = None
 
+    def __copy__(self):
+        """
+        Create a shallow copy of the proposition without any evaluation state.
+        
+        Returns:
+            Proposition: A new proposition with the same configuration parameters.
+        """
+        new_prop = Proposition(
+            claim=self.claim,
+            target=self.targets,
+            include_personas=self.include_personas,
+            first_n=self.first_n,
+            last_n=self.last_n,
+            double_check=self.double_check,
+            use_reasoning_model=self.use_reasoning_model,
+            precondition_function=self.precondition_function
+        )
+        return new_prop
+
+    def copy(self):
+        """
+        Create a shallow copy of the proposition without any evaluation state.
+        
+        Returns:
+            Proposition: A new proposition with the same configuration parameters.
+        """
+        return self.__copy__()
     
 
     def __call__(self, target=None, additional_context=None, claim_variables:dict={}, return_full_response:bool=False) -> bool:
         return self.check(target=target, additional_context=additional_context, claim_variables=claim_variables, return_full_response=return_full_response)
     
+
     def _check_precondition(self, target, additional_context:str, claim_variables:dict) -> bool:
         """
         Check whether the proposition can be evaluated or not.
@@ -122,7 +130,7 @@ class Proposition:
             #render self.claim using the claim_variables via chevron
             rendered_claim = render(self.claim, claim_variables)      
 
-            llm_request = LLMChat(system_prompt="""
+            self.llm_chat = LLMChat(system_prompt="""
                                         You are a system that evaluates whether a proposition is true or false with respect to a given context. This context
                                         always refers to a multi-agent simulation. The proposition is a claim about the behavior of the agents or the state of their environment
                                         in the simulation.
@@ -166,13 +174,20 @@ class Proposition:
                                         model=model,
                                         temperature=0.5)
             
+            self.value = self.llm_chat()
 
-            self.value = llm_request()
-            self.reasoning = llm_request.response_reasoning
-            self.justification = llm_request.response_justification      
-            self.confidence = llm_request.response_confidence
+            if self.double_check:
+                self.llm_chat.add_user_message("Are you sure? Please revise your evaluation to make is correct as possible.")
+                revised_value = self.llm_chat()
+                if revised_value != self.value:
+                    logger.warning(f"The LLM revised its evaluation: from {self.value} to {revised_value}.")
+                    self.value = revised_value
 
-            self.full_evaluation_response = llm_request.response_json
+            self.reasoning = self.llm_chat.response_reasoning
+            self.justification = self.llm_chat.response_justification      
+            self.confidence = self.llm_chat.response_confidence
+
+            self.full_evaluation_response = self.llm_chat.response_json
 
         # return the final result, either only the value or the full response
         if not return_full_response:
@@ -205,7 +220,7 @@ class Proposition:
             #render self.claim using the claim_variables via chevron
             rendered_claim = render(self.claim, claim_variables)      
 
-            llm_request = LLMChat(system_prompt=f"""
+            self.llm_chat = LLMChat(system_prompt=f"""
                                         You are a system that computes an integer score (between {Proposition.MIN_SCORE} and {Proposition.MAX_SCORE}, inclusive) about how much a proposition is true or false with respect to a given context. 
                                         This context always refers to a multi-agent simulation. The proposition is a claim about the behavior of the agents or the state of their environment in the simulation.
 
@@ -213,12 +228,22 @@ class Proposition:
                                         - If the data required to judge the proposition is not present, assign a score of {Proposition.MAX_SCORE}. That is to say, unless there is evidence to the contrary, the proposition is assumed to be true.
                                         - The maximum score of {Proposition.MAX_SCORE} should be assigned when the evidence is as good as it can be. That is to say, all parts of the observed simulation trajectory support the proposition, no exceptions.
                                         - The minimum score of {Proposition.MIN_SCORE} should be assigned when the evidence is as bad as it can be. That is to say, all parts of the observed simulation trajectory contradict the proposition, no exceptions.
-                                        - Intermediate scores should be assigned when the evidence is mixed. The intermediary score should be proportional to the balance of evidence:
+                                        - Intermediate scores should be assigned when the evidence is mixed. The intermediary score should be proportional to the balance of evidence, according to these bands:
                                                   0 = The proposition is without any doubt completely false;
                                             1, 2, 3 = The proposition has little support and is mostly false;
                                                4, 5 = The evidence is mixed, and the proposition is as much true as it is false;
                                             6, 7, 8 = The proposition is well-supported and is mostly true;
                                                   9 = The proposition is without any doubt completely true.
+                                        - You should be very rigorous in your evaluation and, when in doubt, assign a lower score.
+                                        - If there are critical flaws in the evidence, you should move your score to a lower band entirely.
+                                        - If the provided context has inconsistent information, you **must** consider **only** the information that gives the lowest score, since we want to be rigorous and if necessary err to the lower end.
+                                          * If you are considering the relationship between an agent specification and a simulation trajectory, you should consider the worst possible interpretation of: the agent specification; the simulation trajectory; or the relationship between the two.
+                                          * These contradictions can appear anywhere in the context. When they do, you **always** adopt the worst possible inteprpretation, because we want to be rigorous and if necessary err to the lower end. It does not matter if the contradiction shows only very rarely, or if it is very small. It is still a contradiction and should be considered as such.
+                                          * DO NOT dismiss contradictions as specification errors. They are part of the evidence and should be considered as such. They **must** be **always** taken into account when computing the score. **Never** ignore them.
+                                        
+                                        Additionally, whenever you are considering the relationship between an agent specification and a simulation trajectory, the following additional scoring guidelines apply:
+                                          - All observed behavior **must** be easily mapped back to clear elements of the agent specification. If you cannot do this, you should assign a lower score.
+                                          - Evaluate **each** relevant elements in the simulation trajectory (e.g., actions, stimuli) one by one, and assign a score to each of them. The final score is the average of all the scores assigned to each element.
                                                                             
                                         The proposition you receive can contain one or more of the following:
                                           - A statement of fact, which you will score.
@@ -275,12 +300,20 @@ class Proposition:
                                         model=model)
             
 
-            self.value = llm_request()
-            self.reasoning = llm_request.response_reasoning
-            self.justification = llm_request.response_justification      
-            self.confidence = llm_request.response_confidence
+            self.value = self.llm_chat()
 
-            self.full_evaluation_response = llm_request.response_json
+            if self.double_check:
+                self.llm_chat.add_user_message("Are you sure? Please revise your evaluation to make is correct as possible.")
+                revised_value = self.llm_chat()
+                if revised_value != self.value:
+                    logger.warning(f"The LLM revised its evaluation: from {self.value} to {revised_value}.")
+                    self.value = revised_value
+
+            self.reasoning = self.llm_chat.response_reasoning
+            self.justification = self.llm_chat.response_justification      
+            self.confidence = self.llm_chat.response_confidence
+
+            self.full_evaluation_response = self.llm_chat.response_json
         
         # return the final result, either only the value or the full response
         if not return_full_response:
@@ -288,6 +321,29 @@ class Proposition:
         else:
             return self.full_evaluation_response
     
+    def recommendations_for_improvement(self):
+        """
+        Get recommendations for improving the proposition.
+        """
+
+        if self.llm_chat is None:
+            raise ValueError("No evaluation has been performed yet. Please evaluate the proposition before getting recommendations.")
+
+        self.llm_chat.add_user_message(\
+            """
+            To help improve the score next time, please list:
+            - all recommendations for improvements based on the current score.
+            - all criteria you are using to assign scores, and how to best satisfy them
+
+            For both cases:
+            - besides guidelines, make sure to provide plenty of concrete examples of what to be done in order to maximize each criterion.
+            - avoid being generic or abstract. Instead, all of your criteria and recommendations should be given in very concrete terms that would work specifically for the case just considered.            
+            """)
+        
+        recommendation = self.llm_chat(output_type=None)
+        
+        return recommendation
+
     def _model(self, use_reasoning_model):
         if use_reasoning_model:
             return default["reasoning_model"]
