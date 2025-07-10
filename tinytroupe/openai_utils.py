@@ -14,6 +14,14 @@ import tiktoken
 from tinytroupe import utils
 from tinytroupe.control import transactional
 
+from langchain_openai import ChatOpenAI 
+from tenacity import retry, stop_after_attempt, wait_exponential, RetryError
+import time
+
+from openai import OpenAI
+from groq import Groq
+
+
 logger = logging.getLogger("tinytroupe")
 
 # We'll use various configuration elements below
@@ -129,7 +137,11 @@ class LLMRequest:
         #
         # call the LLM model
         #
-        self.model_output = client().send_message(self.messages, **self.model_params)
+        self.model_output = client().send_message(
+            self.messages,
+            temperature=self.model_params.get("temperature", 0.2),
+            max_tokens=self.model_params.get("max_tokens", 128)
+        )
 
         if 'content' in self.model_output:
             self.response_raw = self.response_value = self.model_output['content']            
@@ -630,6 +642,92 @@ class AzureClient(OpenAIClient):
                                   api_version = config["OpenAI"]["AZURE_API_VERSION"],
                                   api_key = os.getenv("AZURE_OPENAI_KEY"))
     
+    
+# logging.basicConfig(level=logging.INFO)
+# logger = logging.getLogger(__name__)from groq import Groq
+from groq import Groq
+
+class GroqClient(OpenAIClient):
+    """
+    A utility class for interacting with the Groq API, inheriting from OpenAIClient.
+    """
+
+    def __init__(self, model_name, api_key=None, cache_api_calls=False, cache_file_name="groq_cache.pickle"):
+        """
+        Initializes the Groq client.
+
+        Args:
+            model_name (str): The Groq model to use (e.g., "qwen-2.5-32b").
+            api_key (str, optional): API key for Groq authentication.
+            cache_api_calls (bool): Whether to cache API calls.
+            cache_file_name (str): File name for caching responses.
+        """
+        super().__init__(cache_api_calls=cache_api_calls, cache_file_name=cache_file_name)
+        self.model_name = model_name
+        self.client = Groq(api_key=api_key)  # Initialize Groq client with API key
+
+    def _raw_model_call(self, model, chat_api_params):
+        """
+        Calls the Groq API with the provided parameters, ignoring the passed model parameter.
+
+        Args:
+            model (str): Ignored; uses self.model_name instead.
+            chat_api_params (dict): Parameters for the API call.
+
+        Returns:
+            The raw completion object from Groq.
+
+        Raises:
+            NonTerminalError: For retryable errors like rate limits.
+            InvalidRequestError: For non-retryable errors.
+        """
+        # Ignore the passed model parameter and use self.model_name
+        messages = chat_api_params["messages"]
+        temperature = chat_api_params.get("temperature", 1.0)
+        max_tokens = chat_api_params.get("max_tokens", 1024)
+        top_p = chat_api_params.get("top_p", 1.0)
+        stop = chat_api_params.get("stop", None)
+
+        try:
+            completion = self.client.chat.completions.create(
+                model=self.model_name,  # Always use initialized model_name
+                messages=messages,
+                temperature=temperature,
+                max_completion_tokens=max_tokens,
+                top_p=top_p,
+                stream=True,  # Groq uses streaming
+                stop=stop
+            )
+            return completion
+        except Exception as e:
+            error_msg = str(e).lower()
+            if "rate limit" in error_msg:
+                raise NonTerminalError(f"Rate limit error: {e}")
+            else:
+                raise InvalidRequestError(f"Error calling Groq API: {e}")
+
+    def _raw_model_response_extractor(self, response):
+        """
+        Extracts the response content from the Groq API's streaming completion.
+
+        Args:
+            response: The raw completion object from Groq.
+
+        Returns:
+            dict: A dictionary with role and content, e.g., {"role": "assistant", "content": "..."}.
+        """
+        response_text = ""
+        for chunk in response:
+            delta = chunk.choices[0].delta.content or ""
+            response_text += delta
+        return {"role": "assistant", "content": response_text}
+
+    def _setup_from_config(self):
+        """
+        Overrides the base method. Not needed for Groq as setup is handled in __init__.
+        """
+        pass  # API key and client are set in __init__
+
 
 ###########################################################################
 # Exceptions
@@ -721,6 +819,14 @@ def force_api_cache(cache_api_calls, cache_file_name=default["cache_file_name"])
 # default client
 register_client("openai", OpenAIClient())
 register_client("azure", AzureClient())
-
-
-
+# register_client("avalai", AvalAiClient(
+#     base_url=config["AvalAi"]["BASE_URL"],
+#     api_key=config["AvalAi"]["API_KEY"],
+#     model_name=config["AvalAi"]["MODEL"]
+# ))
+register_client("groq", GroqClient(
+    model_name=config["Groq"]["MODEL"],
+    api_key=config["Groq"]["API_KEY"],
+    cache_api_calls=config["OpenAI"].getboolean("CACHE_API_CALLS", False),
+    cache_file_name=config["OpenAI"].get("CACHE_FILE_NAME", "openai_api_cache.pickle")
+))
