@@ -14,6 +14,8 @@ import chevron  # to parse Mustache templates
 from typing import Any
 from rich import print
 
+import logging
+
 
 
 #######################################################################################################################
@@ -226,11 +228,8 @@ class TinyPerson(JsonSerializableRegistry):
         return chevron.render(agent_prompt_template, template_variables)
 
     def reset_prompt(self):
-
         # render the template with the current configuration
         self._init_system_message = self.generate_agent_system_prompt()
-
-        # TODO actually, figure out another way to update agent state without "changing history"
 
         # reset system message
         self.current_messages = [
@@ -240,14 +239,16 @@ class TinyPerson(JsonSerializableRegistry):
         # sets up the actual interaction messages to use for prompting
         self.current_messages += self.retrieve_recent_memories()
 
-        # add a final user message, which is neither stimuli or action, to instigate the agent to act properly
+        # add a final user message to instigate the agent to act properly
         self.current_messages.append({"role": "user", 
-                                      "content": "Now you **must** generate a sequence of actions following your interaction directives, " +\
-                                                 "and complying with **all** instructions and contraints related to the action you use." +\
-                                                 "DO NOT repeat the exact same action more than once in a row!" +\
-                                                 "DO NOT keep saying or doing very similar things, but instead try to adapt and make the interactions look natural." +\
-                                                 "These actions **MUST** be rendered following the JSON specification perfectly, including all required keys (even if their value is empty), **ALWAYS**."
-                                     })
+                                    "content": "Now you **must** generate a single action following your interaction directives, "
+                                                "and complying with **all** instructions and constraints related to the action you use. "
+                                                "DO NOT repeat the exact same action more than once in a row! "
+                                                "DO NOT keep saying or doing very similar things, but instead try to adapt and make the interactions look natural. "
+                                                "The action **MUST** be rendered as a single JSON object with the following structure: "
+                                                "{\"cognitive_state\": {\"goals\": \"...\", \"attention\": \"...\", \"emotions\": \"...\"}, "
+                                                "\"action\": {\"type\": \"...\", \"content\": \"...\", \"target\": \"...\"}}, "
+                                                "with no extra text or additional JSON objects."})
 
     def get(self, key):
         """
@@ -771,25 +772,88 @@ class TinyPerson(JsonSerializableRegistry):
 
     @transactional
     def _produce_message(self):
-        # logger.debug(f"Current messages: {self.current_messages}")
-
-        # ensure we have the latest prompt (initial system message + selected messages from memory)
+        """
+        Produces the next message by sending the current conversation to the Groq API
+        and parsing the returned response. Handles multiple JSON objects and ensures required fields.
+        """
+        # Refresh the prompt (integrate the latest system message and memory)
         self.reset_prompt()
 
+        # Prepare the messages by serializing each message's content as JSON
         messages = [
             {"role": msg["role"], "content": json.dumps(msg["content"])}
             for msg in self.current_messages
         ]
 
-        logger.debug(f"[{self.name}] Sending messages to OpenAI API")
-        logger.debug(f"[{self.name}] Last interaction: {messages[-1]}")
+        logger.debug(f"[{self.name}] Sending messages to Groq API")
+        if messages:
+            logger.debug(f"[{self.name}] Last interaction: {messages[-1]}")
 
-        next_message = openai_utils.client().send_message(messages, response_format=CognitiveActionModel)
+        try:
+            # Send messages using GroqClient via openai_utils
+            response = openai_utils.client().send_message(
+                messages,
+                temperature=1.0,
+                max_tokens=1024,
+                response_format=CognitiveActionModel  # Expected response format
+            )
+            logger.debug(f"[{self.name}] Received response: {response}")
 
-        logger.debug(f"[{self.name}] Received message: {next_message}")
+            if response is None:
+                logger.error("API response is None.")
+                return "assistant", {"error": "No response received from API."}
 
-        return next_message["role"], utils.extract_json(next_message["content"])
+            # Extract content from response
+            if isinstance(response, dict):
+                role = response.get("role", "assistant")
+                content = response.get("content", "")
+            else:
+                logger.error("Unexpected response format from API.")
+                return "assistant", {"error": "Unexpected API response format."}
 
+            if not content:
+                logger.error("No content found in the API response.")
+                return "assistant", {"error": "Empty content received from API."}
+
+            # Log raw content for debugging
+            logger.info(f"[{self.name}] Raw API content: {content}")
+
+            # Extract all JSON objects
+            import re
+            json_objects = []
+            for match in re.finditer(r'\{.*?\}(?=\s*(?:\{|$))', content, re.DOTALL):
+                json_str = match.group(0)
+                try:
+                    parsed_content = json.loads(json_str)
+                    json_objects.append(parsed_content)
+                except json.JSONDecodeError as e:
+                    logger.error(f"Failed to parse JSON object: {e}. Raw content: {content}")
+                    return "assistant", {"error": f"JSON parsing error: {str(e)}"}
+
+            if not json_objects:
+                logger.error(f"No valid JSON found in content: {content}")
+                return "assistant", {"error": "No valid JSON found in API response."}
+
+            # Use the last action in the sequence (assuming act() processes one at a time)
+            parsed_content = json_objects[-1]
+
+            # Ensure required fields are present
+            if "cognitive_state" not in parsed_content:
+                logger.warning("cognitive_state missing in response. Adding default value.")
+                parsed_content["cognitive_state"] = {
+                    "goals": self._mental_state.get("goals", []),
+                    "attention": self._mental_state.get("attention", "unknown"),
+                    "emotions": self._mental_state.get("emotions", "neutral")
+                }
+            if "action" not in parsed_content:
+                logger.warning("action missing in response. Adding default value.")
+                parsed_content["action"] = {"type": "NONE", "content": "No action specified"}
+
+            return role, parsed_content
+
+        except Exception as e:
+            logger.error(f"Error while communicating with Groq API: {e}")
+            return "assistant", {"error": f"API communication error: {str(e)}"}
     ###########################################################
     # Internal cognitive state changes
     ###########################################################
