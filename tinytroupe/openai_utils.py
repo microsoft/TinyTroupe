@@ -445,17 +445,26 @@ class OpenAIClient:
                         time.sleep(waiting_time)
                     
                     response = self._raw_model_call(model, chat_api_params)
+                    
+                    # Get the response in a serializable format before caching
+                    serializable_response = self._extract_serializable_response(response)
+                    
                     if self.cache_api_calls:
-                        self.api_cache[cache_key] = response
+                        self.api_cache[cache_key] = serializable_response
                         self._save_cache()
+                        
+                    # If we extracted a serializable response, use that
+                    if serializable_response:
+                        response = serializable_response
                 
                 
-                logger.debug(f"Got response from API: {response}")
+                logger.debug(f"Got response type: {type(response)}")
                 end_time = time.monotonic()
                 logger.debug(
                     f"Got response in {end_time - start_time:.2f} seconds after {i} attempts.")
 
-                return utils.sanitize_dict(self._raw_model_response_extractor(response))
+                extracted_response = self._raw_model_response_extractor(response)
+                return utils.sanitize_dict(extracted_response)
 
             except InvalidRequestError as e:
                 logger.error(f"[{i}] Invalid request error, won't retry: {e}")
@@ -511,7 +520,50 @@ class OpenAIClient:
         Extracts the response from the API response. Subclasses should
         override this method to implement their own response extraction.
         """
+        # Check if we're dealing with a serialized response
+        if isinstance(response, dict) and "content" in response:
+            return response
+        
+        # Otherwise, extract from the API response object
         return response.choices[0].message.to_dict()
+    
+    def _extract_serializable_response(self, response):
+        """
+        Extracts a serializable version of the response object for caching.
+        
+        This handles cases like ParsedChatCompletion objects that can't be pickled.
+        
+        Args:
+            response: The response object from the OpenAI API
+            
+        Returns:
+            A serializable dictionary representation of the response
+        """
+        try:
+            # Handle ParsedChatCompletion objects
+            if hasattr(response, "choices") and hasattr(response.choices[0], "message"):
+                # For standard chat completions
+                if hasattr(response.choices[0].message, "to_dict"):
+                    return response.choices[0].message.to_dict()
+                # For parsed chat completions
+                elif hasattr(response.choices[0].message, "content"):
+                    return {"content": response.choices[0].message.content}
+            
+            # If we can extract a dictionary, do that
+            if hasattr(response, "model_dump"):
+                return response.model_dump()
+            
+            # For any other object, try to convert it to a dictionary if possible
+            if hasattr(response, "__dict__"):
+                return vars(response)
+                
+            # If all else fails, return None and let the caller handle the original response
+            logger.warning(f"Could not extract serializable data from {type(response)}")
+            return None
+            
+        except Exception as e:
+            logger.error(f"Error extracting serializable response: {e}")
+            return None
 
     def _count_tokens(self, messages: list, model: str):
         """
@@ -571,17 +623,49 @@ class OpenAIClient:
         Saves the API cache to disk. We use pickle to do that because some obj
         are not JSON serializable.
         """
-        # use pickle to save the cache
-        pickle.dump(self.api_cache, open(self.cache_file_name, "wb"))
+        try:
+            # Use pickle to save the cache with a protocol that's compatible with most Python versions
+            with open(self.cache_file_name, "wb") as f:
+                pickle.dump(self.api_cache, f, protocol=4)
+            logger.debug(f"Cache saved to {self.cache_file_name}")
+        except Exception as e:
+            logger.error(f"Error saving cache: {e}")
+            # If there's an error, reset the cache to avoid persistent issues
+            self.api_cache = {}
+            
+            # Try to delete the corrupted cache file
+            try:
+                if os.path.exists(self.cache_file_name):
+                    os.remove(self.cache_file_name)
+                    logger.info(f"Removed corrupted cache file: {self.cache_file_name}")
+            except Exception:
+                pass
 
     
     def _load_cache(self):
-
         """
         Loads the API cache from disk.
         """
-        # unpickle
-        return pickle.load(open(self.cache_file_name, "rb")) if os.path.exists(self.cache_file_name) else {}
+        if not os.path.exists(self.cache_file_name):
+            return {}
+        
+        try:
+            # Unpickle the cache
+            with open(self.cache_file_name, "rb") as f:
+                return pickle.load(f)
+        except Exception as e:
+            logger.error(f"Error loading cache, creating new cache: {e}")
+            # If there's an error, just return an empty cache
+            
+            # Try to delete the corrupted cache file
+            try:
+                if os.path.exists(self.cache_file_name):
+                    os.remove(self.cache_file_name)
+                    logger.info(f"Removed corrupted cache file: {self.cache_file_name}")
+            except Exception:
+                pass
+                
+            return {}
 
     def get_embedding(self, text, model=default["embedding_model"]):
         """
@@ -721,6 +805,3 @@ def force_api_cache(cache_api_calls, cache_file_name=default["cache_file_name"])
 # default client
 register_client("openai", OpenAIClient())
 register_client("azure", AzureClient())
-
-
-
