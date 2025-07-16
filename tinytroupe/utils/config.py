@@ -51,6 +51,22 @@ def pretty_print_config(config):
             print(f"{key} = {value}")
         print()
 
+def pretty_print_datetime():
+    from datetime import datetime
+    from datetime import timezone
+    now = datetime.now()
+    now_utc = now.astimezone(timezone.utc)
+    print(f"Current date and time (local): {now.strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"Current date and time (UTC):   {now_utc.strftime('%Y-%m-%d %H:%M:%S')}")
+
+def pretty_print_tinytroupe_version():
+    try:
+        import importlib.metadata
+        version = importlib.metadata.version("tinytroupe")
+    except Exception:
+         version = "unknown"
+    print(f"TinyTroupe version: {version}")
+
 def start_logger(config: configparser.ConfigParser):
     # create logger
     logger = logging.getLogger("tinytroupe")

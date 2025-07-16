@@ -46,6 +46,12 @@ def test_apply_style():
     assert ("5" in result) or ("five" in result), "The styled content should preserve the 5% decrease in operating costs information"
     assert ("78" in result) or ("seventy-eight" in result), "The styled content should preserve the 78% retention rate information"
     
+    # Semantic verification: ensure the styled content maintains financial/business meaning
+    assert proposition_holds(result + " - The content discusses financial performance, revenue, costs, or business metrics")
+    
+    # Semantic verification: ensure the styled content is actually in casual style
+    assert proposition_holds(result + " - The writing style is casual, informal, or conversational rather than formal or technical")
+    
     # Check that the style has been applied (this is more subjective)
     # For casual style, we might expect certain casual markers
     casual_indicators = ["!", "we", "our", "pretty", "nice", "great", "awesome", "cool", "hey", "check", "looking"]
@@ -71,6 +77,14 @@ def test_apply_style_with_different_styles():
         # Basic validation
         assert results[style] is not None, f"The {style} styled result should not be None"
         assert "customer retention" in results[style], f"The {style} styled content should preserve the key information"
+        
+        # Semantic verification: ensure each style is appropriately applied
+        if style == "technical":
+            assert proposition_holds(results[style] + " - The writing style is technical, detailed, or uses professional/technical language")
+        elif style == "professional":
+            assert proposition_holds(results[style] + " - The writing style is professional, formal, or business-like")
+        elif style == "enthusiastic":
+            assert proposition_holds(results[style] + " - The writing style is enthusiastic, energetic, or shows excitement")
     
     # Verify that different styles produce different results
     assert results["technical"] != results["professional"] != results["enthusiastic"], "Different styles should produce different results"

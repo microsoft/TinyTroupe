@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>tinytroupe.utils.rendering API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>tinytroupe.utils.rendering</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import json
+import textwrap
+from datetime import datetime
+from typing import Union
+import inspect
+
+from tinytroupe.utils import logger
+
+
+################################################################################
+# Rendering and markup 
+################################################################################
+def inject_html_css_style_prefix(html, style_prefix_attributes):
+    &#34;&#34;&#34;
+    Injects a style prefix to all style attributes in the given HTML string.
+
+    For example, if you want to add a style prefix to all style attributes in the HTML string
+    ``&lt;div style=&#34;color: red;&#34;&gt;Hello&lt;/div&gt;``, you can use this function as follows:
+    inject_html_css_style_prefix(&#39;&lt;div style=&#34;color: red;&#34;&gt;Hello&lt;/div&gt;&#39;, &#39;font-size: 20px;&#39;)
+    &#34;&#34;&#34;
+    return html.replace(&#39;style=&#34;&#39;, f&#39;style=&#34;{style_prefix_attributes};&#39;)
+
+def break_text_at_length(text: Union[str, dict], max_length: int=None) -&gt; str:
+    &#34;&#34;&#34;
+    Breaks the text (or JSON) at the specified length, inserting a &#34;(...)&#34; string at the break point.
+    If the maximum length is `None`, the content is returned as is.
+    &#34;&#34;&#34;
+    if isinstance(text, dict):
+        text = json.dumps(text, indent=4)
+
+    if max_length is None or len(text) &lt;= max_length:
+        return text
+    else:
+        return text[:max_length] + &#34; (...)&#34;
+
+def pretty_datetime(dt: datetime) -&gt; str:
+    &#34;&#34;&#34;
+    Returns a pretty string representation of the specified datetime object.
+    &#34;&#34;&#34;
+    return dt.strftime(&#34;%Y-%m-%d %H:%M&#34;)
+
+def dedent(text: str) -&gt; str:
+    &#34;&#34;&#34;
+    Dedents the specified text, removing any leading whitespace and identation.
+    &#34;&#34;&#34;
+    return textwrap.dedent(text).strip()
+
+def wrap_text(text: str, width: int=100) -&gt; str:
+    &#34;&#34;&#34;
+    Wraps the text at the specified width.
+    &#34;&#34;&#34;
+    return textwrap.fill(text, width=width)
+
+
+def indent_at_current_level(text: str) -&gt; str:
+    &#34;&#34;&#34;
+    Indents the specified text at the current indentation level, determined dynamically.
+    &#34;&#34;&#34;
+    frame = inspect.currentframe().f_back
+    line = frame.f_lineno
+    filename = frame.f_code.co_filename
+    with open(filename, &#39;r&#39;) as f:
+        lines = f.readlines()
+    current_line = lines[line - 1]
+    
+    indent= len(current_line) - len(current_line.lstrip())
+
+    # first dedent the text to remove any leading whitespace
+    text = dedent(text)
+
+    # then indent it to the specified level
+    return textwrap.indent(text, &#39; &#39; * indent)
+
+
+class RichTextStyle:
+    
+    # Consult color options here: https://rich.readthedocs.io/en/stable/appendix/colors.html
+
+    STIMULUS_CONVERSATION_STYLE = &#34;bold italic cyan1&#34;
+    STIMULUS_THOUGHT_STYLE = &#34;dim italic cyan1&#34;
+    STIMULUS_DEFAULT_STYLE = &#34;italic&#34;
+    
+    ACTION_DONE_STYLE = &#34;grey82&#34;
+    ACTION_TALK_STYLE = &#34;bold green3&#34;
+    ACTION_THINK_STYLE = &#34;green&#34;
+    ACTION_DEFAULT_STYLE = &#34;purple&#34;
+
+    INTERVENTION_DEFAULT_STYLE = &#34;bright_magenta&#34;
+
+    @classmethod
+    def get_style_for(cls, kind:str, event_type:str=None):
+        if kind == &#34;stimulus&#34; or kind==&#34;stimuli&#34;:
+            if event_type == &#34;CONVERSATION&#34;:
+                return cls.STIMULUS_CONVERSATION_STYLE
+            elif event_type == &#34;THOUGHT&#34;:
+                return cls.STIMULUS_THOUGHT_STYLE
+            else:
+                return cls.STIMULUS_DEFAULT_STYLE
+            
+        elif kind == &#34;action&#34;:
+            if event_type == &#34;DONE&#34;:
+                return cls.ACTION_DONE_STYLE
+            elif event_type == &#34;TALK&#34;:
+                return cls.ACTION_TALK_STYLE
+            elif event_type == &#34;THINK&#34;:
+                return cls.ACTION_THINK_STYLE
+            else:
+                return cls.ACTION_DEFAULT_STYLE
+        
+        elif kind == &#34;intervention&#34;:
+            return cls.INTERVENTION_DEFAULT_STYLE</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="tinytroupe.utils.rendering.break_text_at_length"><code class="name flex">
+<span>def <span class="ident">break_text_at_length</span></span>(<span>text: Union[str, dict], max_length: int = None) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Breaks the text (or JSON) at the specified length, inserting a "(&hellip;)" string at the break point.
+If the maximum length is <code>None</code>, the content is returned as is.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def break_text_at_length(text: Union[str, dict], max_length: int=None) -&gt; str:
+    &#34;&#34;&#34;
+    Breaks the text (or JSON) at the specified length, inserting a &#34;(...)&#34; string at the break point.
+    If the maximum length is `None`, the content is returned as is.
+    &#34;&#34;&#34;
+    if isinstance(text, dict):
+        text = json.dumps(text, indent=4)
+
+    if max_length is None or len(text) &lt;= max_length:
+        return text
+    else:
+        return text[:max_length] + &#34; (...)&#34;</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.utils.rendering.dedent"><code class="name flex">
+<span>def <span class="ident">dedent</span></span>(<span>text: str) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Dedents the specified text, removing any leading whitespace and identation.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dedent(text: str) -&gt; str:
+    &#34;&#34;&#34;
+    Dedents the specified text, removing any leading whitespace and identation.
+    &#34;&#34;&#34;
+    return textwrap.dedent(text).strip()</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.utils.rendering.indent_at_current_level"><code class="name flex">
+<span>def <span class="ident">indent_at_current_level</span></span>(<span>text: str) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Indents the specified text at the current indentation level, determined dynamically.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def indent_at_current_level(text: str) -&gt; str:
+    &#34;&#34;&#34;
+    Indents the specified text at the current indentation level, determined dynamically.
+    &#34;&#34;&#34;
+    frame = inspect.currentframe().f_back
+    line = frame.f_lineno
+    filename = frame.f_code.co_filename
+    with open(filename, &#39;r&#39;) as f:
+        lines = f.readlines()
+    current_line = lines[line - 1]
+    
+    indent= len(current_line) - len(current_line.lstrip())
+
+    # first dedent the text to remove any leading whitespace
+    text = dedent(text)
+
+    # then indent it to the specified level
+    return textwrap.indent(text, &#39; &#39; * indent)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.utils.rendering.inject_html_css_style_prefix"><code class="name flex">
+<span>def <span class="ident">inject_html_css_style_prefix</span></span>(<span>html, style_prefix_attributes)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Injects a style prefix to all style attributes in the given HTML string.</p>
+<p>For example, if you want to add a style prefix to all style attributes in the HTML string
+<code>&lt;div style="color: red;"&gt;Hello&lt;/div&gt;</code>, you can use this function as follows:
+inject_html_css_style_prefix('<div style="color: red;">Hello</div>', 'font-size: 20px;')</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def inject_html_css_style_prefix(html, style_prefix_attributes):
+    &#34;&#34;&#34;
+    Injects a style prefix to all style attributes in the given HTML string.
+
+    For example, if you want to add a style prefix to all style attributes in the HTML string
+    ``&lt;div style=&#34;color: red;&#34;&gt;Hello&lt;/div&gt;``, you can use this function as follows:
+    inject_html_css_style_prefix(&#39;&lt;div style=&#34;color: red;&#34;&gt;Hello&lt;/div&gt;&#39;, &#39;font-size: 20px;&#39;)
+    &#34;&#34;&#34;
+    return html.replace(&#39;style=&#34;&#39;, f&#39;style=&#34;{style_prefix_attributes};&#39;)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.utils.rendering.pretty_datetime"><code class="name flex">
+<span>def <span class="ident">pretty_datetime</span></span>(<span>dt: datetime.datetime) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns a pretty string representation of the specified datetime object.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pretty_datetime(dt: datetime) -&gt; str:
+    &#34;&#34;&#34;
+    Returns a pretty string representation of the specified datetime object.
+    &#34;&#34;&#34;
+    return dt.strftime(&#34;%Y-%m-%d %H:%M&#34;)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.utils.rendering.wrap_text"><code class="name flex">
+<span>def <span class="ident">wrap_text</span></span>(<span>text: str, width: int = 100) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Wraps the text at the specified width.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def wrap_text(text: str, width: int=100) -&gt; str:
+    &#34;&#34;&#34;
+    Wraps the text at the specified width.
+    &#34;&#34;&#34;
+    return textwrap.fill(text, width=width)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="tinytroupe.utils.rendering.RichTextStyle"><code class="flex name class">
+<span>class <span class="ident">RichTextStyle</span></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RichTextStyle:
+    
+    # Consult color options here: https://rich.readthedocs.io/en/stable/appendix/colors.html
+
+    STIMULUS_CONVERSATION_STYLE = &#34;bold italic cyan1&#34;
+    STIMULUS_THOUGHT_STYLE = &#34;dim italic cyan1&#34;
+    STIMULUS_DEFAULT_STYLE = &#34;italic&#34;
+    
+    ACTION_DONE_STYLE = &#34;grey82&#34;
+    ACTION_TALK_STYLE = &#34;bold green3&#34;
+    ACTION_THINK_STYLE = &#34;green&#34;
+    ACTION_DEFAULT_STYLE = &#34;purple&#34;
+
+    INTERVENTION_DEFAULT_STYLE = &#34;bright_magenta&#34;
+
+    @classmethod
+    def get_style_for(cls, kind:str, event_type:str=None):
+        if kind == &#34;stimulus&#34; or kind==&#34;stimuli&#34;:
+            if event_type == &#34;CONVERSATION&#34;:
+                return cls.STIMULUS_CONVERSATION_STYLE
+            elif event_type == &#34;THOUGHT&#34;:
+                return cls.STIMULUS_THOUGHT_STYLE
+            else:
+                return cls.STIMULUS_DEFAULT_STYLE
+            
+        elif kind == &#34;action&#34;:
+            if event_type == &#34;DONE&#34;:
+                return cls.ACTION_DONE_STYLE
+            elif event_type == &#34;TALK&#34;:
+                return cls.ACTION_TALK_STYLE
+            elif event_type == &#34;THINK&#34;:
+                return cls.ACTION_THINK_STYLE
+            else:
+                return cls.ACTION_DEFAULT_STYLE
+        
+        elif kind == &#34;intervention&#34;:
+            return cls.INTERVENTION_DEFAULT_STYLE</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="tinytroupe.utils.rendering.RichTextStyle.ACTION_DEFAULT_STYLE"><code class="name">var <span class="ident">ACTION_DEFAULT_STYLE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.utils.rendering.RichTextStyle.ACTION_DONE_STYLE"><code class="name">var <span class="ident">ACTION_DONE_STYLE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.utils.rendering.RichTextStyle.ACTION_TALK_STYLE"><code class="name">var <span class="ident">ACTION_TALK_STYLE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.utils.rendering.RichTextStyle.ACTION_THINK_STYLE"><code class="name">var <span class="ident">ACTION_THINK_STYLE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.utils.rendering.RichTextStyle.INTERVENTION_DEFAULT_STYLE"><code class="name">var <span class="ident">INTERVENTION_DEFAULT_STYLE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.utils.rendering.RichTextStyle.STIMULUS_CONVERSATION_STYLE"><code class="name">var <span class="ident">STIMULUS_CONVERSATION_STYLE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.utils.rendering.RichTextStyle.STIMULUS_DEFAULT_STYLE"><code class="name">var <span class="ident">STIMULUS_DEFAULT_STYLE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.utils.rendering.RichTextStyle.STIMULUS_THOUGHT_STYLE"><code class="name">var <span class="ident">STIMULUS_THOUGHT_STYLE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Static methods</h3>
+<dl>
+<dt id="tinytroupe.utils.rendering.RichTextStyle.get_style_for"><code class="name flex">
+<span>def <span class="ident">get_style_for</span></span>(<span>kind: str, event_type: str = None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def get_style_for(cls, kind:str, event_type:str=None):
+    if kind == &#34;stimulus&#34; or kind==&#34;stimuli&#34;:
+        if event_type == &#34;CONVERSATION&#34;:
+            return cls.STIMULUS_CONVERSATION_STYLE
+        elif event_type == &#34;THOUGHT&#34;:
+            return cls.STIMULUS_THOUGHT_STYLE
+        else:
+            return cls.STIMULUS_DEFAULT_STYLE
+        
+    elif kind == &#34;action&#34;:
+        if event_type == &#34;DONE&#34;:
+            return cls.ACTION_DONE_STYLE
+        elif event_type == &#34;TALK&#34;:
+            return cls.ACTION_TALK_STYLE
+        elif event_type == &#34;THINK&#34;:
+            return cls.ACTION_THINK_STYLE
+        else:
+            return cls.ACTION_DEFAULT_STYLE
+    
+    elif kind == &#34;intervention&#34;:
+        return cls.INTERVENTION_DEFAULT_STYLE</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="tinytroupe.utils" href="index.html">tinytroupe.utils</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="tinytroupe.utils.rendering.break_text_at_length" href="#tinytroupe.utils.rendering.break_text_at_length">break_text_at_length</a></code></li>
+<li><code><a title="tinytroupe.utils.rendering.dedent" href="#tinytroupe.utils.rendering.dedent">dedent</a></code></li>
+<li><code><a title="tinytroupe.utils.rendering.indent_at_current_level" href="#tinytroupe.utils.rendering.indent_at_current_level">indent_at_current_level</a></code></li>
+<li><code><a title="tinytroupe.utils.rendering.inject_html_css_style_prefix" href="#tinytroupe.utils.rendering.inject_html_css_style_prefix">inject_html_css_style_prefix</a></code></li>
+<li><code><a title="tinytroupe.utils.rendering.pretty_datetime" href="#tinytroupe.utils.rendering.pretty_datetime">pretty_datetime</a></code></li>
+<li><code><a title="tinytroupe.utils.rendering.wrap_text" href="#tinytroupe.utils.rendering.wrap_text">wrap_text</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="tinytroupe.utils.rendering.RichTextStyle" href="#tinytroupe.utils.rendering.RichTextStyle">RichTextStyle</a></code></h4>
+<ul class="">
+<li><code><a title="tinytroupe.utils.rendering.RichTextStyle.ACTION_DEFAULT_STYLE" href="#tinytroupe.utils.rendering.RichTextStyle.ACTION_DEFAULT_STYLE">ACTION_DEFAULT_STYLE</a></code></li>
+<li><code><a title="tinytroupe.utils.rendering.RichTextStyle.ACTION_DONE_STYLE" href="#tinytroupe.utils.rendering.RichTextStyle.ACTION_DONE_STYLE">ACTION_DONE_STYLE</a></code></li>
+<li><code><a title="tinytroupe.utils.rendering.RichTextStyle.ACTION_TALK_STYLE" href="#tinytroupe.utils.rendering.RichTextStyle.ACTION_TALK_STYLE">ACTION_TALK_STYLE</a></code></li>
+<li><code><a title="tinytroupe.utils.rendering.RichTextStyle.ACTION_THINK_STYLE" href="#tinytroupe.utils.rendering.RichTextStyle.ACTION_THINK_STYLE">ACTION_THINK_STYLE</a></code></li>
+<li><code><a title="tinytroupe.utils.rendering.RichTextStyle.INTERVENTION_DEFAULT_STYLE" href="#tinytroupe.utils.rendering.RichTextStyle.INTERVENTION_DEFAULT_STYLE">INTERVENTION_DEFAULT_STYLE</a></code></li>
+<li><code><a title="tinytroupe.utils.rendering.RichTextStyle.STIMULUS_CONVERSATION_STYLE" href="#tinytroupe.utils.rendering.RichTextStyle.STIMULUS_CONVERSATION_STYLE">STIMULUS_CONVERSATION_STYLE</a></code></li>
+<li><code><a title="tinytroupe.utils.rendering.RichTextStyle.STIMULUS_DEFAULT_STYLE" href="#tinytroupe.utils.rendering.RichTextStyle.STIMULUS_DEFAULT_STYLE">STIMULUS_DEFAULT_STYLE</a></code></li>
+<li><code><a title="tinytroupe.utils.rendering.RichTextStyle.STIMULUS_THOUGHT_STYLE" href="#tinytroupe.utils.rendering.RichTextStyle.STIMULUS_THOUGHT_STYLE">STIMULUS_THOUGHT_STYLE</a></code></li>
+<li><code><a title="tinytroupe.utils.rendering.RichTextStyle.get_style_for" href="#tinytroupe.utils.rendering.RichTextStyle.get_style_for">get_style_for</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

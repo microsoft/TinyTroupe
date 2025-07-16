@@ -25,9 +25,9 @@ class ResultsReducer:
 
             elif message['role'] == 'user':
                 # User role is related to stimuli only
-                stimulus_type = message['content']['stimuli'][0]['type']
-                stimulus_content = message['content']['stimuli'][0]['content']
-                stimulus_source = message['content']['stimuli'][0]['source']
+                stimulus_type = message['content']['stimuli'][0].get('type', None)
+                stimulus_content = message['content']['stimuli'][0].get('content', None)
+                stimulus_source = message['content']['stimuli'][0].get('source', None)
                 stimulus_timestamp = message['simulation_timestamp']
 
                 if stimulus_type in self.rules:
@@ -37,10 +37,10 @@ class ResultsReducer:
 
             elif message['role'] == 'assistant':
                 # Assistant role is related to actions only
-                if 'action' in message['content']: 
-                    action_type = message['content']['action']['type']
-                    action_content = message['content']['action']['content']
-                    action_target = message['content']['action']['target']
+                if 'action' in message['content']:
+                    action_type = message['content']['action'].get('type', None)
+                    action_content = message['content']['action'].get('content', None)
+                    action_target = message['content']['action'].get('target', None)
                     action_timestamp = message['simulation_timestamp']
                     
                     if action_type in self.rules:

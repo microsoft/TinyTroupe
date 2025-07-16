@@ -63,6 +63,12 @@ class ConfigManager:
         self._config["parallel_agent_actions"] = config["Simulation"].getboolean("PARALLEL_AGENT_ACTIONS", True)
         self._config["parallel_agent_generation"] = config["Simulation"].getboolean("PARALLEL_AGENT_GENERATION", True)
 
+        self._config["enable_memory_consolidation"] = config["Cognition"].get("ENABLE_MEMORY_CONSOLIDATION", True)
+        self._config["min_episode_length"] = config["Cognition"].getint("MIN_EPISODE_LENGTH", 30)
+        self._config["max_episode_length"] = config["Cognition"].getint("MAX_EPISODE_LENGTH", 100)  
+        self._config["episodic_memory_fixed_prefix_length"] = config["Cognition"].getint("EPISODIC_MEMORY_FIXED_PREFIX_LENGTH", 20)
+        self._config["episodic_memory_lookback_length"] = config["Cognition"].getint("EPISODIC_MEMORY_LOOKBACK_LENGTH", 20)
+
         self._config["action_generator_max_attempts"] = config["ActionGenerator"].getint("MAX_ATTEMPTS", 2)
         self._config["action_generator_enable_quality_checks"] = config["ActionGenerator"].getboolean("ENABLE_QUALITY_CHECKS", False)
         self._config["action_generator_enable_regeneration"] = config["ActionGenerator"].getboolean("ENABLE_REGENERATION", False)
@@ -169,6 +175,8 @@ class ConfigManager:
 
 # Create global instance of the configuration manager
 config = utils.read_config_file()
+utils.pretty_print_tinytroupe_version()
+utils.pretty_print_datetime()
 utils.pretty_print_config(config)
 utils.start_logger(config)
 

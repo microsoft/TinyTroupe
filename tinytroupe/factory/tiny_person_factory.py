@@ -94,7 +94,7 @@ class TinyPersonFactory(TinyFactory):
         return None
 
     @staticmethod
-    def create_factory_from_demography(demography_description_or_file_path:Union[str, dict],  population_size:int, context:str=None):
+    def create_factory_from_demography(demography_description_or_file_path:Union[str, dict],  population_size:int, additional_demographic_specification:str=None, context:str=None):
         """
         Create a TinyPersonFactory instance from a demography description, which can be wither given as a file path or a dictionary
         (but not both).
@@ -124,15 +124,33 @@ class TinyPersonFactory(TinyFactory):
         # Sampling space specification
 
         The population described by the demographic data below. Make sure you consider very detailed, fine-grained, 
-        characteristics of the individuals in the population.
+        characteristics of the individuals in the population. 
 
         ## Directives
         Please follow these rules:
-            - consider as many different population segments as possible, while always keeping proportions correct.For example, 
+            - consider as many different population segments as possible, while **always** keeping **proportions** correct.For example, 
               instead of sampling 10 people from segment A and 5 from segment B, you can instead sample 2 from A, 1 from B, 
               and 7 others from other segments, provided the proportions are maintained correct and there are enough people to sample.
             - also use any built-in knowledge you might have of the populations in question to improve the sampling space, 
               provided this built-in knowledge does not conflict with the demographic data below.
+
+        The sample must include representative people from the broad population, so for instance ensure that you include values covering
+        people from all walks of life possible from the specified demographic data and your built-in knowledge of the target population, such as:
+            - from the simplest professions to those of the highest ranks;
+            - from the youngest to the oldest; 
+            - from the kind to the evil;
+            - from the positive and enthusiastic to the negative and pessimistic;
+            - from the happy and joyful to the sad and depressed;
+            - from the most conservative, to the most liberal; 
+            - from the educated, to the ignorant;
+            - from the healthy to the sick;
+            - from rich to poor.   
+        
+        In particular, the population MUST cover both POSITIVE and NEGATIVE possibilities of the various characteristics 
+        (e.g., rich vs poor, likes sugar vs don't like sugar, enthusiastic vs apathetic).
+
+        ## Additional demographic specification (if any)
+        {additional_demographic_specification if additional_demographic_specification is not None else "(none)"}
 
         ## Demographic data
         {json.dumps(demography_description, indent=4)}
@@ -141,7 +159,13 @@ class TinyPersonFactory(TinyFactory):
         return TinyPersonFactory(context=context, 
                                  sampling_space_description=full_demography_description,
                                  total_population_size=population_size)
-        
+
+    @classmethod    
+    def _clear_factories(cls):
+        """
+        Additional class-level cleanup for this subclass.
+        """
+        TinyPersonFactory.all_unique_names = [] # clear the list of all unique names, so that the next factories can start fresh.
 
     def generate_person(self, 
                         agent_particularities:str=None, 
@@ -165,7 +189,7 @@ class TinyPersonFactory(TinyFactory):
             TinyPerson: A TinyPerson instance generated using the LLM.
         """
 
-        logger.info(f"Starting the person generation based on that context: {self.context_text}")
+        logger.info(f"Starting the person generation based these particularities: {agent_particularities}")
         fresh_agent_name = None
 
         # are we going to use a pre-computed sample of characteristics too?
@@ -176,10 +200,14 @@ class TinyPersonFactory(TinyFactory):
                     # if the sample does not exist, we generate it here once.
                     self.initialize_sampling_plan()
             
+            logger.debug(f"Sampling plan initialized. Remaining characteristics sample: {self.remaining_characteristics_sample}")
+
             # CONCURRENT PROTECTION
             with concurrent_agent_generataion_lock:
                 if len(self.remaining_characteristics_sample) == 0:
-                    raise ValueError(f"No more agents to sample from the population, all of the {self.population_size} have been sampled.")
+                    logger.warning("No more characteristics samples left to sample from. This can happen if the sampling plan did not sum up correctly.")
+                    return None
+                
                 else:
                     sampled_characteristics = self.remaining_characteristics_sample.pop()
                     logger.debug(f"Sampled agent: {sampled_characteristics['name']}.")
@@ -194,6 +222,8 @@ class TinyPersonFactory(TinyFactory):
 
                         In case one of the additional characteristics conflicts with a primary one, please use the primary one
                         and ignore the additional one.
+
+                        If the agent's name is specified, you MUST ALWAYS use it, even if it conflicts with the primary characteristics.
 
                     """
             else:
@@ -303,10 +333,11 @@ class TinyPersonFactory(TinyFactory):
 
             return None
    
+    
     @config_manager.config_defaults(parallelize="parallel_agent_generation")
     def generate_people(self, number_of_people:int=None, 
                         agent_particularities:str=None, 
-                        temperature:float=1.7, 
+                        temperature:float=1.2, 
                         frequency_penalty:float=0.0,
                         presence_penalty:float=0.0,
                         attempts:int=10, 
@@ -412,7 +443,7 @@ class TinyPersonFactory(TinyFactory):
                     if verbose:
                         print(info_msg)
                 else:
-                    logger.error(f"Could not generate person {i+1}/{number_of_people}.")
+                    logger.error(f"Could not generate person {i+1}/{number_of_people}. Continuing with the remaining ones.")
             
         return people
         
@@ -477,7 +508,6 @@ class TinyPersonFactory(TinyFactory):
         # a technicality - we need to use an auxiliary method to be able to use the transactional decorator effectively.
         return self._initialize_sampling_plan_transaction(n=self.population_size, description=self.sampling_space_description,context=self.context_text)
         
-    @transactional()
     def _initialize_sampling_plan_transaction(self, n, description, context):
         """
         Auxiliary method to initialize the sampling plan. This is needed in order to be able to use the transactional decorator,
@@ -492,68 +522,70 @@ class TinyPersonFactory(TinyFactory):
             logger.debug(f"Sampling dimensions: {json.dumps(self.sampling_dimensions, indent=4)}")
 
             # sampling plan
-            self.sampling_plan =  utils.try_function(lambda: self._compute_sample_plan(n=n, 
+            self.sampling_plan =  utils.try_function(lambda: self._compute_sample_plan(N=n, 
                                                         sampling_dimensions=self.sampling_dimensions),
                                                         
                                                         # checks that the plan is a list, not an empty dictionary, a number or a string
-                                                        postcond_func = lambda result: isinstance(result, list) and len(result) > 0
+                                                        postcond_func = lambda result: isinstance(result, list) and len(result) > 0 
                                                         )
+            # if the sampling plan is a dict, let' s enclose it in a list
+            if isinstance(self.sampling_plan, dict):
+                self.sampling_plan = [self.sampling_plan]
+                logger.warning("The sampling plan was a dictionary, enclosing it in a list to ensure it is processed correctly.")
             
             logger.debug(f"Sampling plan: {json.dumps(self.sampling_plan, indent=4)}")
 
-            # flatten the sampling plan in concrete individual samples
-            self.remaining_characteristics_sample =  utils.try_function(lambda: self._flatten_sampling_plan(sampling_plan=self.sampling_plan))
+            # Flatten the sampling plan in concrete individual samples.
+            # Use deepcopy because we'll be modifying the samples later, and we want to keep the original sampling plan intact
+            # for correct caching
+            self.remaining_characteristics_sample = copy.deepcopy(utils.try_function(lambda: self._flatten_sampling_plan(sampling_plan=self.sampling_plan)))
+
+            # instead of failing, we warn if the number of samples is not equal to n, as LLMs can be bad at summing up the quantities in the sampling plan.
+            # This is not a problem, as the sampling space is still valid and can be used, though it may not be as rich as expected.
+            if len(self.remaining_characteristics_sample) != n:
+                logger.warning(f"Expected {n} samples, but got {len(self.remaining_characteristics_sample)} samples. The LLM may have failed to sum up the quantities in the sampling plan correctly.")
+
             logger.debug(f"Remaining characteristics sample: {json.dumps(self.remaining_characteristics_sample, indent=4)}")
 
-            # compute how many of each gender we have, in order to be able to generate names accordingly
-            gender_qty = {'male': 0, 'female': 0, 'other': 0}
-            for sample in self.remaining_characteristics_sample:
-                sample_gender = sample.get("gender", None)
-                if sample_gender is not None:
-                    sample_gender = sample_gender.lower() # to avoid problems with case sensitivity
-
-                    if sample_gender == 'male':
-                        gender_qty['male'] += 1
-                    elif sample_gender == 'female':
-                        gender_qty['female'] += 1
-                    else:
-                        gender_qty['other'] += 1
-                        
-
-            # sample the unique names all together. This seems more effective to ensure generated names are unique.
-            def aux_naming_context(gender):
-                f"""
-                Target gender: {gender}
-                
-                General context: {context}
-
-                Population distribution description: {description}
-                """
+            # generate names for each sample individually, considering all their characteristics
+            all_used_names = TinyPersonFactory._all_used_and_precomputed_names()
             
-            unique_names = {"male": [], "female": [], "other": []}
-            unique_names["male"] +=  self._unique_full_names(n=gender_qty["male"], already_generated_names=TinyPersonFactory._all_used_and_precomputed_names(), 
-                                                                    context=aux_naming_context("male"))
-            unique_names["female"] +=  self._unique_full_names(n=gender_qty["female"], already_generated_names=TinyPersonFactory._all_used_and_precomputed_names(), 
-                                                                    context=aux_naming_context("female"))
-            unique_names["other"] +=  self._unique_full_names(n=gender_qty["other"], already_generated_names=TinyPersonFactory._all_used_and_precomputed_names(), 
-                                                                    context=aux_naming_context("any"))
-            
-            all_unique_names = unique_names["male"] + unique_names["female"] + unique_names["other"]
-            
-            logger.debug(f"Unique names generated: {json.dumps(all_unique_names, indent=4)}")
-
-            # check that the names are actually unique, considering that the return type is a list
-            if len(set(all_unique_names)) != len(all_unique_names):
-                raise ValueError("The names generated are not unique. This should not happen.")
-
-            # finally, update the flattened sample with the actual name to use for each sample
             for i, sample in enumerate(self.remaining_characteristics_sample):
-                if sample.get("gender") == "male":
-                    sample["name"] = unique_names["male"].pop()
-                elif sample.get("gender") == "female":
-                    sample["name"] = unique_names["female"].pop()
-                else:
-                    sample["name"] = unique_names["other"].pop()
+                logger.debug(f"Generating name for sample {i+1}/{len(self.remaining_characteristics_sample)}")
+                
+                # randomize the all_used_names to make the context less predictable for the LLM, thereby introducing some additional randomness.
+                # Note that we use a fixed random seed to ensure that the sampling plan is reproducible and cache can be kept.
+                TinyFactory.randomizer.shuffle(all_used_names)
+
+                # generate a name that's appropriate for this specific sample's characteristics
+                try:
+                    
+                    # A dummy name to start with, in case the name generation fails.
+                    sample["name"] = f"Agent_{utils.fresh_id('agents_names')}"
+
+                    name = utils.try_function(
+                        lambda: self._generate_name_for_sample(
+                            sample_characteristics=sample,
+                            already_generated_names=all_used_names
+                        ),
+                        # ensure the name is not in already used names
+                        postcond_func=lambda result: result not in all_used_names,
+                        retries=10
+                    )
+                    
+                    sample["name"] = name
+                    all_used_names.append(name)
+                    
+                except Exception as e:
+                    logger.error(f"Error generating name for sample {i}: {e}")
+                    # fallback: use a simple default name with index
+                    fallback_name = f"Person_{i}_{sample.get('gender', 'unknown')}"
+                    sample["name"] = fallback_name
+                    all_used_names.append(fallback_name)
+            
+            # update the global list of unique names
+            new_names = [sample["name"] for sample in self.remaining_characteristics_sample]
+            TinyPersonFactory.all_unique_names = list(set(TinyPersonFactory.all_unique_names + new_names))
             
         else:
             raise ValueError("Sampling plan already initialized. Cannot reinitialize it.")
@@ -578,7 +610,8 @@ class TinyPersonFactory(TinyFactory):
         return name in TinyPerson.all_agents_names()
 
 
-    @utils.llm(temperature=1.2)
+    @transactional()
+    @utils.llm(temperature=0.5, frequency_penalty=0.0, presence_penalty=0.0)
     def _compute_sampling_dimensions(self, sampling_space_description:str) -> dict:
         """
         Given a sampling description, computes the dimensions of the sampling space. The sampling space offers a way to sample from a population of people,
@@ -586,16 +619,33 @@ class TinyPersonFactory(TinyFactory):
            - contemplate all critical characteristics mentioned in the sampling description, even if this means having a large number of dimensions and
              complex values for each.
                * whenever necessary to properly capture the possibilities, you can replace a single dimension by a collection of sub-dimensions
-                 (e.g., instead of "beliefs", you might have "political_beliefs", "economic_beliefs", "consumer_beliefs", etc.)
-           - values for each dimension can range from numbers or single words to large sentences or even paragraphs.
+             (e.g., instead of "beliefs", you might have "political_beliefs", "economic_beliefs", "consumer_beliefs", etc.)
+           - values for each dimension can range from numbers or single words to large sentences or even paragraphs. For attributes that are not clearly single values,
+             always try to add as much detail as possible. For instance, age is just a single value, but lifestyle or cultural background **must** be a long sentence or even a paragraph. 
+             This is to ensure that, later, the generated people can be very nuanced and realistic, with rich and detailed attributes. See the example below to get inspired.
+           - you can be very creative with the dimensions and values provided that they are consistent with the sampling space description.
+           - whenever you have the information about PROPORTIONS of the values, you **must** include them in the output, so that the sampling space can be used to generate people
+             in a representative way. 
            - values are **not** distributions, probabilities or other statistics, but rather concrete, specific, people attributes. For example, there can
              be no "average_age" dimension, but only "age", although the complete set of valies that define a dimension is itself a distribution.
            - each dimension should be as rich as possible, having as many values as possible, so that the sampling space can be used to generate
              many nuanced variations of the target population.
+           - each dimension should consider a wide range of values, making sure to cover both POSITIVE and NEGATIVE possibilities (e.g., rich vs poor, likes sugar vs don't like sugar).  
+           - each dimension should always include extreme values, so that the sampling space can be used to generate people with extreme characteristics, such as very young or very old,
+             very rich or very poor, very positive or very negative, etc.
+           - include as many dimensions as possible to capture the richness of the population, even if this means having a large number of dimensions.    
            - in principle, the original sampling description could be approximately rephrased in terms of the dimensions and values generated (i.e., the dimensions are rich enough
              to capture all relevant information). Howerver, this should not limit the range of values and dimensions used, but rather be a byproduct of the process. For instance,
              if the original description say "young people", the dimension "age" could be defined as a range of values from 18 to 30, but **not** as a small list with only, say, [18, 25, 30].
              Always try to be as rich as possible in the values and dimensions, even if this means having a large number of them.
+
+        Additionally, make sure you include special dimensions that capture these aspects, in such a way that they relate to the sampling space description:
+            - personality traits (with proportions)
+            - political beliefs (with proportions)
+            - economic beliefs (with proportions)
+            - financial situation (with proportions)
+            - preferences and tastes (with proportions)
+            - cultural background (with proportions and diverse ethnicities and cultural heritages; provide detailed, realistic, and varied examples that reflect a wide spectrum of ethnic, national, and cultural identities relevant to the sampling space description)
 
         ## On your input
 
@@ -609,21 +659,31 @@ class TinyPersonFactory(TinyFactory):
         You output a JSON containing a list of dimensions. Each output dimension **must** consist of:
           - a name;
           - EITHER a list of values OR a range of values (specified as a pair). 
-        
+              * in lists of values, whenever possible, you **must** use long values, such as sentences or paragraphs, instead of short words or numbers. 
+              * in lists of values you can, optionally, use a dictionary to specify proportions of the values, e.g., {"value1": 0.5, "value2": 0.3, "value3": 0.2} to indicate that 50% of the population has value1, 30% has value2, and 20% has value3.
+                Adjust the proportions as appropriate for the context and ensure they sum to 1.0.
+
         The output is formatted as a JSON object with the following structure:
         ```json	
         {
             "sampling_space_description": "A description of the sampling space.",
             "dimensions": [
-                {
-                    "name": "dimension_name_1",
-                    "values": ["value1", "value2", ...]
-                },
-                {
-                    "name": "dimension_name_2",
-                    "range": [min, max]
-                },
-                ...
+            {
+            "name": "dimension_name_1",
+            "values": ["value1", "value2", ...]
+            },
+
+            {
+            "name": "dimension_name_2",
+            "range": [min, max]
+            },
+
+            {
+            "name": "dimension_name_3",
+            "values": {"value1": proportion1, "value2": proportion2, "value3": proportion3, ...}
+            },
+
+            ...
             ]
         }
         ```
@@ -637,43 +697,123 @@ class TinyPersonFactory(TinyFactory):
         The OUTPUT dimensions could be a dictionary with the following structure:
            ```json
            {
-                "sampling_space_description": "Young Western people of different liberal professions and social classes.",
-                "dimensions": [
-                    {
-                        "name": "age",
-                        "range": [18, 30]
-                    },
-                    {
-                        "name": "socioeconomic status",
-                        "values": ["miserable", "poor", "middle class", "rich", "very rich"]
-                    },
-                    {
-                        "name": "profession",
-                        "values": ["Architect", "Lawyer", "Physician", "Accountant", ...]
-                    },
-                    {
-                        "name": "country",
-                        "values": ["USA", "Canada", "UK", "France", "Germany", "Italy", "Spain", "Portugal", "Netherlands", "Belgium", ...]
-                    },
-                    {
-                        "name": "economic_beliefs",
-                        "values": ["Hard work leads to success", "Wealth is a result of luck", ...]
-                    },
-                    {
-                        "name": "professional_attitudes",
-                        "values": ["Want to have their own company", "Prefers to work for established companies", ...]
-                    }
-                    ]
-            }
-            ```
+               "sampling_space_description": "Young Western people of different liberal professions and social classes.",
+               "dimensions": [
+                   {
+                       "name": "age",
+                       "range": [18, 30]
+                   },
+                   {
+                       "name": "socioeconomic status",
+                       "values": ["miserable", "poor", "middle class", "rich", "very rich"]
+                   },
+                   {
+                       "name": "profession",
+                       "values": ["Architect", "Lawyer", "Physician", "Accountant", ...]
+                   },
+                   {
+                       "name": "country",
+                       "values": {
+                           "USA": 0.35,
+                           "Germany": 0.10,
+                           "UK": 0.09,
+                           "France": 0.09,
+                           "Italy": 0.08,
+                           "Spain": 0.06,
+                           "Canada": 0.06,
+                           "Australia": 0.05,
+                           "Netherlands": 0.03,
+                           "Sweden": 0.03,
+                           "Belgium": 0.02,
+                           "Switzerland": 0.02,
+                           "Austria": 0.01
+                       }
+                   },
+                   {
+                       "name": "cultural_background",
+                       "values": {
+                           "Born in a large city of a developed nation, parents were from a lineage of physicians and lawyers": 0.12,
+                           "Descendant of Ashkenazi Jewish immigrants who settled in New York City in the early 20th century, maintaining strong ties to Jewish traditions and community life.": 0.08,
+                           "Second-generation Chinese-Canadian whose family values blend Confucian principles with Canadian multiculturalism, celebrating both Lunar New Year and Canada Day.": 0.06,
+                           "Of Irish and Italian descent, growing up in Boston with a household that combines Catholic traditions, Irish folk music, and Italian culinary heritage.": 0.10,
+                           "Of Turkish-German background, raised in Berlin with exposure to both Turkish family traditions and contemporary German urban culture.": 0.05,
+                           <... many more ...>
+                       }
+                   },
+                   {
+                       "name": "economic_beliefs",
+                       "values": {
+                           "Firmly believes that diligent effort and perseverance in one's career are the primary drivers of financial prosperity and upward mobility.": 0.28,
+                           "Holds the view that wealth accumulation is largely a matter of being in the right place at the right time, with luck playing a significant role in economic outcomes.": 0.18,
+                           "Thinks that government intervention and social programs are essential to ensure fair economic opportunities for all members of society.": 0.22,
+                           "Believes that personal connections and networking are more important than formal education or hard work in achieving economic success.": 0.15,
+                           <... many more ...>
+                       }
+                   },
+                   {
+                       "name": "professional_attitudes",
+                       "values": {
+                           "Aspires to establish and grow their own business, valuing independence and the ability to innovate without corporate constraints.": 0.18,
+                           "Prefers the stability and structure of working for a well-established company, appreciating clear career paths and organizational support.": 0.32,
+                           "Enjoys collaborating in multidisciplinary teams and seeks out workplaces that foster creativity and open communication.": 0.22,
+                           "Is highly risk-averse and prioritizes job security and predictable routines over rapid advancement or entrepreneurial ventures.": 0.15,
+                           <... many more ...>
+                       }
+                   },
+                   {
+                       "name": "political_beliefs",
+                       "values": {
+                           "Strongly supports progressive policies aimed at reducing income inequality and expanding access to healthcare and education.": 0.24,
+                           "Advocates for conservative values, emphasizing the importance of tradition, personal responsibility, and limited government intervention.": 0.20,
+                           "Identifies as a centrist, believing that balanced compromise between opposing political ideologies leads to the best societal outcomes.": 0.26,
+                           "Is passionate about environmental issues and supports policies that prioritize sustainability and climate change mitigation above economic growth.": 0.16,
+                           <... many more ...>
+                       }
+                   },
+                   {
+                       "name": "personality_traits",
+                       "values": {
+                           "Maintains an unwavering optimism, always expecting positive outcomes even in the face of adversity and encouraging others to do the same.": 0.12,
+                           "Tends to be introspective and reserved, preferring solitary activities and deep reflection over social gatherings or group events.": 0.18,
+                           "Is highly ambitious, constantly setting challenging goals and pushing themselves to achieve more in both personal and professional spheres.": 0.15,
+                           "Approaches new experiences with caution, carefully weighing risks and benefits before making decisions or embracing change.": 0.20,
+                           "Often expects the worst in any situation, focusing on potential problems and rarely feeling hopeful about the future.": 0.08,
+                           "Frequently experiences a sense of sadness and melancholy, finding it difficult to enjoy activities that once brought happiness.": 0.06,
+                           "Is quick to notice flaws and shortcomings in themselves and others, tending toward a negative outlook on life.": 0.07,
+                           "Feels overwhelmed by setbacks, easily discouraged, and tends to dwell on failures rather than successes.": 0.05,
+                           <... many more ...>
+                       }
+                   },
+                   {
+                       "name": "preferences_and_tastes",
+                       "values": {
+                           "Has a deep appreciation for classical music, frequently attending orchestral concerts and collecting rare vinyl recordings.": 0.08,
+                           "Finds joy in spending weekends hiking in remote natural parks, seeking tranquility and inspiration from the outdoors.": 0.16,
+                           "Rarely leaves home, preferring the comfort of familiar surroundings and engaging in hobbies such as reading and painting indoors.": 0.11,
+                           "Enjoys experimenting with international cuisines, often hosting elaborate dinner parties to share culinary discoveries with friends.": 0.14,
+                           "Is sensitive to loud environments and actively avoids crowded or noisy places, seeking peace and quiet whenever possible.": 0.13,
+                           "Prefers to spend time alone in dimly lit rooms, listening to somber music and reflecting on the more difficult aspects of life.": 0.04,
+                           "Has little interest in social gatherings or celebrations, often declining invitations and feeling out of place in festive environments.": 0.07,
+                           "Frequently chooses entertainment or art that explores themes of loss, struggle, or existential despair, finding comfort in shared sadness.": 0.03,
+                           <... many more ...>
+                       }
+                   }
+               ]
+           }
+           ```
         
         Note in the example:
-           - Age is given as anumeric range.
+           - Age is given as a numeric range.
            - All other values are descriptive strings, human-friendly, no strange symbols or codes.
+           - The "country" dimension uses a dictionary with suitable proportions for Western countries.
            - No value contains internal structure - just a name or short description.
            - All values are concrete properties, not distributions, probabilities or other statistics.
+           - Whenever possible, the values in the dimensions are long and detailed **sentences** each.
            - It has few dimensions because the sampling space description is very short. If the description were longer, the number of dimensions would be larger,
              and their values more detailed.
+           - It contains the additional dimensions that capture the personality traits, political beliefs, economic beliefs, financial situation, preferences and tastes,
+             and now cultural background with varied ethnicities and heritages, which are important for the sampling space to be rich enough to generate nuanced variations of the target population. 
+           - Beyond positive aspects, it also includes values that emphasize pessimism, negativeness, and sadness, ensuring these characteristics are balanced and represented in the sampling space.
         
         Args:
             sampling_space_description (str): A description of the sampling space.
@@ -683,11 +823,13 @@ class TinyPersonFactory(TinyFactory):
         """
         # the body of this method is handled by the @llm decorator.
     
-    @utils.llm(temperature=1.5)
-    def _compute_sample_plan(self, n:int, sampling_dimensions:dict) -> List[Dict[str, any]]:
+    @transactional()
+    @utils.llm(temperature=0.5, frequency_penalty=0.0, presence_penalty=0.0)
+    def _compute_sample_plan(self, N:int, sampling_dimensions:dict, max_quantity_per_sample_directive:int=5, min_sampling_directives:int=10, max_sampling_directives:int=50) -> List[Dict[str, any]]:
         """
-        Given a number n of elements to sample, and the dimensions of the sampling space, computes a *sample plan* of n elements from that space.  
-        
+        This function defines which and how many people to sample from the sampling space defined by the given dimensions.
+        Given a number N of people to sample, and the dimensions of the sampling space, computes a *sample plan* of N people from that space.
+
         The input sampling dimensions have the following structure:
 
             ```json
@@ -707,46 +849,105 @@ class TinyPersonFactory(TinyFactory):
                 }
             ```
         
-        The *sample plan* to be generated is a list of *sampling directives*. Each *sampling directive* **always** consists of:
-          - "sampled_values": a map from of dimensions from the sampling space to concrete values.
-          - "quantity": to how many elements with those values should be sampled in total (note that this is always <= n).
+        The *sample plan* to be generated is a list of M *sampling directives*. Each *sampling directive* **always** consists of:
+          - "id": a unique identifier for the *sampling directive*, just an incrementing integer starting from 1.
+          - "subpopulation_description": a short description of the sub-population that this *sampling directive* represents, based on the sampling space description and the sampled values.
+                                         If possible, make it a recognizable and meaningful description of the sub-population, 
+                                         such as "Young rebellious people from upper classes", "Old conservative boomers from rural areas", "Intellectual urban professionals with diverse and cosmopolitan cultural backgrounds", etc.
+          - "sampled_values": a map from of dimensions from the sampling space to concrete values, value ranges or value options.
+          - "quantity": to how many elements with those values should be sampled in total (from 1 to max_quantity_per_sample_directive if specified). 
+                        The sum of all of these quantities must be equal to N.
 
         So your final output **MUST** follow this JSON structure:
 
-
             ```json
             [
-                {
+                {   "id": 1,
+                     "subpopulation_description": "Some description here...",
                     "sampled_values": {
-                        "dimension_name_1": "value1",
-                        "dimension_name_2": "value2",
+                        "dimension_name_1": [n_1_min, n_1_max],,
+                        "dimension_name_2": ["value2_1", "value2_2", ...],
+                        "dimension_name_3": ["value3_1", "value3_2", ...],
                         ...
                     },
-                    "quantity": number
+                    "quantity": quantity_1
                 },
                 
                 {
+                    "id": 2,
+                    "subpopulation_description": "Some other description here...",
                     "sampled_values": {
-                        "dimension_name_1": "value1",
+                        "dimension_name_1": [n_1_min, n_1_max],
                         "dimension_name_2": "value2",
+                        "dimension_name_3": ["value3_1", "value3_2", ...],
                         ...
                     },
-                    "quantity": number
+                    "quantity": quantity_2
                 },
                 ...
+                {
+                    "id": M,
+                    "subpopulation_description": "Again some description here...",
+                    "sampled_values": {
+                        "dimension_name_1": [n_1_min, n_1_max],
+                        "dimension_name_2": ["value2_1", "value2_2", ...],
+                        "dimension_name_3": ["value3_1", "value3_2", ...],
+                        ...
+                    },
+                    "quantity": quantity_M
+                },
             ]
             ```
-        
-        You should ensure that the quantity of requested samples in each *sampling directive* is proportional to their presumed size in the target population.
-        That is to say, combinations of dimensions that are more common in the target population should be sampled more often.
-        You can rely on your built-in knowledge or make educated guesses about such quantities and proportions to ensure that the sample is representative of the population.
-        
+
+            where N = quantity_1 + quantity_2 + ... + quantity_M, 
+                  quantity_i <= max_quantity_per_sample_directive (if specified),
+                  and M is the number of *sampling directives*, which can be as large as necessary to ensure 
+                  that the total number of sampled people is equal to N.
+
+            Note:
+              - Concrete values are NOT in brackets, but rather just a single value or a range of values.
+              - Options are given in lists of strings separated by commas, e.g., ["value1", "value2", ...].
+              - Ranges are numberic and specified as a pair of numbers, e.g., [min, max].
+                    
+        Rules and principles:
+          - The sampling plan is a collection of sub-populations captured by each *sampling directive*. Therefore, the various *sampling directives* must complement each other in order
+            to approximate the target population.
+          - Each *sampling directive* is a **combination** of values from the sampling dimensions that represent a specific segment of the target population. Its richness and variety must reflect the desired sub-population.
+          - The dimension sampled in each *sampling directive* can be a single value, a range of values, or a list of values. You can use ranges and lists to cover a wider range of possibilities
+            in a compact way, but you can also use single values if necessary. The items in list can be long or short, does not matter, both can be in lists. Some examples of good fortmatting:
+                * CORRECT example: ["Very rich", "Rich", "Middle class", "Poor"]
+                * CORRECT example: "Rich"
+                * WRONG example: ["Very rich or Rich or Middle class or Poor"]
+                * WRONG example: ["Rich"] 
+          - **Always** try very hard to use a list of values (two or more values) or range of values (min - max), to make the sampling plan at once concise and rich. In doing so, make sure that each *sampling directive* is truly representative
+            of some segment of the target population, and not just a random collection of values.                
+          - You MUST make M as large as necessary to contemplate the target population, ideally M >= min_sampling_directives (but M <= max_sampling_directives, if specified), to ensure a rich and varied sampling of the population.
+              * Note that this means the maximum *sampling directive* "id" (call it max_id) used in the *sampling plan* is such that: max_id >= min_sampling_directives; max_id <= max_sampling_directives (if specified).
+          - The sampled population MUST be representative of the target population.
+          - The sampled population MUST be realistic.
+          - You can set the quantity of each *sampling directive* to 1 if necessary to ensure a varied and representative sampling.
+          - All values chosen from the sampling dimensions must be copied IN FULL in the "sampled_values" map, so that the sampled values are concrete and specific.
+            The sample plan is supposed to be self-contained, therefore it MUST have all details necessary to sample the people later, without needing to refer back to the sampling dimensions.
+          - You should include as many *sampling directives* as necessary to cover the sampling of N total people (the sum of all quantities). When in doubt,
+            **always** add more *sampling directives* (i.e., make M larger) up to max_sampling_directives (if specified), as this will ensure you cover the requested N people.
+          - In particular, make sure both POSITIVE and NEGATIVE possibilities of the various characteristics are covered (e.g., rich vs poor, likes sugar vs doesn't like sugar, enthusiastic vs apathetic).
+            This is to ensure any bias (towards positive or negative characteristics) is minimized, and the sampling space is rich enough to generate people with a wide range of characteristics.
+          - The sampling space description should be used to guide the sampling, so that the sampled population is consistent with it.
+          - You should ensure that the quantity of requested samples in each *sampling directive* is proportional to their presumed size in the target population.
+            That is to say, combinations of dimensions that are more common in the target population should be sampled more often. If you don't know, make a guess.
+          - If max_quantity_per_sample_directive is specified, you must ensure that no single *sampling directive* exceeds this quantity. This is to ensure we get more variation and not just a few large groups.
+          - You can rely on your built-in knowledge or make educated guesses about such quantities and proportions to ensure that the sample is representative of the population.
+              * Note that this means for any quantity_i: quantity_i >= 1; quantity_i <= max_quantity_per_sample_directive (if specified).
+          - The sum of all quantities in the output **must** be equal to N, the number of people to sample in total.
+          - You can always add extra *sampling directives* (up to max_sampling_directives if specified) to ensure the total of N people is reached.
+          - It is acceptable for the sampling plan to generate more than N people, but NEVER less than N. So if unsure generate MORE people, never less.
+
         ## Example
         Given the following INPUT sampling dimensions:
         
         ```json
         {
-            "sampling_space_description": "Young Western people of different liberal professions."
+            "sampling_space_description": "Young Western people of different liberal or intellectual professions."
             "dimensions": [
                 {
                     "name": "age",
@@ -754,51 +955,84 @@ class TinyPersonFactory(TinyFactory):
                 },
                 {
                     "name": "profession",
-                    "values": ["Architect", "Lawyer", "Physician", "Accountant", ...]
+                    "values": ["Architect", "Financial Analyst", "Writer", "Art critic", "Lawyer", "Physician", "Accountant", ...]
                 },
                 {
                     "name": "country",
-                        "values": ["USA", "Canada", "UK", "France", "Germany", "Italy", "Spain", "Portugal", "Netherlands", "Belgium", ...]
-                    }
+                    "values": ["USA", "Canada", "UK", "France", "Germany", "Italy", "Spain", "Portugal", "Netherlands", "Belgium", ...]
+                },
+
+                {
+                       "name": "personality_traits",
+                       "values": {
+                           "Maintains an unwavering optimism, always expecting positive outcomes even in the face of adversity and encouraging others to do the same.": 0.12,
+                           "Tends to be introspective and reserved, preferring solitary activities and deep reflection over social gatherings or group events.": 0.18,
+                           "Is highly ambitious, constantly setting challenging goals and pushing themselves to achieve more in both personal and professional spheres.": 0.15,
+                           "Approaches new experiences with caution, carefully weighing risks and benefits before making decisions or embracing change.": 0.20,
+                           "Often expects the worst in any situation, focusing on potential problems and rarely feeling hopeful about the future.": 0.08,
+                           "Frequently experiences a sense of sadness and melancholy, finding it difficult to enjoy activities that once brought happiness.": 0.06,
+                           "Is quick to notice flaws and shortcomings in themselves and others, tending toward a negative outlook on life.": 0.07,
+                           "Feels overwhelmed by setbacks, easily discouraged, and tends to dwell on failures rather than successes.": 0.05,
+                           <... many more ...>
+                       }
+                   }
+
+                (... more dimensions ...)    
+                    
                 ]
            }
 
-        An OUTPUT *sample plan* therefore is a list with the *sample plan*, where each element is a dictionary with a *sampling directive*. For example, an output based on the above dimensions could look like this:
+        An OUTPUT *sample plan* therefore is a LIST with the *sample plan*, where each element is a dictionary with a *sampling directive*. For example, an output based on the above dimensions could look like this:
 
         ```json 
         [
             {
+                "id": 1,
+                "subpopulation_description": "Young Anglo-Saxon professionals with their stereotypical ambition and drive.",
                 "sampled_values": {
-                    "age": 25,
-                    "profession": "Architect",
-                    "country": "USA"
+                    "age": [22, 30],
+                    "profession": ["Financial Analyst", "Lawyer", "Physician", "Accountant", ...],
+                    "country": ["USA", "UK", "Canada"],
+                    "personality_traits": ["Maintains an unwavering optimism, always expecting positive outcomes even in the face of adversity and encouraging others to do the same.",
+                                           "Approaches new experiences with caution, carefully weighing risks and benefits before making decisions or embracing change",
+                                           "Tends to be introspective and reserved, preferring solitary activities and deep reflection over social gatherings or group events.",
+                                           "Is quick to notice flaws and shortcomings in themselves and others, tending toward a negative outlook on life."]
                 },
-                "quantity": 8
+                "quantity": 10
             },
             {
+                "id": 2,
+                "subpopulation_description": "Young European professionals with a focus on creativity and innovation and their occasional existential crises.",
                 "sampled_values": {
-                    "age": 27,
-                    "profession": "Lawyer",
-                    "country": "Canada"
+                    "age": [21, 30],
+                    "profession": ["Architect", "Lawyer", "Writer", "Physician", "Art critic", ...],
+                    "country": ["France", "Germany", "Italy", "Spain"],
+                    "personality_traits": ["Often expects the worst in any situation, focusing on potential problems and rarely feeling hopeful about the future.",
+                           "Frequently experiences a sense of sadness and melancholy, finding it difficult to enjoy activities that once brought happiness.",
+                           "Is quick to notice flaws and shortcomings in themselves and others, tending toward a negative outlook on life.",
+                           "Feels overwhelmed by setbacks, easily discouraged, and tends to dwell on failures rather than successes.]"
                 },
-                "quantity": 1
+                "quantity": 5
             },
             ...
         ]
         ```
 
-        Note that the number of people from the countries are proportional to their populations (i.e., USA has a population around 8 times larger than Canada, so there are 8 times more people from the USA than from Canada in the sample).
 
         Args:
             n (int): The number of elements to sample in total. This number will be distributed across the dimensions proportionally
                 to the presumed size the target population.
             sampling_dimensions (dict): The dimensions of the sampling space.
-        
+            max_quantity_per_sample_directive (int, optional): The maximum quantity of samples that can be specified in a single sampling directive. This is to ensure that the sampling plan is diverse and not biased towards a few large groups. 
+            min_sampling_directives (int, optional): The minimum number of sampling directives to generate. This is to ensure that the sampling plan is rich and varied.
+            max_sampling_directives (int, optional): The maximum number of sampling directives to generate. This is to ensure that the sampling plan is not overly complex and remains manageable.
+
         Returns:
-            list: A list with the *sample plan*, where each element is a dictionary with a *sampling directive*, as described above.
+            list: A LIST with the *sample plan*, where each element is a dictionary with a *sampling directive*, as described above.
         """
         # the body of this method is handled by the @llm decorator.
     
+    @transactional()
     def _flatten_sampling_plan(self, sampling_plan:dict) -> list:
         """
         Given a sample plan, flattens it into a list of samples in such a way that the number of times each sample appears
@@ -914,7 +1148,7 @@ class TinyPersonFactory(TinyFactory):
     def _unique_full_names(self, n:int, already_generated_names: list, context:str=None) -> list:
         """
         Generates a list of n unique full names for people. The full names must not be in the list of already generated names.
-        
+
         Args:
             n (int): The number of names to generate.
             already_generated_names (list): The list of already generated names.
@@ -990,11 +1224,13 @@ class TinyPersonFactory(TinyFactory):
            ["Some name here."] ---> incorrect as it contains punctuation
            ["Name: Some name here"] ---> incorrect as it contains a label
 
-        An optional context can be provided to guide the name generation, so that it is a realistic name for the context. For example, we know that different socio-economic classes have different naming conventions, so the context can be used to guide the name generation.
+        An optional context can be provided to guide the name generation, so that it is a realistic name for the context. For example, we know that different socio-economic classes have different naming conventions, 
+        so the context can be used to guide the name generation. In particular, follow these rules regarding the context:
+            - If a country is specified, the names should be typical for that country.
 
         Regarding the `already_generated_names`, you must:
             - NEVER generate a name that is already in the list of already generated names.
-            - The names in `already_generated_names` ARE NOT examples of names to generate. They are just names that have already been generated and should not be repeated. You should generate new names regardless of the names in `already_generated_names`, the only constraint is that the new names should not be in the list of already generated names.
+            - The names in `already_generated_names` ARE NOT examples of names to generate. They are just names that have already been generated and should not be repeated. You should generate new names regardless of the names in `already_generated_names`, the only constraint is that the new names should not be in the list of already_generated_names.
             - In particular, you are not to generate a similar name to that of those in `already_generated_names`, you are **not** building some kind of  logical sequence. Each name must be independent of the others.
 
         ## Example
@@ -1045,4 +1281,67 @@ class TinyPersonFactory(TinyFactory):
         agent.include_persona_definitions(configuration)
         
         # does not return anything, as we don't want to cache the agent object itself.
+
+    @transactional()
+    @utils.llm(temperature=0.3, frequency_penalty=-0.1, presence_penalty=-0.1, enable_json_output_format=False)
+    def _generate_name_for_sample(self, sample_characteristics: dict, already_generated_names: list) -> str:
+        """
+        Generates a single full name for a person based on their complete sample characteristics, such that
+        it is as appropriate as possible to all characteristics, not just gender.
+        This name MUST BE UNIQUE and not appear in the already_generated_names list, though variations of the 
+        same name are allowed. 
+
+        You must generate a realistic full name that is appropriate for the given sample characteristics. 
+        Consider ALL the characteristics provided, including but not limited to:
+        - Gender
+        - Age or age range
+        - Country/nationality/ethnicity
+        - Socioeconomic status
+        - Profession
+        - Educational background
+        - Cultural background
+        - Any other relevant demographic or personal characteristics
+
+        The name should:
+        - BE UNIQUE and not appear in the already_generated_names list
+        - Be realistic and culturally appropriate for the characteristics
+        - Sound natural and not made-up
+        - Be unique and not appear in the already_generated_names list
+        - Reflect the person's likely background (e.g., names common in their generation, culture, social class)
+
+        If you need additional methods to ensure uniqueness, you can:
+        - Use longer or more uncommon names
+        - Include middle names or multiple surnames
+        - Use culturally appropriate name variations
+        - As a last resort, you can append a number, but this should be avoided.
+
+
+        In ANY CASE, you **must never**, NEVER, generate a name that already appears in the already_generated_names list.
+
+        Return only the full name as a string, nothing else.
+
+        ## Example
+
+        **Input:**
+            sample_characteristics: {
+                "gender": "female",
+                "age": 28,
+                "country": "Brazil", 
+                "profession": "Software Engineer",
+                "socioeconomic_status": "middle class",
+                "education": "Computer Science degree"
+            }
+            already_generated_names: ["João Silva", "Maria Santos", "Ana Costa"]
+
+        **Output:**
+            "Camila Rodrigues"
+
+        Args:
+            sample_characteristics (dict): The complete characteristics of the sample, including demographics, profession, etc.
+            already_generated_names (list): The list of already generated names to avoid duplicates. The new name MUST NOT be in this list.
+
+        Returns:
+            str: A single full name appropriate for the sample characteristics.
+        """
+        # the body of this method is handled by the @llm decorator
 

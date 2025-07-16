@@ -58,6 +58,9 @@ def test_validate_person(setup):
     print("Banker justification: ", banker_justification)
 
     assert banker_score > 0.5, f"Validation score is too low: {banker_score:.2f}"
+    
+    # Semantic verification: ensure the justification is actually about banking and finance
+    assert proposition_holds(banker_justification + " - The validation discusses banking, finance, wealth, or business expertise")
 
 
     ##########################
@@ -86,8 +89,10 @@ def test_validate_person(setup):
     print("Monk score: ", monk_score)
     print("Monk justification: ", monk_justification)
           
-
     assert monk_score > 0.5, f"Validation score is too low: {monk_score:.2f}"
+    
+    # Semantic verification: ensure the justification is actually about spiritual or monastic qualities
+    assert proposition_holds(monk_justification + " - The validation discusses spirituality, wisdom, humility, or monastic qualities")
 
     # Now, let's check the score for the monk with the wrong expectations! It has to be low!
     wrong_expectations_score, wrong_expectations_justification = TinyPersonValidator.validate_person(monk, expectations=banker_expectations, include_agent_spec=False, max_content_length=None)
@@ -95,3 +100,6 @@ def test_validate_person(setup):
     assert wrong_expectations_score < 0.5, f"Validation score is too high: {wrong_expectations_score:.2f}"
     print("Wrong expectations score: ", wrong_expectations_score)
     print("Wrong expectations justification: ", wrong_expectations_justification)
+    
+    # Semantic verification: the justification should explain why a monk doesn't match banker expectations
+    assert proposition_holds(wrong_expectations_justification + " - The validation explains mismatches or contrasts between monastic and banking characteristics")

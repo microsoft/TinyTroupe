@@ -40,59 +40,103 @@ plotting.
 &#34;&#34;&#34;
 import pandas as pd
 import matplotlib.pyplot as plt
-from typing import List
 from tinytroupe.agent import TinyPerson
 
 
-def plot_age_distribution(agents:List[TinyPerson], title:str=&#34;Age Distribution&#34;, show:bool=True):
-    &#34;&#34;&#34;
-    Plots the age distribution of the given agents.
+import pandas as pd
+import matplotlib.pyplot as plt
+from typing import List
 
-    Args:
-        agents (List[TinyPerson]): The agents whose age distribution is to be plotted.
-        title (str, optional): The title of the plot. Defaults to &#34;Age Distribution&#34;.
-        show (bool, optional): Whether to show the plot. Defaults to True.
+
+class Profiler:
+
+    def __init__(self, attributes: List[str]=[&#34;age&#34;, &#34;occupation.title&#34;, &#34;nationality&#34;]) -&gt; None: 
+        self.attributes = attributes
+        
+        self.attributes_distributions = {} # attribute -&gt; Dataframe
+
+    def profile(self, agents: List[dict], plot:bool=True) -&gt; dict:   
+        &#34;&#34;&#34;
+        Profiles the given agents.
+
+        Args:
+            agents (List[dict]): The agents to be profiled.
+        
+        &#34;&#34;&#34;
+
+        self.attributes_distributions = self._compute_attributes_distributions(agents)
+
+        if plot:
+            self.render()
+            
+        return self.attributes_distributions
+
+    def render(self) -&gt; None:
+        &#34;&#34;&#34;
+        Renders the profile of the agents.
+        &#34;&#34;&#34;
+        return self._plot_attributes_distributions()
+        
+
+    def _compute_attributes_distributions(self, agents:list) -&gt; dict:
+        &#34;&#34;&#34;
+        Computes the distributions of the attributes for the agents.
+
+        Args:
+            agents (list): The agents whose attributes distributions are to be computed.
+        
+        Returns:
+            dict: The distributions of the attributes.
+        &#34;&#34;&#34;
+        distributions = {}
+        for attribute in self.attributes:
+            distributions[attribute] = self._compute_attribute_distribution(agents, attribute)
+        
+        return distributions
     
-    Returns:
-        pd.DataFrame: The data used for plotting.
-    &#34;&#34;&#34;
-    ages = [agent.get(&#34;age&#34;) for agent in agents]
+    def _compute_attribute_distribution(self, agents: list, attribute: str) -&gt; pd.DataFrame:
+        &#34;&#34;&#34;
+        Computes the distribution of a given attribute for the agents and plots it.
 
-    # corresponding dataframe
-    df = pd.DataFrame(ages, columns=[&#34;Age&#34;])
-    df[&#34;Age&#34;].plot.hist(bins=20, title=title)
-    if show:
+        Args:
+            agents (list): The agents whose attribute distribution is to be plotted.
+        
+        Returns:
+            pd.DataFrame: The data used for plotting.
+        &#34;&#34;&#34;
+        values = [agent.get(attribute) for agent in agents]
+
+        # corresponding dataframe of the value counts. Must be ordered by value, not counts 
+        df = pd.DataFrame(values, columns=[attribute]).value_counts().sort_index()
+
+        return df
+    
+    def _plot_attributes_distributions(self) -&gt; None:
+        &#34;&#34;&#34;
+        Plots the distributions of the attributes for the agents.
+        &#34;&#34;&#34;
+
+        for attribute in self.attributes:
+            self._plot_attribute_distribution(attribute)
+        
+    def _plot_attribute_distribution(self, attribute: str) -&gt; pd.DataFrame:
+        &#34;&#34;&#34;
+        Plots the distribution of a given attribute for the agents.
+
+        Args:
+            attribute (str): The attribute whose distribution is to be plotted.
+        
+        Returns:
+            pd.DataFrame: The data used for plotting.
+        &#34;&#34;&#34;
+
+        df = self.attributes_distributions[attribute]
+        df.plot(kind=&#39;bar&#39;, title=f&#34;{attribute.capitalize()} distribution&#34;)
         plt.show()
 
-    return df
-    
 
 
-def plot_interest_distribution(agents:List[TinyPerson], title:str=&#34;Interest Distribution&#34;, show:bool=True):
-    &#34;&#34;&#34;
-    Plots the interest distribution of the given agents.
-
-    Args:
-        agents (List[TinyPerson]): The agents whose interest distribution is to be plotted.
-        title (str, optional): The title of the plot. Defaults to &#34;Interest Distribution&#34;.
-        show (bool, optional): Whether to show the plot. Defaults to True.
-    
-    Returns:
-        pd.DataFrame: The data used for plotting.
-    &#34;&#34;&#34;
-    interests = [agent.get(&#34;interests&#34;) for agent in agents]
-
-    # corresponding dataframe
-    df = pd.DataFrame(interests, columns=[&#34;Interests&#34;])
-
-    # let&#39;s plot a pie chart
-    df[&#34;Interests&#34;].value_counts().plot.pie(title=title)
-    if show:
-        plt.show()
-
-    return df
-
-    </code></pre>
+        </code></pre>
 </details>
 </section>
 <section>
@@ -100,105 +144,158 @@ def plot_interest_distribution(agents:List[TinyPerson], title:str=&#34;Interest 
 <section>
 </section>
 <section>
-<h2 class="section-title" id="header-functions">Functions</h2>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="tinytroupe.profiling.plot_age_distribution"><code class="name flex">
-<span>def <span class="ident">plot_age_distribution</span></span>(<span>agents: List[<a title="tinytroupe.agent.TinyPerson" href="agent.html#tinytroupe.agent.TinyPerson">TinyPerson</a>], title: str = 'Age Distribution', show: bool = True)</span>
+<dt id="tinytroupe.profiling.Profiler"><code class="flex name class">
+<span>class <span class="ident">Profiler</span></span>
+<span>(</span><span>attributes: List[str] = ['age', 'occupation.title', 'nationality'])</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Plots the age distribution of the given agents.</p>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Profiler:
+
+    def __init__(self, attributes: List[str]=[&#34;age&#34;, &#34;occupation.title&#34;, &#34;nationality&#34;]) -&gt; None: 
+        self.attributes = attributes
+        
+        self.attributes_distributions = {} # attribute -&gt; Dataframe
+
+    def profile(self, agents: List[dict], plot:bool=True) -&gt; dict:   
+        &#34;&#34;&#34;
+        Profiles the given agents.
+
+        Args:
+            agents (List[dict]): The agents to be profiled.
+        
+        &#34;&#34;&#34;
+
+        self.attributes_distributions = self._compute_attributes_distributions(agents)
+
+        if plot:
+            self.render()
+            
+        return self.attributes_distributions
+
+    def render(self) -&gt; None:
+        &#34;&#34;&#34;
+        Renders the profile of the agents.
+        &#34;&#34;&#34;
+        return self._plot_attributes_distributions()
+        
+
+    def _compute_attributes_distributions(self, agents:list) -&gt; dict:
+        &#34;&#34;&#34;
+        Computes the distributions of the attributes for the agents.
+
+        Args:
+            agents (list): The agents whose attributes distributions are to be computed.
+        
+        Returns:
+            dict: The distributions of the attributes.
+        &#34;&#34;&#34;
+        distributions = {}
+        for attribute in self.attributes:
+            distributions[attribute] = self._compute_attribute_distribution(agents, attribute)
+        
+        return distributions
+    
+    def _compute_attribute_distribution(self, agents: list, attribute: str) -&gt; pd.DataFrame:
+        &#34;&#34;&#34;
+        Computes the distribution of a given attribute for the agents and plots it.
+
+        Args:
+            agents (list): The agents whose attribute distribution is to be plotted.
+        
+        Returns:
+            pd.DataFrame: The data used for plotting.
+        &#34;&#34;&#34;
+        values = [agent.get(attribute) for agent in agents]
+
+        # corresponding dataframe of the value counts. Must be ordered by value, not counts 
+        df = pd.DataFrame(values, columns=[attribute]).value_counts().sort_index()
+
+        return df
+    
+    def _plot_attributes_distributions(self) -&gt; None:
+        &#34;&#34;&#34;
+        Plots the distributions of the attributes for the agents.
+        &#34;&#34;&#34;
+
+        for attribute in self.attributes:
+            self._plot_attribute_distribution(attribute)
+        
+    def _plot_attribute_distribution(self, attribute: str) -&gt; pd.DataFrame:
+        &#34;&#34;&#34;
+        Plots the distribution of a given attribute for the agents.
+
+        Args:
+            attribute (str): The attribute whose distribution is to be plotted.
+        
+        Returns:
+            pd.DataFrame: The data used for plotting.
+        &#34;&#34;&#34;
+
+        df = self.attributes_distributions[attribute]
+        df.plot(kind=&#39;bar&#39;, title=f&#34;{attribute.capitalize()} distribution&#34;)
+        plt.show()</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="tinytroupe.profiling.Profiler.profile"><code class="name flex">
+<span>def <span class="ident">profile</span></span>(<span>self, agents: List[dict], plot: bool = True) ‑> dict</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Profiles the given agents.</p>
 <h2 id="args">Args</h2>
 <dl>
-<dt><strong><code>agents</code></strong> :&ensp;<code>List[TinyPerson]</code></dt>
-<dd>The agents whose age distribution is to be plotted.</dd>
-<dt><strong><code>title</code></strong> :&ensp;<code>str</code>, optional</dt>
-<dd>The title of the plot. Defaults to "Age Distribution".</dd>
-<dt><strong><code>show</code></strong> :&ensp;<code>bool</code>, optional</dt>
-<dd>Whether to show the plot. Defaults to True.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>pd.DataFrame</code></dt>
-<dd>The data used for plotting.</dd>
+<dt><strong><code>agents</code></strong> :&ensp;<code>List[dict]</code></dt>
+<dd>The agents to be profiled.</dd>
 </dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def plot_age_distribution(agents:List[TinyPerson], title:str=&#34;Age Distribution&#34;, show:bool=True):
+<pre><code class="python">def profile(self, agents: List[dict], plot:bool=True) -&gt; dict:   
     &#34;&#34;&#34;
-    Plots the age distribution of the given agents.
+    Profiles the given agents.
 
     Args:
-        agents (List[TinyPerson]): The agents whose age distribution is to be plotted.
-        title (str, optional): The title of the plot. Defaults to &#34;Age Distribution&#34;.
-        show (bool, optional): Whether to show the plot. Defaults to True.
+        agents (List[dict]): The agents to be profiled.
     
-    Returns:
-        pd.DataFrame: The data used for plotting.
     &#34;&#34;&#34;
-    ages = [agent.get(&#34;age&#34;) for agent in agents]
 
-    # corresponding dataframe
-    df = pd.DataFrame(ages, columns=[&#34;Age&#34;])
-    df[&#34;Age&#34;].plot.hist(bins=20, title=title)
-    if show:
-        plt.show()
+    self.attributes_distributions = self._compute_attributes_distributions(agents)
 
-    return df</code></pre>
+    if plot:
+        self.render()
+        
+    return self.attributes_distributions</code></pre>
 </details>
 </dd>
-<dt id="tinytroupe.profiling.plot_interest_distribution"><code class="name flex">
-<span>def <span class="ident">plot_interest_distribution</span></span>(<span>agents: List[<a title="tinytroupe.agent.TinyPerson" href="agent.html#tinytroupe.agent.TinyPerson">TinyPerson</a>], title: str = 'Interest Distribution', show: bool = True)</span>
+<dt id="tinytroupe.profiling.Profiler.render"><code class="name flex">
+<span>def <span class="ident">render</span></span>(<span>self) ‑> None</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Plots the interest distribution of the given agents.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>agents</code></strong> :&ensp;<code>List[TinyPerson]</code></dt>
-<dd>The agents whose interest distribution is to be plotted.</dd>
-<dt><strong><code>title</code></strong> :&ensp;<code>str</code>, optional</dt>
-<dd>The title of the plot. Defaults to "Interest Distribution".</dd>
-<dt><strong><code>show</code></strong> :&ensp;<code>bool</code>, optional</dt>
-<dd>Whether to show the plot. Defaults to True.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>pd.DataFrame</code></dt>
-<dd>The data used for plotting.</dd>
-</dl></div>
+<div class="desc"><p>Renders the profile of the agents.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def plot_interest_distribution(agents:List[TinyPerson], title:str=&#34;Interest Distribution&#34;, show:bool=True):
+<pre><code class="python">def render(self) -&gt; None:
     &#34;&#34;&#34;
-    Plots the interest distribution of the given agents.
-
-    Args:
-        agents (List[TinyPerson]): The agents whose interest distribution is to be plotted.
-        title (str, optional): The title of the plot. Defaults to &#34;Interest Distribution&#34;.
-        show (bool, optional): Whether to show the plot. Defaults to True.
-    
-    Returns:
-        pd.DataFrame: The data used for plotting.
+    Renders the profile of the agents.
     &#34;&#34;&#34;
-    interests = [agent.get(&#34;interests&#34;) for agent in agents]
-
-    # corresponding dataframe
-    df = pd.DataFrame(interests, columns=[&#34;Interests&#34;])
-
-    # let&#39;s plot a pie chart
-    df[&#34;Interests&#34;].value_counts().plot.pie(title=title)
-    if show:
-        plt.show()
-
-    return df</code></pre>
+    return self._plot_attributes_distributions()</code></pre>
 </details>
 </dd>
 </dl>
-</section>
-<section>
+</dd>
+</dl>
 </section>
 </article>
 <nav id="sidebar">
@@ -212,10 +309,15 @@ def plot_interest_distribution(agents:List[TinyPerson], title:str=&#34;Interest 
 <li><code><a title="tinytroupe" href="index.html">tinytroupe</a></code></li>
 </ul>
 </li>
-<li><h3><a href="#header-functions">Functions</a></h3>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="tinytroupe.profiling.Profiler" href="#tinytroupe.profiling.Profiler">Profiler</a></code></h4>
 <ul class="">
-<li><code><a title="tinytroupe.profiling.plot_age_distribution" href="#tinytroupe.profiling.plot_age_distribution">plot_age_distribution</a></code></li>
-<li><code><a title="tinytroupe.profiling.plot_interest_distribution" href="#tinytroupe.profiling.plot_interest_distribution">plot_interest_distribution</a></code></li>
+<li><code><a title="tinytroupe.profiling.Profiler.profile" href="#tinytroupe.profiling.Profiler.profile">profile</a></code></li>
+<li><code><a title="tinytroupe.profiling.Profiler.render" href="#tinytroupe.profiling.Profiler.render">render</a></code></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

@@ -141,9 +141,11 @@ class Proposition:
                                     
                                         Your output **must**:
                                         - necessarily start with the word "True" or "False";
-                                        - optionally be followed by a justification.
-                                    
-                                        For example, the output could be of the form: "True, because <REASON HERE>." or merely "True" if no justification is needed.
+                                        - optionally be followed by a justification. Please provide a very detailed justifications, including very concrete and specific mentions to elements that contributed to reducing or increasing the score. Examples:
+                                              * WRONG JUSTIFICATION (too abstract) example: " ... the agent behavior did not comply with key parts of its specification, thus a reduced score ... "
+                                              * CORRECT JUSTIFICATION (very precise) example: " ... the agent behavior deviated from key parts of its specification, specifically: S_1 was not met because <reason>, ..., S_n was not met becasue <reason>. Thus, a reduced score ..."
+                                        
+                                        For example, the output could be of the form: "True, because <HIGHLY DETAILED, CONCRETE AND SPECIFIC REASONS HERE>." or merely "True" if no justification is needed.
                                         """, 
 
                                         user_prompt=f"""
@@ -171,8 +173,11 @@ class Proposition:
 
                                         output_type=bool,
                                         enable_reasoning_step=True,
-                                        model=model,
-                                        temperature=0.5)
+
+                                        temperature=0.5,
+                                        frequency_penalty=0.0, 
+                                        presence_penalty=0.0,
+                                        model=model)
             
             self.value = self.llm_chat()
 
@@ -266,9 +271,11 @@ class Proposition:
                                     
                                         Your output **must**:
                                           - necessarily start with an integer between {Proposition.MIN_SCORE} and {Proposition.MAX_SCORE}, inclusive;
-                                          - be followed by a justification.
-                                    
-                                        For example, the output could be of the form: "1, because <REASON HERE>."
+                                          - be followed by a justification. Please provide a very detailed justifications, including very concrete and specific mentions to elements that contributed to reducing or increasing the score. Examples:
+                                              * WRONG JUSTIFICATION (too abstract) example: " ... the agent behavior did not comply with key parts of its specification, thus a reduced score ... "
+                                              * CORRECT JUSTIFICATION (very precise) example: " ... the agent behavior deviated from key parts of its specification, specifically: S_1 was not met because <reason>, ..., S_n was not met becasue <reason>. Thus, a reduced score ..."
+                                        
+                                        For example, the output could be of the form: "1, because <HIGHLY DETAILED, CONCRETE AND SPECIFIC REASONS HERE>."
                                         """, 
 
                                         user_prompt=f"""
@@ -295,6 +302,10 @@ class Proposition:
 
                                         output_type=int,
                                         enable_reasoning_step=True,
+
+                                        temperature=1.0,
+                                        frequency_penalty=0.0, 
+                                        presence_penalty=0.0,
 
                                         # Use a reasoning model, which allows careful evaluation of the proposition.
                                         model=model)
@@ -326,22 +337,34 @@ class Proposition:
         Get recommendations for improving the proposition.
         """
 
-        if self.llm_chat is None:
-            raise ValueError("No evaluation has been performed yet. Please evaluate the proposition before getting recommendations.")
-
-        self.llm_chat.add_user_message(\
-            """
-            To help improve the score next time, please list:
-            - all recommendations for improvements based on the current score.
-            - all criteria you are using to assign scores, and how to best satisfy them
-
-            For both cases:
-            - besides guidelines, make sure to provide plenty of concrete examples of what to be done in order to maximize each criterion.
-            - avoid being generic or abstract. Instead, all of your criteria and recommendations should be given in very concrete terms that would work specifically for the case just considered.            
-            """)
-        
-        recommendation = self.llm_chat(output_type=None)
-        
+        # TODO this is not working, let's try something else
+        #
+        #if self.llm_chat is None:
+        #    raise ValueError("No evaluation has been performed yet. Please evaluate the proposition before getting recommendations.")
+#
+        #self.llm_chat.add_system_message(\
+        #    """
+        #    You will now act as a system that provides recommendations for the improvement of the scores previously assigned to propositions.
+        #    You will now output text that contains analysises, recommendations and other information as requested by the user.
+        #    """)
+#
+        #self.llm_chat.add_user_message(\
+        #    """    
+        #    To help improve the score next time, please list the following in as much detail as possible:
+        #      - all recommendations for improvements based on the current score.
+        #      - all criteria you are using to assign scores, and how to best satisfy them
+#
+        #    For both cases:
+        #      - besides guidelines, make sure to provide plenty of concrete examples of what to be done in order to maximize each criterion.
+        #      - avoid being generic or abstract. Instead, all of your criteria and recommendations should be given in very concrete terms that would work specifically for the case just considered.            
+        #    
+        #    Note that your output is a TEXT with the various recommendations, information and tips, not a JSON object.
+#
+        #    Recommendations:
+        #    """)
+        #
+        #recommendation = self.llm_chat(output_type=str, enable_json_output_format=False)
+        recommendation = "No additional recommendations at this time."
         return recommendation
 
     def _model(self, use_reasoning_model):

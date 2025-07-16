@@ -1,5 +1,6 @@
 import json
 import copy
+from pydantic import BaseModel
 
 from tinytroupe.utils import logger
 
@@ -23,11 +24,14 @@ class JsonSerializableRegistry:
         # Gather all serializable attributes from the class hierarchy
         serializable_attrs = set()
         suppress_attrs = set()
+        custom_serializers = {}
         for cls in self.__class__.__mro__:  # Traverse the class hierarchy
             if hasattr(cls, 'serializable_attributes') and isinstance(cls.serializable_attributes, list):
                 serializable_attrs.update(cls.serializable_attributes)
             if hasattr(cls, 'suppress_attributes_from_serialization') and isinstance(cls.suppress_attributes_from_serialization, list):
                 suppress_attrs.update(cls.suppress_attributes_from_serialization)
+            if hasattr(cls, 'custom_serializers') and isinstance(cls.custom_serializers, dict):
+                custom_serializers.update(cls.custom_serializers)
         
         # Override attributes with method parameters if provided
         if include:
@@ -35,21 +39,33 @@ class JsonSerializableRegistry:
         if suppress:
             suppress_attrs.update(suppress)
         
+        def aux_serialize_item(item):
+            if isinstance(item, JsonSerializableRegistry):
+                return item.to_json(serialization_type_field_name=serialization_type_field_name)
+            elif isinstance(item, BaseModel):
+                # If it's a Pydantic model, convert it to a dict first
+                logger.debug(f"Serializing Pydantic model: {item}")
+                return item.model_dump(mode="json", exclude_unset=True)
+            else:
+                return copy.deepcopy(item)
+        
         result = {serialization_type_field_name: self.__class__.__name__}
         for attr in serializable_attrs if serializable_attrs else self.__dict__:
             if attr not in suppress_attrs:
                 value = getattr(self, attr, None)
 
                 attr_renamed = self._programmatic_name_to_json_name(attr)
-                if isinstance(value, JsonSerializableRegistry):
-                    result[attr_renamed] = value.to_json(serialization_type_field_name=serialization_type_field_name)
+                
+                # Check if there's a custom serializer for this attribute
+                if attr in custom_serializers:
+                    result[attr_renamed] = custom_serializers[attr](value)
                 elif isinstance(value, list):
-                    result[attr_renamed] = [item.to_json(serialization_type_field_name=serialization_type_field_name) if isinstance(item, JsonSerializableRegistry) else copy.deepcopy(item) for item in value]
+                    result[attr_renamed] = [aux_serialize_item(item) for item in value]
                 elif isinstance(value, dict):
-                    result[attr_renamed] = {k: v.to_json(serialization_type_field_name=serialization_type_field_name) if isinstance(v, JsonSerializableRegistry) else copy.deepcopy(v) for k, v in value.items()}
-                else:
-                    result[attr_renamed] = copy.deepcopy(value)
-        
+                    result[attr_renamed] = {k: aux_serialize_item(v) for k, v in value.items()}
+                else: # isinstance(value, JsonSerializableRegistry) or isinstance(value, BaseModel) or other types
+                    result[attr_renamed] = aux_serialize_item(value)
+
         if file_path:
             # Create directories if they do not exist
             import os
@@ -85,13 +101,13 @@ class JsonSerializableRegistry:
         
         # Gather all serializable attributes from the class hierarchy
         serializable_attrs = set()
-        custom_serialization_initializers = {}
+        custom_deserializers = {}
         suppress_attrs = set(suppress) if suppress else set()
         for target_mro in target_class.__mro__:
             if hasattr(target_mro, 'serializable_attributes') and isinstance(target_mro.serializable_attributes, list):
                 serializable_attrs.update(target_mro.serializable_attributes)
-            if hasattr(target_mro, 'custom_serialization_initializers') and isinstance(target_mro.custom_serialization_initializers, dict):
-                custom_serialization_initializers.update(target_mro.custom_serialization_initializers)
+            if hasattr(target_mro, 'custom_deserializers') and isinstance(target_mro.custom_deserializers, dict):
+                custom_deserializers.update(target_mro.custom_deserializers)
             if hasattr(target_mro, 'suppress_attributes_from_serialization') and isinstance(target_mro.suppress_attributes_from_serialization, list):
                 suppress_attrs.update(target_mro.suppress_attributes_from_serialization)
         
@@ -100,9 +116,9 @@ class JsonSerializableRegistry:
             key_in_json = cls._programmatic_name_to_json_name(key)
             if key_in_json in json_dict and key not in suppress_attrs:
                 value = json_dict[key_in_json]
-                if key in custom_serialization_initializers:
+                if key in custom_deserializers:
                     # Use custom initializer if provided
-                    setattr(instance, key, custom_serialization_initializers[key](value))
+                    setattr(instance, key, custom_deserializers[key](value))
                 elif isinstance(value, dict) and serialization_type_field_name in value:
                     # Assume it's another JsonSerializableRegistry object
                     setattr(instance, key, JsonSerializableRegistry.from_json(value, serialization_type_field_name=serialization_type_field_name))
@@ -141,12 +157,19 @@ class JsonSerializableRegistry:
                 if hasattr(base, 'suppress_attributes_from_serialization') and isinstance(base.suppress_attributes_from_serialization, list):
                     cls.suppress_attributes_from_serialization = list(set(base.suppress_attributes_from_serialization + cls.suppress_attributes_from_serialization))
         
-        if hasattr(cls, 'custom_serialization_initializers') and isinstance(cls.custom_serialization_initializers, dict):
+        if hasattr(cls, 'custom_deserializers') and isinstance(cls.custom_deserializers, dict):
             for base in cls.__bases__:
-                if hasattr(base, 'custom_serialization_initializers') and isinstance(base.custom_serialization_initializers, dict):
-                    base_initializers = base.custom_serialization_initializers.copy()
-                    base_initializers.update(cls.custom_serialization_initializers)
-                    cls.custom_serialization_initializers = base_initializers
+                if hasattr(base, 'custom_deserializers') and isinstance(base.custom_deserializers, dict):
+                    base_initializers = base.custom_deserializers.copy()
+                    base_initializers.update(cls.custom_deserializers)
+                    cls.custom_deserializers = base_initializers
+        
+        if hasattr(cls, 'custom_serializers') and isinstance(cls.custom_serializers, dict):
+            for base in cls.__bases__:
+                if hasattr(base, 'custom_serializers') and isinstance(base.custom_serializers, dict):
+                    base_serializers = base.custom_serializers.copy()
+                    base_serializers.update(cls.custom_serializers)
+                    cls.custom_serializers = base_serializers
 
     def _post_deserialization_init(self, **kwargs):
         # if there's a _post_init method, call it after deserialization

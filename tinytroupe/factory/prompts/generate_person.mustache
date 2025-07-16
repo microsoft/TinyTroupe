@@ -16,7 +16,12 @@ No general context was specified.
 {{#agent_particularities}}
 The agent particularities, in turn, are: {{agent_particularities}}.
 
-These are the specific requirements that you must consider, together with the general context, when generating the agent.
+These are the specific requirements that you must consider, together with the general context, when generating the agent. Note that for each particularity we can have:
+  - A concrete scalar value for a field (e.g., "Architect" for job): in this case, the agent must have that value for the corresponding field.
+  - A range of numberic values (e.g., [18, 60] for age): in this case, the agent must have a value for the corresponding field that is within that range. You are free to choose the specific value, as long as it is within the range.
+  - A list of values (e.g., ["male", "female"] `for gender): in this case, the agent must have a value for the corresponding field that is one of the values in the list. You are free to choose the specific value, as long as it is one of the values in the list.
+  - A list of values associated to proportions (e.g., {"rich": 0.1, "middle class":0.7, "poor": 0.2} for wealth): in this case, the agent must have a value for the corresponding field that is one of the values in the list, sampled according to the specified proportions.
+  - A broader characteristic descrition (e.g., "Meticulous and competent, but not a very nice person at all."): in this case, the agent must have values for the corresponding fields that are consistent with the requirements. You are free to choose the specific values, as long as they are consistent with the requirements. Try to make the specification as rich as possible based on this.
 {{/agent_particularities}}
 {{^agent_particularities}}
 There are no agent particularities in this case, so just generate an agent based on the general
@@ -28,6 +33,7 @@ context (if any).
 To generate the requested agents, you **must** to follow these directives:
   - If a general context is provided, you must ensure the generated agent has relevant details that will allow the a realistic simulation of a real person in that context. To do so, you should include nunanced details that could be relevant for the simulation in that context.
   - Given the context and agent particularities, please, be creative to generate details about the person for each of the fields in the response. Sample from a wide range of reasonable possibilities. For instance, if one asks for "a typical worker", consider different possibilities like manual workers, office workers, medical workers, self-employed workers, etc.
+  - You must add as much details as possible, but make sure they are consistent with the context and agent particularities. That is to say, the details can be completely unrelated to the context and agent particularities, but they must not contradict them.
   - The agents you generate must sound authentic and realistic, considering the context and particularities provided. Avoid platitudes and cliches. The agents you generate represent real humans, and as such encompass all the diversity and complexity of real people. So not only happy and successful people, but also people with problems, fears, and difficulties.
   - When generating a person specification, be free to use whatever elements are most realistic, even if they are typically considered undesireable (e.g., vicious people are part of the general population). We need a realistic sample of people, not a caricature. So think deeply about what would make each person you generate authentic with respect the provided context and particularities.
 

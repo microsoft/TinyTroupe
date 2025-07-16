@@ -1,0 +1,1365 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>tinytroupe.agent.action_generator API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>tinytroupe.agent.action_generator</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import json 
+import statistics  # Add this import
+
+import tinytroupe.utils as utils
+from tinytroupe.control import transactional, current_simulation
+import tinytroupe.openai_utils as openai_utils
+from tinytroupe.validation import propositions
+from tinytroupe.utils import JsonSerializableRegistry
+from tinytroupe.experimentation import Proposition
+
+
+class ActionGenerator(JsonSerializableRegistry):
+
+    def __init__(self, max_attempts=2, 
+                 enable_quality_checks=True,
+                 enable_regeneration=True,
+                 enable_direct_correction=False, # TODO enable_direct_correction not working very well yet
+                 enable_quality_check_for_persona_adherence=True,
+                 enable_quality_check_for_selfconsistency=True,
+                 enable_quality_check_for_fluency=True,
+                 enable_quality_check_for_suitability=False,
+                 enable_quality_check_for_similarity=False,
+                 continue_on_failure=True,
+                 quality_threshold=7,
+                 max_action_similarity=0.6,
+                 enable_reasoning_step=False): # TODO enable_reasoning_step not working very well yet
+        &#34;&#34;&#34;
+        Initializes the ActionGenerator.
+
+        Args:
+            max_attempts (int): The maximum number of attempts to generate an action.
+            enable_quality_checks (bool): Whether to perform quality checks on the generated action. If False, the first action generated
+              is returned without any checks.
+            enable_regeneration (bool): Whether to try to make the agent regenerate the action if the first attempt fails.
+            enable_direct_correction (bool): Whether to directly correct the action if the first attempt fails, without asking the agent to regenerate it.
+            enable_quality_check_for_persona_adherence (bool): Whether to check the action for persona adherence.
+            enable_quality_check_for_selfconsistency (bool): Whether to check the action for self-consistency.
+            enable_quality_check_for_fluency (bool): Whether to check the action for fluency.
+            enable_quality_check_for_suitability (bool): Whether to check the action for suitability.
+            continue_on_failure (bool): Whether to return the last tentative action, even if it fails to pass quality checks.
+               Presumably, the last tentative action is the one that is most likely to be correct, since it has gone through the most iterations of regeneration and correction.
+            quality_threshold (int): The minimum score for each quality check for the action to be considered good quality.
+            enable_reasoning_step (bool): Whether to enable reasoning step in the action generation process. This IS NOT the use of &#34;reasoning models&#34; (e.g., o1, o3),
+              but rather the use of an additional reasoning step in the regular text completion.
+        &#34;&#34;&#34;
+         
+        self.max_attempts = max_attempts
+        self.regeneration_attempts = 0
+        self.direct_correction_attempts = 0
+        
+        self.enable_quality_checks = enable_quality_checks
+        self.enable_regeneration = enable_regeneration
+        self.enable_direct_correction = enable_direct_correction
+
+        self.enable_quality_check_for_persona_adherence = enable_quality_check_for_persona_adherence
+        self.enable_quality_check_for_selfconsistency = enable_quality_check_for_selfconsistency   
+        self.enable_quality_check_for_fluency = enable_quality_check_for_fluency
+        self.enable_quality_check_for_suitability = enable_quality_check_for_suitability
+        self.enable_quality_check_for_similarity = enable_quality_check_for_similarity
+
+        self.continue_on_failure = continue_on_failure
+        self.quality_threshold = quality_threshold
+        self.max_action_similarity = max_action_similarity
+
+        self.enable_reasoning_step = enable_reasoning_step
+
+        # This generator has its own copies of the propositions, in order to be able to isolate them
+        # from other agents, particularly when running the simulation in parallel.
+        self.action_persona_adherence = propositions.hard_action_persona_adherence.copy()
+        self.action_self_consistency = propositions.action_self_consistency.copy()
+        self.action_fluency = propositions.action_fluency.copy()
+        self.action_suitability = propositions.action_suitability.copy()
+
+        # initialize statistics  
+        self.regeneration_failures = 0
+        self.direct_correction_failures = 0
+        self.regeneration_scores = []
+        self.direct_correction_scores = []
+        self.total_actions_produced = 0
+        self.total_original_actions_succeeded = 0
+
+    def generate_next_action(self, agent, current_messages:list):
+
+        from tinytroupe.agent import logger # import here to avoid circular import issues
+
+        # clean up (remove unnecessary elements) and copy the list of current messages to avoid modifying the original ones
+        current_messages = [
+            {&#34;role&#34;: msg[&#34;role&#34;], &#34;content&#34;: json.dumps(msg[&#34;content&#34;])}
+            for msg in current_messages
+        ]
+
+        # starts with no feedback
+        cur_feedback = None 
+        all_negative_feedbacks = []
+
+        best_action = None
+        best_role = None
+        best_content = None
+        best_score = float(&#39;-inf&#39;)
+        original_score = None
+
+        def update_best(tentative_action, role, content, total_score):
+            nonlocal best_action, best_role, best_content, best_score
+            if total_score &gt; best_score:
+                best_action = tentative_action
+                best_role = role
+                best_content = content
+                best_score = total_score
+
+        def finish_return(tentative_action, role, content, final_score):
+            if original_score is not None and final_score &gt; original_score:
+                logger.warning(f&#34;[{agent.name}] improved total quality from {original_score} to {final_score}&#34;)
+            
+            # ensure that tentative_action and content are dicts
+            if isinstance(tentative_action, str):
+                tentative_action = json.loads(tentative_action)
+            if isinstance(content, str):
+                content = json.loads(content)
+
+            return tentative_action, role, content, all_negative_feedbacks
+
+        # First attempt to generate an action
+        tentative_action, role, content = self._generate_tentative_action(agent, current_messages, 
+                                                                          feedback_from_previous_attempt=cur_feedback,
+                                                                          previous_tentative_action=None,
+                                                                          previous_llm_role=None, previous_llm_content=None)
+        
+        if self.enable_quality_checks:
+            # First quality check
+            good_quality, total_score, cur_feedback = self._check_action_quality(&#34;Original Action&#34;, agent, tentative_action=tentative_action)
+            update_best(tentative_action, role, content, total_score)
+            if original_score is None:
+                original_score = total_score
+            if good_quality:
+                self.total_original_actions_succeeded += 1
+                # Found a good action, let&#39;s return it now
+                return finish_return(tentative_action, role, content, total_score) 
+            else:
+                logger.warning(f&#34;[{agent.name}] Original action did not pass quality checks: {cur_feedback}&#34;)
+                all_negative_feedbacks.append(cur_feedback)
+                      
+
+            # GENERATE AND REGENERATE the action by the agent 
+            #
+            # We first try to make the agent generate (via the current_messages passed) or regenerate the 
+            # action based on feedback.
+            if self.enable_regeneration:
+                for attempt in range(self.max_attempts):
+                    
+                    # Generate tentative action
+                    tentative_action, role, content = self._generate_tentative_action(agent, current_messages, 
+                                                                                      feedback_from_previous_attempt=cur_feedback,
+                                                                                      previous_tentative_action=tentative_action,
+                                                                                      previous_llm_role=role, previous_llm_content=content)
+                    logger.debug(f&#34;[{agent.name}] Tentative action: {tentative_action}&#34;) 
+                    self.regeneration_attempts += 1
+                
+                    good_quality, total_score, cur_feedback = self._check_action_quality(f&#34;Action Regeneration ({attempt})&#34;, agent, tentative_action=tentative_action)
+                    update_best(tentative_action, role, content, total_score)
+                    if good_quality:
+                        # Found a good action, let&#39;s return it now
+                        return finish_return(tentative_action, role, content, total_score)        
+                    else:
+                        self.regeneration_failures += 1
+                        self.regeneration_scores.append(total_score)  # Assuming feedback contains a score
+                        all_negative_feedbacks.append(cur_feedback)
+
+            # CORRECT OR REPHRASE the action directly
+            #
+            # If we got here, it means the agent was not able to directly generate an action
+            # of sufficient quality, so we&#39;ll try to rephrase it correctly directly now.
+            if self.enable_direct_correction:
+                for attempt in range(self.max_attempts):
+                    tentative_action, role, content = self._correct_action(tentative_action, feedback=cur_feedback, llm_role=role, llm_content=content)
+                    logger.warning(f&#34;[{agent.name}] Rephrased the action directly as: {tentative_action}&#34;) 
+                    self.direct_correction_attempts += 1
+                
+                    good_quality, total_score, cur_feedback = self._check_action_quality(f&#34;Direct Action Correction or Rephrasing ({attempt})&#34;, agent, tentative_action=tentative_action)
+                    update_best(tentative_action, role, content, total_score)
+                    if good_quality:
+                        # Found a good action, let&#39;s return it now
+                        return finish_return(tentative_action, role, content, total_score)                    
+                    else:
+                        self.direct_correction_failures += 1
+                        self.direct_correction_scores.append(total_score)  # Assuming feedback contains a score
+                        all_negative_feedbacks.append(cur_feedback)
+
+            # If we got here, all attempts to generate a good action failed
+            if self.continue_on_failure:
+                logger.warning(f&#34;[{agent.name}] All attempts to generate a good action failed. Returning the best one.&#34;)
+                return finish_return(best_action, best_role, best_content, best_score)
+            
+            else:
+                raise PoorQualityActionException()
+        
+        else:
+            # If we got here, it means that the action was generated without quality checks
+            # and we are not doing any regeneration or direct correction, so we can return it now.
+            return tentative_action, role, content, []
+
+    def _generate_tentative_action(self, agent, current_messages, feedback_from_previous_attempt=None, 
+                                   previous_tentative_action=None,
+                                   previous_llm_role=None, previous_llm_content=None):
+
+        from tinytroupe.agent import logger, CognitiveActionModel, CognitiveActionModelWithReasoning # import here to avoid circular import issues
+
+        self.total_actions_produced += 1
+
+        # shallow clone current_messages
+        current_messages_context = current_messages.copy()
+
+        logger.debug(f&#34;[{agent.name}] Sending messages to OpenAI API&#34;)
+        logger.debug(f&#34;[{agent.name}] Last interaction: {current_messages[-1]}&#34;)
+
+        if feedback_from_previous_attempt:
+            #current_messages_copy.append({&#34;role&#34;: previous_llm_role,
+            #                        &#34;content&#34;: &#34;TENTATIVE ACTION:&#34; + json.dumps(previous_llm_content)})
+            
+            current_messages_context.append({&#34;role&#34;: &#34;user&#34;, 
+                             &#34;content&#34;: \
+                                f&#34;&#34;&#34;
+                                WARNING! TENTATIVE ACTION GENERATION FAILED IN QUALITY CHECKS!
+
+                                You were about to produce the following action, as a sequence for the previous actions or feedbacks (if any):
+                                      ```
+                                      {previous_tentative_action}
+                                      ```
+                                   
+                                However, it failed to pass the quality checks (as described in the quality feedback below), and therefore it was aborted and not added
+                                to the simulation trajectory.
+
+                                Now you **must** try again to generate a **BETTER** action, such that the quality issues mentioned in the feedback are addressed,
+                                or instead issue a DONE action and stop for this turn if it is unclear how to improve quality. 
+                                Your objective is to **PASS** the quality checks this time if possible.
+
+                                You can choose either to FIX somehow the action you were about to produce, or to generate something COMPLETELY NEW and DIFFERENT.  
+                                Each time your tentative action fail a quality check, you should be MORE RADICAL in your changes, and try to produce 
+                                something that is **very** different from the previous attempts.
+
+                                If it is unclear how to produce a better action, you can choose to issue a DONE action instead. 
+                                **It is better to stop acting than to act poorly.**
+                                
+                                In general, desireable properties of the action are:
+                                  - The action is consistent with the agent&#39;s persona, it is what one would expect from the agent given its persona.
+                                  - The action is self-consistent, it does contradict the agent&#39;s previous actions.
+                                  - The action is fluent and natural, and does not repeat itself or use overly formulaic language.
+                                
+                                {feedback_from_previous_attempt}
+                                &#34;&#34;&#34;})
+            
+            current_messages_context.append({&#34;role&#34;: &#34;system&#34;, 
+                                     &#34;content&#34;: &#34;Now generate a better action based on the above feedback, or issue a DONE action if it is unclear how to improve quality.&#34;})
+
+        
+        
+        # TODO: remind the model of some key rules to follow?
+        #
+        #
+        #current_messages_context.append({&#34;role&#34;: &#34;user&#34;, 
+        #                        &#34;content&#34;: &#34;&#34;&#34;
+        #                                    Now you must generate a sequence of actions following the directives in your agent specification, 
+        #                                    complying with **all** instructions and contraints related to the action you use.
+        #                                    In particular, to ensure the quality of your actions:
+        #                                    - **DO NOT** generate similar content in a row! We want human-like, natural and fluent behavior, and thus avoid#repeatitive behavior.
+        #                                    - THINK before taking further actions.
+        #                                    - Avoid thinking for too long, and actually take some concrete action before being done, particularly if you are expected to provide some action.
+        #                                    - Intercalate thinking with other actions.
+        #                                    - The new sequence of actions must be coherent and consistent with the previous actions and stimuli. For example, do not assume an expected or
+        #                                        desireable action already happened if that&#39;s not registered in the simulation history.
+        #                                    - If you received any quality feedback, you **MUST** take it into account and improve your performance. Your next actions
+        #                                        **must** be better than your previous ones if possible.
+        #                                
+        #                                    If you can&#39;t produce a very good action, you may just issue a DONE action instead and remain silent. Rules to follow in #this case:
+        #                                    - It is better to remain silent than repeating similar actions or making other mistakes.
+        #                                    - Avoid remaining silent for too long (i.e., more than 3 times in a row), as this looks robotic and unnatural. If #necessary, you
+        #                                        can communicate your difficulties in coming up with a proper action, or just say something like &#34;I don&#39;t know what to say&#34;.
+        #                                    - In case your thoughts or goals insistenly require you to **not** being quiet or silent, then you avoid just issuing #DONE if possible,
+        #                                        and try to produce a new action. In this case, the new action might refer to the difficulties you are having in #coming up with 
+        #                                        a proper action in the first place.
+        #                                
+        #                                    All of these actions **MUST** be rendered following the JSON specification perfectly, including all required keys (even #if their value is empty), **ALWAYS**.
+        #                                    &#34;&#34;&#34;
+        #                        })
+#
+
+        current_messages_context.append({&#34;role&#34;: &#34;system&#34;, 
+                                         &#34;content&#34;: &#34;Remember: the action you will now generate **MUST** be a **well-formatted** and **valid** JSON object. No extra text, no extra brackets, commas, or other syntax errors.&#34;})
+
+        if not self.enable_reasoning_step:
+            logger.debug(f&#34;[{agent.name}] Reasoning step disabled.&#34;)
+            next_message = openai_utils.client().send_message(current_messages_context, response_format=CognitiveActionModel)
+            
+        else:
+            logger.debug(f&#34;[{agent.name}] Reasoning step enabled.&#34;)
+
+            # If the reasoning step is enabled, we add a system message to the context asking it to think step-by-step
+            #
+            #
+            #current_messages_context.append({&#34;role&#34;: &#34;system&#34;,
+            #                                &#34;content&#34;: &#34;In your response, you first use the \&#34;reasoning\&#34; field to think step-by-step about what is the next action and cognitive state that you are going to generate. To do so, you carefully consider: the agent specification given initially; additional instructions given later; and the history of stimuli and actions present in the simulation trajectory.&#34; +
+            #                                           &#34;Then, you generate the action in the \&#34;action\&#34; field, and generate cognitive state in the \&#34;cognitive_state\&#34; field.&#34; })
+            current_messages_context.append({&#34;role&#34;: &#34;system&#34;,
+                                            &#34;content&#34;: &#34;Use the \&#34;reasoning\&#34; field to add any reasoning process you might wish to use before generating the next action and cognitive state. &#34;})
+
+            next_message = openai_utils.client().send_message(current_messages_context, response_format=CognitiveActionModelWithReasoning)
+
+        logger.debug(f&#34;[{agent.name}] Received message: {next_message}&#34;)
+
+        role, content = next_message[&#34;role&#34;], utils.extract_json(next_message[&#34;content&#34;])
+
+        action = content[&#39;action&#39;]
+        logger.debug(f&#34;{agent.name}&#39;s action: {action}&#34;)
+
+        return action, role, content
+    
+    ###############################################################################################
+    # Quality evaluation methods
+    ###############################################################################################
+
+    def _check_action_quality(self, stage, agent, tentative_action):
+
+        from tinytroupe.agent import logger # import here to avoid circular import issues
+
+        #
+        # Compute various propositions about the action
+        #
+        persona_adherence_passed, persona_adherence_score, persona_adherence_feedback = \
+            self._check_proposition(agent, self.action_persona_adherence, tentative_action, enable_proposition_check=self.enable_quality_check_for_persona_adherence)
+        
+        selfconsistency_passed, selfconsistency_score, selfconsistency_feedback = \
+            self._check_proposition(agent, self.action_self_consistency, tentative_action, minimum_required_qty_of_actions=1, enable_proposition_check=self.enable_quality_check_for_selfconsistency)
+        
+        fluency_passed, fluency_passed_score, fluency_feedback = \
+            self._check_proposition(agent, self.action_fluency, tentative_action, enable_proposition_check=self.enable_quality_check_for_fluency)
+
+        suitability_passed, suitability_score, suitability_feedback = \
+            self._check_proposition(agent, self.action_suitability, tentative_action, enable_proposition_check=self.enable_quality_check_for_suitability)
+        
+        similarity_passed, similarity_score, similarity_feedback = \
+            self._check_next_action_similarity(agent, tentative_action, threshold=self.max_action_similarity, enable_similarity_check=self.enable_quality_check_for_similarity)
+
+        # put the results together
+        good_quality = persona_adherence_passed and selfconsistency_passed and fluency_passed and suitability_passed and similarity_passed
+        total_score = persona_adherence_score + selfconsistency_score + fluency_passed_score + suitability_score + (similarity_score * Proposition.MAX_SCORE)
+
+        combined_feedback = utils.combine_texts(
+            persona_adherence_feedback, selfconsistency_feedback, fluency_feedback, suitability_feedback, similarity_feedback
+        )
+
+        # give verdict
+        if good_quality:
+            return True, total_score, combined_feedback
+        
+        else:
+            
+            failure_feedback = \
+                f&#34;&#34;&#34;
+                # Quality feedback
+
+                This is the action that was about to be generated by the agent:
+                    {tentative_action}
+
+                Unfortunately, the action failed to pass the quality checks, and therefore was aborted and not added to the similation trajectory. 
+                The following problems were detected.
+                &#34;&#34;&#34;
+            
+            if not persona_adherence_passed:
+                failure_feedback += f&#34;&#34;&#34;
+                ## Problem: The action does not adhere to the persona specification.
+                {persona_adherence_feedback}
+
+                ### RECOMMENDATIONS FOR IMPROVEMENT
+                Please follow the recommendations below when trying to generate this action again.
+
+                {self.action_persona_adherence.recommendations_for_improvement()}
+
+                &#34;&#34;&#34;
+            
+            if not selfconsistency_passed:
+                failure_feedback += f&#34;&#34;&#34;
+                ## Problem: The action is not self-consistent.
+                {selfconsistency_feedback}
+
+                ### RECOMMENDATIONS FOR IMPROVEMENT
+                Please follow the recommendations below when trying to generate this action again.
+
+                {self.action_self_consistency.recommendations_for_improvement()}
+
+                &#34;&#34;&#34;
+            
+            if not fluency_passed:
+                failure_feedback += f&#34;&#34;&#34;
+                ## Problem: The action is not fluent.
+                {fluency_feedback}
+
+                ### RECOMMENDATIONS FOR IMPROVEMENT
+                Please follow the recommendations below when trying to generate this action again.
+
+                {self.action_fluency.recommendations_for_improvement()}
+                
+                &#34;&#34;&#34;
+
+            if not suitability_passed:
+                failure_feedback += f&#34;&#34;&#34;
+                ## Problem: The action is not suitable to the situation or task.
+                {suitability_feedback}
+
+                ### RECOMMENDATIONS FOR IMPROVEMENT
+                Please follow the recommendations below when trying to generate this action again.
+
+                {self.action_suitability.recommendations_for_improvement()}
+
+                &#34;&#34;&#34;
+            
+            if not similarity_passed:
+                failure_feedback += f&#34;&#34;&#34;
+                ## Problem: The action is too similar to the previous one.
+                {similarity_feedback}
+
+                &#34;&#34;&#34;
+
+            logger.warning(f&#34;[{agent.name}][{stage}] failed to pass quality checks: {failure_feedback}&#34;) 
+            return False, total_score, failure_feedback
+    
+    
+    def _check_proposition(self, agent, proposition, tentative_action, minimum_required_qty_of_actions=0, enable_proposition_check=True):
+
+        if enable_proposition_check:
+            if agent.actions_count &gt;= minimum_required_qty_of_actions:
+                result = proposition.score(target=agent, claim_variables={&#34;action&#34;: tentative_action}, return_full_response=True)
+
+                value_with_justification = f&#34;Score = {result[&#39;value&#39;]} (out of {Proposition.MAX_SCORE}). Justification = {result[&#39;justification&#39;]}&#34; 
+
+                if result[&#34;value&#34;] &gt;= self.quality_threshold:
+                    return True, result[&#34;value&#34;], value_with_justification
+                else:
+                    return False, result[&#34;value&#34;], value_with_justification
+            
+            else:
+                return True, Proposition.MAX_SCORE, f&#34;The proposition is trivially true due to the lack of enough actions for comparison.&#34;
+        else:
+            # If the proposition check is disabled, we assume it passed
+            return True, Proposition.MAX_SCORE, f&#34;The proposition check is disabled, so it is assumed to have passed.&#34;
+    
+    def _check_next_action_similarity(self, agent, proposed_next_action, threshold, enable_similarity_check=True):
+        &#34;&#34;&#34;
+        Checks the similarity between the agent&#39;s current action and a proposed next action.
+        High similarity indicates that the proposed action is too similar to the current one, and this
+        check fails.
+        &#34;&#34;&#34;
+        from tinytroupe.agent import logger # import here to avoid circular import issues
+
+        if enable_similarity_check:
+            similarity = utils.next_action_jaccard_similarity(agent, proposed_next_action)
+            logger.debug(f&#34;[{agent.name}] Next-action Jaccard similarity: {similarity}&#34;)
+            
+            if similarity &gt;= threshold:
+                logger.warning(f&#34;[{agent.name}] Next-action Jaccard similarity is above the threshold ({threshold}).&#34;)
+                return False, similarity, f&#34;Similarity = {similarity} (range: 0.0 to 1.0). The action is too similar to the previous one.&#34;
+            else:
+                logger.debug(f&#34;[{agent.name}] Next-action Jaccard similarity is below the threshold ({threshold}).&#34;)
+                return True, similarity, f&#34;Similarity = {similarity} (range: 0.0 to 1.0). The action is sufficiently different from the previous one.&#34;
+        
+        else:
+            # If the similarity check is disabled, we assume it passed
+            return True, 0.0, f&#34;The similarity check is disabled, so it is assumed to have passed.&#34;
+    
+    ################################################################################################
+    # Action correction methods
+    ################################################################################################
+
+    def _correct_action(self, action:dict, feedback, llm_role, llm_content):
+        situation = \
+            f&#34;&#34;&#34;
+            The following action by an agent was observed:
+                
+                {action}
+
+            However, it does not conform to expectations about this agent behavior, 
+            due to the following reasons.
+            {feedback}
+            &#34;&#34;&#34;
+        #restructured_situation =\
+        #    utils.restructure_as_observed_vs_expected(\
+        
+        #        &#34;&#34;&#34;)
+        #rule = utils.formulate_corrective_rule(restructured_situation)
+        rules = utils.extract_observed_vs_expected_rules(situation)
+        rephrased_action_content = utils.correct_according_to_rule(action[&#34;content&#34;], rules)
+        
+        # copy action
+        rephrased_action = action.copy()
+
+        # update content
+        rephrased_action[&#34;content&#34;] = rephrased_action_content
+
+        # replace in the &#39;action&#39; key in the original llm content message
+        llm_content[&#34;action&#34;] = rephrased_action
+
+        return rephrased_action, llm_role, llm_content
+
+    def get_statistics(self):
+        regeneration_failure_rate = self.regeneration_failures / self.regeneration_attempts if self.regeneration_attempts else 0
+        direct_correction_failure_rate = self.direct_correction_failures / self.direct_correction_attempts if self.direct_correction_attempts else 0
+
+        regeneration_mean_score = statistics.mean(self.regeneration_scores) if self.regeneration_scores else 0
+        regeneration_sd_score = statistics.stdev(self.regeneration_scores) if len(self.regeneration_scores) &gt; 1 else 0
+
+        direct_correction_mean_score = statistics.mean(self.direct_correction_scores) if self.direct_correction_scores else 0
+        direct_correction_sd_score = statistics.stdev(self.direct_correction_scores) if len(self.direct_correction_scores) &gt; 1 else 0
+
+        original_success_rate = self.total_original_actions_succeeded / self.total_actions_produced if self.total_actions_produced else 0
+
+        return {
+            &#34;regeneration_failure_rate&#34;: regeneration_failure_rate,
+            &#34;direct_correction_failure_rate&#34;: direct_correction_failure_rate,
+            &#34;regeneration_mean_score&#34;: regeneration_mean_score,
+            &#34;regeneration_sd_score&#34;: regeneration_sd_score,
+            &#34;direct_correction_mean_score&#34;: direct_correction_mean_score,
+            &#34;direct_correction_sd_score&#34;: direct_correction_sd_score,
+            &#34;total_actions_produced&#34;: self.total_actions_produced,
+            &#34;total_original_actions_succeeded&#34;: self.total_original_actions_succeeded,
+            &#34;original_success_rate&#34;: original_success_rate,
+            &#34;regeneration_success_rate&#34;: 1 - regeneration_failure_rate,
+            &#34;direct_correction_success_rate&#34;: 1 - direct_correction_failure_rate
+        }
+    
+
+class PoorQualityActionException(Exception):
+    def __init__(self, message=&#34;The generated action is of poor quality&#34;):
+        self.message = message
+        super().__init__(self.message)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="tinytroupe.agent.action_generator.ActionGenerator"><code class="flex name class">
+<span>class <span class="ident">ActionGenerator</span></span>
+<span>(</span><span>max_attempts=2, enable_quality_checks=True, enable_regeneration=True, enable_direct_correction=False, enable_quality_check_for_persona_adherence=True, enable_quality_check_for_selfconsistency=True, enable_quality_check_for_fluency=True, enable_quality_check_for_suitability=False, enable_quality_check_for_similarity=False, continue_on_failure=True, quality_threshold=7, max_action_similarity=0.6, enable_reasoning_step=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A mixin class that provides JSON serialization, deserialization, and subclass registration.</p>
+<p>Initializes the ActionGenerator.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>max_attempts</code></strong> :&ensp;<code>int</code></dt>
+<dd>The maximum number of attempts to generate an action.</dd>
+<dt><strong><code>enable_quality_checks</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether to perform quality checks on the generated action. If False, the first action generated
+is returned without any checks.</dd>
+<dt><strong><code>enable_regeneration</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether to try to make the agent regenerate the action if the first attempt fails.</dd>
+<dt><strong><code>enable_direct_correction</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether to directly correct the action if the first attempt fails, without asking the agent to regenerate it.</dd>
+<dt><strong><code>enable_quality_check_for_persona_adherence</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether to check the action for persona adherence.</dd>
+<dt><strong><code>enable_quality_check_for_selfconsistency</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether to check the action for self-consistency.</dd>
+<dt><strong><code>enable_quality_check_for_fluency</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether to check the action for fluency.</dd>
+<dt><strong><code>enable_quality_check_for_suitability</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether to check the action for suitability.</dd>
+<dt><strong><code>continue_on_failure</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether to return the last tentative action, even if it fails to pass quality checks.
+Presumably, the last tentative action is the one that is most likely to be correct, since it has gone through the most iterations of regeneration and correction.</dd>
+<dt><strong><code>quality_threshold</code></strong> :&ensp;<code>int</code></dt>
+<dd>The minimum score for each quality check for the action to be considered good quality.</dd>
+<dt><strong><code>enable_reasoning_step</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether to enable reasoning step in the action generation process. This IS NOT the use of "reasoning models" (e.g., o1, o3),
+but rather the use of an additional reasoning step in the regular text completion.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ActionGenerator(JsonSerializableRegistry):
+
+    def __init__(self, max_attempts=2, 
+                 enable_quality_checks=True,
+                 enable_regeneration=True,
+                 enable_direct_correction=False, # TODO enable_direct_correction not working very well yet
+                 enable_quality_check_for_persona_adherence=True,
+                 enable_quality_check_for_selfconsistency=True,
+                 enable_quality_check_for_fluency=True,
+                 enable_quality_check_for_suitability=False,
+                 enable_quality_check_for_similarity=False,
+                 continue_on_failure=True,
+                 quality_threshold=7,
+                 max_action_similarity=0.6,
+                 enable_reasoning_step=False): # TODO enable_reasoning_step not working very well yet
+        &#34;&#34;&#34;
+        Initializes the ActionGenerator.
+
+        Args:
+            max_attempts (int): The maximum number of attempts to generate an action.
+            enable_quality_checks (bool): Whether to perform quality checks on the generated action. If False, the first action generated
+              is returned without any checks.
+            enable_regeneration (bool): Whether to try to make the agent regenerate the action if the first attempt fails.
+            enable_direct_correction (bool): Whether to directly correct the action if the first attempt fails, without asking the agent to regenerate it.
+            enable_quality_check_for_persona_adherence (bool): Whether to check the action for persona adherence.
+            enable_quality_check_for_selfconsistency (bool): Whether to check the action for self-consistency.
+            enable_quality_check_for_fluency (bool): Whether to check the action for fluency.
+            enable_quality_check_for_suitability (bool): Whether to check the action for suitability.
+            continue_on_failure (bool): Whether to return the last tentative action, even if it fails to pass quality checks.
+               Presumably, the last tentative action is the one that is most likely to be correct, since it has gone through the most iterations of regeneration and correction.
+            quality_threshold (int): The minimum score for each quality check for the action to be considered good quality.
+            enable_reasoning_step (bool): Whether to enable reasoning step in the action generation process. This IS NOT the use of &#34;reasoning models&#34; (e.g., o1, o3),
+              but rather the use of an additional reasoning step in the regular text completion.
+        &#34;&#34;&#34;
+         
+        self.max_attempts = max_attempts
+        self.regeneration_attempts = 0
+        self.direct_correction_attempts = 0
+        
+        self.enable_quality_checks = enable_quality_checks
+        self.enable_regeneration = enable_regeneration
+        self.enable_direct_correction = enable_direct_correction
+
+        self.enable_quality_check_for_persona_adherence = enable_quality_check_for_persona_adherence
+        self.enable_quality_check_for_selfconsistency = enable_quality_check_for_selfconsistency   
+        self.enable_quality_check_for_fluency = enable_quality_check_for_fluency
+        self.enable_quality_check_for_suitability = enable_quality_check_for_suitability
+        self.enable_quality_check_for_similarity = enable_quality_check_for_similarity
+
+        self.continue_on_failure = continue_on_failure
+        self.quality_threshold = quality_threshold
+        self.max_action_similarity = max_action_similarity
+
+        self.enable_reasoning_step = enable_reasoning_step
+
+        # This generator has its own copies of the propositions, in order to be able to isolate them
+        # from other agents, particularly when running the simulation in parallel.
+        self.action_persona_adherence = propositions.hard_action_persona_adherence.copy()
+        self.action_self_consistency = propositions.action_self_consistency.copy()
+        self.action_fluency = propositions.action_fluency.copy()
+        self.action_suitability = propositions.action_suitability.copy()
+
+        # initialize statistics  
+        self.regeneration_failures = 0
+        self.direct_correction_failures = 0
+        self.regeneration_scores = []
+        self.direct_correction_scores = []
+        self.total_actions_produced = 0
+        self.total_original_actions_succeeded = 0
+
+    def generate_next_action(self, agent, current_messages:list):
+
+        from tinytroupe.agent import logger # import here to avoid circular import issues
+
+        # clean up (remove unnecessary elements) and copy the list of current messages to avoid modifying the original ones
+        current_messages = [
+            {&#34;role&#34;: msg[&#34;role&#34;], &#34;content&#34;: json.dumps(msg[&#34;content&#34;])}
+            for msg in current_messages
+        ]
+
+        # starts with no feedback
+        cur_feedback = None 
+        all_negative_feedbacks = []
+
+        best_action = None
+        best_role = None
+        best_content = None
+        best_score = float(&#39;-inf&#39;)
+        original_score = None
+
+        def update_best(tentative_action, role, content, total_score):
+            nonlocal best_action, best_role, best_content, best_score
+            if total_score &gt; best_score:
+                best_action = tentative_action
+                best_role = role
+                best_content = content
+                best_score = total_score
+
+        def finish_return(tentative_action, role, content, final_score):
+            if original_score is not None and final_score &gt; original_score:
+                logger.warning(f&#34;[{agent.name}] improved total quality from {original_score} to {final_score}&#34;)
+            
+            # ensure that tentative_action and content are dicts
+            if isinstance(tentative_action, str):
+                tentative_action = json.loads(tentative_action)
+            if isinstance(content, str):
+                content = json.loads(content)
+
+            return tentative_action, role, content, all_negative_feedbacks
+
+        # First attempt to generate an action
+        tentative_action, role, content = self._generate_tentative_action(agent, current_messages, 
+                                                                          feedback_from_previous_attempt=cur_feedback,
+                                                                          previous_tentative_action=None,
+                                                                          previous_llm_role=None, previous_llm_content=None)
+        
+        if self.enable_quality_checks:
+            # First quality check
+            good_quality, total_score, cur_feedback = self._check_action_quality(&#34;Original Action&#34;, agent, tentative_action=tentative_action)
+            update_best(tentative_action, role, content, total_score)
+            if original_score is None:
+                original_score = total_score
+            if good_quality:
+                self.total_original_actions_succeeded += 1
+                # Found a good action, let&#39;s return it now
+                return finish_return(tentative_action, role, content, total_score) 
+            else:
+                logger.warning(f&#34;[{agent.name}] Original action did not pass quality checks: {cur_feedback}&#34;)
+                all_negative_feedbacks.append(cur_feedback)
+                      
+
+            # GENERATE AND REGENERATE the action by the agent 
+            #
+            # We first try to make the agent generate (via the current_messages passed) or regenerate the 
+            # action based on feedback.
+            if self.enable_regeneration:
+                for attempt in range(self.max_attempts):
+                    
+                    # Generate tentative action
+                    tentative_action, role, content = self._generate_tentative_action(agent, current_messages, 
+                                                                                      feedback_from_previous_attempt=cur_feedback,
+                                                                                      previous_tentative_action=tentative_action,
+                                                                                      previous_llm_role=role, previous_llm_content=content)
+                    logger.debug(f&#34;[{agent.name}] Tentative action: {tentative_action}&#34;) 
+                    self.regeneration_attempts += 1
+                
+                    good_quality, total_score, cur_feedback = self._check_action_quality(f&#34;Action Regeneration ({attempt})&#34;, agent, tentative_action=tentative_action)
+                    update_best(tentative_action, role, content, total_score)
+                    if good_quality:
+                        # Found a good action, let&#39;s return it now
+                        return finish_return(tentative_action, role, content, total_score)        
+                    else:
+                        self.regeneration_failures += 1
+                        self.regeneration_scores.append(total_score)  # Assuming feedback contains a score
+                        all_negative_feedbacks.append(cur_feedback)
+
+            # CORRECT OR REPHRASE the action directly
+            #
+            # If we got here, it means the agent was not able to directly generate an action
+            # of sufficient quality, so we&#39;ll try to rephrase it correctly directly now.
+            if self.enable_direct_correction:
+                for attempt in range(self.max_attempts):
+                    tentative_action, role, content = self._correct_action(tentative_action, feedback=cur_feedback, llm_role=role, llm_content=content)
+                    logger.warning(f&#34;[{agent.name}] Rephrased the action directly as: {tentative_action}&#34;) 
+                    self.direct_correction_attempts += 1
+                
+                    good_quality, total_score, cur_feedback = self._check_action_quality(f&#34;Direct Action Correction or Rephrasing ({attempt})&#34;, agent, tentative_action=tentative_action)
+                    update_best(tentative_action, role, content, total_score)
+                    if good_quality:
+                        # Found a good action, let&#39;s return it now
+                        return finish_return(tentative_action, role, content, total_score)                    
+                    else:
+                        self.direct_correction_failures += 1
+                        self.direct_correction_scores.append(total_score)  # Assuming feedback contains a score
+                        all_negative_feedbacks.append(cur_feedback)
+
+            # If we got here, all attempts to generate a good action failed
+            if self.continue_on_failure:
+                logger.warning(f&#34;[{agent.name}] All attempts to generate a good action failed. Returning the best one.&#34;)
+                return finish_return(best_action, best_role, best_content, best_score)
+            
+            else:
+                raise PoorQualityActionException()
+        
+        else:
+            # If we got here, it means that the action was generated without quality checks
+            # and we are not doing any regeneration or direct correction, so we can return it now.
+            return tentative_action, role, content, []
+
+    def _generate_tentative_action(self, agent, current_messages, feedback_from_previous_attempt=None, 
+                                   previous_tentative_action=None,
+                                   previous_llm_role=None, previous_llm_content=None):
+
+        from tinytroupe.agent import logger, CognitiveActionModel, CognitiveActionModelWithReasoning # import here to avoid circular import issues
+
+        self.total_actions_produced += 1
+
+        # shallow clone current_messages
+        current_messages_context = current_messages.copy()
+
+        logger.debug(f&#34;[{agent.name}] Sending messages to OpenAI API&#34;)
+        logger.debug(f&#34;[{agent.name}] Last interaction: {current_messages[-1]}&#34;)
+
+        if feedback_from_previous_attempt:
+            #current_messages_copy.append({&#34;role&#34;: previous_llm_role,
+            #                        &#34;content&#34;: &#34;TENTATIVE ACTION:&#34; + json.dumps(previous_llm_content)})
+            
+            current_messages_context.append({&#34;role&#34;: &#34;user&#34;, 
+                             &#34;content&#34;: \
+                                f&#34;&#34;&#34;
+                                WARNING! TENTATIVE ACTION GENERATION FAILED IN QUALITY CHECKS!
+
+                                You were about to produce the following action, as a sequence for the previous actions or feedbacks (if any):
+                                      ```
+                                      {previous_tentative_action}
+                                      ```
+                                   
+                                However, it failed to pass the quality checks (as described in the quality feedback below), and therefore it was aborted and not added
+                                to the simulation trajectory.
+
+                                Now you **must** try again to generate a **BETTER** action, such that the quality issues mentioned in the feedback are addressed,
+                                or instead issue a DONE action and stop for this turn if it is unclear how to improve quality. 
+                                Your objective is to **PASS** the quality checks this time if possible.
+
+                                You can choose either to FIX somehow the action you were about to produce, or to generate something COMPLETELY NEW and DIFFERENT.  
+                                Each time your tentative action fail a quality check, you should be MORE RADICAL in your changes, and try to produce 
+                                something that is **very** different from the previous attempts.
+
+                                If it is unclear how to produce a better action, you can choose to issue a DONE action instead. 
+                                **It is better to stop acting than to act poorly.**
+                                
+                                In general, desireable properties of the action are:
+                                  - The action is consistent with the agent&#39;s persona, it is what one would expect from the agent given its persona.
+                                  - The action is self-consistent, it does contradict the agent&#39;s previous actions.
+                                  - The action is fluent and natural, and does not repeat itself or use overly formulaic language.
+                                
+                                {feedback_from_previous_attempt}
+                                &#34;&#34;&#34;})
+            
+            current_messages_context.append({&#34;role&#34;: &#34;system&#34;, 
+                                     &#34;content&#34;: &#34;Now generate a better action based on the above feedback, or issue a DONE action if it is unclear how to improve quality.&#34;})
+
+        
+        
+        # TODO: remind the model of some key rules to follow?
+        #
+        #
+        #current_messages_context.append({&#34;role&#34;: &#34;user&#34;, 
+        #                        &#34;content&#34;: &#34;&#34;&#34;
+        #                                    Now you must generate a sequence of actions following the directives in your agent specification, 
+        #                                    complying with **all** instructions and contraints related to the action you use.
+        #                                    In particular, to ensure the quality of your actions:
+        #                                    - **DO NOT** generate similar content in a row! We want human-like, natural and fluent behavior, and thus avoid#repeatitive behavior.
+        #                                    - THINK before taking further actions.
+        #                                    - Avoid thinking for too long, and actually take some concrete action before being done, particularly if you are expected to provide some action.
+        #                                    - Intercalate thinking with other actions.
+        #                                    - The new sequence of actions must be coherent and consistent with the previous actions and stimuli. For example, do not assume an expected or
+        #                                        desireable action already happened if that&#39;s not registered in the simulation history.
+        #                                    - If you received any quality feedback, you **MUST** take it into account and improve your performance. Your next actions
+        #                                        **must** be better than your previous ones if possible.
+        #                                
+        #                                    If you can&#39;t produce a very good action, you may just issue a DONE action instead and remain silent. Rules to follow in #this case:
+        #                                    - It is better to remain silent than repeating similar actions or making other mistakes.
+        #                                    - Avoid remaining silent for too long (i.e., more than 3 times in a row), as this looks robotic and unnatural. If #necessary, you
+        #                                        can communicate your difficulties in coming up with a proper action, or just say something like &#34;I don&#39;t know what to say&#34;.
+        #                                    - In case your thoughts or goals insistenly require you to **not** being quiet or silent, then you avoid just issuing #DONE if possible,
+        #                                        and try to produce a new action. In this case, the new action might refer to the difficulties you are having in #coming up with 
+        #                                        a proper action in the first place.
+        #                                
+        #                                    All of these actions **MUST** be rendered following the JSON specification perfectly, including all required keys (even #if their value is empty), **ALWAYS**.
+        #                                    &#34;&#34;&#34;
+        #                        })
+#
+
+        current_messages_context.append({&#34;role&#34;: &#34;system&#34;, 
+                                         &#34;content&#34;: &#34;Remember: the action you will now generate **MUST** be a **well-formatted** and **valid** JSON object. No extra text, no extra brackets, commas, or other syntax errors.&#34;})
+
+        if not self.enable_reasoning_step:
+            logger.debug(f&#34;[{agent.name}] Reasoning step disabled.&#34;)
+            next_message = openai_utils.client().send_message(current_messages_context, response_format=CognitiveActionModel)
+            
+        else:
+            logger.debug(f&#34;[{agent.name}] Reasoning step enabled.&#34;)
+
+            # If the reasoning step is enabled, we add a system message to the context asking it to think step-by-step
+            #
+            #
+            #current_messages_context.append({&#34;role&#34;: &#34;system&#34;,
+            #                                &#34;content&#34;: &#34;In your response, you first use the \&#34;reasoning\&#34; field to think step-by-step about what is the next action and cognitive state that you are going to generate. To do so, you carefully consider: the agent specification given initially; additional instructions given later; and the history of stimuli and actions present in the simulation trajectory.&#34; +
+            #                                           &#34;Then, you generate the action in the \&#34;action\&#34; field, and generate cognitive state in the \&#34;cognitive_state\&#34; field.&#34; })
+            current_messages_context.append({&#34;role&#34;: &#34;system&#34;,
+                                            &#34;content&#34;: &#34;Use the \&#34;reasoning\&#34; field to add any reasoning process you might wish to use before generating the next action and cognitive state. &#34;})
+
+            next_message = openai_utils.client().send_message(current_messages_context, response_format=CognitiveActionModelWithReasoning)
+
+        logger.debug(f&#34;[{agent.name}] Received message: {next_message}&#34;)
+
+        role, content = next_message[&#34;role&#34;], utils.extract_json(next_message[&#34;content&#34;])
+
+        action = content[&#39;action&#39;]
+        logger.debug(f&#34;{agent.name}&#39;s action: {action}&#34;)
+
+        return action, role, content
+    
+    ###############################################################################################
+    # Quality evaluation methods
+    ###############################################################################################
+
+    def _check_action_quality(self, stage, agent, tentative_action):
+
+        from tinytroupe.agent import logger # import here to avoid circular import issues
+
+        #
+        # Compute various propositions about the action
+        #
+        persona_adherence_passed, persona_adherence_score, persona_adherence_feedback = \
+            self._check_proposition(agent, self.action_persona_adherence, tentative_action, enable_proposition_check=self.enable_quality_check_for_persona_adherence)
+        
+        selfconsistency_passed, selfconsistency_score, selfconsistency_feedback = \
+            self._check_proposition(agent, self.action_self_consistency, tentative_action, minimum_required_qty_of_actions=1, enable_proposition_check=self.enable_quality_check_for_selfconsistency)
+        
+        fluency_passed, fluency_passed_score, fluency_feedback = \
+            self._check_proposition(agent, self.action_fluency, tentative_action, enable_proposition_check=self.enable_quality_check_for_fluency)
+
+        suitability_passed, suitability_score, suitability_feedback = \
+            self._check_proposition(agent, self.action_suitability, tentative_action, enable_proposition_check=self.enable_quality_check_for_suitability)
+        
+        similarity_passed, similarity_score, similarity_feedback = \
+            self._check_next_action_similarity(agent, tentative_action, threshold=self.max_action_similarity, enable_similarity_check=self.enable_quality_check_for_similarity)
+
+        # put the results together
+        good_quality = persona_adherence_passed and selfconsistency_passed and fluency_passed and suitability_passed and similarity_passed
+        total_score = persona_adherence_score + selfconsistency_score + fluency_passed_score + suitability_score + (similarity_score * Proposition.MAX_SCORE)
+
+        combined_feedback = utils.combine_texts(
+            persona_adherence_feedback, selfconsistency_feedback, fluency_feedback, suitability_feedback, similarity_feedback
+        )
+
+        # give verdict
+        if good_quality:
+            return True, total_score, combined_feedback
+        
+        else:
+            
+            failure_feedback = \
+                f&#34;&#34;&#34;
+                # Quality feedback
+
+                This is the action that was about to be generated by the agent:
+                    {tentative_action}
+
+                Unfortunately, the action failed to pass the quality checks, and therefore was aborted and not added to the similation trajectory. 
+                The following problems were detected.
+                &#34;&#34;&#34;
+            
+            if not persona_adherence_passed:
+                failure_feedback += f&#34;&#34;&#34;
+                ## Problem: The action does not adhere to the persona specification.
+                {persona_adherence_feedback}
+
+                ### RECOMMENDATIONS FOR IMPROVEMENT
+                Please follow the recommendations below when trying to generate this action again.
+
+                {self.action_persona_adherence.recommendations_for_improvement()}
+
+                &#34;&#34;&#34;
+            
+            if not selfconsistency_passed:
+                failure_feedback += f&#34;&#34;&#34;
+                ## Problem: The action is not self-consistent.
+                {selfconsistency_feedback}
+
+                ### RECOMMENDATIONS FOR IMPROVEMENT
+                Please follow the recommendations below when trying to generate this action again.
+
+                {self.action_self_consistency.recommendations_for_improvement()}
+
+                &#34;&#34;&#34;
+            
+            if not fluency_passed:
+                failure_feedback += f&#34;&#34;&#34;
+                ## Problem: The action is not fluent.
+                {fluency_feedback}
+
+                ### RECOMMENDATIONS FOR IMPROVEMENT
+                Please follow the recommendations below when trying to generate this action again.
+
+                {self.action_fluency.recommendations_for_improvement()}
+                
+                &#34;&#34;&#34;
+
+            if not suitability_passed:
+                failure_feedback += f&#34;&#34;&#34;
+                ## Problem: The action is not suitable to the situation or task.
+                {suitability_feedback}
+
+                ### RECOMMENDATIONS FOR IMPROVEMENT
+                Please follow the recommendations below when trying to generate this action again.
+
+                {self.action_suitability.recommendations_for_improvement()}
+
+                &#34;&#34;&#34;
+            
+            if not similarity_passed:
+                failure_feedback += f&#34;&#34;&#34;
+                ## Problem: The action is too similar to the previous one.
+                {similarity_feedback}
+
+                &#34;&#34;&#34;
+
+            logger.warning(f&#34;[{agent.name}][{stage}] failed to pass quality checks: {failure_feedback}&#34;) 
+            return False, total_score, failure_feedback
+    
+    
+    def _check_proposition(self, agent, proposition, tentative_action, minimum_required_qty_of_actions=0, enable_proposition_check=True):
+
+        if enable_proposition_check:
+            if agent.actions_count &gt;= minimum_required_qty_of_actions:
+                result = proposition.score(target=agent, claim_variables={&#34;action&#34;: tentative_action}, return_full_response=True)
+
+                value_with_justification = f&#34;Score = {result[&#39;value&#39;]} (out of {Proposition.MAX_SCORE}). Justification = {result[&#39;justification&#39;]}&#34; 
+
+                if result[&#34;value&#34;] &gt;= self.quality_threshold:
+                    return True, result[&#34;value&#34;], value_with_justification
+                else:
+                    return False, result[&#34;value&#34;], value_with_justification
+            
+            else:
+                return True, Proposition.MAX_SCORE, f&#34;The proposition is trivially true due to the lack of enough actions for comparison.&#34;
+        else:
+            # If the proposition check is disabled, we assume it passed
+            return True, Proposition.MAX_SCORE, f&#34;The proposition check is disabled, so it is assumed to have passed.&#34;
+    
+    def _check_next_action_similarity(self, agent, proposed_next_action, threshold, enable_similarity_check=True):
+        &#34;&#34;&#34;
+        Checks the similarity between the agent&#39;s current action and a proposed next action.
+        High similarity indicates that the proposed action is too similar to the current one, and this
+        check fails.
+        &#34;&#34;&#34;
+        from tinytroupe.agent import logger # import here to avoid circular import issues
+
+        if enable_similarity_check:
+            similarity = utils.next_action_jaccard_similarity(agent, proposed_next_action)
+            logger.debug(f&#34;[{agent.name}] Next-action Jaccard similarity: {similarity}&#34;)
+            
+            if similarity &gt;= threshold:
+                logger.warning(f&#34;[{agent.name}] Next-action Jaccard similarity is above the threshold ({threshold}).&#34;)
+                return False, similarity, f&#34;Similarity = {similarity} (range: 0.0 to 1.0). The action is too similar to the previous one.&#34;
+            else:
+                logger.debug(f&#34;[{agent.name}] Next-action Jaccard similarity is below the threshold ({threshold}).&#34;)
+                return True, similarity, f&#34;Similarity = {similarity} (range: 0.0 to 1.0). The action is sufficiently different from the previous one.&#34;
+        
+        else:
+            # If the similarity check is disabled, we assume it passed
+            return True, 0.0, f&#34;The similarity check is disabled, so it is assumed to have passed.&#34;
+    
+    ################################################################################################
+    # Action correction methods
+    ################################################################################################
+
+    def _correct_action(self, action:dict, feedback, llm_role, llm_content):
+        situation = \
+            f&#34;&#34;&#34;
+            The following action by an agent was observed:
+                
+                {action}
+
+            However, it does not conform to expectations about this agent behavior, 
+            due to the following reasons.
+            {feedback}
+            &#34;&#34;&#34;
+        #restructured_situation =\
+        #    utils.restructure_as_observed_vs_expected(\
+        
+        #        &#34;&#34;&#34;)
+        #rule = utils.formulate_corrective_rule(restructured_situation)
+        rules = utils.extract_observed_vs_expected_rules(situation)
+        rephrased_action_content = utils.correct_according_to_rule(action[&#34;content&#34;], rules)
+        
+        # copy action
+        rephrased_action = action.copy()
+
+        # update content
+        rephrased_action[&#34;content&#34;] = rephrased_action_content
+
+        # replace in the &#39;action&#39; key in the original llm content message
+        llm_content[&#34;action&#34;] = rephrased_action
+
+        return rephrased_action, llm_role, llm_content
+
+    def get_statistics(self):
+        regeneration_failure_rate = self.regeneration_failures / self.regeneration_attempts if self.regeneration_attempts else 0
+        direct_correction_failure_rate = self.direct_correction_failures / self.direct_correction_attempts if self.direct_correction_attempts else 0
+
+        regeneration_mean_score = statistics.mean(self.regeneration_scores) if self.regeneration_scores else 0
+        regeneration_sd_score = statistics.stdev(self.regeneration_scores) if len(self.regeneration_scores) &gt; 1 else 0
+
+        direct_correction_mean_score = statistics.mean(self.direct_correction_scores) if self.direct_correction_scores else 0
+        direct_correction_sd_score = statistics.stdev(self.direct_correction_scores) if len(self.direct_correction_scores) &gt; 1 else 0
+
+        original_success_rate = self.total_original_actions_succeeded / self.total_actions_produced if self.total_actions_produced else 0
+
+        return {
+            &#34;regeneration_failure_rate&#34;: regeneration_failure_rate,
+            &#34;direct_correction_failure_rate&#34;: direct_correction_failure_rate,
+            &#34;regeneration_mean_score&#34;: regeneration_mean_score,
+            &#34;regeneration_sd_score&#34;: regeneration_sd_score,
+            &#34;direct_correction_mean_score&#34;: direct_correction_mean_score,
+            &#34;direct_correction_sd_score&#34;: direct_correction_sd_score,
+            &#34;total_actions_produced&#34;: self.total_actions_produced,
+            &#34;total_original_actions_succeeded&#34;: self.total_original_actions_succeeded,
+            &#34;original_success_rate&#34;: original_success_rate,
+            &#34;regeneration_success_rate&#34;: 1 - regeneration_failure_rate,
+            &#34;direct_correction_success_rate&#34;: 1 - direct_correction_failure_rate
+        }</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="tinytroupe.utils.json.JsonSerializableRegistry" href="../utils/json.html#tinytroupe.utils.json.JsonSerializableRegistry">JsonSerializableRegistry</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="tinytroupe.agent.action_generator.ActionGenerator.generate_next_action"><code class="name flex">
+<span>def <span class="ident">generate_next_action</span></span>(<span>self, agent, current_messages: list)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generate_next_action(self, agent, current_messages:list):
+
+    from tinytroupe.agent import logger # import here to avoid circular import issues
+
+    # clean up (remove unnecessary elements) and copy the list of current messages to avoid modifying the original ones
+    current_messages = [
+        {&#34;role&#34;: msg[&#34;role&#34;], &#34;content&#34;: json.dumps(msg[&#34;content&#34;])}
+        for msg in current_messages
+    ]
+
+    # starts with no feedback
+    cur_feedback = None 
+    all_negative_feedbacks = []
+
+    best_action = None
+    best_role = None
+    best_content = None
+    best_score = float(&#39;-inf&#39;)
+    original_score = None
+
+    def update_best(tentative_action, role, content, total_score):
+        nonlocal best_action, best_role, best_content, best_score
+        if total_score &gt; best_score:
+            best_action = tentative_action
+            best_role = role
+            best_content = content
+            best_score = total_score
+
+    def finish_return(tentative_action, role, content, final_score):
+        if original_score is not None and final_score &gt; original_score:
+            logger.warning(f&#34;[{agent.name}] improved total quality from {original_score} to {final_score}&#34;)
+        
+        # ensure that tentative_action and content are dicts
+        if isinstance(tentative_action, str):
+            tentative_action = json.loads(tentative_action)
+        if isinstance(content, str):
+            content = json.loads(content)
+
+        return tentative_action, role, content, all_negative_feedbacks
+
+    # First attempt to generate an action
+    tentative_action, role, content = self._generate_tentative_action(agent, current_messages, 
+                                                                      feedback_from_previous_attempt=cur_feedback,
+                                                                      previous_tentative_action=None,
+                                                                      previous_llm_role=None, previous_llm_content=None)
+    
+    if self.enable_quality_checks:
+        # First quality check
+        good_quality, total_score, cur_feedback = self._check_action_quality(&#34;Original Action&#34;, agent, tentative_action=tentative_action)
+        update_best(tentative_action, role, content, total_score)
+        if original_score is None:
+            original_score = total_score
+        if good_quality:
+            self.total_original_actions_succeeded += 1
+            # Found a good action, let&#39;s return it now
+            return finish_return(tentative_action, role, content, total_score) 
+        else:
+            logger.warning(f&#34;[{agent.name}] Original action did not pass quality checks: {cur_feedback}&#34;)
+            all_negative_feedbacks.append(cur_feedback)
+                  
+
+        # GENERATE AND REGENERATE the action by the agent 
+        #
+        # We first try to make the agent generate (via the current_messages passed) or regenerate the 
+        # action based on feedback.
+        if self.enable_regeneration:
+            for attempt in range(self.max_attempts):
+                
+                # Generate tentative action
+                tentative_action, role, content = self._generate_tentative_action(agent, current_messages, 
+                                                                                  feedback_from_previous_attempt=cur_feedback,
+                                                                                  previous_tentative_action=tentative_action,
+                                                                                  previous_llm_role=role, previous_llm_content=content)
+                logger.debug(f&#34;[{agent.name}] Tentative action: {tentative_action}&#34;) 
+                self.regeneration_attempts += 1
+            
+                good_quality, total_score, cur_feedback = self._check_action_quality(f&#34;Action Regeneration ({attempt})&#34;, agent, tentative_action=tentative_action)
+                update_best(tentative_action, role, content, total_score)
+                if good_quality:
+                    # Found a good action, let&#39;s return it now
+                    return finish_return(tentative_action, role, content, total_score)        
+                else:
+                    self.regeneration_failures += 1
+                    self.regeneration_scores.append(total_score)  # Assuming feedback contains a score
+                    all_negative_feedbacks.append(cur_feedback)
+
+        # CORRECT OR REPHRASE the action directly
+        #
+        # If we got here, it means the agent was not able to directly generate an action
+        # of sufficient quality, so we&#39;ll try to rephrase it correctly directly now.
+        if self.enable_direct_correction:
+            for attempt in range(self.max_attempts):
+                tentative_action, role, content = self._correct_action(tentative_action, feedback=cur_feedback, llm_role=role, llm_content=content)
+                logger.warning(f&#34;[{agent.name}] Rephrased the action directly as: {tentative_action}&#34;) 
+                self.direct_correction_attempts += 1
+            
+                good_quality, total_score, cur_feedback = self._check_action_quality(f&#34;Direct Action Correction or Rephrasing ({attempt})&#34;, agent, tentative_action=tentative_action)
+                update_best(tentative_action, role, content, total_score)
+                if good_quality:
+                    # Found a good action, let&#39;s return it now
+                    return finish_return(tentative_action, role, content, total_score)                    
+                else:
+                    self.direct_correction_failures += 1
+                    self.direct_correction_scores.append(total_score)  # Assuming feedback contains a score
+                    all_negative_feedbacks.append(cur_feedback)
+
+        # If we got here, all attempts to generate a good action failed
+        if self.continue_on_failure:
+            logger.warning(f&#34;[{agent.name}] All attempts to generate a good action failed. Returning the best one.&#34;)
+            return finish_return(best_action, best_role, best_content, best_score)
+        
+        else:
+            raise PoorQualityActionException()
+    
+    else:
+        # If we got here, it means that the action was generated without quality checks
+        # and we are not doing any regeneration or direct correction, so we can return it now.
+        return tentative_action, role, content, []</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.agent.action_generator.ActionGenerator.get_statistics"><code class="name flex">
+<span>def <span class="ident">get_statistics</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_statistics(self):
+    regeneration_failure_rate = self.regeneration_failures / self.regeneration_attempts if self.regeneration_attempts else 0
+    direct_correction_failure_rate = self.direct_correction_failures / self.direct_correction_attempts if self.direct_correction_attempts else 0
+
+    regeneration_mean_score = statistics.mean(self.regeneration_scores) if self.regeneration_scores else 0
+    regeneration_sd_score = statistics.stdev(self.regeneration_scores) if len(self.regeneration_scores) &gt; 1 else 0
+
+    direct_correction_mean_score = statistics.mean(self.direct_correction_scores) if self.direct_correction_scores else 0
+    direct_correction_sd_score = statistics.stdev(self.direct_correction_scores) if len(self.direct_correction_scores) &gt; 1 else 0
+
+    original_success_rate = self.total_original_actions_succeeded / self.total_actions_produced if self.total_actions_produced else 0
+
+    return {
+        &#34;regeneration_failure_rate&#34;: regeneration_failure_rate,
+        &#34;direct_correction_failure_rate&#34;: direct_correction_failure_rate,
+        &#34;regeneration_mean_score&#34;: regeneration_mean_score,
+        &#34;regeneration_sd_score&#34;: regeneration_sd_score,
+        &#34;direct_correction_mean_score&#34;: direct_correction_mean_score,
+        &#34;direct_correction_sd_score&#34;: direct_correction_sd_score,
+        &#34;total_actions_produced&#34;: self.total_actions_produced,
+        &#34;total_original_actions_succeeded&#34;: self.total_original_actions_succeeded,
+        &#34;original_success_rate&#34;: original_success_rate,
+        &#34;regeneration_success_rate&#34;: 1 - regeneration_failure_rate,
+        &#34;direct_correction_success_rate&#34;: 1 - direct_correction_failure_rate
+    }</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="tinytroupe.utils.json.JsonSerializableRegistry" href="../utils/json.html#tinytroupe.utils.json.JsonSerializableRegistry">JsonSerializableRegistry</a></b></code>:
+<ul class="hlist">
+<li><code><a title="tinytroupe.utils.json.JsonSerializableRegistry.from_json" href="../utils/json.html#tinytroupe.utils.json.JsonSerializableRegistry.from_json">from_json</a></code></li>
+<li><code><a title="tinytroupe.utils.json.JsonSerializableRegistry.to_json" href="../utils/json.html#tinytroupe.utils.json.JsonSerializableRegistry.to_json">to_json</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="tinytroupe.agent.action_generator.PoorQualityActionException"><code class="flex name class">
+<span>class <span class="ident">PoorQualityActionException</span></span>
+<span>(</span><span>message='The generated action is of poor quality')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Common base class for all non-exit exceptions.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PoorQualityActionException(Exception):
+    def __init__(self, message=&#34;The generated action is of poor quality&#34;):
+        self.message = message
+        super().__init__(self.message)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="tinytroupe.agent" href="index.html">tinytroupe.agent</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="tinytroupe.agent.action_generator.ActionGenerator" href="#tinytroupe.agent.action_generator.ActionGenerator">ActionGenerator</a></code></h4>
+<ul class="">
+<li><code><a title="tinytroupe.agent.action_generator.ActionGenerator.generate_next_action" href="#tinytroupe.agent.action_generator.ActionGenerator.generate_next_action">generate_next_action</a></code></li>
+<li><code><a title="tinytroupe.agent.action_generator.ActionGenerator.get_statistics" href="#tinytroupe.agent.action_generator.ActionGenerator.get_statistics">get_statistics</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="tinytroupe.agent.action_generator.PoorQualityActionException" href="#tinytroupe.agent.action_generator.PoorQualityActionException">PoorQualityActionException</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

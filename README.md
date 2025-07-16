@@ -5,6 +5,9 @@
   <img src="./docs/tinytroupe_stage.png" alt="A tiny office with tiny people doing some tiny jobs.">
 </p>
 
+>[!TIP]
+>📄 **New Paper Released!** Check out our [TinyTroupe paper (preprint)](https://arxiv.org/abs/2507.09788) that describes the library and its use cases in detail. You can find the related experiments and complementary material in the [publications/](./publications/) folder.
+
 *TinyTroupe* is an experimental Python library that allows the **simulation** of people with specific personalities, interests, and goals. These artificial agents - `TinyPerson`s - can listen to us and one another, reply back, and go about their lives in simulated `TinyWorld` environments. This is achieved by leveraging the power of Large Language Models (LLMs), notably GPT-4, to generate realistic simulated behavior. This allows us to investigate a wide range of **convincing interactions** and **consumer types**, with **highly customizable personas**, under **conditions of our choosing**. The focus is thus on *understanding* human behavior and not on directly *supporting it* (like, say, AI assistants do) -- this results in, among other things, specialized mechanisms that make sense only in a simulation setting. Further, unlike other *game-like* LLM-based simulation approaches, TinyTroupe aims at enlightening productivity and business scenarios, thereby contributing to more successful projects and products. Here are some application ideas to **enhance human imagination**:
 
   - **Advertisement:** TinyTroupe can **evaluate digital ads (e.g., Bing Ads)** offline with a simulated audience before spending money on them!
@@ -43,8 +46,8 @@ We are releasing *TinyTroupe* at a relatively early stage, with considerable wor
 
 
 ## LATEST NEWS
-**[2025-06-25] Release 0.5.0 with various improvements. Some highlights:**
-  - Released the first version of the TinyTroupe paper (as a preprint), which describes the library and its use cases in more detail. You can find the related experiments and complementary material in the [publications/](./publications/) folder.
+**[2025-07-15] Release 0.5.1 with various improvements. Some highlights:**
+  - Released the first version of the [TinyTroupe paper (as a preprint)](https://arxiv.org/abs/2507.09788), which describes the library and its use cases in more detail. You can find the related experiments and complementary material in the [publications/](./publications/) folder.
   - `TinyPerson`s now include action correction mechanisms, allowing better adherence to persona specification, self-consistency and/or fluency (for details, refer to the paper we are releasing at the same time now).
   - Substantial improvements to the `TinyPersonFactory` class, which now: uses a plan-based approach to generate new agents, allowing better sampling of larger populations; generate agents in parallel.
   - `TinyWorld` now run agents in parallel within each simulation step, allowing faster simulations.
@@ -52,6 +55,8 @@ We are releasing *TinyTroupe* at a relatively early stage, with considerable wor
   - Various standard `Proposition`s were introduced to make it easier to run common verifications and monitoring of agent behavior (e.g., `persona_adherence`, `hard_persona_adherence`, `self_consistency`, `fluency`, etc.).
   - Internal LLM usage is now better supported via the `LLMChat` class, and also the `@llm` decorator, which transform any standard Python function into an LLM-based one (i.e., by using the docstring as part of the prompt, and some other nuances). This is meant to make it easier to continue advancing TinyTroupe and also allow for some creative explorations of LLM tooling possibilities.
   - Configuration mechanism has been refactored to allow, besides the static `config.ini` file, also the dynamic programmatic reconfiguration.
+  - Renamed Jupyter notebooks examples for better readability and consistency.
+  - Added many more tests.
   
   **Note: this will likely break some existing programs, as the API has changed in some places.**
 
@@ -72,7 +77,7 @@ To get a sense of what TinyTroupe can do, here are some examples of its use. The
 >[!NOTE]
 > Currently, simulation outputs are better visualized against dark backgrounds, so we recommend using a dark theme in your Jupyter notebook client.
 
-### 🧪**Example 1** *(from [interview_with_customer.ipynb](./examples/interview_with_customer.ipynb))*
+### 🧪**Example 1** *(from [Interview with Customer.ipynb](./examples/Interview%20with%20Customer.ipynb))*
 Let's begin with a simple customer interview scenario, where a business consultant approaches a banker:
 <p align="center">
   <img src="./docs/example_screenshot_customer-interview-1.png" alt="An example.">
@@ -85,7 +90,7 @@ The conversation can go on for a few steps to dig deeper and deeper until the co
 
 
 
-### 🧪**EXAMPLE 2** *(from [advertisement_for_tv.ipynb](./examples/advertisement_for_tv.ipynb))*
+### 🧪**EXAMPLE 2** *(from [Advertisement for TV.ipynb](./examples/Advertisement%20for%20TV.ipynb))*
 Let's evaluate some online ads options to pick the best one. Here's one example output for TV ad evaluation:
 
 <p align="center">
@@ -98,7 +103,7 @@ Now, instead of having to carefully read what the agents said, we can extract th
   <img src="./docs/example_screenshot_tv-ad-2.png" alt="An example.">
 </p>
 
-### 🧪 **EXAMPLES 3** *(from [product_brainstorming.ipynb](./examples/product_brainstorming.ipynb))*
+### 🧪 **EXAMPLES 3** *(from [Product Brainstorming.ipynb](./examples/Product%20Brainstorming.ipynb))*
 And here's a focus group starting to brainstorm about new AI features for Microsoft Word. Instead of interacting with each agent individually, we manipulate the environment to make them interact with each other:
 
 <p align="center">
@@ -121,7 +126,7 @@ To run the library, you need:
   - Access to Azure OpenAI Service or Open AI GPT-4 APIs. You can get access to the Azure OpenAI Service [here](https://azure.microsoft.com/en-us/products/ai-services/openai-service), and to the OpenAI API [here](https://platform.openai.com/). 
       * For Azure OpenAI Service, you will need to set the `AZURE_OPENAI_KEY` and `AZURE_OPENAI_ENDPOINT` environment variables to your API key and endpoint, respectively.
       * For OpenAI, you will need to set the `OPENAI_API_KEY` environment variable to your API key.
-  - By default, TinyTroupe `config.ini` is set to use some specific API, model and related parameters. You can customize these values by including your own `config.ini` file in the same folder as the program or notebook you are running. An example of a `config.ini` file is provided in the [examples/](./examples/) folder.
+  - By default, TinyTroupe `config.ini` is set to use OpenAI API with `gpt-4o-mini` as the main model. You can customize these values by including your own `config.ini` file in the same folder as the program or notebook you are running. An example of a `config.ini` file is provided in the [examples/](./examples/) folder.
 
 >[!IMPORTANT]
 > **Content Filters**: To ensure no harmful content is generated during simulations, it is strongly recommended to use content filters whenever available at the API level. In particular, **if using Azure OpenAI, there's extensive support for content moderation, and we urge you to use it.** For details about how to do so, please consult [the corresponding Azure OpenAI documentation](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/content-filter). If content filters are in place, and an API call is rejected by them, the library will raise an exception, as it will be unable to proceed with the simulation at that point.
@@ -391,8 +396,22 @@ lisa.import_fragment("./examples/fragments/travel_enthusiast.agent.fragment.json
 ```python
 from tinytroupe.factory import TinyPersonFactory
 
-factory = TinyPersonFactory("A hospital in São Paulo.")
-person = factory.generate_person("Create a Brazilian person that is a doctor, like pets and the nature and love heavy metal.")
+factory = TinyPersonFactory(context="A hospital in São Paulo.")
+person = factory.generate_person("Create a Brazilian person that is a doctor, likes pets and nature and loves heavy metal.")
+```
+
+You can also create factories from demographic data:
+
+```python
+# Create a factory from demographic specifications
+factory = TinyPersonFactory.create_factory_from_demography(
+    demography_description_or_file_path="path/to/demography.json",
+    population_size=50,
+    context="Urban professionals in technology sector"
+)
+
+# Generate multiple people at once
+people = factory.generate_people(number_of_people=10, parallelize=True)
 ```
 
 ### TinyWorld
@@ -479,13 +498,48 @@ provides useful simulation management methods:
 
 #### Caching LLM API Calls
 
-This is enabled preferably in the `config.ini` file, and alternatively via the `openai_utils.force_api_cache()`.
+This is enabled preferably in the `config.ini` file by setting `CACHE_API_CALLS=True`, and alternatively via the `openai_utils.force_api_cache()` method.
 
 LLM API caching, when enabled, works at a lower and simpler level than simulation state caching. Here, what happens is very straightforward: every LLM call is kept in a map from the input to the generated output; when a new call comes and is identical to a previous one, the cached value is returned.
 
 ### Config.ini
 
-The `config.ini` file contains various parameters that can be used to customize the behavior of the library, such as model parameters and logging level. Please pay special attention to `API_TYPE` parameter, which defines whether you are using the Azure OpenAI Service or the OpenAI API. We provide an example of a `config.ini` file, [./examples/config.ini](./examples/config.ini), which you can use as a template for your own, or just modify to run the examples.
+The `config.ini` file contains various parameters that can be used to customize the behavior of the library, such as model parameters and logging level. Please pay special attention to the `API_TYPE` parameter, which defines whether you are using the Azure OpenAI Service or the OpenAI API. The current default is set to `openai` (OpenAI API).
+
+Key configuration sections include:
+- **[OpenAI]**: API settings, model selection, and parameters
+- **[Simulation]**: Parallel execution and safety settings  
+- **[Cognition]**: Memory management settings
+- **[ActionGenerator]**: Action quality control and correction mechanisms
+- **[Logging]**: Log level configuration
+
+Models used by default:
+- `MODEL=gpt-4o-mini`: Main text generation model for agent responses
+- `EMBEDDING_MODEL=text-embedding-3-small`: For text similarity tasks
+- `REASONING_MODEL=o3-mini`: Used for detailed analyses and reasoning tasks (even more experimental -- not really recommended yet)
+
+We provide an example of a `config.ini` file, [./examples/config.ini](./examples/config.ini), which you can use as a template for your own, or just modify to run the examples.
+
+#### Programmatic Configuration Override
+
+In addition to the static `config.ini` file, you can also override many configuration values programmatically using the `config_manager`. This is useful for dynamic configuration changes during runtime or for experiment-specific settings:
+
+```python
+from tinytroupe import config_manager
+
+# Override configuration values programmatically
+config_manager.update("action_generator_enable_quality_checks", True)
+config_manager.update("action_generator_quality_threshold", 6)
+config_manager.update("cache_api_calls", True)
+```
+
+This approach allows you to:
+- **Experiment with different settings** without modifying configuration files
+- **Apply configuration changes dynamically** during simulation execution
+- **Override specific parameters** while keeping the rest of the configuration intact
+- **Implement conditional configurations** based on runtime conditions
+
+The programmatic overrides take precedence over the values in the `config.ini` file, allowing you to fine-tune behavior for specific use cases or experiments.
 
 ## Contributing
 
@@ -546,7 +600,7 @@ Other special contributions were made by:
 
 Please cite the introductory TinyTroupe paper when using TinyTroupe in your work. The paper is currently under review, but you can find the preprint on Arxiv.
 
-> Paulo Salem, Robert Sim, Christopher Olsen, Prerit Saxena, Rafael Barcelos, Yi Ding. (2025). **TinyTroupe: An LLM-powered Multiagent Persona Simulation Toolkit**. ArXiv preprint: URL TO BE ADDED. *GitHub repository available at https://github.com/microsoft/TinyTroupe.*
+> Paulo Salem, Robert Sim, Christopher Olsen, Prerit Saxena, Rafael Barcelos, Yi Ding. (2025). **TinyTroupe: An LLM-powered Multiagent Persona Simulation Toolkit**. ArXiv preprint: [2507.09788](https://arxiv.org/abs/2507.09788). *GitHub repository available at https://github.com/microsoft/TinyTroupe.*
  
 In BibTeX format, you can use the following entry:
 
@@ -554,10 +608,10 @@ In BibTeX format, you can use the following entry:
 @article{tinytroupe2025,
   author       = {Paulo Salem and Robert Sim and Christopher Olsen and Prerit Saxena and Rafael Barcelos and Yi Ding},
   title        = {TinyTroupe: An LLM-powered Multiagent Persona Simulation Toolkit},
-  journal      = {arXiv preprint arXiv:xxxx.xxxxx},
+  journal      = {arXiv preprint arXiv:2507.09788},
   year         = {2025},
   archivePrefix= {arXiv},
-  eprint       = {xxxx.xxxxx},
+  eprint       = {2507.09788},
   note         = {GitHub repository: \url{https://github.com/microsoft/TinyTroupe}}
 }
 ```

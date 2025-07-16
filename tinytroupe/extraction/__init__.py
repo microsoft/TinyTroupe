@@ -19,5 +19,6 @@ from tinytroupe.extraction.artifact_exporter import ArtifactExporter
 from tinytroupe.extraction.normalizer import Normalizer
 from tinytroupe.extraction.results_extractor import ResultsExtractor
 from tinytroupe.extraction.results_reducer import ResultsReducer
+from tinytroupe.extraction.results_reporter import ResultsReporter
 
-__all__ = ["ArtifactExporter", "Normalizer", "ResultsExtractor", "ResultsReducer"]
+__all__ = ["ArtifactExporter", "Normalizer", "ResultsExtractor", "ResultsReducer", "ResultsReporter"]

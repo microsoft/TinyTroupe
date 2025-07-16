@@ -5,6 +5,7 @@ import json
 import os
 import tempfile
 import threading
+import traceback
 
 import tinytroupe
 import tinytroupe.utils as utils
@@ -90,6 +91,7 @@ class Simulation:
         from tinytroupe.agent import TinyPerson
         from tinytroupe.environment import TinyWorld
         from tinytroupe.factory.tiny_factory import TinyFactory
+        from tinytroupe.factory.tiny_person_factory import TinyPersonFactory
 
         if self.status == Simulation.STATUS_STOPPED:
             self.status = Simulation.STATUS_STARTED
@@ -106,6 +108,7 @@ class Simulation:
         TinyPerson.clear_agents()
         TinyWorld.clear_environments()
         TinyFactory.clear_factories()
+        TinyPersonFactory.clear_factories()
 
         # All automated fresh ids will start from 0 again for this simulation
         utils.reset_fresh_id()
@@ -129,7 +132,7 @@ class Simulation:
         """
         Saves current simulation trace to a file.
         """
-        logger.debug("Checkpointing simulation state.")
+        logger.debug("Checkpointing simulation state...")
         # save the cache file
         if self.has_unsaved_cache_changes:
             self._save_cache_file(self.cache_path)
@@ -201,6 +204,10 @@ class Simulation:
                 
         # then, convert to a single string, to obtain a unique hash
         event = str((function_name, args_str, kwargs_str))
+
+        # TODO actually compute a short hash of the event string, e.g., using SHA256 ?
+        # event_hash = utils.custom_hash(event)
+
         return event
 
     def _skip_execution_with_cache(self):
@@ -229,7 +236,13 @@ class Simulation:
                     #   Must satisfy: 
                     #     - event_hash == c_event_hash_1
                     #     - hash(e0) == c_prev_node_hash_1
-                    event_hash_match = event_hash == self.cached_trace[self._execution_trace_position() + 1][1]
+                    
+                    try:
+                        event_hash_match = event_hash == self.cached_trace[self._execution_trace_position() + 1][1]
+                    except Exception as e:
+                        logger.error(f"Error while checking event hash match: {e}")
+                        event_hash_match = False                    
+                    
                     prev_node_match = True # TODO implement real check
 
                     return event_hash_match and prev_node_match
@@ -328,6 +341,7 @@ class Simulation:
         """
         Saves the cache file to the given path. Always overwrites.
         """
+        logger.debug(f"Now saving cache file to {cache_path}.")
         try:
             # Create a temporary file
             with tempfile.NamedTemporaryFile('w', delete=False) as temp:
@@ -336,7 +350,8 @@ class Simulation:
             # Replace the original file with the temporary file
             os.replace(temp.name, cache_path)
         except Exception as e:
-            print(f"An error occurred: {e}")
+            traceback_string = ''.join(traceback.format_tb(e.__traceback__))
+            logger.error(f"An error occurred while saving the cache file: {e}\nTraceback:\n{traceback_string}")
 
         self.has_unsaved_cache_changes = False
 
@@ -573,8 +588,11 @@ class Transaction:
                     output = self._decode_function_output(encoded_output)
 
             else: # not cached
-                self.simulation.cache_misses += 1
-                
+
+                if not begin_parallel:
+                    # in case of beginning a parallel segment, we don't want to count it as a cache miss,
+                    # since the segment itself will not be cached, but rather the events within it.
+                    self.simulation.cache_misses += 1
                 
                 if not self.simulation.is_under_transaction(id=parallel_id) and not begin_parallel:
                     
@@ -587,20 +605,7 @@ class Transaction:
 
                     # Compute the function and encode the relevant output and simulation state
                     output = self.function(*self.args, **self.kwargs)
-                    encoded_output = self._encode_function_output(output)
-                    state = self.simulation._encode_simulation_state()
-
-                    # immediately drop the cached trace suffix, since we are starting a new execution from this point on.
-                    # in the case of parallel transactions, this will drop everything _after_ the current parallel segment
-                    # (which itself occupies one position only, with a dictionary of event hashes and their outputs).
-                    self.simulation._drop_cached_trace_suffix()
-
-                    # Cache the result and update the current execution trace. If this is a parallel transaction, the
-                    # cache and execution traces will be updated in a different way.
-                    self.simulation._add_to_cache_trace(state, event_hash, encoded_output, 
-                                                        parallel=self.simulation.is_under_parallel_transactions())
-                    self.simulation._add_to_execution_trace(state, event_hash, encoded_output, 
-                                                            parallel=self.simulation.is_under_parallel_transactions())
+                    self._save_output_with_simulation_state(event_hash, output)
 
                     # END TRANSACTION #################################################################
                     if not begin_parallel:
@@ -622,16 +627,38 @@ class Transaction:
             if begin_parallel:
                 self.simulation.end_parallel_transactions()
 
+                # execute an ad-hoc Transaction to save the simulation state AFTER the parallel segment is done.
+                Transaction(self.obj_under_transaction, self.simulation, lambda: True).execute(begin_parallel=False, parallel_id=parallel_id)
+
         else:
             raise ValueError(f"Simulation status is invalid at this point: {self.simulation.status}")
 
         # Checkpoint if needed
+        logger.debug(f"Will attempt to checkpoint simulation state after transaction execution.")
         if self.simulation is not None and self.simulation.auto_checkpoint:
+            logger.debug("Auto-checkpointing simulation state after transaction execution.")
             self.simulation.checkpoint()
 
         # after all the transaction is done, return the output - the client will never know about all the complexity we've
         # gone through to get here.
         return output
+    
+    def _save_output_with_simulation_state(self, event_hash, output):
+        encoded_output = self._encode_function_output(output)
+        state = self.simulation._encode_simulation_state()
+
+        # immediately drop the cached trace suffix, since we are starting a new execution from this point on.
+        # in the case of parallel transactions, this will drop everything _after_ the current parallel segment
+        # (which itself occupies one position only, with a dictionary of event hashes and their outputs).
+        self.simulation._drop_cached_trace_suffix()
+
+        # Cache the result and update the current execution trace. If this is a parallel transaction, the
+        # cache and execution traces will be updated in a different way.
+        self.simulation._add_to_cache_trace(state, event_hash, encoded_output, 
+                                            parallel=self.simulation.is_under_parallel_transactions())
+        self.simulation._add_to_execution_trace(state, event_hash, encoded_output, 
+                                                parallel=self.simulation.is_under_parallel_transactions())
+
   
     def _encode_function_output(self, output) -> dict:
         """

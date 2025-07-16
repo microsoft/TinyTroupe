@@ -30,76 +30,22 @@
 import openai
 from openai import OpenAI, AzureOpenAI
 import time
-import json
 import pickle
 import logging
 import configparser
+from typing import Union
+
+
 import tiktoken
 from tinytroupe import utils
+from tinytroupe.control import transactional
+from tinytroupe import default
+from tinytroupe import config_manager
 
 logger = logging.getLogger(&#34;tinytroupe&#34;)
 
 # We&#39;ll use various configuration elements below
 config = utils.read_config_file()
-
-###########################################################################
-# Default parameter values
-###########################################################################
-default = {}
-default[&#34;model&#34;] = config[&#34;OpenAI&#34;].get(&#34;MODEL&#34;, &#34;gpt-4&#34;)
-default[&#34;max_tokens&#34;] = int(config[&#34;OpenAI&#34;].get(&#34;MAX_TOKENS&#34;, &#34;1024&#34;))
-default[&#34;temperature&#34;] = float(config[&#34;OpenAI&#34;].get(&#34;TEMPERATURE&#34;, &#34;0.3&#34;))
-default[&#34;top_p&#34;] = int(config[&#34;OpenAI&#34;].get(&#34;TOP_P&#34;, &#34;0&#34;))
-default[&#34;frequency_penalty&#34;] = float(config[&#34;OpenAI&#34;].get(&#34;FREQ_PENALTY&#34;, &#34;0.0&#34;))
-default[&#34;presence_penalty&#34;] = float(
-    config[&#34;OpenAI&#34;].get(&#34;PRESENCE_PENALTY&#34;, &#34;0.0&#34;))
-default[&#34;timeout&#34;] = float(config[&#34;OpenAI&#34;].get(&#34;TIMEOUT&#34;, &#34;30.0&#34;))
-default[&#34;max_attempts&#34;] = float(config[&#34;OpenAI&#34;].get(&#34;MAX_ATTEMPTS&#34;, &#34;0.0&#34;))
-default[&#34;waiting_time&#34;] = float(config[&#34;OpenAI&#34;].get(&#34;WAITING_TIME&#34;, &#34;0.5&#34;))
-default[&#34;exponential_backoff_factor&#34;] = float(config[&#34;OpenAI&#34;].get(&#34;EXPONENTIAL_BACKOFF_FACTOR&#34;, &#34;5&#34;))
-
-default[&#34;embedding_model&#34;] = config[&#34;OpenAI&#34;].get(&#34;EMBEDDING_MODEL&#34;, &#34;text-embedding-3-small&#34;)
-
-default[&#34;cache_api_calls&#34;] = config[&#34;OpenAI&#34;].getboolean(&#34;CACHE_API_CALLS&#34;, False)
-default[&#34;cache_file_name&#34;] = config[&#34;OpenAI&#34;].get(&#34;CACHE_FILE_NAME&#34;, &#34;openai_api_cache.pickle&#34;)
-
-###########################################################################
-# Model calling helpers
-###########################################################################
-
-# TODO under development
-class LLMCall:
-    &#34;&#34;&#34;
-    A class that represents an LLM model call. It contains the input messages, the model configuration, and the model output.
-    &#34;&#34;&#34;
-    def __init__(self, system_template_name:str, user_template_name:str=None, **model_params):
-        &#34;&#34;&#34;
-        Initializes an LLMCall instance with the specified system and user templates.
-        &#34;&#34;&#34;
-        self.system_template_name = system_template_name
-        self.user_template_name = user_template_name
-        self.model_params = model_params
-    
-    def call(self, **rendering_configs):
-        &#34;&#34;&#34;
-        Calls the LLM model with the specified rendering configurations.
-        &#34;&#34;&#34;
-        self.messages = utils.compose_initial_LLM_messages_with_templates(self.system_template_name, self.user_template_name, rendering_configs)
-        
-
-        # call the LLM model
-        self.model_output = client().send_message(self.messages, **self.model_params)
-
-        if &#39;content&#39; in self.model_output:
-            return self.model_output[&#39;content&#39;]
-        else:
-            logger.error(f&#34;Model output does not contain &#39;content&#39; key: {self.model_output}&#34;)
-            return None
-
-
-    def __repr__(self):
-        return f&#34;LLMCall(messages={self.messages}, model_config={self.model_config}, model_output={self.model_output})&#34;
-
 
 ###########################################################################
 # Client class
@@ -136,26 +82,43 @@ class OpenAIClient:
         &#34;&#34;&#34;
         self.client = OpenAI(api_key=os.getenv(&#34;OPENAI_API_KEY&#34;))
 
+    @config_manager.config_defaults(
+        model=&#34;model&#34;,
+        temperature=&#34;temperature&#34;,
+        max_tokens=&#34;max_tokens&#34;,
+        top_p=&#34;top_p&#34;,
+        frequency_penalty=&#34;frequency_penalty&#34;,
+        presence_penalty=&#34;presence_penalty&#34;,
+        timeout=&#34;timeout&#34;,
+        max_attempts=&#34;max_attempts&#34;,
+        waiting_time=&#34;waiting_time&#34;,
+        exponential_backoff_factor=&#34;exponential_backoff_factor&#34;,
+        response_format=None,
+        echo=None
+    )
     def send_message(self,
                     current_messages,
-                     model=default[&#34;model&#34;],
-                     temperature=default[&#34;temperature&#34;],
-                     max_tokens=default[&#34;max_tokens&#34;],
-                     top_p=default[&#34;top_p&#34;],
-                     frequency_penalty=default[&#34;frequency_penalty&#34;],
-                     presence_penalty=default[&#34;presence_penalty&#34;],
-                     stop=[],
-                     timeout=default[&#34;timeout&#34;],
-                     max_attempts=default[&#34;max_attempts&#34;],
-                     waiting_time=default[&#34;waiting_time&#34;],
-                     exponential_backoff_factor=default[&#34;exponential_backoff_factor&#34;],
-                     n = 1,
-                     echo=False):
+                    dedent_messages=True,
+                    model=None,
+                    temperature=None,
+                    max_tokens=None,
+                    top_p=None,
+                    frequency_penalty=None,
+                    presence_penalty=None,
+                    stop=[],
+                    timeout=None,
+                    max_attempts=None,
+                    waiting_time=None,
+                    exponential_backoff_factor=None,
+                    n = 1,
+                    response_format=None,
+                    echo=False):
         &#34;&#34;&#34;
         Sends a message to the OpenAI API and returns the response.
 
         Args:
         current_messages (list): A list of dictionaries representing the conversation history.
+        dedent_messages (bool): Whether to dedent the messages before sending them to the API.
         model (str): The ID of the model to use for generating the response.
         temperature (float): Controls the &#34;creativity&#34; of the response. Higher values result in more diverse responses.
         max_tokens (int): The maximum number of tokens (words or punctuation marks) to generate in the response.
@@ -165,6 +128,10 @@ class OpenAIClient:
         stop (str): A string that, if encountered in the generated response, will cause the generation to stop.
         max_attempts (int): The maximum number of attempts to make before giving up on generating a response.
         timeout (int): The maximum number of seconds to wait for a response from the API.
+        waiting_time (int): The number of seconds to wait between requests.
+        exponential_backoff_factor (int): The factor by which to increase the waiting time between requests.
+        n (int): The number of completions to generate.
+        response_format: The format of the response, if any.
 
         Returns:
         A dictionary representing the generated response.
@@ -172,18 +139,30 @@ class OpenAIClient:
 
         def aux_exponential_backoff():
             nonlocal waiting_time
+
+            # in case waiting time was initially set to 0
+            if waiting_time &lt;= 0:
+                waiting_time = 2
+
             logger.info(f&#34;Request failed. Waiting {waiting_time} seconds between requests...&#34;)
             time.sleep(waiting_time)
 
             # exponential backoff
             waiting_time = waiting_time * exponential_backoff_factor
-        
 
         # setup the OpenAI configurations for this client.
         self._setup_from_config()
+
+        # dedent the messages (field &#39;content&#39; only) if needed (using textwrap)
+        if dedent_messages:
+            for message in current_messages:
+                if &#34;content&#34; in message:
+                    message[&#34;content&#34;] = utils.dedent(message[&#34;content&#34;])
+            
         
         # We need to adapt the parameters to the API type, so we create a dictionary with them first
         chat_api_params = {
+            &#34;model&#34;: model,
             &#34;messages&#34;: current_messages,
             &#34;temperature&#34;: temperature,
             &#34;max_tokens&#34;:max_tokens,
@@ -196,6 +175,8 @@ class OpenAIClient:
             &#34;n&#34;: n,
         }
 
+        if response_format is not None:
+            chat_api_params[&#34;response_format&#34;] = response_format
 
         i = 0
         while i &lt; max_attempts:
@@ -217,8 +198,9 @@ class OpenAIClient:
                 if self.cache_api_calls and (cache_key in self.api_cache):
                     response = self.api_cache[cache_key]
                 else:
-                    logger.info(f&#34;Waiting {waiting_time} seconds before next API request (to avoid throttling)...&#34;)
-                    time.sleep(waiting_time)
+                    if waiting_time &gt; 0:
+                        logger.info(f&#34;Waiting {waiting_time} seconds before next API request (to avoid throttling)...&#34;)
+                        time.sleep(waiting_time)
                     
                     response = self._raw_model_call(model, chat_api_params)
                     if self.cache_api_calls:
@@ -229,7 +211,7 @@ class OpenAIClient:
                 logger.debug(f&#34;Got response from API: {response}&#34;)
                 end_time = time.monotonic()
                 logger.debug(
-                    f&#34;Got response in {end_time - start_time:.2f} seconds after {i + 1} attempts.&#34;)
+                    f&#34;Got response in {end_time - start_time:.2f} seconds after {i} attempts.&#34;)
 
                 return utils.sanitize_dict(self._raw_model_response_extractor(response))
 
@@ -257,7 +239,8 @@ class OpenAIClient:
                 aux_exponential_backoff()
                 
             except Exception as e:
-                logger.error(f&#34;[{i}] Error: {e}&#34;)
+                logger.error(f&#34;[{i}] {type(e).__name__} Error: {e}&#34;)
+                aux_exponential_backoff()
 
         logger.error(f&#34;Failed to get response after {max_attempts} attempts.&#34;)
         return None
@@ -266,12 +249,47 @@ class OpenAIClient:
         &#34;&#34;&#34;
         Calls the OpenAI API with the given parameters. Subclasses should
         override this method to implement their own API calls.
-        &#34;&#34;&#34;
-        
-        chat_api_params[&#34;model&#34;] = model # OpenAI API uses this parameter name
-        return self.client.chat.completions.create(
+        &#34;&#34;&#34;   
+
+        # adjust parameters depending on the model
+        if self._is_reasoning_model(model):
+            # Reasoning models have slightly different parameters
+            del chat_api_params[&#34;stream&#34;]
+            del chat_api_params[&#34;temperature&#34;]
+            del chat_api_params[&#34;top_p&#34;]
+            del chat_api_params[&#34;frequency_penalty&#34;]
+            del chat_api_params[&#34;presence_penalty&#34;]            
+
+            chat_api_params[&#34;max_completion_tokens&#34;] = chat_api_params[&#34;max_tokens&#34;]
+            del chat_api_params[&#34;max_tokens&#34;]
+
+            chat_api_params[&#34;reasoning_effort&#34;] = default[&#34;reasoning_effort&#34;]
+
+
+        # To make the log cleaner, we remove the messages from the logged parameters
+        logged_params = {k: v for k, v in chat_api_params.items() if k != &#34;messages&#34;} 
+
+        if &#34;response_format&#34; in chat_api_params:
+            # to enforce the response format via pydantic, we need to use a different method
+
+            if &#34;stream&#34; in chat_api_params:
+                del chat_api_params[&#34;stream&#34;]
+
+            logger.info(f&#34;Calling LLM model (using .parse too) with these parameters: {logged_params}. Not showing &#39;messages&#39; parameter.&#34;)
+            # complete message
+            logger.debug(f&#34;   --&gt; Complete messages sent to LLM: {chat_api_params[&#39;messages&#39;]}&#34;)
+            return self.client.beta.chat.completions.parse(
                     **chat_api_params
                 )
+        
+        else:
+            logger.info(f&#34;Calling LLM model with these parameters: {logged_params}. Not showing &#39;messages&#39; parameter.&#34;)
+            return self.client.chat.completions.create(
+                        **chat_api_params
+                    )
+
+    def _is_reasoning_model(self, model):
+        return &#34;o1&#34; in model or &#34;o3&#34; in model
 
     def _raw_model_response_extractor(self, response):
         &#34;&#34;&#34;
@@ -296,6 +314,7 @@ class OpenAIClient:
             except KeyError:
                 logger.debug(&#34;Token count: model not found. Using cl100k_base encoding.&#34;)
                 encoding = tiktoken.get_encoding(&#34;cl100k_base&#34;)
+            
             if model in {
                 &#34;gpt-3.5-turbo-0613&#34;,
                 &#34;gpt-3.5-turbo-16k-0613&#34;,
@@ -303,7 +322,7 @@ class OpenAIClient:
                 &#34;gpt-4-32k-0314&#34;,
                 &#34;gpt-4-0613&#34;,
                 &#34;gpt-4-32k-0613&#34;,
-                }:
+                } or &#34;o1&#34; in model or &#34;o3&#34; in model: # assuming o1/3 models work the same way
                 tokens_per_message = 3
                 tokens_per_name = 1
             elif model == &#34;gpt-3.5-turbo-0301&#34;:
@@ -312,13 +331,14 @@ class OpenAIClient:
             elif &#34;gpt-3.5-turbo&#34; in model:
                 logger.debug(&#34;Token count: gpt-3.5-turbo may update over time. Returning num tokens assuming gpt-3.5-turbo-0613.&#34;)
                 return self._count_tokens(messages, model=&#34;gpt-3.5-turbo-0613&#34;)
-            elif (&#34;gpt-4&#34; in model) or (&#34;ppo&#34; in model):
+            elif (&#34;gpt-4&#34; in model) or (&#34;ppo&#34; in model) :
                 logger.debug(&#34;Token count: gpt-4 may update over time. Returning num tokens assuming gpt-4-0613.&#34;)
                 return self._count_tokens(messages, model=&#34;gpt-4-0613&#34;)
             else:
                 raise NotImplementedError(
-                    f&#34;&#34;&#34;num_tokens_from_messages() is not implemented for model {model}. See https://github.com/openai/openai-python/blob/main/chatml.md for information on how messages are converted to tokens.&#34;&#34;&#34;
+                    f&#34;&#34;&#34;_count_tokens() is not implemented for model {model}. See https://github.com/openai/openai-python/blob/main/chatml.md for information on how messages are converted to tokens.&#34;&#34;&#34;
                 )
+            
             num_tokens = 0
             for message in messages:
                 num_tokens += tokens_per_message
@@ -393,21 +413,27 @@ class AzureClient(OpenAIClient):
         Sets up the Azure OpenAI Service API configurations for this client,
         including the API endpoint and key.
         &#34;&#34;&#34;
-        self.client = AzureOpenAI(azure_endpoint= os.getenv(&#34;AZURE_OPENAI_ENDPOINT&#34;),
-                                  api_version = config[&#34;OpenAI&#34;][&#34;AZURE_API_VERSION&#34;],
-                                  api_key = os.getenv(&#34;AZURE_OPENAI_KEY&#34;))
+        if os.getenv(&#34;AZURE_OPENAI_KEY&#34;):
+            logger.info(&#34;Using Azure OpenAI Service API with key.&#34;)
+            self.client = AzureOpenAI(azure_endpoint= os.getenv(&#34;AZURE_OPENAI_ENDPOINT&#34;),
+                                    api_version = config[&#34;OpenAI&#34;][&#34;AZURE_API_VERSION&#34;],
+                                    api_key = os.getenv(&#34;AZURE_OPENAI_KEY&#34;))
+        else:  # Use Entra ID Auth
+            logger.info(&#34;Using Azure OpenAI Service API with Entra ID Auth.&#34;)
+            from azure.identity import DefaultAzureCredential, get_bearer_token_provider
+
+            credential = DefaultAzureCredential()
+            token_provider = get_bearer_token_provider(credential, &#34;https://cognitiveservices.azure.com/.default&#34;)
+            self.client = AzureOpenAI(
+                azure_endpoint= os.getenv(&#34;AZURE_OPENAI_ENDPOINT&#34;),
+                api_version = config[&#34;OpenAI&#34;][&#34;AZURE_API_VERSION&#34;],
+                azure_ad_token_provider=token_provider
+            )
     
-    def _raw_model_call(self, model, chat_api_params):
-        &#34;&#34;&#34;
-        Calls the Azue OpenAI Service API with the given parameters.
-        &#34;&#34;&#34;
-        chat_api_params[&#34;model&#34;] = model 
 
-        return self.client.chat.completions.create(
-                    **chat_api_params
-                )
-
-
+###########################################################################
+# Exceptions
+###########################################################################
 class InvalidRequestError(Exception):
     &#34;&#34;&#34;
     Exception raised when the request to the OpenAI API is invalid.
@@ -492,26 +518,9 @@ def force_api_cache(cache_api_calls, cache_file_name=default[&#34;cache_file_nam
     for client in _api_type_to_client.values():
         client.set_api_cache(cache_api_calls, cache_file_name)
 
-def force_default_value(key, value):
-    &#34;&#34;&#34;
-    Forces the use of the given default configuration value for the specified key, thus overriding any other configuration.
-
-    Args:
-    key (str): The key to override.
-    value: The value to use for the key.
-    &#34;&#34;&#34;
-    global default
-
-    # check if the key actually exists
-    if key in default:
-        default[key] = value
-    else:
-        raise ValueError(f&#34;Key {key} is not a valid configuration key.&#34;)
-
 # default client
 register_client(&#34;openai&#34;, OpenAIClient())
-register_client(&#34;azure&#34;, AzureClient())
-    </code></pre>
+register_client(&#34;azure&#34;, AzureClient())</code></pre>
 </details>
 </section>
 <section>
@@ -587,35 +596,6 @@ api_type (str): The API type to use.</p></div>
     _api_type_override = api_type</code></pre>
 </details>
 </dd>
-<dt id="tinytroupe.openai_utils.force_default_value"><code class="name flex">
-<span>def <span class="ident">force_default_value</span></span>(<span>key, value)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Forces the use of the given default configuration value for the specified key, thus overriding any other configuration.</p>
-<p>Args:
-key (str): The key to override.
-value: The value to use for the key.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def force_default_value(key, value):
-    &#34;&#34;&#34;
-    Forces the use of the given default configuration value for the specified key, thus overriding any other configuration.
-
-    Args:
-    key (str): The key to override.
-    value: The value to use for the key.
-    &#34;&#34;&#34;
-    global default
-
-    # check if the key actually exists
-    if key in default:
-        default[key] = value
-    else:
-        raise ValueError(f&#34;Key {key} is not a valid configuration key.&#34;)</code></pre>
-</details>
-</dd>
 <dt id="tinytroupe.openai_utils.register_client"><code class="name flex">
 <span>def <span class="ident">register_client</span></span>(<span>api_type, client)</span>
 </code></dt>
@@ -666,19 +646,22 @@ client: The client to register.</p></div>
         Sets up the Azure OpenAI Service API configurations for this client,
         including the API endpoint and key.
         &#34;&#34;&#34;
-        self.client = AzureOpenAI(azure_endpoint= os.getenv(&#34;AZURE_OPENAI_ENDPOINT&#34;),
-                                  api_version = config[&#34;OpenAI&#34;][&#34;AZURE_API_VERSION&#34;],
-                                  api_key = os.getenv(&#34;AZURE_OPENAI_KEY&#34;))
-    
-    def _raw_model_call(self, model, chat_api_params):
-        &#34;&#34;&#34;
-        Calls the Azue OpenAI Service API with the given parameters.
-        &#34;&#34;&#34;
-        chat_api_params[&#34;model&#34;] = model 
+        if os.getenv(&#34;AZURE_OPENAI_KEY&#34;):
+            logger.info(&#34;Using Azure OpenAI Service API with key.&#34;)
+            self.client = AzureOpenAI(azure_endpoint= os.getenv(&#34;AZURE_OPENAI_ENDPOINT&#34;),
+                                    api_version = config[&#34;OpenAI&#34;][&#34;AZURE_API_VERSION&#34;],
+                                    api_key = os.getenv(&#34;AZURE_OPENAI_KEY&#34;))
+        else:  # Use Entra ID Auth
+            logger.info(&#34;Using Azure OpenAI Service API with Entra ID Auth.&#34;)
+            from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 
-        return self.client.chat.completions.create(
-                    **chat_api_params
-                )</code></pre>
+            credential = DefaultAzureCredential()
+            token_provider = get_bearer_token_provider(credential, &#34;https://cognitiveservices.azure.com/.default&#34;)
+            self.client = AzureOpenAI(
+                azure_endpoint= os.getenv(&#34;AZURE_OPENAI_ENDPOINT&#34;),
+                api_version = config[&#34;OpenAI&#34;][&#34;AZURE_API_VERSION&#34;],
+                azure_ad_token_provider=token_provider
+            )</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -716,79 +699,6 @@ client: The client to register.</p></div>
 <li>builtins.Exception</li>
 <li>builtins.BaseException</li>
 </ul>
-</dd>
-<dt id="tinytroupe.openai_utils.LLMCall"><code class="flex name class">
-<span>class <span class="ident">LLMCall</span></span>
-<span>(</span><span>system_template_name: str, user_template_name: str = None, **model_params)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>A class that represents an LLM model call. It contains the input messages, the model configuration, and the model output.</p>
-<p>Initializes an LLMCall instance with the specified system and user templates.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class LLMCall:
-    &#34;&#34;&#34;
-    A class that represents an LLM model call. It contains the input messages, the model configuration, and the model output.
-    &#34;&#34;&#34;
-    def __init__(self, system_template_name:str, user_template_name:str=None, **model_params):
-        &#34;&#34;&#34;
-        Initializes an LLMCall instance with the specified system and user templates.
-        &#34;&#34;&#34;
-        self.system_template_name = system_template_name
-        self.user_template_name = user_template_name
-        self.model_params = model_params
-    
-    def call(self, **rendering_configs):
-        &#34;&#34;&#34;
-        Calls the LLM model with the specified rendering configurations.
-        &#34;&#34;&#34;
-        self.messages = utils.compose_initial_LLM_messages_with_templates(self.system_template_name, self.user_template_name, rendering_configs)
-        
-
-        # call the LLM model
-        self.model_output = client().send_message(self.messages, **self.model_params)
-
-        if &#39;content&#39; in self.model_output:
-            return self.model_output[&#39;content&#39;]
-        else:
-            logger.error(f&#34;Model output does not contain &#39;content&#39; key: {self.model_output}&#34;)
-            return None
-
-
-    def __repr__(self):
-        return f&#34;LLMCall(messages={self.messages}, model_config={self.model_config}, model_output={self.model_output})&#34;</code></pre>
-</details>
-<h3>Methods</h3>
-<dl>
-<dt id="tinytroupe.openai_utils.LLMCall.call"><code class="name flex">
-<span>def <span class="ident">call</span></span>(<span>self, **rendering_configs)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Calls the LLM model with the specified rendering configurations.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def call(self, **rendering_configs):
-    &#34;&#34;&#34;
-    Calls the LLM model with the specified rendering configurations.
-    &#34;&#34;&#34;
-    self.messages = utils.compose_initial_LLM_messages_with_templates(self.system_template_name, self.user_template_name, rendering_configs)
-    
-
-    # call the LLM model
-    self.model_output = client().send_message(self.messages, **self.model_params)
-
-    if &#39;content&#39; in self.model_output:
-        return self.model_output[&#39;content&#39;]
-    else:
-        logger.error(f&#34;Model output does not contain &#39;content&#39; key: {self.model_output}&#34;)
-        return None</code></pre>
-</details>
-</dd>
-</dl>
 </dd>
 <dt id="tinytroupe.openai_utils.NonTerminalError"><code class="flex name class">
 <span>class <span class="ident">NonTerminalError</span></span>
@@ -853,26 +763,43 @@ client: The client to register.</p></div>
         &#34;&#34;&#34;
         self.client = OpenAI(api_key=os.getenv(&#34;OPENAI_API_KEY&#34;))
 
+    @config_manager.config_defaults(
+        model=&#34;model&#34;,
+        temperature=&#34;temperature&#34;,
+        max_tokens=&#34;max_tokens&#34;,
+        top_p=&#34;top_p&#34;,
+        frequency_penalty=&#34;frequency_penalty&#34;,
+        presence_penalty=&#34;presence_penalty&#34;,
+        timeout=&#34;timeout&#34;,
+        max_attempts=&#34;max_attempts&#34;,
+        waiting_time=&#34;waiting_time&#34;,
+        exponential_backoff_factor=&#34;exponential_backoff_factor&#34;,
+        response_format=None,
+        echo=None
+    )
     def send_message(self,
                     current_messages,
-                     model=default[&#34;model&#34;],
-                     temperature=default[&#34;temperature&#34;],
-                     max_tokens=default[&#34;max_tokens&#34;],
-                     top_p=default[&#34;top_p&#34;],
-                     frequency_penalty=default[&#34;frequency_penalty&#34;],
-                     presence_penalty=default[&#34;presence_penalty&#34;],
-                     stop=[],
-                     timeout=default[&#34;timeout&#34;],
-                     max_attempts=default[&#34;max_attempts&#34;],
-                     waiting_time=default[&#34;waiting_time&#34;],
-                     exponential_backoff_factor=default[&#34;exponential_backoff_factor&#34;],
-                     n = 1,
-                     echo=False):
+                    dedent_messages=True,
+                    model=None,
+                    temperature=None,
+                    max_tokens=None,
+                    top_p=None,
+                    frequency_penalty=None,
+                    presence_penalty=None,
+                    stop=[],
+                    timeout=None,
+                    max_attempts=None,
+                    waiting_time=None,
+                    exponential_backoff_factor=None,
+                    n = 1,
+                    response_format=None,
+                    echo=False):
         &#34;&#34;&#34;
         Sends a message to the OpenAI API and returns the response.
 
         Args:
         current_messages (list): A list of dictionaries representing the conversation history.
+        dedent_messages (bool): Whether to dedent the messages before sending them to the API.
         model (str): The ID of the model to use for generating the response.
         temperature (float): Controls the &#34;creativity&#34; of the response. Higher values result in more diverse responses.
         max_tokens (int): The maximum number of tokens (words or punctuation marks) to generate in the response.
@@ -882,6 +809,10 @@ client: The client to register.</p></div>
         stop (str): A string that, if encountered in the generated response, will cause the generation to stop.
         max_attempts (int): The maximum number of attempts to make before giving up on generating a response.
         timeout (int): The maximum number of seconds to wait for a response from the API.
+        waiting_time (int): The number of seconds to wait between requests.
+        exponential_backoff_factor (int): The factor by which to increase the waiting time between requests.
+        n (int): The number of completions to generate.
+        response_format: The format of the response, if any.
 
         Returns:
         A dictionary representing the generated response.
@@ -889,18 +820,30 @@ client: The client to register.</p></div>
 
         def aux_exponential_backoff():
             nonlocal waiting_time
+
+            # in case waiting time was initially set to 0
+            if waiting_time &lt;= 0:
+                waiting_time = 2
+
             logger.info(f&#34;Request failed. Waiting {waiting_time} seconds between requests...&#34;)
             time.sleep(waiting_time)
 
             # exponential backoff
             waiting_time = waiting_time * exponential_backoff_factor
-        
 
         # setup the OpenAI configurations for this client.
         self._setup_from_config()
+
+        # dedent the messages (field &#39;content&#39; only) if needed (using textwrap)
+        if dedent_messages:
+            for message in current_messages:
+                if &#34;content&#34; in message:
+                    message[&#34;content&#34;] = utils.dedent(message[&#34;content&#34;])
+            
         
         # We need to adapt the parameters to the API type, so we create a dictionary with them first
         chat_api_params = {
+            &#34;model&#34;: model,
             &#34;messages&#34;: current_messages,
             &#34;temperature&#34;: temperature,
             &#34;max_tokens&#34;:max_tokens,
@@ -913,6 +856,8 @@ client: The client to register.</p></div>
             &#34;n&#34;: n,
         }
 
+        if response_format is not None:
+            chat_api_params[&#34;response_format&#34;] = response_format
 
         i = 0
         while i &lt; max_attempts:
@@ -934,8 +879,9 @@ client: The client to register.</p></div>
                 if self.cache_api_calls and (cache_key in self.api_cache):
                     response = self.api_cache[cache_key]
                 else:
-                    logger.info(f&#34;Waiting {waiting_time} seconds before next API request (to avoid throttling)...&#34;)
-                    time.sleep(waiting_time)
+                    if waiting_time &gt; 0:
+                        logger.info(f&#34;Waiting {waiting_time} seconds before next API request (to avoid throttling)...&#34;)
+                        time.sleep(waiting_time)
                     
                     response = self._raw_model_call(model, chat_api_params)
                     if self.cache_api_calls:
@@ -946,7 +892,7 @@ client: The client to register.</p></div>
                 logger.debug(f&#34;Got response from API: {response}&#34;)
                 end_time = time.monotonic()
                 logger.debug(
-                    f&#34;Got response in {end_time - start_time:.2f} seconds after {i + 1} attempts.&#34;)
+                    f&#34;Got response in {end_time - start_time:.2f} seconds after {i} attempts.&#34;)
 
                 return utils.sanitize_dict(self._raw_model_response_extractor(response))
 
@@ -974,7 +920,8 @@ client: The client to register.</p></div>
                 aux_exponential_backoff()
                 
             except Exception as e:
-                logger.error(f&#34;[{i}] Error: {e}&#34;)
+                logger.error(f&#34;[{i}] {type(e).__name__} Error: {e}&#34;)
+                aux_exponential_backoff()
 
         logger.error(f&#34;Failed to get response after {max_attempts} attempts.&#34;)
         return None
@@ -983,12 +930,47 @@ client: The client to register.</p></div>
         &#34;&#34;&#34;
         Calls the OpenAI API with the given parameters. Subclasses should
         override this method to implement their own API calls.
-        &#34;&#34;&#34;
-        
-        chat_api_params[&#34;model&#34;] = model # OpenAI API uses this parameter name
-        return self.client.chat.completions.create(
+        &#34;&#34;&#34;   
+
+        # adjust parameters depending on the model
+        if self._is_reasoning_model(model):
+            # Reasoning models have slightly different parameters
+            del chat_api_params[&#34;stream&#34;]
+            del chat_api_params[&#34;temperature&#34;]
+            del chat_api_params[&#34;top_p&#34;]
+            del chat_api_params[&#34;frequency_penalty&#34;]
+            del chat_api_params[&#34;presence_penalty&#34;]            
+
+            chat_api_params[&#34;max_completion_tokens&#34;] = chat_api_params[&#34;max_tokens&#34;]
+            del chat_api_params[&#34;max_tokens&#34;]
+
+            chat_api_params[&#34;reasoning_effort&#34;] = default[&#34;reasoning_effort&#34;]
+
+
+        # To make the log cleaner, we remove the messages from the logged parameters
+        logged_params = {k: v for k, v in chat_api_params.items() if k != &#34;messages&#34;} 
+
+        if &#34;response_format&#34; in chat_api_params:
+            # to enforce the response format via pydantic, we need to use a different method
+
+            if &#34;stream&#34; in chat_api_params:
+                del chat_api_params[&#34;stream&#34;]
+
+            logger.info(f&#34;Calling LLM model (using .parse too) with these parameters: {logged_params}. Not showing &#39;messages&#39; parameter.&#34;)
+            # complete message
+            logger.debug(f&#34;   --&gt; Complete messages sent to LLM: {chat_api_params[&#39;messages&#39;]}&#34;)
+            return self.client.beta.chat.completions.parse(
                     **chat_api_params
                 )
+        
+        else:
+            logger.info(f&#34;Calling LLM model with these parameters: {logged_params}. Not showing &#39;messages&#39; parameter.&#34;)
+            return self.client.chat.completions.create(
+                        **chat_api_params
+                    )
+
+    def _is_reasoning_model(self, model):
+        return &#34;o1&#34; in model or &#34;o3&#34; in model
 
     def _raw_model_response_extractor(self, response):
         &#34;&#34;&#34;
@@ -1013,6 +995,7 @@ client: The client to register.</p></div>
             except KeyError:
                 logger.debug(&#34;Token count: model not found. Using cl100k_base encoding.&#34;)
                 encoding = tiktoken.get_encoding(&#34;cl100k_base&#34;)
+            
             if model in {
                 &#34;gpt-3.5-turbo-0613&#34;,
                 &#34;gpt-3.5-turbo-16k-0613&#34;,
@@ -1020,7 +1003,7 @@ client: The client to register.</p></div>
                 &#34;gpt-4-32k-0314&#34;,
                 &#34;gpt-4-0613&#34;,
                 &#34;gpt-4-32k-0613&#34;,
-                }:
+                } or &#34;o1&#34; in model or &#34;o3&#34; in model: # assuming o1/3 models work the same way
                 tokens_per_message = 3
                 tokens_per_name = 1
             elif model == &#34;gpt-3.5-turbo-0301&#34;:
@@ -1029,13 +1012,14 @@ client: The client to register.</p></div>
             elif &#34;gpt-3.5-turbo&#34; in model:
                 logger.debug(&#34;Token count: gpt-3.5-turbo may update over time. Returning num tokens assuming gpt-3.5-turbo-0613.&#34;)
                 return self._count_tokens(messages, model=&#34;gpt-3.5-turbo-0613&#34;)
-            elif (&#34;gpt-4&#34; in model) or (&#34;ppo&#34; in model):
+            elif (&#34;gpt-4&#34; in model) or (&#34;ppo&#34; in model) :
                 logger.debug(&#34;Token count: gpt-4 may update over time. Returning num tokens assuming gpt-4-0613.&#34;)
                 return self._count_tokens(messages, model=&#34;gpt-4-0613&#34;)
             else:
                 raise NotImplementedError(
-                    f&#34;&#34;&#34;num_tokens_from_messages() is not implemented for model {model}. See https://github.com/openai/openai-python/blob/main/chatml.md for information on how messages are converted to tokens.&#34;&#34;&#34;
+                    f&#34;&#34;&#34;_count_tokens() is not implemented for model {model}. See https://github.com/openai/openai-python/blob/main/chatml.md for information on how messages are converted to tokens.&#34;&#34;&#34;
                 )
+            
             num_tokens = 0
             for message in messages:
                 num_tokens += tokens_per_message
@@ -1134,12 +1118,13 @@ The embedding of the text.</p></div>
 </details>
 </dd>
 <dt id="tinytroupe.openai_utils.OpenAIClient.send_message"><code class="name flex">
-<span>def <span class="ident">send_message</span></span>(<span>self, current_messages, model='gpt-4o', temperature=0.3, max_tokens=4000, top_p=0, frequency_penalty=0.0, presence_penalty=0.0, stop=[], timeout=60.0, max_attempts=5.0, waiting_time=1.0, exponential_backoff_factor=5.0, n=1, echo=False)</span>
+<span>def <span class="ident">send_message</span></span>(<span>self, current_messages, dedent_messages=True, model=None, temperature=None, max_tokens=None, top_p=None, frequency_penalty=None, presence_penalty=None, stop=[], timeout=None, max_attempts=None, waiting_time=None, exponential_backoff_factor=None, n=1, response_format=None, echo=False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sends a message to the OpenAI API and returns the response.</p>
 <p>Args:
 current_messages (list): A list of dictionaries representing the conversation history.
+dedent_messages (bool): Whether to dedent the messages before sending them to the API.
 model (str): The ID of the model to use for generating the response.
 temperature (float): Controls the "creativity" of the response. Higher values result in more diverse responses.
 max_tokens (int): The maximum number of tokens (words or punctuation marks) to generate in the response.
@@ -1148,33 +1133,54 @@ frequency_penalty (float): Controls the "repetition" of the response. Higher val
 presence_penalty (float): Controls the "diversity" of the response. Higher values result in more diverse responses.
 stop (str): A string that, if encountered in the generated response, will cause the generation to stop.
 max_attempts (int): The maximum number of attempts to make before giving up on generating a response.
-timeout (int): The maximum number of seconds to wait for a response from the API.</p>
+timeout (int): The maximum number of seconds to wait for a response from the API.
+waiting_time (int): The number of seconds to wait between requests.
+exponential_backoff_factor (int): The factor by which to increase the waiting time between requests.
+n (int): The number of completions to generate.
+response_format: The format of the response, if any.</p>
 <p>Returns:
 A dictionary representing the generated response.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def send_message(self,
+<pre><code class="python">@config_manager.config_defaults(
+    model=&#34;model&#34;,
+    temperature=&#34;temperature&#34;,
+    max_tokens=&#34;max_tokens&#34;,
+    top_p=&#34;top_p&#34;,
+    frequency_penalty=&#34;frequency_penalty&#34;,
+    presence_penalty=&#34;presence_penalty&#34;,
+    timeout=&#34;timeout&#34;,
+    max_attempts=&#34;max_attempts&#34;,
+    waiting_time=&#34;waiting_time&#34;,
+    exponential_backoff_factor=&#34;exponential_backoff_factor&#34;,
+    response_format=None,
+    echo=None
+)
+def send_message(self,
                 current_messages,
-                 model=default[&#34;model&#34;],
-                 temperature=default[&#34;temperature&#34;],
-                 max_tokens=default[&#34;max_tokens&#34;],
-                 top_p=default[&#34;top_p&#34;],
-                 frequency_penalty=default[&#34;frequency_penalty&#34;],
-                 presence_penalty=default[&#34;presence_penalty&#34;],
-                 stop=[],
-                 timeout=default[&#34;timeout&#34;],
-                 max_attempts=default[&#34;max_attempts&#34;],
-                 waiting_time=default[&#34;waiting_time&#34;],
-                 exponential_backoff_factor=default[&#34;exponential_backoff_factor&#34;],
-                 n = 1,
-                 echo=False):
+                dedent_messages=True,
+                model=None,
+                temperature=None,
+                max_tokens=None,
+                top_p=None,
+                frequency_penalty=None,
+                presence_penalty=None,
+                stop=[],
+                timeout=None,
+                max_attempts=None,
+                waiting_time=None,
+                exponential_backoff_factor=None,
+                n = 1,
+                response_format=None,
+                echo=False):
     &#34;&#34;&#34;
     Sends a message to the OpenAI API and returns the response.
 
     Args:
     current_messages (list): A list of dictionaries representing the conversation history.
+    dedent_messages (bool): Whether to dedent the messages before sending them to the API.
     model (str): The ID of the model to use for generating the response.
     temperature (float): Controls the &#34;creativity&#34; of the response. Higher values result in more diverse responses.
     max_tokens (int): The maximum number of tokens (words or punctuation marks) to generate in the response.
@@ -1184,6 +1190,10 @@ A dictionary representing the generated response.</p></div>
     stop (str): A string that, if encountered in the generated response, will cause the generation to stop.
     max_attempts (int): The maximum number of attempts to make before giving up on generating a response.
     timeout (int): The maximum number of seconds to wait for a response from the API.
+    waiting_time (int): The number of seconds to wait between requests.
+    exponential_backoff_factor (int): The factor by which to increase the waiting time between requests.
+    n (int): The number of completions to generate.
+    response_format: The format of the response, if any.
 
     Returns:
     A dictionary representing the generated response.
@@ -1191,18 +1201,30 @@ A dictionary representing the generated response.</p></div>
 
     def aux_exponential_backoff():
         nonlocal waiting_time
+
+        # in case waiting time was initially set to 0
+        if waiting_time &lt;= 0:
+            waiting_time = 2
+
         logger.info(f&#34;Request failed. Waiting {waiting_time} seconds between requests...&#34;)
         time.sleep(waiting_time)
 
         # exponential backoff
         waiting_time = waiting_time * exponential_backoff_factor
-    
 
     # setup the OpenAI configurations for this client.
     self._setup_from_config()
+
+    # dedent the messages (field &#39;content&#39; only) if needed (using textwrap)
+    if dedent_messages:
+        for message in current_messages:
+            if &#34;content&#34; in message:
+                message[&#34;content&#34;] = utils.dedent(message[&#34;content&#34;])
+        
     
     # We need to adapt the parameters to the API type, so we create a dictionary with them first
     chat_api_params = {
+        &#34;model&#34;: model,
         &#34;messages&#34;: current_messages,
         &#34;temperature&#34;: temperature,
         &#34;max_tokens&#34;:max_tokens,
@@ -1215,6 +1237,8 @@ A dictionary representing the generated response.</p></div>
         &#34;n&#34;: n,
     }
 
+    if response_format is not None:
+        chat_api_params[&#34;response_format&#34;] = response_format
 
     i = 0
     while i &lt; max_attempts:
@@ -1236,8 +1260,9 @@ A dictionary representing the generated response.</p></div>
             if self.cache_api_calls and (cache_key in self.api_cache):
                 response = self.api_cache[cache_key]
             else:
-                logger.info(f&#34;Waiting {waiting_time} seconds before next API request (to avoid throttling)...&#34;)
-                time.sleep(waiting_time)
+                if waiting_time &gt; 0:
+                    logger.info(f&#34;Waiting {waiting_time} seconds before next API request (to avoid throttling)...&#34;)
+                    time.sleep(waiting_time)
                 
                 response = self._raw_model_call(model, chat_api_params)
                 if self.cache_api_calls:
@@ -1248,7 +1273,7 @@ A dictionary representing the generated response.</p></div>
             logger.debug(f&#34;Got response from API: {response}&#34;)
             end_time = time.monotonic()
             logger.debug(
-                f&#34;Got response in {end_time - start_time:.2f} seconds after {i + 1} attempts.&#34;)
+                f&#34;Got response in {end_time - start_time:.2f} seconds after {i} attempts.&#34;)
 
             return utils.sanitize_dict(self._raw_model_response_extractor(response))
 
@@ -1276,7 +1301,8 @@ A dictionary representing the generated response.</p></div>
             aux_exponential_backoff()
             
         except Exception as e:
-            logger.error(f&#34;[{i}] Error: {e}&#34;)
+            logger.error(f&#34;[{i}] {type(e).__name__} Error: {e}&#34;)
+            aux_exponential_backoff()
 
     logger.error(f&#34;Failed to get response after {max_attempts} attempts.&#34;)
     return None</code></pre>
@@ -1328,7 +1354,6 @@ cache_file_name (str): The name of the file to use for caching API calls.</p></d
 <li><code><a title="tinytroupe.openai_utils.client" href="#tinytroupe.openai_utils.client">client</a></code></li>
 <li><code><a title="tinytroupe.openai_utils.force_api_cache" href="#tinytroupe.openai_utils.force_api_cache">force_api_cache</a></code></li>
 <li><code><a title="tinytroupe.openai_utils.force_api_type" href="#tinytroupe.openai_utils.force_api_type">force_api_type</a></code></li>
-<li><code><a title="tinytroupe.openai_utils.force_default_value" href="#tinytroupe.openai_utils.force_default_value">force_default_value</a></code></li>
 <li><code><a title="tinytroupe.openai_utils.register_client" href="#tinytroupe.openai_utils.register_client">register_client</a></code></li>
 </ul>
 </li>
@@ -1339,12 +1364,6 @@ cache_file_name (str): The name of the file to use for caching API calls.</p></d
 </li>
 <li>
 <h4><code><a title="tinytroupe.openai_utils.InvalidRequestError" href="#tinytroupe.openai_utils.InvalidRequestError">InvalidRequestError</a></code></h4>
-</li>
-<li>
-<h4><code><a title="tinytroupe.openai_utils.LLMCall" href="#tinytroupe.openai_utils.LLMCall">LLMCall</a></code></h4>
-<ul class="">
-<li><code><a title="tinytroupe.openai_utils.LLMCall.call" href="#tinytroupe.openai_utils.LLMCall.call">call</a></code></li>
-</ul>
 </li>
 <li>
 <h4><code><a title="tinytroupe.openai_utils.NonTerminalError" href="#tinytroupe.openai_utils.NonTerminalError">NonTerminalError</a></code></h4>

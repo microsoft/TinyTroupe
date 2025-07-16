@@ -1,0 +1,1331 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>tinytroupe.experimentation.statistical_tests API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>tinytroupe.experimentation.statistical_tests</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import numpy as np
+import scipy.stats as stats
+from typing import Dict, List, Union, Callable, Any, Optional
+
+from tinytroupe.experimentation import logger
+
+
+class StatisticalTester:
+    &#34;&#34;&#34;
+    A class to perform statistical tests on experiment results. To do so, a control is defined, and then one or 
+    more treatments are compared to the control. The class supports various statistical tests, including t-tests,
+    Mann-Whitney U tests, and ANOVA. The user can specify the type of test to run, the significance level, and
+    the specific metrics to analyze. The results of the tests are returned in a structured format.
+    &#34;&#34;&#34;
+
+    def __init__(self, control_experiment_data: Dict[str, list], 
+                 treatments_experiment_data: Dict[str, Dict[str, list]],
+                 results_key:str = None):
+        &#34;&#34;&#34;
+        Initialize with experiment results.
+        
+        Args:
+            control_experiment_data (dict): Dictionary containing control experiment results with keys 
+                as metric names and values as lists of values.
+                e.g.,{&#34;control_exp&#34;: {&#34;metric1&#34;: [0.1, 0.2], &#34;metric2&#34;: [0.3, 0.4], ...}}
+           treatments_experiment_data (dict): Dictionary containing experiment results with keys 
+                as experiment IDs and values as dicts of metric names to lists of values.
+                e.g., {&#34;exp1&#34;: {&#34;metric1&#34;: [0.1, 0.2], &#34;metric2&#34;: [0.3, 0.4]}, 
+                       &#34;exp2&#34;: {&#34;metric1&#34;: [0.5, 0.6], &#34;metric2&#34;: [0.7, 0.8]}, ...}
+        &#34;&#34;&#34;
+        
+        # if results_key is provided, use it to extract the relevant data from the control and treatment data
+        # e.g., {&#34;exp1&#34;: {&#34;results&#34;: {&#34;metric1&#34;: [0.1, 0.2], &#34;metric2&#34;: [0.3, 0.4]}}
+        if results_key:
+            control_experiment_data = {k: v[results_key] for k, v in control_experiment_data.items()}
+            treatments_experiment_data = {k: v[results_key] for k, v in treatments_experiment_data.items()}
+            
+        self.control_experiment_data = control_experiment_data
+        self.treatments_experiment_data = treatments_experiment_data
+        
+        # Validate input data
+        self._validate_input_data()
+    
+    def _validate_input_data(self):
+        &#34;&#34;&#34;Validate the input data formats and structure.&#34;&#34;&#34;
+        # Check that control and treatments are dictionaries
+        if not isinstance(self.control_experiment_data, dict):
+            raise TypeError(&#34;Control experiment data must be a dictionary&#34;)
+        if not isinstance(self.treatments_experiment_data, dict):
+            raise TypeError(&#34;Treatments experiment data must be a dictionary&#34;)
+        
+        # Check that control has at least one experiment
+        if not self.control_experiment_data:
+            raise ValueError(&#34;Control experiment data cannot be empty&#34;)
+
+        # Check only one control
+        if len(self.control_experiment_data) &gt; 1:
+            raise ValueError(&#34;Only one control experiment is allowed&#34;)
+            
+        # Validate control experiment structure
+        for control_id, control_metrics in self.control_experiment_data.items():
+            if not isinstance(control_metrics, dict):
+                raise TypeError(f&#34;Metrics for control experiment &#39;{control_id}&#39; must be a dictionary&#34;)
+            
+            # Check that the metrics dictionary is not empty
+            if not control_metrics:
+                raise ValueError(f&#34;Control experiment &#39;{control_id}&#39; has no metrics&#34;)
+                
+            # Validate that metric values are lists
+            for metric, values in control_metrics.items():
+                if not isinstance(values, list):
+                    raise TypeError(f&#34;Values for metric &#39;{metric}&#39; in control experiment &#39;{control_id}&#39; must be a list&#34;)
+        
+        # Check treatments have at least one experiment
+        if not self.treatments_experiment_data:
+            raise ValueError(&#34;Treatments experiment data cannot be empty&#34;)
+        
+        # Validate treatment experiment structure
+        for treatment_id, treatment_data in self.treatments_experiment_data.items():
+            if not isinstance(treatment_data, dict):
+                raise TypeError(f&#34;Data for treatment &#39;{treatment_id}&#39; must be a dictionary&#34;)
+                
+            # Check that the metrics dictionary is not empty
+            if not treatment_data:
+                raise ValueError(f&#34;Treatment &#39;{treatment_id}&#39; has no metrics&#34;)
+            
+            # Get all control metrics for overlap checking
+            all_control_metrics = set()
+            for control_metrics in self.control_experiment_data.values():
+                all_control_metrics.update(control_metrics.keys())
+                
+            # Check if there&#39;s any overlap between control and treatment metrics
+            common_metrics = all_control_metrics.intersection(set(treatment_data.keys()))
+            if not common_metrics:
+                logger.warning(f&#34;Treatment &#39;{treatment_id}&#39; has no metrics in common with any control experiment&#34;)
+            
+            # Check that treatment metrics are lists
+            for metric, values in treatment_data.items():
+                if not isinstance(values, list):
+                    raise TypeError(f&#34;Values for metric &#39;{metric}&#39; in treatment &#39;{treatment_id}&#39; must be a list&#34;)
+    
+    def run_test(self, 
+                test_type: str=&#34;welch_t_test&#34;, 
+                alpha: float = 0.05, 
+                **kwargs) -&gt; Dict[str, Dict[str, Any]]:
+        &#34;&#34;&#34;
+        Run the specified statistical test on the control and treatments data.
+
+        Args:
+            test_type (str): Type of statistical test to run. 
+                Options: &#39;t_test&#39;, &#39;welch_t_test&#39;, &#39;mann_whitney&#39;, &#39;anova&#39;, &#39;chi_square&#39;
+            alpha (float): Significance level, defaults to 0.05
+            **kwargs: Additional arguments for specific test types.
+
+        Returns:
+            dict: Dictionary containing the results of the statistical tests for each treatment (vs the one control).
+                Each key is the treatment ID and each value is a dictionary with test results.
+        &#34;&#34;&#34;
+        supported_tests = {
+            &#39;t_test&#39;: self._run_t_test,
+            &#39;welch_t_test&#39;: self._run_welch_t_test,
+            &#39;mann_whitney&#39;: self._run_mann_whitney,
+            &#39;anova&#39;: self._run_anova,
+            &#39;chi_square&#39;: self._run_chi_square
+        }
+        
+        if test_type not in supported_tests:
+            raise ValueError(f&#34;Unsupported test type: {test_type}. Supported types: {list(supported_tests.keys())}&#34;)
+            
+        results = {}
+        for control_id, control_data in self.control_experiment_data.items():
+            # get all metrics from control data
+            metrics = set()
+            metrics.update(control_data.keys())
+            for treatment_id, treatment_data in self.treatments_experiment_data.items():
+                results[treatment_id] = {}
+                
+                for metric in metrics:
+                    # Skip metrics not in treatment data
+                    if metric not in treatment_data:
+                        logger.warning(f&#34;Metric &#39;{metric}&#39; not found in treatment &#39;{treatment_id}&#39;&#34;)
+                        continue
+                    
+                    control_values = control_data[metric]
+                    treatment_values = treatment_data[metric]
+                    
+                    # Skip if either control or treatment has no values
+                    if len(control_values) == 0 or len(treatment_values) == 0:
+                        logger.warning(f&#34;Skipping metric &#39;{metric}&#39; for treatment &#39;{treatment_id}&#39; due to empty values&#34;)
+                        continue
+                    
+                    # Run the selected test and convert to JSON serializable types
+                    test_result = supported_tests[test_type](control_values, treatment_values, alpha, **kwargs)
+                    results[treatment_id][metric] = convert_to_serializable(test_result)
+        
+        return results
+    
+    def _run_t_test(self, control_values: list, treatment_values: list, alpha: float, **kwargs) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Run Student&#39;s t-test (equal variance assumed).&#34;&#34;&#34;
+        # Convert to numpy arrays for calculations
+        control = np.array(control_values, dtype=float)
+        treatment = np.array(treatment_values, dtype=float)
+        
+        # Calculate basic statistics
+        control_mean = np.mean(control)
+        treatment_mean = np.mean(treatment)
+        mean_diff = treatment_mean - control_mean
+        
+        # Run the t-test
+        t_stat, p_value = stats.ttest_ind(control, treatment, equal_var=True)
+        
+        # Calculate confidence interval
+        control_std = np.std(control, ddof=1)
+        treatment_std = np.std(treatment, ddof=1)
+        pooled_std = np.sqrt(((len(control) - 1) * control_std**2 + 
+                              (len(treatment) - 1) * treatment_std**2) / 
+                            (len(control) + len(treatment) - 2))
+        
+        se = pooled_std * np.sqrt(1/len(control) + 1/len(treatment))
+        critical_value = stats.t.ppf(1 - alpha/2, len(control) + len(treatment) - 2)
+        margin_error = critical_value * se
+        ci_lower = mean_diff - margin_error
+        ci_upper = mean_diff + margin_error
+        
+        # Determine if the result is significant
+        significant = p_value &lt; alpha
+        
+        return {
+            &#39;test_type&#39;: &#39;Student t-test (equal variance)&#39;,
+            &#39;control_mean&#39;: control_mean,
+            &#39;treatment_mean&#39;: treatment_mean,
+            &#39;mean_difference&#39;: mean_diff,
+            &#39;percent_change&#39;: (mean_diff / control_mean * 100) if control_mean != 0 else float(&#39;inf&#39;),
+            &#39;t_statistic&#39;: t_stat,
+            &#39;p_value&#39;: p_value,
+            &#39;confidence_interval&#39;: (ci_lower, ci_upper),
+            &#39;confidence_level&#39;: 1 - alpha,
+            &#39;significant&#39;: significant,
+            &#39;control_sample_size&#39;: len(control),
+            &#39;treatment_sample_size&#39;: len(treatment),
+            &#39;control_std&#39;: control_std,
+            &#39;treatment_std&#39;: treatment_std,
+            &#39;effect_size&#39;: cohen_d(control, treatment)
+        }
+    
+    def _run_welch_t_test(self, control_values: list, treatment_values: list, alpha: float, **kwargs) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Run Welch&#39;s t-test (unequal variance).&#34;&#34;&#34;
+        # Convert to numpy arrays for calculations
+        control = np.array(control_values, dtype=float)
+        treatment = np.array(treatment_values, dtype=float)
+        
+        # Calculate basic statistics
+        control_mean = np.mean(control)
+        treatment_mean = np.mean(treatment)
+        mean_diff = treatment_mean - control_mean
+        
+        # Run Welch&#39;s t-test
+        t_stat, p_value = stats.ttest_ind(control, treatment, equal_var=False)
+        
+        # Calculate confidence interval (for Welch&#39;s t-test)
+        control_var = np.var(control, ddof=1)
+        treatment_var = np.var(treatment, ddof=1)
+        
+        # Calculate effective degrees of freedom (Welch-Satterthwaite equation)
+        v_num = (control_var/len(control) + treatment_var/len(treatment))**2
+        v_denom = (control_var/len(control))**2/(len(control)-1) + (treatment_var/len(treatment))**2/(len(treatment)-1)
+        df = v_num / v_denom if v_denom &gt; 0 else float(&#39;inf&#39;)
+        
+        se = np.sqrt(control_var/len(control) + treatment_var/len(treatment))
+        critical_value = stats.t.ppf(1 - alpha/2, df)
+        margin_error = critical_value * se
+        ci_lower = mean_diff - margin_error
+        ci_upper = mean_diff + margin_error
+        
+        control_std = np.std(control, ddof=1)
+        treatment_std = np.std(treatment, ddof=1)
+        
+        # Determine if the result is significant
+        significant = p_value &lt; alpha
+        
+        return {
+            &#39;test_type&#39;: &#39;Welch t-test (unequal variance)&#39;,
+            &#39;control_mean&#39;: control_mean,
+            &#39;treatment_mean&#39;: treatment_mean,
+            &#39;mean_difference&#39;: mean_diff,
+            &#39;percent_change&#39;: (mean_diff / control_mean * 100) if control_mean != 0 else float(&#39;inf&#39;),
+            &#39;t_statistic&#39;: t_stat,
+            &#39;p_value&#39;: p_value,
+            &#39;confidence_interval&#39;: (ci_lower, ci_upper),
+            &#39;confidence_level&#39;: 1 - alpha,
+            &#39;significant&#39;: significant,
+            &#39;degrees_of_freedom&#39;: df,
+            &#39;control_sample_size&#39;: len(control),
+            &#39;treatment_sample_size&#39;: len(treatment),
+            &#39;control_std&#39;: control_std,
+            &#39;treatment_std&#39;: treatment_std,
+            &#39;effect_size&#39;: cohen_d(control, treatment)
+        }
+    
+    def _run_mann_whitney(self, control_values: list, treatment_values: list, alpha: float, **kwargs) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Run Mann-Whitney U test (non-parametric test).&#34;&#34;&#34;
+        # Convert to numpy arrays
+        control = np.array(control_values, dtype=float)
+        treatment = np.array(treatment_values, dtype=float)
+        
+        # Calculate basic statistics
+        control_median = np.median(control)
+        treatment_median = np.median(treatment)
+        median_diff = treatment_median - control_median
+        
+        # Run the Mann-Whitney U test
+        u_stat, p_value = stats.mannwhitneyu(control, treatment, alternative=&#39;two-sided&#39;)
+        
+        # Calculate common language effect size
+        # (probability that a randomly selected value from treatment is greater than control)
+        count = 0
+        for tc in treatment:
+            for cc in control:
+                if tc &gt; cc:
+                    count += 1
+        cles = count / (len(treatment) * len(control))
+        
+        # Calculate approximate confidence interval using bootstrap
+        try:
+            from scipy.stats import bootstrap
+            
+            def median_diff_func(x, y):
+                return np.median(x) - np.median(y)
+            
+            res = bootstrap((control, treatment), median_diff_func, 
+                            confidence_level=1-alpha, 
+                            n_resamples=1000,
+                            random_state=42)
+            ci_lower, ci_upper = res.confidence_interval
+        except ImportError:
+            # If bootstrap is not available, return None for confidence interval
+            ci_lower, ci_upper = None, None
+            logger.warning(&#34;SciPy bootstrap not available, skipping confidence interval calculation&#34;)
+        
+        # Determine if the result is significant
+        significant = p_value &lt; alpha
+        
+        return {
+            &#39;test_type&#39;: &#39;Mann-Whitney U test&#39;,
+            &#39;control_median&#39;: control_median,
+            &#39;treatment_median&#39;: treatment_median,
+            &#39;median_difference&#39;: median_diff,
+            &#39;percent_change&#39;: (median_diff / control_median * 100) if control_median != 0 else float(&#39;inf&#39;),
+            &#39;u_statistic&#39;: u_stat,
+            &#39;p_value&#39;: p_value,
+            &#39;confidence_interval&#39;: (ci_lower, ci_upper) if ci_lower is not None else None,
+            &#39;confidence_level&#39;: 1 - alpha,
+            &#39;significant&#39;: significant,
+            &#39;control_sample_size&#39;: len(control),
+            &#39;treatment_sample_size&#39;: len(treatment),
+            &#39;effect_size&#39;: cles
+        }
+    
+    def _run_anova(self, control_values: list, treatment_values: list, alpha: float, **kwargs) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Run one-way ANOVA test.&#34;&#34;&#34;
+        # For ANOVA, we typically need multiple groups, but we can still run it with just two
+        # Convert to numpy arrays
+        control = np.array(control_values, dtype=float)
+        treatment = np.array(treatment_values, dtype=float)
+        
+        # Run one-way ANOVA
+        f_stat, p_value = stats.f_oneway(control, treatment)
+        
+        # Calculate effect size (eta-squared)
+        total_values = np.concatenate([control, treatment])
+        grand_mean = np.mean(total_values)
+        
+        ss_total = np.sum((total_values - grand_mean) ** 2)
+        ss_between = (len(control) * (np.mean(control) - grand_mean) ** 2 + 
+                     len(treatment) * (np.mean(treatment) - grand_mean) ** 2)
+        
+        eta_squared = ss_between / ss_total if ss_total &gt; 0 else 0
+        
+        # Determine if the result is significant
+        significant = p_value &lt; alpha
+        
+        return {
+            &#39;test_type&#39;: &#39;One-way ANOVA&#39;,
+            &#39;f_statistic&#39;: f_stat,
+            &#39;p_value&#39;: p_value,
+            &#39;significant&#39;: significant,
+            &#39;control_sample_size&#39;: len(control),
+            &#39;treatment_sample_size&#39;: len(treatment),
+            &#39;effect_size&#39;: eta_squared,
+            &#39;effect_size_type&#39;: &#39;eta_squared&#39;
+        }
+    
+    def _run_chi_square(self, control_values: list, treatment_values: list, alpha: float, **kwargs) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Run Chi-square test for categorical data.&#34;&#34;&#34;
+        # For chi-square, we assume the values represent counts in different categories
+        # Convert to numpy arrays
+        control = np.array(control_values, dtype=float)
+        treatment = np.array(treatment_values, dtype=float)
+        
+        # Check if the arrays are the same length (same number of categories)
+        if len(control) != len(treatment):
+            raise ValueError(&#34;Control and treatment must have the same number of categories for chi-square test&#34;)
+        
+        # Run chi-square test
+        contingency_table = np.vstack([control, treatment])
+        chi2_stat, p_value, dof, expected = stats.chi2_contingency(contingency_table)
+        
+        # Calculate Cramer&#39;s V as effect size
+        n = np.sum(contingency_table)
+        min_dim = min(contingency_table.shape) - 1
+        cramers_v = np.sqrt(chi2_stat / (n * min_dim)) if n * min_dim &gt; 0 else 0
+        
+        # Determine if the result is significant
+        significant = p_value &lt; alpha
+        
+        return {
+            &#39;test_type&#39;: &#39;Chi-square test&#39;,
+            &#39;chi2_statistic&#39;: chi2_stat,
+            &#39;p_value&#39;: p_value,
+            &#39;degrees_of_freedom&#39;: dof,
+            &#39;significant&#39;: significant,
+            &#39;effect_size&#39;: cramers_v,
+            &#39;effect_size_type&#39;: &#39;cramers_v&#39;
+        }
+    
+    def check_assumptions(self, metric: str) -&gt; Dict[str, Dict[str, Any]]:
+        &#34;&#34;&#34;
+        Check statistical assumptions for the given metric across all treatments.
+        
+        Args:
+            metric (str): The metric to check assumptions for.
+            
+        Returns:
+            dict: Dictionary with results of assumption checks for each treatment.
+        &#34;&#34;&#34;
+        if metric not in self.control_experiment_data:
+            raise ValueError(f&#34;Metric &#39;{metric}&#39; not found in control data&#34;)
+            
+        results = {}
+        control_values = np.array(self.control_experiment_data[metric], dtype=float)
+        
+        # Check normality of control
+        control_shapiro = stats.shapiro(control_values)
+        control_normality = {
+            &#39;test&#39;: &#39;Shapiro-Wilk&#39;,
+            &#39;statistic&#39;: control_shapiro[0],
+            &#39;p_value&#39;: control_shapiro[1],
+            &#39;normal&#39;: control_shapiro[1] &gt;= 0.05
+        }
+        
+        for treatment_id, treatment_data in self.treatments_experiment_data.items():
+            if metric not in treatment_data:
+                logger.warning(f&#34;Metric &#39;{metric}&#39; not found in treatment &#39;{treatment_id}&#39;&#34;)
+                continue
+                
+            treatment_values = np.array(treatment_data[metric], dtype=float)
+            
+            # Check normality of treatment
+            treatment_shapiro = stats.shapiro(treatment_values)
+            treatment_normality = {
+                &#39;test&#39;: &#39;Shapiro-Wilk&#39;,
+                &#39;statistic&#39;: treatment_shapiro[0],
+                &#39;p_value&#39;: treatment_shapiro[1],
+                &#39;normal&#39;: treatment_shapiro[1] &gt;= 0.05
+            }
+            
+            # Check homogeneity of variance
+            levene_test = stats.levene(control_values, treatment_values)
+            variance_homogeneity = {
+                &#39;test&#39;: &#39;Levene&#39;,
+                &#39;statistic&#39;: levene_test[0],
+                &#39;p_value&#39;: levene_test[1],
+                &#39;equal_variance&#39;: levene_test[1] &gt;= 0.05
+            }
+            
+            # Store results and convert to JSON serializable types
+            results[treatment_id] = convert_to_serializable({
+                &#39;control_normality&#39;: control_normality,
+                &#39;treatment_normality&#39;: treatment_normality,
+                &#39;variance_homogeneity&#39;: variance_homogeneity,
+                &#39;recommended_test&#39;: self._recommend_test(control_normality[&#39;normal&#39;], 
+                                                       treatment_normality[&#39;normal&#39;],
+                                                       variance_homogeneity[&#39;equal_variance&#39;])
+            })
+            
+        return results
+    
+    def _recommend_test(self, control_normal: bool, treatment_normal: bool, equal_variance: bool) -&gt; str:
+        &#34;&#34;&#34;Recommend a statistical test based on assumption checks.&#34;&#34;&#34;
+        if control_normal and treatment_normal:
+            if equal_variance:
+                return &#39;t_test&#39;
+            else:
+                return &#39;welch_t_test&#39;
+        else:
+            return &#39;mann_whitney&#39;
+
+
+def cohen_d(x: Union[list, np.ndarray], y: Union[list, np.ndarray]) -&gt; float:
+    &#34;&#34;&#34;
+    Calculate Cohen&#39;s d effect size for two samples.
+    
+    Args:
+        x: First sample
+        y: Second sample
+        
+    Returns:
+        float: Cohen&#39;s d effect size
+    &#34;&#34;&#34;
+    nx = len(x)
+    ny = len(y)
+    
+    # Convert to numpy arrays
+    x = np.array(x, dtype=float)
+    y = np.array(y, dtype=float)
+    
+    # Calculate means
+    mx = np.mean(x)
+    my = np.mean(y)
+    
+    # Calculate standard deviations
+    sx = np.std(x, ddof=1)
+    sy = np.std(y, ddof=1)
+    
+    # Pooled standard deviation
+    pooled_sd = np.sqrt(((nx - 1) * sx**2 + (ny - 1) * sy**2) / (nx + ny - 2))
+    
+    # Cohen&#39;s d
+    return (my - mx) / pooled_sd if pooled_sd &gt; 0 else 0
+
+
+def convert_to_serializable(obj):
+    &#34;&#34;&#34;
+    Convert NumPy types to native Python types recursively to ensure JSON serialization works.
+    
+    Args:
+        obj: Any object that might contain NumPy types
+        
+    Returns:
+        Object with NumPy types converted to Python native types
+    &#34;&#34;&#34;
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()
+    elif isinstance(obj, (np.number, np.bool_)):
+        return obj.item()
+    elif isinstance(obj, dict):
+        return {k: convert_to_serializable(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [convert_to_serializable(i) for i in obj]
+    elif isinstance(obj, tuple):
+        return tuple(convert_to_serializable(i) for i in obj)
+    else:
+        return obj</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="tinytroupe.experimentation.statistical_tests.cohen_d"><code class="name flex">
+<span>def <span class="ident">cohen_d</span></span>(<span>x: Union[list, numpy.ndarray], y: Union[list, numpy.ndarray]) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate Cohen's d effect size for two samples.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>x</code></strong></dt>
+<dd>First sample</dd>
+<dt><strong><code>y</code></strong></dt>
+<dd>Second sample</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>Cohen's d effect size</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def cohen_d(x: Union[list, np.ndarray], y: Union[list, np.ndarray]) -&gt; float:
+    &#34;&#34;&#34;
+    Calculate Cohen&#39;s d effect size for two samples.
+    
+    Args:
+        x: First sample
+        y: Second sample
+        
+    Returns:
+        float: Cohen&#39;s d effect size
+    &#34;&#34;&#34;
+    nx = len(x)
+    ny = len(y)
+    
+    # Convert to numpy arrays
+    x = np.array(x, dtype=float)
+    y = np.array(y, dtype=float)
+    
+    # Calculate means
+    mx = np.mean(x)
+    my = np.mean(y)
+    
+    # Calculate standard deviations
+    sx = np.std(x, ddof=1)
+    sy = np.std(y, ddof=1)
+    
+    # Pooled standard deviation
+    pooled_sd = np.sqrt(((nx - 1) * sx**2 + (ny - 1) * sy**2) / (nx + ny - 2))
+    
+    # Cohen&#39;s d
+    return (my - mx) / pooled_sd if pooled_sd &gt; 0 else 0</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.experimentation.statistical_tests.convert_to_serializable"><code class="name flex">
+<span>def <span class="ident">convert_to_serializable</span></span>(<span>obj)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Convert NumPy types to native Python types recursively to ensure JSON serialization works.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>obj</code></strong></dt>
+<dd>Any object that might contain NumPy types</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>Object with NumPy types converted to Python native types</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def convert_to_serializable(obj):
+    &#34;&#34;&#34;
+    Convert NumPy types to native Python types recursively to ensure JSON serialization works.
+    
+    Args:
+        obj: Any object that might contain NumPy types
+        
+    Returns:
+        Object with NumPy types converted to Python native types
+    &#34;&#34;&#34;
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()
+    elif isinstance(obj, (np.number, np.bool_)):
+        return obj.item()
+    elif isinstance(obj, dict):
+        return {k: convert_to_serializable(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [convert_to_serializable(i) for i in obj]
+    elif isinstance(obj, tuple):
+        return tuple(convert_to_serializable(i) for i in obj)
+    else:
+        return obj</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="tinytroupe.experimentation.statistical_tests.StatisticalTester"><code class="flex name class">
+<span>class <span class="ident">StatisticalTester</span></span>
+<span>(</span><span>control_experiment_data: Dict[str, list], treatments_experiment_data: Dict[str, Dict[str, list]], results_key: str = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A class to perform statistical tests on experiment results. To do so, a control is defined, and then one or
+more treatments are compared to the control. The class supports various statistical tests, including t-tests,
+Mann-Whitney U tests, and ANOVA. The user can specify the type of test to run, the significance level, and
+the specific metrics to analyze. The results of the tests are returned in a structured format.</p>
+<p>Initialize with experiment results.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>control_experiment_data (dict): Dictionary containing control experiment results with keys</dt>
+<dt>as metric names and values as lists of values.</dt>
+<dt>e.g.,{"control_exp": {"metric1": [0.1, 0.2], "metric2": [0.3, 0.4], &hellip;}}</dt>
+<dt><strong><code>treatments_experiment_data</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Dictionary containing experiment results with keys
+as experiment IDs and values as dicts of metric names to lists of values.
+e.g., {"exp1": {"metric1": [0.1, 0.2], "metric2": [0.3, 0.4]},
+"exp2": {"metric1": [0.5, 0.6], "metric2": [0.7, 0.8]}, &hellip;}</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StatisticalTester:
+    &#34;&#34;&#34;
+    A class to perform statistical tests on experiment results. To do so, a control is defined, and then one or 
+    more treatments are compared to the control. The class supports various statistical tests, including t-tests,
+    Mann-Whitney U tests, and ANOVA. The user can specify the type of test to run, the significance level, and
+    the specific metrics to analyze. The results of the tests are returned in a structured format.
+    &#34;&#34;&#34;
+
+    def __init__(self, control_experiment_data: Dict[str, list], 
+                 treatments_experiment_data: Dict[str, Dict[str, list]],
+                 results_key:str = None):
+        &#34;&#34;&#34;
+        Initialize with experiment results.
+        
+        Args:
+            control_experiment_data (dict): Dictionary containing control experiment results with keys 
+                as metric names and values as lists of values.
+                e.g.,{&#34;control_exp&#34;: {&#34;metric1&#34;: [0.1, 0.2], &#34;metric2&#34;: [0.3, 0.4], ...}}
+           treatments_experiment_data (dict): Dictionary containing experiment results with keys 
+                as experiment IDs and values as dicts of metric names to lists of values.
+                e.g., {&#34;exp1&#34;: {&#34;metric1&#34;: [0.1, 0.2], &#34;metric2&#34;: [0.3, 0.4]}, 
+                       &#34;exp2&#34;: {&#34;metric1&#34;: [0.5, 0.6], &#34;metric2&#34;: [0.7, 0.8]}, ...}
+        &#34;&#34;&#34;
+        
+        # if results_key is provided, use it to extract the relevant data from the control and treatment data
+        # e.g., {&#34;exp1&#34;: {&#34;results&#34;: {&#34;metric1&#34;: [0.1, 0.2], &#34;metric2&#34;: [0.3, 0.4]}}
+        if results_key:
+            control_experiment_data = {k: v[results_key] for k, v in control_experiment_data.items()}
+            treatments_experiment_data = {k: v[results_key] for k, v in treatments_experiment_data.items()}
+            
+        self.control_experiment_data = control_experiment_data
+        self.treatments_experiment_data = treatments_experiment_data
+        
+        # Validate input data
+        self._validate_input_data()
+    
+    def _validate_input_data(self):
+        &#34;&#34;&#34;Validate the input data formats and structure.&#34;&#34;&#34;
+        # Check that control and treatments are dictionaries
+        if not isinstance(self.control_experiment_data, dict):
+            raise TypeError(&#34;Control experiment data must be a dictionary&#34;)
+        if not isinstance(self.treatments_experiment_data, dict):
+            raise TypeError(&#34;Treatments experiment data must be a dictionary&#34;)
+        
+        # Check that control has at least one experiment
+        if not self.control_experiment_data:
+            raise ValueError(&#34;Control experiment data cannot be empty&#34;)
+
+        # Check only one control
+        if len(self.control_experiment_data) &gt; 1:
+            raise ValueError(&#34;Only one control experiment is allowed&#34;)
+            
+        # Validate control experiment structure
+        for control_id, control_metrics in self.control_experiment_data.items():
+            if not isinstance(control_metrics, dict):
+                raise TypeError(f&#34;Metrics for control experiment &#39;{control_id}&#39; must be a dictionary&#34;)
+            
+            # Check that the metrics dictionary is not empty
+            if not control_metrics:
+                raise ValueError(f&#34;Control experiment &#39;{control_id}&#39; has no metrics&#34;)
+                
+            # Validate that metric values are lists
+            for metric, values in control_metrics.items():
+                if not isinstance(values, list):
+                    raise TypeError(f&#34;Values for metric &#39;{metric}&#39; in control experiment &#39;{control_id}&#39; must be a list&#34;)
+        
+        # Check treatments have at least one experiment
+        if not self.treatments_experiment_data:
+            raise ValueError(&#34;Treatments experiment data cannot be empty&#34;)
+        
+        # Validate treatment experiment structure
+        for treatment_id, treatment_data in self.treatments_experiment_data.items():
+            if not isinstance(treatment_data, dict):
+                raise TypeError(f&#34;Data for treatment &#39;{treatment_id}&#39; must be a dictionary&#34;)
+                
+            # Check that the metrics dictionary is not empty
+            if not treatment_data:
+                raise ValueError(f&#34;Treatment &#39;{treatment_id}&#39; has no metrics&#34;)
+            
+            # Get all control metrics for overlap checking
+            all_control_metrics = set()
+            for control_metrics in self.control_experiment_data.values():
+                all_control_metrics.update(control_metrics.keys())
+                
+            # Check if there&#39;s any overlap between control and treatment metrics
+            common_metrics = all_control_metrics.intersection(set(treatment_data.keys()))
+            if not common_metrics:
+                logger.warning(f&#34;Treatment &#39;{treatment_id}&#39; has no metrics in common with any control experiment&#34;)
+            
+            # Check that treatment metrics are lists
+            for metric, values in treatment_data.items():
+                if not isinstance(values, list):
+                    raise TypeError(f&#34;Values for metric &#39;{metric}&#39; in treatment &#39;{treatment_id}&#39; must be a list&#34;)
+    
+    def run_test(self, 
+                test_type: str=&#34;welch_t_test&#34;, 
+                alpha: float = 0.05, 
+                **kwargs) -&gt; Dict[str, Dict[str, Any]]:
+        &#34;&#34;&#34;
+        Run the specified statistical test on the control and treatments data.
+
+        Args:
+            test_type (str): Type of statistical test to run. 
+                Options: &#39;t_test&#39;, &#39;welch_t_test&#39;, &#39;mann_whitney&#39;, &#39;anova&#39;, &#39;chi_square&#39;
+            alpha (float): Significance level, defaults to 0.05
+            **kwargs: Additional arguments for specific test types.
+
+        Returns:
+            dict: Dictionary containing the results of the statistical tests for each treatment (vs the one control).
+                Each key is the treatment ID and each value is a dictionary with test results.
+        &#34;&#34;&#34;
+        supported_tests = {
+            &#39;t_test&#39;: self._run_t_test,
+            &#39;welch_t_test&#39;: self._run_welch_t_test,
+            &#39;mann_whitney&#39;: self._run_mann_whitney,
+            &#39;anova&#39;: self._run_anova,
+            &#39;chi_square&#39;: self._run_chi_square
+        }
+        
+        if test_type not in supported_tests:
+            raise ValueError(f&#34;Unsupported test type: {test_type}. Supported types: {list(supported_tests.keys())}&#34;)
+            
+        results = {}
+        for control_id, control_data in self.control_experiment_data.items():
+            # get all metrics from control data
+            metrics = set()
+            metrics.update(control_data.keys())
+            for treatment_id, treatment_data in self.treatments_experiment_data.items():
+                results[treatment_id] = {}
+                
+                for metric in metrics:
+                    # Skip metrics not in treatment data
+                    if metric not in treatment_data:
+                        logger.warning(f&#34;Metric &#39;{metric}&#39; not found in treatment &#39;{treatment_id}&#39;&#34;)
+                        continue
+                    
+                    control_values = control_data[metric]
+                    treatment_values = treatment_data[metric]
+                    
+                    # Skip if either control or treatment has no values
+                    if len(control_values) == 0 or len(treatment_values) == 0:
+                        logger.warning(f&#34;Skipping metric &#39;{metric}&#39; for treatment &#39;{treatment_id}&#39; due to empty values&#34;)
+                        continue
+                    
+                    # Run the selected test and convert to JSON serializable types
+                    test_result = supported_tests[test_type](control_values, treatment_values, alpha, **kwargs)
+                    results[treatment_id][metric] = convert_to_serializable(test_result)
+        
+        return results
+    
+    def _run_t_test(self, control_values: list, treatment_values: list, alpha: float, **kwargs) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Run Student&#39;s t-test (equal variance assumed).&#34;&#34;&#34;
+        # Convert to numpy arrays for calculations
+        control = np.array(control_values, dtype=float)
+        treatment = np.array(treatment_values, dtype=float)
+        
+        # Calculate basic statistics
+        control_mean = np.mean(control)
+        treatment_mean = np.mean(treatment)
+        mean_diff = treatment_mean - control_mean
+        
+        # Run the t-test
+        t_stat, p_value = stats.ttest_ind(control, treatment, equal_var=True)
+        
+        # Calculate confidence interval
+        control_std = np.std(control, ddof=1)
+        treatment_std = np.std(treatment, ddof=1)
+        pooled_std = np.sqrt(((len(control) - 1) * control_std**2 + 
+                              (len(treatment) - 1) * treatment_std**2) / 
+                            (len(control) + len(treatment) - 2))
+        
+        se = pooled_std * np.sqrt(1/len(control) + 1/len(treatment))
+        critical_value = stats.t.ppf(1 - alpha/2, len(control) + len(treatment) - 2)
+        margin_error = critical_value * se
+        ci_lower = mean_diff - margin_error
+        ci_upper = mean_diff + margin_error
+        
+        # Determine if the result is significant
+        significant = p_value &lt; alpha
+        
+        return {
+            &#39;test_type&#39;: &#39;Student t-test (equal variance)&#39;,
+            &#39;control_mean&#39;: control_mean,
+            &#39;treatment_mean&#39;: treatment_mean,
+            &#39;mean_difference&#39;: mean_diff,
+            &#39;percent_change&#39;: (mean_diff / control_mean * 100) if control_mean != 0 else float(&#39;inf&#39;),
+            &#39;t_statistic&#39;: t_stat,
+            &#39;p_value&#39;: p_value,
+            &#39;confidence_interval&#39;: (ci_lower, ci_upper),
+            &#39;confidence_level&#39;: 1 - alpha,
+            &#39;significant&#39;: significant,
+            &#39;control_sample_size&#39;: len(control),
+            &#39;treatment_sample_size&#39;: len(treatment),
+            &#39;control_std&#39;: control_std,
+            &#39;treatment_std&#39;: treatment_std,
+            &#39;effect_size&#39;: cohen_d(control, treatment)
+        }
+    
+    def _run_welch_t_test(self, control_values: list, treatment_values: list, alpha: float, **kwargs) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Run Welch&#39;s t-test (unequal variance).&#34;&#34;&#34;
+        # Convert to numpy arrays for calculations
+        control = np.array(control_values, dtype=float)
+        treatment = np.array(treatment_values, dtype=float)
+        
+        # Calculate basic statistics
+        control_mean = np.mean(control)
+        treatment_mean = np.mean(treatment)
+        mean_diff = treatment_mean - control_mean
+        
+        # Run Welch&#39;s t-test
+        t_stat, p_value = stats.ttest_ind(control, treatment, equal_var=False)
+        
+        # Calculate confidence interval (for Welch&#39;s t-test)
+        control_var = np.var(control, ddof=1)
+        treatment_var = np.var(treatment, ddof=1)
+        
+        # Calculate effective degrees of freedom (Welch-Satterthwaite equation)
+        v_num = (control_var/len(control) + treatment_var/len(treatment))**2
+        v_denom = (control_var/len(control))**2/(len(control)-1) + (treatment_var/len(treatment))**2/(len(treatment)-1)
+        df = v_num / v_denom if v_denom &gt; 0 else float(&#39;inf&#39;)
+        
+        se = np.sqrt(control_var/len(control) + treatment_var/len(treatment))
+        critical_value = stats.t.ppf(1 - alpha/2, df)
+        margin_error = critical_value * se
+        ci_lower = mean_diff - margin_error
+        ci_upper = mean_diff + margin_error
+        
+        control_std = np.std(control, ddof=1)
+        treatment_std = np.std(treatment, ddof=1)
+        
+        # Determine if the result is significant
+        significant = p_value &lt; alpha
+        
+        return {
+            &#39;test_type&#39;: &#39;Welch t-test (unequal variance)&#39;,
+            &#39;control_mean&#39;: control_mean,
+            &#39;treatment_mean&#39;: treatment_mean,
+            &#39;mean_difference&#39;: mean_diff,
+            &#39;percent_change&#39;: (mean_diff / control_mean * 100) if control_mean != 0 else float(&#39;inf&#39;),
+            &#39;t_statistic&#39;: t_stat,
+            &#39;p_value&#39;: p_value,
+            &#39;confidence_interval&#39;: (ci_lower, ci_upper),
+            &#39;confidence_level&#39;: 1 - alpha,
+            &#39;significant&#39;: significant,
+            &#39;degrees_of_freedom&#39;: df,
+            &#39;control_sample_size&#39;: len(control),
+            &#39;treatment_sample_size&#39;: len(treatment),
+            &#39;control_std&#39;: control_std,
+            &#39;treatment_std&#39;: treatment_std,
+            &#39;effect_size&#39;: cohen_d(control, treatment)
+        }
+    
+    def _run_mann_whitney(self, control_values: list, treatment_values: list, alpha: float, **kwargs) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Run Mann-Whitney U test (non-parametric test).&#34;&#34;&#34;
+        # Convert to numpy arrays
+        control = np.array(control_values, dtype=float)
+        treatment = np.array(treatment_values, dtype=float)
+        
+        # Calculate basic statistics
+        control_median = np.median(control)
+        treatment_median = np.median(treatment)
+        median_diff = treatment_median - control_median
+        
+        # Run the Mann-Whitney U test
+        u_stat, p_value = stats.mannwhitneyu(control, treatment, alternative=&#39;two-sided&#39;)
+        
+        # Calculate common language effect size
+        # (probability that a randomly selected value from treatment is greater than control)
+        count = 0
+        for tc in treatment:
+            for cc in control:
+                if tc &gt; cc:
+                    count += 1
+        cles = count / (len(treatment) * len(control))
+        
+        # Calculate approximate confidence interval using bootstrap
+        try:
+            from scipy.stats import bootstrap
+            
+            def median_diff_func(x, y):
+                return np.median(x) - np.median(y)
+            
+            res = bootstrap((control, treatment), median_diff_func, 
+                            confidence_level=1-alpha, 
+                            n_resamples=1000,
+                            random_state=42)
+            ci_lower, ci_upper = res.confidence_interval
+        except ImportError:
+            # If bootstrap is not available, return None for confidence interval
+            ci_lower, ci_upper = None, None
+            logger.warning(&#34;SciPy bootstrap not available, skipping confidence interval calculation&#34;)
+        
+        # Determine if the result is significant
+        significant = p_value &lt; alpha
+        
+        return {
+            &#39;test_type&#39;: &#39;Mann-Whitney U test&#39;,
+            &#39;control_median&#39;: control_median,
+            &#39;treatment_median&#39;: treatment_median,
+            &#39;median_difference&#39;: median_diff,
+            &#39;percent_change&#39;: (median_diff / control_median * 100) if control_median != 0 else float(&#39;inf&#39;),
+            &#39;u_statistic&#39;: u_stat,
+            &#39;p_value&#39;: p_value,
+            &#39;confidence_interval&#39;: (ci_lower, ci_upper) if ci_lower is not None else None,
+            &#39;confidence_level&#39;: 1 - alpha,
+            &#39;significant&#39;: significant,
+            &#39;control_sample_size&#39;: len(control),
+            &#39;treatment_sample_size&#39;: len(treatment),
+            &#39;effect_size&#39;: cles
+        }
+    
+    def _run_anova(self, control_values: list, treatment_values: list, alpha: float, **kwargs) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Run one-way ANOVA test.&#34;&#34;&#34;
+        # For ANOVA, we typically need multiple groups, but we can still run it with just two
+        # Convert to numpy arrays
+        control = np.array(control_values, dtype=float)
+        treatment = np.array(treatment_values, dtype=float)
+        
+        # Run one-way ANOVA
+        f_stat, p_value = stats.f_oneway(control, treatment)
+        
+        # Calculate effect size (eta-squared)
+        total_values = np.concatenate([control, treatment])
+        grand_mean = np.mean(total_values)
+        
+        ss_total = np.sum((total_values - grand_mean) ** 2)
+        ss_between = (len(control) * (np.mean(control) - grand_mean) ** 2 + 
+                     len(treatment) * (np.mean(treatment) - grand_mean) ** 2)
+        
+        eta_squared = ss_between / ss_total if ss_total &gt; 0 else 0
+        
+        # Determine if the result is significant
+        significant = p_value &lt; alpha
+        
+        return {
+            &#39;test_type&#39;: &#39;One-way ANOVA&#39;,
+            &#39;f_statistic&#39;: f_stat,
+            &#39;p_value&#39;: p_value,
+            &#39;significant&#39;: significant,
+            &#39;control_sample_size&#39;: len(control),
+            &#39;treatment_sample_size&#39;: len(treatment),
+            &#39;effect_size&#39;: eta_squared,
+            &#39;effect_size_type&#39;: &#39;eta_squared&#39;
+        }
+    
+    def _run_chi_square(self, control_values: list, treatment_values: list, alpha: float, **kwargs) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Run Chi-square test for categorical data.&#34;&#34;&#34;
+        # For chi-square, we assume the values represent counts in different categories
+        # Convert to numpy arrays
+        control = np.array(control_values, dtype=float)
+        treatment = np.array(treatment_values, dtype=float)
+        
+        # Check if the arrays are the same length (same number of categories)
+        if len(control) != len(treatment):
+            raise ValueError(&#34;Control and treatment must have the same number of categories for chi-square test&#34;)
+        
+        # Run chi-square test
+        contingency_table = np.vstack([control, treatment])
+        chi2_stat, p_value, dof, expected = stats.chi2_contingency(contingency_table)
+        
+        # Calculate Cramer&#39;s V as effect size
+        n = np.sum(contingency_table)
+        min_dim = min(contingency_table.shape) - 1
+        cramers_v = np.sqrt(chi2_stat / (n * min_dim)) if n * min_dim &gt; 0 else 0
+        
+        # Determine if the result is significant
+        significant = p_value &lt; alpha
+        
+        return {
+            &#39;test_type&#39;: &#39;Chi-square test&#39;,
+            &#39;chi2_statistic&#39;: chi2_stat,
+            &#39;p_value&#39;: p_value,
+            &#39;degrees_of_freedom&#39;: dof,
+            &#39;significant&#39;: significant,
+            &#39;effect_size&#39;: cramers_v,
+            &#39;effect_size_type&#39;: &#39;cramers_v&#39;
+        }
+    
+    def check_assumptions(self, metric: str) -&gt; Dict[str, Dict[str, Any]]:
+        &#34;&#34;&#34;
+        Check statistical assumptions for the given metric across all treatments.
+        
+        Args:
+            metric (str): The metric to check assumptions for.
+            
+        Returns:
+            dict: Dictionary with results of assumption checks for each treatment.
+        &#34;&#34;&#34;
+        if metric not in self.control_experiment_data:
+            raise ValueError(f&#34;Metric &#39;{metric}&#39; not found in control data&#34;)
+            
+        results = {}
+        control_values = np.array(self.control_experiment_data[metric], dtype=float)
+        
+        # Check normality of control
+        control_shapiro = stats.shapiro(control_values)
+        control_normality = {
+            &#39;test&#39;: &#39;Shapiro-Wilk&#39;,
+            &#39;statistic&#39;: control_shapiro[0],
+            &#39;p_value&#39;: control_shapiro[1],
+            &#39;normal&#39;: control_shapiro[1] &gt;= 0.05
+        }
+        
+        for treatment_id, treatment_data in self.treatments_experiment_data.items():
+            if metric not in treatment_data:
+                logger.warning(f&#34;Metric &#39;{metric}&#39; not found in treatment &#39;{treatment_id}&#39;&#34;)
+                continue
+                
+            treatment_values = np.array(treatment_data[metric], dtype=float)
+            
+            # Check normality of treatment
+            treatment_shapiro = stats.shapiro(treatment_values)
+            treatment_normality = {
+                &#39;test&#39;: &#39;Shapiro-Wilk&#39;,
+                &#39;statistic&#39;: treatment_shapiro[0],
+                &#39;p_value&#39;: treatment_shapiro[1],
+                &#39;normal&#39;: treatment_shapiro[1] &gt;= 0.05
+            }
+            
+            # Check homogeneity of variance
+            levene_test = stats.levene(control_values, treatment_values)
+            variance_homogeneity = {
+                &#39;test&#39;: &#39;Levene&#39;,
+                &#39;statistic&#39;: levene_test[0],
+                &#39;p_value&#39;: levene_test[1],
+                &#39;equal_variance&#39;: levene_test[1] &gt;= 0.05
+            }
+            
+            # Store results and convert to JSON serializable types
+            results[treatment_id] = convert_to_serializable({
+                &#39;control_normality&#39;: control_normality,
+                &#39;treatment_normality&#39;: treatment_normality,
+                &#39;variance_homogeneity&#39;: variance_homogeneity,
+                &#39;recommended_test&#39;: self._recommend_test(control_normality[&#39;normal&#39;], 
+                                                       treatment_normality[&#39;normal&#39;],
+                                                       variance_homogeneity[&#39;equal_variance&#39;])
+            })
+            
+        return results
+    
+    def _recommend_test(self, control_normal: bool, treatment_normal: bool, equal_variance: bool) -&gt; str:
+        &#34;&#34;&#34;Recommend a statistical test based on assumption checks.&#34;&#34;&#34;
+        if control_normal and treatment_normal:
+            if equal_variance:
+                return &#39;t_test&#39;
+            else:
+                return &#39;welch_t_test&#39;
+        else:
+            return &#39;mann_whitney&#39;</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="tinytroupe.experimentation.statistical_tests.StatisticalTester.check_assumptions"><code class="name flex">
+<span>def <span class="ident">check_assumptions</span></span>(<span>self, metric: str) ‑> Dict[str, Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Check statistical assumptions for the given metric across all treatments.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>metric</code></strong> :&ensp;<code>str</code></dt>
+<dd>The metric to check assumptions for.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>Dictionary with results of assumption checks for each treatment.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def check_assumptions(self, metric: str) -&gt; Dict[str, Dict[str, Any]]:
+    &#34;&#34;&#34;
+    Check statistical assumptions for the given metric across all treatments.
+    
+    Args:
+        metric (str): The metric to check assumptions for.
+        
+    Returns:
+        dict: Dictionary with results of assumption checks for each treatment.
+    &#34;&#34;&#34;
+    if metric not in self.control_experiment_data:
+        raise ValueError(f&#34;Metric &#39;{metric}&#39; not found in control data&#34;)
+        
+    results = {}
+    control_values = np.array(self.control_experiment_data[metric], dtype=float)
+    
+    # Check normality of control
+    control_shapiro = stats.shapiro(control_values)
+    control_normality = {
+        &#39;test&#39;: &#39;Shapiro-Wilk&#39;,
+        &#39;statistic&#39;: control_shapiro[0],
+        &#39;p_value&#39;: control_shapiro[1],
+        &#39;normal&#39;: control_shapiro[1] &gt;= 0.05
+    }
+    
+    for treatment_id, treatment_data in self.treatments_experiment_data.items():
+        if metric not in treatment_data:
+            logger.warning(f&#34;Metric &#39;{metric}&#39; not found in treatment &#39;{treatment_id}&#39;&#34;)
+            continue
+            
+        treatment_values = np.array(treatment_data[metric], dtype=float)
+        
+        # Check normality of treatment
+        treatment_shapiro = stats.shapiro(treatment_values)
+        treatment_normality = {
+            &#39;test&#39;: &#39;Shapiro-Wilk&#39;,
+            &#39;statistic&#39;: treatment_shapiro[0],
+            &#39;p_value&#39;: treatment_shapiro[1],
+            &#39;normal&#39;: treatment_shapiro[1] &gt;= 0.05
+        }
+        
+        # Check homogeneity of variance
+        levene_test = stats.levene(control_values, treatment_values)
+        variance_homogeneity = {
+            &#39;test&#39;: &#39;Levene&#39;,
+            &#39;statistic&#39;: levene_test[0],
+            &#39;p_value&#39;: levene_test[1],
+            &#39;equal_variance&#39;: levene_test[1] &gt;= 0.05
+        }
+        
+        # Store results and convert to JSON serializable types
+        results[treatment_id] = convert_to_serializable({
+            &#39;control_normality&#39;: control_normality,
+            &#39;treatment_normality&#39;: treatment_normality,
+            &#39;variance_homogeneity&#39;: variance_homogeneity,
+            &#39;recommended_test&#39;: self._recommend_test(control_normality[&#39;normal&#39;], 
+                                                   treatment_normality[&#39;normal&#39;],
+                                                   variance_homogeneity[&#39;equal_variance&#39;])
+        })
+        
+    return results</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.experimentation.statistical_tests.StatisticalTester.run_test"><code class="name flex">
+<span>def <span class="ident">run_test</span></span>(<span>self, test_type: str = 'welch_t_test', alpha: float = 0.05, **kwargs) ‑> Dict[str, Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Run the specified statistical test on the control and treatments data.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>test_type</code></strong> :&ensp;<code>str</code></dt>
+<dd>Type of statistical test to run.
+Options: 't_test', 'welch_t_test', 'mann_whitney', 'anova', 'chi_square'</dd>
+<dt><strong><code>alpha</code></strong> :&ensp;<code>float</code></dt>
+<dd>Significance level, defaults to 0.05</dd>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>Additional arguments for specific test types.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>Dictionary containing the results of the statistical tests for each treatment (vs the one control).
+Each key is the treatment ID and each value is a dictionary with test results.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run_test(self, 
+            test_type: str=&#34;welch_t_test&#34;, 
+            alpha: float = 0.05, 
+            **kwargs) -&gt; Dict[str, Dict[str, Any]]:
+    &#34;&#34;&#34;
+    Run the specified statistical test on the control and treatments data.
+
+    Args:
+        test_type (str): Type of statistical test to run. 
+            Options: &#39;t_test&#39;, &#39;welch_t_test&#39;, &#39;mann_whitney&#39;, &#39;anova&#39;, &#39;chi_square&#39;
+        alpha (float): Significance level, defaults to 0.05
+        **kwargs: Additional arguments for specific test types.
+
+    Returns:
+        dict: Dictionary containing the results of the statistical tests for each treatment (vs the one control).
+            Each key is the treatment ID and each value is a dictionary with test results.
+    &#34;&#34;&#34;
+    supported_tests = {
+        &#39;t_test&#39;: self._run_t_test,
+        &#39;welch_t_test&#39;: self._run_welch_t_test,
+        &#39;mann_whitney&#39;: self._run_mann_whitney,
+        &#39;anova&#39;: self._run_anova,
+        &#39;chi_square&#39;: self._run_chi_square
+    }
+    
+    if test_type not in supported_tests:
+        raise ValueError(f&#34;Unsupported test type: {test_type}. Supported types: {list(supported_tests.keys())}&#34;)
+        
+    results = {}
+    for control_id, control_data in self.control_experiment_data.items():
+        # get all metrics from control data
+        metrics = set()
+        metrics.update(control_data.keys())
+        for treatment_id, treatment_data in self.treatments_experiment_data.items():
+            results[treatment_id] = {}
+            
+            for metric in metrics:
+                # Skip metrics not in treatment data
+                if metric not in treatment_data:
+                    logger.warning(f&#34;Metric &#39;{metric}&#39; not found in treatment &#39;{treatment_id}&#39;&#34;)
+                    continue
+                
+                control_values = control_data[metric]
+                treatment_values = treatment_data[metric]
+                
+                # Skip if either control or treatment has no values
+                if len(control_values) == 0 or len(treatment_values) == 0:
+                    logger.warning(f&#34;Skipping metric &#39;{metric}&#39; for treatment &#39;{treatment_id}&#39; due to empty values&#34;)
+                    continue
+                
+                # Run the selected test and convert to JSON serializable types
+                test_result = supported_tests[test_type](control_values, treatment_values, alpha, **kwargs)
+                results[treatment_id][metric] = convert_to_serializable(test_result)
+    
+    return results</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="tinytroupe.experimentation" href="index.html">tinytroupe.experimentation</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="tinytroupe.experimentation.statistical_tests.cohen_d" href="#tinytroupe.experimentation.statistical_tests.cohen_d">cohen_d</a></code></li>
+<li><code><a title="tinytroupe.experimentation.statistical_tests.convert_to_serializable" href="#tinytroupe.experimentation.statistical_tests.convert_to_serializable">convert_to_serializable</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="tinytroupe.experimentation.statistical_tests.StatisticalTester" href="#tinytroupe.experimentation.statistical_tests.StatisticalTester">StatisticalTester</a></code></h4>
+<ul class="">
+<li><code><a title="tinytroupe.experimentation.statistical_tests.StatisticalTester.check_assumptions" href="#tinytroupe.experimentation.statistical_tests.StatisticalTester.check_assumptions">check_assumptions</a></code></li>
+<li><code><a title="tinytroupe.experimentation.statistical_tests.StatisticalTester.run_test" href="#tinytroupe.experimentation.statistical_tests.StatisticalTester.run_test">run_test</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

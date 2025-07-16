@@ -1,0 +1,1987 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>tinytroupe.factory API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>tinytroupe.factory</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import logging
+logger = logging.getLogger(&#34;tinytroupe&#34;)
+
+from tinytroupe import utils, config_manager
+
+# We&#39;ll use various configuration elements below
+config = utils.read_config_file()
+
+
+###########################################################################
+# Exposed API
+###########################################################################
+from .tiny_person_factory import TinyPersonFactory
+
+__all__ = [&#34;TinyPersonFactory&#34;]</code></pre>
+</details>
+</section>
+<section>
+<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+<dl>
+<dt><code class="name"><a title="tinytroupe.factory.tiny_factory" href="tiny_factory.html">tinytroupe.factory.tiny_factory</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="tinytroupe.factory.tiny_person_factory" href="tiny_person_factory.html">tinytroupe.factory.tiny_person_factory</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="tinytroupe.factory.TinyPersonFactory"><code class="flex name class">
+<span>class <span class="ident">TinyPersonFactory</span></span>
+<span>(</span><span>sampling_space_description: str = None, total_population_size: int = None, context: str = None, simulation_id: str = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A base class for various types of factories. This is important because it makes it easier to extend the system, particularly
+regarding transaction caching.</p>
+<p>Initialize a TinyPersonFactory instance.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>sampling_space_description</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>The description of the sampling space. Defaults to None. If this is
+specified, then population_size must also be specified.</dd>
+<dt><strong><code>population_size</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>The size of the population to sample from. Defaults to None.</dd>
+<dt><strong><code>context</code></strong> :&ensp;<code>str</code></dt>
+<dd>The context text used to generate the TinyPerson instances.</dd>
+<dt><strong><code>simulation_id</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>The ID of the simulation. Defaults to None.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TinyPersonFactory(TinyFactory):
+
+    # keep track of all the names generated by all the factories, to ensure they are globally unique.
+    all_unique_names=[]
+
+    def __init__(self, sampling_space_description:str=None, total_population_size:int=None, context:str=None, simulation_id:str=None):
+        &#34;&#34;&#34;
+        Initialize a TinyPersonFactory instance.
+
+        Args:
+            sampling_space_description (str, optional): The description of the sampling space. Defaults to None. If this is
+               specified, then population_size must also be specified.
+            population_size (int, optional): The size of the population to sample from. Defaults to None.
+            context (str): The context text used to generate the TinyPerson instances.
+            simulation_id (str, optional): The ID of the simulation. Defaults to None.
+        &#34;&#34;&#34;
+        super().__init__(simulation_id)
+        self.person_prompt_template_path = os.path.join(os.path.dirname(__file__), &#39;prompts/generate_person.mustache&#39;)
+        self.context_text = context
+        self.sampling_space_description = sampling_space_description
+        self.population_size = total_population_size
+        
+        self.sampling_dimensions = None
+        self.sampling_plan = None
+        self.remaining_characteristics_sample = None
+
+        self.generated_minibios = [] # keep track of the generated persons. We keep the minibio to avoid generating the same person twice.
+        self.generated_names = []
+
+    # TODO obsolete?
+    @staticmethod
+    def generate_person_factories(number_of_factories, generic_context_text):
+        &#34;&#34;&#34;
+        Generate a list of TinyPersonFactory instances using OpenAI&#39;s LLM.
+
+        Args:
+            number_of_factories (int): The number of TinyPersonFactory instances to generate.
+            generic_context_text (str): The generic context text used to generate the TinyPersonFactory instances.
+
+        Returns:
+            list: A list of TinyPersonFactory instances.
+        &#34;&#34;&#34;
+        
+        logger.info(f&#34;Starting the generation of the {number_of_factories} person factories based on that context: {generic_context_text}&#34;)
+        
+        system_prompt = open(os.path.join(os.path.dirname(__file__), &#39;prompts/generate_person_factory.md&#39;)).read()
+
+        messages = []
+        messages.append({&#34;role&#34;: &#34;system&#34;, &#34;content&#34;: system_prompt})
+
+        user_prompt = chevron.render(&#34;Please, create {{number_of_factories}} person descriptions based on the following broad context: {{context}}&#34;, {
+            &#34;number_of_factories&#34;: number_of_factories,
+            &#34;context&#34;: generic_context_text
+        })
+
+        messages.append({&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: user_prompt})
+
+        response = openai_utils.client().send_message(messages)
+
+        if response is not None:
+            result = utils.extract_json(response[&#34;content&#34;])
+
+            factories = []
+            for i in range(number_of_factories):
+                logger.debug(f&#34;Generating person factory with description: {result[i]}&#34;)
+                factories.append(TinyPersonFactory(result[i]))
+
+            return factories
+
+        return None
+
+    @staticmethod
+    def create_factory_from_demography(demography_description_or_file_path:Union[str, dict],  population_size:int, additional_demographic_specification:str=None, context:str=None):
+        &#34;&#34;&#34;
+        Create a TinyPersonFactory instance from a demography description, which can be wither given as a file path or a dictionary
+        (but not both).
+
+        Args:
+            demography_description_or_file_path (Union[str, dict]): The demography description or the file path to the demography description.
+            population_size (int): The size of the population to sample from.
+            context (str, optional): Additional context text used to generate the TinyPerson instances. Defaults to None.            
+
+        Returns:
+            TinyPersonFactory: A TinyPersonFactory instance.
+        &#34;&#34;&#34;
+        # read the demography description from a file or use the given dictionary
+        if isinstance(demography_description_or_file_path, str):
+            demography_description = json.loads(open(demography_description_or_file_path).read())
+        elif isinstance(demography_description_or_file_path, dict):
+            demography_description = demography_description_or_file_path
+        else:
+            raise ValueError(&#34;demography_description_or_file_path must be either a string or a dictionary.&#34;)
+
+        if population_size is None:
+            raise ValueError(&#34;population_size must be specified.&#34;)
+
+
+        full_demography_description = \
+        f&#34;&#34;&#34;
+        # Sampling space specification
+
+        The population described by the demographic data below. Make sure you consider very detailed, fine-grained, 
+        characteristics of the individuals in the population. 
+
+        ## Directives
+        Please follow these rules:
+            - consider as many different population segments as possible, while **always** keeping **proportions** correct.For example, 
+              instead of sampling 10 people from segment A and 5 from segment B, you can instead sample 2 from A, 1 from B, 
+              and 7 others from other segments, provided the proportions are maintained correct and there are enough people to sample.
+            - also use any built-in knowledge you might have of the populations in question to improve the sampling space, 
+              provided this built-in knowledge does not conflict with the demographic data below.
+
+        The sample must include representative people from the broad population, so for instance ensure that you include values covering
+        people from all walks of life possible from the specified demographic data and your built-in knowledge of the target population, such as:
+            - from the simplest professions to those of the highest ranks;
+            - from the youngest to the oldest; 
+            - from the kind to the evil;
+            - from the positive and enthusiastic to the negative and pessimistic;
+            - from the happy and joyful to the sad and depressed;
+            - from the most conservative, to the most liberal; 
+            - from the educated, to the ignorant;
+            - from the healthy to the sick;
+            - from rich to poor.   
+        
+        In particular, the population MUST cover both POSITIVE and NEGATIVE possibilities of the various characteristics 
+        (e.g., rich vs poor, likes sugar vs don&#39;t like sugar, enthusiastic vs apathetic).
+
+        ## Additional demographic specification (if any)
+        {additional_demographic_specification if additional_demographic_specification is not None else &#34;(none)&#34;}
+
+        ## Demographic data
+        {json.dumps(demography_description, indent=4)}
+        &#34;&#34;&#34;
+
+        return TinyPersonFactory(context=context, 
+                                 sampling_space_description=full_demography_description,
+                                 total_population_size=population_size)
+
+    @classmethod    
+    def _clear_factories(cls):
+        &#34;&#34;&#34;
+        Additional class-level cleanup for this subclass.
+        &#34;&#34;&#34;
+        TinyPersonFactory.all_unique_names = [] # clear the list of all unique names, so that the next factories can start fresh.
+
+    def generate_person(self, 
+                        agent_particularities:str=None, 
+                        temperature:float=1.2, 
+                        frequency_penalty:float=0.0,
+                        presence_penalty:float=0.0, 
+                        attempts:int=10,
+                        post_processing_func=None) -&gt; TinyPerson:
+        &#34;&#34;&#34;
+        Generate a TinyPerson instance using OpenAI&#39;s LLM.
+
+        Args:
+            agent_particularities (str): The particularities of the agent.
+            temperature (float): The temperature to use when sampling from the LLM.
+            frequency_penalty (float): The frequency penalty to use when sampling from the LLM.
+            presence_penalty (float): The presence penalty to use when sampling from the LLM.
+            attempts (int): The number of attempts to generate a TinyPerson instance.
+            post_processing_func (function): A function to apply to the generated agent after it is created.
+
+        Returns:
+            TinyPerson: A TinyPerson instance generated using the LLM.
+        &#34;&#34;&#34;
+
+        logger.info(f&#34;Starting the person generation based these particularities: {agent_particularities}&#34;)
+        fresh_agent_name = None
+
+        # are we going to use a pre-computed sample of characteristics too?
+        if self.population_size is not None:
+            
+            with concurrent_agent_generataion_lock:
+                if self.remaining_characteristics_sample is None:
+                    # if the sample does not exist, we generate it here once.
+                    self.initialize_sampling_plan()
+            
+            logger.debug(f&#34;Sampling plan initialized. Remaining characteristics sample: {self.remaining_characteristics_sample}&#34;)
+
+            # CONCURRENT PROTECTION
+            with concurrent_agent_generataion_lock:
+                if len(self.remaining_characteristics_sample) == 0:
+                    logger.warning(&#34;No more characteristics samples left to sample from. This can happen if the sampling plan did not sum up correctly.&#34;)
+                    return None
+                
+                else:
+                    sampled_characteristics = self.remaining_characteristics_sample.pop()
+                    logger.debug(f&#34;Sampled agent: {sampled_characteristics[&#39;name&#39;]}.&#34;)
+            
+            if agent_particularities is not None:
+                agent_particularities =\
+                    f&#34;&#34;&#34;
+                        - Primary characteristics: {agent_particularities}
+
+                        - Also use all the following additional characteristics that **do not** conflict with the primary ones:
+                            * Name, demographics and other characteristics: {json.dumps(sampled_characteristics, indent=4)}
+
+                        In case one of the additional characteristics conflicts with a primary one, please use the primary one
+                        and ignore the additional one.
+
+                    &#34;&#34;&#34;
+            else:
+                agent_particularities = \
+                    f&#34;&#34;&#34;
+                    - Name, demographics and other characteristics:
+                         {json.dumps(sampled_characteristics, indent=4)}
+                    &#34;&#34;&#34;
+        else: # no predefined population size, so we generate one-off agents.
+            # CONCURRENT PROTECTION
+            with concurrent_agent_generataion_lock:
+                fresh_agent_name = self._unique_full_name(already_generated_names=TinyPersonFactory._all_used_and_precomputed_names(), 
+                                                        context=self.context_text)
+
+            if agent_particularities is not None:
+                agent_particularities = \
+                f&#34;&#34;&#34;
+
+                - Primary characteristics: {agent_particularities}
+
+                - Also use the following additional characteristics:
+                    * Full name: {fresh_agent_name}
+
+                In case the primary characteristics already specify a name, please use the primary name and ignore the additional one.
+                &#34;&#34;&#34;
+            else:
+                agent_particularities = f&#34;Full name: {fresh_agent_name}&#34;
+                
+
+    
+        logger.info(f&#34;Generating person with the following particularities: {agent_particularities}&#34;)
+
+        # read example specs from files. 
+        example_1 = json.load(open(os.path.join(os.path.dirname(__file__), &#39;../examples/agents/Friedrich_Wolf.agent.json&#39;)))
+        example_2 = json.load(open(os.path.join(os.path.dirname(__file__), &#39;../examples/agents/Sophie_Lefevre.agent.json&#39;)))
+
+        # We must include all agent names generated in the whole of the simulation, not only the ones generated by this factory,
+        # since they all share the same name space.
+        #
+        # For the minibios, we only need to keep track of the ones generated by this factory, since they are unique to each factory
+        # and are used to guide the sampling process.
+        user_prompt = chevron.render(open(self.person_prompt_template_path).read(), {
+            &#34;context&#34;: self.context_text,
+            &#34;agent_particularities&#34;: agent_particularities,
+            
+            #Note that we need to dump them to JSON strings, to ensure we get double quotes,
+            # and other formatting issues are avoided.
+            &#34;example_1&#34;: json.dumps(example_1[&#34;persona&#34;], indent=4),
+            &#34;example_2&#34;: json.dumps(example_2[&#34;persona&#34;], indent=4)
+        })
+
+        def aux_generate(attempt):
+            messages = []
+            messages += [{&#34;role&#34;: &#34;system&#34;, &#34;content&#34;: &#34;You are a system that generates specifications for realistic simulations of people. You follow the generation rules and constraints carefully.&#34;},
+                        {&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: user_prompt}]
+            
+
+            # due to a technicality, we need to call an auxiliary method to be able to use the transactional decorator.
+            message = self._aux_model_call(messages=messages, 
+                                            temperature=temperature,
+                                            frequency_penalty=frequency_penalty,
+                                            presence_penalty=presence_penalty)
+
+            if message is not None:
+                result = utils.extract_json(message[&#34;content&#34;])
+
+                logger.debug(f&#34;At attempt {attempt}, generated person parameters:\n{json.dumps(result, indent=4, sort_keys=True)}&#34;)
+
+                # only accept the generated spec if the name is not already in use
+                if not self._is_name_already_assigned(result[&#34;name&#34;]):
+                    return result
+                else:
+                    logger.info(f&#34;Person with name {result[&#39;name&#39;]} was already generated, cannot be reused.&#34;)
+
+            return None # no suitable agent was generated
+        
+        agent_spec = None
+        attempt = 0
+        while agent_spec is None and attempt &lt; attempts:
+            try:
+                attempt += 1
+                agent_spec = aux_generate(attempt=attempt)
+            except Exception as e:
+                logger.error(f&#34;Error while generating agent specification: {e}&#34;)
+        
+        # create the fresh agent
+        if agent_spec is not None:
+            # the agent is created here. This is why the present method cannot be cached. Instead, an auxiliary method is used
+            # for the actual model call, so that it gets cached properly without skipping the agent creation.
+            
+            # protect parallel agent generation
+            with concurrent_agent_generataion_lock:
+                person = TinyPerson(agent_spec[&#34;name&#34;])
+                self._setup_agent(person, agent_spec)
+                if post_processing_func is not None:
+                    post_processing_func(person)
+
+                self.generated_minibios.append(person.minibio())
+                self.generated_names.append(person.get(&#34;name&#34;))
+
+            return person
+        else:
+            logger.error(f&#34;Could not generate an agent after {attempts} attempts.&#34;)
+            if sampled_characteristics is not None:
+                self.remaining_characteristics_sample.append(sampled_characteristics)
+                logger.error(f&#34;Name {fresh_agent_name} was not used, it will be added back to the pool of names.&#34;)
+
+            return None
+   
+    
+    @config_manager.config_defaults(parallelize=&#34;parallel_agent_generation&#34;)
+    def generate_people(self, number_of_people:int=None, 
+                        agent_particularities:str=None, 
+                        temperature:float=1.2, 
+                        frequency_penalty:float=0.0,
+                        presence_penalty:float=0.0,
+                        attempts:int=10, 
+                        post_processing_func=None,
+                        parallelize=None,
+                        verbose:bool=False) -&gt; list:
+        &#34;&#34;&#34;
+        Generate a list of TinyPerson instances using OpenAI&#39;s LLM.
+
+        Args:
+            number_of_people (int): The number of TinyPerson instances to generate.
+            agent_particularities (str): The particularities of the agent.
+            temperature (float): The temperature to use when sampling from the LLM.
+            frequency_penalty (float): The frequency penalty to use when sampling from the LLM.
+            presence_penalty (float): The presence penalty to use when sampling from the LLM.
+            attempts (int): The number of attempts to generate a TinyPerson instance.
+            post_processing_func (function): A function to apply to the generated agent after it is created.
+            parallalel_workers (int): The number of parallel workers to use when generating the people. Too many workers may cause the LLM to fail 
+                due to throttling by the API.
+            verbose (bool): Whether to print information about the generated people.
+
+        Returns:
+            list: A list of TinyPerson instances generated using the LLM.
+        &#34;&#34;&#34;
+
+        if number_of_people is None:
+            if self.population_size is None:
+                raise ValueError(&#34;Either the number of people to generate or the population size must be specified.&#34;)
+            number_of_people = self.population_size
+
+        elif self.population_size is None:
+            self.population_size = number_of_people
+
+        elif number_of_people is not None and self.population_size is not None and number_of_people &gt; self.population_size:
+            raise ValueError(f&#34;Cannot generate more people than the population size. Requested {number_of_people}, but the population size is {self.population_size}.&#34;)
+
+        people = []
+        if parallelize:
+            people = self._generate_people_in_parallel(number_of_people=number_of_people, 
+                                                        agent_particularities=agent_particularities, 
+                                                        temperature=temperature, 
+                                                        frequency_penalty=frequency_penalty,
+                                                        presence_penalty=presence_penalty,
+                                                        attempts=attempts, 
+                                                        post_processing_func=post_processing_func,
+                                                        verbose=verbose)
+        else:
+            people = self._generate_people_sequentially(number_of_people=number_of_people, 
+                                                        agent_particularities=agent_particularities, 
+                                                        temperature=temperature, 
+                                                        frequency_penalty=frequency_penalty,
+                                                        presence_penalty=presence_penalty,
+                                                        attempts=attempts, 
+                                                        post_processing_func=post_processing_func,
+                                                        verbose=verbose)
+        
+        return people
+        
+
+    @transactional(parallel=True)
+    def _generate_people_in_parallel(self, number_of_people:int=None, 
+                        agent_particularities:str=None, 
+                        temperature:float=1.5, 
+                        frequency_penalty:float=0.0,
+                        presence_penalty:float=0.0,
+                        attempts:int=10, 
+                        post_processing_func=None,
+                        verbose:bool=False) -&gt; list:
+        people = []
+
+        #
+        # Concurrently generate the people. 
+        # 
+        # This vastly speeds up the process, but be careful with the number of workers, as too 
+        # many may cause the LLM to fail due to throttling by the API.
+        #
+
+        # this is the function that will be executed in parallel
+        def generate_person_wrapper(args):
+            self, i, agent_particularities, temperature, frequency_penalty, presence_penalty, attempts, post_processing_func = args
+            person = self.generate_person(agent_particularities=agent_particularities, 
+                                        temperature=temperature, 
+                                        frequency_penalty=frequency_penalty,
+                                        presence_penalty=presence_penalty,
+                                        attempts=attempts,
+                                        post_processing_func=post_processing_func)
+            return i, person
+
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            # we use a list of futures to keep track of the results
+            futures = [
+                executor.submit(generate_person_wrapper, (self, i, agent_particularities, temperature, frequency_penalty, presence_penalty, attempts, post_processing_func))
+                for i in range(number_of_people)
+            ]
+
+            # we iterate over the futures as they are completed, and collect the results
+            for future in concurrent.futures.as_completed(futures):
+                i, person = future.result()
+                if person is not None:
+                    people.append(person)
+                    info_msg = f&#34;Generated person {i+1}/{number_of_people}: {person.minibio()}&#34;
+                    logger.info(info_msg)
+                    if verbose:
+                        print(info_msg)
+                else:
+                    logger.error(f&#34;Could not generate person {i+1}/{number_of_people}. Continuing with the remaining ones.&#34;)
+            
+        return people
+        
+    # TODO still make this one available? 
+    def _generate_people_sequentially(self, number_of_people:int=None, 
+                        agent_particularities:str=None, 
+                        temperature:float=1.5, 
+                        frequency_penalty:float=0.0,
+                        presence_penalty:float=0.0,
+                        attempts:int=10, 
+                        post_processing_func=None,
+                        verbose:bool=False) -&gt; list:
+        &#34;&#34;&#34;
+        Generate the people sequentially, not in parallel. This is a simpler alternative.
+        &#34;&#34;&#34;
+        people = []
+        for i in range(number_of_people):
+            person = self.generate_person(agent_particularities=agent_particularities, 
+                          temperature=temperature, 
+                          frequency_penalty=frequency_penalty,
+                          presence_penalty=presence_penalty,
+                          attempts=attempts,
+                          post_processing_func=post_processing_func)
+            if person is not None:
+                people.append(person)
+            info_msg = f&#34;Generated person {i+1}/{number_of_people}: {person.minibio()}&#34;
+            logger.info(info_msg)
+            if verbose:
+                print(info_msg)
+            else:
+                logger.error(f&#34;Could not generate person {i+1}/{number_of_people}.&#34;)
+        
+        return people
+
+                                      
+                                      
+
+    def initialize_sampling_plan(self):
+        &#34;&#34;&#34;
+        Computes a list of characteristics samples from a sampling space. 
+        The sampling space is built from the given description through intermediary steps
+        that actually build a sampling space and then randomly (and not via LLM) sample from it, thereby 
+        ensuring that the sampling is not biased by the LLM (though the sampling space itself may be biased).
+
+        All intermediary results are stored for later inspection.
+
+        For example, given some n &gt; 3 and a description like
+           &#34;Young Western people of different liberal professions.&#34;
+        
+        The final samples could be something like:
+              [{&#34;age&#34;: 25, &#34;profession&#34;: &#34;Architect&#34;, &#34;country&#34;: &#34;USA&#34;}, 
+                {&#34;age&#34;: 27, &#34;profession&#34;: &#34;Lawyer&#34;, &#34;country&#34;: &#34;Canada&#34;}, 
+                ...
+                {&#34;age&#34;: 25, &#34;profession&#34;: &#34;Architect&#34;, &#34;country&#34;: &#34;USA&#34;}]
+
+        Args:
+            n (int): The number of samples to generate.
+            sampling_space_description (str): A description of the sampling space.
+
+        &#34;&#34;&#34;
+
+        # a technicality - we need to use an auxiliary method to be able to use the transactional decorator effectively.
+        return self._initialize_sampling_plan_transaction(n=self.population_size, description=self.sampling_space_description,context=self.context_text)
+        
+    def _initialize_sampling_plan_transaction(self, n, description, context):
+        &#34;&#34;&#34;
+        Auxiliary method to initialize the sampling plan. This is needed in order to be able to use the transactional decorator,
+        due too a technicality - the method parameters must be such that when they change the transaction is nullified.
+        &#34;&#34;&#34;
+        if self.remaining_characteristics_sample is None:
+            # sampling dimensions
+            self.sampling_dimensions = utils.try_function(lambda: self._compute_sampling_dimensions(sampling_space_description=description),
+                                                    
+                                                    # check that the result is a dict
+                                                    postcond_func=lambda result: isinstance(result, dict))
+            logger.debug(f&#34;Sampling dimensions: {json.dumps(self.sampling_dimensions, indent=4)}&#34;)
+
+            # sampling plan
+            self.sampling_plan =  utils.try_function(lambda: self._compute_sample_plan(N=n, 
+                                                        sampling_dimensions=self.sampling_dimensions),
+                                                        
+                                                        # checks that the plan is a list, not an empty dictionary, a number or a string
+                                                        postcond_func = lambda result: isinstance(result, list) and len(result) &gt; 0 
+                                                        )
+            # if the sampling plan is a dict, let&#39; s enclose it in a list
+            if isinstance(self.sampling_plan, dict):
+                self.sampling_plan = [self.sampling_plan]
+                logger.warning(&#34;The sampling plan was a dictionary, enclosing it in a list to ensure it is processed correctly.&#34;)
+            
+            logger.debug(f&#34;Sampling plan: {json.dumps(self.sampling_plan, indent=4)}&#34;)
+
+            # Flatten the sampling plan in concrete individual samples.
+            # Use deepcopy because we&#39;ll be modifying the samples later, and we want to keep the original sampling plan intact
+            # for correct caching
+            self.remaining_characteristics_sample = copy.deepcopy(utils.try_function(lambda: self._flatten_sampling_plan(sampling_plan=self.sampling_plan)))
+
+            # instead of failing, we warn if the number of samples is not equal to n, as LLMs can be bad at summing up the quantities in the sampling plan.
+            # This is not a problem, as the sampling space is still valid and can be used, though it may not be as rich as expected.
+            if len(self.remaining_characteristics_sample) != n:
+                logger.warning(f&#34;Expected {n} samples, but got {len(self.remaining_characteristics_sample)} samples. The LLM may have failed to sum up the quantities in the sampling plan correctly.&#34;)
+
+            logger.debug(f&#34;Remaining characteristics sample: {json.dumps(self.remaining_characteristics_sample, indent=4)}&#34;)
+
+            # generate names for each sample individually, considering all their characteristics
+            all_used_names = TinyPersonFactory._all_used_and_precomputed_names()
+            
+            for i, sample in enumerate(self.remaining_characteristics_sample):
+                logger.debug(f&#34;Generating name for sample {i+1}/{len(self.remaining_characteristics_sample)}&#34;)
+                
+                # randomize the all_used_names to make the context less predictable for the LLM, thereby introducing some additional randomness.
+                # Note that we use a fixed random seed to ensure that the sampling plan is reproducible and cache can be kept.
+                TinyFactory.randomizer.shuffle(all_used_names)
+
+                # generate a name that&#39;s appropriate for this specific sample&#39;s characteristics
+                try:
+                    
+                    # A dummy name to start with, in case the name generation fails.
+                    sample[&#34;name&#34;] = f&#34;Agent_{utils.fresh_id(&#39;agents_names&#39;)}&#34;
+
+                    name = utils.try_function(
+                        lambda: self._generate_name_for_sample(
+                            sample_characteristics=sample,
+                            already_generated_names=all_used_names
+                        ),
+                        # ensure the name is not in already used names
+                        postcond_func=lambda result: result not in all_used_names,
+                        retries=10
+                    )
+                    
+                    sample[&#34;name&#34;] = name
+                    all_used_names.append(name)
+                    
+                except Exception as e:
+                    logger.error(f&#34;Error generating name for sample {i}: {e}&#34;)
+                    # fallback: use a simple default name with index
+                    fallback_name = f&#34;Person_{i}_{sample.get(&#39;gender&#39;, &#39;unknown&#39;)}&#34;
+                    sample[&#34;name&#34;] = fallback_name
+                    all_used_names.append(fallback_name)
+            
+            # update the global list of unique names
+            new_names = [sample[&#34;name&#34;] for sample in self.remaining_characteristics_sample]
+            TinyPersonFactory.all_unique_names = list(set(TinyPersonFactory.all_unique_names + new_names))
+            
+        else:
+            raise ValueError(&#34;Sampling plan already initialized. Cannot reinitialize it.&#34;)
+
+    @classmethod
+    def _all_used_and_precomputed_names(cls) -&gt; list:
+        &#34;&#34;&#34;
+        Returns all the names currently in use by agents and those pre-generated by all factories.
+        &#34;&#34;&#34;
+        return TinyPerson.all_agents_names() + cls.all_unique_names
+    
+    def _is_name_globally_unique(self, name:str) -&gt; bool:
+        &#34;&#34;&#34;
+        Checks if a name is globally unique.
+        &#34;&#34;&#34;
+        return name not in TinyPersonFactory.all_unique_names
+    
+    def _is_name_already_assigned(self, name:str) -&gt; bool:
+        &#34;&#34;&#34;
+        Checks if a name has already been assigned to a person.
+        &#34;&#34;&#34;
+        return name in TinyPerson.all_agents_names()
+
+
+    @transactional()
+    @utils.llm(temperature=0.5, frequency_penalty=0.0, presence_penalty=0.0)
+    def _compute_sampling_dimensions(self, sampling_space_description:str) -&gt; dict:
+        &#34;&#34;&#34;
+        Given a sampling description, computes the dimensions of the sampling space. The sampling space offers a way to sample from a population of people,
+        so each dimension contains values that could be an attribute of a **specific** person. The resulting sampling space must:
+           - contemplate all critical characteristics mentioned in the sampling description, even if this means having a large number of dimensions and
+             complex values for each.
+               * whenever necessary to properly capture the possibilities, you can replace a single dimension by a collection of sub-dimensions
+             (e.g., instead of &#34;beliefs&#34;, you might have &#34;political_beliefs&#34;, &#34;economic_beliefs&#34;, &#34;consumer_beliefs&#34;, etc.)
+           - values for each dimension can range from numbers or single words to large sentences or even paragraphs. For attributes that are not clearly single values,
+             always try to add as much detail as possible. For instance, age is just a single value, but lifestyle or cultural background **must** be a long sentence or even a paragraph. 
+             This is to ensure that, later, the generated people can be very nuanced and realistic, with rich and detailed attributes. See the example below to get inspired.
+           - you can be very creative with the dimensions and values provided that they are consistent with the sampling space description.
+           - whenever you have the information about PROPORTIONS of the values, you **must** include them in the output, so that the sampling space can be used to generate people
+             in a representative way. 
+           - values are **not** distributions, probabilities or other statistics, but rather concrete, specific, people attributes. For example, there can
+             be no &#34;average_age&#34; dimension, but only &#34;age&#34;, although the complete set of valies that define a dimension is itself a distribution.
+           - each dimension should be as rich as possible, having as many values as possible, so that the sampling space can be used to generate
+             many nuanced variations of the target population.
+           - each dimension should consider a wide range of values, making sure to cover both POSITIVE and NEGATIVE possibilities (e.g., rich vs poor, likes sugar vs don&#39;t like sugar).  
+           - each dimension should always include extreme values, so that the sampling space can be used to generate people with extreme characteristics, such as very young or very old,
+             very rich or very poor, very positive or very negative, etc.
+           - include as many dimensions as possible to capture the richness of the population, even if this means having a large number of dimensions.    
+           - in principle, the original sampling description could be approximately rephrased in terms of the dimensions and values generated (i.e., the dimensions are rich enough
+             to capture all relevant information). Howerver, this should not limit the range of values and dimensions used, but rather be a byproduct of the process. For instance,
+             if the original description say &#34;young people&#34;, the dimension &#34;age&#34; could be defined as a range of values from 18 to 30, but **not** as a small list with only, say, [18, 25, 30].
+             Always try to be as rich as possible in the values and dimensions, even if this means having a large number of them.
+
+        Additionally, make sure you include special dimensions that capture these aspects, in such a way that they relate to the sampling space description:
+            - personality traits (with proportions)
+            - political beliefs (with proportions)
+            - economic beliefs (with proportions)
+            - financial situation (with proportions)
+            - preferences and tastes (with proportions)
+            - cultural background (with proportions and diverse ethnicities and cultural heritages; provide detailed, realistic, and varied examples that reflect a wide spectrum of ethnic, national, and cultural identities relevant to the sampling space description)
+
+        ## On your input
+
+        Here&#39;s what to do depending on what the input sampling space description looks like:
+          - Plain text: Abstract all the potential dimensions from the text. For example, if the text is &#34;Young Western people of different liberal professions.&#34;, the dimensions could be &#34;age&#34;, &#34;profession&#34;, &#34;country&#34;.
+          - JSON: Do not use the JSON directly, but rather abstract the dimensions from it. Input JSONs can be obtained from various sources, and you should do your best to interpret them and produce a clean list of dimensions and their values, regardless of how complex the input JSON is. In particular, never use the JSON formatting itself as dimension names or values, but rather abstract the actual dimensions and values from it.
+          - Tables or other structured data: Abstract the dimensions from the structured data. For example, if the data is in a table, you should extract the rows and columns and abstract the dimensions from them.
+            
+        
+        ## On your output:
+        You output a JSON containing a list of dimensions. Each output dimension **must** consist of:
+          - a name;
+          - EITHER a list of values OR a range of values (specified as a pair). 
+              * in lists of values, whenever possible, you **must** use long values, such as sentences or paragraphs, instead of short words or numbers. 
+              * in lists of values you can, optionally, use a dictionary to specify proportions of the values, e.g., {&#34;value1&#34;: 0.5, &#34;value2&#34;: 0.3, &#34;value3&#34;: 0.2} to indicate that 50% of the population has value1, 30% has value2, and 20% has value3.
+                Adjust the proportions as appropriate for the context and ensure they sum to 1.0.
+
+        The output is formatted as a JSON object with the following structure:
+        ```json 
+        {
+            &#34;sampling_space_description&#34;: &#34;A description of the sampling space.&#34;,
+            &#34;dimensions&#34;: [
+            {
+            &#34;name&#34;: &#34;dimension_name_1&#34;,
+            &#34;values&#34;: [&#34;value1&#34;, &#34;value2&#34;, ...]
+            },
+
+            {
+            &#34;name&#34;: &#34;dimension_name_2&#34;,
+            &#34;range&#34;: [min, max]
+            },
+
+            {
+            &#34;name&#34;: &#34;dimension_name_3&#34;,
+            &#34;values&#34;: {&#34;value1&#34;: proportion1, &#34;value2&#34;: proportion2, &#34;value3&#34;: proportion3, ...}
+            },
+
+            ...
+            ]
+        }
+        ```
+
+        Unless values are necessarily numbers (e.g., age), they should be descriptive strings so that it is easy to understand what they mean.
+        These strings can be simple values or long detailed texts, whatever is best to capture the desired characteristic.
+        
+        ## Example:
+        Given the following INPUT sampling space description: &#34;Young Western people of different liberal professions and social classes.&#34;
+
+        The OUTPUT dimensions could be a dictionary with the following structure:
+           ```json
+           {
+               &#34;sampling_space_description&#34;: &#34;Young Western people of different liberal professions and social classes.&#34;,
+               &#34;dimensions&#34;: [
+                   {
+                       &#34;name&#34;: &#34;age&#34;,
+                       &#34;range&#34;: [18, 30]
+                   },
+                   {
+                       &#34;name&#34;: &#34;socioeconomic status&#34;,
+                       &#34;values&#34;: [&#34;miserable&#34;, &#34;poor&#34;, &#34;middle class&#34;, &#34;rich&#34;, &#34;very rich&#34;]
+                   },
+                   {
+                       &#34;name&#34;: &#34;profession&#34;,
+                       &#34;values&#34;: [&#34;Architect&#34;, &#34;Lawyer&#34;, &#34;Physician&#34;, &#34;Accountant&#34;, ...]
+                   },
+                   {
+                       &#34;name&#34;: &#34;country&#34;,
+                       &#34;values&#34;: {
+                           &#34;USA&#34;: 0.35,
+                           &#34;Germany&#34;: 0.10,
+                           &#34;UK&#34;: 0.09,
+                           &#34;France&#34;: 0.09,
+                           &#34;Italy&#34;: 0.08,
+                           &#34;Spain&#34;: 0.06,
+                           &#34;Canada&#34;: 0.06,
+                           &#34;Australia&#34;: 0.05,
+                           &#34;Netherlands&#34;: 0.03,
+                           &#34;Sweden&#34;: 0.03,
+                           &#34;Belgium&#34;: 0.02,
+                           &#34;Switzerland&#34;: 0.02,
+                           &#34;Austria&#34;: 0.01
+                       }
+                   },
+                   {
+                       &#34;name&#34;: &#34;cultural_background&#34;,
+                       &#34;values&#34;: {
+                           &#34;Born in a large city of a developed nation, parents were from a lineage of physicians and lawyers&#34;: 0.12,
+                           &#34;Descendant of Ashkenazi Jewish immigrants who settled in New York City in the early 20th century, maintaining strong ties to Jewish traditions and community life.&#34;: 0.08,
+                           &#34;Second-generation Chinese-Canadian whose family values blend Confucian principles with Canadian multiculturalism, celebrating both Lunar New Year and Canada Day.&#34;: 0.06,
+                           &#34;Of Irish and Italian descent, growing up in Boston with a household that combines Catholic traditions, Irish folk music, and Italian culinary heritage.&#34;: 0.10,
+                           &#34;Of Turkish-German background, raised in Berlin with exposure to both Turkish family traditions and contemporary German urban culture.&#34;: 0.05,
+                           &lt;... many more ...&gt;
+                       }
+                   },
+                   {
+                       &#34;name&#34;: &#34;economic_beliefs&#34;,
+                       &#34;values&#34;: {
+                           &#34;Firmly believes that diligent effort and perseverance in one&#39;s career are the primary drivers of financial prosperity and upward mobility.&#34;: 0.28,
+                           &#34;Holds the view that wealth accumulation is largely a matter of being in the right place at the right time, with luck playing a significant role in economic outcomes.&#34;: 0.18,
+                           &#34;Thinks that government intervention and social programs are essential to ensure fair economic opportunities for all members of society.&#34;: 0.22,
+                           &#34;Believes that personal connections and networking are more important than formal education or hard work in achieving economic success.&#34;: 0.15,
+                           &lt;... many more ...&gt;
+                       }
+                   },
+                   {
+                       &#34;name&#34;: &#34;professional_attitudes&#34;,
+                       &#34;values&#34;: {
+                           &#34;Aspires to establish and grow their own business, valuing independence and the ability to innovate without corporate constraints.&#34;: 0.18,
+                           &#34;Prefers the stability and structure of working for a well-established company, appreciating clear career paths and organizational support.&#34;: 0.32,
+                           &#34;Enjoys collaborating in multidisciplinary teams and seeks out workplaces that foster creativity and open communication.&#34;: 0.22,
+                           &#34;Is highly risk-averse and prioritizes job security and predictable routines over rapid advancement or entrepreneurial ventures.&#34;: 0.15,
+                           &lt;... many more ...&gt;
+                       }
+                   },
+                   {
+                       &#34;name&#34;: &#34;political_beliefs&#34;,
+                       &#34;values&#34;: {
+                           &#34;Strongly supports progressive policies aimed at reducing income inequality and expanding access to healthcare and education.&#34;: 0.24,
+                           &#34;Advocates for conservative values, emphasizing the importance of tradition, personal responsibility, and limited government intervention.&#34;: 0.20,
+                           &#34;Identifies as a centrist, believing that balanced compromise between opposing political ideologies leads to the best societal outcomes.&#34;: 0.26,
+                           &#34;Is passionate about environmental issues and supports policies that prioritize sustainability and climate change mitigation above economic growth.&#34;: 0.16,
+                           &lt;... many more ...&gt;
+                       }
+                   },
+                   {
+                       &#34;name&#34;: &#34;personality_traits&#34;,
+                       &#34;values&#34;: {
+                           &#34;Maintains an unwavering optimism, always expecting positive outcomes even in the face of adversity and encouraging others to do the same.&#34;: 0.12,
+                           &#34;Tends to be introspective and reserved, preferring solitary activities and deep reflection over social gatherings or group events.&#34;: 0.18,
+                           &#34;Is highly ambitious, constantly setting challenging goals and pushing themselves to achieve more in both personal and professional spheres.&#34;: 0.15,
+                           &#34;Approaches new experiences with caution, carefully weighing risks and benefits before making decisions or embracing change.&#34;: 0.20,
+                           &#34;Often expects the worst in any situation, focusing on potential problems and rarely feeling hopeful about the future.&#34;: 0.08,
+                           &#34;Frequently experiences a sense of sadness and melancholy, finding it difficult to enjoy activities that once brought happiness.&#34;: 0.06,
+                           &#34;Is quick to notice flaws and shortcomings in themselves and others, tending toward a negative outlook on life.&#34;: 0.07,
+                           &#34;Feels overwhelmed by setbacks, easily discouraged, and tends to dwell on failures rather than successes.&#34;: 0.05,
+                           &lt;... many more ...&gt;
+                       }
+                   },
+                   {
+                       &#34;name&#34;: &#34;preferences_and_tastes&#34;,
+                       &#34;values&#34;: {
+                           &#34;Has a deep appreciation for classical music, frequently attending orchestral concerts and collecting rare vinyl recordings.&#34;: 0.08,
+                           &#34;Finds joy in spending weekends hiking in remote natural parks, seeking tranquility and inspiration from the outdoors.&#34;: 0.16,
+                           &#34;Rarely leaves home, preferring the comfort of familiar surroundings and engaging in hobbies such as reading and painting indoors.&#34;: 0.11,
+                           &#34;Enjoys experimenting with international cuisines, often hosting elaborate dinner parties to share culinary discoveries with friends.&#34;: 0.14,
+                           &#34;Is sensitive to loud environments and actively avoids crowded or noisy places, seeking peace and quiet whenever possible.&#34;: 0.13,
+                           &#34;Prefers to spend time alone in dimly lit rooms, listening to somber music and reflecting on the more difficult aspects of life.&#34;: 0.04,
+                           &#34;Has little interest in social gatherings or celebrations, often declining invitations and feeling out of place in festive environments.&#34;: 0.07,
+                           &#34;Frequently chooses entertainment or art that explores themes of loss, struggle, or existential despair, finding comfort in shared sadness.&#34;: 0.03,
+                           &lt;... many more ...&gt;
+                       }
+                   }
+               ]
+           }
+           ```
+        
+        Note in the example:
+           - Age is given as a numeric range.
+           - All other values are descriptive strings, human-friendly, no strange symbols or codes.
+           - The &#34;country&#34; dimension uses a dictionary with suitable proportions for Western countries.
+           - No value contains internal structure - just a name or short description.
+           - All values are concrete properties, not distributions, probabilities or other statistics.
+           - Whenever possible, the values in the dimensions are long and detailed **sentences** each.
+           - It has few dimensions because the sampling space description is very short. If the description were longer, the number of dimensions would be larger,
+             and their values more detailed.
+           - It contains the additional dimensions that capture the personality traits, political beliefs, economic beliefs, financial situation, preferences and tastes,
+             and now cultural background with varied ethnicities and heritages, which are important for the sampling space to be rich enough to generate nuanced variations of the target population. 
+           - Beyond positive aspects, it also includes values that emphasize pessimism, negativeness, and sadness, ensuring these characteristics are balanced and represented in the sampling space.
+        
+        Args:
+            sampling_space_description (str): A description of the sampling space.
+        
+        Returns:
+            dict: A dictionary with the dimensions of the sampling space, as shown in the example above.
+        &#34;&#34;&#34;
+        # the body of this method is handled by the @llm decorator.
+    
+    @transactional()
+    @utils.llm(temperature=0.5, frequency_penalty=0.0, presence_penalty=0.0)
+    def _compute_sample_plan(self, N:int, sampling_dimensions:dict, max_quantity_per_sample_directive:int=5, min_sampling_directives:int=10, max_sampling_directives:int=50) -&gt; List[Dict[str, any]]:
+        &#34;&#34;&#34;
+        This function defines which and how many people to sample from the sampling space defined by the given dimensions.
+        Given a number N of people to sample, and the dimensions of the sampling space, computes a *sample plan* of N people from that space.
+
+        The input sampling dimensions have the following structure:
+
+            ```json
+                {
+                    &#34;sampling_space_description&#34;: &#34;A description of the sampling space.&#34;,
+                    &#34;dimensions&#34;: [
+                        {
+                            &#34;name&#34;: &#34;dimension_name_1&#34;,
+                            &#34;values&#34;: [&#34;value1&#34;, &#34;value2&#34;, ...]
+                        },
+                        {
+                            &#34;name&#34;: &#34;dimension_name_2&#34;,
+                            &#34;range&#34;: [min, max]
+                        },
+                        ...
+                    ]
+                }
+            ```
+        
+        The *sample plan* to be generated is a list of M *sampling directives*. Each *sampling directive* **always** consists of:
+          - &#34;id&#34;: a unique identifier for the *sampling directive*, just an incrementing integer starting from 1.
+          - &#34;subpopulation_description&#34;: a short description of the sub-population that this *sampling directive* represents, based on the sampling space description and the sampled values.
+                                         If possible, make it a recognizable and meaningful description of the sub-population, 
+                                         such as &#34;Young rebellious people from upper classes&#34;, &#34;Old conservative boomers from rural areas&#34;, &#34;Intellectual urban professionals with diverse and cosmopolitan cultural backgrounds&#34;, etc.
+          - &#34;sampled_values&#34;: a map from of dimensions from the sampling space to concrete values, value ranges or value options.
+          - &#34;quantity&#34;: to how many elements with those values should be sampled in total (from 1 to max_quantity_per_sample_directive if specified). 
+                        The sum of all of these quantities must be equal to N.
+
+        So your final output **MUST** follow this JSON structure:
+
+            ```json
+            [
+                {   &#34;id&#34;: 1,
+                     &#34;subpopulation_description&#34;: &#34;Some description here...&#34;,
+                    &#34;sampled_values&#34;: {
+                        &#34;dimension_name_1&#34;: [n_1_min, n_1_max],,
+                        &#34;dimension_name_2&#34;: [&#34;value2_1&#34;, &#34;value2_2&#34;, ...],
+                        &#34;dimension_name_3&#34;: [&#34;value3_1&#34;, &#34;value3_2&#34;, ...],
+                        ...
+                    },
+                    &#34;quantity&#34;: quantity_1
+                },
+                
+                {
+                    &#34;id&#34;: 2,
+                    &#34;subpopulation_description&#34;: &#34;Some other description here...&#34;,
+                    &#34;sampled_values&#34;: {
+                        &#34;dimension_name_1&#34;: [n_1_min, n_1_max],
+                        &#34;dimension_name_2&#34;: &#34;value2&#34;,
+                        &#34;dimension_name_3&#34;: [&#34;value3_1&#34;, &#34;value3_2&#34;, ...],
+                        ...
+                    },
+                    &#34;quantity&#34;: quantity_2
+                },
+                ...
+                {
+                    &#34;id&#34;: M,
+                    &#34;subpopulation_description&#34;: &#34;Again some description here...&#34;,
+                    &#34;sampled_values&#34;: {
+                        &#34;dimension_name_1&#34;: [n_1_min, n_1_max],
+                        &#34;dimension_name_2&#34;: [&#34;value2_1&#34;, &#34;value2_2&#34;, ...],
+                        &#34;dimension_name_3&#34;: [&#34;value3_1&#34;, &#34;value3_2&#34;, ...],
+                        ...
+                    },
+                    &#34;quantity&#34;: quantity_M
+                },
+            ]
+            ```
+
+            where N = quantity_1 + quantity_2 + ... + quantity_M, 
+                  quantity_i &lt;= max_quantity_per_sample_directive (if specified),
+                  and M is the number of *sampling directives*, which can be as large as necessary to ensure 
+                  that the total number of sampled people is equal to N.
+
+            Note:
+              - Concrete values are NOT in brackets, but rather just a single value or a range of values.
+              - Options are given in lists of strings separated by commas, e.g., [&#34;value1&#34;, &#34;value2&#34;, ...].
+              - Ranges are numberic and specified as a pair of numbers, e.g., [min, max].
+                    
+        Rules and principles:
+          - The sampling plan is a collection of sub-populations captured by each *sampling directive*. Therefore, the various *sampling directives* must complement each other in order
+            to approximate the target population.
+          - Each *sampling directive* is a **combination** of values from the sampling dimensions that represent a specific segment of the target population. Its richness and variety must reflect the desired sub-population.
+          - The dimension sampled in each *sampling directive* can be a single value, a range of values, or a list of values. You can use ranges and lists to cover a wider range of possibilities
+            in a compact way, but you can also use single values if necessary. The items in list can be long or short, does not matter, both can be in lists. Some examples of good fortmatting:
+                * CORRECT example: [&#34;Very rich&#34;, &#34;Rich&#34;, &#34;Middle class&#34;, &#34;Poor&#34;]
+                * CORRECT example: &#34;Rich&#34;
+                * WRONG example: [&#34;Very rich or Rich or Middle class or Poor&#34;]
+                * WRONG example: [&#34;Rich&#34;] 
+          - **Always** try very hard to use a list of values (two or more values) or range of values (min - max), to make the sampling plan at once concise and rich. In doing so, make sure that each *sampling directive* is truly representative
+            of some segment of the target population, and not just a random collection of values.                
+          - You MUST make M as large as necessary to contemplate the target population, ideally M &gt;= min_sampling_directives (but M &lt;= max_sampling_directives, if specified), to ensure a rich and varied sampling of the population.
+              * Note that this means the maximum *sampling directive* &#34;id&#34; (call it max_id) used in the *sampling plan* is such that: max_id &gt;= min_sampling_directives; max_id &lt;= max_sampling_directives (if specified).
+          - The sampled population MUST be representative of the target population.
+          - The sampled population MUST be realistic.
+          - You can set the quantity of each *sampling directive* to 1 if necessary to ensure a varied and representative sampling.
+          - All values chosen from the sampling dimensions must be copied IN FULL in the &#34;sampled_values&#34; map, so that the sampled values are concrete and specific.
+            The sample plan is supposed to be self-contained, therefore it MUST have all details necessary to sample the people later, without needing to refer back to the sampling dimensions.
+          - You should include as many *sampling directives* as necessary to cover the sampling of N total people (the sum of all quantities). When in doubt,
+            **always** add more *sampling directives* (i.e., make M larger) up to max_sampling_directives (if specified), as this will ensure you cover the requested N people.
+          - In particular, make sure both POSITIVE and NEGATIVE possibilities of the various characteristics are covered (e.g., rich vs poor, likes sugar vs doesn&#39;t like sugar, enthusiastic vs apathetic).
+            This is to ensure any bias (towards positive or negative characteristics) is minimized, and the sampling space is rich enough to generate people with a wide range of characteristics.
+          - The sampling space description should be used to guide the sampling, so that the sampled population is consistent with it.
+          - You should ensure that the quantity of requested samples in each *sampling directive* is proportional to their presumed size in the target population.
+            That is to say, combinations of dimensions that are more common in the target population should be sampled more often. If you don&#39;t know, make a guess.
+          - If max_quantity_per_sample_directive is specified, you must ensure that no single *sampling directive* exceeds this quantity. This is to ensure we get more variation and not just a few large groups.
+          - You can rely on your built-in knowledge or make educated guesses about such quantities and proportions to ensure that the sample is representative of the population.
+              * Note that this means for any quantity_i: quantity_i &gt;= 1; quantity_i &lt;= max_quantity_per_sample_directive (if specified).
+          - The sum of all quantities in the output **must** be equal to N, the number of people to sample in total.
+          - You can always add extra *sampling directives* (up to max_sampling_directives if specified) to ensure the total of N people is reached.
+          - It is acceptable for the sampling plan to generate more than N people, but NEVER less than N. So if unsure generate MORE people, never less.
+
+        ## Example
+        Given the following INPUT sampling dimensions:
+        
+        ```json
+        {
+            &#34;sampling_space_description&#34;: &#34;Young Western people of different liberal or intellectual professions.&#34;
+            &#34;dimensions&#34;: [
+                {
+                    &#34;name&#34;: &#34;age&#34;,
+                    &#34;range&#34;: [18, 30]
+                },
+                {
+                    &#34;name&#34;: &#34;profession&#34;,
+                    &#34;values&#34;: [&#34;Architect&#34;, &#34;Financial Analyst&#34;, &#34;Writer&#34;, &#34;Art critic&#34;, &#34;Lawyer&#34;, &#34;Physician&#34;, &#34;Accountant&#34;, ...]
+                },
+                {
+                    &#34;name&#34;: &#34;country&#34;,
+                    &#34;values&#34;: [&#34;USA&#34;, &#34;Canada&#34;, &#34;UK&#34;, &#34;France&#34;, &#34;Germany&#34;, &#34;Italy&#34;, &#34;Spain&#34;, &#34;Portugal&#34;, &#34;Netherlands&#34;, &#34;Belgium&#34;, ...]
+                },
+
+                {
+                       &#34;name&#34;: &#34;personality_traits&#34;,
+                       &#34;values&#34;: {
+                           &#34;Maintains an unwavering optimism, always expecting positive outcomes even in the face of adversity and encouraging others to do the same.&#34;: 0.12,
+                           &#34;Tends to be introspective and reserved, preferring solitary activities and deep reflection over social gatherings or group events.&#34;: 0.18,
+                           &#34;Is highly ambitious, constantly setting challenging goals and pushing themselves to achieve more in both personal and professional spheres.&#34;: 0.15,
+                           &#34;Approaches new experiences with caution, carefully weighing risks and benefits before making decisions or embracing change.&#34;: 0.20,
+                           &#34;Often expects the worst in any situation, focusing on potential problems and rarely feeling hopeful about the future.&#34;: 0.08,
+                           &#34;Frequently experiences a sense of sadness and melancholy, finding it difficult to enjoy activities that once brought happiness.&#34;: 0.06,
+                           &#34;Is quick to notice flaws and shortcomings in themselves and others, tending toward a negative outlook on life.&#34;: 0.07,
+                           &#34;Feels overwhelmed by setbacks, easily discouraged, and tends to dwell on failures rather than successes.&#34;: 0.05,
+                           &lt;... many more ...&gt;
+                       }
+                   }
+
+                (... more dimensions ...)    
+                    
+                ]
+           }
+
+        An OUTPUT *sample plan* therefore is a LIST with the *sample plan*, where each element is a dictionary with a *sampling directive*. For example, an output based on the above dimensions could look like this:
+
+        ```json 
+        [
+            {
+                &#34;id&#34;: 1,
+                &#34;subpopulation_description&#34;: &#34;Young Anglo-Saxon professionals with their stereotypical ambition and drive.&#34;,
+                &#34;sampled_values&#34;: {
+                    &#34;age&#34;: [22, 30],
+                    &#34;profession&#34;: [&#34;Financial Analyst&#34;, &#34;Lawyer&#34;, &#34;Physician&#34;, &#34;Accountant&#34;, ...],
+                    &#34;country&#34;: [&#34;USA&#34;, &#34;UK&#34;, &#34;Canada&#34;],
+                    &#34;personality_traits&#34;: [&#34;Maintains an unwavering optimism, always expecting positive outcomes even in the face of adversity and encouraging others to do the same.&#34;,
+                                           &#34;Approaches new experiences with caution, carefully weighing risks and benefits before making decisions or embracing change&#34;,
+                                           &#34;Tends to be introspective and reserved, preferring solitary activities and deep reflection over social gatherings or group events.&#34;,
+                                           &#34;Is quick to notice flaws and shortcomings in themselves and others, tending toward a negative outlook on life.&#34;]
+                },
+                &#34;quantity&#34;: 10
+            },
+            {
+                &#34;id&#34;: 2,
+                &#34;subpopulation_description&#34;: &#34;Young European professionals with a focus on creativity and innovation and their occasional existential crises.&#34;,
+                &#34;sampled_values&#34;: {
+                    &#34;age&#34;: [21, 30],
+                    &#34;profession&#34;: [&#34;Architect&#34;, &#34;Lawyer&#34;, &#34;Writer&#34;, &#34;Physician&#34;, &#34;Art critic&#34;, ...],
+                    &#34;country&#34;: [&#34;France&#34;, &#34;Germany&#34;, &#34;Italy&#34;, &#34;Spain&#34;],
+                    &#34;personality_traits&#34;: [&#34;Often expects the worst in any situation, focusing on potential problems and rarely feeling hopeful about the future.&#34;,
+                           &#34;Frequently experiences a sense of sadness and melancholy, finding it difficult to enjoy activities that once brought happiness.&#34;,
+                           &#34;Is quick to notice flaws and shortcomings in themselves and others, tending toward a negative outlook on life.&#34;,
+                           &#34;Feels overwhelmed by setbacks, easily discouraged, and tends to dwell on failures rather than successes.]&#34;
+                },
+                &#34;quantity&#34;: 5
+            },
+            ...
+        ]
+        ```
+
+
+        Args:
+            n (int): The number of elements to sample in total. This number will be distributed across the dimensions proportionally
+                to the presumed size the target population.
+            sampling_dimensions (dict): The dimensions of the sampling space.
+            max_quantity_per_sample_directive (int, optional): The maximum quantity of samples that can be specified in a single sampling directive. This is to ensure that the sampling plan is diverse and not biased towards a few large groups. 
+            min_sampling_directives (int, optional): The minimum number of sampling directives to generate. This is to ensure that the sampling plan is rich and varied.
+            max_sampling_directives (int, optional): The maximum number of sampling directives to generate. This is to ensure that the sampling plan is not overly complex and remains manageable.
+
+        Returns:
+            list: A LIST with the *sample plan*, where each element is a dictionary with a *sampling directive*, as described above.
+        &#34;&#34;&#34;
+        # the body of this method is handled by the @llm decorator.
+    
+    @transactional()
+    def _flatten_sampling_plan(self, sampling_plan:dict) -&gt; list:
+        &#34;&#34;&#34;
+        Given a sample plan, flattens it into a list of samples in such a way that the number of times each sample appears
+        correspond to what was specified in the plan. The order is random to avoid bias.
+
+        For example, an input sample plan could look like this:
+
+        ```json 
+        [
+            {
+                &#34;sampled_values&#34;: {
+                    &#34;age&#34;: 25,
+                    &#34;profession&#34;: &#34;Architect&#34;,
+                    &#34;country&#34;: &#34;USA&#34;
+                },
+                &#34;quantity&#34;: 8
+            },
+            {
+                &#34;sampled_values&#34;: {
+                    &#34;age&#34;: 27,
+                    &#34;profession&#34;: &#34;Lawyer&#34;,
+                    &#34;country&#34;: &#34;Canada&#34;
+                },
+                &#34;quantity&#34;: 1
+            },
+            ...
+        ]
+        ```
+
+        And the output would be something like:
+        
+        ```python
+           [{&#34;age&#34;: 25, &#34;profession&#34;: &#34;Architect&#34;, &#34;country&#34;: &#34;USA&#34;}, 
+            {&#34;age&#34;: 27, &#34;profession&#34;: &#34;Lawyer&#34;, &#34;country&#34;: &#34;Canada&#34;}, 
+            ...
+            {&#34;age&#34;: 25, &#34;profession&#34;: &#34;Architect&#34;, &#34;country&#34;: &#34;USA&#34;}]
+        ```
+
+        Args:
+            sampling_plan (dict): The sample plan to flatten.
+
+        Returns:
+            list: A list of samples, where each sample is a dictionary with the sampled values.
+        &#34;&#34;&#34;
+        samples = []
+        for sample in sampling_plan:
+            for _ in range(int(sample[&#34;quantity&#34;])):
+                # we need to copy the sample to avoid adding the original sample multiple times,
+                # which would cause problems later when we modify the individual flattened samples
+                cc_sample = copy.deepcopy(sample[&#34;sampled_values&#34;]) 
+
+                samples.append(cc_sample)
+        
+        # randomize
+        random.shuffle(samples) #inplace
+        return samples
+
+    @transactional()
+    def _unique_full_name(self, already_generated_names: list, context:str=None) -&gt; str:
+        # a technicality - we need to use an auxiliary method to be able to use the transactional decorator effectively.
+        # TODO update this somehow to avoid this cumbersome workaround.
+        
+        return self._aux_unique_full_name(already_generated_names=already_generated_names, context=context)
+
+
+    @utils.llm(temperature=1.5, presence_penalty=0.5, frequency_penalty=0.5)
+    def _aux_unique_full_name(self, already_generated_names: list, context:str=None) -&gt; str:
+        &#34;&#34;&#34;
+        Generates a unique full name for a person. The full name must not be in the list of already generated names.
+        If necessary, you can generate a longer name to ensure it is new. You can also try tweaking the spelling or
+        adding more surnames, so that the name is unique. However, the name **must** sound realistic and not be too far-fetched,
+        not sound as if it was made up.
+        
+        The final result is only the name, nothing else:
+
+           &#34;Some name here&#34;  ---&gt; correct as it is just a name, nothing else
+           &#34;Some name here, because ...&#34; ---&gt; incorrect as it contains a reason
+           &#34;Some name here.&#34; ---&gt; incorrect as it contains punctuation
+           &#34;Name: Some name here&#34; ---&gt; incorrect as it contains a label
+           &#34;Some name here, some other name here&#34; ---&gt; incorrect as it contains more than one name
+
+        An optional context can be provided to guide the name generation, so that it is a realistic name for the context. For example, we know that different socio-economic classes have different naming conventions, so the context can be used to guide the name generation.
+
+        Regarding the `already_generated_names`, you must:
+            - NEVER generate a name that is already in the list of already generated names.
+            - The names in `already_generated_names` ARE NOT examples of names to generate. They are just names that have already been generated and should not be repeated. You should generate new names regardless of the names in `already_generated_names`, the only constraint is that the new names should not be in the list of already generated names.
+            - In particular, you are not to generate a similar name to that of those in `already_generated_names`, you are **not** building some kind of 
+            logical sequence. Each name must be independent of the others.
+
+        ## Example
+
+          **Input:**
+              already_generated_names: [&#34;John Doe&#34;, &#34;Jane Smith&#34;, &#34;Alice Brown&#34;]
+              context: { &#39;age&#39;: 25, &#39;profession&#39;: &#39;Architect&#39;, &#39;country&#39;: &#39;USA&#39; }
+        
+          **Output:**
+              &#34;Michael Johnson&#34;
+
+          Note that: 
+            - The name &#34;Michael Johnson&#34; is not in the list of already generated names.
+            - The ouput consists only of a name, nothing else.
+
+        Args:
+            already_generated_names (list): The list of already generated names.
+            context (str): The context in which the name is being generated. This can be used to guide the name generation, so that it is a realistic name for the context.
+
+        Returns:
+            str: A unique full name for a person.
+        &#34;&#34;&#34;
+        # the body of this method is handled by the @llm decorator
+    
+    @transactional()
+    def _unique_full_names(self, n:int, already_generated_names: list, context:str=None) -&gt; list:
+        &#34;&#34;&#34;
+        Generates a list of n unique full names for people. The full names must not be in the list of already generated names.
+
+        Args:
+            n (int): The number of names to generate.
+            already_generated_names (list): The list of already generated names.
+            context (str): The context in which the names are being generated. This can be used to guide the name generation, so that it is a realistic name for the context.
+        &#34;&#34;&#34;
+
+        logger.debug(f&#34;Will generate {n} unique full names for people. Already generated names: {already_generated_names}&#34;)
+        
+        names = []
+
+        if n &gt; 0:
+            # let&#39;s split the n in smaller chunks to make the model&#39;s job easier
+            chunk_size = min(10, n)  # we generate at most 10 names at a time, to avoid overwhelming the model
+            chunks = math.ceil(n/chunk_size)
+
+            forbidden_names = copy.deepcopy(already_generated_names)
+            
+
+            max_iterations = chunks * 10 
+            cur_iterations = 0
+
+            while len(names) &lt; n and cur_iterations &lt; max_iterations:
+                logger.debug(f&#34;Currently already generated names: {forbidden_names}&#34;)
+                logger.debug(f&#34;Iteration {cur_iterations} - Generating {chunk_size} names. Currently have {len(names)} names. Max iterations to be allowed: {max_iterations}&#34;)
+                try:
+                    temp_names = utils.try_function(\
+                                        lambda: \
+                                            self._aux_unique_full_names(n=chunk_size , 
+                                                                        already_generated_names=forbidden_names,
+                                                                        context=context),
+
+                                                                        # checks that some new name was produced
+                                                                        postcond_func = lambda result: len(set(forbidden_names).intersection(result)) &lt; len(result),
+                                        retries=3)
+                    
+                    # add the new names to the names list, removing any duplicates from their combination
+                    names = list(set(names + temp_names))
+                    forbidden_names += names
+                except Exception as e:
+                    logger.error(f&#34;Error generating names: {e}&#34;)
+                    # if we have an error, we just skip this iteration and try again
+                    # but we need to increment the number of iterations anyway
+                    
+                cur_iterations += 1
+            
+            if cur_iterations &gt;= max_iterations and len(names) &lt; n:
+                logger.error(f&#34;Could not generate the requested number of names after {max_iterations} iterations. Moving on with the {len(names)} names generated.&#34;)
+            
+            TinyPersonFactory.all_unique_names = list(set(TinyPersonFactory.all_unique_names + names))
+
+        return names
+
+    @utils.llm(temperature=1.9, presence_penalty=0.5, frequency_penalty=0.5)
+    def _aux_unique_full_names(self, n:int, already_generated_names: list, context:str=None) -&gt; list:
+        &#34;&#34;&#34;
+        Generates a list of n unique full names for people. The full names must not be in the list of already generated names. You **must** consider **all** reasononable options for names, 
+        not only the common or popular. To ensure that fresh names are really new and do not appear in the list of already generated ones, if necessary you can:
+          - generate longer names to ensure they are new. 
+          - try tweaking the spelling or adding more surnames, so that the names are unique. 
+          - add unusual names or surnames, so that the names are unique.
+          - as a very last resort, you can append a number to the name, so that it is unique, despote being a bit less realistic.
+        
+        Except for the latter option, the names **must** sound realistic and not be too far-fetched, not sound as if they were made up.
+
+        You **must** generate at least n names, and they **must** all be unique. If necessary, to ensure you get at least n names, you can try to generate more than n, 
+        but **never** less, unless you need to avoid a repeated name. If forced to choose, you always prefer to generate unique names, even if that means generating less than n names.
+        
+        The final result is only the list of names, nothing else:
+
+           [&#34;Some name here&#34;]  ---&gt; correct as it is just a list with a single name, nothing else
+           [&#34;Some name here, some other name here&#34;] ---&gt; correct as it is a list of names
+           [&#34;Some name here, because ...&#34;] ---&gt; incorrect as it contains a reason
+           [&#34;Some name here.&#34;] ---&gt; incorrect as it contains punctuation
+           [&#34;Name: Some name here&#34;] ---&gt; incorrect as it contains a label
+
+        An optional context can be provided to guide the name generation, so that it is a realistic name for the context. For example, we know that different socio-economic classes have different naming conventions, 
+        so the context can be used to guide the name generation. In particular, follow these rules regarding the context:
+            - If a country is specified, the names should be typical for that country.
+
+        Regarding the `already_generated_names`, you must:
+            - NEVER generate a name that is already in the list of already generated names.
+            - The names in `already_generated_names` ARE NOT examples of names to generate. They are just names that have already been generated and should not be repeated. You should generate new names regardless of the names in `already_generated_names`, the only constraint is that the new names should not be in the list of already_generated_names.
+            - In particular, you are not to generate a similar name to that of those in `already_generated_names`, you are **not** building some kind of  logical sequence. Each name must be independent of the others.
+
+        ## Example
+
+          **Input:**
+              n: 6
+              already_generated_names: [&#34;John Doe&#34;, &#34;Jane Smith&#34;, &#34;Alice Brown&#34;]
+              context: &#34;Young Americans of different liberal professions&#34; 
+          **Output:**
+              [&#34;Michael Johnson&#34;, &#34;Sarah Williams&#34;, &#34;David Gates&#34;, &#34;Jennifer Davis&#34;, &#34;Robert J. Wilson&#34;, &#34;Anna Kerr&#34;]
+
+          Note that: 
+            - The names are not in the list of already generated names.
+            - The ouputs consist only of a list of names, nothing else.
+            - The output length is exactly 6, which is the requested number of names. There could be a bit more names generated, but never less.
+
+        Args:
+            n (int): The number of names to generate.
+            already_generated_names (list): The list of already generated names.
+            context (str): The context in which the names are being generated. This can be used to guide the name generation, so that it is a realistic name for the context.
+
+        Returns:
+            list: A list of n unique full names for people. These names NEVER repeat names in the list of already generated names.
+        &#34;&#34;&#34;
+        # the body of this method is handled by the @llm decorator. Below we provide a post-processing function that is
+        # applied to the LLM output, to ensure that the names are unique.
+              
+        return lambda names: list(set(names))
+
+    @transactional()
+    def _aux_model_call(self, messages, temperature, frequency_penalty, presence_penalty):
+        &#34;&#34;&#34;
+        Auxiliary method to make a model call. This is needed in order to be able to use the transactional decorator,
+        due too a technicality - otherwise, the agent creation would be skipped during cache reutilization, and
+        we don&#39;t want that.
+        &#34;&#34;&#34;
+        return openai_utils.client().send_message(messages, 
+                                                  temperature=temperature, 
+                                                  frequency_penalty=frequency_penalty, 
+                                                  presence_penalty=presence_penalty,
+                                                  response_format={&#34;type&#34;: &#34;json_object&#34;})
+    
+    @transactional()
+    def _setup_agent(self, agent, configuration):
+        &#34;&#34;&#34;
+        Sets up the agent with the necessary elements.
+        &#34;&#34;&#34;
+        agent.include_persona_definitions(configuration)
+        
+        # does not return anything, as we don&#39;t want to cache the agent object itself.
+
+    @transactional()
+    @utils.llm(temperature=0.3, frequency_penalty=-0.1, presence_penalty=-0.1, enable_json_output_format=False)
+    def _generate_name_for_sample(self, sample_characteristics: dict, already_generated_names: list) -&gt; str:
+        &#34;&#34;&#34;
+        Generates a single full name for a person based on their complete sample characteristics, such that
+        it is as appropriate as possible to all characteristics, not just gender.
+        This name MUST BE UNIQUE and not appear in the already_generated_names list, though variations of the 
+        same name are allowed. 
+
+        You must generate a realistic full name that is appropriate for the given sample characteristics. 
+        Consider ALL the characteristics provided, including but not limited to:
+        - Gender
+        - Age or age range
+        - Country/nationality/ethnicity
+        - Socioeconomic status
+        - Profession
+        - Educational background
+        - Cultural background
+        - Any other relevant demographic or personal characteristics
+
+        The name should:
+        - BE UNIQUE and not appear in the already_generated_names list
+        - Be realistic and culturally appropriate for the characteristics
+        - Sound natural and not made-up
+        - Be unique and not appear in the already_generated_names list
+        - Reflect the person&#39;s likely background (e.g., names common in their generation, culture, social class)
+
+        If you need additional methods to ensure uniqueness, you can:
+        - Use longer or more uncommon names
+        - Include middle names or multiple surnames
+        - Use culturally appropriate name variations
+        - As a last resort, you can append a number, but this should be avoided.
+
+
+        In ANY CASE, you **must never**, NEVER, generate a name that already appears in the already_generated_names list.
+
+        Return only the full name as a string, nothing else.
+
+        ## Example
+
+        **Input:**
+            sample_characteristics: {
+                &#34;gender&#34;: &#34;female&#34;,
+                &#34;age&#34;: 28,
+                &#34;country&#34;: &#34;Brazil&#34;, 
+                &#34;profession&#34;: &#34;Software Engineer&#34;,
+                &#34;socioeconomic_status&#34;: &#34;middle class&#34;,
+                &#34;education&#34;: &#34;Computer Science degree&#34;
+            }
+            already_generated_names: [&#34;João Silva&#34;, &#34;Maria Santos&#34;, &#34;Ana Costa&#34;]
+
+        **Output:**
+            &#34;Camila Rodrigues&#34;
+
+        Args:
+            sample_characteristics (dict): The complete characteristics of the sample, including demographics, profession, etc.
+            already_generated_names (list): The list of already generated names to avoid duplicates. The new name MUST NOT be in this list.
+
+        Returns:
+            str: A single full name appropriate for the sample characteristics.
+        &#34;&#34;&#34;
+        # the body of this method is handled by the @llm decorator</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="tinytroupe.factory.tiny_factory.TinyFactory" href="tiny_factory.html#tinytroupe.factory.tiny_factory.TinyFactory">TinyFactory</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="tinytroupe.factory.TinyPersonFactory.all_unique_names"><code class="name">var <span class="ident">all_unique_names</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Static methods</h3>
+<dl>
+<dt id="tinytroupe.factory.TinyPersonFactory.create_factory_from_demography"><code class="name flex">
+<span>def <span class="ident">create_factory_from_demography</span></span>(<span>demography_description_or_file_path: Union[str, dict], population_size: int, additional_demographic_specification: str = None, context: str = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create a TinyPersonFactory instance from a demography description, which can be wither given as a file path or a dictionary
+(but not both).</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>demography_description_or_file_path</code></strong> :&ensp;<code>Union[str, dict]</code></dt>
+<dd>The demography description or the file path to the demography description.</dd>
+<dt><strong><code>population_size</code></strong> :&ensp;<code>int</code></dt>
+<dd>The size of the population to sample from.</dd>
+<dt><strong><code>context</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Additional context text used to generate the TinyPerson instances. Defaults to None.
+</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="tinytroupe.factory.TinyPersonFactory" href="#tinytroupe.factory.TinyPersonFactory">TinyPersonFactory</a></code></dt>
+<dd>A TinyPersonFactory instance.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def create_factory_from_demography(demography_description_or_file_path:Union[str, dict],  population_size:int, additional_demographic_specification:str=None, context:str=None):
+    &#34;&#34;&#34;
+    Create a TinyPersonFactory instance from a demography description, which can be wither given as a file path or a dictionary
+    (but not both).
+
+    Args:
+        demography_description_or_file_path (Union[str, dict]): The demography description or the file path to the demography description.
+        population_size (int): The size of the population to sample from.
+        context (str, optional): Additional context text used to generate the TinyPerson instances. Defaults to None.            
+
+    Returns:
+        TinyPersonFactory: A TinyPersonFactory instance.
+    &#34;&#34;&#34;
+    # read the demography description from a file or use the given dictionary
+    if isinstance(demography_description_or_file_path, str):
+        demography_description = json.loads(open(demography_description_or_file_path).read())
+    elif isinstance(demography_description_or_file_path, dict):
+        demography_description = demography_description_or_file_path
+    else:
+        raise ValueError(&#34;demography_description_or_file_path must be either a string or a dictionary.&#34;)
+
+    if population_size is None:
+        raise ValueError(&#34;population_size must be specified.&#34;)
+
+
+    full_demography_description = \
+    f&#34;&#34;&#34;
+    # Sampling space specification
+
+    The population described by the demographic data below. Make sure you consider very detailed, fine-grained, 
+    characteristics of the individuals in the population. 
+
+    ## Directives
+    Please follow these rules:
+        - consider as many different population segments as possible, while **always** keeping **proportions** correct.For example, 
+          instead of sampling 10 people from segment A and 5 from segment B, you can instead sample 2 from A, 1 from B, 
+          and 7 others from other segments, provided the proportions are maintained correct and there are enough people to sample.
+        - also use any built-in knowledge you might have of the populations in question to improve the sampling space, 
+          provided this built-in knowledge does not conflict with the demographic data below.
+
+    The sample must include representative people from the broad population, so for instance ensure that you include values covering
+    people from all walks of life possible from the specified demographic data and your built-in knowledge of the target population, such as:
+        - from the simplest professions to those of the highest ranks;
+        - from the youngest to the oldest; 
+        - from the kind to the evil;
+        - from the positive and enthusiastic to the negative and pessimistic;
+        - from the happy and joyful to the sad and depressed;
+        - from the most conservative, to the most liberal; 
+        - from the educated, to the ignorant;
+        - from the healthy to the sick;
+        - from rich to poor.   
+    
+    In particular, the population MUST cover both POSITIVE and NEGATIVE possibilities of the various characteristics 
+    (e.g., rich vs poor, likes sugar vs don&#39;t like sugar, enthusiastic vs apathetic).
+
+    ## Additional demographic specification (if any)
+    {additional_demographic_specification if additional_demographic_specification is not None else &#34;(none)&#34;}
+
+    ## Demographic data
+    {json.dumps(demography_description, indent=4)}
+    &#34;&#34;&#34;
+
+    return TinyPersonFactory(context=context, 
+                             sampling_space_description=full_demography_description,
+                             total_population_size=population_size)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.factory.TinyPersonFactory.generate_person_factories"><code class="name flex">
+<span>def <span class="ident">generate_person_factories</span></span>(<span>number_of_factories, generic_context_text)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generate a list of TinyPersonFactory instances using OpenAI's LLM.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>number_of_factories</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of TinyPersonFactory instances to generate.</dd>
+<dt><strong><code>generic_context_text</code></strong> :&ensp;<code>str</code></dt>
+<dd>The generic context text used to generate the TinyPersonFactory instances.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list</code></dt>
+<dd>A list of TinyPersonFactory instances.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def generate_person_factories(number_of_factories, generic_context_text):
+    &#34;&#34;&#34;
+    Generate a list of TinyPersonFactory instances using OpenAI&#39;s LLM.
+
+    Args:
+        number_of_factories (int): The number of TinyPersonFactory instances to generate.
+        generic_context_text (str): The generic context text used to generate the TinyPersonFactory instances.
+
+    Returns:
+        list: A list of TinyPersonFactory instances.
+    &#34;&#34;&#34;
+    
+    logger.info(f&#34;Starting the generation of the {number_of_factories} person factories based on that context: {generic_context_text}&#34;)
+    
+    system_prompt = open(os.path.join(os.path.dirname(__file__), &#39;prompts/generate_person_factory.md&#39;)).read()
+
+    messages = []
+    messages.append({&#34;role&#34;: &#34;system&#34;, &#34;content&#34;: system_prompt})
+
+    user_prompt = chevron.render(&#34;Please, create {{number_of_factories}} person descriptions based on the following broad context: {{context}}&#34;, {
+        &#34;number_of_factories&#34;: number_of_factories,
+        &#34;context&#34;: generic_context_text
+    })
+
+    messages.append({&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: user_prompt})
+
+    response = openai_utils.client().send_message(messages)
+
+    if response is not None:
+        result = utils.extract_json(response[&#34;content&#34;])
+
+        factories = []
+        for i in range(number_of_factories):
+            logger.debug(f&#34;Generating person factory with description: {result[i]}&#34;)
+            factories.append(TinyPersonFactory(result[i]))
+
+        return factories
+
+    return None</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="tinytroupe.factory.TinyPersonFactory.generate_people"><code class="name flex">
+<span>def <span class="ident">generate_people</span></span>(<span>self, number_of_people: int = None, agent_particularities: str = None, temperature: float = 1.2, frequency_penalty: float = 0.0, presence_penalty: float = 0.0, attempts: int = 10, post_processing_func=None, parallelize=None, verbose: bool = False) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generate a list of TinyPerson instances using OpenAI's LLM.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>number_of_people</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of TinyPerson instances to generate.</dd>
+<dt><strong><code>agent_particularities</code></strong> :&ensp;<code>str</code></dt>
+<dd>The particularities of the agent.</dd>
+<dt><strong><code>temperature</code></strong> :&ensp;<code>float</code></dt>
+<dd>The temperature to use when sampling from the LLM.</dd>
+<dt><strong><code>frequency_penalty</code></strong> :&ensp;<code>float</code></dt>
+<dd>The frequency penalty to use when sampling from the LLM.</dd>
+<dt><strong><code>presence_penalty</code></strong> :&ensp;<code>float</code></dt>
+<dd>The presence penalty to use when sampling from the LLM.</dd>
+<dt><strong><code>attempts</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of attempts to generate a TinyPerson instance.</dd>
+<dt><strong><code>post_processing_func</code></strong> :&ensp;<code>function</code></dt>
+<dd>A function to apply to the generated agent after it is created.</dd>
+<dt><strong><code>parallalel_workers</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of parallel workers to use when generating the people. Too many workers may cause the LLM to fail
+due to throttling by the API.</dd>
+<dt><strong><code>verbose</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether to print information about the generated people.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list</code></dt>
+<dd>A list of TinyPerson instances generated using the LLM.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@config_manager.config_defaults(parallelize=&#34;parallel_agent_generation&#34;)
+def generate_people(self, number_of_people:int=None, 
+                    agent_particularities:str=None, 
+                    temperature:float=1.2, 
+                    frequency_penalty:float=0.0,
+                    presence_penalty:float=0.0,
+                    attempts:int=10, 
+                    post_processing_func=None,
+                    parallelize=None,
+                    verbose:bool=False) -&gt; list:
+    &#34;&#34;&#34;
+    Generate a list of TinyPerson instances using OpenAI&#39;s LLM.
+
+    Args:
+        number_of_people (int): The number of TinyPerson instances to generate.
+        agent_particularities (str): The particularities of the agent.
+        temperature (float): The temperature to use when sampling from the LLM.
+        frequency_penalty (float): The frequency penalty to use when sampling from the LLM.
+        presence_penalty (float): The presence penalty to use when sampling from the LLM.
+        attempts (int): The number of attempts to generate a TinyPerson instance.
+        post_processing_func (function): A function to apply to the generated agent after it is created.
+        parallalel_workers (int): The number of parallel workers to use when generating the people. Too many workers may cause the LLM to fail 
+            due to throttling by the API.
+        verbose (bool): Whether to print information about the generated people.
+
+    Returns:
+        list: A list of TinyPerson instances generated using the LLM.
+    &#34;&#34;&#34;
+
+    if number_of_people is None:
+        if self.population_size is None:
+            raise ValueError(&#34;Either the number of people to generate or the population size must be specified.&#34;)
+        number_of_people = self.population_size
+
+    elif self.population_size is None:
+        self.population_size = number_of_people
+
+    elif number_of_people is not None and self.population_size is not None and number_of_people &gt; self.population_size:
+        raise ValueError(f&#34;Cannot generate more people than the population size. Requested {number_of_people}, but the population size is {self.population_size}.&#34;)
+
+    people = []
+    if parallelize:
+        people = self._generate_people_in_parallel(number_of_people=number_of_people, 
+                                                    agent_particularities=agent_particularities, 
+                                                    temperature=temperature, 
+                                                    frequency_penalty=frequency_penalty,
+                                                    presence_penalty=presence_penalty,
+                                                    attempts=attempts, 
+                                                    post_processing_func=post_processing_func,
+                                                    verbose=verbose)
+    else:
+        people = self._generate_people_sequentially(number_of_people=number_of_people, 
+                                                    agent_particularities=agent_particularities, 
+                                                    temperature=temperature, 
+                                                    frequency_penalty=frequency_penalty,
+                                                    presence_penalty=presence_penalty,
+                                                    attempts=attempts, 
+                                                    post_processing_func=post_processing_func,
+                                                    verbose=verbose)
+    
+    return people</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.factory.TinyPersonFactory.generate_person"><code class="name flex">
+<span>def <span class="ident">generate_person</span></span>(<span>self, agent_particularities: str = None, temperature: float = 1.2, frequency_penalty: float = 0.0, presence_penalty: float = 0.0, attempts: int = 10, post_processing_func=None) ‑> <a title="tinytroupe.agent.tiny_person.TinyPerson" href="../agent/tiny_person.html#tinytroupe.agent.tiny_person.TinyPerson">TinyPerson</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generate a TinyPerson instance using OpenAI's LLM.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>agent_particularities</code></strong> :&ensp;<code>str</code></dt>
+<dd>The particularities of the agent.</dd>
+<dt><strong><code>temperature</code></strong> :&ensp;<code>float</code></dt>
+<dd>The temperature to use when sampling from the LLM.</dd>
+<dt><strong><code>frequency_penalty</code></strong> :&ensp;<code>float</code></dt>
+<dd>The frequency penalty to use when sampling from the LLM.</dd>
+<dt><strong><code>presence_penalty</code></strong> :&ensp;<code>float</code></dt>
+<dd>The presence penalty to use when sampling from the LLM.</dd>
+<dt><strong><code>attempts</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of attempts to generate a TinyPerson instance.</dd>
+<dt><strong><code>post_processing_func</code></strong> :&ensp;<code>function</code></dt>
+<dd>A function to apply to the generated agent after it is created.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>TinyPerson</code></dt>
+<dd>A TinyPerson instance generated using the LLM.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generate_person(self, 
+                    agent_particularities:str=None, 
+                    temperature:float=1.2, 
+                    frequency_penalty:float=0.0,
+                    presence_penalty:float=0.0, 
+                    attempts:int=10,
+                    post_processing_func=None) -&gt; TinyPerson:
+    &#34;&#34;&#34;
+    Generate a TinyPerson instance using OpenAI&#39;s LLM.
+
+    Args:
+        agent_particularities (str): The particularities of the agent.
+        temperature (float): The temperature to use when sampling from the LLM.
+        frequency_penalty (float): The frequency penalty to use when sampling from the LLM.
+        presence_penalty (float): The presence penalty to use when sampling from the LLM.
+        attempts (int): The number of attempts to generate a TinyPerson instance.
+        post_processing_func (function): A function to apply to the generated agent after it is created.
+
+    Returns:
+        TinyPerson: A TinyPerson instance generated using the LLM.
+    &#34;&#34;&#34;
+
+    logger.info(f&#34;Starting the person generation based these particularities: {agent_particularities}&#34;)
+    fresh_agent_name = None
+
+    # are we going to use a pre-computed sample of characteristics too?
+    if self.population_size is not None:
+        
+        with concurrent_agent_generataion_lock:
+            if self.remaining_characteristics_sample is None:
+                # if the sample does not exist, we generate it here once.
+                self.initialize_sampling_plan()
+        
+        logger.debug(f&#34;Sampling plan initialized. Remaining characteristics sample: {self.remaining_characteristics_sample}&#34;)
+
+        # CONCURRENT PROTECTION
+        with concurrent_agent_generataion_lock:
+            if len(self.remaining_characteristics_sample) == 0:
+                logger.warning(&#34;No more characteristics samples left to sample from. This can happen if the sampling plan did not sum up correctly.&#34;)
+                return None
+            
+            else:
+                sampled_characteristics = self.remaining_characteristics_sample.pop()
+                logger.debug(f&#34;Sampled agent: {sampled_characteristics[&#39;name&#39;]}.&#34;)
+        
+        if agent_particularities is not None:
+            agent_particularities =\
+                f&#34;&#34;&#34;
+                    - Primary characteristics: {agent_particularities}
+
+                    - Also use all the following additional characteristics that **do not** conflict with the primary ones:
+                        * Name, demographics and other characteristics: {json.dumps(sampled_characteristics, indent=4)}
+
+                    In case one of the additional characteristics conflicts with a primary one, please use the primary one
+                    and ignore the additional one.
+
+                &#34;&#34;&#34;
+        else:
+            agent_particularities = \
+                f&#34;&#34;&#34;
+                - Name, demographics and other characteristics:
+                     {json.dumps(sampled_characteristics, indent=4)}
+                &#34;&#34;&#34;
+    else: # no predefined population size, so we generate one-off agents.
+        # CONCURRENT PROTECTION
+        with concurrent_agent_generataion_lock:
+            fresh_agent_name = self._unique_full_name(already_generated_names=TinyPersonFactory._all_used_and_precomputed_names(), 
+                                                    context=self.context_text)
+
+        if agent_particularities is not None:
+            agent_particularities = \
+            f&#34;&#34;&#34;
+
+            - Primary characteristics: {agent_particularities}
+
+            - Also use the following additional characteristics:
+                * Full name: {fresh_agent_name}
+
+            In case the primary characteristics already specify a name, please use the primary name and ignore the additional one.
+            &#34;&#34;&#34;
+        else:
+            agent_particularities = f&#34;Full name: {fresh_agent_name}&#34;
+            
+
+
+    logger.info(f&#34;Generating person with the following particularities: {agent_particularities}&#34;)
+
+    # read example specs from files. 
+    example_1 = json.load(open(os.path.join(os.path.dirname(__file__), &#39;../examples/agents/Friedrich_Wolf.agent.json&#39;)))
+    example_2 = json.load(open(os.path.join(os.path.dirname(__file__), &#39;../examples/agents/Sophie_Lefevre.agent.json&#39;)))
+
+    # We must include all agent names generated in the whole of the simulation, not only the ones generated by this factory,
+    # since they all share the same name space.
+    #
+    # For the minibios, we only need to keep track of the ones generated by this factory, since they are unique to each factory
+    # and are used to guide the sampling process.
+    user_prompt = chevron.render(open(self.person_prompt_template_path).read(), {
+        &#34;context&#34;: self.context_text,
+        &#34;agent_particularities&#34;: agent_particularities,
+        
+        #Note that we need to dump them to JSON strings, to ensure we get double quotes,
+        # and other formatting issues are avoided.
+        &#34;example_1&#34;: json.dumps(example_1[&#34;persona&#34;], indent=4),
+        &#34;example_2&#34;: json.dumps(example_2[&#34;persona&#34;], indent=4)
+    })
+
+    def aux_generate(attempt):
+        messages = []
+        messages += [{&#34;role&#34;: &#34;system&#34;, &#34;content&#34;: &#34;You are a system that generates specifications for realistic simulations of people. You follow the generation rules and constraints carefully.&#34;},
+                    {&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: user_prompt}]
+        
+
+        # due to a technicality, we need to call an auxiliary method to be able to use the transactional decorator.
+        message = self._aux_model_call(messages=messages, 
+                                        temperature=temperature,
+                                        frequency_penalty=frequency_penalty,
+                                        presence_penalty=presence_penalty)
+
+        if message is not None:
+            result = utils.extract_json(message[&#34;content&#34;])
+
+            logger.debug(f&#34;At attempt {attempt}, generated person parameters:\n{json.dumps(result, indent=4, sort_keys=True)}&#34;)
+
+            # only accept the generated spec if the name is not already in use
+            if not self._is_name_already_assigned(result[&#34;name&#34;]):
+                return result
+            else:
+                logger.info(f&#34;Person with name {result[&#39;name&#39;]} was already generated, cannot be reused.&#34;)
+
+        return None # no suitable agent was generated
+    
+    agent_spec = None
+    attempt = 0
+    while agent_spec is None and attempt &lt; attempts:
+        try:
+            attempt += 1
+            agent_spec = aux_generate(attempt=attempt)
+        except Exception as e:
+            logger.error(f&#34;Error while generating agent specification: {e}&#34;)
+    
+    # create the fresh agent
+    if agent_spec is not None:
+        # the agent is created here. This is why the present method cannot be cached. Instead, an auxiliary method is used
+        # for the actual model call, so that it gets cached properly without skipping the agent creation.
+        
+        # protect parallel agent generation
+        with concurrent_agent_generataion_lock:
+            person = TinyPerson(agent_spec[&#34;name&#34;])
+            self._setup_agent(person, agent_spec)
+            if post_processing_func is not None:
+                post_processing_func(person)
+
+            self.generated_minibios.append(person.minibio())
+            self.generated_names.append(person.get(&#34;name&#34;))
+
+        return person
+    else:
+        logger.error(f&#34;Could not generate an agent after {attempts} attempts.&#34;)
+        if sampled_characteristics is not None:
+            self.remaining_characteristics_sample.append(sampled_characteristics)
+            logger.error(f&#34;Name {fresh_agent_name} was not used, it will be added back to the pool of names.&#34;)
+
+        return None</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.factory.TinyPersonFactory.initialize_sampling_plan"><code class="name flex">
+<span>def <span class="ident">initialize_sampling_plan</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Computes a list of characteristics samples from a sampling space.
+The sampling space is built from the given description through intermediary steps
+that actually build a sampling space and then randomly (and not via LLM) sample from it, thereby
+ensuring that the sampling is not biased by the LLM (though the sampling space itself may be biased).</p>
+<p>All intermediary results are stored for later inspection.</p>
+<p>For example, given some n &gt; 3 and a description like
+"Young Western people of different liberal professions."</p>
+<p>The final samples could be something like:
+[{"age": 25, "profession": "Architect", "country": "USA"},
+{"age": 27, "profession": "Lawyer", "country": "Canada"},
+&hellip;
+{"age": 25, "profession": "Architect", "country": "USA"}]</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>n</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of samples to generate.</dd>
+<dt><strong><code>sampling_space_description</code></strong> :&ensp;<code>str</code></dt>
+<dd>A description of the sampling space.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def initialize_sampling_plan(self):
+    &#34;&#34;&#34;
+    Computes a list of characteristics samples from a sampling space. 
+    The sampling space is built from the given description through intermediary steps
+    that actually build a sampling space and then randomly (and not via LLM) sample from it, thereby 
+    ensuring that the sampling is not biased by the LLM (though the sampling space itself may be biased).
+
+    All intermediary results are stored for later inspection.
+
+    For example, given some n &gt; 3 and a description like
+       &#34;Young Western people of different liberal professions.&#34;
+    
+    The final samples could be something like:
+          [{&#34;age&#34;: 25, &#34;profession&#34;: &#34;Architect&#34;, &#34;country&#34;: &#34;USA&#34;}, 
+            {&#34;age&#34;: 27, &#34;profession&#34;: &#34;Lawyer&#34;, &#34;country&#34;: &#34;Canada&#34;}, 
+            ...
+            {&#34;age&#34;: 25, &#34;profession&#34;: &#34;Architect&#34;, &#34;country&#34;: &#34;USA&#34;}]
+
+    Args:
+        n (int): The number of samples to generate.
+        sampling_space_description (str): A description of the sampling space.
+
+    &#34;&#34;&#34;
+
+    # a technicality - we need to use an auxiliary method to be able to use the transactional decorator effectively.
+    return self._initialize_sampling_plan_transaction(n=self.population_size, description=self.sampling_space_description,context=self.context_text)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="tinytroupe.factory.tiny_factory.TinyFactory" href="tiny_factory.html#tinytroupe.factory.tiny_factory.TinyFactory">TinyFactory</a></b></code>:
+<ul class="hlist">
+<li><code><a title="tinytroupe.factory.tiny_factory.TinyFactory.add_factory" href="tiny_factory.html#tinytroupe.factory.tiny_factory.TinyFactory.add_factory">add_factory</a></code></li>
+<li><code><a title="tinytroupe.factory.tiny_factory.TinyFactory.clear_factories" href="tiny_factory.html#tinytroupe.factory.tiny_factory.TinyFactory.clear_factories">clear_factories</a></code></li>
+<li><code><a title="tinytroupe.factory.tiny_factory.TinyFactory.decode_complete_state" href="tiny_factory.html#tinytroupe.factory.tiny_factory.TinyFactory.decode_complete_state">decode_complete_state</a></code></li>
+<li><code><a title="tinytroupe.factory.tiny_factory.TinyFactory.encode_complete_state" href="tiny_factory.html#tinytroupe.factory.tiny_factory.TinyFactory.encode_complete_state">encode_complete_state</a></code></li>
+<li><code><a title="tinytroupe.factory.tiny_factory.TinyFactory.set_simulation_for_free_factories" href="tiny_factory.html#tinytroupe.factory.tiny_factory.TinyFactory.set_simulation_for_free_factories">set_simulation_for_free_factories</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="tinytroupe" href="../index.html">tinytroupe</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<ul>
+<li><code><a title="tinytroupe.factory.tiny_factory" href="tiny_factory.html">tinytroupe.factory.tiny_factory</a></code></li>
+<li><code><a title="tinytroupe.factory.tiny_person_factory" href="tiny_person_factory.html">tinytroupe.factory.tiny_person_factory</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="tinytroupe.factory.TinyPersonFactory" href="#tinytroupe.factory.TinyPersonFactory">TinyPersonFactory</a></code></h4>
+<ul class="">
+<li><code><a title="tinytroupe.factory.TinyPersonFactory.all_unique_names" href="#tinytroupe.factory.TinyPersonFactory.all_unique_names">all_unique_names</a></code></li>
+<li><code><a title="tinytroupe.factory.TinyPersonFactory.create_factory_from_demography" href="#tinytroupe.factory.TinyPersonFactory.create_factory_from_demography">create_factory_from_demography</a></code></li>
+<li><code><a title="tinytroupe.factory.TinyPersonFactory.generate_people" href="#tinytroupe.factory.TinyPersonFactory.generate_people">generate_people</a></code></li>
+<li><code><a title="tinytroupe.factory.TinyPersonFactory.generate_person" href="#tinytroupe.factory.TinyPersonFactory.generate_person">generate_person</a></code></li>
+<li><code><a title="tinytroupe.factory.TinyPersonFactory.generate_person_factories" href="#tinytroupe.factory.TinyPersonFactory.generate_person_factories">generate_person_factories</a></code></li>
+<li><code><a title="tinytroupe.factory.TinyPersonFactory.initialize_sampling_plan" href="#tinytroupe.factory.TinyPersonFactory.initialize_sampling_plan">initialize_sampling_plan</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

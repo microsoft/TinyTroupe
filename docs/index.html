@@ -60,16 +60,21 @@
             text-align: center;
             margin: 0;
             overflow: hidden;
-            height: 30vh; /* Show only the top portion of the image */
+            height: 30vh;
             position: relative;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
         }
         .hero img {
             max-width: 100%;
             height: auto;
             position: absolute;
-            bottom: -60%;
+            bottom: -80%;
             left: 50%;
             transform: translateX(-50%);
+            will-change: transform;
         }
         .content {
             padding: 20px;
@@ -157,22 +162,74 @@
             border-radius: 5px;
             margin: 20px 0;
         }
+        .sticky-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to right, #ff6f61, #ffcc00);
+            border-bottom: 3px solid #cc5500;
+            z-index: 1000;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+            padding: 10px 0;
+        }
+        .sticky-nav.visible {
+            transform: translateY(0);
+        }
+        .sticky-nav .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 80%;
+            margin: 0 auto;
+        }
+        .sticky-nav .nav-logo {
+            max-height: 80px;
+        }
+        .sticky-nav .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .sticky-nav .nav-buttons a {
+            background: #cc5500;
+            color: #fff;
+            padding: 8px 16px;
+            font-size: 0.9em;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+        .sticky-nav .nav-buttons a:hover {
+            background: #b34700;
+        }
     </style>
 </head>
 <body>
+    <div class="sticky-nav" id="stickyNav">
+        <div class="nav-content">
+            <img src="./TinyTroupe_banner_logo_A_3D_bg-transparent.png" alt="TinyTroupe" class="nav-logo">
+            <div class="nav-buttons">
+                <a href="https://github.com/microsoft/tinytroupe" target="_blank">GitHub 📂</a>
+                <a href="./api/tinytroupe/index.html">API Docs 📑</a>
+                <a href="https://arxiv.org/abs/2507.09788" target="_blank">Paper 📄</a>
+            </div>
+        </div>
+    </div>
     <header>
         <div class="container">
-            <h1>TinyTroupe 🤠🤓🥸🧐</h1>
+            <img src="./TinyTroupe_banner_logo_A_3D_bg-transparent.png" alt="TinyTroupe" style="max-height: 180px; margin-bottom: 10px;">
             <p>LLM-powered multiagent persona simulation for imagination enhancement and business insights.</p>
         </div>
     </header>
     <div class="buttons">
         <a href="https://github.com/microsoft/tinytroupe" target="_blank">GitHub Repo 📂</a>
         <a href="./api/tinytroupe/index.html">API Docs 📑</a>
+        <a href="https://arxiv.org/abs/2507.09788" target="_blank">Research Paper 📄</a>
     </div>
     <section class="hero">
         <div class="container">
-            <img src="./tinytroupe_stage.png" alt="A tiny office with tiny people doing some tiny jobs.">
+            <img src="./tinytroupe_stage.png" alt="A tiny office with tiny people doing some tiny jobs." id="heroImage">
         </div>
     </section>
     <section class="content">
@@ -259,5 +316,27 @@ person = factory.<span class="code-function">generate_person</span>(<span class=
             <p>This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow <a href="https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general" target="_blank">Microsoft's Trademark & Brand Guidelines</a>. Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.</p>
         </div>
     </footer>
+    <script>
+        // Sticky navigation on scroll
+        window.addEventListener('scroll', function() {
+            const stickyNav = document.getElementById('stickyNav');
+            const scrolled = window.pageYOffset;
+            const parallaxSpeed = 0.5;
+            const heroImage = document.getElementById('heroImage');
+            
+            // Show sticky nav after scrolling past header
+            if (scrolled > 200) {
+                stickyNav.classList.add('visible');
+            } else {
+                stickyNav.classList.remove('visible');
+            }
+            
+            // Parallax effect for hero image
+            if (heroImage) {
+                const yPos = -(scrolled * parallaxSpeed);
+                heroImage.style.transform = `translateX(-50%) translateY(${yPos}px)`;
+            }
+        });
+    </script>
 </body>
 </html>

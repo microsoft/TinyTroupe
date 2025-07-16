@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>tinytroupe.experimentation.randomization API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>tinytroupe.experimentation.randomization</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import random
+import pandas as pd
+from tinytroupe.agent import TinyPerson
+
+class ABRandomizer():
+
+    def __init__(self, real_name_1=&#34;control&#34;, real_name_2=&#34;treatment&#34;,
+                       blind_name_a=&#34;A&#34;, blind_name_b=&#34;B&#34;,
+                       passtrough_name=[],
+                       random_seed=42):
+        &#34;&#34;&#34;
+        An utility class to randomize between two options, and de-randomize later.
+        The choices are stored in a dictionary, with the index of the item as the key.
+        The real names are the names of the options as they are in the data, and the blind names
+        are the names of the options as they are presented to the user. Finally, the passtrough names
+        are names that are not randomized, but are always returned as-is.
+
+        Args:
+            real_name_1 (str): the name of the first option
+            real_name_2 (str): the name of the second option
+            blind_name_a (str): the name of the first option as seen by the user
+            blind_name_b (str): the name of the second option as seen by the user
+            passtrough_name (list): a list of names that should not be randomized and are always
+                                    returned as-is.
+            random_seed (int): the random seed to use
+        &#34;&#34;&#34;
+
+        self.choices = {}
+        self.real_name_1 = real_name_1
+        self.real_name_2 = real_name_2
+        self.blind_name_a = blind_name_a
+        self.blind_name_b = blind_name_b
+        self.passtrough_name = passtrough_name
+        self.random_seed = random_seed
+
+    def randomize(self, i, a, b):
+        &#34;&#34;&#34;
+        Randomly switch between a and b, and return the choices.
+        Store whether the a and b were switched or not for item i, to be able to
+        de-randomize later.
+
+        Args:
+            i (int): index of the item
+            a (str): first choice
+            b (str): second choice
+        &#34;&#34;&#34;
+        # use the seed
+        if random.Random(self.random_seed).random() &lt; 0.5:
+            self.choices[i] = (0, 1)
+            return a, b
+            
+        else:
+            self.choices[i] = (1, 0)
+            return b, a
+    
+    def derandomize(self, i, a, b):
+        &#34;&#34;&#34;
+        De-randomize the choices for item i, and return the choices.
+
+        Args:
+            i (int): index of the item
+            a (str): first choice
+            b (str): second choice
+        &#34;&#34;&#34;
+        if self.choices[i] == (0, 1):
+            return a, b
+        elif self.choices[i] == (1, 0):
+            return b, a
+        else:
+            raise Exception(f&#34;No randomization found for item {i}&#34;)
+    
+    def derandomize_name(self, i, blind_name):
+        &#34;&#34;&#34;
+        Decode the choice made by the user, and return the choice. 
+
+        Args:
+            i (int): index of the item
+            choice_name (str): the choice made by the user
+        &#34;&#34;&#34;
+
+        # was the choice i randomized?
+        if self.choices[i] == (0, 1):
+            # no, so return the choice
+            if blind_name == self.blind_name_a:
+                return self.real_name_1
+            elif blind_name == self.blind_name_b:
+                return self.real_name_2
+            elif blind_name in self.passtrough_name:
+                return blind_name
+            else:
+                raise Exception(f&#34;Choice &#39;{blind_name}&#39; not recognized&#34;)
+            
+        elif self.choices[i] == (1, 0):
+            # yes, it was randomized, so return the opposite choice
+            if blind_name == self.blind_name_a:
+                return self.real_name_2
+            elif blind_name == self.blind_name_b:
+                return self.real_name_1
+            elif blind_name in self.passtrough_name:
+                return blind_name
+            else:
+                raise Exception(f&#34;Choice &#39;{blind_name}&#39; not recognized&#34;)
+        else:
+            raise Exception(f&#34;No randomization found for item {i}&#34;)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="tinytroupe.experimentation.randomization.ABRandomizer"><code class="flex name class">
+<span>class <span class="ident">ABRandomizer</span></span>
+<span>(</span><span>real_name_1='control', real_name_2='treatment', blind_name_a='A', blind_name_b='B', passtrough_name=[], random_seed=42)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>An utility class to randomize between two options, and de-randomize later.
+The choices are stored in a dictionary, with the index of the item as the key.
+The real names are the names of the options as they are in the data, and the blind names
+are the names of the options as they are presented to the user. Finally, the passtrough names
+are names that are not randomized, but are always returned as-is.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>real_name_1</code></strong> :&ensp;<code>str</code></dt>
+<dd>the name of the first option</dd>
+<dt><strong><code>real_name_2</code></strong> :&ensp;<code>str</code></dt>
+<dd>the name of the second option</dd>
+<dt><strong><code>blind_name_a</code></strong> :&ensp;<code>str</code></dt>
+<dd>the name of the first option as seen by the user</dd>
+<dt><strong><code>blind_name_b</code></strong> :&ensp;<code>str</code></dt>
+<dd>the name of the second option as seen by the user</dd>
+<dt><strong><code>passtrough_name</code></strong> :&ensp;<code>list</code></dt>
+<dd>a list of names that should not be randomized and are always
+returned as-is.</dd>
+<dt><strong><code>random_seed</code></strong> :&ensp;<code>int</code></dt>
+<dd>the random seed to use</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ABRandomizer():
+
+    def __init__(self, real_name_1=&#34;control&#34;, real_name_2=&#34;treatment&#34;,
+                       blind_name_a=&#34;A&#34;, blind_name_b=&#34;B&#34;,
+                       passtrough_name=[],
+                       random_seed=42):
+        &#34;&#34;&#34;
+        An utility class to randomize between two options, and de-randomize later.
+        The choices are stored in a dictionary, with the index of the item as the key.
+        The real names are the names of the options as they are in the data, and the blind names
+        are the names of the options as they are presented to the user. Finally, the passtrough names
+        are names that are not randomized, but are always returned as-is.
+
+        Args:
+            real_name_1 (str): the name of the first option
+            real_name_2 (str): the name of the second option
+            blind_name_a (str): the name of the first option as seen by the user
+            blind_name_b (str): the name of the second option as seen by the user
+            passtrough_name (list): a list of names that should not be randomized and are always
+                                    returned as-is.
+            random_seed (int): the random seed to use
+        &#34;&#34;&#34;
+
+        self.choices = {}
+        self.real_name_1 = real_name_1
+        self.real_name_2 = real_name_2
+        self.blind_name_a = blind_name_a
+        self.blind_name_b = blind_name_b
+        self.passtrough_name = passtrough_name
+        self.random_seed = random_seed
+
+    def randomize(self, i, a, b):
+        &#34;&#34;&#34;
+        Randomly switch between a and b, and return the choices.
+        Store whether the a and b were switched or not for item i, to be able to
+        de-randomize later.
+
+        Args:
+            i (int): index of the item
+            a (str): first choice
+            b (str): second choice
+        &#34;&#34;&#34;
+        # use the seed
+        if random.Random(self.random_seed).random() &lt; 0.5:
+            self.choices[i] = (0, 1)
+            return a, b
+            
+        else:
+            self.choices[i] = (1, 0)
+            return b, a
+    
+    def derandomize(self, i, a, b):
+        &#34;&#34;&#34;
+        De-randomize the choices for item i, and return the choices.
+
+        Args:
+            i (int): index of the item
+            a (str): first choice
+            b (str): second choice
+        &#34;&#34;&#34;
+        if self.choices[i] == (0, 1):
+            return a, b
+        elif self.choices[i] == (1, 0):
+            return b, a
+        else:
+            raise Exception(f&#34;No randomization found for item {i}&#34;)
+    
+    def derandomize_name(self, i, blind_name):
+        &#34;&#34;&#34;
+        Decode the choice made by the user, and return the choice. 
+
+        Args:
+            i (int): index of the item
+            choice_name (str): the choice made by the user
+        &#34;&#34;&#34;
+
+        # was the choice i randomized?
+        if self.choices[i] == (0, 1):
+            # no, so return the choice
+            if blind_name == self.blind_name_a:
+                return self.real_name_1
+            elif blind_name == self.blind_name_b:
+                return self.real_name_2
+            elif blind_name in self.passtrough_name:
+                return blind_name
+            else:
+                raise Exception(f&#34;Choice &#39;{blind_name}&#39; not recognized&#34;)
+            
+        elif self.choices[i] == (1, 0):
+            # yes, it was randomized, so return the opposite choice
+            if blind_name == self.blind_name_a:
+                return self.real_name_2
+            elif blind_name == self.blind_name_b:
+                return self.real_name_1
+            elif blind_name in self.passtrough_name:
+                return blind_name
+            else:
+                raise Exception(f&#34;Choice &#39;{blind_name}&#39; not recognized&#34;)
+        else:
+            raise Exception(f&#34;No randomization found for item {i}&#34;)</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="tinytroupe.experimentation.randomization.ABRandomizer.derandomize"><code class="name flex">
+<span>def <span class="ident">derandomize</span></span>(<span>self, i, a, b)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>De-randomize the choices for item i, and return the choices.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>i</code></strong> :&ensp;<code>int</code></dt>
+<dd>index of the item</dd>
+<dt><strong><code>a</code></strong> :&ensp;<code>str</code></dt>
+<dd>first choice</dd>
+<dt><strong><code>b</code></strong> :&ensp;<code>str</code></dt>
+<dd>second choice</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def derandomize(self, i, a, b):
+    &#34;&#34;&#34;
+    De-randomize the choices for item i, and return the choices.
+
+    Args:
+        i (int): index of the item
+        a (str): first choice
+        b (str): second choice
+    &#34;&#34;&#34;
+    if self.choices[i] == (0, 1):
+        return a, b
+    elif self.choices[i] == (1, 0):
+        return b, a
+    else:
+        raise Exception(f&#34;No randomization found for item {i}&#34;)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.experimentation.randomization.ABRandomizer.derandomize_name"><code class="name flex">
+<span>def <span class="ident">derandomize_name</span></span>(<span>self, i, blind_name)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Decode the choice made by the user, and return the choice. </p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>i</code></strong> :&ensp;<code>int</code></dt>
+<dd>index of the item</dd>
+<dt><strong><code>choice_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>the choice made by the user</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def derandomize_name(self, i, blind_name):
+    &#34;&#34;&#34;
+    Decode the choice made by the user, and return the choice. 
+
+    Args:
+        i (int): index of the item
+        choice_name (str): the choice made by the user
+    &#34;&#34;&#34;
+
+    # was the choice i randomized?
+    if self.choices[i] == (0, 1):
+        # no, so return the choice
+        if blind_name == self.blind_name_a:
+            return self.real_name_1
+        elif blind_name == self.blind_name_b:
+            return self.real_name_2
+        elif blind_name in self.passtrough_name:
+            return blind_name
+        else:
+            raise Exception(f&#34;Choice &#39;{blind_name}&#39; not recognized&#34;)
+        
+    elif self.choices[i] == (1, 0):
+        # yes, it was randomized, so return the opposite choice
+        if blind_name == self.blind_name_a:
+            return self.real_name_2
+        elif blind_name == self.blind_name_b:
+            return self.real_name_1
+        elif blind_name in self.passtrough_name:
+            return blind_name
+        else:
+            raise Exception(f&#34;Choice &#39;{blind_name}&#39; not recognized&#34;)
+    else:
+        raise Exception(f&#34;No randomization found for item {i}&#34;)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.experimentation.randomization.ABRandomizer.randomize"><code class="name flex">
+<span>def <span class="ident">randomize</span></span>(<span>self, i, a, b)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Randomly switch between a and b, and return the choices.
+Store whether the a and b were switched or not for item i, to be able to
+de-randomize later.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>i</code></strong> :&ensp;<code>int</code></dt>
+<dd>index of the item</dd>
+<dt><strong><code>a</code></strong> :&ensp;<code>str</code></dt>
+<dd>first choice</dd>
+<dt><strong><code>b</code></strong> :&ensp;<code>str</code></dt>
+<dd>second choice</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def randomize(self, i, a, b):
+    &#34;&#34;&#34;
+    Randomly switch between a and b, and return the choices.
+    Store whether the a and b were switched or not for item i, to be able to
+    de-randomize later.
+
+    Args:
+        i (int): index of the item
+        a (str): first choice
+        b (str): second choice
+    &#34;&#34;&#34;
+    # use the seed
+    if random.Random(self.random_seed).random() &lt; 0.5:
+        self.choices[i] = (0, 1)
+        return a, b
+        
+    else:
+        self.choices[i] = (1, 0)
+        return b, a</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="tinytroupe.experimentation" href="index.html">tinytroupe.experimentation</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="tinytroupe.experimentation.randomization.ABRandomizer" href="#tinytroupe.experimentation.randomization.ABRandomizer">ABRandomizer</a></code></h4>
+<ul class="">
+<li><code><a title="tinytroupe.experimentation.randomization.ABRandomizer.derandomize" href="#tinytroupe.experimentation.randomization.ABRandomizer.derandomize">derandomize</a></code></li>
+<li><code><a title="tinytroupe.experimentation.randomization.ABRandomizer.derandomize_name" href="#tinytroupe.experimentation.randomization.ABRandomizer.derandomize_name">derandomize_name</a></code></li>
+<li><code><a title="tinytroupe.experimentation.randomization.ABRandomizer.randomize" href="#tinytroupe.experimentation.randomization.ABRandomizer.randomize">randomize</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

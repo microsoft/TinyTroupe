@@ -1,5 +1,5 @@
 from tinytroupe.agent import logger, default, Self, AgentOrWorld, CognitiveActionModel
-from tinytroupe.agent.memory import EpisodicMemory, SemanticMemory
+from tinytroupe.agent.memory import EpisodicMemory, SemanticMemory, EpisodicConsolidator
 import tinytroupe.openai_utils as openai_utils
 from tinytroupe.utils import JsonSerializableRegistry, repeat_on_error, name_or_empty
 import tinytroupe.utils as utils
@@ -36,10 +36,13 @@ class TinyPerson(JsonSerializableRegistry):
     # Set this to None to disable the check.
     MAX_ACTION_SIMILARITY = 0.85
 
+    MIN_EPISODE_LENGTH = config_manager.get("min_episode_length", 15)  # The minimum number of messages in an episode before it is considered valid.
+    MAX_EPISODE_LENGTH = config_manager.get("max_episode_length", 50)  # The maximum number of messages in an episode before it is considered valid.
+
     PP_TEXT_WIDTH = 100
 
-    serializable_attributes = ["_persona", "_mental_state", "_mental_faculties", "episodic_memory", "semantic_memory"]
-    serializable_attributes_renaming = {"_mental_faculties": "mental_faculties", "_persona": "persona", "_mental_state": "mental_state"}
+    serializable_attributes = ["_persona", "_mental_state", "_mental_faculties", "_current_episode_event_count", "episodic_memory", "semantic_memory"]
+    serializable_attributes_renaming = {"_mental_faculties": "mental_faculties", "_persona": "persona", "_mental_state": "mental_state", "_current_episode_event_count": "current_episode_event_count"}
 
     # A dict of all agents instantiated so far.
     all_agents = {}  # name -> agent
@@ -122,6 +125,9 @@ class TinyPerson(JsonSerializableRegistry):
         # saving these communications to another output form later (e.g., caching)
         self._displayed_communications_buffer = []
 
+        if not hasattr(self, '_current_episode_event_count'):
+            self._current_episode_event_count = 0  # the number of events in the current episode, used to limit the episode length
+
         if not hasattr(self, 'action_generator'):
             # This default value MUST NOT be in the method signature, otherwise it will be shared across all instances.
             self.action_generator = ActionGenerator(max_attempts=config_manager.get("action_generator_max_attempts"),
@@ -138,7 +144,8 @@ class TinyPerson(JsonSerializableRegistry):
 
         if not hasattr(self, 'episodic_memory'):
             # This default value MUST NOT be in the method signature, otherwise it will be shared across all instances.
-            self.episodic_memory = EpisodicMemory()
+            self.episodic_memory = EpisodicMemory(fixed_prefix_length= config_manager.get("episodic_memory_fixed_prefix_length"),
+                                                   lookback_length=config_manager.get("episodic_memory_lookback_length"))
         
         if not hasattr(self, 'semantic_memory'):
             # This default value MUST NOT be in the method signature, otherwise it will be shared across all instances.
@@ -243,6 +250,9 @@ class TinyPerson(JsonSerializableRegistry):
         template_variables = self._persona.copy()    
         template_variables["persona"] = json.dumps(self._persona.copy(), indent=4)    
 
+        # add mental state to the template variables
+        template_variables["mental_state"] = json.dumps(self._mental_state, indent=4)
+
         # Prepare additional action definitions and constraints
         actions_definitions_prompt = ""
         actions_constraints_prompt = ""
@@ -265,11 +275,14 @@ class TinyPerson(JsonSerializableRegistry):
         # render the template with the current configuration
         self._init_system_message = self.generate_agent_system_prompt()
 
-        # TODO actually, figure out another way to update agent state without "changing history"
-
-        # reset system message
+        # - reset system message
+        # - make it clear that the provided events are past events and have already had their effects
         self.current_messages = [
-            {"role": "system", "content": self._init_system_message}
+            {"role": "system", "content": self._init_system_message},
+            {"role": "system", "content": "The next messages refer to past interactions you had recently and are meant to help you contextualize your next actions. "\
+                                        + "They are the most recent episodic memories you have, including stimuli and actions. "\
+                                        + "Their effects already took place and led to your present cognitive state (described above), so you can use them in conjunction "\
+                                        + "with your cognitive state to inform your next actions and perceptions. Please consider them and then proceed with your next actions right after. "}
         ]
 
         # sets up the actual interaction messages to use for prompting
@@ -571,9 +584,12 @@ class TinyPerson(JsonSerializableRegistry):
             
             if "cognitive_state" in content:
                 cognitive_state = content["cognitive_state"]
+                logger.debug(f"[{self.name}] Cognitive state: {cognitive_state}")
+                
                 self._update_cognitive_state(goals=cognitive_state.get("goals", None),
-                                            attention=cognitive_state.get("emotions", None),
-                                            emotions=cognitive_state.get("emotions", None))
+                                             context=cognitive_state.get("context", None),
+                                             attention=cognitive_state.get("emotions", None),
+                                             emotions=cognitive_state.get("emotions", None))
             
             contents.append(content)          
             if TinyPerson.communication_display:
@@ -648,6 +664,9 @@ class TinyPerson(JsonSerializableRegistry):
 
                 aux_pre_act()
                 aux_act_once()
+
+        # The end of a sequence of actions is always considered to mark the end of an episode.
+        self.consolidate_episode_memories()
 
         if return_actions:
             return contents
@@ -931,6 +950,13 @@ max_content_length=max_content_length,
         self._accessible_agents = []
         self._mental_state["accessible_agents"] = []
 
+    @property
+    def accessible_agents(self):
+        """
+        Property to access the list of accessible agents.
+        """
+        return self._accessible_agents
+
     ###########################################################
     # Internal cognitive state changes
     ###########################################################
@@ -962,7 +988,8 @@ max_content_length=max_content_length,
         if emotions is not None:
             self._mental_state["emotions"] = emotions
         
-        # update relevant memories for the current situation
+        # update relevant memories for the current situation. These are memories that come to mind "spontaneously" when the agent is in a given context,
+        # so avoiding the need to actively trying to remember them.
         current_memory_context = self.retrieve_relevant_memories_for_current_context()
         self._mental_state["memory_context"] = current_memory_context
 
@@ -972,21 +999,61 @@ max_content_length=max_content_length,
     ###########################################################
     # Memory management
     ###########################################################
+
+    def store_in_memory(self, value: Any) -> list:
+        self.episodic_memory.store(value)
+        
+        self._current_episode_event_count += 1
+        logger.debug(f"[{self.name}] Current episode event count: {self._current_episode_event_count}.")
+
+        if self._current_episode_event_count >= self.MAX_EPISODE_LENGTH:
+            # commit the current episode to memory, if it is long enough
+            logger.warning(f"[{self.name}] Episode length exceeded {self.MAX_EPISODE_LENGTH} events. Committing episode to memory. Please check whether this was expected or not.")
+            self.consolidate_episode_memories()
+    
+    def consolidate_episode_memories(self):
+        """
+        Applies all memory consolidation or transformation processes appropriate to the conclusion of one simulation episode.
+        """
+        # a minimum length of the episode is required to consolidate it, to avoid excessive fragments in the semantic memory
+        if self._current_episode_event_count > self.MIN_EPISODE_LENGTH:
+            logger.debug(f"[{self.name}] ***** Consolidating current episode memories into semantic memory *****")
+        
+            # Consolidate latest episodic memories into semantic memory
+            if config_manager.get("enable_memory_consolidation"):
+                
+                
+                    episodic_consolidator = EpisodicConsolidator()
+                    episode = self.episodic_memory.get_current_episode(item_types=["action", "stimulus"],)
+                    logger.debug(f"[{self.name}] Current episode: {episode}")
+                    consolidated_memories = episodic_consolidator.process(episode, timestamp=self._mental_state["datetime"], context=self._mental_state, persona=self.minibio())["consolidation"]
+                    if consolidated_memories is not None:
+                        logger.info(f"[{self.name}] Consolidating current {len(episode)} episodic events as consolidated semantic memories.")
+                        logger.debug(f"[{self.name}] Consolidated memories: {consolidated_memories}")
+                        self.semantic_memory.store_all(consolidated_memories)
+                    else:
+                        logger.debug(f"[{self.name}] No memories to consolidate from the current episode.")
+                
+
+            else:
+                logger.warning(f"[{self.name}] Memory consolidation is disabled. Not consolidating current episode memories into semantic memory.")
+
+            # commit the current episode to episodic memory
+            self.episodic_memory.commit_episode()
+            self._current_episode_event_count = 0
+            logger.debug(f"[{self.name}] Current episode event count reset to 0 after consolidation.")
+
+            # TODO reflections, optimizations, etc.
+
+    def optimize_memory(self):
+        pass #TODO
+
     def clear_episodic_memory(self, max_prefix_to_clear=None, max_suffix_to_clear=None):
         """
         Clears the episodic memory, causing a permanent "episodic amnesia". Note that this does not
         change other memories, such as semantic memory.  
         """
         self.episodic_memory.clear(max_prefix_to_clear=max_prefix_to_clear, max_suffix_to_clear=max_suffix_to_clear)
-        
-    def store_in_memory(self, value: Any) -> list:
-        # TODO find another smarter way to abstract episodic information into semantic memory
-        # self.semantic_memory.store(value)
-
-        self.episodic_memory.store(value)
-
-    def optimize_memory(self):
-        pass #TODO
 
     def retrieve_memories(self, first_n: int, last_n: int, include_omission_info:bool=True, max_content_length:int=None) -> list:
         episodes = self.episodic_memory.retrieve(first_n=first_n, last_n=last_n, include_omission_info=include_omission_info)
@@ -1016,7 +1083,7 @@ max_content_length=max_content_length,
         goals = self._mental_state["goals"]
         attention = self._mental_state["attention"]
         emotions = self._mental_state["emotions"]
-        recent_memories = "\n".join([f"  - {m['content']}"  for m in self.retrieve_memories(first_n=0, last_n=10, max_content_length=100)])
+        recent_memories = "\n".join([f"  - {m['content']}"  for m in self.retrieve_memories(first_n=10, last_n=20, max_content_length=500)])
 
         # put everything together in a nice markdown string to fetch relevant memories
         target = f"""
@@ -1024,7 +1091,7 @@ max_content_length=max_content_length,
         Current Goals: {goals}
         Current Attention: {attention}
         Current Emotions: {emotions}
-        Recent Memories:
+        Selected Episodic Memories (from oldest to newest):
         {recent_memories}
         """
 
@@ -1032,6 +1099,19 @@ max_content_length=max_content_length,
 
         return self.retrieve_relevant_memories(target, top_k=top_k)
 
+    def summarize_relevant_memories_via_full_scan(self, relevance_target:str, item_type: str = None) -> str:
+        """
+        Summarizes relevant memories for a given target by scanning the entire semantic memory.
+        
+        Args:
+            relevance_target (str): The target to retrieve relevant memories for.
+            item_type (str, optional): The type of items to summarize. Defaults to None.
+            max_summary_length (int, optional): The maximum length of the summary. Defaults to 1000.
+        
+        Returns:
+            str: The summary of relevant memories.
+        """
+        return self.semantic_memory.summarize_relevant_via_full_scan(relevance_target, item_type=item_type)
 
     ###########################################################
     # Inspection conveniences
@@ -1088,7 +1168,7 @@ max_content_length=max_content_length,
                     simplified=simplified,
                     max_content_length=max_content_length,
                 )
-                source = content["stimuli"][0]["source"]
+                source = content["stimuli"][0].get("source", None)
                 target = self.name
                 
             elif kind == "action":
@@ -1099,7 +1179,7 @@ max_content_length=max_content_length,
                     max_content_length=max_content_length,
                 )
                 source = self.name
-                target = content["action"]["target"]
+                target = content["action"].get("target", None)
 
             else:
                 raise ValueError(f"Unknown communication kind: {kind}")
@@ -1195,7 +1275,13 @@ max_content_length=max_content_length,
             str: The mini-biography.
         """
 
-        base_biography = f"{self.name} is a {self._persona['age']} year old {self._persona['occupation']['title']}, {self._persona['nationality']}, currently living in {self._persona['residence']}."
+        # if occupation is a dict and has a "title" key, use that as the occupation 
+        if isinstance(self._persona['occupation'], dict) and 'title' in self._persona['occupation']:
+            occupation = self._persona['occupation']['title']
+        else:
+            occupation = self._persona['occupation']
+
+        base_biography = f"{self.name} is a {self._persona['age']} year old {occupation}, {self._persona['nationality']}, currently living in {self._persona['residence']}."
 
         if self._extended_agent_summary is None and extended:
             logger.debug(f"Generating extended agent summary for {self.name}.")
@@ -1228,6 +1314,9 @@ max_content_length=max_content_length,
         simplified=True,
         skip_system=True,
         max_content_length=default["max_content_display_length"],
+        first_n=None, 
+        last_n=None, 
+        include_omission_info:bool=True
     ):
         """
         Pretty prints the current messages.
@@ -1237,6 +1326,31 @@ max_content_length=max_content_length,
                 simplified=simplified,
                 skip_system=skip_system,
                 max_content_length=max_content_length,
+                first_n=first_n,
+                last_n=last_n,
+                include_omission_info=include_omission_info
+            )
+        )
+
+    def pp_last_interactions(
+        self,
+        n=3,
+        simplified=True,
+        skip_system=True,
+        max_content_length=default["max_content_display_length"],
+        include_omission_info:bool=True
+    ):
+        """
+        Pretty prints the last n messages. Useful to examine the conclusion of an experiment.
+        """
+        print(
+            self.pretty_current_interactions(
+                simplified=simplified,
+                skip_system=skip_system,
+                max_content_length=max_content_length,
+                first_n=None,
+                last_n=n,
+                include_omission_info=include_omission_info
             )
         )
 

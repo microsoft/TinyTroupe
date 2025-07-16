@@ -29,7 +29,8 @@ def next_action_jaccard_similarity(agent, proposed_next_action):
         return 0.0
     
     # Check if the action type and target are the same
-    if current_action["type"] != proposed_next_action["type"] or current_action["target"] != proposed_next_action["target"]:
+    if ("type" in current_action) and ("type" in proposed_next_action) and ("target" in current_action) and ("target" in proposed_next_action) and \
+            (current_action["type"] != proposed_next_action["type"] or current_action["target"] != proposed_next_action["target"]):
         return 0.0
     
     # Compute the Jaccard similarity between the content of the two actions

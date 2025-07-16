@@ -8,7 +8,7 @@ include-package-data = true
 
 [project]
 name = "tinytroupe"
-version = "0.5.0"
+version = "0.5.1"
 authors = [
   { name="Paulo Salem", email="paulo.salem@microsoft.com" }
 ]
@@ -45,4 +45,13 @@ dependencies = [
 pythonpath = [
   "."
 ]
-addopts = "--cov=. --cov-report=html --cov-report=xml"
+
+testpaths = [
+  "./tests/"
+]
+
+markers = [
+  "examples: mark a test as the execution of examples",
+  "notebooks: mark a test as a more specific Jupyter notebook execution example",
+]
+addopts = "--cov=tinytroupe --cov-report=html --cov-report=xml"

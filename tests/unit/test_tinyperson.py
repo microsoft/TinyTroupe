@@ -23,6 +23,14 @@ def test_act(setup):
         assert len(actions) >= 1, f"{agent.name} should have at least one action to perform (even if it is just DONE)."
         assert contains_action_type(actions, "TALK"), f"{agent.name} should have at least one TALK action to perform, since we asked him to do so."
         assert terminates_with_action_type(actions, "DONE"), f"{agent.name} should always terminate with a DONE action."
+        
+        # Semantic verification: check that the agent actually talks about their life
+        for action in actions:
+            if action["action"]["type"] == "TALK":
+                talk_content = action["action"]["content"]
+                assert proposition_holds(f"The following text is someone talking about their personal life, background, or experiences: '{talk_content}'"), \
+                    f"Agent should be talking about their life but said: {talk_content}"
+                break
 
 def test_listen(setup):
     # test that the agent listens to a speech stimulus and updates its current messages
@@ -82,6 +90,14 @@ def test_see(setup):
         assert len(actions) >= 1, f"{agent.name} should have at least one action to perform."
         assert contains_action_type(actions, "THINK"), f"{agent.name} should have at least one THINK action to perform, since they saw something interesting."
         assert contains_action_content(actions, "sunset"), f"{agent.name} should mention the sunset in the THINK action, since they saw it."
+        
+        # Semantic verification: check that the agent's thoughts relate to what they saw
+        for action in actions:
+            if action["action"]["type"] == "THINK":
+                think_content = action["action"]["content"]
+                assert proposition_holds(f"The following text is someone thinking about or reacting to seeing a beautiful sunset over the ocean: '{think_content}'"), \
+                    f"Agent should be thinking about the sunset but thought: {think_content}"
+                break
 
 def test_think(setup):
     # Test that thinking about something works as expected
@@ -91,6 +107,14 @@ def test_think(setup):
         assert len(actions) >= 1, f"{agent.name} should have at least one action to perform."
         assert contains_action_type(actions, "TALK"), f"{agent.name} should have at least one TALK action to perform, since they are eager to talk."
         assert contains_action_content(actions, "life"), f"{agent.name} should mention life in the TALK action, since they thought about it."
+        
+        # Semantic verification: check that the agent expresses enthusiasm about life
+        for action in actions:
+            if action["action"]["type"] == "TALK":
+                talk_content = action["action"]["content"]
+                assert proposition_holds(f"The following text expresses enthusiasm or positive feelings about life: '{talk_content}'"), \
+                    f"Agent should be expressing enthusiasm about life but said: {talk_content}"
+                break
 
 def test_internalize_goal(setup):
     # Test that internalizing a goal works as expected
@@ -100,6 +124,14 @@ def test_internalize_goal(setup):
         assert len(actions) >= 1, f"{agent.name} should have at least one action to perform."
         assert contains_action_type(actions, "THINK"), f"{agent.name} should have at least one THINK action to perform, since they internalized a goal."
         assert contains_action_content(actions, "cats"), f"{agent.name} should mention cats in the THINK action, since they internalized a goal about them."
+        
+        # Semantic verification: check that the agent's thoughts relate to cats or poetry
+        for action in actions:
+            if action["action"]["type"] == "THINK":
+                think_content = action["action"]["content"]
+                assert proposition_holds(f"The following text is someone thinking about cats, poetry, or composing a poem about cats: '{think_content}'"), \
+                    f"Agent should be thinking about cats or poetry but thought: {think_content}"
+                break
 
 
 def test_move_to(setup):

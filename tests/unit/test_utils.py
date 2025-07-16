@@ -28,10 +28,10 @@ def test_extract_json():
     result = extract_json(text)
     assert result == {"key": "'value'"}
 
-    # Test with invalid JSON
+    # Test with invalid JSON that gets fixed
     text = 'Some text before {"key": "value",} some text after'
     result = extract_json(text)
-    assert result == {}
+    assert result == {"key": "value"}  # extract_json can fix trailing commas
 
     # Test with no JSON
     text = 'Some text with no JSON'

@@ -212,6 +212,7 @@ class OpenAIClient:
                 
             except Exception as e:
                 logger.error(f"[{i}] {type(e).__name__} Error: {e}")
+                aux_exponential_backoff()
 
         logger.error(f"Failed to get response after {max_attempts} attempts.")
         return None
@@ -247,6 +248,8 @@ class OpenAIClient:
                 del chat_api_params["stream"]
 
             logger.info(f"Calling LLM model (using .parse too) with these parameters: {logged_params}. Not showing 'messages' parameter.")
+            # complete message
+            logger.debug(f"   --> Complete messages sent to LLM: {chat_api_params['messages']}")
             return self.client.beta.chat.completions.parse(
                     **chat_api_params
                 )

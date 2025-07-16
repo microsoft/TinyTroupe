@@ -1,0 +1,921 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>tinytroupe.utils.json API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>tinytroupe.utils.json</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import json
+import copy
+from pydantic import BaseModel
+
+from tinytroupe.utils import logger
+
+class JsonSerializableRegistry:
+    &#34;&#34;&#34;
+    A mixin class that provides JSON serialization, deserialization, and subclass registration.
+    &#34;&#34;&#34;
+    
+    class_mapping = {}
+
+    def to_json(self, include: list = None, suppress: list = None, file_path: str = None,
+                serialization_type_field_name = &#34;json_serializable_class_name&#34;) -&gt; dict:
+        &#34;&#34;&#34;
+        Returns a JSON representation of the object.
+        
+        Args:
+            include (list, optional): Attributes to include in the serialization. Will override the default behavior.
+            suppress (list, optional): Attributes to suppress from the serialization. Will override the default behavior.
+            file_path (str, optional): Path to a file where the JSON will be written.
+        &#34;&#34;&#34;
+        # Gather all serializable attributes from the class hierarchy
+        serializable_attrs = set()
+        suppress_attrs = set()
+        custom_serializers = {}
+        for cls in self.__class__.__mro__:  # Traverse the class hierarchy
+            if hasattr(cls, &#39;serializable_attributes&#39;) and isinstance(cls.serializable_attributes, list):
+                serializable_attrs.update(cls.serializable_attributes)
+            if hasattr(cls, &#39;suppress_attributes_from_serialization&#39;) and isinstance(cls.suppress_attributes_from_serialization, list):
+                suppress_attrs.update(cls.suppress_attributes_from_serialization)
+            if hasattr(cls, &#39;custom_serializers&#39;) and isinstance(cls.custom_serializers, dict):
+                custom_serializers.update(cls.custom_serializers)
+        
+        # Override attributes with method parameters if provided
+        if include:
+            serializable_attrs = set(include)
+        if suppress:
+            suppress_attrs.update(suppress)
+        
+        def aux_serialize_item(item):
+            if isinstance(item, JsonSerializableRegistry):
+                return item.to_json(serialization_type_field_name=serialization_type_field_name)
+            elif isinstance(item, BaseModel):
+                # If it&#39;s a Pydantic model, convert it to a dict first
+                logger.debug(f&#34;Serializing Pydantic model: {item}&#34;)
+                return item.model_dump(mode=&#34;json&#34;, exclude_unset=True)
+            else:
+                return copy.deepcopy(item)
+        
+        result = {serialization_type_field_name: self.__class__.__name__}
+        for attr in serializable_attrs if serializable_attrs else self.__dict__:
+            if attr not in suppress_attrs:
+                value = getattr(self, attr, None)
+
+                attr_renamed = self._programmatic_name_to_json_name(attr)
+                
+                # Check if there&#39;s a custom serializer for this attribute
+                if attr in custom_serializers:
+                    result[attr_renamed] = custom_serializers[attr](value)
+                elif isinstance(value, list):
+                    result[attr_renamed] = [aux_serialize_item(item) for item in value]
+                elif isinstance(value, dict):
+                    result[attr_renamed] = {k: aux_serialize_item(v) for k, v in value.items()}
+                else: # isinstance(value, JsonSerializableRegistry) or isinstance(value, BaseModel) or other types
+                    result[attr_renamed] = aux_serialize_item(value)
+
+        if file_path:
+            # Create directories if they do not exist
+            import os
+            os.makedirs(os.path.dirname(file_path), exist_ok=True)
+            with open(file_path, &#39;w&#39;) as f:
+                json.dump(result, f, indent=4)
+        
+        return result
+
+    @classmethod
+    def from_json(cls, json_dict_or_path, suppress: list = None, 
+                  serialization_type_field_name = &#34;json_serializable_class_name&#34;, 
+                  post_init_params: dict = None):
+        &#34;&#34;&#34;
+        Loads a JSON representation of the object and creates an instance of the class.
+        
+        Args:
+            json_dict_or_path (dict or str): The JSON dictionary representing the object or a file path to load the JSON from.
+            suppress (list, optional): Attributes to suppress from being loaded.
+            
+        Returns:
+            An instance of the class populated with the data from json_dict_or_path.
+        &#34;&#34;&#34;
+        if isinstance(json_dict_or_path, str):
+            with open(json_dict_or_path, &#39;r&#39;) as f:
+                json_dict = json.load(f)
+        else:
+            json_dict = json_dict_or_path
+        
+        subclass_name = json_dict.get(serialization_type_field_name)
+        target_class = cls.class_mapping.get(subclass_name, cls)
+        instance = target_class.__new__(target_class)  # Create an instance without calling __init__
+        
+        # Gather all serializable attributes from the class hierarchy
+        serializable_attrs = set()
+        custom_deserializers = {}
+        suppress_attrs = set(suppress) if suppress else set()
+        for target_mro in target_class.__mro__:
+            if hasattr(target_mro, &#39;serializable_attributes&#39;) and isinstance(target_mro.serializable_attributes, list):
+                serializable_attrs.update(target_mro.serializable_attributes)
+            if hasattr(target_mro, &#39;custom_deserializers&#39;) and isinstance(target_mro.custom_deserializers, dict):
+                custom_deserializers.update(target_mro.custom_deserializers)
+            if hasattr(target_mro, &#39;suppress_attributes_from_serialization&#39;) and isinstance(target_mro.suppress_attributes_from_serialization, list):
+                suppress_attrs.update(target_mro.suppress_attributes_from_serialization)
+        
+        # Assign values only for serializable attributes if specified, otherwise assign everything
+        for key in serializable_attrs if serializable_attrs else json_dict:
+            key_in_json = cls._programmatic_name_to_json_name(key)
+            if key_in_json in json_dict and key not in suppress_attrs:
+                value = json_dict[key_in_json]
+                if key in custom_deserializers:
+                    # Use custom initializer if provided
+                    setattr(instance, key, custom_deserializers[key](value))
+                elif isinstance(value, dict) and serialization_type_field_name in value:
+                    # Assume it&#39;s another JsonSerializableRegistry object
+                    setattr(instance, key, JsonSerializableRegistry.from_json(value, serialization_type_field_name=serialization_type_field_name))
+                elif isinstance(value, list):
+                    # Handle collections, recursively deserialize if items are JsonSerializableRegistry objects
+                    deserialized_collection = []
+                    for item in value:
+                        if isinstance(item, dict) and serialization_type_field_name in item:
+                            deserialized_collection.append(JsonSerializableRegistry.from_json(item, serialization_type_field_name=serialization_type_field_name))
+                        else:
+                            deserialized_collection.append(copy.deepcopy(item))
+                    setattr(instance, key, deserialized_collection)
+                else:
+                    setattr(instance, key, copy.deepcopy(value))
+        
+        # Call post-deserialization initialization if available
+        if hasattr(instance, &#39;_post_deserialization_init&#39;) and callable(instance._post_deserialization_init):
+            post_init_params = post_init_params if post_init_params else {}
+            instance._post_deserialization_init(**post_init_params)
+        
+        return instance
+
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        # Register the subclass using its name as the key
+        JsonSerializableRegistry.class_mapping[cls.__name__] = cls
+        
+        # Automatically extend serializable attributes and custom initializers from parent classes 
+        if hasattr(cls, &#39;serializable_attributes&#39;) and isinstance(cls.serializable_attributes, list):
+            for base in cls.__bases__:
+                if hasattr(base, &#39;serializable_attributes&#39;) and isinstance(base.serializable_attributes, list):
+                    cls.serializable_attributes = list(set(base.serializable_attributes + cls.serializable_attributes))
+        
+        if hasattr(cls, &#39;suppress_attributes_from_serialization&#39;) and isinstance(cls.suppress_attributes_from_serialization, list):
+            for base in cls.__bases__:
+                if hasattr(base, &#39;suppress_attributes_from_serialization&#39;) and isinstance(base.suppress_attributes_from_serialization, list):
+                    cls.suppress_attributes_from_serialization = list(set(base.suppress_attributes_from_serialization + cls.suppress_attributes_from_serialization))
+        
+        if hasattr(cls, &#39;custom_deserializers&#39;) and isinstance(cls.custom_deserializers, dict):
+            for base in cls.__bases__:
+                if hasattr(base, &#39;custom_deserializers&#39;) and isinstance(base.custom_deserializers, dict):
+                    base_initializers = base.custom_deserializers.copy()
+                    base_initializers.update(cls.custom_deserializers)
+                    cls.custom_deserializers = base_initializers
+        
+        if hasattr(cls, &#39;custom_serializers&#39;) and isinstance(cls.custom_serializers, dict):
+            for base in cls.__bases__:
+                if hasattr(base, &#39;custom_serializers&#39;) and isinstance(base.custom_serializers, dict):
+                    base_serializers = base.custom_serializers.copy()
+                    base_serializers.update(cls.custom_serializers)
+                    cls.custom_serializers = base_serializers
+
+    def _post_deserialization_init(self, **kwargs):
+        # if there&#39;s a _post_init method, call it after deserialization
+        if hasattr(self, &#39;_post_init&#39;):
+            self._post_init(**kwargs)
+
+    @classmethod
+    def _programmatic_name_to_json_name(cls, name):
+        &#34;&#34;&#34;
+        Converts a programmatic name to a JSON name by converting it to snake case.
+        &#34;&#34;&#34;
+        if hasattr(cls, &#39;serializable_attributes_renaming&#39;) and isinstance(cls.serializable_attributes_renaming, dict):
+            return cls.serializable_attributes_renaming.get(name, name)
+        return name
+    
+    @classmethod
+    def _json_name_to_programmatic_name(cls, name):
+        &#34;&#34;&#34;
+        Converts a JSON name to a programmatic name.
+        &#34;&#34;&#34;
+        if hasattr(cls, &#39;serializable_attributes_renaming&#39;) and isinstance(cls.serializable_attributes_renaming, dict):
+            reverse_rename = {}
+            for k, v in cls.serializable_attributes_renaming.items():
+                if v in reverse_rename:
+                    raise ValueError(f&#34;Duplicate value &#39;{v}&#39; found in serializable_attributes_renaming.&#34;)
+                reverse_rename[v] = k
+            return reverse_rename.get(name, name)
+        return name
+
+def post_init(cls):
+    &#34;&#34;&#34;
+    Decorator to enforce a post-initialization method call in a class, if it has one.
+    The method must be named `_post_init`.
+    &#34;&#34;&#34;
+    original_init = cls.__init__
+
+    def new_init(self, *args, **kwargs):
+        original_init(self, *args, **kwargs)
+        if hasattr(cls, &#39;_post_init&#39;):
+            cls._post_init(self)
+
+    cls.__init__ = new_init
+    return cls
+
+def merge_dicts(current, additions, overwrite=False, error_on_conflict=True, remove_duplicates=True):
+    &#34;&#34;&#34;
+    Merges two dictionaries and returns a new dictionary. Works as follows:
+    - If a key exists in the additions dictionary but not in the current dictionary, it is added.
+    - If a key maps to None in the current dictionary, it is replaced by the value in the additions dictionary.
+    - If a key exists in both dictionaries and the values are dictionaries, the function is called recursively.
+    - If a key exists in both dictionaries and the values are lists, the lists are concatenated and duplicates are removed
+      (if remove_duplicates is True).
+    - If the values are of different types, an exception is raised.
+    - If the values are of the same type but not both lists/dictionaries, the value from the additions dictionary overwrites the value in the current dictionary based on the overwrite parameter.
+    
+    Parameters:
+    - current (dict): The original dictionary.
+    - additions (dict): The dictionary with values to add.
+    - overwrite (bool): Whether to overwrite values if they are of the same type but not both lists/dictionaries.
+    - error_on_conflict (bool): Whether to raise an error if there is a conflict and overwrite is False.
+    - remove_duplicates (bool): Whether to remove duplicates from lists when merging.
+    
+    Returns:
+    - dict: A new dictionary with merged values.
+    &#34;&#34;&#34;
+    merged = current.copy()  # Create a copy of the current dictionary to avoid altering it
+
+    for key in additions:
+        if key in merged:
+            # If the current value is None, directly assign the new value
+            if merged[key] is None:
+                merged[key] = additions[key]
+            # If both values are dictionaries, merge them recursively
+            elif isinstance(merged[key], dict) and isinstance(additions[key], dict):
+                merged[key] = merge_dicts(merged[key], additions[key], overwrite, error_on_conflict)
+            # If both values are lists, concatenate them and remove duplicates
+            elif isinstance(merged[key], list) and isinstance(additions[key], list):
+                merged[key].extend(additions[key])
+                # Remove duplicates while preserving order
+                if remove_duplicates:
+                    merged[key] = remove_duplicate_items(merged[key])
+            # If the values are of different types, raise an exception
+            elif type(merged[key]) != type(additions[key]):
+                raise TypeError(f&#34;Cannot merge different types: {type(merged[key])} and {type(additions[key])} for key &#39;{key}&#39;&#34;)
+            # If the values are of the same type but not both lists/dictionaries, decide based on the overwrite parameter
+            else:
+                if overwrite:
+                    merged[key] = additions[key]
+                elif merged[key] != additions[key]:
+                    if error_on_conflict:
+                        raise ValueError(f&#34;Conflict at key &#39;{key}&#39;: overwrite is set to False and values are different.&#34;)
+                    else:
+                        continue  # Ignore the conflict and continue
+        else:
+            # If the key is not present in merged, add it from additions
+            merged[key] = additions[key]
+
+    return merged
+
+def remove_duplicate_items(lst):
+        &#34;&#34;&#34;
+        Removes duplicates from a list while preserving order.
+        Handles unhashable elements by using a list comprehension.
+
+        Parameters:
+        - lst (list): The list to remove duplicates from.
+
+        Returns:
+        - list: A new list with duplicates removed.
+        &#34;&#34;&#34;
+        seen = []
+        result = []
+        for item in lst:
+            if isinstance(item, dict):
+                # Convert dict to a frozenset of its items to make it hashable
+                item_key = frozenset(item.items())
+            else:
+                item_key = item
+
+            if item_key not in seen:
+                seen.append(item_key)
+                result.append(item)
+        return result</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="tinytroupe.utils.json.merge_dicts"><code class="name flex">
+<span>def <span class="ident">merge_dicts</span></span>(<span>current, additions, overwrite=False, error_on_conflict=True, remove_duplicates=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Merges two dictionaries and returns a new dictionary. Works as follows:
+- If a key exists in the additions dictionary but not in the current dictionary, it is added.
+- If a key maps to None in the current dictionary, it is replaced by the value in the additions dictionary.
+- If a key exists in both dictionaries and the values are dictionaries, the function is called recursively.
+- If a key exists in both dictionaries and the values are lists, the lists are concatenated and duplicates are removed
+(if remove_duplicates is True).
+- If the values are of different types, an exception is raised.
+- If the values are of the same type but not both lists/dictionaries, the value from the additions dictionary overwrites the value in the current dictionary based on the overwrite parameter.</p>
+<p>Parameters:
+- current (dict): The original dictionary.
+- additions (dict): The dictionary with values to add.
+- overwrite (bool): Whether to overwrite values if they are of the same type but not both lists/dictionaries.
+- error_on_conflict (bool): Whether to raise an error if there is a conflict and overwrite is False.
+- remove_duplicates (bool): Whether to remove duplicates from lists when merging.</p>
+<p>Returns:
+- dict: A new dictionary with merged values.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def merge_dicts(current, additions, overwrite=False, error_on_conflict=True, remove_duplicates=True):
+    &#34;&#34;&#34;
+    Merges two dictionaries and returns a new dictionary. Works as follows:
+    - If a key exists in the additions dictionary but not in the current dictionary, it is added.
+    - If a key maps to None in the current dictionary, it is replaced by the value in the additions dictionary.
+    - If a key exists in both dictionaries and the values are dictionaries, the function is called recursively.
+    - If a key exists in both dictionaries and the values are lists, the lists are concatenated and duplicates are removed
+      (if remove_duplicates is True).
+    - If the values are of different types, an exception is raised.
+    - If the values are of the same type but not both lists/dictionaries, the value from the additions dictionary overwrites the value in the current dictionary based on the overwrite parameter.
+    
+    Parameters:
+    - current (dict): The original dictionary.
+    - additions (dict): The dictionary with values to add.
+    - overwrite (bool): Whether to overwrite values if they are of the same type but not both lists/dictionaries.
+    - error_on_conflict (bool): Whether to raise an error if there is a conflict and overwrite is False.
+    - remove_duplicates (bool): Whether to remove duplicates from lists when merging.
+    
+    Returns:
+    - dict: A new dictionary with merged values.
+    &#34;&#34;&#34;
+    merged = current.copy()  # Create a copy of the current dictionary to avoid altering it
+
+    for key in additions:
+        if key in merged:
+            # If the current value is None, directly assign the new value
+            if merged[key] is None:
+                merged[key] = additions[key]
+            # If both values are dictionaries, merge them recursively
+            elif isinstance(merged[key], dict) and isinstance(additions[key], dict):
+                merged[key] = merge_dicts(merged[key], additions[key], overwrite, error_on_conflict)
+            # If both values are lists, concatenate them and remove duplicates
+            elif isinstance(merged[key], list) and isinstance(additions[key], list):
+                merged[key].extend(additions[key])
+                # Remove duplicates while preserving order
+                if remove_duplicates:
+                    merged[key] = remove_duplicate_items(merged[key])
+            # If the values are of different types, raise an exception
+            elif type(merged[key]) != type(additions[key]):
+                raise TypeError(f&#34;Cannot merge different types: {type(merged[key])} and {type(additions[key])} for key &#39;{key}&#39;&#34;)
+            # If the values are of the same type but not both lists/dictionaries, decide based on the overwrite parameter
+            else:
+                if overwrite:
+                    merged[key] = additions[key]
+                elif merged[key] != additions[key]:
+                    if error_on_conflict:
+                        raise ValueError(f&#34;Conflict at key &#39;{key}&#39;: overwrite is set to False and values are different.&#34;)
+                    else:
+                        continue  # Ignore the conflict and continue
+        else:
+            # If the key is not present in merged, add it from additions
+            merged[key] = additions[key]
+
+    return merged</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.utils.json.post_init"><code class="name flex">
+<span>def <span class="ident">post_init</span></span>(<span>cls)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Decorator to enforce a post-initialization method call in a class, if it has one.
+The method must be named <code>_post_init</code>.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_init(cls):
+    &#34;&#34;&#34;
+    Decorator to enforce a post-initialization method call in a class, if it has one.
+    The method must be named `_post_init`.
+    &#34;&#34;&#34;
+    original_init = cls.__init__
+
+    def new_init(self, *args, **kwargs):
+        original_init(self, *args, **kwargs)
+        if hasattr(cls, &#39;_post_init&#39;):
+            cls._post_init(self)
+
+    cls.__init__ = new_init
+    return cls</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.utils.json.remove_duplicate_items"><code class="name flex">
+<span>def <span class="ident">remove_duplicate_items</span></span>(<span>lst)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Removes duplicates from a list while preserving order.
+Handles unhashable elements by using a list comprehension.</p>
+<p>Parameters:
+- lst (list): The list to remove duplicates from.</p>
+<p>Returns:
+- list: A new list with duplicates removed.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove_duplicate_items(lst):
+        &#34;&#34;&#34;
+        Removes duplicates from a list while preserving order.
+        Handles unhashable elements by using a list comprehension.
+
+        Parameters:
+        - lst (list): The list to remove duplicates from.
+
+        Returns:
+        - list: A new list with duplicates removed.
+        &#34;&#34;&#34;
+        seen = []
+        result = []
+        for item in lst:
+            if isinstance(item, dict):
+                # Convert dict to a frozenset of its items to make it hashable
+                item_key = frozenset(item.items())
+            else:
+                item_key = item
+
+            if item_key not in seen:
+                seen.append(item_key)
+                result.append(item)
+        return result</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="tinytroupe.utils.json.JsonSerializableRegistry"><code class="flex name class">
+<span>class <span class="ident">JsonSerializableRegistry</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>A mixin class that provides JSON serialization, deserialization, and subclass registration.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class JsonSerializableRegistry:
+    &#34;&#34;&#34;
+    A mixin class that provides JSON serialization, deserialization, and subclass registration.
+    &#34;&#34;&#34;
+    
+    class_mapping = {}
+
+    def to_json(self, include: list = None, suppress: list = None, file_path: str = None,
+                serialization_type_field_name = &#34;json_serializable_class_name&#34;) -&gt; dict:
+        &#34;&#34;&#34;
+        Returns a JSON representation of the object.
+        
+        Args:
+            include (list, optional): Attributes to include in the serialization. Will override the default behavior.
+            suppress (list, optional): Attributes to suppress from the serialization. Will override the default behavior.
+            file_path (str, optional): Path to a file where the JSON will be written.
+        &#34;&#34;&#34;
+        # Gather all serializable attributes from the class hierarchy
+        serializable_attrs = set()
+        suppress_attrs = set()
+        custom_serializers = {}
+        for cls in self.__class__.__mro__:  # Traverse the class hierarchy
+            if hasattr(cls, &#39;serializable_attributes&#39;) and isinstance(cls.serializable_attributes, list):
+                serializable_attrs.update(cls.serializable_attributes)
+            if hasattr(cls, &#39;suppress_attributes_from_serialization&#39;) and isinstance(cls.suppress_attributes_from_serialization, list):
+                suppress_attrs.update(cls.suppress_attributes_from_serialization)
+            if hasattr(cls, &#39;custom_serializers&#39;) and isinstance(cls.custom_serializers, dict):
+                custom_serializers.update(cls.custom_serializers)
+        
+        # Override attributes with method parameters if provided
+        if include:
+            serializable_attrs = set(include)
+        if suppress:
+            suppress_attrs.update(suppress)
+        
+        def aux_serialize_item(item):
+            if isinstance(item, JsonSerializableRegistry):
+                return item.to_json(serialization_type_field_name=serialization_type_field_name)
+            elif isinstance(item, BaseModel):
+                # If it&#39;s a Pydantic model, convert it to a dict first
+                logger.debug(f&#34;Serializing Pydantic model: {item}&#34;)
+                return item.model_dump(mode=&#34;json&#34;, exclude_unset=True)
+            else:
+                return copy.deepcopy(item)
+        
+        result = {serialization_type_field_name: self.__class__.__name__}
+        for attr in serializable_attrs if serializable_attrs else self.__dict__:
+            if attr not in suppress_attrs:
+                value = getattr(self, attr, None)
+
+                attr_renamed = self._programmatic_name_to_json_name(attr)
+                
+                # Check if there&#39;s a custom serializer for this attribute
+                if attr in custom_serializers:
+                    result[attr_renamed] = custom_serializers[attr](value)
+                elif isinstance(value, list):
+                    result[attr_renamed] = [aux_serialize_item(item) for item in value]
+                elif isinstance(value, dict):
+                    result[attr_renamed] = {k: aux_serialize_item(v) for k, v in value.items()}
+                else: # isinstance(value, JsonSerializableRegistry) or isinstance(value, BaseModel) or other types
+                    result[attr_renamed] = aux_serialize_item(value)
+
+        if file_path:
+            # Create directories if they do not exist
+            import os
+            os.makedirs(os.path.dirname(file_path), exist_ok=True)
+            with open(file_path, &#39;w&#39;) as f:
+                json.dump(result, f, indent=4)
+        
+        return result
+
+    @classmethod
+    def from_json(cls, json_dict_or_path, suppress: list = None, 
+                  serialization_type_field_name = &#34;json_serializable_class_name&#34;, 
+                  post_init_params: dict = None):
+        &#34;&#34;&#34;
+        Loads a JSON representation of the object and creates an instance of the class.
+        
+        Args:
+            json_dict_or_path (dict or str): The JSON dictionary representing the object or a file path to load the JSON from.
+            suppress (list, optional): Attributes to suppress from being loaded.
+            
+        Returns:
+            An instance of the class populated with the data from json_dict_or_path.
+        &#34;&#34;&#34;
+        if isinstance(json_dict_or_path, str):
+            with open(json_dict_or_path, &#39;r&#39;) as f:
+                json_dict = json.load(f)
+        else:
+            json_dict = json_dict_or_path
+        
+        subclass_name = json_dict.get(serialization_type_field_name)
+        target_class = cls.class_mapping.get(subclass_name, cls)
+        instance = target_class.__new__(target_class)  # Create an instance without calling __init__
+        
+        # Gather all serializable attributes from the class hierarchy
+        serializable_attrs = set()
+        custom_deserializers = {}
+        suppress_attrs = set(suppress) if suppress else set()
+        for target_mro in target_class.__mro__:
+            if hasattr(target_mro, &#39;serializable_attributes&#39;) and isinstance(target_mro.serializable_attributes, list):
+                serializable_attrs.update(target_mro.serializable_attributes)
+            if hasattr(target_mro, &#39;custom_deserializers&#39;) and isinstance(target_mro.custom_deserializers, dict):
+                custom_deserializers.update(target_mro.custom_deserializers)
+            if hasattr(target_mro, &#39;suppress_attributes_from_serialization&#39;) and isinstance(target_mro.suppress_attributes_from_serialization, list):
+                suppress_attrs.update(target_mro.suppress_attributes_from_serialization)
+        
+        # Assign values only for serializable attributes if specified, otherwise assign everything
+        for key in serializable_attrs if serializable_attrs else json_dict:
+            key_in_json = cls._programmatic_name_to_json_name(key)
+            if key_in_json in json_dict and key not in suppress_attrs:
+                value = json_dict[key_in_json]
+                if key in custom_deserializers:
+                    # Use custom initializer if provided
+                    setattr(instance, key, custom_deserializers[key](value))
+                elif isinstance(value, dict) and serialization_type_field_name in value:
+                    # Assume it&#39;s another JsonSerializableRegistry object
+                    setattr(instance, key, JsonSerializableRegistry.from_json(value, serialization_type_field_name=serialization_type_field_name))
+                elif isinstance(value, list):
+                    # Handle collections, recursively deserialize if items are JsonSerializableRegistry objects
+                    deserialized_collection = []
+                    for item in value:
+                        if isinstance(item, dict) and serialization_type_field_name in item:
+                            deserialized_collection.append(JsonSerializableRegistry.from_json(item, serialization_type_field_name=serialization_type_field_name))
+                        else:
+                            deserialized_collection.append(copy.deepcopy(item))
+                    setattr(instance, key, deserialized_collection)
+                else:
+                    setattr(instance, key, copy.deepcopy(value))
+        
+        # Call post-deserialization initialization if available
+        if hasattr(instance, &#39;_post_deserialization_init&#39;) and callable(instance._post_deserialization_init):
+            post_init_params = post_init_params if post_init_params else {}
+            instance._post_deserialization_init(**post_init_params)
+        
+        return instance
+
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        # Register the subclass using its name as the key
+        JsonSerializableRegistry.class_mapping[cls.__name__] = cls
+        
+        # Automatically extend serializable attributes and custom initializers from parent classes 
+        if hasattr(cls, &#39;serializable_attributes&#39;) and isinstance(cls.serializable_attributes, list):
+            for base in cls.__bases__:
+                if hasattr(base, &#39;serializable_attributes&#39;) and isinstance(base.serializable_attributes, list):
+                    cls.serializable_attributes = list(set(base.serializable_attributes + cls.serializable_attributes))
+        
+        if hasattr(cls, &#39;suppress_attributes_from_serialization&#39;) and isinstance(cls.suppress_attributes_from_serialization, list):
+            for base in cls.__bases__:
+                if hasattr(base, &#39;suppress_attributes_from_serialization&#39;) and isinstance(base.suppress_attributes_from_serialization, list):
+                    cls.suppress_attributes_from_serialization = list(set(base.suppress_attributes_from_serialization + cls.suppress_attributes_from_serialization))
+        
+        if hasattr(cls, &#39;custom_deserializers&#39;) and isinstance(cls.custom_deserializers, dict):
+            for base in cls.__bases__:
+                if hasattr(base, &#39;custom_deserializers&#39;) and isinstance(base.custom_deserializers, dict):
+                    base_initializers = base.custom_deserializers.copy()
+                    base_initializers.update(cls.custom_deserializers)
+                    cls.custom_deserializers = base_initializers
+        
+        if hasattr(cls, &#39;custom_serializers&#39;) and isinstance(cls.custom_serializers, dict):
+            for base in cls.__bases__:
+                if hasattr(base, &#39;custom_serializers&#39;) and isinstance(base.custom_serializers, dict):
+                    base_serializers = base.custom_serializers.copy()
+                    base_serializers.update(cls.custom_serializers)
+                    cls.custom_serializers = base_serializers
+
+    def _post_deserialization_init(self, **kwargs):
+        # if there&#39;s a _post_init method, call it after deserialization
+        if hasattr(self, &#39;_post_init&#39;):
+            self._post_init(**kwargs)
+
+    @classmethod
+    def _programmatic_name_to_json_name(cls, name):
+        &#34;&#34;&#34;
+        Converts a programmatic name to a JSON name by converting it to snake case.
+        &#34;&#34;&#34;
+        if hasattr(cls, &#39;serializable_attributes_renaming&#39;) and isinstance(cls.serializable_attributes_renaming, dict):
+            return cls.serializable_attributes_renaming.get(name, name)
+        return name
+    
+    @classmethod
+    def _json_name_to_programmatic_name(cls, name):
+        &#34;&#34;&#34;
+        Converts a JSON name to a programmatic name.
+        &#34;&#34;&#34;
+        if hasattr(cls, &#39;serializable_attributes_renaming&#39;) and isinstance(cls.serializable_attributes_renaming, dict):
+            reverse_rename = {}
+            for k, v in cls.serializable_attributes_renaming.items():
+                if v in reverse_rename:
+                    raise ValueError(f&#34;Duplicate value &#39;{v}&#39; found in serializable_attributes_renaming.&#34;)
+                reverse_rename[v] = k
+            return reverse_rename.get(name, name)
+        return name</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="tinytroupe.agent.action_generator.ActionGenerator" href="../agent/action_generator.html#tinytroupe.agent.action_generator.ActionGenerator">ActionGenerator</a></li>
+<li><a title="tinytroupe.agent.grounding.GroundingConnector" href="../agent/grounding.html#tinytroupe.agent.grounding.GroundingConnector">GroundingConnector</a></li>
+<li><a title="tinytroupe.agent.mental_faculty.TinyMentalFaculty" href="../agent/mental_faculty.html#tinytroupe.agent.mental_faculty.TinyMentalFaculty">TinyMentalFaculty</a></li>
+<li><a title="tinytroupe.agent.tiny_person.TinyPerson" href="../agent/tiny_person.html#tinytroupe.agent.tiny_person.TinyPerson">TinyPerson</a></li>
+<li><a title="tinytroupe.enrichment.tiny_enricher.TinyEnricher" href="../enrichment/tiny_enricher.html#tinytroupe.enrichment.tiny_enricher.TinyEnricher">TinyEnricher</a></li>
+<li><a title="tinytroupe.enrichment.tiny_styler.TinyStyler" href="../enrichment/tiny_styler.html#tinytroupe.enrichment.tiny_styler.TinyStyler">TinyStyler</a></li>
+<li><a title="tinytroupe.extraction.artifact_exporter.ArtifactExporter" href="../extraction/artifact_exporter.html#tinytroupe.extraction.artifact_exporter.ArtifactExporter">ArtifactExporter</a></li>
+<li><a title="tinytroupe.tools.tiny_tool.TinyTool" href="../tools/tiny_tool.html#tinytroupe.tools.tiny_tool.TinyTool">TinyTool</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="tinytroupe.utils.json.JsonSerializableRegistry.class_mapping"><code class="name">var <span class="ident">class_mapping</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Static methods</h3>
+<dl>
+<dt id="tinytroupe.utils.json.JsonSerializableRegistry.from_json"><code class="name flex">
+<span>def <span class="ident">from_json</span></span>(<span>json_dict_or_path, suppress: list = None, serialization_type_field_name='json_serializable_class_name', post_init_params: dict = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Loads a JSON representation of the object and creates an instance of the class.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>json_dict_or_path</code></strong> :&ensp;<code>dict</code> or <code>str</code></dt>
+<dd>The JSON dictionary representing the object or a file path to load the JSON from.</dd>
+<dt><strong><code>suppress</code></strong> :&ensp;<code>list</code>, optional</dt>
+<dd>Attributes to suppress from being loaded.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>An instance of the class populated with the data from json_dict_or_path.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def from_json(cls, json_dict_or_path, suppress: list = None, 
+              serialization_type_field_name = &#34;json_serializable_class_name&#34;, 
+              post_init_params: dict = None):
+    &#34;&#34;&#34;
+    Loads a JSON representation of the object and creates an instance of the class.
+    
+    Args:
+        json_dict_or_path (dict or str): The JSON dictionary representing the object or a file path to load the JSON from.
+        suppress (list, optional): Attributes to suppress from being loaded.
+        
+    Returns:
+        An instance of the class populated with the data from json_dict_or_path.
+    &#34;&#34;&#34;
+    if isinstance(json_dict_or_path, str):
+        with open(json_dict_or_path, &#39;r&#39;) as f:
+            json_dict = json.load(f)
+    else:
+        json_dict = json_dict_or_path
+    
+    subclass_name = json_dict.get(serialization_type_field_name)
+    target_class = cls.class_mapping.get(subclass_name, cls)
+    instance = target_class.__new__(target_class)  # Create an instance without calling __init__
+    
+    # Gather all serializable attributes from the class hierarchy
+    serializable_attrs = set()
+    custom_deserializers = {}
+    suppress_attrs = set(suppress) if suppress else set()
+    for target_mro in target_class.__mro__:
+        if hasattr(target_mro, &#39;serializable_attributes&#39;) and isinstance(target_mro.serializable_attributes, list):
+            serializable_attrs.update(target_mro.serializable_attributes)
+        if hasattr(target_mro, &#39;custom_deserializers&#39;) and isinstance(target_mro.custom_deserializers, dict):
+            custom_deserializers.update(target_mro.custom_deserializers)
+        if hasattr(target_mro, &#39;suppress_attributes_from_serialization&#39;) and isinstance(target_mro.suppress_attributes_from_serialization, list):
+            suppress_attrs.update(target_mro.suppress_attributes_from_serialization)
+    
+    # Assign values only for serializable attributes if specified, otherwise assign everything
+    for key in serializable_attrs if serializable_attrs else json_dict:
+        key_in_json = cls._programmatic_name_to_json_name(key)
+        if key_in_json in json_dict and key not in suppress_attrs:
+            value = json_dict[key_in_json]
+            if key in custom_deserializers:
+                # Use custom initializer if provided
+                setattr(instance, key, custom_deserializers[key](value))
+            elif isinstance(value, dict) and serialization_type_field_name in value:
+                # Assume it&#39;s another JsonSerializableRegistry object
+                setattr(instance, key, JsonSerializableRegistry.from_json(value, serialization_type_field_name=serialization_type_field_name))
+            elif isinstance(value, list):
+                # Handle collections, recursively deserialize if items are JsonSerializableRegistry objects
+                deserialized_collection = []
+                for item in value:
+                    if isinstance(item, dict) and serialization_type_field_name in item:
+                        deserialized_collection.append(JsonSerializableRegistry.from_json(item, serialization_type_field_name=serialization_type_field_name))
+                    else:
+                        deserialized_collection.append(copy.deepcopy(item))
+                setattr(instance, key, deserialized_collection)
+            else:
+                setattr(instance, key, copy.deepcopy(value))
+    
+    # Call post-deserialization initialization if available
+    if hasattr(instance, &#39;_post_deserialization_init&#39;) and callable(instance._post_deserialization_init):
+        post_init_params = post_init_params if post_init_params else {}
+        instance._post_deserialization_init(**post_init_params)
+    
+    return instance</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="tinytroupe.utils.json.JsonSerializableRegistry.to_json"><code class="name flex">
+<span>def <span class="ident">to_json</span></span>(<span>self, include: list = None, suppress: list = None, file_path: str = None, serialization_type_field_name='json_serializable_class_name') ‑> dict</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns a JSON representation of the object.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>include</code></strong> :&ensp;<code>list</code>, optional</dt>
+<dd>Attributes to include in the serialization. Will override the default behavior.</dd>
+<dt><strong><code>suppress</code></strong> :&ensp;<code>list</code>, optional</dt>
+<dd>Attributes to suppress from the serialization. Will override the default behavior.</dd>
+<dt><strong><code>file_path</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Path to a file where the JSON will be written.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_json(self, include: list = None, suppress: list = None, file_path: str = None,
+            serialization_type_field_name = &#34;json_serializable_class_name&#34;) -&gt; dict:
+    &#34;&#34;&#34;
+    Returns a JSON representation of the object.
+    
+    Args:
+        include (list, optional): Attributes to include in the serialization. Will override the default behavior.
+        suppress (list, optional): Attributes to suppress from the serialization. Will override the default behavior.
+        file_path (str, optional): Path to a file where the JSON will be written.
+    &#34;&#34;&#34;
+    # Gather all serializable attributes from the class hierarchy
+    serializable_attrs = set()
+    suppress_attrs = set()
+    custom_serializers = {}
+    for cls in self.__class__.__mro__:  # Traverse the class hierarchy
+        if hasattr(cls, &#39;serializable_attributes&#39;) and isinstance(cls.serializable_attributes, list):
+            serializable_attrs.update(cls.serializable_attributes)
+        if hasattr(cls, &#39;suppress_attributes_from_serialization&#39;) and isinstance(cls.suppress_attributes_from_serialization, list):
+            suppress_attrs.update(cls.suppress_attributes_from_serialization)
+        if hasattr(cls, &#39;custom_serializers&#39;) and isinstance(cls.custom_serializers, dict):
+            custom_serializers.update(cls.custom_serializers)
+    
+    # Override attributes with method parameters if provided
+    if include:
+        serializable_attrs = set(include)
+    if suppress:
+        suppress_attrs.update(suppress)
+    
+    def aux_serialize_item(item):
+        if isinstance(item, JsonSerializableRegistry):
+            return item.to_json(serialization_type_field_name=serialization_type_field_name)
+        elif isinstance(item, BaseModel):
+            # If it&#39;s a Pydantic model, convert it to a dict first
+            logger.debug(f&#34;Serializing Pydantic model: {item}&#34;)
+            return item.model_dump(mode=&#34;json&#34;, exclude_unset=True)
+        else:
+            return copy.deepcopy(item)
+    
+    result = {serialization_type_field_name: self.__class__.__name__}
+    for attr in serializable_attrs if serializable_attrs else self.__dict__:
+        if attr not in suppress_attrs:
+            value = getattr(self, attr, None)
+
+            attr_renamed = self._programmatic_name_to_json_name(attr)
+            
+            # Check if there&#39;s a custom serializer for this attribute
+            if attr in custom_serializers:
+                result[attr_renamed] = custom_serializers[attr](value)
+            elif isinstance(value, list):
+                result[attr_renamed] = [aux_serialize_item(item) for item in value]
+            elif isinstance(value, dict):
+                result[attr_renamed] = {k: aux_serialize_item(v) for k, v in value.items()}
+            else: # isinstance(value, JsonSerializableRegistry) or isinstance(value, BaseModel) or other types
+                result[attr_renamed] = aux_serialize_item(value)
+
+    if file_path:
+        # Create directories if they do not exist
+        import os
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        with open(file_path, &#39;w&#39;) as f:
+            json.dump(result, f, indent=4)
+    
+    return result</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="tinytroupe.utils" href="index.html">tinytroupe.utils</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="tinytroupe.utils.json.merge_dicts" href="#tinytroupe.utils.json.merge_dicts">merge_dicts</a></code></li>
+<li><code><a title="tinytroupe.utils.json.post_init" href="#tinytroupe.utils.json.post_init">post_init</a></code></li>
+<li><code><a title="tinytroupe.utils.json.remove_duplicate_items" href="#tinytroupe.utils.json.remove_duplicate_items">remove_duplicate_items</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="tinytroupe.utils.json.JsonSerializableRegistry" href="#tinytroupe.utils.json.JsonSerializableRegistry">JsonSerializableRegistry</a></code></h4>
+<ul class="">
+<li><code><a title="tinytroupe.utils.json.JsonSerializableRegistry.class_mapping" href="#tinytroupe.utils.json.JsonSerializableRegistry.class_mapping">class_mapping</a></code></li>
+<li><code><a title="tinytroupe.utils.json.JsonSerializableRegistry.from_json" href="#tinytroupe.utils.json.JsonSerializableRegistry.from_json">from_json</a></code></li>
+<li><code><a title="tinytroupe.utils.json.JsonSerializableRegistry.to_json" href="#tinytroupe.utils.json.JsonSerializableRegistry.to_json">to_json</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

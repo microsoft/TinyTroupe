@@ -159,7 +159,7 @@ def formulate_corrective_rule(feedback) -> str:
     # llm decorator will handle the body of this function
 
 
-@llm()
+@llm(enable_json_output_format=False)
 def combine_texts(*texts) -> str:
     """
     Given a list of input texts, this function combines them into a single text, ensuring that the
@@ -179,6 +179,94 @@ def combine_texts(*texts) -> str:
     
     Returns:
         str: The combined text.
+    """
+    # llm decorator will handle the body of this function
+
+@llm(enable_json_output_format=False)
+def extract_information_from_text(query: str, text: str, context:str=None) -> str:
+    """
+    Given a text and a query, this function extracts the information from the text that either answers the query directly or
+    provides relevant information related to it. The query can be a question, a request for specific information, or a general
+    request for details about the text. If the desired information is not present in the text, the function should return an empty string.
+    If a context is provided, it is used to help in understanding the query or the text, and to provide additional background
+    information or expectations about the input/output. Any requests in the context are respected and enforced in the output.
+
+    Args:
+        query (str): The query that specifies what information to extract.
+        text (str): The text from which to extract information.
+        context (str, optional): Additional context that might help in extracting the information. This can be used to provide 
+          background information or specify expectations about the input/output.
+
+    Returns:
+        str: The extracted information that answers the query. If no information is found, an empty string is returned.
+    """
+    # llm decorator will handle the body of this function
+
+@llm(enable_json_output_format=False)
+def accumulate_based_on_query(query: str, new_entry:str, current_accumulation:str, context=None) -> str:
+    """
+    This function accumulates information that is relevant to a given query. It takes a new entry and updates the current accumulation of information
+    such that the final accumulation preserves its original information and in addition integrates the new entry in a way that addresses the query or provides related information. 
+    Details are **never** suppressed, but rather expanded upon, while mantaining the coherence and structure of the overall accumulation.
+    In other words, it is a monotonic accumulation process that builds on the current accumulation, **minimally** adjusts it to maintain coherence,
+    while ensuring that the new entry is integrated in a way that is relevant to the query.
+    The query itself specifies the problem that the accumulation is trying to address, and the new entry is a piece of information that might be relevant to that problem.
+    
+    The function should ensure that the accumulation is coherent, well-written, and that it does not contain redundant information. More precisely:
+      - INTEGRATES NEW ENTRIES: The accumulation process is not a simple concatenation of the new entry and the current accumulation. Rather, it should intelligently integrate 
+        the new entry into the current accumulation, even if this requires rephrasing, restructuring or rewriting the resulting accumulation.
+      - EXPAND ON DETAILS: When integrating the new entry, always try to expand the level of detail rather than reduce it.
+      - AVOID OBVIOUS REDUNDANCY: The integration of the new entry should be done in a way to avoid obvious redundancy and ensure that the resulting accumulation is coherent and well-structured. However,
+        it **must** preserve nuances that might be somewhat redundant.
+      - ALWAYS PRESERVE INFORMATION: Previous information should **never** be lost. Previous emphasis or details are **never** lost. Rather, the accumulation is suitably expanded to include the new entry, 
+        while preserving the previous information and maintaining the coherence of the overall accumulation.
+      - INTEGRATE ONLY IF RELEVANT: The new entry should be integrated into the current accumulation only if it is relevant to the query. Otherwise, the accumulation should remain unchanged.
+      - TOLERATE CONTRADICTIONS: If the new entry contradicts the current accumulation, it should be integrated in a way that mentions the fact that there are 
+        divergent pieces of information, and that the accumulation reflects this divergence. That is to say, the contradiction is not discarded, but rather acknowledged and preserved.
+      - MAINTAIN COHERENCE: The resulting accumulation should be coherent and well-structured, with a clear flow of information.
+      - CONSIDER CONTEXT: If a context is provided, it should be used to help in understanding the query or the new entry, and to provide additional background 
+        information or expectations about the input/output. Make sure any requests in the context are respected and enforced in the output.
+
+    Args:
+        query (str): The query that specifies the problem that the accumulation is trying to address.
+        new_entry (str): The new entry of information to be considered for accumulation.
+        current_accumulation (str): The current accumulation of information.
+        context (str, optional): Additional context that might help in understanding the query or the new entry. This can be used to provide 
+          background information or specify expectations about the input/output.
+
+    Returns:
+        str: The updated accumulation of information that includes the new entry if it is relevant to the query.
+    """
+    # llm decorator will handle the body of this function
+
+@llm()
+def compute_semantic_proximity(text1: str, text2: str, context: str = None) -> dict:
+    """
+    Computes the semantic proximity between two texts and returns a proximity score along with justification.
+    This function is particularly useful for comparing agent justifications, explanations, or reasoning
+    to assess how similar they are in meaning and content.
+
+    Args:
+        text1 (str): The first text to compare.
+        text2 (str): The second text to compare.
+        context (str, optional): Additional context that might help in understanding the comparison.
+                                This can provide background information about what the texts represent
+                                or the purpose of the comparison.
+
+    Returns:
+        dict: A dictionary containing:
+            - 'proximity_score' (float): A score between 0.0 and 1.0, where 0.0 means completely different
+                                       and 1.0 means semantically identical.
+            - 'justification' (str): A detailed explanation of why this score was assigned, including
+                                   specific similarities and differences found between the texts.
+    
+    Example:
+        >>> result = compute_semantic_proximity(
+        ...     "I prefer luxury travel because I enjoy comfort and high-quality service",
+        ...     "I like premium vacations since I value convenience and excellent amenities"
+        ... )
+        >>> print(result['proximity_score'])  # Expected: ~0.85
+        >>> print(result['justification'])    # Detailed explanation of similarities
     """
     # llm decorator will handle the body of this function
 

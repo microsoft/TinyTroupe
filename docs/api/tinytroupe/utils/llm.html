@@ -1,0 +1,2903 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>tinytroupe.utils.llm API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>tinytroupe.utils.llm</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import re
+import json
+import ast
+import os
+import chevron
+from typing import Collection, Dict, List, Union
+from pydantic import BaseModel
+import copy
+import functools
+import inspect
+import pprint
+import textwrap
+
+from tinytroupe import utils
+from tinytroupe.utils import logger
+from tinytroupe.utils.rendering import break_text_at_length
+
+################################################################################
+# Model input utilities
+################################################################################
+
+def compose_initial_LLM_messages_with_templates(system_template_name:str, user_template_name:str=None, 
+                                                base_module_folder:str=None,
+                                                rendering_configs:dict={}) -&gt; list:
+    &#34;&#34;&#34;
+    Composes the initial messages for the LLM model call, under the assumption that it always involves 
+    a system (overall task description) and an optional user message (specific task description). 
+    These messages are composed using the specified templates and rendering configurations.
+    &#34;&#34;&#34;
+
+    # ../ to go to the base library folder, because that&#39;s the most natural reference point for the user
+    if base_module_folder is None:
+        sub_folder =  &#34;../prompts/&#34; 
+    else:
+        sub_folder = f&#34;../{base_module_folder}/prompts/&#34;
+
+    base_template_folder = os.path.join(os.path.dirname(__file__), sub_folder)    
+
+    system_prompt_template_path = os.path.join(base_template_folder, f&#39;{system_template_name}&#39;)
+    user_prompt_template_path = os.path.join(base_template_folder, f&#39;{user_template_name}&#39;)
+
+    messages = []
+
+    messages.append({&#34;role&#34;: &#34;system&#34;, 
+                         &#34;content&#34;: chevron.render(
+                             open(system_prompt_template_path).read(), 
+                             rendering_configs)})
+    
+    # optionally add a user message
+    if user_template_name is not None:
+        messages.append({&#34;role&#34;: &#34;user&#34;, 
+                            &#34;content&#34;: chevron.render(
+                                    open(user_prompt_template_path).read(), 
+                                    rendering_configs)})
+    return messages
+
+
+#
+# Data structures to enforce output format during LLM API call.
+#
+
+class LLMScalarWithJustificationResponse(BaseModel):
+    &#34;&#34;&#34;
+    Represents a typed response from an LLM (Language Learning Model) including justification.
+    Attributes:
+        justification (str): The justification or explanation for the response.
+        value (str, int, float, bool): The value of the response.
+        confidence (float): The confidence level of the response.        
+    &#34;&#34;&#34;
+    justification: str
+    value: Union[str, int, float, bool]    
+    confidence: float
+
+class LLMScalarWithJustificationAndReasoningResponse(BaseModel):
+    &#34;&#34;&#34;
+    Represents a typed response from an LLM (Language Learning Model) including justification and reasoning.
+    Attributes:
+        reasoning (str): The reasoning behind the response.
+        justification (str): The justification or explanation for the response.
+        value (str, int, float, bool): The value of the response.
+        confidence (float): The confidence level of the response.
+    &#34;&#34;&#34;
+    reasoning: str
+
+    # we need to repeat these fields here, instead of inheriting from LLMScalarWithJustificationResponse,
+    # because we need to ensure `reasoning` is always the first field in the JSON object.
+    justification: str
+    value: Union[str, int, float, bool]
+    confidence: float
+
+
+
+###########################################################################
+# Model calling helpers
+###########################################################################
+
+class LLMChat:
+    &#34;&#34;&#34;
+    A class that represents an ongoing LLM conversation. It maintains the conversation history,
+    allows adding new messages, and handles model output type coercion.
+    &#34;&#34;&#34;
+
+    def __init__(self, system_template_name:str=None, system_prompt:str=None,
+                 user_template_name:str=None, user_prompt:str=None,
+                 base_module_folder=None,
+                 output_type=None,
+                 enable_json_output_format:bool=True,
+                 enable_justification_step:bool=True,
+                 enable_reasoning_step:bool=False,
+                 **model_params):
+        &#34;&#34;&#34;
+        Initializes an LLMChat instance with the specified system and user templates, or the system and user prompts.
+        If a template is specified, the corresponding prompt must be None, and vice versa.
+
+        Args:
+            system_template_name (str): Name of the system template file.
+            system_prompt (str): System prompt content.
+            user_template_name (str): Name of the user template file.
+            user_prompt (str): User prompt content.
+            base_module_folder (str): Optional subfolder path within the library where templates are located.
+            output_type (type): Expected type of the model output.
+            enable_reasoning_step (bool): Flag to enable reasoning step in the conversation. This IS NOT the use of &#34;reasoning models&#34; (e.g., o1, o3),
+              but rather the use of an additional reasoning step in the regular text completion.
+            enable_justification_step (bool): Flag to enable justification step in the conversation. Must be True if reasoning step is enabled as well.
+            enable_json_output_format (bool): Flag to enable JSON output format for the model response. Must be True if reasoning or justification steps are enabled.
+            **model_params: Additional parameters for the LLM model call.
+
+        &#34;&#34;&#34;
+        if (system_template_name is not None and system_prompt is not None) or \
+        (user_template_name is not None and user_prompt is not None) or\
+        (system_template_name is None and system_prompt is None) or \
+        (user_template_name is None and user_prompt is None):
+            raise ValueError(&#34;Either the template or the prompt must be specified, but not both.&#34;)
+
+        self.base_module_folder = base_module_folder
+
+        self.system_template_name = system_template_name
+        self.user_template_name = user_template_name
+
+        self.system_prompt = textwrap.dedent(system_prompt) if system_prompt is not None else None
+        self.user_prompt = textwrap.dedent(user_prompt) if user_prompt is not None else None
+
+        self.output_type = output_type
+
+        self.enable_reasoning_step = enable_reasoning_step
+        self.enable_justification_step = enable_justification_step
+        self.enable_json_output_format = enable_json_output_format
+
+        self.model_params = model_params
+        
+        # Conversation history
+        self.messages = []
+        self.conversation_history = []
+        
+        # Response tracking
+        self.response_raw = None
+        self.response_json = None
+        self.response_reasoning = None
+        self.response_value = None
+        self.response_justification = None
+        self.response_confidence = None
+        
+    def __call__(self, *args, **kwds):
+        return self.call(*args, **kwds)
+        
+    def _render_template(self, template_name, base_module_folder=None, rendering_configs={}):
+        &#34;&#34;&#34;
+        Helper method to render templates for messages.
+        
+        Args:
+            template_name: Name of the template file
+            base_module_folder: Optional subfolder path within the library
+            rendering_configs: Configuration variables for template rendering
+            
+        Returns:
+            Rendered template content
+        &#34;&#34;&#34;
+        if base_module_folder is None:
+            sub_folder =  &#34;../prompts/&#34; 
+        else:
+            sub_folder = f&#34;../{base_module_folder}/prompts/&#34;
+            
+        base_template_folder = os.path.join(os.path.dirname(__file__), sub_folder)
+        template_path = os.path.join(base_template_folder, template_name)
+        
+        return chevron.render(open(template_path).read(), rendering_configs)
+
+    def add_user_message(self, message=None, template_name=None, base_module_folder=None, rendering_configs={}):
+        &#34;&#34;&#34;
+        Add a user message to the conversation.
+        
+        Args:
+            message: The direct message content from the user (mutually exclusive with template_name)
+            template_name: Optional template file name to use for the message
+            base_module_folder: Optional subfolder for template location
+            rendering_configs: Configuration variables for template rendering
+            
+        Returns:
+            self for method chaining
+        &#34;&#34;&#34;
+        if message is not None and template_name is not None:
+            raise ValueError(&#34;Either message or template_name must be specified, but not both.&#34;)
+        
+        if template_name is not None:
+            content = self._render_template(template_name, base_module_folder, rendering_configs)
+        else:
+            content = textwrap.dedent(message)
+            
+        self.messages.append({&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: content})
+        return self
+        
+    def add_system_message(self, message=None, template_name=None, base_module_folder=None, rendering_configs={}):
+        &#34;&#34;&#34;
+        Add a system message to the conversation.
+        
+        Args:
+            message: The direct message content from the system (mutually exclusive with template_name)
+            template_name: Optional template file name to use for the message
+            base_module_folder: Optional subfolder for template location
+            rendering_configs: Configuration variables for template rendering
+            
+        Returns:
+            self for method chaining
+        &#34;&#34;&#34;
+        if message is not None and template_name is not None:
+            raise ValueError(&#34;Either message or template_name must be specified, but not both.&#34;)
+        
+        if template_name is not None:
+            content = self._render_template(template_name, base_module_folder, rendering_configs)
+        else:
+            content = textwrap.dedent(message)
+            
+        self.messages.append({&#34;role&#34;: &#34;system&#34;, &#34;content&#34;: content})
+        return self
+    
+    def add_assistant_message(self, message=None, template_name=None, base_module_folder=None, rendering_configs={}):
+        &#34;&#34;&#34;
+        Add an assistant message to the conversation.
+        
+        Args:
+            message: The direct message content from the assistant (mutually exclusive with template_name)
+            template_name: Optional template file name to use for the message
+            base_module_folder: Optional subfolder for template location
+            rendering_configs: Configuration variables for template rendering
+            
+        Returns:
+            self for method chaining
+        &#34;&#34;&#34;
+        if message is not None and template_name is not None:
+            raise ValueError(&#34;Either message or template_name must be specified, but not both.&#34;)
+        
+        if template_name is not None:
+            content = self._render_template(template_name, base_module_folder, rendering_configs)
+        else:
+            content = textwrap.dedent(message)
+            
+        self.messages.append({&#34;role&#34;: &#34;assistant&#34;, &#34;content&#34;: content})
+        return self
+
+    def call(self, output_type=&#34;default&#34;, 
+                   enable_json_output_format:bool=None,        
+                   enable_justification_step:bool=None,
+                   enable_reasoning_step:bool=None, 
+                   **rendering_configs):
+        &#34;&#34;&#34;
+        Initiates or continues the conversation with the LLM model using the current message history.
+
+        Args:
+            output_type: Optional parameter to override the output type for this specific call. If set to &#34;default&#34;, it uses the instance&#39;s output_type.
+                         If set to None, removes all output formatting and coercion.
+            enable_json_output_format: Optional flag to enable JSON output format for the model response. If None, uses the instance&#39;s setting.
+            enable_justification_step: Optional flag to enable justification step in the conversation. If None, uses the instance&#39;s setting.
+            enable_reasoning_step: Optional flag to enable reasoning step in the conversation. If None, uses the instance&#39;s setting.
+            rendering_configs: The rendering configurations (template variables) to use when composing the initial messages.
+
+        Returns:
+            The content of the model response.
+        &#34;&#34;&#34;
+        from tinytroupe.openai_utils import client # import here to avoid circular import
+
+        try:
+
+            # Initialize the conversation if this is the first call
+            if not self.messages:
+                if self.system_template_name is not None and self.user_template_name is not None:
+                    self.messages = utils.compose_initial_LLM_messages_with_templates(
+                        self.system_template_name, 
+                        self.user_template_name, 
+                        base_module_folder=self.base_module_folder,
+                        rendering_configs=rendering_configs
+                    )
+                else:
+                    if self.system_prompt:
+                        self.messages.append({&#34;role&#34;: &#34;system&#34;, &#34;content&#34;: self.system_prompt})
+                    if self.user_prompt:
+                        self.messages.append({&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: self.user_prompt})
+
+            # Use the provided output_type if specified, otherwise fall back to the instance&#39;s output_type
+            current_output_type = output_type if output_type != &#34;default&#34; else self.output_type
+
+            # Set up typing for the output
+            if current_output_type is not None:
+                
+                # TODO obsolete?
+                #
+                ## Add type coercion instructions if not already added
+                #if not any(msg.get(&#34;content&#34;, &#34;&#34;).startswith(&#34;In your response, you **MUST** provide a value&#34;) 
+                #          for msg in self.messages if msg.get(&#34;role&#34;) == &#34;system&#34;):
+                
+                # the user can override the response format by specifying it in the model_params, otherwise
+                # we will use the default response format
+                if &#34;response_format&#34; not in self.model_params:
+
+                    if utils.first_non_none(enable_json_output_format, self.enable_json_output_format):
+
+                        self.model_params[&#34;response_format&#34;] = {&#34;type&#34;: &#34;json_object&#34;}
+
+                        typing_instruction = {&#34;role&#34;: &#34;system&#34;,
+                            &#34;content&#34;: &#34;Your response **MUST** be a JSON object.&#34;}
+
+                        # Special justification format can be used (will also include confidence level)
+                        if utils.first_non_none(enable_justification_step, self.enable_justification_step):
+
+                            # Add reasoning step if enabled provides further mechanism to think step-by-step
+                            if not (utils.first_non_none(enable_reasoning_step, self.enable_reasoning_step)):
+                                # Default structured output
+                                self.model_params[&#34;response_format&#34;] = LLMScalarWithJustificationResponse
+                                
+                                typing_instruction = {&#34;role&#34;: &#34;system&#34;,
+                                    &#34;content&#34;: &#34;In your response, you **MUST** provide a value, along with a justification and your confidence level that the value and justification are correct (0.0 means no confidence, 1.0 means complete confidence). &#34;+
+                                    &#34;Furtheremore, your response **MUST** be a JSON object with the following structure: {\&#34;justification\&#34;: justification, \&#34;value\&#34;: value, \&#34;confidence\&#34;: confidence}. &#34;+
+                                    &#34;Note that \&#34;justification\&#34; comes first in order to help you think about the value you are providing.&#34;}
+                            
+                            else: 
+                                # Override the response format to also use a reasoning step
+                                self.model_params[&#34;response_format&#34;] = LLMScalarWithJustificationAndReasoningResponse
+                                
+                                typing_instruction = {&#34;role&#34;: &#34;system&#34;,
+                                    &#34;content&#34;: \
+                                        &#34;In your response, you **FIRST** think step-by-step on how you are going to compute the value, and you put this reasoning in the \&#34;reasoning\&#34; field (which must come before all others). &#34;+
+                                        &#34;This allows you to think carefully as much as you need to deduce the best and most correct value. &#34;+
+                                        &#34;After that, you **MUST** provide the resulting value, along with a justification (which can tap into the previous reasoning), and your confidence level that the value and justification are correct (0.0 means no confidence, 1.0 means complete confidence).&#34;+
+                                        &#34;Furtheremore, your response **MUST** be a JSON object with the following structure: {\&#34;reasoning\&#34;: reasoning, \&#34;justification\&#34;: justification, \&#34;value\&#34;: value, \&#34;confidence\&#34;: confidence}.&#34; +
+                                        &#34; Note that \&#34;justification\&#34; comes after \&#34;reasoning\&#34; but before \&#34;value\&#34; to help with further formulation of the resulting \&#34;value\&#34;.&#34;}
+                        
+                    
+                        # Specify the value type
+                        if current_output_type == bool:
+                            typing_instruction[&#34;content&#34;] += &#34; &#34; + self._request_bool_llm_message()[&#34;content&#34;]
+                        elif current_output_type == int:
+                            typing_instruction[&#34;content&#34;] += &#34; &#34; + self._request_integer_llm_message()[&#34;content&#34;]
+                        elif current_output_type == float:
+                            typing_instruction[&#34;content&#34;] += &#34; &#34; + self._request_float_llm_message()[&#34;content&#34;]
+                        elif isinstance(current_output_type, list) and all(isinstance(option, str) for option in current_output_type):
+                            typing_instruction[&#34;content&#34;] += &#34; &#34; + self._request_enumerable_llm_message(current_output_type)[&#34;content&#34;]
+                        elif current_output_type == List[Dict[str, any]]:
+                            # Override the response format
+                            self.model_params[&#34;response_format&#34;] = {&#34;type&#34;: &#34;json_object&#34;}
+                            typing_instruction[&#34;content&#34;] += &#34; &#34; + self._request_list_of_dict_llm_message()[&#34;content&#34;]
+                        elif current_output_type == dict or current_output_type == &#34;json&#34;:
+                            # Override the response format
+                            self.model_params[&#34;response_format&#34;] = {&#34;type&#34;: &#34;json_object&#34;}
+                            typing_instruction[&#34;content&#34;] += &#34; &#34; + self._request_dict_llm_message()[&#34;content&#34;]
+                        elif current_output_type == list:
+                            # Override the response format
+                            self.model_params[&#34;response_format&#34;] = {&#34;type&#34;: &#34;json_object&#34;}
+                            typing_instruction[&#34;content&#34;] += &#34; &#34; + self._request_list_llm_message()[&#34;content&#34;]
+                        # Check if it is actually a pydantic model
+                        elif issubclass(current_output_type, BaseModel):
+                            # Completely override the response format
+                            self.model_params[&#34;response_format&#34;] = current_output_type
+                            typing_instruction = {&#34;role&#34;: &#34;system&#34;, &#34;content&#34;: &#34;Your response **MUST** be a JSON object.&#34;}
+                        elif current_output_type == str:
+                            typing_instruction[&#34;content&#34;] += &#34; &#34; + self._request_str_llm_message()[&#34;content&#34;]
+                            #pass # no coercion needed, it is already a string
+                        else:
+                            raise ValueError(f&#34;Unsupported output type: {current_output_type}&#34;)
+                        
+                        self.messages.append(typing_instruction)
+                    
+                    else: # output_type is None
+                        self.model_params[&#34;response_format&#34;] = None
+                        typing_instruction = {&#34;role&#34;: &#34;system&#34;, &#34;content&#34;: \
+                                                &#34;If you were given instructions before about the **format** of your response, please ignore them from now on. &#34;+
+                                                &#34;The needs of the user have changed. You **must** now use regular text -- not numbers, not booleans, not JSON. &#34;+
+                                                &#34;There are no fields, no types, no special formats. Just regular text appropriate to respond to the last user request.&#34;}
+                        self.messages.append(typing_instruction)
+                        #pass  # nothing here for now
+
+
+            # Call the LLM model with all messages in the conversation
+            model_output = client().send_message(self.messages, **self.model_params)
+
+            if &#39;content&#39; in model_output:
+                self.response_raw = self.response_value = model_output[&#39;content&#39;]
+                logger.debug(f&#34;Model raw &#39;content&#39;  response: {self.response_raw}&#34;)
+                
+                # Add the assistant&#39;s response to the conversation history
+                self.add_assistant_message(self.response_raw)
+                self.conversation_history.append({&#34;messages&#34;: copy.deepcopy(self.messages)})
+
+                # Type coercion if output type is specified
+                if current_output_type is not None:
+                    
+                    if self.enable_json_output_format:
+                        # output is supposed to be a JSON object
+                        self.response_json = self.response_value = utils.extract_json(self.response_raw)
+                        logger.debug(f&#34;Model output JSON response: {self.response_json}&#34;)
+
+                        if self.enable_justification_step and not (hasattr(current_output_type, &#39;model_validate&#39;) or hasattr(current_output_type, &#39;parse_obj&#39;)):
+                            # if justification step is enabled, we expect a JSON object with reasoning (optionally), justification, value, and confidence
+                            # BUT not for Pydantic models which expect direct JSON structure
+                            self.response_reasoning = self.response_json.get(&#34;reasoning&#34;, None)
+                            self.response_value = self.response_json.get(&#34;value&#34;, None)
+                            self.response_justification = self.response_json.get(&#34;justification&#34;, None)
+                            self.response_confidence = self.response_json.get(&#34;confidence&#34;, None)
+                        else:
+                            # For direct JSON output (like Pydantic models), use the whole JSON as the value
+                            self.response_value = self.response_json
+                        
+                    # if output type was specified, we need to coerce the response value
+                    if self.response_value is not None:
+                        if current_output_type == bool:
+                            self.response_value = self._coerce_to_bool(self.response_value)
+                        elif current_output_type == int:
+                            self.response_value = self._coerce_to_integer(self.response_value)
+                        elif current_output_type == float:
+                            self.response_value = self._coerce_to_float(self.response_value)
+                        elif isinstance(current_output_type, list) and all(isinstance(option, str) for option in current_output_type):
+                            self.response_value = self._coerce_to_enumerable(self.response_value, current_output_type)
+                        elif current_output_type == List[Dict[str, any]]:
+                            self.response_value = self._coerce_to_dict_or_list(self.response_value)
+                        elif current_output_type == dict or current_output_type == &#34;json&#34;:
+                            self.response_value = self._coerce_to_dict_or_list(self.response_value)
+                        elif current_output_type == list:
+                            self.response_value = self._coerce_to_list(self.response_value)
+                        elif hasattr(current_output_type, &#39;model_validate&#39;) or hasattr(current_output_type, &#39;parse_obj&#39;):
+                            # Handle Pydantic model - try modern approach first, then fallback
+                            try:
+                                if hasattr(current_output_type, &#39;model_validate&#39;):
+                                    self.response_value = current_output_type.model_validate(self.response_json)
+                                else:
+                                    self.response_value = current_output_type.parse_obj(self.response_json)
+                            except Exception as e:
+                                logger.error(f&#34;Failed to parse Pydantic model: {e}&#34;)
+                                raise
+                        elif current_output_type == str:
+                            pass # no coercion needed, it is already a string
+                        else:
+                            raise ValueError(f&#34;Unsupported output type: {current_output_type}&#34;)
+                    
+                    else:
+                        logger.error(f&#34;Model output is None: {self.response_raw}&#34;)
+                
+                logger.debug(f&#34;Model output coerced response value: {self.response_value}&#34;)
+                logger.debug(f&#34;Model output coerced response justification: {self.response_justification}&#34;)
+                logger.debug(f&#34;Model output coerced response confidence: {self.response_confidence}&#34;)
+
+                return self.response_value
+            else:
+                logger.error(f&#34;Model output does not contain &#39;content&#39; key: {model_output}&#34;)
+                return None
+        
+        except ValueError as ve:
+            # Re-raise ValueError exceptions (like unsupported output type) instead of catching them
+            if &#34;Unsupported output type&#34; in str(ve):
+                raise
+            else:
+                logger.error(f&#34;Error during LLM call: {ve}. Will return None instead of failing.&#34;)
+                return None
+        except Exception as e:
+            logger.error(f&#34;Error during LLM call: {e}. Will return None instead of failing.&#34;)
+            return None
+    
+    def continue_conversation(self, user_message=None, **rendering_configs):
+        &#34;&#34;&#34;
+        Continue the conversation with a new user message and get a response.
+        
+        Args:
+            user_message: The new message from the user
+            rendering_configs: Additional rendering configurations
+            
+        Returns:
+            The content of the model response
+        &#34;&#34;&#34;
+        if user_message:
+            self.add_user_message(user_message)
+        return self.call(**rendering_configs)
+    
+    def reset_conversation(self):
+        &#34;&#34;&#34;
+        Reset the conversation state but keep the initial configuration.
+        
+        Returns:
+            self for method chaining
+        &#34;&#34;&#34;
+        self.messages = []
+        self.response_raw = None
+        self.response_json = None
+        self.response_value = None
+        self.response_justification = None
+        self.response_confidence = None
+        return self
+    
+    def get_conversation_history(self):
+        &#34;&#34;&#34;
+        Get the full conversation history.
+        
+        Returns:
+            List of all messages in the conversation
+        &#34;&#34;&#34;
+        return self.messages
+    
+    # Keep all the existing coercion methods
+    def _coerce_to_bool(self, llm_output):
+        &#34;&#34;&#34;
+        Coerces the LLM output to a boolean value.
+
+        This method looks for the string &#34;True&#34;, &#34;False&#34;, &#34;Yes&#34;, &#34;No&#34;, &#34;Positive&#34;, &#34;Negative&#34; in the LLM output, such that
+          - case is neutralized;
+          - the first occurrence of the string is considered, the rest is ignored. For example,  &#34; Yes, that is true&#34; will be considered &#34;Yes&#34;;
+          - if no such string is found, the method raises an error. So it is important that the prompts actually requests a boolean value. 
+
+        Args:
+            llm_output (str, bool): The LLM output to coerce.
+
+        Returns:
+            The boolean value of the LLM output.
+        &#34;&#34;&#34;
+
+        # if the LLM output is already a boolean, we return it
+        if isinstance(llm_output, bool):
+            return llm_output
+
+        # let&#39;s extract the first occurrence of the string &#34;True&#34;, &#34;False&#34;, &#34;Yes&#34;, &#34;No&#34;, &#34;Positive&#34;, &#34;Negative&#34; in the LLM output.
+        # using a regular expression
+        import re
+        match = re.search(r&#39;\b(?:True|False|Yes|No|Positive|Negative)\b&#39;, llm_output, re.IGNORECASE)
+        if match:
+            first_match = match.group(0).lower()
+            if first_match in [&#34;true&#34;, &#34;yes&#34;, &#34;positive&#34;]:
+                return True
+            elif first_match in [&#34;false&#34;, &#34;no&#34;, &#34;negative&#34;]:
+                return False
+
+        raise ValueError(&#34;Cannot convert the LLM output to a boolean value.&#34;)
+
+    def _request_str_llm_message(self):
+        return {&#34;role&#34;: &#34;user&#34;,
+                &#34;content&#34;: &#34;The `value` field you generate from now on has no special format, it can be any string you find appropriate to the current conversation. &#34;+
+                           &#34;Make sure you move to `value` **all** relevant information you used in reasoning or justification, so that it is not lost. &#34;}
+    
+    def _request_bool_llm_message(self):
+        return {&#34;role&#34;: &#34;user&#34;,
+                &#34;content&#34;: &#34;The `value` field you generate **must** be either &#39;True&#39; or &#39;False&#39;. This is critical for later processing. If you don&#39;t know the correct answer, just output &#39;False&#39;.&#34;}
+
+
+    def _coerce_to_integer(self, llm_output:str):
+        &#34;&#34;&#34;
+        Coerces the LLM output to an integer value.
+
+        This method looks for the first occurrence of an integer in the LLM output, such that
+          - the first occurrence of the integer is considered, the rest is ignored. For example,  &#34;There are 3 cats&#34; will be considered 3;
+          - if no integer is found, the method raises an error. So it is important that the prompts actually requests an integer value. 
+
+        Args:
+            llm_output (str, int): The LLM output to coerce.
+
+        Returns:
+            The integer value of the LLM output.
+        &#34;&#34;&#34;
+
+        # if the LLM output is already an integer, we return it
+        if isinstance(llm_output, int):
+            return llm_output
+        
+        # if it&#39;s a float that represents a whole number, convert it
+        if isinstance(llm_output, float):
+            if llm_output.is_integer():
+                return int(llm_output)
+            else:
+                raise ValueError(&#34;Cannot convert the LLM output to an integer value.&#34;)
+
+        # Convert to string for regex processing
+        llm_output_str = str(llm_output)
+
+        # let&#39;s extract the first occurrence of an integer in the LLM output.
+        # using a regular expression
+        import re
+        # Match integers that are not part of a decimal number
+        # First check if the string contains a decimal point - if so, reject it for integer coercion
+        if &#39;.&#39; in llm_output_str and any(c.isdigit() for c in llm_output_str.split(&#39;.&#39;)[1]):
+            # This looks like a decimal number, not a pure integer
+            raise ValueError(&#34;Cannot convert the LLM output to an integer value.&#34;)
+        
+        match = re.search(r&#39;-?\b\d+\b&#39;, llm_output_str)
+        if match:
+            return int(match.group(0))
+
+        raise ValueError(&#34;Cannot convert the LLM output to an integer value.&#34;)
+
+    def _request_integer_llm_message(self):
+        return {&#34;role&#34;: &#34;user&#34;,
+                &#34;content&#34;: &#34;The `value` field you generate **must** be an integer number (e.g., &#39;1&#39;). This is critical for later processing..&#34;}
+
+    def _coerce_to_float(self, llm_output:str):
+        &#34;&#34;&#34;
+        Coerces the LLM output to a float value.
+
+        This method looks for the first occurrence of a float in the LLM output, such that
+          - the first occurrence of the float is considered, the rest is ignored. For example,  &#34;The price is $3.50&#34; will be considered 3.50;
+          - if no float is found, the method raises an error. So it is important that the prompts actually requests a float value. 
+
+        Args:
+            llm_output (str, float): The LLM output to coerce.
+
+        Returns:
+            The float value of the LLM output.
+        &#34;&#34;&#34;
+
+        # if the LLM output is already a float, we return it
+        if isinstance(llm_output, float):
+            return llm_output
+        
+        # if it&#39;s an integer, convert to float
+        if isinstance(llm_output, int):
+            return float(llm_output)
+
+        # let&#39;s extract the first occurrence of a number (float or int) in the LLM output.
+        # using a regular expression that handles negative numbers and both int/float formats
+        import re
+        match = re.search(r&#39;-?\b\d+(?:\.\d+)?\b&#39;, llm_output)
+        if match:
+            return float(match.group(0))
+
+        raise ValueError(&#34;Cannot convert the LLM output to a float value.&#34;)
+
+    def _request_float_llm_message(self):
+        return {&#34;role&#34;: &#34;user&#34;,
+                &#34;content&#34;: &#34;The `value` field you generate **must** be a float number (e.g., &#39;980.16&#39;). This is critical for later processing.&#34;}
+
+    def _coerce_to_enumerable(self, llm_output:str, options:list):
+        &#34;&#34;&#34;
+        Coerces the LLM output to one of the specified options.
+
+        This method looks for the first occurrence of one of the specified options in the LLM output, such that
+          - the first occurrence of the option is considered, the rest is ignored. For example,  &#34;I prefer cats&#34; will be considered &#34;cats&#34;;
+          - if no option is found, the method raises an error. So it is important that the prompts actually requests one of the specified options. 
+
+        Args:
+            llm_output (str): The LLM output to coerce.
+            options (list): The list of options to consider.
+
+        Returns:
+            The option value of the LLM output.
+        &#34;&#34;&#34;
+
+        # let&#39;s extract the first occurrence of one of the specified options in the LLM output.
+        # using a regular expression
+        import re
+        match = re.search(r&#39;\b(?:&#39; + &#39;|&#39;.join(options) + r&#39;)\b&#39;, llm_output, re.IGNORECASE)
+        if match:
+            # Return the canonical option (from the options list) instead of the matched text
+            matched_text = match.group(0).lower()
+            for option in options:
+                if option.lower() == matched_text:
+                    return option
+            return match.group(0)  # fallback
+
+        raise ValueError(&#34;Cannot find any of the specified options in the LLM output.&#34;)
+
+    def _request_enumerable_llm_message(self, options:list):
+        options_list_as_string = &#39;, &#39;.join([f&#34;&#39;{o}&#39;&#34; for o in options])
+        return {&#34;role&#34;: &#34;user&#34;,
+                &#34;content&#34;: f&#34;The `value` field you generate **must** be exactly one of the following strings: {options_list_as_string}. This is critical for later processing.&#34;}
+
+    def _coerce_to_dict_or_list(self, llm_output:str):
+        &#34;&#34;&#34;
+        Coerces the LLM output to a list or dictionary, i.e., a JSON structure.
+
+        This method looks for a JSON object in the LLM output, such that
+          - the JSON object is considered;
+          - if no JSON object is found, the method raises an error. So it is important that the prompts actually requests a JSON object. 
+
+        Args:
+            llm_output (str): The LLM output to coerce.
+
+        Returns:
+            The dictionary value of the LLM output.
+        &#34;&#34;&#34;
+
+        # if the LLM output is already a dictionary or list, we return it
+        if isinstance(llm_output, (dict, list)):
+            return llm_output
+
+        try:
+            result = utils.extract_json(llm_output)
+            # extract_json returns {} on failure, but we need dict or list
+            if result == {} and not (isinstance(llm_output, str) and (&#39;{}&#39; in llm_output or &#39;{&#39; in llm_output and &#39;}&#39; in llm_output)):
+                raise ValueError(&#34;Cannot convert the LLM output to a dict or list value.&#34;)
+            # Check if result is actually dict or list
+            if not isinstance(result, (dict, list)):
+                raise ValueError(&#34;Cannot convert the LLM output to a dict or list value.&#34;)
+            return result
+        except Exception:
+            raise ValueError(&#34;Cannot convert the LLM output to a dict or list value.&#34;)
+
+    def _request_dict_llm_message(self):
+            return {&#34;role&#34;: &#34;user&#34;,
+                    &#34;content&#34;: &#34;The `value` field you generate **must** be a JSON structure embedded in a string. This is critical for later processing.&#34;}
+
+    def _request_list_of_dict_llm_message(self):
+            return {&#34;role&#34;: &#34;user&#34;,
+                    &#34;content&#34;: &#34;The `value` field you generate **must** be a list of dictionaries, specified as a JSON structure embedded in a string. For example, `[\{...\}, \{...\}, ...]`. This is critical for later processing.&#34;}
+
+    def _coerce_to_list(self, llm_output:str):
+        &#34;&#34;&#34;
+        Coerces the LLM output to a list.
+
+        This method looks for a list in the LLM output, such that
+          - the list is considered;
+          - if no list is found, the method raises an error. So it is important that the prompts actually requests a list. 
+
+        Args:
+            llm_output (str): The LLM output to coerce.
+
+        Returns:
+            The list value of the LLM output.
+        &#34;&#34;&#34;
+
+        # if the LLM output is already a list, we return it
+        if isinstance(llm_output, list):
+            return llm_output
+
+        # must make sure there&#39;s actually a list. Let&#39;s start with regex
+        import re
+        match = re.search(r&#39;\[.*\]&#39;, llm_output)
+        if match:
+            return json.loads(match.group(0))
+
+        raise ValueError(&#34;Cannot convert the LLM output to a list.&#34;)
+
+    def _request_list_llm_message(self):
+        return {&#34;role&#34;: &#34;user&#34;,
+                &#34;content&#34;: &#34;The `value` field you generate **must** be a JSON **list** (e.g., [\&#34;apple\&#34;, 1, 0.9]), NOT a dictionary, always embedded in a string. This is critical for later processing.&#34;}
+
+    def __repr__(self):
+        return f&#34;LLMChat(messages={self.messages}, model_params={self.model_params})&#34;
+
+
+def llm(enable_json_output_format:bool=True, enable_justification_step:bool=True, enable_reasoning_step:bool=False, **model_overrides):
+    &#34;&#34;&#34;
+    Decorator that turns the decorated function into an LLM-based function.
+    The decorated function must either return a string (the instruction to the LLM)
+    or a one-argument function that will be used to post-process the LLM response.
+
+    If the function returns a string, the function&#39;s docstring will be used as the system prompt,
+    and the returned string will be used as the user prompt. If the function returns a function,
+    the parameters of the function will be used instead as the system instructions to the LLM,
+    and the returned function will be used to post-process the LLM response.
+
+
+    The LLM response is coerced to the function&#39;s annotated return type, if present.
+
+    Usage example:
+        @llm(model=&#34;gpt-4-0613&#34;, temperature=0.5, max_tokens=100)
+        def joke():
+            return &#34;Tell me a joke.&#34;
+    
+    Usage example with post-processing:
+        @llm()
+        def unique_joke_list():
+            \&#34;\&#34;\&#34;Creates a list of unique jokes.\&#34;\&#34;\&#34;
+            return lambda x: list(set(x.split(&#34;\n&#34;)))
+    
+    &#34;&#34;&#34;
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            sig = inspect.signature(func)
+            return_type = sig.return_annotation if sig.return_annotation != inspect.Signature.empty else str
+            postprocessing_func = lambda x: x # by default, no post-processing
+            
+            system_prompt = &#34;You are an AI system that executes a computation as defined below.\n\n&#34;
+            if func.__doc__ is not None:
+                system_prompt += func.__doc__.strip() 
+            
+            #
+            # Setup user prompt
+            #
+            if isinstance(result, str):
+                user_prompt = &#34;EXECUTE THE INSTRUCTIONS BELOW:\n\n &#34; + result
+            
+            else:
+                # if there&#39;s a parameter named &#34;self&#34; in the function signature, remove it from args
+                if &#34;self&#34; in sig.parameters:
+                    args = args[1:]
+                
+                # TODO obsolete?
+                #
+                # if we are relying on parameters, they must be named
+                #if len(args) &gt; 0:
+                #    raise ValueError(&#34;Positional arguments are not allowed in LLM-based functions whose body does not return a string.&#34;)               
+
+                user_prompt  = f&#34;Execute your computation as best as you can using the following input parameter values.\n\n&#34;
+                user_prompt += f&#34; ## Unnamed parameters\n{json.dumps(args, indent=4)}\n\n&#34; 
+                user_prompt += f&#34; ## Named parameters\n{json.dumps(kwargs, indent=4)}\n\n&#34; 
+            
+            #
+            # Set the post-processing function if the function returns a function
+            #
+            if inspect.isfunction(result):
+                # uses the returned function as a post-processing function
+                postprocessing_func = result
+            
+            
+            llm_req = LLMChat(system_prompt=system_prompt,
+                              user_prompt=user_prompt,
+                              output_type=return_type,
+                              enable_json_output_format=enable_json_output_format,
+                              enable_justification_step=enable_justification_step,
+                              enable_reasoning_step=enable_reasoning_step,
+                              **model_overrides)
+            
+            llm_result = postprocessing_func(llm_req.call())
+            
+            return llm_result
+        return wrapper
+    return decorator
+
+################################################################################        
+# Model output utilities
+################################################################################
+def extract_json(text: str) -&gt; dict:
+    &#34;&#34;&#34;
+    Extracts a JSON object from a string, ignoring: any text before the first 
+    opening curly brace; and any Markdown opening (```json) or closing(```) tags.
+    &#34;&#34;&#34;
+    try:
+        logger.debug(f&#34;Extracting JSON from text: {text}&#34;)
+
+        # if it already is a dictionary or list, return it
+        if isinstance(text, dict) or isinstance(text, list):
+
+            # validate that all the internal contents are indeed JSON-like
+            try:
+                json.dumps(text)
+            except Exception as e:
+                logger.error(f&#34;Error occurred while validating JSON: {e}. Input text: {text}.&#34;)
+                return {}
+
+            logger.debug(f&#34;Text is already a dictionary. Returning it.&#34;)
+            return text
+
+        filtered_text = &#34;&#34;
+
+        # remove any text before the first opening curly or square braces, using regex. Leave the braces.
+        filtered_text = re.sub(r&#39;^.*?({|\[)&#39;, r&#39;\1&#39;, text, flags=re.DOTALL)
+
+        # remove any trailing text after the LAST closing curly or square braces, using regex. Leave the braces.
+        filtered_text  =  re.sub(r&#39;(}|\])(?!.*(\]|\})).*$&#39;, r&#39;\1&#39;, filtered_text, flags=re.DOTALL)
+        
+        # remove invalid escape sequences, which show up sometimes
+        filtered_text = re.sub(&#34;\\&#39;&#34;, &#34;&#39;&#34;, filtered_text) # replace \&#39; with just &#39;
+        filtered_text = re.sub(&#34;\\,&#34;, &#34;,&#34;, filtered_text)
+
+        # parse the final JSON in a robust manner, to account for potentially messy LLM outputs
+        try:
+            # First try standard JSON parsing
+            # use strict=False to correctly parse new lines, tabs, etc.
+            parsed = json.loads(filtered_text, strict=False)
+        except json.JSONDecodeError:
+            # If JSON parsing fails, try ast.literal_eval which accepts single quotes
+            try:
+                parsed = ast.literal_eval(filtered_text)
+                logger.debug(&#34;Used ast.literal_eval as fallback for single-quoted JSON-like text&#34;)
+            except:
+                # If both fail, try converting single quotes to double quotes and parse again
+                # Replace single-quoted keys and values with double quotes, without using look-behind
+                # This will match single-quoted strings that are keys or values in JSON-like structures
+                # It may not be perfect for all edge cases, but works for most LLM outputs
+                converted_text = re.sub(r&#34;&#39;([^&#39;]*)&#39;&#34;, r&#39;&#34;\1&#34;&#39;, filtered_text)
+                parsed = json.loads(converted_text, strict=False)
+                logger.debug(&#34;Converted single quotes to double quotes before parsing&#34;)
+        
+        # return the parsed JSON object
+        return parsed
+    
+    except Exception as e:
+        logger.error(f&#34;Error occurred while extracting JSON: {e}. Input text: {text}. Filtered text: {filtered_text}&#34;)
+        return {}
+
+def extract_code_block(text: str) -&gt; str:
+    &#34;&#34;&#34;
+    Extracts a code block from a string, ignoring any text before the first 
+    opening triple backticks and any text after the closing triple backticks.
+    &#34;&#34;&#34;
+    try:
+        # remove any text before the first opening triple backticks, using regex. Leave the backticks.
+        text = re.sub(r&#39;^.*?(```)&#39;, r&#39;\1&#39;, text, flags=re.DOTALL)
+
+        # remove any trailing text after the LAST closing triple backticks, using regex. Leave the backticks.
+        text  =  re.sub(r&#39;(```)(?!.*```).*$&#39;, r&#39;\1&#39;, text, flags=re.DOTALL)
+        
+        return text
+    
+    except Exception:
+        return &#34;&#34;
+
+################################################################################
+# Model control utilities
+################################################################################    
+
+def repeat_on_error(retries:int, exceptions:list):
+    &#34;&#34;&#34;
+    Decorator that repeats the specified function call if an exception among those specified occurs, 
+    up to the specified number of retries. If that number of retries is exceeded, the
+    exception is raised. If no exception occurs, the function returns normally.
+
+    Args:
+        retries (int): The number of retries to attempt.
+        exceptions (list): The list of exception classes to catch.
+    &#34;&#34;&#34;
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            for i in range(retries):
+                try:
+                    return func(*args, **kwargs)
+                except tuple(exceptions) as e:
+                    logger.debug(f&#34;Exception occurred: {e}&#34;)
+                    if i == retries - 1:
+                        raise e
+                    else:
+                        logger.debug(f&#34;Retrying ({i+1}/{retries})...&#34;)
+                        continue
+        return wrapper
+    return decorator
+
+ 
+def try_function(func, postcond_func=None, retries=5, exceptions=[Exception]):
+
+    @repeat_on_error(retries=retries, exceptions=exceptions)
+    def aux_apply_func():
+        logger.debug(f&#34;Trying function {func.__name__}...&#34;)
+        result = func()
+        logger.debug(f&#34;Result of function {func.__name__}: {result}&#34;)
+        
+        if postcond_func is not None:
+            if not postcond_func(result):
+                # must raise an exception if the postcondition is not met.
+                raise ValueError(f&#34;Postcondition not met for function {func.__name__}!&#34;)
+
+        return result
+    
+    return aux_apply_func()
+   
+################################################################################
+# Prompt engineering
+################################################################################
+def add_rai_template_variables_if_enabled(template_variables: dict) -&gt; dict:
+    &#34;&#34;&#34;
+    Adds the RAI template variables to the specified dictionary, if the RAI disclaimers are enabled.
+    These can be configured in the config.ini file. If enabled, the variables will then load the RAI disclaimers from the 
+    appropriate files in the prompts directory. Otherwise, the variables will be set to None.
+
+    Args:
+        template_variables (dict): The dictionary of template variables to add the RAI variables to.
+
+    Returns:
+        dict: The updated dictionary of template variables.
+    &#34;&#34;&#34;
+
+    from tinytroupe import config # avoids circular import
+    rai_harmful_content_prevention = config[&#34;Simulation&#34;].getboolean(
+        &#34;RAI_HARMFUL_CONTENT_PREVENTION&#34;, True 
+    )
+    rai_copyright_infringement_prevention = config[&#34;Simulation&#34;].getboolean(
+        &#34;RAI_COPYRIGHT_INFRINGEMENT_PREVENTION&#34;, True
+    )
+
+    # Harmful content
+    with open(os.path.join(os.path.dirname(__file__), &#34;prompts/rai_harmful_content_prevention.md&#34;), &#34;r&#34;) as f:
+        rai_harmful_content_prevention_content = f.read()
+
+    template_variables[&#39;rai_harmful_content_prevention&#39;] = rai_harmful_content_prevention_content if rai_harmful_content_prevention else None
+
+    # Copyright infringement
+    with open(os.path.join(os.path.dirname(__file__), &#34;prompts/rai_copyright_infringement_prevention.md&#34;), &#34;r&#34;) as f:
+        rai_copyright_infringement_prevention_content = f.read()
+
+    template_variables[&#39;rai_copyright_infringement_prevention&#39;] = rai_copyright_infringement_prevention_content if rai_copyright_infringement_prevention else None
+
+    return template_variables
+
+
+################################################################################
+# Truncation
+################################################################################
+
+def truncate_actions_or_stimuli(list_of_actions_or_stimuli: Collection[dict], max_content_length: int) -&gt; Collection[str]:
+    &#34;&#34;&#34;
+    Truncates the content of actions or stimuli at the specified maximum length. Does not modify the original list.
+
+    Args:
+        list_of_actions_or_stimuli (Collection[dict]): The list of actions or stimuli to truncate.
+        max_content_length (int): The maximum length of the content.
+
+    Returns:
+        Collection[str]: The truncated list of actions or stimuli. It is a new list, not a reference to the original list, 
+        to avoid unexpected side effects.
+    &#34;&#34;&#34;
+    cloned_list = copy.deepcopy(list_of_actions_or_stimuli)
+    
+    for element in cloned_list:
+        # the external wrapper of the LLM message: {&#39;role&#39;: ..., &#39;content&#39;: ...}
+        if &#34;content&#34; in element and &#34;role&#34; in element and element[&#34;role&#34;] != &#34;system&#34;:
+            msg_content = element[&#34;content&#34;] 
+
+            # now the actual action or stimulus content
+
+            # has action, stimuli or stimulus as key?
+            if isinstance(msg_content, dict):
+                if &#34;action&#34; in msg_content:
+                    # is content there?
+                    if &#34;content&#34; in msg_content[&#34;action&#34;]:
+                        msg_content[&#34;action&#34;][&#34;content&#34;] = break_text_at_length(msg_content[&#34;action&#34;][&#34;content&#34;], max_content_length)
+                elif &#34;stimulus&#34; in msg_content:
+                    # is content there?
+                    if &#34;content&#34; in msg_content[&#34;stimulus&#34;]:
+                        msg_content[&#34;stimulus&#34;][&#34;content&#34;] = break_text_at_length(msg_content[&#34;stimulus&#34;][&#34;content&#34;], max_content_length)
+                elif &#34;stimuli&#34; in msg_content:
+                    # for each element in the list
+                    for stimulus in msg_content[&#34;stimuli&#34;]:
+                        # is content there?
+                        if &#34;content&#34; in stimulus:
+                            stimulus[&#34;content&#34;] = break_text_at_length(stimulus[&#34;content&#34;], max_content_length)
+
+        # if no condition was met, we just ignore it. It is not an action or a stimulus.
+    
+    return cloned_list</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="tinytroupe.utils.llm.add_rai_template_variables_if_enabled"><code class="name flex">
+<span>def <span class="ident">add_rai_template_variables_if_enabled</span></span>(<span>template_variables: dict) ‑> dict</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds the RAI template variables to the specified dictionary, if the RAI disclaimers are enabled.
+These can be configured in the config.ini file. If enabled, the variables will then load the RAI disclaimers from the
+appropriate files in the prompts directory. Otherwise, the variables will be set to None.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>template_variables</code></strong> :&ensp;<code>dict</code></dt>
+<dd>The dictionary of template variables to add the RAI variables to.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>The updated dictionary of template variables.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_rai_template_variables_if_enabled(template_variables: dict) -&gt; dict:
+    &#34;&#34;&#34;
+    Adds the RAI template variables to the specified dictionary, if the RAI disclaimers are enabled.
+    These can be configured in the config.ini file. If enabled, the variables will then load the RAI disclaimers from the 
+    appropriate files in the prompts directory. Otherwise, the variables will be set to None.
+
+    Args:
+        template_variables (dict): The dictionary of template variables to add the RAI variables to.
+
+    Returns:
+        dict: The updated dictionary of template variables.
+    &#34;&#34;&#34;
+
+    from tinytroupe import config # avoids circular import
+    rai_harmful_content_prevention = config[&#34;Simulation&#34;].getboolean(
+        &#34;RAI_HARMFUL_CONTENT_PREVENTION&#34;, True 
+    )
+    rai_copyright_infringement_prevention = config[&#34;Simulation&#34;].getboolean(
+        &#34;RAI_COPYRIGHT_INFRINGEMENT_PREVENTION&#34;, True
+    )
+
+    # Harmful content
+    with open(os.path.join(os.path.dirname(__file__), &#34;prompts/rai_harmful_content_prevention.md&#34;), &#34;r&#34;) as f:
+        rai_harmful_content_prevention_content = f.read()
+
+    template_variables[&#39;rai_harmful_content_prevention&#39;] = rai_harmful_content_prevention_content if rai_harmful_content_prevention else None
+
+    # Copyright infringement
+    with open(os.path.join(os.path.dirname(__file__), &#34;prompts/rai_copyright_infringement_prevention.md&#34;), &#34;r&#34;) as f:
+        rai_copyright_infringement_prevention_content = f.read()
+
+    template_variables[&#39;rai_copyright_infringement_prevention&#39;] = rai_copyright_infringement_prevention_content if rai_copyright_infringement_prevention else None
+
+    return template_variables</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.utils.llm.compose_initial_LLM_messages_with_templates"><code class="name flex">
+<span>def <span class="ident">compose_initial_LLM_messages_with_templates</span></span>(<span>system_template_name: str, user_template_name: str = None, base_module_folder: str = None, rendering_configs: dict = {}) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Composes the initial messages for the LLM model call, under the assumption that it always involves
+a system (overall task description) and an optional user message (specific task description).
+These messages are composed using the specified templates and rendering configurations.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compose_initial_LLM_messages_with_templates(system_template_name:str, user_template_name:str=None, 
+                                                base_module_folder:str=None,
+                                                rendering_configs:dict={}) -&gt; list:
+    &#34;&#34;&#34;
+    Composes the initial messages for the LLM model call, under the assumption that it always involves 
+    a system (overall task description) and an optional user message (specific task description). 
+    These messages are composed using the specified templates and rendering configurations.
+    &#34;&#34;&#34;
+
+    # ../ to go to the base library folder, because that&#39;s the most natural reference point for the user
+    if base_module_folder is None:
+        sub_folder =  &#34;../prompts/&#34; 
+    else:
+        sub_folder = f&#34;../{base_module_folder}/prompts/&#34;
+
+    base_template_folder = os.path.join(os.path.dirname(__file__), sub_folder)    
+
+    system_prompt_template_path = os.path.join(base_template_folder, f&#39;{system_template_name}&#39;)
+    user_prompt_template_path = os.path.join(base_template_folder, f&#39;{user_template_name}&#39;)
+
+    messages = []
+
+    messages.append({&#34;role&#34;: &#34;system&#34;, 
+                         &#34;content&#34;: chevron.render(
+                             open(system_prompt_template_path).read(), 
+                             rendering_configs)})
+    
+    # optionally add a user message
+    if user_template_name is not None:
+        messages.append({&#34;role&#34;: &#34;user&#34;, 
+                            &#34;content&#34;: chevron.render(
+                                    open(user_prompt_template_path).read(), 
+                                    rendering_configs)})
+    return messages</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.utils.llm.extract_code_block"><code class="name flex">
+<span>def <span class="ident">extract_code_block</span></span>(<span>text: str) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Extracts a code block from a string, ignoring any text before the first
+opening triple backticks and any text after the closing triple backticks.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def extract_code_block(text: str) -&gt; str:
+    &#34;&#34;&#34;
+    Extracts a code block from a string, ignoring any text before the first 
+    opening triple backticks and any text after the closing triple backticks.
+    &#34;&#34;&#34;
+    try:
+        # remove any text before the first opening triple backticks, using regex. Leave the backticks.
+        text = re.sub(r&#39;^.*?(```)&#39;, r&#39;\1&#39;, text, flags=re.DOTALL)
+
+        # remove any trailing text after the LAST closing triple backticks, using regex. Leave the backticks.
+        text  =  re.sub(r&#39;(```)(?!.*```).*$&#39;, r&#39;\1&#39;, text, flags=re.DOTALL)
+        
+        return text
+    
+    except Exception:
+        return &#34;&#34;</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.utils.llm.extract_json"><code class="name flex">
+<span>def <span class="ident">extract_json</span></span>(<span>text: str) ‑> dict</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Extracts a JSON object from a string, ignoring: any text before the first
+opening curly brace; and any Markdown opening (<code>json) or closing(</code>) tags.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def extract_json(text: str) -&gt; dict:
+    &#34;&#34;&#34;
+    Extracts a JSON object from a string, ignoring: any text before the first 
+    opening curly brace; and any Markdown opening (```json) or closing(```) tags.
+    &#34;&#34;&#34;
+    try:
+        logger.debug(f&#34;Extracting JSON from text: {text}&#34;)
+
+        # if it already is a dictionary or list, return it
+        if isinstance(text, dict) or isinstance(text, list):
+
+            # validate that all the internal contents are indeed JSON-like
+            try:
+                json.dumps(text)
+            except Exception as e:
+                logger.error(f&#34;Error occurred while validating JSON: {e}. Input text: {text}.&#34;)
+                return {}
+
+            logger.debug(f&#34;Text is already a dictionary. Returning it.&#34;)
+            return text
+
+        filtered_text = &#34;&#34;
+
+        # remove any text before the first opening curly or square braces, using regex. Leave the braces.
+        filtered_text = re.sub(r&#39;^.*?({|\[)&#39;, r&#39;\1&#39;, text, flags=re.DOTALL)
+
+        # remove any trailing text after the LAST closing curly or square braces, using regex. Leave the braces.
+        filtered_text  =  re.sub(r&#39;(}|\])(?!.*(\]|\})).*$&#39;, r&#39;\1&#39;, filtered_text, flags=re.DOTALL)
+        
+        # remove invalid escape sequences, which show up sometimes
+        filtered_text = re.sub(&#34;\\&#39;&#34;, &#34;&#39;&#34;, filtered_text) # replace \&#39; with just &#39;
+        filtered_text = re.sub(&#34;\\,&#34;, &#34;,&#34;, filtered_text)
+
+        # parse the final JSON in a robust manner, to account for potentially messy LLM outputs
+        try:
+            # First try standard JSON parsing
+            # use strict=False to correctly parse new lines, tabs, etc.
+            parsed = json.loads(filtered_text, strict=False)
+        except json.JSONDecodeError:
+            # If JSON parsing fails, try ast.literal_eval which accepts single quotes
+            try:
+                parsed = ast.literal_eval(filtered_text)
+                logger.debug(&#34;Used ast.literal_eval as fallback for single-quoted JSON-like text&#34;)
+            except:
+                # If both fail, try converting single quotes to double quotes and parse again
+                # Replace single-quoted keys and values with double quotes, without using look-behind
+                # This will match single-quoted strings that are keys or values in JSON-like structures
+                # It may not be perfect for all edge cases, but works for most LLM outputs
+                converted_text = re.sub(r&#34;&#39;([^&#39;]*)&#39;&#34;, r&#39;&#34;\1&#34;&#39;, filtered_text)
+                parsed = json.loads(converted_text, strict=False)
+                logger.debug(&#34;Converted single quotes to double quotes before parsing&#34;)
+        
+        # return the parsed JSON object
+        return parsed
+    
+    except Exception as e:
+        logger.error(f&#34;Error occurred while extracting JSON: {e}. Input text: {text}. Filtered text: {filtered_text}&#34;)
+        return {}</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.utils.llm.llm"><code class="name flex">
+<span>def <span class="ident">llm</span></span>(<span>enable_json_output_format: bool = True, enable_justification_step: bool = True, enable_reasoning_step: bool = False, **model_overrides)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Decorator that turns the decorated function into an LLM-based function.
+The decorated function must either return a string (the instruction to the LLM)
+or a one-argument function that will be used to post-process the LLM response.</p>
+<pre><code>If the function returns a string, the function's docstring will be used as the system prompt,
+and the returned string will be used as the user prompt. If the function returns a function,
+the parameters of the function will be used instead as the system instructions to the LLM,
+and the returned function will be used to post-process the LLM response.
+
+
+The LLM response is coerced to the function's annotated return type, if present.
+
+Usage example:
+    @llm(model="gpt-4-0613", temperature=0.5, max_tokens=100)
+    def joke():
+        return "Tell me a joke."
+
+Usage example with post-processing:
+    @llm()
+    def unique_joke_list():
+        """Creates a list of unique jokes."""
+        return lambda x: list(set(x.split("
+</code></pre>
+<p>")))</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def llm(enable_json_output_format:bool=True, enable_justification_step:bool=True, enable_reasoning_step:bool=False, **model_overrides):
+    &#34;&#34;&#34;
+    Decorator that turns the decorated function into an LLM-based function.
+    The decorated function must either return a string (the instruction to the LLM)
+    or a one-argument function that will be used to post-process the LLM response.
+
+    If the function returns a string, the function&#39;s docstring will be used as the system prompt,
+    and the returned string will be used as the user prompt. If the function returns a function,
+    the parameters of the function will be used instead as the system instructions to the LLM,
+    and the returned function will be used to post-process the LLM response.
+
+
+    The LLM response is coerced to the function&#39;s annotated return type, if present.
+
+    Usage example:
+        @llm(model=&#34;gpt-4-0613&#34;, temperature=0.5, max_tokens=100)
+        def joke():
+            return &#34;Tell me a joke.&#34;
+    
+    Usage example with post-processing:
+        @llm()
+        def unique_joke_list():
+            \&#34;\&#34;\&#34;Creates a list of unique jokes.\&#34;\&#34;\&#34;
+            return lambda x: list(set(x.split(&#34;\n&#34;)))
+    
+    &#34;&#34;&#34;
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            sig = inspect.signature(func)
+            return_type = sig.return_annotation if sig.return_annotation != inspect.Signature.empty else str
+            postprocessing_func = lambda x: x # by default, no post-processing
+            
+            system_prompt = &#34;You are an AI system that executes a computation as defined below.\n\n&#34;
+            if func.__doc__ is not None:
+                system_prompt += func.__doc__.strip() 
+            
+            #
+            # Setup user prompt
+            #
+            if isinstance(result, str):
+                user_prompt = &#34;EXECUTE THE INSTRUCTIONS BELOW:\n\n &#34; + result
+            
+            else:
+                # if there&#39;s a parameter named &#34;self&#34; in the function signature, remove it from args
+                if &#34;self&#34; in sig.parameters:
+                    args = args[1:]
+                
+                # TODO obsolete?
+                #
+                # if we are relying on parameters, they must be named
+                #if len(args) &gt; 0:
+                #    raise ValueError(&#34;Positional arguments are not allowed in LLM-based functions whose body does not return a string.&#34;)               
+
+                user_prompt  = f&#34;Execute your computation as best as you can using the following input parameter values.\n\n&#34;
+                user_prompt += f&#34; ## Unnamed parameters\n{json.dumps(args, indent=4)}\n\n&#34; 
+                user_prompt += f&#34; ## Named parameters\n{json.dumps(kwargs, indent=4)}\n\n&#34; 
+            
+            #
+            # Set the post-processing function if the function returns a function
+            #
+            if inspect.isfunction(result):
+                # uses the returned function as a post-processing function
+                postprocessing_func = result
+            
+            
+            llm_req = LLMChat(system_prompt=system_prompt,
+                              user_prompt=user_prompt,
+                              output_type=return_type,
+                              enable_json_output_format=enable_json_output_format,
+                              enable_justification_step=enable_justification_step,
+                              enable_reasoning_step=enable_reasoning_step,
+                              **model_overrides)
+            
+            llm_result = postprocessing_func(llm_req.call())
+            
+            return llm_result
+        return wrapper
+    return decorator</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.utils.llm.repeat_on_error"><code class="name flex">
+<span>def <span class="ident">repeat_on_error</span></span>(<span>retries: int, exceptions: list)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Decorator that repeats the specified function call if an exception among those specified occurs,
+up to the specified number of retries. If that number of retries is exceeded, the
+exception is raised. If no exception occurs, the function returns normally.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>retries</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of retries to attempt.</dd>
+<dt><strong><code>exceptions</code></strong> :&ensp;<code>list</code></dt>
+<dd>The list of exception classes to catch.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def repeat_on_error(retries:int, exceptions:list):
+    &#34;&#34;&#34;
+    Decorator that repeats the specified function call if an exception among those specified occurs, 
+    up to the specified number of retries. If that number of retries is exceeded, the
+    exception is raised. If no exception occurs, the function returns normally.
+
+    Args:
+        retries (int): The number of retries to attempt.
+        exceptions (list): The list of exception classes to catch.
+    &#34;&#34;&#34;
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            for i in range(retries):
+                try:
+                    return func(*args, **kwargs)
+                except tuple(exceptions) as e:
+                    logger.debug(f&#34;Exception occurred: {e}&#34;)
+                    if i == retries - 1:
+                        raise e
+                    else:
+                        logger.debug(f&#34;Retrying ({i+1}/{retries})...&#34;)
+                        continue
+        return wrapper
+    return decorator</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.utils.llm.truncate_actions_or_stimuli"><code class="name flex">
+<span>def <span class="ident">truncate_actions_or_stimuli</span></span>(<span>list_of_actions_or_stimuli: Collection[dict], max_content_length: int) ‑> Collection[str]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Truncates the content of actions or stimuli at the specified maximum length. Does not modify the original list.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>list_of_actions_or_stimuli</code></strong> :&ensp;<code>Collection[dict]</code></dt>
+<dd>The list of actions or stimuli to truncate.</dd>
+<dt><strong><code>max_content_length</code></strong> :&ensp;<code>int</code></dt>
+<dd>The maximum length of the content.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Collection[str]</code></dt>
+<dd>The truncated list of actions or stimuli. It is a new list, not a reference to the original list, </dd>
+</dl>
+<p>to avoid unexpected side effects.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def truncate_actions_or_stimuli(list_of_actions_or_stimuli: Collection[dict], max_content_length: int) -&gt; Collection[str]:
+    &#34;&#34;&#34;
+    Truncates the content of actions or stimuli at the specified maximum length. Does not modify the original list.
+
+    Args:
+        list_of_actions_or_stimuli (Collection[dict]): The list of actions or stimuli to truncate.
+        max_content_length (int): The maximum length of the content.
+
+    Returns:
+        Collection[str]: The truncated list of actions or stimuli. It is a new list, not a reference to the original list, 
+        to avoid unexpected side effects.
+    &#34;&#34;&#34;
+    cloned_list = copy.deepcopy(list_of_actions_or_stimuli)
+    
+    for element in cloned_list:
+        # the external wrapper of the LLM message: {&#39;role&#39;: ..., &#39;content&#39;: ...}
+        if &#34;content&#34; in element and &#34;role&#34; in element and element[&#34;role&#34;] != &#34;system&#34;:
+            msg_content = element[&#34;content&#34;] 
+
+            # now the actual action or stimulus content
+
+            # has action, stimuli or stimulus as key?
+            if isinstance(msg_content, dict):
+                if &#34;action&#34; in msg_content:
+                    # is content there?
+                    if &#34;content&#34; in msg_content[&#34;action&#34;]:
+                        msg_content[&#34;action&#34;][&#34;content&#34;] = break_text_at_length(msg_content[&#34;action&#34;][&#34;content&#34;], max_content_length)
+                elif &#34;stimulus&#34; in msg_content:
+                    # is content there?
+                    if &#34;content&#34; in msg_content[&#34;stimulus&#34;]:
+                        msg_content[&#34;stimulus&#34;][&#34;content&#34;] = break_text_at_length(msg_content[&#34;stimulus&#34;][&#34;content&#34;], max_content_length)
+                elif &#34;stimuli&#34; in msg_content:
+                    # for each element in the list
+                    for stimulus in msg_content[&#34;stimuli&#34;]:
+                        # is content there?
+                        if &#34;content&#34; in stimulus:
+                            stimulus[&#34;content&#34;] = break_text_at_length(stimulus[&#34;content&#34;], max_content_length)
+
+        # if no condition was met, we just ignore it. It is not an action or a stimulus.
+    
+    return cloned_list</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.utils.llm.try_function"><code class="name flex">
+<span>def <span class="ident">try_function</span></span>(<span>func, postcond_func=None, retries=5, exceptions=[&lt;class &#x27;Exception&#x27;&gt;])</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def try_function(func, postcond_func=None, retries=5, exceptions=[Exception]):
+
+    @repeat_on_error(retries=retries, exceptions=exceptions)
+    def aux_apply_func():
+        logger.debug(f&#34;Trying function {func.__name__}...&#34;)
+        result = func()
+        logger.debug(f&#34;Result of function {func.__name__}: {result}&#34;)
+        
+        if postcond_func is not None:
+            if not postcond_func(result):
+                # must raise an exception if the postcondition is not met.
+                raise ValueError(f&#34;Postcondition not met for function {func.__name__}!&#34;)
+
+        return result
+    
+    return aux_apply_func()</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="tinytroupe.utils.llm.LLMChat"><code class="flex name class">
+<span>class <span class="ident">LLMChat</span></span>
+<span>(</span><span>system_template_name: str = None, system_prompt: str = None, user_template_name: str = None, user_prompt: str = None, base_module_folder=None, output_type=None, enable_json_output_format: bool = True, enable_justification_step: bool = True, enable_reasoning_step: bool = False, **model_params)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A class that represents an ongoing LLM conversation. It maintains the conversation history,
+allows adding new messages, and handles model output type coercion.</p>
+<p>Initializes an LLMChat instance with the specified system and user templates, or the system and user prompts.
+If a template is specified, the corresponding prompt must be None, and vice versa.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>system_template_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of the system template file.</dd>
+<dt><strong><code>system_prompt</code></strong> :&ensp;<code>str</code></dt>
+<dd>System prompt content.</dd>
+<dt><strong><code>user_template_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of the user template file.</dd>
+<dt><strong><code>user_prompt</code></strong> :&ensp;<code>str</code></dt>
+<dd>User prompt content.</dd>
+<dt><strong><code>base_module_folder</code></strong> :&ensp;<code>str</code></dt>
+<dd>Optional subfolder path within the library where templates are located.</dd>
+<dt><strong><code>output_type</code></strong> :&ensp;<code>type</code></dt>
+<dd>Expected type of the model output.</dd>
+<dt><strong><code>enable_reasoning_step</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Flag to enable reasoning step in the conversation. This IS NOT the use of "reasoning models" (e.g., o1, o3),
+but rather the use of an additional reasoning step in the regular text completion.</dd>
+<dt><strong><code>enable_justification_step</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Flag to enable justification step in the conversation. Must be True if reasoning step is enabled as well.</dd>
+<dt><strong><code>enable_json_output_format</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Flag to enable JSON output format for the model response. Must be True if reasoning or justification steps are enabled.</dd>
+<dt><strong><code>**model_params</code></strong></dt>
+<dd>Additional parameters for the LLM model call.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LLMChat:
+    &#34;&#34;&#34;
+    A class that represents an ongoing LLM conversation. It maintains the conversation history,
+    allows adding new messages, and handles model output type coercion.
+    &#34;&#34;&#34;
+
+    def __init__(self, system_template_name:str=None, system_prompt:str=None,
+                 user_template_name:str=None, user_prompt:str=None,
+                 base_module_folder=None,
+                 output_type=None,
+                 enable_json_output_format:bool=True,
+                 enable_justification_step:bool=True,
+                 enable_reasoning_step:bool=False,
+                 **model_params):
+        &#34;&#34;&#34;
+        Initializes an LLMChat instance with the specified system and user templates, or the system and user prompts.
+        If a template is specified, the corresponding prompt must be None, and vice versa.
+
+        Args:
+            system_template_name (str): Name of the system template file.
+            system_prompt (str): System prompt content.
+            user_template_name (str): Name of the user template file.
+            user_prompt (str): User prompt content.
+            base_module_folder (str): Optional subfolder path within the library where templates are located.
+            output_type (type): Expected type of the model output.
+            enable_reasoning_step (bool): Flag to enable reasoning step in the conversation. This IS NOT the use of &#34;reasoning models&#34; (e.g., o1, o3),
+              but rather the use of an additional reasoning step in the regular text completion.
+            enable_justification_step (bool): Flag to enable justification step in the conversation. Must be True if reasoning step is enabled as well.
+            enable_json_output_format (bool): Flag to enable JSON output format for the model response. Must be True if reasoning or justification steps are enabled.
+            **model_params: Additional parameters for the LLM model call.
+
+        &#34;&#34;&#34;
+        if (system_template_name is not None and system_prompt is not None) or \
+        (user_template_name is not None and user_prompt is not None) or\
+        (system_template_name is None and system_prompt is None) or \
+        (user_template_name is None and user_prompt is None):
+            raise ValueError(&#34;Either the template or the prompt must be specified, but not both.&#34;)
+
+        self.base_module_folder = base_module_folder
+
+        self.system_template_name = system_template_name
+        self.user_template_name = user_template_name
+
+        self.system_prompt = textwrap.dedent(system_prompt) if system_prompt is not None else None
+        self.user_prompt = textwrap.dedent(user_prompt) if user_prompt is not None else None
+
+        self.output_type = output_type
+
+        self.enable_reasoning_step = enable_reasoning_step
+        self.enable_justification_step = enable_justification_step
+        self.enable_json_output_format = enable_json_output_format
+
+        self.model_params = model_params
+        
+        # Conversation history
+        self.messages = []
+        self.conversation_history = []
+        
+        # Response tracking
+        self.response_raw = None
+        self.response_json = None
+        self.response_reasoning = None
+        self.response_value = None
+        self.response_justification = None
+        self.response_confidence = None
+        
+    def __call__(self, *args, **kwds):
+        return self.call(*args, **kwds)
+        
+    def _render_template(self, template_name, base_module_folder=None, rendering_configs={}):
+        &#34;&#34;&#34;
+        Helper method to render templates for messages.
+        
+        Args:
+            template_name: Name of the template file
+            base_module_folder: Optional subfolder path within the library
+            rendering_configs: Configuration variables for template rendering
+            
+        Returns:
+            Rendered template content
+        &#34;&#34;&#34;
+        if base_module_folder is None:
+            sub_folder =  &#34;../prompts/&#34; 
+        else:
+            sub_folder = f&#34;../{base_module_folder}/prompts/&#34;
+            
+        base_template_folder = os.path.join(os.path.dirname(__file__), sub_folder)
+        template_path = os.path.join(base_template_folder, template_name)
+        
+        return chevron.render(open(template_path).read(), rendering_configs)
+
+    def add_user_message(self, message=None, template_name=None, base_module_folder=None, rendering_configs={}):
+        &#34;&#34;&#34;
+        Add a user message to the conversation.
+        
+        Args:
+            message: The direct message content from the user (mutually exclusive with template_name)
+            template_name: Optional template file name to use for the message
+            base_module_folder: Optional subfolder for template location
+            rendering_configs: Configuration variables for template rendering
+            
+        Returns:
+            self for method chaining
+        &#34;&#34;&#34;
+        if message is not None and template_name is not None:
+            raise ValueError(&#34;Either message or template_name must be specified, but not both.&#34;)
+        
+        if template_name is not None:
+            content = self._render_template(template_name, base_module_folder, rendering_configs)
+        else:
+            content = textwrap.dedent(message)
+            
+        self.messages.append({&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: content})
+        return self
+        
+    def add_system_message(self, message=None, template_name=None, base_module_folder=None, rendering_configs={}):
+        &#34;&#34;&#34;
+        Add a system message to the conversation.
+        
+        Args:
+            message: The direct message content from the system (mutually exclusive with template_name)
+            template_name: Optional template file name to use for the message
+            base_module_folder: Optional subfolder for template location
+            rendering_configs: Configuration variables for template rendering
+            
+        Returns:
+            self for method chaining
+        &#34;&#34;&#34;
+        if message is not None and template_name is not None:
+            raise ValueError(&#34;Either message or template_name must be specified, but not both.&#34;)
+        
+        if template_name is not None:
+            content = self._render_template(template_name, base_module_folder, rendering_configs)
+        else:
+            content = textwrap.dedent(message)
+            
+        self.messages.append({&#34;role&#34;: &#34;system&#34;, &#34;content&#34;: content})
+        return self
+    
+    def add_assistant_message(self, message=None, template_name=None, base_module_folder=None, rendering_configs={}):
+        &#34;&#34;&#34;
+        Add an assistant message to the conversation.
+        
+        Args:
+            message: The direct message content from the assistant (mutually exclusive with template_name)
+            template_name: Optional template file name to use for the message
+            base_module_folder: Optional subfolder for template location
+            rendering_configs: Configuration variables for template rendering
+            
+        Returns:
+            self for method chaining
+        &#34;&#34;&#34;
+        if message is not None and template_name is not None:
+            raise ValueError(&#34;Either message or template_name must be specified, but not both.&#34;)
+        
+        if template_name is not None:
+            content = self._render_template(template_name, base_module_folder, rendering_configs)
+        else:
+            content = textwrap.dedent(message)
+            
+        self.messages.append({&#34;role&#34;: &#34;assistant&#34;, &#34;content&#34;: content})
+        return self
+
+    def call(self, output_type=&#34;default&#34;, 
+                   enable_json_output_format:bool=None,        
+                   enable_justification_step:bool=None,
+                   enable_reasoning_step:bool=None, 
+                   **rendering_configs):
+        &#34;&#34;&#34;
+        Initiates or continues the conversation with the LLM model using the current message history.
+
+        Args:
+            output_type: Optional parameter to override the output type for this specific call. If set to &#34;default&#34;, it uses the instance&#39;s output_type.
+                         If set to None, removes all output formatting and coercion.
+            enable_json_output_format: Optional flag to enable JSON output format for the model response. If None, uses the instance&#39;s setting.
+            enable_justification_step: Optional flag to enable justification step in the conversation. If None, uses the instance&#39;s setting.
+            enable_reasoning_step: Optional flag to enable reasoning step in the conversation. If None, uses the instance&#39;s setting.
+            rendering_configs: The rendering configurations (template variables) to use when composing the initial messages.
+
+        Returns:
+            The content of the model response.
+        &#34;&#34;&#34;
+        from tinytroupe.openai_utils import client # import here to avoid circular import
+
+        try:
+
+            # Initialize the conversation if this is the first call
+            if not self.messages:
+                if self.system_template_name is not None and self.user_template_name is not None:
+                    self.messages = utils.compose_initial_LLM_messages_with_templates(
+                        self.system_template_name, 
+                        self.user_template_name, 
+                        base_module_folder=self.base_module_folder,
+                        rendering_configs=rendering_configs
+                    )
+                else:
+                    if self.system_prompt:
+                        self.messages.append({&#34;role&#34;: &#34;system&#34;, &#34;content&#34;: self.system_prompt})
+                    if self.user_prompt:
+                        self.messages.append({&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: self.user_prompt})
+
+            # Use the provided output_type if specified, otherwise fall back to the instance&#39;s output_type
+            current_output_type = output_type if output_type != &#34;default&#34; else self.output_type
+
+            # Set up typing for the output
+            if current_output_type is not None:
+                
+                # TODO obsolete?
+                #
+                ## Add type coercion instructions if not already added
+                #if not any(msg.get(&#34;content&#34;, &#34;&#34;).startswith(&#34;In your response, you **MUST** provide a value&#34;) 
+                #          for msg in self.messages if msg.get(&#34;role&#34;) == &#34;system&#34;):
+                
+                # the user can override the response format by specifying it in the model_params, otherwise
+                # we will use the default response format
+                if &#34;response_format&#34; not in self.model_params:
+
+                    if utils.first_non_none(enable_json_output_format, self.enable_json_output_format):
+
+                        self.model_params[&#34;response_format&#34;] = {&#34;type&#34;: &#34;json_object&#34;}
+
+                        typing_instruction = {&#34;role&#34;: &#34;system&#34;,
+                            &#34;content&#34;: &#34;Your response **MUST** be a JSON object.&#34;}
+
+                        # Special justification format can be used (will also include confidence level)
+                        if utils.first_non_none(enable_justification_step, self.enable_justification_step):
+
+                            # Add reasoning step if enabled provides further mechanism to think step-by-step
+                            if not (utils.first_non_none(enable_reasoning_step, self.enable_reasoning_step)):
+                                # Default structured output
+                                self.model_params[&#34;response_format&#34;] = LLMScalarWithJustificationResponse
+                                
+                                typing_instruction = {&#34;role&#34;: &#34;system&#34;,
+                                    &#34;content&#34;: &#34;In your response, you **MUST** provide a value, along with a justification and your confidence level that the value and justification are correct (0.0 means no confidence, 1.0 means complete confidence). &#34;+
+                                    &#34;Furtheremore, your response **MUST** be a JSON object with the following structure: {\&#34;justification\&#34;: justification, \&#34;value\&#34;: value, \&#34;confidence\&#34;: confidence}. &#34;+
+                                    &#34;Note that \&#34;justification\&#34; comes first in order to help you think about the value you are providing.&#34;}
+                            
+                            else: 
+                                # Override the response format to also use a reasoning step
+                                self.model_params[&#34;response_format&#34;] = LLMScalarWithJustificationAndReasoningResponse
+                                
+                                typing_instruction = {&#34;role&#34;: &#34;system&#34;,
+                                    &#34;content&#34;: \
+                                        &#34;In your response, you **FIRST** think step-by-step on how you are going to compute the value, and you put this reasoning in the \&#34;reasoning\&#34; field (which must come before all others). &#34;+
+                                        &#34;This allows you to think carefully as much as you need to deduce the best and most correct value. &#34;+
+                                        &#34;After that, you **MUST** provide the resulting value, along with a justification (which can tap into the previous reasoning), and your confidence level that the value and justification are correct (0.0 means no confidence, 1.0 means complete confidence).&#34;+
+                                        &#34;Furtheremore, your response **MUST** be a JSON object with the following structure: {\&#34;reasoning\&#34;: reasoning, \&#34;justification\&#34;: justification, \&#34;value\&#34;: value, \&#34;confidence\&#34;: confidence}.&#34; +
+                                        &#34; Note that \&#34;justification\&#34; comes after \&#34;reasoning\&#34; but before \&#34;value\&#34; to help with further formulation of the resulting \&#34;value\&#34;.&#34;}
+                        
+                    
+                        # Specify the value type
+                        if current_output_type == bool:
+                            typing_instruction[&#34;content&#34;] += &#34; &#34; + self._request_bool_llm_message()[&#34;content&#34;]
+                        elif current_output_type == int:
+                            typing_instruction[&#34;content&#34;] += &#34; &#34; + self._request_integer_llm_message()[&#34;content&#34;]
+                        elif current_output_type == float:
+                            typing_instruction[&#34;content&#34;] += &#34; &#34; + self._request_float_llm_message()[&#34;content&#34;]
+                        elif isinstance(current_output_type, list) and all(isinstance(option, str) for option in current_output_type):
+                            typing_instruction[&#34;content&#34;] += &#34; &#34; + self._request_enumerable_llm_message(current_output_type)[&#34;content&#34;]
+                        elif current_output_type == List[Dict[str, any]]:
+                            # Override the response format
+                            self.model_params[&#34;response_format&#34;] = {&#34;type&#34;: &#34;json_object&#34;}
+                            typing_instruction[&#34;content&#34;] += &#34; &#34; + self._request_list_of_dict_llm_message()[&#34;content&#34;]
+                        elif current_output_type == dict or current_output_type == &#34;json&#34;:
+                            # Override the response format
+                            self.model_params[&#34;response_format&#34;] = {&#34;type&#34;: &#34;json_object&#34;}
+                            typing_instruction[&#34;content&#34;] += &#34; &#34; + self._request_dict_llm_message()[&#34;content&#34;]
+                        elif current_output_type == list:
+                            # Override the response format
+                            self.model_params[&#34;response_format&#34;] = {&#34;type&#34;: &#34;json_object&#34;}
+                            typing_instruction[&#34;content&#34;] += &#34; &#34; + self._request_list_llm_message()[&#34;content&#34;]
+                        # Check if it is actually a pydantic model
+                        elif issubclass(current_output_type, BaseModel):
+                            # Completely override the response format
+                            self.model_params[&#34;response_format&#34;] = current_output_type
+                            typing_instruction = {&#34;role&#34;: &#34;system&#34;, &#34;content&#34;: &#34;Your response **MUST** be a JSON object.&#34;}
+                        elif current_output_type == str:
+                            typing_instruction[&#34;content&#34;] += &#34; &#34; + self._request_str_llm_message()[&#34;content&#34;]
+                            #pass # no coercion needed, it is already a string
+                        else:
+                            raise ValueError(f&#34;Unsupported output type: {current_output_type}&#34;)
+                        
+                        self.messages.append(typing_instruction)
+                    
+                    else: # output_type is None
+                        self.model_params[&#34;response_format&#34;] = None
+                        typing_instruction = {&#34;role&#34;: &#34;system&#34;, &#34;content&#34;: \
+                                                &#34;If you were given instructions before about the **format** of your response, please ignore them from now on. &#34;+
+                                                &#34;The needs of the user have changed. You **must** now use regular text -- not numbers, not booleans, not JSON. &#34;+
+                                                &#34;There are no fields, no types, no special formats. Just regular text appropriate to respond to the last user request.&#34;}
+                        self.messages.append(typing_instruction)
+                        #pass  # nothing here for now
+
+
+            # Call the LLM model with all messages in the conversation
+            model_output = client().send_message(self.messages, **self.model_params)
+
+            if &#39;content&#39; in model_output:
+                self.response_raw = self.response_value = model_output[&#39;content&#39;]
+                logger.debug(f&#34;Model raw &#39;content&#39;  response: {self.response_raw}&#34;)
+                
+                # Add the assistant&#39;s response to the conversation history
+                self.add_assistant_message(self.response_raw)
+                self.conversation_history.append({&#34;messages&#34;: copy.deepcopy(self.messages)})
+
+                # Type coercion if output type is specified
+                if current_output_type is not None:
+                    
+                    if self.enable_json_output_format:
+                        # output is supposed to be a JSON object
+                        self.response_json = self.response_value = utils.extract_json(self.response_raw)
+                        logger.debug(f&#34;Model output JSON response: {self.response_json}&#34;)
+
+                        if self.enable_justification_step and not (hasattr(current_output_type, &#39;model_validate&#39;) or hasattr(current_output_type, &#39;parse_obj&#39;)):
+                            # if justification step is enabled, we expect a JSON object with reasoning (optionally), justification, value, and confidence
+                            # BUT not for Pydantic models which expect direct JSON structure
+                            self.response_reasoning = self.response_json.get(&#34;reasoning&#34;, None)
+                            self.response_value = self.response_json.get(&#34;value&#34;, None)
+                            self.response_justification = self.response_json.get(&#34;justification&#34;, None)
+                            self.response_confidence = self.response_json.get(&#34;confidence&#34;, None)
+                        else:
+                            # For direct JSON output (like Pydantic models), use the whole JSON as the value
+                            self.response_value = self.response_json
+                        
+                    # if output type was specified, we need to coerce the response value
+                    if self.response_value is not None:
+                        if current_output_type == bool:
+                            self.response_value = self._coerce_to_bool(self.response_value)
+                        elif current_output_type == int:
+                            self.response_value = self._coerce_to_integer(self.response_value)
+                        elif current_output_type == float:
+                            self.response_value = self._coerce_to_float(self.response_value)
+                        elif isinstance(current_output_type, list) and all(isinstance(option, str) for option in current_output_type):
+                            self.response_value = self._coerce_to_enumerable(self.response_value, current_output_type)
+                        elif current_output_type == List[Dict[str, any]]:
+                            self.response_value = self._coerce_to_dict_or_list(self.response_value)
+                        elif current_output_type == dict or current_output_type == &#34;json&#34;:
+                            self.response_value = self._coerce_to_dict_or_list(self.response_value)
+                        elif current_output_type == list:
+                            self.response_value = self._coerce_to_list(self.response_value)
+                        elif hasattr(current_output_type, &#39;model_validate&#39;) or hasattr(current_output_type, &#39;parse_obj&#39;):
+                            # Handle Pydantic model - try modern approach first, then fallback
+                            try:
+                                if hasattr(current_output_type, &#39;model_validate&#39;):
+                                    self.response_value = current_output_type.model_validate(self.response_json)
+                                else:
+                                    self.response_value = current_output_type.parse_obj(self.response_json)
+                            except Exception as e:
+                                logger.error(f&#34;Failed to parse Pydantic model: {e}&#34;)
+                                raise
+                        elif current_output_type == str:
+                            pass # no coercion needed, it is already a string
+                        else:
+                            raise ValueError(f&#34;Unsupported output type: {current_output_type}&#34;)
+                    
+                    else:
+                        logger.error(f&#34;Model output is None: {self.response_raw}&#34;)
+                
+                logger.debug(f&#34;Model output coerced response value: {self.response_value}&#34;)
+                logger.debug(f&#34;Model output coerced response justification: {self.response_justification}&#34;)
+                logger.debug(f&#34;Model output coerced response confidence: {self.response_confidence}&#34;)
+
+                return self.response_value
+            else:
+                logger.error(f&#34;Model output does not contain &#39;content&#39; key: {model_output}&#34;)
+                return None
+        
+        except ValueError as ve:
+            # Re-raise ValueError exceptions (like unsupported output type) instead of catching them
+            if &#34;Unsupported output type&#34; in str(ve):
+                raise
+            else:
+                logger.error(f&#34;Error during LLM call: {ve}. Will return None instead of failing.&#34;)
+                return None
+        except Exception as e:
+            logger.error(f&#34;Error during LLM call: {e}. Will return None instead of failing.&#34;)
+            return None
+    
+    def continue_conversation(self, user_message=None, **rendering_configs):
+        &#34;&#34;&#34;
+        Continue the conversation with a new user message and get a response.
+        
+        Args:
+            user_message: The new message from the user
+            rendering_configs: Additional rendering configurations
+            
+        Returns:
+            The content of the model response
+        &#34;&#34;&#34;
+        if user_message:
+            self.add_user_message(user_message)
+        return self.call(**rendering_configs)
+    
+    def reset_conversation(self):
+        &#34;&#34;&#34;
+        Reset the conversation state but keep the initial configuration.
+        
+        Returns:
+            self for method chaining
+        &#34;&#34;&#34;
+        self.messages = []
+        self.response_raw = None
+        self.response_json = None
+        self.response_value = None
+        self.response_justification = None
+        self.response_confidence = None
+        return self
+    
+    def get_conversation_history(self):
+        &#34;&#34;&#34;
+        Get the full conversation history.
+        
+        Returns:
+            List of all messages in the conversation
+        &#34;&#34;&#34;
+        return self.messages
+    
+    # Keep all the existing coercion methods
+    def _coerce_to_bool(self, llm_output):
+        &#34;&#34;&#34;
+        Coerces the LLM output to a boolean value.
+
+        This method looks for the string &#34;True&#34;, &#34;False&#34;, &#34;Yes&#34;, &#34;No&#34;, &#34;Positive&#34;, &#34;Negative&#34; in the LLM output, such that
+          - case is neutralized;
+          - the first occurrence of the string is considered, the rest is ignored. For example,  &#34; Yes, that is true&#34; will be considered &#34;Yes&#34;;
+          - if no such string is found, the method raises an error. So it is important that the prompts actually requests a boolean value. 
+
+        Args:
+            llm_output (str, bool): The LLM output to coerce.
+
+        Returns:
+            The boolean value of the LLM output.
+        &#34;&#34;&#34;
+
+        # if the LLM output is already a boolean, we return it
+        if isinstance(llm_output, bool):
+            return llm_output
+
+        # let&#39;s extract the first occurrence of the string &#34;True&#34;, &#34;False&#34;, &#34;Yes&#34;, &#34;No&#34;, &#34;Positive&#34;, &#34;Negative&#34; in the LLM output.
+        # using a regular expression
+        import re
+        match = re.search(r&#39;\b(?:True|False|Yes|No|Positive|Negative)\b&#39;, llm_output, re.IGNORECASE)
+        if match:
+            first_match = match.group(0).lower()
+            if first_match in [&#34;true&#34;, &#34;yes&#34;, &#34;positive&#34;]:
+                return True
+            elif first_match in [&#34;false&#34;, &#34;no&#34;, &#34;negative&#34;]:
+                return False
+
+        raise ValueError(&#34;Cannot convert the LLM output to a boolean value.&#34;)
+
+    def _request_str_llm_message(self):
+        return {&#34;role&#34;: &#34;user&#34;,
+                &#34;content&#34;: &#34;The `value` field you generate from now on has no special format, it can be any string you find appropriate to the current conversation. &#34;+
+                           &#34;Make sure you move to `value` **all** relevant information you used in reasoning or justification, so that it is not lost. &#34;}
+    
+    def _request_bool_llm_message(self):
+        return {&#34;role&#34;: &#34;user&#34;,
+                &#34;content&#34;: &#34;The `value` field you generate **must** be either &#39;True&#39; or &#39;False&#39;. This is critical for later processing. If you don&#39;t know the correct answer, just output &#39;False&#39;.&#34;}
+
+
+    def _coerce_to_integer(self, llm_output:str):
+        &#34;&#34;&#34;
+        Coerces the LLM output to an integer value.
+
+        This method looks for the first occurrence of an integer in the LLM output, such that
+          - the first occurrence of the integer is considered, the rest is ignored. For example,  &#34;There are 3 cats&#34; will be considered 3;
+          - if no integer is found, the method raises an error. So it is important that the prompts actually requests an integer value. 
+
+        Args:
+            llm_output (str, int): The LLM output to coerce.
+
+        Returns:
+            The integer value of the LLM output.
+        &#34;&#34;&#34;
+
+        # if the LLM output is already an integer, we return it
+        if isinstance(llm_output, int):
+            return llm_output
+        
+        # if it&#39;s a float that represents a whole number, convert it
+        if isinstance(llm_output, float):
+            if llm_output.is_integer():
+                return int(llm_output)
+            else:
+                raise ValueError(&#34;Cannot convert the LLM output to an integer value.&#34;)
+
+        # Convert to string for regex processing
+        llm_output_str = str(llm_output)
+
+        # let&#39;s extract the first occurrence of an integer in the LLM output.
+        # using a regular expression
+        import re
+        # Match integers that are not part of a decimal number
+        # First check if the string contains a decimal point - if so, reject it for integer coercion
+        if &#39;.&#39; in llm_output_str and any(c.isdigit() for c in llm_output_str.split(&#39;.&#39;)[1]):
+            # This looks like a decimal number, not a pure integer
+            raise ValueError(&#34;Cannot convert the LLM output to an integer value.&#34;)
+        
+        match = re.search(r&#39;-?\b\d+\b&#39;, llm_output_str)
+        if match:
+            return int(match.group(0))
+
+        raise ValueError(&#34;Cannot convert the LLM output to an integer value.&#34;)
+
+    def _request_integer_llm_message(self):
+        return {&#34;role&#34;: &#34;user&#34;,
+                &#34;content&#34;: &#34;The `value` field you generate **must** be an integer number (e.g., &#39;1&#39;). This is critical for later processing..&#34;}
+
+    def _coerce_to_float(self, llm_output:str):
+        &#34;&#34;&#34;
+        Coerces the LLM output to a float value.
+
+        This method looks for the first occurrence of a float in the LLM output, such that
+          - the first occurrence of the float is considered, the rest is ignored. For example,  &#34;The price is $3.50&#34; will be considered 3.50;
+          - if no float is found, the method raises an error. So it is important that the prompts actually requests a float value. 
+
+        Args:
+            llm_output (str, float): The LLM output to coerce.
+
+        Returns:
+            The float value of the LLM output.
+        &#34;&#34;&#34;
+
+        # if the LLM output is already a float, we return it
+        if isinstance(llm_output, float):
+            return llm_output
+        
+        # if it&#39;s an integer, convert to float
+        if isinstance(llm_output, int):
+            return float(llm_output)
+
+        # let&#39;s extract the first occurrence of a number (float or int) in the LLM output.
+        # using a regular expression that handles negative numbers and both int/float formats
+        import re
+        match = re.search(r&#39;-?\b\d+(?:\.\d+)?\b&#39;, llm_output)
+        if match:
+            return float(match.group(0))
+
+        raise ValueError(&#34;Cannot convert the LLM output to a float value.&#34;)
+
+    def _request_float_llm_message(self):
+        return {&#34;role&#34;: &#34;user&#34;,
+                &#34;content&#34;: &#34;The `value` field you generate **must** be a float number (e.g., &#39;980.16&#39;). This is critical for later processing.&#34;}
+
+    def _coerce_to_enumerable(self, llm_output:str, options:list):
+        &#34;&#34;&#34;
+        Coerces the LLM output to one of the specified options.
+
+        This method looks for the first occurrence of one of the specified options in the LLM output, such that
+          - the first occurrence of the option is considered, the rest is ignored. For example,  &#34;I prefer cats&#34; will be considered &#34;cats&#34;;
+          - if no option is found, the method raises an error. So it is important that the prompts actually requests one of the specified options. 
+
+        Args:
+            llm_output (str): The LLM output to coerce.
+            options (list): The list of options to consider.
+
+        Returns:
+            The option value of the LLM output.
+        &#34;&#34;&#34;
+
+        # let&#39;s extract the first occurrence of one of the specified options in the LLM output.
+        # using a regular expression
+        import re
+        match = re.search(r&#39;\b(?:&#39; + &#39;|&#39;.join(options) + r&#39;)\b&#39;, llm_output, re.IGNORECASE)
+        if match:
+            # Return the canonical option (from the options list) instead of the matched text
+            matched_text = match.group(0).lower()
+            for option in options:
+                if option.lower() == matched_text:
+                    return option
+            return match.group(0)  # fallback
+
+        raise ValueError(&#34;Cannot find any of the specified options in the LLM output.&#34;)
+
+    def _request_enumerable_llm_message(self, options:list):
+        options_list_as_string = &#39;, &#39;.join([f&#34;&#39;{o}&#39;&#34; for o in options])
+        return {&#34;role&#34;: &#34;user&#34;,
+                &#34;content&#34;: f&#34;The `value` field you generate **must** be exactly one of the following strings: {options_list_as_string}. This is critical for later processing.&#34;}
+
+    def _coerce_to_dict_or_list(self, llm_output:str):
+        &#34;&#34;&#34;
+        Coerces the LLM output to a list or dictionary, i.e., a JSON structure.
+
+        This method looks for a JSON object in the LLM output, such that
+          - the JSON object is considered;
+          - if no JSON object is found, the method raises an error. So it is important that the prompts actually requests a JSON object. 
+
+        Args:
+            llm_output (str): The LLM output to coerce.
+
+        Returns:
+            The dictionary value of the LLM output.
+        &#34;&#34;&#34;
+
+        # if the LLM output is already a dictionary or list, we return it
+        if isinstance(llm_output, (dict, list)):
+            return llm_output
+
+        try:
+            result = utils.extract_json(llm_output)
+            # extract_json returns {} on failure, but we need dict or list
+            if result == {} and not (isinstance(llm_output, str) and (&#39;{}&#39; in llm_output or &#39;{&#39; in llm_output and &#39;}&#39; in llm_output)):
+                raise ValueError(&#34;Cannot convert the LLM output to a dict or list value.&#34;)
+            # Check if result is actually dict or list
+            if not isinstance(result, (dict, list)):
+                raise ValueError(&#34;Cannot convert the LLM output to a dict or list value.&#34;)
+            return result
+        except Exception:
+            raise ValueError(&#34;Cannot convert the LLM output to a dict or list value.&#34;)
+
+    def _request_dict_llm_message(self):
+            return {&#34;role&#34;: &#34;user&#34;,
+                    &#34;content&#34;: &#34;The `value` field you generate **must** be a JSON structure embedded in a string. This is critical for later processing.&#34;}
+
+    def _request_list_of_dict_llm_message(self):
+            return {&#34;role&#34;: &#34;user&#34;,
+                    &#34;content&#34;: &#34;The `value` field you generate **must** be a list of dictionaries, specified as a JSON structure embedded in a string. For example, `[\{...\}, \{...\}, ...]`. This is critical for later processing.&#34;}
+
+    def _coerce_to_list(self, llm_output:str):
+        &#34;&#34;&#34;
+        Coerces the LLM output to a list.
+
+        This method looks for a list in the LLM output, such that
+          - the list is considered;
+          - if no list is found, the method raises an error. So it is important that the prompts actually requests a list. 
+
+        Args:
+            llm_output (str): The LLM output to coerce.
+
+        Returns:
+            The list value of the LLM output.
+        &#34;&#34;&#34;
+
+        # if the LLM output is already a list, we return it
+        if isinstance(llm_output, list):
+            return llm_output
+
+        # must make sure there&#39;s actually a list. Let&#39;s start with regex
+        import re
+        match = re.search(r&#39;\[.*\]&#39;, llm_output)
+        if match:
+            return json.loads(match.group(0))
+
+        raise ValueError(&#34;Cannot convert the LLM output to a list.&#34;)
+
+    def _request_list_llm_message(self):
+        return {&#34;role&#34;: &#34;user&#34;,
+                &#34;content&#34;: &#34;The `value` field you generate **must** be a JSON **list** (e.g., [\&#34;apple\&#34;, 1, 0.9]), NOT a dictionary, always embedded in a string. This is critical for later processing.&#34;}
+
+    def __repr__(self):
+        return f&#34;LLMChat(messages={self.messages}, model_params={self.model_params})&#34;</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="tinytroupe.utils.llm.LLMChat.add_assistant_message"><code class="name flex">
+<span>def <span class="ident">add_assistant_message</span></span>(<span>self, message=None, template_name=None, base_module_folder=None, rendering_configs={})</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add an assistant message to the conversation.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>message</code></strong></dt>
+<dd>The direct message content from the assistant (mutually exclusive with template_name)</dd>
+<dt><strong><code>template_name</code></strong></dt>
+<dd>Optional template file name to use for the message</dd>
+<dt><strong><code>base_module_folder</code></strong></dt>
+<dd>Optional subfolder for template location</dd>
+<dt><strong><code>rendering_configs</code></strong></dt>
+<dd>Configuration variables for template rendering</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>self for method chaining</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_assistant_message(self, message=None, template_name=None, base_module_folder=None, rendering_configs={}):
+    &#34;&#34;&#34;
+    Add an assistant message to the conversation.
+    
+    Args:
+        message: The direct message content from the assistant (mutually exclusive with template_name)
+        template_name: Optional template file name to use for the message
+        base_module_folder: Optional subfolder for template location
+        rendering_configs: Configuration variables for template rendering
+        
+    Returns:
+        self for method chaining
+    &#34;&#34;&#34;
+    if message is not None and template_name is not None:
+        raise ValueError(&#34;Either message or template_name must be specified, but not both.&#34;)
+    
+    if template_name is not None:
+        content = self._render_template(template_name, base_module_folder, rendering_configs)
+    else:
+        content = textwrap.dedent(message)
+        
+    self.messages.append({&#34;role&#34;: &#34;assistant&#34;, &#34;content&#34;: content})
+    return self</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.utils.llm.LLMChat.add_system_message"><code class="name flex">
+<span>def <span class="ident">add_system_message</span></span>(<span>self, message=None, template_name=None, base_module_folder=None, rendering_configs={})</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add a system message to the conversation.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>message</code></strong></dt>
+<dd>The direct message content from the system (mutually exclusive with template_name)</dd>
+<dt><strong><code>template_name</code></strong></dt>
+<dd>Optional template file name to use for the message</dd>
+<dt><strong><code>base_module_folder</code></strong></dt>
+<dd>Optional subfolder for template location</dd>
+<dt><strong><code>rendering_configs</code></strong></dt>
+<dd>Configuration variables for template rendering</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>self for method chaining</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_system_message(self, message=None, template_name=None, base_module_folder=None, rendering_configs={}):
+    &#34;&#34;&#34;
+    Add a system message to the conversation.
+    
+    Args:
+        message: The direct message content from the system (mutually exclusive with template_name)
+        template_name: Optional template file name to use for the message
+        base_module_folder: Optional subfolder for template location
+        rendering_configs: Configuration variables for template rendering
+        
+    Returns:
+        self for method chaining
+    &#34;&#34;&#34;
+    if message is not None and template_name is not None:
+        raise ValueError(&#34;Either message or template_name must be specified, but not both.&#34;)
+    
+    if template_name is not None:
+        content = self._render_template(template_name, base_module_folder, rendering_configs)
+    else:
+        content = textwrap.dedent(message)
+        
+    self.messages.append({&#34;role&#34;: &#34;system&#34;, &#34;content&#34;: content})
+    return self</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.utils.llm.LLMChat.add_user_message"><code class="name flex">
+<span>def <span class="ident">add_user_message</span></span>(<span>self, message=None, template_name=None, base_module_folder=None, rendering_configs={})</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add a user message to the conversation.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>message</code></strong></dt>
+<dd>The direct message content from the user (mutually exclusive with template_name)</dd>
+<dt><strong><code>template_name</code></strong></dt>
+<dd>Optional template file name to use for the message</dd>
+<dt><strong><code>base_module_folder</code></strong></dt>
+<dd>Optional subfolder for template location</dd>
+<dt><strong><code>rendering_configs</code></strong></dt>
+<dd>Configuration variables for template rendering</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>self for method chaining</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_user_message(self, message=None, template_name=None, base_module_folder=None, rendering_configs={}):
+    &#34;&#34;&#34;
+    Add a user message to the conversation.
+    
+    Args:
+        message: The direct message content from the user (mutually exclusive with template_name)
+        template_name: Optional template file name to use for the message
+        base_module_folder: Optional subfolder for template location
+        rendering_configs: Configuration variables for template rendering
+        
+    Returns:
+        self for method chaining
+    &#34;&#34;&#34;
+    if message is not None and template_name is not None:
+        raise ValueError(&#34;Either message or template_name must be specified, but not both.&#34;)
+    
+    if template_name is not None:
+        content = self._render_template(template_name, base_module_folder, rendering_configs)
+    else:
+        content = textwrap.dedent(message)
+        
+    self.messages.append({&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: content})
+    return self</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.utils.llm.LLMChat.call"><code class="name flex">
+<span>def <span class="ident">call</span></span>(<span>self, output_type='default', enable_json_output_format: bool = None, enable_justification_step: bool = None, enable_reasoning_step: bool = None, **rendering_configs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Initiates or continues the conversation with the LLM model using the current message history.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>output_type</code></strong></dt>
+<dd>Optional parameter to override the output type for this specific call. If set to "default", it uses the instance's output_type.
+If set to None, removes all output formatting and coercion.</dd>
+<dt><strong><code>enable_json_output_format</code></strong></dt>
+<dd>Optional flag to enable JSON output format for the model response. If None, uses the instance's setting.</dd>
+<dt><strong><code>enable_justification_step</code></strong></dt>
+<dd>Optional flag to enable justification step in the conversation. If None, uses the instance's setting.</dd>
+<dt><strong><code>enable_reasoning_step</code></strong></dt>
+<dd>Optional flag to enable reasoning step in the conversation. If None, uses the instance's setting.</dd>
+<dt><strong><code>rendering_configs</code></strong></dt>
+<dd>The rendering configurations (template variables) to use when composing the initial messages.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>The content of the model response.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def call(self, output_type=&#34;default&#34;, 
+               enable_json_output_format:bool=None,        
+               enable_justification_step:bool=None,
+               enable_reasoning_step:bool=None, 
+               **rendering_configs):
+    &#34;&#34;&#34;
+    Initiates or continues the conversation with the LLM model using the current message history.
+
+    Args:
+        output_type: Optional parameter to override the output type for this specific call. If set to &#34;default&#34;, it uses the instance&#39;s output_type.
+                     If set to None, removes all output formatting and coercion.
+        enable_json_output_format: Optional flag to enable JSON output format for the model response. If None, uses the instance&#39;s setting.
+        enable_justification_step: Optional flag to enable justification step in the conversation. If None, uses the instance&#39;s setting.
+        enable_reasoning_step: Optional flag to enable reasoning step in the conversation. If None, uses the instance&#39;s setting.
+        rendering_configs: The rendering configurations (template variables) to use when composing the initial messages.
+
+    Returns:
+        The content of the model response.
+    &#34;&#34;&#34;
+    from tinytroupe.openai_utils import client # import here to avoid circular import
+
+    try:
+
+        # Initialize the conversation if this is the first call
+        if not self.messages:
+            if self.system_template_name is not None and self.user_template_name is not None:
+                self.messages = utils.compose_initial_LLM_messages_with_templates(
+                    self.system_template_name, 
+                    self.user_template_name, 
+                    base_module_folder=self.base_module_folder,
+                    rendering_configs=rendering_configs
+                )
+            else:
+                if self.system_prompt:
+                    self.messages.append({&#34;role&#34;: &#34;system&#34;, &#34;content&#34;: self.system_prompt})
+                if self.user_prompt:
+                    self.messages.append({&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: self.user_prompt})
+
+        # Use the provided output_type if specified, otherwise fall back to the instance&#39;s output_type
+        current_output_type = output_type if output_type != &#34;default&#34; else self.output_type
+
+        # Set up typing for the output
+        if current_output_type is not None:
+            
+            # TODO obsolete?
+            #
+            ## Add type coercion instructions if not already added
+            #if not any(msg.get(&#34;content&#34;, &#34;&#34;).startswith(&#34;In your response, you **MUST** provide a value&#34;) 
+            #          for msg in self.messages if msg.get(&#34;role&#34;) == &#34;system&#34;):
+            
+            # the user can override the response format by specifying it in the model_params, otherwise
+            # we will use the default response format
+            if &#34;response_format&#34; not in self.model_params:
+
+                if utils.first_non_none(enable_json_output_format, self.enable_json_output_format):
+
+                    self.model_params[&#34;response_format&#34;] = {&#34;type&#34;: &#34;json_object&#34;}
+
+                    typing_instruction = {&#34;role&#34;: &#34;system&#34;,
+                        &#34;content&#34;: &#34;Your response **MUST** be a JSON object.&#34;}
+
+                    # Special justification format can be used (will also include confidence level)
+                    if utils.first_non_none(enable_justification_step, self.enable_justification_step):
+
+                        # Add reasoning step if enabled provides further mechanism to think step-by-step
+                        if not (utils.first_non_none(enable_reasoning_step, self.enable_reasoning_step)):
+                            # Default structured output
+                            self.model_params[&#34;response_format&#34;] = LLMScalarWithJustificationResponse
+                            
+                            typing_instruction = {&#34;role&#34;: &#34;system&#34;,
+                                &#34;content&#34;: &#34;In your response, you **MUST** provide a value, along with a justification and your confidence level that the value and justification are correct (0.0 means no confidence, 1.0 means complete confidence). &#34;+
+                                &#34;Furtheremore, your response **MUST** be a JSON object with the following structure: {\&#34;justification\&#34;: justification, \&#34;value\&#34;: value, \&#34;confidence\&#34;: confidence}. &#34;+
+                                &#34;Note that \&#34;justification\&#34; comes first in order to help you think about the value you are providing.&#34;}
+                        
+                        else: 
+                            # Override the response format to also use a reasoning step
+                            self.model_params[&#34;response_format&#34;] = LLMScalarWithJustificationAndReasoningResponse
+                            
+                            typing_instruction = {&#34;role&#34;: &#34;system&#34;,
+                                &#34;content&#34;: \
+                                    &#34;In your response, you **FIRST** think step-by-step on how you are going to compute the value, and you put this reasoning in the \&#34;reasoning\&#34; field (which must come before all others). &#34;+
+                                    &#34;This allows you to think carefully as much as you need to deduce the best and most correct value. &#34;+
+                                    &#34;After that, you **MUST** provide the resulting value, along with a justification (which can tap into the previous reasoning), and your confidence level that the value and justification are correct (0.0 means no confidence, 1.0 means complete confidence).&#34;+
+                                    &#34;Furtheremore, your response **MUST** be a JSON object with the following structure: {\&#34;reasoning\&#34;: reasoning, \&#34;justification\&#34;: justification, \&#34;value\&#34;: value, \&#34;confidence\&#34;: confidence}.&#34; +
+                                    &#34; Note that \&#34;justification\&#34; comes after \&#34;reasoning\&#34; but before \&#34;value\&#34; to help with further formulation of the resulting \&#34;value\&#34;.&#34;}
+                    
+                
+                    # Specify the value type
+                    if current_output_type == bool:
+                        typing_instruction[&#34;content&#34;] += &#34; &#34; + self._request_bool_llm_message()[&#34;content&#34;]
+                    elif current_output_type == int:
+                        typing_instruction[&#34;content&#34;] += &#34; &#34; + self._request_integer_llm_message()[&#34;content&#34;]
+                    elif current_output_type == float:
+                        typing_instruction[&#34;content&#34;] += &#34; &#34; + self._request_float_llm_message()[&#34;content&#34;]
+                    elif isinstance(current_output_type, list) and all(isinstance(option, str) for option in current_output_type):
+                        typing_instruction[&#34;content&#34;] += &#34; &#34; + self._request_enumerable_llm_message(current_output_type)[&#34;content&#34;]
+                    elif current_output_type == List[Dict[str, any]]:
+                        # Override the response format
+                        self.model_params[&#34;response_format&#34;] = {&#34;type&#34;: &#34;json_object&#34;}
+                        typing_instruction[&#34;content&#34;] += &#34; &#34; + self._request_list_of_dict_llm_message()[&#34;content&#34;]
+                    elif current_output_type == dict or current_output_type == &#34;json&#34;:
+                        # Override the response format
+                        self.model_params[&#34;response_format&#34;] = {&#34;type&#34;: &#34;json_object&#34;}
+                        typing_instruction[&#34;content&#34;] += &#34; &#34; + self._request_dict_llm_message()[&#34;content&#34;]
+                    elif current_output_type == list:
+                        # Override the response format
+                        self.model_params[&#34;response_format&#34;] = {&#34;type&#34;: &#34;json_object&#34;}
+                        typing_instruction[&#34;content&#34;] += &#34; &#34; + self._request_list_llm_message()[&#34;content&#34;]
+                    # Check if it is actually a pydantic model
+                    elif issubclass(current_output_type, BaseModel):
+                        # Completely override the response format
+                        self.model_params[&#34;response_format&#34;] = current_output_type
+                        typing_instruction = {&#34;role&#34;: &#34;system&#34;, &#34;content&#34;: &#34;Your response **MUST** be a JSON object.&#34;}
+                    elif current_output_type == str:
+                        typing_instruction[&#34;content&#34;] += &#34; &#34; + self._request_str_llm_message()[&#34;content&#34;]
+                        #pass # no coercion needed, it is already a string
+                    else:
+                        raise ValueError(f&#34;Unsupported output type: {current_output_type}&#34;)
+                    
+                    self.messages.append(typing_instruction)
+                
+                else: # output_type is None
+                    self.model_params[&#34;response_format&#34;] = None
+                    typing_instruction = {&#34;role&#34;: &#34;system&#34;, &#34;content&#34;: \
+                                            &#34;If you were given instructions before about the **format** of your response, please ignore them from now on. &#34;+
+                                            &#34;The needs of the user have changed. You **must** now use regular text -- not numbers, not booleans, not JSON. &#34;+
+                                            &#34;There are no fields, no types, no special formats. Just regular text appropriate to respond to the last user request.&#34;}
+                    self.messages.append(typing_instruction)
+                    #pass  # nothing here for now
+
+
+        # Call the LLM model with all messages in the conversation
+        model_output = client().send_message(self.messages, **self.model_params)
+
+        if &#39;content&#39; in model_output:
+            self.response_raw = self.response_value = model_output[&#39;content&#39;]
+            logger.debug(f&#34;Model raw &#39;content&#39;  response: {self.response_raw}&#34;)
+            
+            # Add the assistant&#39;s response to the conversation history
+            self.add_assistant_message(self.response_raw)
+            self.conversation_history.append({&#34;messages&#34;: copy.deepcopy(self.messages)})
+
+            # Type coercion if output type is specified
+            if current_output_type is not None:
+                
+                if self.enable_json_output_format:
+                    # output is supposed to be a JSON object
+                    self.response_json = self.response_value = utils.extract_json(self.response_raw)
+                    logger.debug(f&#34;Model output JSON response: {self.response_json}&#34;)
+
+                    if self.enable_justification_step and not (hasattr(current_output_type, &#39;model_validate&#39;) or hasattr(current_output_type, &#39;parse_obj&#39;)):
+                        # if justification step is enabled, we expect a JSON object with reasoning (optionally), justification, value, and confidence
+                        # BUT not for Pydantic models which expect direct JSON structure
+                        self.response_reasoning = self.response_json.get(&#34;reasoning&#34;, None)
+                        self.response_value = self.response_json.get(&#34;value&#34;, None)
+                        self.response_justification = self.response_json.get(&#34;justification&#34;, None)
+                        self.response_confidence = self.response_json.get(&#34;confidence&#34;, None)
+                    else:
+                        # For direct JSON output (like Pydantic models), use the whole JSON as the value
+                        self.response_value = self.response_json
+                    
+                # if output type was specified, we need to coerce the response value
+                if self.response_value is not None:
+                    if current_output_type == bool:
+                        self.response_value = self._coerce_to_bool(self.response_value)
+                    elif current_output_type == int:
+                        self.response_value = self._coerce_to_integer(self.response_value)
+                    elif current_output_type == float:
+                        self.response_value = self._coerce_to_float(self.response_value)
+                    elif isinstance(current_output_type, list) and all(isinstance(option, str) for option in current_output_type):
+                        self.response_value = self._coerce_to_enumerable(self.response_value, current_output_type)
+                    elif current_output_type == List[Dict[str, any]]:
+                        self.response_value = self._coerce_to_dict_or_list(self.response_value)
+                    elif current_output_type == dict or current_output_type == &#34;json&#34;:
+                        self.response_value = self._coerce_to_dict_or_list(self.response_value)
+                    elif current_output_type == list:
+                        self.response_value = self._coerce_to_list(self.response_value)
+                    elif hasattr(current_output_type, &#39;model_validate&#39;) or hasattr(current_output_type, &#39;parse_obj&#39;):
+                        # Handle Pydantic model - try modern approach first, then fallback
+                        try:
+                            if hasattr(current_output_type, &#39;model_validate&#39;):
+                                self.response_value = current_output_type.model_validate(self.response_json)
+                            else:
+                                self.response_value = current_output_type.parse_obj(self.response_json)
+                        except Exception as e:
+                            logger.error(f&#34;Failed to parse Pydantic model: {e}&#34;)
+                            raise
+                    elif current_output_type == str:
+                        pass # no coercion needed, it is already a string
+                    else:
+                        raise ValueError(f&#34;Unsupported output type: {current_output_type}&#34;)
+                
+                else:
+                    logger.error(f&#34;Model output is None: {self.response_raw}&#34;)
+            
+            logger.debug(f&#34;Model output coerced response value: {self.response_value}&#34;)
+            logger.debug(f&#34;Model output coerced response justification: {self.response_justification}&#34;)
+            logger.debug(f&#34;Model output coerced response confidence: {self.response_confidence}&#34;)
+
+            return self.response_value
+        else:
+            logger.error(f&#34;Model output does not contain &#39;content&#39; key: {model_output}&#34;)
+            return None
+    
+    except ValueError as ve:
+        # Re-raise ValueError exceptions (like unsupported output type) instead of catching them
+        if &#34;Unsupported output type&#34; in str(ve):
+            raise
+        else:
+            logger.error(f&#34;Error during LLM call: {ve}. Will return None instead of failing.&#34;)
+            return None
+    except Exception as e:
+        logger.error(f&#34;Error during LLM call: {e}. Will return None instead of failing.&#34;)
+        return None</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.utils.llm.LLMChat.continue_conversation"><code class="name flex">
+<span>def <span class="ident">continue_conversation</span></span>(<span>self, user_message=None, **rendering_configs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Continue the conversation with a new user message and get a response.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>user_message</code></strong></dt>
+<dd>The new message from the user</dd>
+<dt><strong><code>rendering_configs</code></strong></dt>
+<dd>Additional rendering configurations</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>The content of the model response</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def continue_conversation(self, user_message=None, **rendering_configs):
+    &#34;&#34;&#34;
+    Continue the conversation with a new user message and get a response.
+    
+    Args:
+        user_message: The new message from the user
+        rendering_configs: Additional rendering configurations
+        
+    Returns:
+        The content of the model response
+    &#34;&#34;&#34;
+    if user_message:
+        self.add_user_message(user_message)
+    return self.call(**rendering_configs)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.utils.llm.LLMChat.get_conversation_history"><code class="name flex">
+<span>def <span class="ident">get_conversation_history</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get the full conversation history.</p>
+<h2 id="returns">Returns</h2>
+<p>List of all messages in the conversation</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_conversation_history(self):
+    &#34;&#34;&#34;
+    Get the full conversation history.
+    
+    Returns:
+        List of all messages in the conversation
+    &#34;&#34;&#34;
+    return self.messages</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.utils.llm.LLMChat.reset_conversation"><code class="name flex">
+<span>def <span class="ident">reset_conversation</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Reset the conversation state but keep the initial configuration.</p>
+<h2 id="returns">Returns</h2>
+<p>self for method chaining</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reset_conversation(self):
+    &#34;&#34;&#34;
+    Reset the conversation state but keep the initial configuration.
+    
+    Returns:
+        self for method chaining
+    &#34;&#34;&#34;
+    self.messages = []
+    self.response_raw = None
+    self.response_json = None
+    self.response_value = None
+    self.response_justification = None
+    self.response_confidence = None
+    return self</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="tinytroupe.utils.llm.LLMScalarWithJustificationAndReasoningResponse"><code class="flex name class">
+<span>class <span class="ident">LLMScalarWithJustificationAndReasoningResponse</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Represents a typed response from an LLM (Language Learning Model) including justification and reasoning.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>reasoning</code></strong> :&ensp;<code>str</code></dt>
+<dd>The reasoning behind the response.</dd>
+<dt><strong><code>justification</code></strong> :&ensp;<code>str</code></dt>
+<dd>The justification or explanation for the response.</dd>
+<dt><strong><code>value</code></strong> :&ensp;<code>str, int, float, bool</code></dt>
+<dd>The value of the response.</dd>
+<dt><strong><code>confidence</code></strong> :&ensp;<code>float</code></dt>
+<dd>The confidence level of the response.</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>__init__</code> uses <code>__pydantic_self__</code> instead of the more common <code>self</code> for the first arg to
+allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LLMScalarWithJustificationAndReasoningResponse(BaseModel):
+    &#34;&#34;&#34;
+    Represents a typed response from an LLM (Language Learning Model) including justification and reasoning.
+    Attributes:
+        reasoning (str): The reasoning behind the response.
+        justification (str): The justification or explanation for the response.
+        value (str, int, float, bool): The value of the response.
+        confidence (float): The confidence level of the response.
+    &#34;&#34;&#34;
+    reasoning: str
+
+    # we need to repeat these fields here, instead of inheriting from LLMScalarWithJustificationResponse,
+    # because we need to ensure `reasoning` is always the first field in the JSON object.
+    justification: str
+    value: Union[str, int, float, bool]
+    confidence: float</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="tinytroupe.utils.llm.LLMScalarWithJustificationAndReasoningResponse.confidence"><code class="name">var <span class="ident">confidence</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.utils.llm.LLMScalarWithJustificationAndReasoningResponse.justification"><code class="name">var <span class="ident">justification</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.utils.llm.LLMScalarWithJustificationAndReasoningResponse.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.utils.llm.LLMScalarWithJustificationAndReasoningResponse.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.utils.llm.LLMScalarWithJustificationAndReasoningResponse.reasoning"><code class="name">var <span class="ident">reasoning</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.utils.llm.LLMScalarWithJustificationAndReasoningResponse.value"><code class="name">var <span class="ident">value</span> : Union[str, int, float, bool]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="tinytroupe.utils.llm.LLMScalarWithJustificationResponse"><code class="flex name class">
+<span>class <span class="ident">LLMScalarWithJustificationResponse</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Represents a typed response from an LLM (Language Learning Model) including justification.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>justification</code></strong> :&ensp;<code>str</code></dt>
+<dd>The justification or explanation for the response.</dd>
+<dt><strong><code>value</code></strong> :&ensp;<code>str, int, float, bool</code></dt>
+<dd>The value of the response.</dd>
+<dt><strong><code>confidence</code></strong> :&ensp;<code>float</code></dt>
+<dd>The confidence level of the response.
+</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>__init__</code> uses <code>__pydantic_self__</code> instead of the more common <code>self</code> for the first arg to
+allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LLMScalarWithJustificationResponse(BaseModel):
+    &#34;&#34;&#34;
+    Represents a typed response from an LLM (Language Learning Model) including justification.
+    Attributes:
+        justification (str): The justification or explanation for the response.
+        value (str, int, float, bool): The value of the response.
+        confidence (float): The confidence level of the response.        
+    &#34;&#34;&#34;
+    justification: str
+    value: Union[str, int, float, bool]    
+    confidence: float</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="tinytroupe.utils.llm.LLMScalarWithJustificationResponse.confidence"><code class="name">var <span class="ident">confidence</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.utils.llm.LLMScalarWithJustificationResponse.justification"><code class="name">var <span class="ident">justification</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.utils.llm.LLMScalarWithJustificationResponse.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.utils.llm.LLMScalarWithJustificationResponse.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.utils.llm.LLMScalarWithJustificationResponse.value"><code class="name">var <span class="ident">value</span> : Union[str, int, float, bool]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="tinytroupe.utils" href="index.html">tinytroupe.utils</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="tinytroupe.utils.llm.add_rai_template_variables_if_enabled" href="#tinytroupe.utils.llm.add_rai_template_variables_if_enabled">add_rai_template_variables_if_enabled</a></code></li>
+<li><code><a title="tinytroupe.utils.llm.compose_initial_LLM_messages_with_templates" href="#tinytroupe.utils.llm.compose_initial_LLM_messages_with_templates">compose_initial_LLM_messages_with_templates</a></code></li>
+<li><code><a title="tinytroupe.utils.llm.extract_code_block" href="#tinytroupe.utils.llm.extract_code_block">extract_code_block</a></code></li>
+<li><code><a title="tinytroupe.utils.llm.extract_json" href="#tinytroupe.utils.llm.extract_json">extract_json</a></code></li>
+<li><code><a title="tinytroupe.utils.llm.llm" href="#tinytroupe.utils.llm.llm">llm</a></code></li>
+<li><code><a title="tinytroupe.utils.llm.repeat_on_error" href="#tinytroupe.utils.llm.repeat_on_error">repeat_on_error</a></code></li>
+<li><code><a title="tinytroupe.utils.llm.truncate_actions_or_stimuli" href="#tinytroupe.utils.llm.truncate_actions_or_stimuli">truncate_actions_or_stimuli</a></code></li>
+<li><code><a title="tinytroupe.utils.llm.try_function" href="#tinytroupe.utils.llm.try_function">try_function</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="tinytroupe.utils.llm.LLMChat" href="#tinytroupe.utils.llm.LLMChat">LLMChat</a></code></h4>
+<ul class="">
+<li><code><a title="tinytroupe.utils.llm.LLMChat.add_assistant_message" href="#tinytroupe.utils.llm.LLMChat.add_assistant_message">add_assistant_message</a></code></li>
+<li><code><a title="tinytroupe.utils.llm.LLMChat.add_system_message" href="#tinytroupe.utils.llm.LLMChat.add_system_message">add_system_message</a></code></li>
+<li><code><a title="tinytroupe.utils.llm.LLMChat.add_user_message" href="#tinytroupe.utils.llm.LLMChat.add_user_message">add_user_message</a></code></li>
+<li><code><a title="tinytroupe.utils.llm.LLMChat.call" href="#tinytroupe.utils.llm.LLMChat.call">call</a></code></li>
+<li><code><a title="tinytroupe.utils.llm.LLMChat.continue_conversation" href="#tinytroupe.utils.llm.LLMChat.continue_conversation">continue_conversation</a></code></li>
+<li><code><a title="tinytroupe.utils.llm.LLMChat.get_conversation_history" href="#tinytroupe.utils.llm.LLMChat.get_conversation_history">get_conversation_history</a></code></li>
+<li><code><a title="tinytroupe.utils.llm.LLMChat.reset_conversation" href="#tinytroupe.utils.llm.LLMChat.reset_conversation">reset_conversation</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="tinytroupe.utils.llm.LLMScalarWithJustificationAndReasoningResponse" href="#tinytroupe.utils.llm.LLMScalarWithJustificationAndReasoningResponse">LLMScalarWithJustificationAndReasoningResponse</a></code></h4>
+<ul class="two-column">
+<li><code><a title="tinytroupe.utils.llm.LLMScalarWithJustificationAndReasoningResponse.confidence" href="#tinytroupe.utils.llm.LLMScalarWithJustificationAndReasoningResponse.confidence">confidence</a></code></li>
+<li><code><a title="tinytroupe.utils.llm.LLMScalarWithJustificationAndReasoningResponse.justification" href="#tinytroupe.utils.llm.LLMScalarWithJustificationAndReasoningResponse.justification">justification</a></code></li>
+<li><code><a title="tinytroupe.utils.llm.LLMScalarWithJustificationAndReasoningResponse.model_config" href="#tinytroupe.utils.llm.LLMScalarWithJustificationAndReasoningResponse.model_config">model_config</a></code></li>
+<li><code><a title="tinytroupe.utils.llm.LLMScalarWithJustificationAndReasoningResponse.model_fields" href="#tinytroupe.utils.llm.LLMScalarWithJustificationAndReasoningResponse.model_fields">model_fields</a></code></li>
+<li><code><a title="tinytroupe.utils.llm.LLMScalarWithJustificationAndReasoningResponse.reasoning" href="#tinytroupe.utils.llm.LLMScalarWithJustificationAndReasoningResponse.reasoning">reasoning</a></code></li>
+<li><code><a title="tinytroupe.utils.llm.LLMScalarWithJustificationAndReasoningResponse.value" href="#tinytroupe.utils.llm.LLMScalarWithJustificationAndReasoningResponse.value">value</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="tinytroupe.utils.llm.LLMScalarWithJustificationResponse" href="#tinytroupe.utils.llm.LLMScalarWithJustificationResponse">LLMScalarWithJustificationResponse</a></code></h4>
+<ul class="">
+<li><code><a title="tinytroupe.utils.llm.LLMScalarWithJustificationResponse.confidence" href="#tinytroupe.utils.llm.LLMScalarWithJustificationResponse.confidence">confidence</a></code></li>
+<li><code><a title="tinytroupe.utils.llm.LLMScalarWithJustificationResponse.justification" href="#tinytroupe.utils.llm.LLMScalarWithJustificationResponse.justification">justification</a></code></li>
+<li><code><a title="tinytroupe.utils.llm.LLMScalarWithJustificationResponse.model_config" href="#tinytroupe.utils.llm.LLMScalarWithJustificationResponse.model_config">model_config</a></code></li>
+<li><code><a title="tinytroupe.utils.llm.LLMScalarWithJustificationResponse.model_fields" href="#tinytroupe.utils.llm.LLMScalarWithJustificationResponse.model_fields">model_fields</a></code></li>
+<li><code><a title="tinytroupe.utils.llm.LLMScalarWithJustificationResponse.value" href="#tinytroupe.utils.llm.LLMScalarWithJustificationResponse.value">value</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

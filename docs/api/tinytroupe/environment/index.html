@@ -1,0 +1,2233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>tinytroupe.environment API documentation</title>
+<meta name="description" content="Environments provide a structured way to define the world in which the
+agents interact with each other as well as external entities (e.g., search …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>tinytroupe.environment</code></h1>
+</header>
+<section id="section-intro">
+<p>Environments provide a structured way to define the world in which the
+agents interact with each other as well as external entities (e.g., search engines).</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+Environments provide a structured way to define the world in which the
+agents interact with each other as well as external entities (e.g., search engines).
+&#34;&#34;&#34;
+
+import logging
+logger = logging.getLogger(&#34;tinytroupe&#34;)
+
+from tinytroupe import default
+
+###########################################################################
+# Exposed API
+###########################################################################
+from tinytroupe.environment.tiny_world import TinyWorld
+from tinytroupe.environment.tiny_social_network import TinySocialNetwork
+
+__all__ = [&#34;TinyWorld&#34;, &#34;TinySocialNetwork&#34;]</code></pre>
+</details>
+</section>
+<section>
+<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+<dl>
+<dt><code class="name"><a title="tinytroupe.environment.tiny_social_network" href="tiny_social_network.html">tinytroupe.environment.tiny_social_network</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="tinytroupe.environment.tiny_world" href="tiny_world.html">tinytroupe.environment.tiny_world</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="tinytroupe.environment.TinySocialNetwork"><code class="flex name class">
+<span>class <span class="ident">TinySocialNetwork</span></span>
+<span>(</span><span>name, broadcast_if_no_target=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Base class for environments.</p>
+<p>Create a new TinySocialNetwork environment.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the environment.</dd>
+<dt><strong><code>broadcast_if_no_target</code></strong> :&ensp;<code>bool</code></dt>
+<dd>If True, broadcast actions through an agent's available relations
+if the target of an action is not found.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TinySocialNetwork(TinyWorld):
+
+    def __init__(self, name, broadcast_if_no_target=True):
+        &#34;&#34;&#34;
+        Create a new TinySocialNetwork environment.
+
+        Args:
+            name (str): The name of the environment.
+            broadcast_if_no_target (bool): If True, broadcast actions through an agent&#39;s available relations
+              if the target of an action is not found.
+        &#34;&#34;&#34;
+        
+        super().__init__(name, broadcast_if_no_target=broadcast_if_no_target)
+
+        self.relations = {}
+    
+    @transactional()
+    def add_relation(self, agent_1, agent_2, name=&#34;default&#34;):
+        &#34;&#34;&#34;
+        Adds a relation between two agents.
+        
+        Args:
+            agent_1 (TinyPerson): The first agent.
+            agent_2 (TinyPerson): The second agent.
+            name (str): The name of the relation.
+        &#34;&#34;&#34;
+
+        logger.debug(f&#34;Adding relation {name} between {agent_1.name} and {agent_2.name}.&#34;)
+
+        # agents must already be in the environment, if not they are first added
+        if agent_1 not in self.agents:
+            self.agents.append(agent_1)
+        if agent_2 not in self.agents:
+            self.agents.append(agent_2)
+
+        if name in self.relations:
+            self.relations[name].append((agent_1, agent_2))
+        else:
+            self.relations[name] = [(agent_1, agent_2)]
+
+        return self # for chaining
+    
+    @transactional()
+    def _update_agents_contexts(self):
+        &#34;&#34;&#34;
+        Updates the agents&#39; observations based on the current state of the world.
+        &#34;&#34;&#34;
+
+        # clear all accessibility first
+        for agent in self.agents:
+            agent.make_all_agents_inaccessible()
+
+        # now update accessibility based on relations
+        for relation_name, relation in self.relations.items():
+            logger.debug(f&#34;Updating agents&#39; observations for relation {relation_name}.&#34;)
+            for agent_1, agent_2 in relation:
+                agent_1.make_agent_accessible(agent_2)
+                agent_2.make_agent_accessible(agent_1)
+
+    @transactional()
+    def _step(self):
+        self._update_agents_contexts()
+
+        #call super
+        super()._step()
+    
+    @transactional()
+    def _handle_reach_out(self, source_agent: TinyPerson, content: str, target: str):
+        &#34;&#34;&#34;
+        Handles the REACH_OUT action. This social network implementation only allows
+        REACH_OUT to succeed if the target agent is in the same relation as the source agent.
+
+        Args:
+            source_agent (TinyPerson): The agent that issued the REACH_OUT action.
+            content (str): The content of the message.
+            target (str): The target of the message.
+        &#34;&#34;&#34;
+            
+        # check if the target is in the same relation as the source
+        if self.is_in_relation_with(source_agent, self.get_agent_by_name(target)):
+            super()._handle_reach_out(source_agent, content, target)
+            
+        # if we get here, the target is not in the same relation as the source
+        source_agent.socialize(f&#34;{target} is not in the same relation as you, so you cannot reach out to them.&#34;, source=self)
+
+
+    # TODO implement _handle_talk using broadcast_if_no_target too
+
+    #######################################################################
+    # Utilities and conveniences
+    #######################################################################
+
+    def is_in_relation_with(self, agent_1:TinyPerson, agent_2:TinyPerson, relation_name=None) -&gt; bool:
+        &#34;&#34;&#34;
+        Checks if two agents are in a relation. If the relation name is given, check that
+        the agents are in that relation. If no relation name is given, check that the agents
+        are in any relation. Relations are undirected, so the order of the agents does not matter.
+
+        Args:
+            agent_1 (TinyPerson): The first agent.
+            agent_2 (TinyPerson): The second agent.
+            relation_name (str): The name of the relation to check, or None to check any relation.
+
+        Returns:
+            bool: True if the two agents are in the given relation, False otherwise.
+        &#34;&#34;&#34;
+        if relation_name is None:
+            for relation_name, relation in self.relations.items():
+                if (agent_1, agent_2) in relation or (agent_2, agent_1) in relation:
+                    return True
+            return False
+        
+        else:
+            if relation_name in self.relations:
+                return (agent_1, agent_2) in self.relations[relation_name] or (agent_2, agent_1) in self.relations[relation_name]
+            else:
+                return False</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="tinytroupe.environment.tiny_world.TinyWorld" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld">TinyWorld</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="tinytroupe.environment.TinySocialNetwork.add_relation"><code class="name flex">
+<span>def <span class="ident">add_relation</span></span>(<span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def wrapper(*args, **kwargs):
+    obj_under_transaction = args[0]
+    simulation = current_simulation()
+    obj_sim_id = obj_under_transaction.simulation_id if hasattr(obj_under_transaction, &#39;simulation_id&#39;) else None
+
+    logger.debug(f&#34;-----------------------------------------&gt; Transaction: {func.__name__} with args {args[1:]} and kwargs {kwargs} under simulation {obj_sim_id}, parallel={parallel}.&#34;)
+    
+    parallel_id = str(threading.current_thread())
+    
+    transaction = Transaction(obj_under_transaction, simulation, func, *args, **kwargs)
+    result = transaction.execute(begin_parallel=parallel, parallel_id=parallel_id)
+    
+    return result</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinySocialNetwork.is_in_relation_with"><code class="name flex">
+<span>def <span class="ident">is_in_relation_with</span></span>(<span>self, agent_1: <a title="tinytroupe.agent.tiny_person.TinyPerson" href="../agent/tiny_person.html#tinytroupe.agent.tiny_person.TinyPerson">TinyPerson</a>, agent_2: <a title="tinytroupe.agent.tiny_person.TinyPerson" href="../agent/tiny_person.html#tinytroupe.agent.tiny_person.TinyPerson">TinyPerson</a>, relation_name=None) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if two agents are in a relation. If the relation name is given, check that
+the agents are in that relation. If no relation name is given, check that the agents
+are in any relation. Relations are undirected, so the order of the agents does not matter.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>agent_1</code></strong> :&ensp;<code>TinyPerson</code></dt>
+<dd>The first agent.</dd>
+<dt><strong><code>agent_2</code></strong> :&ensp;<code>TinyPerson</code></dt>
+<dd>The second agent.</dd>
+<dt><strong><code>relation_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the relation to check, or None to check any relation.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>bool</code></dt>
+<dd>True if the two agents are in the given relation, False otherwise.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def is_in_relation_with(self, agent_1:TinyPerson, agent_2:TinyPerson, relation_name=None) -&gt; bool:
+    &#34;&#34;&#34;
+    Checks if two agents are in a relation. If the relation name is given, check that
+    the agents are in that relation. If no relation name is given, check that the agents
+    are in any relation. Relations are undirected, so the order of the agents does not matter.
+
+    Args:
+        agent_1 (TinyPerson): The first agent.
+        agent_2 (TinyPerson): The second agent.
+        relation_name (str): The name of the relation to check, or None to check any relation.
+
+    Returns:
+        bool: True if the two agents are in the given relation, False otherwise.
+    &#34;&#34;&#34;
+    if relation_name is None:
+        for relation_name, relation in self.relations.items():
+            if (agent_1, agent_2) in relation or (agent_2, agent_1) in relation:
+                return True
+        return False
+    
+    else:
+        if relation_name in self.relations:
+            return (agent_1, agent_2) in self.relations[relation_name] or (agent_2, agent_1) in self.relations[relation_name]
+        else:
+            return False</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="tinytroupe.environment.tiny_world.TinyWorld" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld">TinyWorld</a></b></code>:
+<ul class="hlist">
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.add_agent" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.add_agent">add_agent</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.add_agents" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.add_agents">add_agents</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.add_environment" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.add_environment">add_environment</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.add_intervention" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.add_intervention">add_intervention</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.clear_communications_buffer" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.clear_communications_buffer">clear_communications_buffer</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.clear_environments" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.clear_environments">clear_environments</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.decode_complete_state" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.decode_complete_state">decode_complete_state</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.encode_complete_state" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.encode_complete_state">encode_complete_state</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.get_agent_by_name" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.get_agent_by_name">get_agent_by_name</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.get_environment_by_name" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.get_environment_by_name">get_environment_by_name</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.make_everyone_accessible" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.make_everyone_accessible">make_everyone_accessible</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.pop_and_display_latest_communications" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.pop_and_display_latest_communications">pop_and_display_latest_communications</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.pp_current_interactions" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.pp_current_interactions">pp_current_interactions</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.pretty_current_interactions" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.pretty_current_interactions">pretty_current_interactions</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.remove_agent" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.remove_agent">remove_agent</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.remove_all_agents" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.remove_all_agents">remove_all_agents</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.run_days" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.run_days">run_days</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.run_hours" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.run_hours">run_hours</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.run_minutes" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.run_minutes">run_minutes</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.run_months" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.run_months">run_months</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.run_weeks" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.run_weeks">run_weeks</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.run_years" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.run_years">run_years</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.set_simulation_for_free_environments" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.set_simulation_for_free_environments">set_simulation_for_free_environments</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.skip_days" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.skip_days">skip_days</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.skip_hours" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.skip_hours">skip_hours</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.skip_minutes" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.skip_minutes">skip_minutes</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.skip_months" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.skip_months">skip_months</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.skip_weeks" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.skip_weeks">skip_weeks</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.skip_years" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.skip_years">skip_years</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld"><code class="flex name class">
+<span>class <span class="ident">TinyWorld</span></span>
+<span>(</span><span>name: str = None, agents=[], initial_datetime=datetime.datetime(2025, 7, 16, 0, 9, 43, 295337), interventions=[], broadcast_if_no_target=True, max_additional_targets_to_display=3)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Base class for environments.</p>
+<p>Initializes an environment.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the environment.</dd>
+<dt><strong><code>agents</code></strong> :&ensp;<code>list</code></dt>
+<dd>A list of agents to add to the environment.</dd>
+<dt><strong><code>initial_datetifme</code></strong> :&ensp;<code>datetime</code></dt>
+<dd>The initial datetime of the environment, or None (i.e., explicit time is optional).
+Defaults to the current datetime in the real world.</dd>
+<dt><strong><code>interventions</code></strong> :&ensp;<code>list</code></dt>
+<dd>A list of interventions to apply in the environment at each simulation step.</dd>
+<dt><strong><code>broadcast_if_no_target</code></strong> :&ensp;<code>bool</code></dt>
+<dd>If True, broadcast actions if the target of an action is not found.</dd>
+<dt><strong><code>max_additional_targets_to_display</code></strong> :&ensp;<code>int</code></dt>
+<dd>The maximum number of additional targets to display in a communication. If None,
+all additional targets are displayed.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TinyWorld:
+    &#34;&#34;&#34;
+    Base class for environments.
+    &#34;&#34;&#34;
+
+    # A dict of all environments created so far.
+    all_environments = {} # name -&gt; environment
+
+    # Whether to display environments communications or not, for all environments. 
+    communication_display = True
+
+    def __init__(self, name: str=None, agents=[], 
+                 initial_datetime=datetime.now(),
+                 interventions=[],
+                 broadcast_if_no_target=True,
+                 max_additional_targets_to_display=3):
+        &#34;&#34;&#34;
+        Initializes an environment.
+
+        Args:
+            name (str): The name of the environment.
+            agents (list): A list of agents to add to the environment.
+            initial_datetifme (datetime): The initial datetime of the environment, or None (i.e., explicit time is optional). 
+                Defaults to the current datetime in the real world.
+            interventions (list): A list of interventions to apply in the environment at each simulation step.
+            broadcast_if_no_target (bool): If True, broadcast actions if the target of an action is not found.
+            max_additional_targets_to_display (int): The maximum number of additional targets to display in a communication. If None, 
+                all additional targets are displayed.
+        &#34;&#34;&#34;
+
+        if name is not None:
+            self.name = name
+        else:
+            self.name = f&#34;TinyWorld {utils.fresh_id(self.__class__.__name__)}&#34;
+            
+        self.current_datetime = initial_datetime
+        self.broadcast_if_no_target = broadcast_if_no_target
+        self.simulation_id = None # will be reset later if the agent is used within a specific simulation scope
+        
+        self.agents = []
+        self.name_to_agent = {} # {agent_name: agent, agent_name_2: agent_2, ...}
+
+        self._interventions = interventions
+
+        # the buffer of communications that have been displayed so far, used for
+        # saving these communications to another output form later (e.g., caching)
+        self._displayed_communications_buffer = []
+
+        # a temporary buffer for communications target to make rendering easier
+        self._target_display_communications_buffer = []
+        self._max_additional_targets_to_display = max_additional_targets_to_display
+
+        self.console = Console()
+
+        # add the environment to the list of all environments
+        TinyWorld.add_environment(self)
+        
+        self.add_agents(agents)
+        
+    #######################################################################
+    # Simulation control methods
+    #######################################################################
+    @transactional()
+    def _step(self, 
+              timedelta_per_step=None, 
+              randomize_agents_order=True,
+              parallelize=True): # TODO have a configuration for parallelism?
+        &#34;&#34;&#34;
+        Performs a single step in the environment. This default implementation
+        simply calls makes all agents in the environment act and properly
+        handle the resulting actions. Subclasses might override this method to implement 
+        different policies.
+        &#34;&#34;&#34;
+        
+        # Increase current datetime if timedelta is given. This must happen before
+        # any other simulation updates, to make sure that the agents are acting
+        # in the correct time, particularly if only one step is being run.
+        self._advance_datetime(timedelta_per_step)
+
+        # Apply interventions. 
+        # 
+        # Why not in parallel? Owing to the very general nature of their potential effects,
+        # interventions are never parallelized, since that could introduce unforeseen race conditions.
+        for intervention in self._interventions:
+            should_apply_intervention = intervention.check_precondition()
+            if should_apply_intervention:
+                if TinyWorld.communication_display:
+                    self._display_intervention_communication(intervention)
+                intervention.apply_effect()
+                
+                logger.debug(f&#34;[{self.name}] Intervention &#39;{intervention.name}&#39; was applied.&#34;)
+
+        # Agents can act in parallel or sequentially
+        if parallelize:
+            agents_actions = self._step_in_parallel(timedelta_per_step=timedelta_per_step)
+        else:
+            agents_actions = self._step_sequentially(timedelta_per_step=timedelta_per_step, 
+                                                 randomize_agents_order=randomize_agents_order)
+        
+        return agents_actions
+        
+    def _step_sequentially(self, timedelta_per_step=None, randomize_agents_order=True):
+        &#34;&#34;&#34;
+        The sequential version of the _step method to request agents to act. 
+        &#34;&#34;&#34;
+        
+        # agents can act in a random order
+        reordered_agents = copy.copy(self.agents)
+        if randomize_agents_order:
+            random.shuffle(reordered_agents)
+
+        # agents can act
+        agents_actions = {}
+        for agent in reordered_agents:
+            logger.debug(f&#34;[{self.name}] Agent {name_or_empty(agent)} is acting.&#34;)
+            actions = agent.act(return_actions=True)
+            agents_actions[agent.name] = actions
+
+            self._handle_actions(agent, agent.pop_latest_actions())
+        
+        return agents_actions
+
+    def _step_in_parallel(self, timedelta_per_step=None):
+        &#34;&#34;&#34;
+        A parallelized version of the _step method to request agents to act.
+        &#34;&#34;&#34;
+
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            futures = {executor.submit(agent.act, return_actions=True): agent for agent in self.agents}
+            agents_actions = {}
+
+            # Wait for all futures to complete
+            concurrent.futures.wait(futures.keys())
+
+            for future in futures:
+                agent = futures[future]
+                try:
+                    actions = future.result()
+                    agents_actions[agent.name] = actions
+                    self._handle_actions(agent, agent.pop_latest_actions())
+                except Exception as exc:
+                    logger.error(f&#34;[{self.name}] Agent {name_or_empty(agent)} generated an exception: {exc}&#34;)
+
+        return agents_actions
+
+        
+
+    def _advance_datetime(self, timedelta):
+        &#34;&#34;&#34;
+        Advances the current datetime of the environment by the specified timedelta.
+
+        Args:
+            timedelta (timedelta): The timedelta to advance the current datetime by.
+        &#34;&#34;&#34;
+        if timedelta is not None:
+            self.current_datetime += timedelta
+        else:
+            logger.info(f&#34;[{self.name}] No timedelta provided, so the datetime was not advanced.&#34;)
+
+    @transactional()
+    @config_manager.config_defaults(parallelize=&#34;parallel_agent_actions&#34;)
+    def run(self, steps: int, timedelta_per_step=None, return_actions=False, randomize_agents_order=True, parallelize=None):
+        &#34;&#34;&#34;
+        Runs the environment for a given number of steps.
+
+        Args:
+            steps (int): The number of steps to run the environment for.
+            timedelta_per_step (timedelta, optional): The time interval between steps. Defaults to None.
+            return_actions (bool, optional): If True, returns the actions taken by the agents. Defaults to False.
+            randomize_agents_order (bool, optional): If True, randomizes the order in which agents act. Defaults to True.
+            parallelize (bool, optional): If True, agents act in parallel. Defaults to True.
+        
+        Returns:
+            list: A list of actions taken by the agents over time, if return_actions is True. The list has this format:
+                  [{agent_name: [action_1, action_2, ...]}, {agent_name_2: [action_1, action_2, ...]}, ...]
+        &#34;&#34;&#34;
+        agents_actions_over_time = []
+        for i in range(steps):
+            logger.info(f&#34;[{self.name}] Running world simulation step {i+1} of {steps}.&#34;)
+
+            if TinyWorld.communication_display:
+                self._display_step_communication(cur_step=i+1, total_steps=steps, timedelta_per_step=timedelta_per_step)
+
+            agents_actions = self._step(timedelta_per_step=timedelta_per_step, randomize_agents_order=randomize_agents_order, parallelize=parallelize)
+            agents_actions_over_time.append(agents_actions)
+        
+        if return_actions:
+            return agents_actions_over_time
+    
+    @transactional()
+    def skip(self, steps: int, timedelta_per_step=None):
+        &#34;&#34;&#34;
+        Skips a given number of steps in the environment. That is to say, time shall pass, but no actions will be taken
+        by the agents or any other entity in the environment.
+
+        Args:
+            steps (int): The number of steps to skip.
+            timedelta_per_step (timedelta, optional): The time interval between steps. Defaults to None.
+        &#34;&#34;&#34;
+        self._advance_datetime(steps * timedelta_per_step)
+
+    @config_manager.config_defaults(parallelize=&#34;parallel_agent_actions&#34;)
+    def run_minutes(self, minutes: int, randomize_agents_order=True, parallelize=None):
+        &#34;&#34;&#34;
+        Runs the environment for a given number of minutes.
+
+        Args:
+            minutes (int): The number of minutes to run the environment for.
+        &#34;&#34;&#34;
+        self.run(steps=minutes, timedelta_per_step=timedelta(minutes=1), randomize_agents_order=randomize_agents_order, parallelize=parallelize)
+    
+    def skip_minutes(self, minutes: int):
+        &#34;&#34;&#34;
+        Skips a given number of minutes in the environment.
+
+        Args:
+            minutes (int): The number of minutes to skip.
+        &#34;&#34;&#34;
+        self.skip(steps=minutes, timedelta_per_step=timedelta(minutes=1))
+    
+    @config_manager.config_defaults(parallelize=&#34;parallel_agent_actions&#34;)
+    def run_hours(self, hours: int, randomize_agents_order=True, parallelize=None):
+        &#34;&#34;&#34;
+        Runs the environment for a given number of hours.
+
+        Args:
+            hours (int): The number of hours to run the environment for.
+        &#34;&#34;&#34;
+        self.run(steps=hours, timedelta_per_step=timedelta(hours=1), randomize_agents_order=randomize_agents_order, parallelize=parallelize)
+    
+    def skip_hours(self, hours: int):
+        &#34;&#34;&#34;
+        Skips a given number of hours in the environment.
+
+        Args:
+            hours (int): The number of hours to skip.
+        &#34;&#34;&#34;
+        self.skip(steps=hours, timedelta_per_step=timedelta(hours=1))
+    
+    @config_manager.config_defaults(parallelize=&#34;parallel_agent_actions&#34;)
+    def run_days(self, days: int, randomize_agents_order=True, parallelize=None):
+        &#34;&#34;&#34;
+        Runs the environment for a given number of days.
+
+        Args:
+            days (int): The number of days to run the environment for.
+        &#34;&#34;&#34;
+        self.run(steps=days, timedelta_per_step=timedelta(days=1), randomize_agents_order=randomize_agents_order, parallelize=parallelize)
+    
+    def skip_days(self, days: int):
+        &#34;&#34;&#34;
+        Skips a given number of days in the environment.
+
+        Args:
+            days (int): The number of days to skip.
+        &#34;&#34;&#34;
+        self.skip(steps=days, timedelta_per_step=timedelta(days=1))
+    
+    @config_manager.config_defaults(parallelize=&#34;parallel_agent_actions&#34;)
+    def run_weeks(self, weeks: int, randomize_agents_order=True, parallelize=None):
+        &#34;&#34;&#34;
+        Runs the environment for a given number of weeks.
+
+        Args:
+            weeks (int): The number of weeks to run the environment for.
+            randomize_agents_order (bool, optional): If True, randomizes the order in which agents act. Defaults to True.
+        &#34;&#34;&#34;
+        self.run(steps=weeks, timedelta_per_step=timedelta(weeks=1), randomize_agents_order=randomize_agents_order, parallelize=parallelize)
+    
+    def skip_weeks(self, weeks: int):
+        &#34;&#34;&#34;
+        Skips a given number of weeks in the environment.
+
+        Args:
+            weeks (int): The number of weeks to skip.
+        &#34;&#34;&#34;
+        self.skip(steps=weeks, timedelta_per_step=timedelta(weeks=1))
+    
+    @config_manager.config_defaults(parallelize=&#34;parallel_agent_actions&#34;)
+    def run_months(self, months: int, randomize_agents_order=True, parallelize=None):
+        &#34;&#34;&#34;
+        Runs the environment for a given number of months.
+
+        Args:
+            months (int): The number of months to run the environment for.
+            randomize_agents_order (bool, optional): If True, randomizes the order in which agents act. Defaults to True.
+        &#34;&#34;&#34;
+        self.run(steps=months, timedelta_per_step=timedelta(weeks=4), randomize_agents_order=randomize_agents_order, parallelize=parallelize)
+    
+    def skip_months(self, months: int):
+        &#34;&#34;&#34;
+        Skips a given number of months in the environment.
+
+        Args:
+            months (int): The number of months to skip.
+        &#34;&#34;&#34;
+        self.skip(steps=months, timedelta_per_step=timedelta(weeks=4))
+    
+    @config_manager.config_defaults(parallelize=&#34;parallel_agent_actions&#34;)
+    def run_years(self, years: int, randomize_agents_order=True, parallelize=None):
+        &#34;&#34;&#34;
+        Runs the environment for a given number of years.
+
+        Args:
+            years (int): The number of years to run the environment for.
+            randomize_agents_order (bool, optional): If True, randomizes the order in which agents act. Defaults to True.
+        &#34;&#34;&#34;
+        self.run(steps=years, timedelta_per_step=timedelta(days=365), randomize_agents_order=randomize_agents_order, parallelize=parallelize)
+    
+    def skip_years(self, years: int):
+        &#34;&#34;&#34;
+        Skips a given number of years in the environment.
+
+        Args:
+            years (int): The number of years to skip.
+        &#34;&#34;&#34;
+        self.skip(steps=years, timedelta_per_step=timedelta(days=365))
+
+    #######################################################################
+    # Agent management methods
+    #######################################################################
+    def add_agents(self, agents: list):
+        &#34;&#34;&#34;
+        Adds a list of agents to the environment.
+
+        Args:
+            agents (list): A list of agents to add to the environment.
+        &#34;&#34;&#34;
+        for agent in agents:
+            self.add_agent(agent)
+        
+        return self # for chaining
+
+    def add_agent(self, agent: TinyPerson):
+        &#34;&#34;&#34;
+        Adds an agent to the environment. The agent must have a unique name within the environment.
+
+        Args:
+            agent (TinyPerson): The agent to add to the environment.
+        
+        Raises:
+            ValueError: If the agent name is not unique within the environment.
+        &#34;&#34;&#34;
+
+        # check if the agent is not already in the environment
+        if agent not in self.agents:
+            logger.debug(f&#34;Adding agent {agent.name} to the environment.&#34;)
+            
+            # Agent names must be unique in the environment. 
+            # Check if the agent name is already there.
+            if agent.name not in self.name_to_agent:
+                agent.environment = self
+                self.agents.append(agent)
+                self.name_to_agent[agent.name] = agent
+            else:
+                raise ValueError(f&#34;Agent names must be unique, but &#39;{agent.name}&#39; is already in the environment.&#34;)
+        else:
+            logger.warn(f&#34;Agent {agent.name} is already in the environment.&#34;)
+        
+        return self # for chaining
+
+    def remove_agent(self, agent: TinyPerson):
+        &#34;&#34;&#34;
+        Removes an agent from the environment.
+
+        Args:
+            agent (TinyPerson): The agent to remove from the environment.
+        &#34;&#34;&#34;
+        logger.debug(f&#34;Removing agent {agent.name} from the environment.&#34;)
+        self.agents.remove(agent)
+        del self.name_to_agent[agent.name]
+
+        return self # for chaining
+    
+    def remove_all_agents(self):
+        &#34;&#34;&#34;
+        Removes all agents from the environment.
+        &#34;&#34;&#34;
+        logger.debug(f&#34;Removing all agents from the environment.&#34;)
+        self.agents = []
+        self.name_to_agent = {}
+
+        return self # for chaining
+
+    def get_agent_by_name(self, name: str) -&gt; TinyPerson:
+        &#34;&#34;&#34;
+        Returns the agent with the specified name. If no agent with that name exists in the environment, 
+        returns None.
+
+        Args:
+            name (str): The name of the agent to return.
+
+        Returns:
+            TinyPerson: The agent with the specified name.
+        &#34;&#34;&#34;
+        if name in self.name_to_agent:
+            return self.name_to_agent[name]
+        else:
+            return None
+    
+    #######################################################################
+    # Intervention management methods
+    #######################################################################
+
+    def add_intervention(self, intervention):
+        &#34;&#34;&#34;
+        Adds an intervention to the environment.
+
+        Args:
+            intervention: The intervention to add to the environment.
+        &#34;&#34;&#34;
+        self._interventions.append(intervention)
+
+    #######################################################################
+    # Action handlers
+    #
+    # Specific actions issued by agents are handled by the environment,
+    # because they have effects beyond the agent itself.
+    #######################################################################
+    @transactional()
+    def _handle_actions(self, source: TinyPerson, actions: list):
+        &#34;&#34;&#34; 
+        Handles the actions issued by the agents.
+
+        Args:
+            source (TinyPerson): The agent that issued the actions.
+            actions (list): A list of actions issued by the agents. Each action is actually a
+              JSON specification.
+            
+        &#34;&#34;&#34;
+        for action in actions:
+            action_type = action[&#34;type&#34;] # this is the only required field
+            content = action[&#34;content&#34;] if &#34;content&#34; in action else None
+            target = action[&#34;target&#34;] if &#34;target&#34; in action else None
+
+            logger.debug(f&#34;[{self.name}] Handling action {action_type} from agent {name_or_empty(source)}. Content: {content}, target: {target}.&#34;)
+
+            # only some actions require the enviroment to intervene
+            if action_type == &#34;REACH_OUT&#34;:
+                self._handle_reach_out(source, content, target)
+            elif action_type == &#34;TALK&#34;:
+                self._handle_talk(source, content, target)
+
+    @transactional()
+    def _handle_reach_out(self, source_agent: TinyPerson, content: str, target: str):
+        &#34;&#34;&#34;
+        Handles the REACH_OUT action. This default implementation always allows REACH_OUT to succeed.
+        Subclasses might override this method to implement different policies.
+
+        Args:
+            source_agent (TinyPerson): The agent that issued the REACH_OUT action.
+            content (str): The content of the message.
+            target (str): The target of the message.
+        &#34;&#34;&#34;
+
+        # This default implementation always allows REACH_OUT to suceed.
+        target_agent = self.get_agent_by_name(target)
+
+        if target_agent is not None:
+            source_agent.make_agent_accessible(target_agent)
+            target_agent.make_agent_accessible(source_agent)
+
+            source_agent.socialize(f&#34;{name_or_empty(target_agent)} was successfully reached out, and is now available for interaction.&#34;, source=self)
+            target_agent.socialize(f&#34;{name_or_empty(source_agent)} reached out to you, and is now available for interaction.&#34;, source=self)
+        
+        else:
+            logger.debug(f&#34;[{self.name}] REACH_OUT action failed: target agent &#39;{target}&#39; not found.&#34;)
+
+    @transactional()
+    def _handle_talk(self, source_agent: TinyPerson, content: str, target: str):
+        &#34;&#34;&#34;
+        Handles the TALK action by delivering the specified content to the specified target.
+
+        Args:
+            source_agent (TinyPerson): The agent that issued the TALK action.
+            content (str): The content of the message.
+            target (str, optional): The target of the message.
+        &#34;&#34;&#34;
+        target_agent = self.get_agent_by_name(target)
+
+        logger.debug(f&#34;[{self.name}] Delivering message from {name_or_empty(source_agent)} to {name_or_empty(target_agent)}.&#34;)
+
+        if target_agent is not None:
+            target_agent.listen(content, source=source_agent)
+        elif self.broadcast_if_no_target:
+            self.broadcast(content, source=source_agent)
+
+    #######################################################################
+    # Interaction methods
+    #######################################################################
+    @transactional()
+    def broadcast(self, speech: str, source: AgentOrWorld=None):
+        &#34;&#34;&#34;
+        Delivers a speech to all agents in the environment.
+
+        Args:
+            speech (str): The content of the message.
+            source (AgentOrWorld, optional): The agent or environment that issued the message. Defaults to None.
+        &#34;&#34;&#34;
+        logger.debug(f&#34;[{self.name}] Broadcasting message: &#39;{speech}&#39;.&#34;)
+
+        for agent in self.agents:
+            # do not deliver the message to the source
+            if agent != source:
+                agent.listen(speech, source=source)
+    
+    @transactional()
+    def broadcast_thought(self, thought: str, source: AgentOrWorld=None):
+        &#34;&#34;&#34;
+        Broadcasts a thought to all agents in the environment.
+
+        Args:
+            thought (str): The content of the thought.
+        &#34;&#34;&#34;
+        logger.debug(f&#34;[{self.name}] Broadcasting thought: &#39;{thought}&#39;.&#34;)
+
+        for agent in self.agents:
+            agent.think(thought)
+    
+    @transactional()
+    def broadcast_internal_goal(self, internal_goal: str):
+        &#34;&#34;&#34;
+        Broadcasts an internal goal to all agents in the environment.
+
+        Args:
+            internal_goal (str): The content of the internal goal.
+        &#34;&#34;&#34;
+        logger.debug(f&#34;[{self.name}] Broadcasting internal goal: &#39;{internal_goal}&#39;.&#34;)
+
+        for agent in self.agents:
+            agent.internalize_goal(internal_goal)
+    
+    @transactional()
+    def broadcast_context_change(self, context:list):
+        &#34;&#34;&#34;
+        Broadcasts a context change to all agents in the environment.
+
+        Args:
+            context (list): The content of the context change.
+        &#34;&#34;&#34;
+        logger.debug(f&#34;[{self.name}] Broadcasting context change: &#39;{context}&#39;.&#34;)
+
+        for agent in self.agents:
+            agent.change_context(context)
+
+    def make_everyone_accessible(self):
+        &#34;&#34;&#34;
+        Makes all agents in the environment accessible to each other.
+        &#34;&#34;&#34;
+        for agent_1 in self.agents:
+            for agent_2 in self.agents:
+                if agent_1 != agent_2:
+                    agent_1.make_agent_accessible(agent_2)
+            
+
+    ###########################################################
+    # Formatting conveniences
+    ###########################################################
+
+    # TODO better names for these &#34;display&#34; methods
+    def _display_step_communication(self, cur_step, total_steps, timedelta_per_step=None):
+        &#34;&#34;&#34;
+        Displays the current communication and stores it in a buffer for later use.
+        &#34;&#34;&#34;
+        rendering = self._pretty_step(cur_step=cur_step, total_steps=total_steps, timedelta_per_step=timedelta_per_step) 
+
+        self._push_and_display_latest_communication({&#34;kind&#34;: &#39;step&#39;, &#34;rendering&#34;: rendering, &#34;content&#34;: None, &#34;source&#34;:  None, &#34;target&#34;: None})
+    
+    def _display_intervention_communication(self, intervention):
+        &#34;&#34;&#34;
+        Displays the current intervention communication and stores it in a buffer for later use.
+        &#34;&#34;&#34;
+        rendering = self._pretty_intervention(intervention)
+        self._push_and_display_latest_communication({&#34;kind&#34;: &#39;intervention&#39;, &#34;rendering&#34;: rendering, &#34;content&#34;: None, &#34;source&#34;:  None, &#34;target&#34;: None})
+    
+    def _push_and_display_latest_communication(self, communication):
+        &#34;&#34;&#34;
+        Pushes the latest communications to the agent&#39;s buffer.
+        &#34;&#34;&#34;
+        #
+        # check if the communication is just repeating the last one for a different target
+        #
+        if len(self._displayed_communications_buffer) &gt; 0:
+            # get values from last communication
+            last_communication = self._displayed_communications_buffer[-1]
+            last_kind = last_communication[&#34;kind&#34;]
+            last_target = last_communication[&#34;target&#34;]
+            last_source = last_communication[&#34;source&#34;]
+            if last_kind == &#39;action&#39;:  
+                last_content = last_communication[&#34;content&#34;][&#34;action&#34;][&#34;content&#34;]
+                last_type = last_communication[&#34;content&#34;][&#34;action&#34;][&#34;type&#34;]
+            elif last_kind == &#39;stimulus&#39;:
+                last_content = last_communication[&#34;content&#34;][&#34;stimulus&#34;][&#34;content&#34;]
+                last_type = last_communication[&#34;content&#34;][&#34;stimulus&#34;][&#34;type&#34;]
+            elif last_kind == &#39;stimuli&#39;:
+                last_stimulus = last_communication[&#34;content&#34;][&#34;stimuli&#34;][0]
+                last_content = last_stimulus[&#34;content&#34;]
+                last_type = last_stimulus[&#34;type&#34;]
+            else:
+                last_content = None
+                last_type = None
+        
+            # get values from current communication
+            current_kind = communication[&#34;kind&#34;]
+            current_target = communication[&#34;target&#34;]
+            current_source = communication[&#34;source&#34;]
+            if current_kind == &#39;action&#39;:
+                current_content = communication[&#34;content&#34;][&#34;action&#34;][&#34;content&#34;]
+                current_type = communication[&#34;content&#34;][&#34;action&#34;][&#34;type&#34;]
+            elif current_kind == &#39;stimulus&#39;:
+                current_content = communication[&#34;content&#34;][&#34;stimulus&#34;][&#34;content&#34;]
+                current_type = communication[&#34;content&#34;][&#34;stimulus&#34;][&#34;type&#34;]
+            elif current_kind == &#39;stimuli&#39;:
+                current_stimulus = communication[&#34;content&#34;][&#34;stimuli&#34;][0]
+                current_content = current_stimulus[&#34;content&#34;]
+                current_type = current_stimulus[&#34;type&#34;]
+            else:
+                current_content = None
+                current_type = None
+
+            # if we are repeating the last communication, let&#39;s simplify the rendering
+            if (last_source == current_source) and (last_type == current_type) and (last_kind == current_kind) and \
+               (last_content is not None) and (last_content == current_content) and \
+               (current_target is not None):
+               
+                self._target_display_communications_buffer.append(current_target)
+
+                rich_style = utils.RichTextStyle.get_style_for(last_kind, last_type)
+                
+                # print the additional target a limited number of times if a max is set, or
+                # always if no max is set.
+                if (self._max_additional_targets_to_display is None) or\
+                   len(self._target_display_communications_buffer) &lt; self._max_additional_targets_to_display:
+                    communication[&#34;rendering&#34;] = &#34; &#34; * len(last_source) + f&#34;[{rich_style}]       + --&gt; [underline]{current_target}[/][/]&#34;
+
+                elif len(self._target_display_communications_buffer) == self._max_additional_targets_to_display:
+                    communication[&#34;rendering&#34;] = &#34; &#34; * len(last_source) + f&#34;[{rich_style}]       + --&gt; ...others...[/]&#34;
+                
+                else: # don&#39;t display anything anymore
+                    communication[&#34;rendering&#34;] = None
+            
+            else:
+                # no repetition, so just display the communication and reset the targets buffer
+                self._target_display_communications_buffer = [] # resets
+        
+        else:
+            # no repetition, so just display the communication and reset the targets buffer
+            self._target_display_communications_buffer = [] # resets
+
+
+
+        self._displayed_communications_buffer.append(communication)
+        self._display(communication)
+
+    def pop_and_display_latest_communications(self):
+        &#34;&#34;&#34;
+        Pops the latest communications and displays them.
+        &#34;&#34;&#34;
+        communications = self._displayed_communications_buffer
+        self._displayed_communications_buffer = []
+
+        for communication in communications:
+            self._display(communication)
+
+        return communications    
+
+    def _display(self, communication:dict):
+        # unpack the rendering to find more info
+        content = communication[&#34;rendering&#34;]
+        kind = communication[&#34;kind&#34;]
+        
+        if content is not None:
+            # render as appropriate
+            if kind == &#39;step&#39;:
+                self.console.rule(content)
+            else:
+                self.console.print(content)
+    
+    def clear_communications_buffer(self):
+        &#34;&#34;&#34;
+        Cleans the communications buffer.
+        &#34;&#34;&#34;
+        self._displayed_communications_buffer = []
+
+    def __repr__(self):
+        return f&#34;TinyWorld(name=&#39;{self.name}&#39;)&#34;
+
+    def _pretty_step(self, cur_step, total_steps, timedelta_per_step=None):
+        rendering = f&#34;{self.name} step {cur_step} of {total_steps}&#34;
+        if timedelta_per_step is not None:
+            rendering += f&#34; ({pretty_datetime(self.current_datetime)})&#34;
+
+        return rendering
+
+    def _pretty_intervention(self, intervention):
+        indent = &#34;          &gt; &#34;
+        justification = textwrap.fill(
+            intervention.precondition_justification(),
+            width=TinyPerson.PP_TEXT_WIDTH,
+            initial_indent=indent,
+            subsequent_indent=indent,
+        )
+        
+        rich_style = utils.RichTextStyle.get_style_for(&#34;intervention&#34;)
+        rendering = f&#34;[{rich_style}] :zap: [bold] &lt;&lt;{intervention.name}&gt;&gt; Triggered, effects are being applied...[/] \n&#34; + \
+                    f&#34;[italic]{justification}[/][/]&#34;
+        # TODO add details about why the intervention was applied
+
+        return rendering
+
+    def pp_current_interactions(self, simplified=True, skip_system=True):
+        &#34;&#34;&#34;
+        Pretty prints the current messages from agents in this environment.
+        &#34;&#34;&#34;
+        print(self.pretty_current_interactions(simplified=simplified, skip_system=skip_system))
+
+    def pretty_current_interactions(self, simplified=True, skip_system=True, max_content_length=default[&#34;max_content_display_length&#34;], first_n=None, last_n=None, include_omission_info:bool=True):
+      &#34;&#34;&#34;
+      Returns a pretty, readable, string with the current messages of agents in this environment.
+      &#34;&#34;&#34;
+      agent_contents = []
+
+      for agent in self.agents:
+          agent_content = f&#34;#### Interactions from the point of view of {agent.name} agent:\n&#34;
+          agent_content += f&#34;**BEGIN AGENT {agent.name} HISTORY.**\n &#34;
+          agent_content += agent.pretty_current_interactions(simplified=simplified, skip_system=skip_system, max_content_length=max_content_length, first_n=first_n, last_n=last_n, include_omission_info=include_omission_info) + &#34;\n&#34;
+          agent_content += f&#34;**FINISHED AGENT {agent.name} HISTORY.**\n\n&#34;
+          agent_contents.append(agent_content)      
+          
+      return &#34;\n&#34;.join(agent_contents)
+    
+    #######################################################################
+    # IO
+    #######################################################################
+
+    def encode_complete_state(self) -&gt; dict:
+        &#34;&#34;&#34;
+        Encodes the complete state of the environment in a dictionary.
+
+        Returns:
+            dict: A dictionary encoding the complete state of the environment.
+        &#34;&#34;&#34;
+        to_copy = copy.copy(self.__dict__)
+
+        # remove the logger and other fields
+        del to_copy[&#39;console&#39;]
+        del to_copy[&#39;agents&#39;]
+        del to_copy[&#39;name_to_agent&#39;]
+        del to_copy[&#39;current_datetime&#39;]
+        del to_copy[&#39;_interventions&#39;] # TODO: encode interventions
+
+        state = copy.deepcopy(to_copy)
+
+        # agents are encoded separately
+        state[&#34;agents&#34;] = [agent.encode_complete_state() for agent in self.agents]
+
+        # datetime also has to be encoded separately
+        state[&#34;current_datetime&#34;] = self.current_datetime.isoformat()
+
+        return state
+    
+    def decode_complete_state(self, state:dict):
+        &#34;&#34;&#34;
+        Decodes the complete state of the environment from a dictionary.
+
+        Args:
+            state (dict): A dictionary encoding the complete state of the environment.
+
+        Returns:
+            Self: The environment decoded from the dictionary.
+        &#34;&#34;&#34;
+        state = copy.deepcopy(state)
+
+        #################################
+        # restore agents in-place
+        #################################
+        self.remove_all_agents()
+        for agent_state in state[&#34;agents&#34;]:
+            try:
+                try:
+                    agent = TinyPerson.get_agent_by_name(agent_state[&#34;name&#34;])
+                except Exception as e:
+                    raise ValueError(f&#34;Could not find agent {agent_state[&#39;name&#39;]} for environment {self.name}.&#34;) from e
+                
+                agent.decode_complete_state(agent_state)
+                self.add_agent(agent)
+                
+            except Exception as e:
+                raise ValueError(f&#34;Could not decode agent {agent_state[&#39;name&#39;]} for environment {self.name}.&#34;) from e
+        
+        # remove the agent states to update the rest of the environment
+        del state[&#34;agents&#34;]
+
+        # restore datetime
+        state[&#34;current_datetime&#34;] = datetime.fromisoformat(state[&#34;current_datetime&#34;])
+
+        # restore other fields
+        self.__dict__.update(state)
+
+        return self
+
+    @staticmethod
+    def add_environment(environment):
+        &#34;&#34;&#34;
+        Adds an environment to the list of all environments. Environment names must be unique,
+        so if an environment with the same name already exists, an error is raised.
+        &#34;&#34;&#34;
+        if environment.name in TinyWorld.all_environments:
+            raise ValueError(f&#34;Environment names must be unique, but &#39;{environment.name}&#39; is already defined.&#34;)
+        else:
+            TinyWorld.all_environments[environment.name] = environment
+        
+
+    @staticmethod
+    def set_simulation_for_free_environments(simulation):
+        &#34;&#34;&#34;
+        Sets the simulation if it is None. This allows free environments to be captured by specific simulation scopes
+        if desired.
+        &#34;&#34;&#34;
+        for environment in TinyWorld.all_environments.values():
+            if environment.simulation_id is None:
+                simulation.add_environment(environment)
+    
+    @staticmethod
+    def get_environment_by_name(name: str):
+        &#34;&#34;&#34;
+        Returns the environment with the specified name. If no environment with that name exists, 
+        returns None.
+
+        Args:
+            name (str): The name of the environment to return.
+
+        Returns:
+            TinyWorld: The environment with the specified name.
+        &#34;&#34;&#34;
+        if name in TinyWorld.all_environments:
+            return TinyWorld.all_environments[name]
+        else:
+            return None
+    
+    @staticmethod
+    def clear_environments():
+        &#34;&#34;&#34;
+        Clears the list of all environments.
+        &#34;&#34;&#34;
+        TinyWorld.all_environments = {}</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="tinytroupe.environment.tiny_social_network.TinySocialNetwork" href="tiny_social_network.html#tinytroupe.environment.tiny_social_network.TinySocialNetwork">TinySocialNetwork</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="tinytroupe.environment.TinyWorld.all_environments"><code class="name">var <span class="ident">all_environments</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.communication_display"><code class="name">var <span class="ident">communication_display</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Static methods</h3>
+<dl>
+<dt id="tinytroupe.environment.TinyWorld.add_environment"><code class="name flex">
+<span>def <span class="ident">add_environment</span></span>(<span>environment)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds an environment to the list of all environments. Environment names must be unique,
+so if an environment with the same name already exists, an error is raised.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def add_environment(environment):
+    &#34;&#34;&#34;
+    Adds an environment to the list of all environments. Environment names must be unique,
+    so if an environment with the same name already exists, an error is raised.
+    &#34;&#34;&#34;
+    if environment.name in TinyWorld.all_environments:
+        raise ValueError(f&#34;Environment names must be unique, but &#39;{environment.name}&#39; is already defined.&#34;)
+    else:
+        TinyWorld.all_environments[environment.name] = environment</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.clear_environments"><code class="name flex">
+<span>def <span class="ident">clear_environments</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Clears the list of all environments.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def clear_environments():
+    &#34;&#34;&#34;
+    Clears the list of all environments.
+    &#34;&#34;&#34;
+    TinyWorld.all_environments = {}</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.get_environment_by_name"><code class="name flex">
+<span>def <span class="ident">get_environment_by_name</span></span>(<span>name: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the environment with the specified name. If no environment with that name exists,
+returns None.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the environment to return.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="tinytroupe.environment.TinyWorld" href="#tinytroupe.environment.TinyWorld">TinyWorld</a></code></dt>
+<dd>The environment with the specified name.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def get_environment_by_name(name: str):
+    &#34;&#34;&#34;
+    Returns the environment with the specified name. If no environment with that name exists, 
+    returns None.
+
+    Args:
+        name (str): The name of the environment to return.
+
+    Returns:
+        TinyWorld: The environment with the specified name.
+    &#34;&#34;&#34;
+    if name in TinyWorld.all_environments:
+        return TinyWorld.all_environments[name]
+    else:
+        return None</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.set_simulation_for_free_environments"><code class="name flex">
+<span>def <span class="ident">set_simulation_for_free_environments</span></span>(<span>simulation)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the simulation if it is None. This allows free environments to be captured by specific simulation scopes
+if desired.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def set_simulation_for_free_environments(simulation):
+    &#34;&#34;&#34;
+    Sets the simulation if it is None. This allows free environments to be captured by specific simulation scopes
+    if desired.
+    &#34;&#34;&#34;
+    for environment in TinyWorld.all_environments.values():
+        if environment.simulation_id is None:
+            simulation.add_environment(environment)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="tinytroupe.environment.TinyWorld.add_agent"><code class="name flex">
+<span>def <span class="ident">add_agent</span></span>(<span>self, agent: <a title="tinytroupe.agent.tiny_person.TinyPerson" href="../agent/tiny_person.html#tinytroupe.agent.tiny_person.TinyPerson">TinyPerson</a>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds an agent to the environment. The agent must have a unique name within the environment.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>agent</code></strong> :&ensp;<code>TinyPerson</code></dt>
+<dd>The agent to add to the environment.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ValueError</code></dt>
+<dd>If the agent name is not unique within the environment.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_agent(self, agent: TinyPerson):
+    &#34;&#34;&#34;
+    Adds an agent to the environment. The agent must have a unique name within the environment.
+
+    Args:
+        agent (TinyPerson): The agent to add to the environment.
+    
+    Raises:
+        ValueError: If the agent name is not unique within the environment.
+    &#34;&#34;&#34;
+
+    # check if the agent is not already in the environment
+    if agent not in self.agents:
+        logger.debug(f&#34;Adding agent {agent.name} to the environment.&#34;)
+        
+        # Agent names must be unique in the environment. 
+        # Check if the agent name is already there.
+        if agent.name not in self.name_to_agent:
+            agent.environment = self
+            self.agents.append(agent)
+            self.name_to_agent[agent.name] = agent
+        else:
+            raise ValueError(f&#34;Agent names must be unique, but &#39;{agent.name}&#39; is already in the environment.&#34;)
+    else:
+        logger.warn(f&#34;Agent {agent.name} is already in the environment.&#34;)
+    
+    return self # for chaining</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.add_agents"><code class="name flex">
+<span>def <span class="ident">add_agents</span></span>(<span>self, agents: list)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds a list of agents to the environment.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>agents</code></strong> :&ensp;<code>list</code></dt>
+<dd>A list of agents to add to the environment.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_agents(self, agents: list):
+    &#34;&#34;&#34;
+    Adds a list of agents to the environment.
+
+    Args:
+        agents (list): A list of agents to add to the environment.
+    &#34;&#34;&#34;
+    for agent in agents:
+        self.add_agent(agent)
+    
+    return self # for chaining</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.add_intervention"><code class="name flex">
+<span>def <span class="ident">add_intervention</span></span>(<span>self, intervention)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds an intervention to the environment.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>intervention</code></strong></dt>
+<dd>The intervention to add to the environment.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_intervention(self, intervention):
+    &#34;&#34;&#34;
+    Adds an intervention to the environment.
+
+    Args:
+        intervention: The intervention to add to the environment.
+    &#34;&#34;&#34;
+    self._interventions.append(intervention)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.broadcast"><code class="name flex">
+<span>def <span class="ident">broadcast</span></span>(<span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def wrapper(*args, **kwargs):
+    obj_under_transaction = args[0]
+    simulation = current_simulation()
+    obj_sim_id = obj_under_transaction.simulation_id if hasattr(obj_under_transaction, &#39;simulation_id&#39;) else None
+
+    logger.debug(f&#34;-----------------------------------------&gt; Transaction: {func.__name__} with args {args[1:]} and kwargs {kwargs} under simulation {obj_sim_id}, parallel={parallel}.&#34;)
+    
+    parallel_id = str(threading.current_thread())
+    
+    transaction = Transaction(obj_under_transaction, simulation, func, *args, **kwargs)
+    result = transaction.execute(begin_parallel=parallel, parallel_id=parallel_id)
+    
+    return result</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.broadcast_context_change"><code class="name flex">
+<span>def <span class="ident">broadcast_context_change</span></span>(<span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def wrapper(*args, **kwargs):
+    obj_under_transaction = args[0]
+    simulation = current_simulation()
+    obj_sim_id = obj_under_transaction.simulation_id if hasattr(obj_under_transaction, &#39;simulation_id&#39;) else None
+
+    logger.debug(f&#34;-----------------------------------------&gt; Transaction: {func.__name__} with args {args[1:]} and kwargs {kwargs} under simulation {obj_sim_id}, parallel={parallel}.&#34;)
+    
+    parallel_id = str(threading.current_thread())
+    
+    transaction = Transaction(obj_under_transaction, simulation, func, *args, **kwargs)
+    result = transaction.execute(begin_parallel=parallel, parallel_id=parallel_id)
+    
+    return result</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.broadcast_internal_goal"><code class="name flex">
+<span>def <span class="ident">broadcast_internal_goal</span></span>(<span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def wrapper(*args, **kwargs):
+    obj_under_transaction = args[0]
+    simulation = current_simulation()
+    obj_sim_id = obj_under_transaction.simulation_id if hasattr(obj_under_transaction, &#39;simulation_id&#39;) else None
+
+    logger.debug(f&#34;-----------------------------------------&gt; Transaction: {func.__name__} with args {args[1:]} and kwargs {kwargs} under simulation {obj_sim_id}, parallel={parallel}.&#34;)
+    
+    parallel_id = str(threading.current_thread())
+    
+    transaction = Transaction(obj_under_transaction, simulation, func, *args, **kwargs)
+    result = transaction.execute(begin_parallel=parallel, parallel_id=parallel_id)
+    
+    return result</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.broadcast_thought"><code class="name flex">
+<span>def <span class="ident">broadcast_thought</span></span>(<span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def wrapper(*args, **kwargs):
+    obj_under_transaction = args[0]
+    simulation = current_simulation()
+    obj_sim_id = obj_under_transaction.simulation_id if hasattr(obj_under_transaction, &#39;simulation_id&#39;) else None
+
+    logger.debug(f&#34;-----------------------------------------&gt; Transaction: {func.__name__} with args {args[1:]} and kwargs {kwargs} under simulation {obj_sim_id}, parallel={parallel}.&#34;)
+    
+    parallel_id = str(threading.current_thread())
+    
+    transaction = Transaction(obj_under_transaction, simulation, func, *args, **kwargs)
+    result = transaction.execute(begin_parallel=parallel, parallel_id=parallel_id)
+    
+    return result</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.clear_communications_buffer"><code class="name flex">
+<span>def <span class="ident">clear_communications_buffer</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Cleans the communications buffer.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def clear_communications_buffer(self):
+    &#34;&#34;&#34;
+    Cleans the communications buffer.
+    &#34;&#34;&#34;
+    self._displayed_communications_buffer = []</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.decode_complete_state"><code class="name flex">
+<span>def <span class="ident">decode_complete_state</span></span>(<span>self, state: dict)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Decodes the complete state of the environment from a dictionary.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>state</code></strong> :&ensp;<code>dict</code></dt>
+<dd>A dictionary encoding the complete state of the environment.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Self</code></dt>
+<dd>The environment decoded from the dictionary.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def decode_complete_state(self, state:dict):
+    &#34;&#34;&#34;
+    Decodes the complete state of the environment from a dictionary.
+
+    Args:
+        state (dict): A dictionary encoding the complete state of the environment.
+
+    Returns:
+        Self: The environment decoded from the dictionary.
+    &#34;&#34;&#34;
+    state = copy.deepcopy(state)
+
+    #################################
+    # restore agents in-place
+    #################################
+    self.remove_all_agents()
+    for agent_state in state[&#34;agents&#34;]:
+        try:
+            try:
+                agent = TinyPerson.get_agent_by_name(agent_state[&#34;name&#34;])
+            except Exception as e:
+                raise ValueError(f&#34;Could not find agent {agent_state[&#39;name&#39;]} for environment {self.name}.&#34;) from e
+            
+            agent.decode_complete_state(agent_state)
+            self.add_agent(agent)
+            
+        except Exception as e:
+            raise ValueError(f&#34;Could not decode agent {agent_state[&#39;name&#39;]} for environment {self.name}.&#34;) from e
+    
+    # remove the agent states to update the rest of the environment
+    del state[&#34;agents&#34;]
+
+    # restore datetime
+    state[&#34;current_datetime&#34;] = datetime.fromisoformat(state[&#34;current_datetime&#34;])
+
+    # restore other fields
+    self.__dict__.update(state)
+
+    return self</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.encode_complete_state"><code class="name flex">
+<span>def <span class="ident">encode_complete_state</span></span>(<span>self) ‑> dict</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Encodes the complete state of the environment in a dictionary.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>A dictionary encoding the complete state of the environment.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def encode_complete_state(self) -&gt; dict:
+    &#34;&#34;&#34;
+    Encodes the complete state of the environment in a dictionary.
+
+    Returns:
+        dict: A dictionary encoding the complete state of the environment.
+    &#34;&#34;&#34;
+    to_copy = copy.copy(self.__dict__)
+
+    # remove the logger and other fields
+    del to_copy[&#39;console&#39;]
+    del to_copy[&#39;agents&#39;]
+    del to_copy[&#39;name_to_agent&#39;]
+    del to_copy[&#39;current_datetime&#39;]
+    del to_copy[&#39;_interventions&#39;] # TODO: encode interventions
+
+    state = copy.deepcopy(to_copy)
+
+    # agents are encoded separately
+    state[&#34;agents&#34;] = [agent.encode_complete_state() for agent in self.agents]
+
+    # datetime also has to be encoded separately
+    state[&#34;current_datetime&#34;] = self.current_datetime.isoformat()
+
+    return state</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.get_agent_by_name"><code class="name flex">
+<span>def <span class="ident">get_agent_by_name</span></span>(<span>self, name: str) ‑> <a title="tinytroupe.agent.tiny_person.TinyPerson" href="../agent/tiny_person.html#tinytroupe.agent.tiny_person.TinyPerson">TinyPerson</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the agent with the specified name. If no agent with that name exists in the environment,
+returns None.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the agent to return.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>TinyPerson</code></dt>
+<dd>The agent with the specified name.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_agent_by_name(self, name: str) -&gt; TinyPerson:
+    &#34;&#34;&#34;
+    Returns the agent with the specified name. If no agent with that name exists in the environment, 
+    returns None.
+
+    Args:
+        name (str): The name of the agent to return.
+
+    Returns:
+        TinyPerson: The agent with the specified name.
+    &#34;&#34;&#34;
+    if name in self.name_to_agent:
+        return self.name_to_agent[name]
+    else:
+        return None</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.make_everyone_accessible"><code class="name flex">
+<span>def <span class="ident">make_everyone_accessible</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Makes all agents in the environment accessible to each other.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def make_everyone_accessible(self):
+    &#34;&#34;&#34;
+    Makes all agents in the environment accessible to each other.
+    &#34;&#34;&#34;
+    for agent_1 in self.agents:
+        for agent_2 in self.agents:
+            if agent_1 != agent_2:
+                agent_1.make_agent_accessible(agent_2)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.pop_and_display_latest_communications"><code class="name flex">
+<span>def <span class="ident">pop_and_display_latest_communications</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Pops the latest communications and displays them.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pop_and_display_latest_communications(self):
+    &#34;&#34;&#34;
+    Pops the latest communications and displays them.
+    &#34;&#34;&#34;
+    communications = self._displayed_communications_buffer
+    self._displayed_communications_buffer = []
+
+    for communication in communications:
+        self._display(communication)
+
+    return communications    </code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.pp_current_interactions"><code class="name flex">
+<span>def <span class="ident">pp_current_interactions</span></span>(<span>self, simplified=True, skip_system=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Pretty prints the current messages from agents in this environment.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pp_current_interactions(self, simplified=True, skip_system=True):
+    &#34;&#34;&#34;
+    Pretty prints the current messages from agents in this environment.
+    &#34;&#34;&#34;
+    print(self.pretty_current_interactions(simplified=simplified, skip_system=skip_system))</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.pretty_current_interactions"><code class="name flex">
+<span>def <span class="ident">pretty_current_interactions</span></span>(<span>self, simplified=True, skip_system=True, max_content_length=4000, first_n=None, last_n=None, include_omission_info: bool = True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns a pretty, readable, string with the current messages of agents in this environment.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pretty_current_interactions(self, simplified=True, skip_system=True, max_content_length=default[&#34;max_content_display_length&#34;], first_n=None, last_n=None, include_omission_info:bool=True):
+  &#34;&#34;&#34;
+  Returns a pretty, readable, string with the current messages of agents in this environment.
+  &#34;&#34;&#34;
+  agent_contents = []
+
+  for agent in self.agents:
+      agent_content = f&#34;#### Interactions from the point of view of {agent.name} agent:\n&#34;
+      agent_content += f&#34;**BEGIN AGENT {agent.name} HISTORY.**\n &#34;
+      agent_content += agent.pretty_current_interactions(simplified=simplified, skip_system=skip_system, max_content_length=max_content_length, first_n=first_n, last_n=last_n, include_omission_info=include_omission_info) + &#34;\n&#34;
+      agent_content += f&#34;**FINISHED AGENT {agent.name} HISTORY.**\n\n&#34;
+      agent_contents.append(agent_content)      
+      
+  return &#34;\n&#34;.join(agent_contents)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.remove_agent"><code class="name flex">
+<span>def <span class="ident">remove_agent</span></span>(<span>self, agent: <a title="tinytroupe.agent.tiny_person.TinyPerson" href="../agent/tiny_person.html#tinytroupe.agent.tiny_person.TinyPerson">TinyPerson</a>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Removes an agent from the environment.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>agent</code></strong> :&ensp;<code>TinyPerson</code></dt>
+<dd>The agent to remove from the environment.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove_agent(self, agent: TinyPerson):
+    &#34;&#34;&#34;
+    Removes an agent from the environment.
+
+    Args:
+        agent (TinyPerson): The agent to remove from the environment.
+    &#34;&#34;&#34;
+    logger.debug(f&#34;Removing agent {agent.name} from the environment.&#34;)
+    self.agents.remove(agent)
+    del self.name_to_agent[agent.name]
+
+    return self # for chaining</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.remove_all_agents"><code class="name flex">
+<span>def <span class="ident">remove_all_agents</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Removes all agents from the environment.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove_all_agents(self):
+    &#34;&#34;&#34;
+    Removes all agents from the environment.
+    &#34;&#34;&#34;
+    logger.debug(f&#34;Removing all agents from the environment.&#34;)
+    self.agents = []
+    self.name_to_agent = {}
+
+    return self # for chaining</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.run"><code class="name flex">
+<span>def <span class="ident">run</span></span>(<span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def wrapper(*args, **kwargs):
+    obj_under_transaction = args[0]
+    simulation = current_simulation()
+    obj_sim_id = obj_under_transaction.simulation_id if hasattr(obj_under_transaction, &#39;simulation_id&#39;) else None
+
+    logger.debug(f&#34;-----------------------------------------&gt; Transaction: {func.__name__} with args {args[1:]} and kwargs {kwargs} under simulation {obj_sim_id}, parallel={parallel}.&#34;)
+    
+    parallel_id = str(threading.current_thread())
+    
+    transaction = Transaction(obj_under_transaction, simulation, func, *args, **kwargs)
+    result = transaction.execute(begin_parallel=parallel, parallel_id=parallel_id)
+    
+    return result</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.run_days"><code class="name flex">
+<span>def <span class="ident">run_days</span></span>(<span>self, days: int, randomize_agents_order=True, parallelize=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Runs the environment for a given number of days.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>days</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of days to run the environment for.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@config_manager.config_defaults(parallelize=&#34;parallel_agent_actions&#34;)
+def run_days(self, days: int, randomize_agents_order=True, parallelize=None):
+    &#34;&#34;&#34;
+    Runs the environment for a given number of days.
+
+    Args:
+        days (int): The number of days to run the environment for.
+    &#34;&#34;&#34;
+    self.run(steps=days, timedelta_per_step=timedelta(days=1), randomize_agents_order=randomize_agents_order, parallelize=parallelize)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.run_hours"><code class="name flex">
+<span>def <span class="ident">run_hours</span></span>(<span>self, hours: int, randomize_agents_order=True, parallelize=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Runs the environment for a given number of hours.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>hours</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of hours to run the environment for.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@config_manager.config_defaults(parallelize=&#34;parallel_agent_actions&#34;)
+def run_hours(self, hours: int, randomize_agents_order=True, parallelize=None):
+    &#34;&#34;&#34;
+    Runs the environment for a given number of hours.
+
+    Args:
+        hours (int): The number of hours to run the environment for.
+    &#34;&#34;&#34;
+    self.run(steps=hours, timedelta_per_step=timedelta(hours=1), randomize_agents_order=randomize_agents_order, parallelize=parallelize)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.run_minutes"><code class="name flex">
+<span>def <span class="ident">run_minutes</span></span>(<span>self, minutes: int, randomize_agents_order=True, parallelize=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Runs the environment for a given number of minutes.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>minutes</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of minutes to run the environment for.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@config_manager.config_defaults(parallelize=&#34;parallel_agent_actions&#34;)
+def run_minutes(self, minutes: int, randomize_agents_order=True, parallelize=None):
+    &#34;&#34;&#34;
+    Runs the environment for a given number of minutes.
+
+    Args:
+        minutes (int): The number of minutes to run the environment for.
+    &#34;&#34;&#34;
+    self.run(steps=minutes, timedelta_per_step=timedelta(minutes=1), randomize_agents_order=randomize_agents_order, parallelize=parallelize)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.run_months"><code class="name flex">
+<span>def <span class="ident">run_months</span></span>(<span>self, months: int, randomize_agents_order=True, parallelize=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Runs the environment for a given number of months.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>months</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of months to run the environment for.</dd>
+<dt><strong><code>randomize_agents_order</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>If True, randomizes the order in which agents act. Defaults to True.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@config_manager.config_defaults(parallelize=&#34;parallel_agent_actions&#34;)
+def run_months(self, months: int, randomize_agents_order=True, parallelize=None):
+    &#34;&#34;&#34;
+    Runs the environment for a given number of months.
+
+    Args:
+        months (int): The number of months to run the environment for.
+        randomize_agents_order (bool, optional): If True, randomizes the order in which agents act. Defaults to True.
+    &#34;&#34;&#34;
+    self.run(steps=months, timedelta_per_step=timedelta(weeks=4), randomize_agents_order=randomize_agents_order, parallelize=parallelize)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.run_weeks"><code class="name flex">
+<span>def <span class="ident">run_weeks</span></span>(<span>self, weeks: int, randomize_agents_order=True, parallelize=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Runs the environment for a given number of weeks.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>weeks</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of weeks to run the environment for.</dd>
+<dt><strong><code>randomize_agents_order</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>If True, randomizes the order in which agents act. Defaults to True.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@config_manager.config_defaults(parallelize=&#34;parallel_agent_actions&#34;)
+def run_weeks(self, weeks: int, randomize_agents_order=True, parallelize=None):
+    &#34;&#34;&#34;
+    Runs the environment for a given number of weeks.
+
+    Args:
+        weeks (int): The number of weeks to run the environment for.
+        randomize_agents_order (bool, optional): If True, randomizes the order in which agents act. Defaults to True.
+    &#34;&#34;&#34;
+    self.run(steps=weeks, timedelta_per_step=timedelta(weeks=1), randomize_agents_order=randomize_agents_order, parallelize=parallelize)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.run_years"><code class="name flex">
+<span>def <span class="ident">run_years</span></span>(<span>self, years: int, randomize_agents_order=True, parallelize=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Runs the environment for a given number of years.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>years</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of years to run the environment for.</dd>
+<dt><strong><code>randomize_agents_order</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>If True, randomizes the order in which agents act. Defaults to True.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@config_manager.config_defaults(parallelize=&#34;parallel_agent_actions&#34;)
+def run_years(self, years: int, randomize_agents_order=True, parallelize=None):
+    &#34;&#34;&#34;
+    Runs the environment for a given number of years.
+
+    Args:
+        years (int): The number of years to run the environment for.
+        randomize_agents_order (bool, optional): If True, randomizes the order in which agents act. Defaults to True.
+    &#34;&#34;&#34;
+    self.run(steps=years, timedelta_per_step=timedelta(days=365), randomize_agents_order=randomize_agents_order, parallelize=parallelize)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.skip"><code class="name flex">
+<span>def <span class="ident">skip</span></span>(<span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def wrapper(*args, **kwargs):
+    obj_under_transaction = args[0]
+    simulation = current_simulation()
+    obj_sim_id = obj_under_transaction.simulation_id if hasattr(obj_under_transaction, &#39;simulation_id&#39;) else None
+
+    logger.debug(f&#34;-----------------------------------------&gt; Transaction: {func.__name__} with args {args[1:]} and kwargs {kwargs} under simulation {obj_sim_id}, parallel={parallel}.&#34;)
+    
+    parallel_id = str(threading.current_thread())
+    
+    transaction = Transaction(obj_under_transaction, simulation, func, *args, **kwargs)
+    result = transaction.execute(begin_parallel=parallel, parallel_id=parallel_id)
+    
+    return result</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.skip_days"><code class="name flex">
+<span>def <span class="ident">skip_days</span></span>(<span>self, days: int)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Skips a given number of days in the environment.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>days</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of days to skip.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def skip_days(self, days: int):
+    &#34;&#34;&#34;
+    Skips a given number of days in the environment.
+
+    Args:
+        days (int): The number of days to skip.
+    &#34;&#34;&#34;
+    self.skip(steps=days, timedelta_per_step=timedelta(days=1))</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.skip_hours"><code class="name flex">
+<span>def <span class="ident">skip_hours</span></span>(<span>self, hours: int)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Skips a given number of hours in the environment.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>hours</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of hours to skip.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def skip_hours(self, hours: int):
+    &#34;&#34;&#34;
+    Skips a given number of hours in the environment.
+
+    Args:
+        hours (int): The number of hours to skip.
+    &#34;&#34;&#34;
+    self.skip(steps=hours, timedelta_per_step=timedelta(hours=1))</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.skip_minutes"><code class="name flex">
+<span>def <span class="ident">skip_minutes</span></span>(<span>self, minutes: int)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Skips a given number of minutes in the environment.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>minutes</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of minutes to skip.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def skip_minutes(self, minutes: int):
+    &#34;&#34;&#34;
+    Skips a given number of minutes in the environment.
+
+    Args:
+        minutes (int): The number of minutes to skip.
+    &#34;&#34;&#34;
+    self.skip(steps=minutes, timedelta_per_step=timedelta(minutes=1))</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.skip_months"><code class="name flex">
+<span>def <span class="ident">skip_months</span></span>(<span>self, months: int)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Skips a given number of months in the environment.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>months</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of months to skip.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def skip_months(self, months: int):
+    &#34;&#34;&#34;
+    Skips a given number of months in the environment.
+
+    Args:
+        months (int): The number of months to skip.
+    &#34;&#34;&#34;
+    self.skip(steps=months, timedelta_per_step=timedelta(weeks=4))</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.skip_weeks"><code class="name flex">
+<span>def <span class="ident">skip_weeks</span></span>(<span>self, weeks: int)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Skips a given number of weeks in the environment.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>weeks</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of weeks to skip.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def skip_weeks(self, weeks: int):
+    &#34;&#34;&#34;
+    Skips a given number of weeks in the environment.
+
+    Args:
+        weeks (int): The number of weeks to skip.
+    &#34;&#34;&#34;
+    self.skip(steps=weeks, timedelta_per_step=timedelta(weeks=1))</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.skip_years"><code class="name flex">
+<span>def <span class="ident">skip_years</span></span>(<span>self, years: int)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Skips a given number of years in the environment.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>years</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of years to skip.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def skip_years(self, years: int):
+    &#34;&#34;&#34;
+    Skips a given number of years in the environment.
+
+    Args:
+        years (int): The number of years to skip.
+    &#34;&#34;&#34;
+    self.skip(steps=years, timedelta_per_step=timedelta(days=365))</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="tinytroupe" href="../index.html">tinytroupe</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<ul>
+<li><code><a title="tinytroupe.environment.tiny_social_network" href="tiny_social_network.html">tinytroupe.environment.tiny_social_network</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world" href="tiny_world.html">tinytroupe.environment.tiny_world</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="tinytroupe.environment.TinySocialNetwork" href="#tinytroupe.environment.TinySocialNetwork">TinySocialNetwork</a></code></h4>
+<ul class="">
+<li><code><a title="tinytroupe.environment.TinySocialNetwork.add_relation" href="#tinytroupe.environment.TinySocialNetwork.add_relation">add_relation</a></code></li>
+<li><code><a title="tinytroupe.environment.TinySocialNetwork.is_in_relation_with" href="#tinytroupe.environment.TinySocialNetwork.is_in_relation_with">is_in_relation_with</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="tinytroupe.environment.TinyWorld" href="#tinytroupe.environment.TinyWorld">TinyWorld</a></code></h4>
+<ul class="">
+<li><code><a title="tinytroupe.environment.TinyWorld.add_agent" href="#tinytroupe.environment.TinyWorld.add_agent">add_agent</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.add_agents" href="#tinytroupe.environment.TinyWorld.add_agents">add_agents</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.add_environment" href="#tinytroupe.environment.TinyWorld.add_environment">add_environment</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.add_intervention" href="#tinytroupe.environment.TinyWorld.add_intervention">add_intervention</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.all_environments" href="#tinytroupe.environment.TinyWorld.all_environments">all_environments</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.broadcast" href="#tinytroupe.environment.TinyWorld.broadcast">broadcast</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.broadcast_context_change" href="#tinytroupe.environment.TinyWorld.broadcast_context_change">broadcast_context_change</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.broadcast_internal_goal" href="#tinytroupe.environment.TinyWorld.broadcast_internal_goal">broadcast_internal_goal</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.broadcast_thought" href="#tinytroupe.environment.TinyWorld.broadcast_thought">broadcast_thought</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.clear_communications_buffer" href="#tinytroupe.environment.TinyWorld.clear_communications_buffer">clear_communications_buffer</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.clear_environments" href="#tinytroupe.environment.TinyWorld.clear_environments">clear_environments</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.communication_display" href="#tinytroupe.environment.TinyWorld.communication_display">communication_display</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.decode_complete_state" href="#tinytroupe.environment.TinyWorld.decode_complete_state">decode_complete_state</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.encode_complete_state" href="#tinytroupe.environment.TinyWorld.encode_complete_state">encode_complete_state</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.get_agent_by_name" href="#tinytroupe.environment.TinyWorld.get_agent_by_name">get_agent_by_name</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.get_environment_by_name" href="#tinytroupe.environment.TinyWorld.get_environment_by_name">get_environment_by_name</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.make_everyone_accessible" href="#tinytroupe.environment.TinyWorld.make_everyone_accessible">make_everyone_accessible</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.pop_and_display_latest_communications" href="#tinytroupe.environment.TinyWorld.pop_and_display_latest_communications">pop_and_display_latest_communications</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.pp_current_interactions" href="#tinytroupe.environment.TinyWorld.pp_current_interactions">pp_current_interactions</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.pretty_current_interactions" href="#tinytroupe.environment.TinyWorld.pretty_current_interactions">pretty_current_interactions</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.remove_agent" href="#tinytroupe.environment.TinyWorld.remove_agent">remove_agent</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.remove_all_agents" href="#tinytroupe.environment.TinyWorld.remove_all_agents">remove_all_agents</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.run" href="#tinytroupe.environment.TinyWorld.run">run</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.run_days" href="#tinytroupe.environment.TinyWorld.run_days">run_days</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.run_hours" href="#tinytroupe.environment.TinyWorld.run_hours">run_hours</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.run_minutes" href="#tinytroupe.environment.TinyWorld.run_minutes">run_minutes</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.run_months" href="#tinytroupe.environment.TinyWorld.run_months">run_months</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.run_weeks" href="#tinytroupe.environment.TinyWorld.run_weeks">run_weeks</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.run_years" href="#tinytroupe.environment.TinyWorld.run_years">run_years</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.set_simulation_for_free_environments" href="#tinytroupe.environment.TinyWorld.set_simulation_for_free_environments">set_simulation_for_free_environments</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.skip" href="#tinytroupe.environment.TinyWorld.skip">skip</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.skip_days" href="#tinytroupe.environment.TinyWorld.skip_days">skip_days</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.skip_hours" href="#tinytroupe.environment.TinyWorld.skip_hours">skip_hours</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.skip_minutes" href="#tinytroupe.environment.TinyWorld.skip_minutes">skip_minutes</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.skip_months" href="#tinytroupe.environment.TinyWorld.skip_months">skip_months</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.skip_weeks" href="#tinytroupe.environment.TinyWorld.skip_weeks">skip_weeks</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.skip_years" href="#tinytroupe.environment.TinyWorld.skip_years">skip_years</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

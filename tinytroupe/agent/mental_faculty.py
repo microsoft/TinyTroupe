@@ -1,3 +1,4 @@
+from tinytroupe.agent import logger
 from tinytroupe.agent.grounding import LocalFilesGroundingConnector, WebPagesGroundingConnector
 from tinytroupe.utils import JsonSerializableRegistry
 import tinytroupe.utils as utils
@@ -116,7 +117,7 @@ class CustomMentalFaculty(TinyMentalFaculty):
             self.add_action_constraint(constraint)
 
     def process_action(self, agent, action: dict) -> bool:
-        agent.logger.debug(f"Processing action: {action}")
+        logger.debug(f"Processing action: {action}")
 
         action_type = action['type']
         if action_type in self.actions_configs:
@@ -154,31 +155,48 @@ class RecallFaculty(TinyMentalFaculty):
         
 
     def process_action(self, agent, action: dict) -> bool:
-        agent.logger.debug(f"Processing action: {action}")
+        logger.debug(f"Processing action: {action}")
 
         if action['type'] == "RECALL" and action['content'] is not None:
             content = action['content']
 
             semantic_memories = agent.retrieve_relevant_memories(relevance_target=content)
 
-            agent.logger.info(f"Recalling information related to '{content}'. Found {len(semantic_memories)} relevant memories.")
+            logger.info(f"Recalling information related to '{content}'. Found {len(semantic_memories)} relevant memories.")
 
             if len(semantic_memories) > 0:
                 # a string with each element in the list in a new line starting with a bullet point
                 agent.think("I have remembered the following information from my semantic memory and will use it to guide me in my subsequent actions: \n" + \
                         "\n".join([f"  - {item}" for item in semantic_memories]))
             else:
-                agent.think(f"I can't remember anything about '{content}'.")
+                agent.think(f"I can't remember anything additional about '{content}'. I'll just use what I already currently have in mind to proceed as well as I can.")
             
             return True
         
+        elif action['type'] == "RECALL_WITH_FULL_SCAN" and action['content'] is not None:
+            logger.debug(f"Processing RECALL_WITH_FULL_SCAN action. Recalling and summarizing information related to '{action['content']}' with full scan.")
+
+            content = action['content']
+            memories_summary = agent.summarize_relevant_memories_via_full_scan(relevance_target=content)
+
+            logger.debug(f"Summary produced via full scan: {memories_summary}")
+
+            if len(memories_summary) > 0:
+                # the summary is presented as a block of text
+                agent.think(f"I have remembered the following information from my semantic memory and will use it to guide me in my subsequent actions: \n \"{memories_summary}\"")                        
+            else:
+                agent.think(f"I can't remember anything additional about '{content}'. I'll just use what I already currently have in mind to proceed as well as I can.")
+
+            return True
         else:
             return False
 
     def actions_definitions_prompt(self) -> str:
         prompt = \
             """
-              - RECALL: you can recall information from your memory. To do, you must specify a "mental query" to locate the desired memory. If the memory is found, it is brought to your conscience.
+              - RECALL: you can recall information that relates to specific topics from your memory. To do, you must specify a "mental query" to locate the desired memory. If the memory is found, it is brought to your conscience.
+              - RECALL_WITH_FULL_SCAN: you can recall information from your memory in an exhaustive way, scanning all your memories. To do, you must specify a "mental query" that will be used to extract the relevant information from each memory. 
+                                       All the information found will be brought to your conscience. This action is more expensive than RECALL, and is meant to be used when you want to ensure that you are not missing any relevant information.
             """
 
         return textwrap.dedent(prompt)
@@ -186,21 +204,43 @@ class RecallFaculty(TinyMentalFaculty):
     def actions_constraints_prompt(self) -> str:
         prompt = \
           """
-            - Before concluding you don't know something or don't have access to some information, you **must** try to RECALL it from your memory.
-            - You try to RECALL information from your semantic/factual memory, so that you can have more relevant elements to think and talk about, whenever such an action would be likely
+            - Before concluding you don't know something or don't have access to some information, you **must** try to RECALL or RECALL_WITH_FULL_SCAN it from your memory.
+            - If you you know precisely what you are looking for, you can use RECALL to retrieve it. If you are not sure, or if you want to ensure that you are not missing any relevant information, you should use RECALL_WITH_FULL_SCAN instead.
+                * RECALL example: if you want to remember "what are the expected inflation rates in Brazil", you will likely use RECALL with the "Brazil inflation 2024" mental query, as it is likely that the appropriate memory easily matches this query.
+                * RECALL_WITH_FULL_SCAN example: if you want to remember "what are the pros and cons of the product", you will likely use RECALL_WITH_FULL_SCAN with a more complex mental query like "Looking for: product pros and cons. Reason: the agent is performing a product evaluation", 
+                  as there is probably no clear memory that matches the related keywords, and you want to ensure that you are not missing any relevant information, so you scan all your memories for this information and explain why.
+            - You try to RECALL information from your memory, so that you can have more relevant elements to think and talk about, whenever such an action would be likely
                 to enrich the current interaction. To do so, you must specify able "mental query" that is related to the things you've been thinking, listening and talking about.
                 Example:
                 ```
                 <THINK A>
-                <RECALL B, which is something related to A>
+                <RECALL / RECALL_WITH_FULL_SCAN B, which is something related to A>
                 <THINK about A and B>
                 <TALK about A and B>
+                DONE
+                ```
+            - You can try to RECALL_WITH_FULL_SCAN information from your memory when you want or are tasked with finding all relevant information about a topic, and you want to ensure that you are not missing any relevant information. 
+              In other words, you "try hard" to remember.
+               Example:
+                ```
+                <LISTEN what are the main pros and cons of the product>
+                <RECALL_WITH_FULL_SCAN Looking for: product pros and cons. Reason: the agent is performing a product evaluation.>
+                <THINK about all the pros and cons found>
+                <TALK about the pros and cons recalled>
                 DONE
                 ```
             - If you RECALL:
                 * you use a "mental query" that describe the elements you are looking for, you do not use a question. It is like a keyword-based search query.
                 For example, instead of "What are the symptoms of COVID-19?", you would use "COVID-19 symptoms".
                 * you use keywords likely to be found in the text you are looking for. For example, instead of "Brazil economic outlook", you would use "Brazil economy", "Brazil GPD", "Brazil inflation", etc.
+            - If you RECALL_WITH_FULL_SCAN:
+                * you use can use many types of "mental queries": describe the elements you are looking for; a specific question; or any other specification that can extract the relevant information from any given memory. It is NOT like a keyword-based search query, 
+                  but instead a specification of what is important to the agent at the moment.
+                * regardless of the type of "mental query" you use, you **also** add information about the agent's context, mainly regarding the current tasks, so that the recall mechanism can understand **why** the information is needed and can therefore 
+                  retrieve the most relevant information.
+                * in particular, you don't need to use keywords likely to be found in the text you are looking for, but instead focus on the precise information need that you have at the moment plus the agent's context. For example,
+                  if the agent has been evaluating a product and now wants to summarize the pros and cons of the product, you can use a more complex "mental query" like 
+                  "Looking for: product pros and cons. Reason: the agent was asked to perform a product evaluation and has examined many of the product features already.".
             - It may take several tries of RECALL to get the relevant information you need. If you don't find what you are looking for, you can try again with a **very** different "mental query".
                 Be creative: you can use synonyms, related concepts, or any other strategy you think might help you to find the information you need. Avoid using the same terms in different queries, as it is likely to return the same results. Whenever necessary, you should retry RECALL a couple of times before giving up the location of more information.
                 Example:
@@ -215,8 +255,9 @@ class RecallFaculty(TinyMentalFaculty):
                 <TALK something>
                 DONE
                 ```
-            - You **may** interleave THINK and RECALL so that you can better reflect on the information you are trying to recall.
-            - If you need information about a specific document, you **must** use CONSULT instead of RECALL. This is because RECALL **does not** allow you to select the specific document, and only brings small 
+            - If you did not find what you needed using RECALL after a few attempts, you can try RECALL_WITH_FULL_SCAN instead.
+            - You **may** interleave THINK and RECALL / RECALL_WITH_FULL_SCAN so that you can better reflect on the information you are trying to recall.
+            - If you need information about a specific document, you **must** use CONSULT instead of RECALL / RECALL_WITH_FULL_SCAN. This is because RECALL / RECALL_WITH_FULL_SCAN **does not** allow you to select the specific document, and only brings small 
                 relevant parts of variious documents - while CONSULT brings the precise document requested for your inspection, with its full content. 
                 Example:
                 ```

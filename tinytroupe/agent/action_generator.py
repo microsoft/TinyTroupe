@@ -136,6 +136,7 @@ class ActionGenerator(JsonSerializableRegistry):
                 # Found a good action, let's return it now
                 return finish_return(tentative_action, role, content, total_score) 
             else:
+                logger.warning(f"[{agent.name}] Original action did not pass quality checks: {cur_feedback}")
                 all_negative_feedbacks.append(cur_feedback)
                       
 
@@ -281,6 +282,10 @@ class ActionGenerator(JsonSerializableRegistry):
         #                                    """
         #                        })
 #
+
+        current_messages_context.append({"role": "system", 
+                                         "content": "Remember: the action you will now generate **MUST** be a **well-formatted** and **valid** JSON object. No extra text, no extra brackets, commas, or other syntax errors."})
+
         if not self.enable_reasoning_step:
             logger.debug(f"[{agent.name}] Reasoning step disabled.")
             next_message = openai_utils.client().send_message(current_messages_context, response_format=CognitiveActionModel)

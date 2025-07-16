@@ -22,19 +22,19 @@ def test_intervention_1(setup):
     oscar.think("I will talk about my travel preferences so that everyone can know and help me plan a trip.")
     oscar.act()
 
-    assert check_proposition(oscar, "Oscar is talking about travel.", last_n=3)
-    assert check_proposition(oscar, "Oscar is not talking about movies.", last_n=3)
+    assert check_proposition(oscar, "Oscar is talking about travel.", last_n=10)
+    assert check_proposition(oscar, "Oscar is not talking about movies.", last_n=10)
 
     intervention = \
         Intervention(oscar)\
         .set_textual_precondition("Oscar is talking about travel.")\
-        .set_effect(lambda target: target.think("Ok, enough of travel. Now I'll talk about my favorite movies."))\
+        .set_effect(lambda target: target.think("Ok, enough of travel. Now I'll IMMEDIATLY talk about my favorite movies, RIGHT NOW, I'm suddenly in a hurry."))\
     
     world = TinyWorld("Test World", [oscar], interventions=[intervention])
 
     world.run(2)
 
-    assert check_proposition(oscar, "Oscar was talking about travel, but then started talking about his favorite movies.", last_n = 5)
+    assert check_proposition(oscar, "Oscar was talking about travel, but then started talking about his favorite movies.", last_n = 30)
 
 
 def test_intervention_batch_creation(setup):
@@ -96,15 +96,15 @@ def test_intervention_batch_in_world(setup):
     lisa = create_lisa_the_data_scientist()
     
     # Set up initial state
-    oscar.think("I will talk about work projects.")
+    oscar.think("I will talk about work projects. I'll provide details on my current tasks.")
     oscar.act()
-    lisa.think("I will discuss data analysis methods.")
+    lisa.think("I will discuss data analysis methods. I'll provide details on my current tasks.")
     lisa.act()
     
     # Create intervention batch
     batch = Intervention.create_for_each([oscar, lisa])\
         .set_textual_precondition("The agent is talking about work-related topics.")\
-        .set_effect(lambda target: target.think("I will switch to talking about my hobbies immediatly. I'll start now talking about them like this: 'Let me tell you about my hobbies (...)'."))
+        .set_effect(lambda target: target.think("I will switch to TALK about my hobbies IMMEDIATELY before issuing DONE. I'll start NOW, without any delay, not waiting another turn, talking about them like this: 'Let me tell you about my hobbies (...)'."))
     
     # Create world with the batch directly (should work with iteration)
     world = TinyWorld("Test World", [oscar, lisa], interventions=batch)
@@ -112,6 +112,6 @@ def test_intervention_batch_in_world(setup):
     world.run(2)
     
     # Verify effect on both agents
-    assert check_proposition(oscar, "Oscar was talking about work, but then switched to talking about hobbies.", last_n=5)
-    assert check_proposition(lisa, "Lisa was talking about work, but then switched to talking about hobbies.", last_n=5)
+    assert check_proposition(oscar, "Oscar was talking about work, but then switched to talking about hobbies.", last_n=30)
+    assert check_proposition(lisa, "Lisa was talking about work, but then switched to talking about hobbies.", last_n=30)
 

@@ -1,0 +1,1383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>tinytroupe.agent.grounding API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>tinytroupe.agent.grounding</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from tinytroupe.utils import JsonSerializableRegistry
+import tinytroupe.utils as utils
+
+from tinytroupe.agent import logger
+from llama_index.core import  VectorStoreIndex, SimpleDirectoryReader, Document, StorageContext, load_index_from_storage
+from llama_index.core.vector_stores import SimpleVectorStore
+from llama_index.readers.web import SimpleWebPageReader
+import json
+import tempfile
+import os
+import shutil
+
+
+#######################################################################################################################
+# Grounding connectors
+#######################################################################################################################
+
+class GroundingConnector(JsonSerializableRegistry):
+    &#34;&#34;&#34;
+    An abstract class representing a grounding connector. A grounding connector is a component that allows an agent to ground
+    its knowledge in external sources, such as files, web pages, databases, etc.
+    &#34;&#34;&#34;
+
+    serializable_attributes = [&#34;name&#34;]
+
+    def __init__(self, name:str) -&gt; None:
+        self.name = name
+    
+    def retrieve_relevant(self, relevance_target:str, source:str, top_k=20) -&gt; list:
+        raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)
+    
+    def retrieve_by_name(self, name:str) -&gt; str:
+        raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)
+    
+    def list_sources(self) -&gt; list:
+        raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)
+
+
+@utils.post_init
+class BaseSemanticGroundingConnector(GroundingConnector):
+    &#34;&#34;&#34;
+    A base class for semantic grounding connectors. A semantic grounding connector is a component that indexes and retrieves
+    documents based on so-called &#34;semantic search&#34; (i.e, embeddings-based search). This specific implementation
+    is based on the VectorStoreIndex class from the LLaMa-Index library. Here, &#34;documents&#34; refer to the llama-index&#39;s
+    data structure that stores a unit of content, not necessarily a file.
+    &#34;&#34;&#34;
+
+    serializable_attributes = [&#34;documents&#34;, &#34;index&#34;]
+    
+    # needs custom deserialization to handle Pydantic models (Document is a Pydantic model)
+    custom_deserializers = {&#34;documents&#34;: lambda docs_json: [Document.from_json(doc_json) for doc_json in docs_json],
+                            &#34;index&#34;: lambda index_json: BaseSemanticGroundingConnector._deserialize_index(index_json)}
+
+    custom_serializers = {&#34;documents&#34;: lambda docs: [doc.to_json() for doc in docs] if docs is not None else None,
+                          &#34;index&#34;: lambda index: BaseSemanticGroundingConnector._serialize_index(index)}
+
+    def __init__(self, name:str=&#34;Semantic Grounding&#34;) -&gt; None:
+        super().__init__(name)
+
+        self.documents = None 
+        self.name_to_document = None
+        self.index = None
+
+        # @post_init ensures that _post_init is called after the __init__ method
+    
+    def _post_init(self):
+        &#34;&#34;&#34;
+        This will run after __init__, since the class has the @post_init decorator.
+        It is convenient to separate some of the initialization processes to make deserialize easier.
+        &#34;&#34;&#34;
+        self.index = None
+
+        if not hasattr(self, &#39;documents&#39;) or self.documents is None:
+            self.documents = []
+        
+        if not hasattr(self, &#39;name_to_document&#39;) or self.name_to_document is None:
+            self.name_to_document = {}
+
+            if hasattr(self, &#39;documents&#39;) and self.documents is not None:
+                for document in self.documents:
+                    # if the document has a semantic memory ID, we use it as the identifier
+                    name = document.metadata.get(&#34;semantic_memory_id&#34;, document.id_)
+                    
+                    # self.name_to_document[name] contains a list, since each source file could be split into multiple pages
+                    if name in self.name_to_document:
+                        self.name_to_document[name].append(document)
+                    else:
+                        self.name_to_document[name] = [document]
+        
+        # Rebuild index from documents if it&#39;s None or invalid
+        if self.index is None and self.documents:
+            logger.warning(&#34;No index found. Rebuilding index from documents.&#34;)
+            vector_store = SimpleVectorStore()
+            self.index = VectorStoreIndex.from_documents(
+                self.documents,
+                vector_store=vector_store,
+                store_nodes_override=True
+            )
+
+        # TODO remove?
+        #self.add_documents(self.documents)        
+
+    @staticmethod
+    def _serialize_index(index):
+        &#34;&#34;&#34;Helper function to serialize index with proper storage context&#34;&#34;&#34;
+        if index is None:
+            return None
+        
+        try:
+            # Create a temporary directory to store the index
+            with tempfile.TemporaryDirectory() as temp_dir:
+                # Persist the index to the temporary directory
+                index.storage_context.persist(persist_dir=temp_dir)
+                
+                # Read all the persisted files and store them in a dictionary
+                persisted_data = {}
+                for filename in os.listdir(temp_dir):
+                    filepath = os.path.join(temp_dir, filename)
+                    if os.path.isfile(filepath):
+                        with open(filepath, &#39;r&#39;) as f:
+                            persisted_data[filename] = f.read()
+                
+                return persisted_data
+        except Exception as e:
+            logger.warning(f&#34;Failed to serialize index: {e}&#34;)
+            return None
+
+    @staticmethod
+    def _deserialize_index(index_data):
+        &#34;&#34;&#34;Helper function to deserialize index with proper error handling&#34;&#34;&#34;
+        if not index_data:
+            return None
+        
+        try:
+            # Create a temporary directory to restore the index
+            with tempfile.TemporaryDirectory() as temp_dir:
+                # Write all the persisted files to the temporary directory
+                for filename, content in index_data.items():
+                    filepath = os.path.join(temp_dir, filename)
+                    with open(filepath, &#39;w&#39;) as f:
+                        f.write(content)
+                
+                # Load the index from the temporary directory
+                storage_context = StorageContext.from_defaults(persist_dir=temp_dir)
+                index = load_index_from_storage(storage_context)
+                
+                return index
+        except Exception as e:
+            # If deserialization fails, return None
+            # The index will be rebuilt from documents in _post_init
+            logger.warning(f&#34;Failed to deserialize index: {e}. Index will be rebuilt.&#34;)
+            return None
+    
+    def retrieve_relevant(self, relevance_target:str, top_k=20) -&gt; list:
+        &#34;&#34;&#34;
+        Retrieves all values from memory that are relevant to a given target.
+        &#34;&#34;&#34;
+        # Handle empty or None query
+        if not relevance_target or not relevance_target.strip():
+            return []
+            
+        if self.index is not None:
+            retriever = self.index.as_retriever(similarity_top_k=top_k)
+            nodes = retriever.retrieve(relevance_target)
+        else:
+            nodes = []
+
+        retrieved = []
+        for node in nodes:
+            content = &#34;SOURCE: &#34; + node.metadata.get(&#39;file_name&#39;, &#39;(unknown)&#39;)
+            content += &#34;\n&#34; + &#34;SIMILARITY SCORE:&#34; + str(node.score)
+            content += &#34;\n&#34; + &#34;RELEVANT CONTENT:&#34; + node.text
+            retrieved.append(content)
+
+            logger.debug(f&#34;Content retrieved: {content[:200]}&#34;)
+
+        return retrieved
+    
+    def retrieve_by_name(self, name:str) -&gt; list:
+        &#34;&#34;&#34;
+        Retrieves a content source by its name.
+        &#34;&#34;&#34;
+        # TODO also optionally provide a relevance target?
+        results = []
+        if self.name_to_document is not None and name in self.name_to_document:
+            docs = self.name_to_document[name]
+            for i, doc in enumerate(docs):
+                if doc is not None:
+                    content = f&#34;SOURCE: {name}\n&#34;
+                    content += f&#34;PAGE: {i}\n&#34;
+                    content += &#34;CONTENT: \n&#34; + doc.text[:10000] # TODO a more intelligent way to limit the content
+                    results.append(content)
+                    
+        return results
+        
+        
+    def list_sources(self) -&gt; list:
+        &#34;&#34;&#34;
+        Lists the names of the available content sources.
+        &#34;&#34;&#34;
+        if self.name_to_document is not None:
+            return list(self.name_to_document.keys())
+        else:
+            return []
+    
+    def add_document(self, document) -&gt; None:
+        &#34;&#34;&#34;
+        Indexes a document for semantic retrieval.
+
+        Assumes the document has a metadata field called &#34;semantic_memory_id&#34; that is used to identify the document within Semantic Memory.
+        &#34;&#34;&#34;
+        self.add_documents([document])
+
+    def add_documents(self, new_documents) -&gt; list:
+        &#34;&#34;&#34;
+        Indexes documents for semantic retrieval.
+        &#34;&#34;&#34;
+        # index documents by name
+        if len(new_documents) &gt; 0:
+            
+            # process documents individually too
+            for document in new_documents:
+                logger.debug(f&#34;Adding document {document} to index, text is: {document.text}&#34;)
+
+                # out of an abundance of caution, we sanitize the text
+                document.text = utils.sanitize_raw_string(document.text)
+
+                logger.debug(f&#34;Document text after sanitization: {document.text}&#34;)
+
+                # add the new document to the list of documents after all sanitization and checks
+                self.documents.append(document)
+
+                if document.metadata.get(&#34;semantic_memory_id&#34;) is not None:
+                    # if the document has a semantic memory ID, we use it as the identifier
+                    name = document.metadata[&#34;semantic_memory_id&#34;]
+                    
+                    # Ensure name_to_document is initialized
+                    if not hasattr(self, &#39;name_to_document&#39;) or self.name_to_document is None:
+                        self.name_to_document = {}
+                    
+                    # self.name_to_document[name] contains a list, since each source file could be split into multiple pages
+                    if name in self.name_to_document:
+                        self.name_to_document[name].append(document)
+                    else:
+                        self.name_to_document[name] = [document]
+
+
+            # index documents for semantic retrieval
+            if self.index is None:
+                # Create storage context with vector store
+                vector_store = SimpleVectorStore()
+                storage_context = StorageContext.from_defaults(vector_store=vector_store)
+                
+                self.index = VectorStoreIndex.from_documents(
+                    self.documents, 
+                    storage_context=storage_context,
+                    store_nodes_override=True  # This ensures nodes (with text) are stored
+                )
+            else:
+                self.index.refresh(self.documents)
+    
+    @staticmethod
+    def _set_internal_id_to_documents(documents:list, external_attribute_name:str =&#34;file_name&#34;) -&gt; None:
+        &#34;&#34;&#34;
+        Sets the internal ID for each document in the list of documents.
+        This is useful to ensure that each document has a unique identifier.
+        &#34;&#34;&#34;
+        for doc in documents:
+            if not hasattr(doc, &#39;metadata&#39;):
+                doc.metadata = {}
+            doc.metadata[&#34;semantic_memory_id&#34;] = doc.metadata.get(external_attribute_name, doc.id_)
+
+        return documents
+    
+
+@utils.post_init
+class LocalFilesGroundingConnector(BaseSemanticGroundingConnector):
+
+    serializable_attributes = [&#34;folders_paths&#34;]
+
+    def __init__(self, name:str=&#34;Local Files&#34;, folders_paths: list=None) -&gt; None:
+        super().__init__(name)
+
+        self.folders_paths = folders_paths
+
+        # @post_init ensures that _post_init is called after the __init__ method
+    
+    def _post_init(self):
+        &#34;&#34;&#34;
+        This will run after __init__, since the class has the @post_init decorator.
+        It is convenient to separate some of the initialization processes to make deserialize easier.
+        &#34;&#34;&#34;
+        self.loaded_folders_paths = []
+
+        if not hasattr(self, &#39;folders_paths&#39;) or self.folders_paths is None:
+            self.folders_paths = []
+
+        self.add_folders(self.folders_paths)
+
+    def add_folders(self, folders_paths:list) -&gt; None:
+        &#34;&#34;&#34;
+        Adds a path to a folder with files used for grounding.
+        &#34;&#34;&#34;
+
+        if folders_paths is not None:
+            for folder_path in folders_paths:
+                try:
+                    logger.debug(f&#34;Adding the following folder to grounding index: {folder_path}&#34;)
+                    self.add_folder(folder_path)
+                except (FileNotFoundError, ValueError) as e:
+                    print(f&#34;Error: {e}&#34;)
+                    print(f&#34;Current working directory: {os.getcwd()}&#34;)
+                    print(f&#34;Provided path: {folder_path}&#34;)
+                    print(&#34;Please check if the path exists and is accessible.&#34;)
+
+    def add_folder(self, folder_path:str) -&gt; None:
+        &#34;&#34;&#34;
+        Adds a path to a folder with files used for grounding.
+        &#34;&#34;&#34;
+
+        if folder_path not in self.loaded_folders_paths:
+            self._mark_folder_as_loaded(folder_path)
+
+            # for PDF files, please note that the document will be split into pages: https://github.com/run-llama/llama_index/issues/15903
+            new_files = SimpleDirectoryReader(folder_path).load_data()
+            BaseSemanticGroundingConnector._set_internal_id_to_documents(new_files, &#34;file_name&#34;)
+
+            self.add_documents(new_files)
+    
+    def add_file_path(self, file_path:str) -&gt; None:
+        &#34;&#34;&#34;
+        Adds a path to a file used for grounding.
+        &#34;&#34;&#34;
+        # a trick to make SimpleDirectoryReader work with a single file
+        new_files = SimpleDirectoryReader(input_files=[file_path]).load_data()
+        
+        logger.debug(f&#34;Adding the following file to grounding index: {new_files}&#34;)
+        BaseSemanticGroundingConnector._set_internal_id_to_documents(new_files, &#34;file_name&#34;)
+    
+    def _mark_folder_as_loaded(self, folder_path:str) -&gt; None:
+        if folder_path not in self.loaded_folders_paths:
+            self.loaded_folders_paths.append(folder_path)
+        
+        if folder_path not in self.folders_paths:
+            self.folders_paths.append(folder_path)
+    
+    
+    
+
+@utils.post_init
+class WebPagesGroundingConnector(BaseSemanticGroundingConnector):
+
+    serializable_attributes = [&#34;web_urls&#34;]
+
+    def __init__(self, name:str=&#34;Web Pages&#34;, web_urls: list=None) -&gt; None:
+        super().__init__(name)
+
+        self.web_urls = web_urls
+
+        # @post_init ensures that _post_init is called after the __init__ method
+    
+    def _post_init(self):
+        self.loaded_web_urls = []
+
+        if not hasattr(self, &#39;web_urls&#39;) or self.web_urls is None:
+            self.web_urls = []
+
+        # load web urls
+        self.add_web_urls(self.web_urls)
+    
+    def add_web_urls(self, web_urls:list) -&gt; None:
+        &#34;&#34;&#34; 
+        Adds the data retrieved from the specified URLs to grounding.
+        &#34;&#34;&#34;
+        filtered_web_urls = [url for url in web_urls if url not in self.loaded_web_urls]
+        for url in filtered_web_urls:
+            self._mark_web_url_as_loaded(url)
+
+        if len(filtered_web_urls) &gt; 0:
+            new_documents = SimpleWebPageReader(html_to_text=True).load_data(filtered_web_urls)
+            BaseSemanticGroundingConnector._set_internal_id_to_documents(new_documents, &#34;url&#34;)
+            self.add_documents(new_documents)
+    
+    def add_web_url(self, web_url:str) -&gt; None:
+        &#34;&#34;&#34;
+        Adds the data retrieved from the specified URL to grounding.
+        &#34;&#34;&#34;
+        # we do it like this because the add_web_urls could run scrapes in parallel, so it is better
+        # to implement this one in terms of the other
+        self.add_web_urls([web_url])
+    
+    def _mark_web_url_as_loaded(self, web_url:str) -&gt; None:
+        if web_url not in self.loaded_web_urls:
+            self.loaded_web_urls.append(web_url)
+        
+        if web_url not in self.web_urls:
+            self.web_urls.append(web_url)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="tinytroupe.agent.grounding.BaseSemanticGroundingConnector"><code class="flex name class">
+<span>class <span class="ident">BaseSemanticGroundingConnector</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A base class for semantic grounding connectors. A semantic grounding connector is a component that indexes and retrieves
+documents based on so-called "semantic search" (i.e, embeddings-based search). This specific implementation
+is based on the VectorStoreIndex class from the LLaMa-Index library. Here, "documents" refer to the llama-index's
+data structure that stores a unit of content, not necessarily a file.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@utils.post_init
+class BaseSemanticGroundingConnector(GroundingConnector):
+    &#34;&#34;&#34;
+    A base class for semantic grounding connectors. A semantic grounding connector is a component that indexes and retrieves
+    documents based on so-called &#34;semantic search&#34; (i.e, embeddings-based search). This specific implementation
+    is based on the VectorStoreIndex class from the LLaMa-Index library. Here, &#34;documents&#34; refer to the llama-index&#39;s
+    data structure that stores a unit of content, not necessarily a file.
+    &#34;&#34;&#34;
+
+    serializable_attributes = [&#34;documents&#34;, &#34;index&#34;]
+    
+    # needs custom deserialization to handle Pydantic models (Document is a Pydantic model)
+    custom_deserializers = {&#34;documents&#34;: lambda docs_json: [Document.from_json(doc_json) for doc_json in docs_json],
+                            &#34;index&#34;: lambda index_json: BaseSemanticGroundingConnector._deserialize_index(index_json)}
+
+    custom_serializers = {&#34;documents&#34;: lambda docs: [doc.to_json() for doc in docs] if docs is not None else None,
+                          &#34;index&#34;: lambda index: BaseSemanticGroundingConnector._serialize_index(index)}
+
+    def __init__(self, name:str=&#34;Semantic Grounding&#34;) -&gt; None:
+        super().__init__(name)
+
+        self.documents = None 
+        self.name_to_document = None
+        self.index = None
+
+        # @post_init ensures that _post_init is called after the __init__ method
+    
+    def _post_init(self):
+        &#34;&#34;&#34;
+        This will run after __init__, since the class has the @post_init decorator.
+        It is convenient to separate some of the initialization processes to make deserialize easier.
+        &#34;&#34;&#34;
+        self.index = None
+
+        if not hasattr(self, &#39;documents&#39;) or self.documents is None:
+            self.documents = []
+        
+        if not hasattr(self, &#39;name_to_document&#39;) or self.name_to_document is None:
+            self.name_to_document = {}
+
+            if hasattr(self, &#39;documents&#39;) and self.documents is not None:
+                for document in self.documents:
+                    # if the document has a semantic memory ID, we use it as the identifier
+                    name = document.metadata.get(&#34;semantic_memory_id&#34;, document.id_)
+                    
+                    # self.name_to_document[name] contains a list, since each source file could be split into multiple pages
+                    if name in self.name_to_document:
+                        self.name_to_document[name].append(document)
+                    else:
+                        self.name_to_document[name] = [document]
+        
+        # Rebuild index from documents if it&#39;s None or invalid
+        if self.index is None and self.documents:
+            logger.warning(&#34;No index found. Rebuilding index from documents.&#34;)
+            vector_store = SimpleVectorStore()
+            self.index = VectorStoreIndex.from_documents(
+                self.documents,
+                vector_store=vector_store,
+                store_nodes_override=True
+            )
+
+        # TODO remove?
+        #self.add_documents(self.documents)        
+
+    @staticmethod
+    def _serialize_index(index):
+        &#34;&#34;&#34;Helper function to serialize index with proper storage context&#34;&#34;&#34;
+        if index is None:
+            return None
+        
+        try:
+            # Create a temporary directory to store the index
+            with tempfile.TemporaryDirectory() as temp_dir:
+                # Persist the index to the temporary directory
+                index.storage_context.persist(persist_dir=temp_dir)
+                
+                # Read all the persisted files and store them in a dictionary
+                persisted_data = {}
+                for filename in os.listdir(temp_dir):
+                    filepath = os.path.join(temp_dir, filename)
+                    if os.path.isfile(filepath):
+                        with open(filepath, &#39;r&#39;) as f:
+                            persisted_data[filename] = f.read()
+                
+                return persisted_data
+        except Exception as e:
+            logger.warning(f&#34;Failed to serialize index: {e}&#34;)
+            return None
+
+    @staticmethod
+    def _deserialize_index(index_data):
+        &#34;&#34;&#34;Helper function to deserialize index with proper error handling&#34;&#34;&#34;
+        if not index_data:
+            return None
+        
+        try:
+            # Create a temporary directory to restore the index
+            with tempfile.TemporaryDirectory() as temp_dir:
+                # Write all the persisted files to the temporary directory
+                for filename, content in index_data.items():
+                    filepath = os.path.join(temp_dir, filename)
+                    with open(filepath, &#39;w&#39;) as f:
+                        f.write(content)
+                
+                # Load the index from the temporary directory
+                storage_context = StorageContext.from_defaults(persist_dir=temp_dir)
+                index = load_index_from_storage(storage_context)
+                
+                return index
+        except Exception as e:
+            # If deserialization fails, return None
+            # The index will be rebuilt from documents in _post_init
+            logger.warning(f&#34;Failed to deserialize index: {e}. Index will be rebuilt.&#34;)
+            return None
+    
+    def retrieve_relevant(self, relevance_target:str, top_k=20) -&gt; list:
+        &#34;&#34;&#34;
+        Retrieves all values from memory that are relevant to a given target.
+        &#34;&#34;&#34;
+        # Handle empty or None query
+        if not relevance_target or not relevance_target.strip():
+            return []
+            
+        if self.index is not None:
+            retriever = self.index.as_retriever(similarity_top_k=top_k)
+            nodes = retriever.retrieve(relevance_target)
+        else:
+            nodes = []
+
+        retrieved = []
+        for node in nodes:
+            content = &#34;SOURCE: &#34; + node.metadata.get(&#39;file_name&#39;, &#39;(unknown)&#39;)
+            content += &#34;\n&#34; + &#34;SIMILARITY SCORE:&#34; + str(node.score)
+            content += &#34;\n&#34; + &#34;RELEVANT CONTENT:&#34; + node.text
+            retrieved.append(content)
+
+            logger.debug(f&#34;Content retrieved: {content[:200]}&#34;)
+
+        return retrieved
+    
+    def retrieve_by_name(self, name:str) -&gt; list:
+        &#34;&#34;&#34;
+        Retrieves a content source by its name.
+        &#34;&#34;&#34;
+        # TODO also optionally provide a relevance target?
+        results = []
+        if self.name_to_document is not None and name in self.name_to_document:
+            docs = self.name_to_document[name]
+            for i, doc in enumerate(docs):
+                if doc is not None:
+                    content = f&#34;SOURCE: {name}\n&#34;
+                    content += f&#34;PAGE: {i}\n&#34;
+                    content += &#34;CONTENT: \n&#34; + doc.text[:10000] # TODO a more intelligent way to limit the content
+                    results.append(content)
+                    
+        return results
+        
+        
+    def list_sources(self) -&gt; list:
+        &#34;&#34;&#34;
+        Lists the names of the available content sources.
+        &#34;&#34;&#34;
+        if self.name_to_document is not None:
+            return list(self.name_to_document.keys())
+        else:
+            return []
+    
+    def add_document(self, document) -&gt; None:
+        &#34;&#34;&#34;
+        Indexes a document for semantic retrieval.
+
+        Assumes the document has a metadata field called &#34;semantic_memory_id&#34; that is used to identify the document within Semantic Memory.
+        &#34;&#34;&#34;
+        self.add_documents([document])
+
+    def add_documents(self, new_documents) -&gt; list:
+        &#34;&#34;&#34;
+        Indexes documents for semantic retrieval.
+        &#34;&#34;&#34;
+        # index documents by name
+        if len(new_documents) &gt; 0:
+            
+            # process documents individually too
+            for document in new_documents:
+                logger.debug(f&#34;Adding document {document} to index, text is: {document.text}&#34;)
+
+                # out of an abundance of caution, we sanitize the text
+                document.text = utils.sanitize_raw_string(document.text)
+
+                logger.debug(f&#34;Document text after sanitization: {document.text}&#34;)
+
+                # add the new document to the list of documents after all sanitization and checks
+                self.documents.append(document)
+
+                if document.metadata.get(&#34;semantic_memory_id&#34;) is not None:
+                    # if the document has a semantic memory ID, we use it as the identifier
+                    name = document.metadata[&#34;semantic_memory_id&#34;]
+                    
+                    # Ensure name_to_document is initialized
+                    if not hasattr(self, &#39;name_to_document&#39;) or self.name_to_document is None:
+                        self.name_to_document = {}
+                    
+                    # self.name_to_document[name] contains a list, since each source file could be split into multiple pages
+                    if name in self.name_to_document:
+                        self.name_to_document[name].append(document)
+                    else:
+                        self.name_to_document[name] = [document]
+
+
+            # index documents for semantic retrieval
+            if self.index is None:
+                # Create storage context with vector store
+                vector_store = SimpleVectorStore()
+                storage_context = StorageContext.from_defaults(vector_store=vector_store)
+                
+                self.index = VectorStoreIndex.from_documents(
+                    self.documents, 
+                    storage_context=storage_context,
+                    store_nodes_override=True  # This ensures nodes (with text) are stored
+                )
+            else:
+                self.index.refresh(self.documents)
+    
+    @staticmethod
+    def _set_internal_id_to_documents(documents:list, external_attribute_name:str =&#34;file_name&#34;) -&gt; None:
+        &#34;&#34;&#34;
+        Sets the internal ID for each document in the list of documents.
+        This is useful to ensure that each document has a unique identifier.
+        &#34;&#34;&#34;
+        for doc in documents:
+            if not hasattr(doc, &#39;metadata&#39;):
+                doc.metadata = {}
+            doc.metadata[&#34;semantic_memory_id&#34;] = doc.metadata.get(external_attribute_name, doc.id_)
+
+        return documents</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="tinytroupe.agent.grounding.GroundingConnector" href="#tinytroupe.agent.grounding.GroundingConnector">GroundingConnector</a></li>
+<li><a title="tinytroupe.utils.json.JsonSerializableRegistry" href="../utils/json.html#tinytroupe.utils.json.JsonSerializableRegistry">JsonSerializableRegistry</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="tinytroupe.agent.grounding.LocalFilesGroundingConnector" href="#tinytroupe.agent.grounding.LocalFilesGroundingConnector">LocalFilesGroundingConnector</a></li>
+<li><a title="tinytroupe.agent.grounding.WebPagesGroundingConnector" href="#tinytroupe.agent.grounding.WebPagesGroundingConnector">WebPagesGroundingConnector</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.custom_deserializers"><code class="name">var <span class="ident">custom_deserializers</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.custom_serializers"><code class="name">var <span class="ident">custom_serializers</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.serializable_attributes"><code class="name">var <span class="ident">serializable_attributes</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.add_document"><code class="name flex">
+<span>def <span class="ident">add_document</span></span>(<span>self, document) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Indexes a document for semantic retrieval.</p>
+<p>Assumes the document has a metadata field called "semantic_memory_id" that is used to identify the document within Semantic Memory.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_document(self, document) -&gt; None:
+    &#34;&#34;&#34;
+    Indexes a document for semantic retrieval.
+
+    Assumes the document has a metadata field called &#34;semantic_memory_id&#34; that is used to identify the document within Semantic Memory.
+    &#34;&#34;&#34;
+    self.add_documents([document])</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.add_documents"><code class="name flex">
+<span>def <span class="ident">add_documents</span></span>(<span>self, new_documents) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Indexes documents for semantic retrieval.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_documents(self, new_documents) -&gt; list:
+    &#34;&#34;&#34;
+    Indexes documents for semantic retrieval.
+    &#34;&#34;&#34;
+    # index documents by name
+    if len(new_documents) &gt; 0:
+        
+        # process documents individually too
+        for document in new_documents:
+            logger.debug(f&#34;Adding document {document} to index, text is: {document.text}&#34;)
+
+            # out of an abundance of caution, we sanitize the text
+            document.text = utils.sanitize_raw_string(document.text)
+
+            logger.debug(f&#34;Document text after sanitization: {document.text}&#34;)
+
+            # add the new document to the list of documents after all sanitization and checks
+            self.documents.append(document)
+
+            if document.metadata.get(&#34;semantic_memory_id&#34;) is not None:
+                # if the document has a semantic memory ID, we use it as the identifier
+                name = document.metadata[&#34;semantic_memory_id&#34;]
+                
+                # Ensure name_to_document is initialized
+                if not hasattr(self, &#39;name_to_document&#39;) or self.name_to_document is None:
+                    self.name_to_document = {}
+                
+                # self.name_to_document[name] contains a list, since each source file could be split into multiple pages
+                if name in self.name_to_document:
+                    self.name_to_document[name].append(document)
+                else:
+                    self.name_to_document[name] = [document]
+
+
+        # index documents for semantic retrieval
+        if self.index is None:
+            # Create storage context with vector store
+            vector_store = SimpleVectorStore()
+            storage_context = StorageContext.from_defaults(vector_store=vector_store)
+            
+            self.index = VectorStoreIndex.from_documents(
+                self.documents, 
+                storage_context=storage_context,
+                store_nodes_override=True  # This ensures nodes (with text) are stored
+            )
+        else:
+            self.index.refresh(self.documents)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.list_sources"><code class="name flex">
+<span>def <span class="ident">list_sources</span></span>(<span>self) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Lists the names of the available content sources.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_sources(self) -&gt; list:
+    &#34;&#34;&#34;
+    Lists the names of the available content sources.
+    &#34;&#34;&#34;
+    if self.name_to_document is not None:
+        return list(self.name_to_document.keys())
+    else:
+        return []</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.retrieve_by_name"><code class="name flex">
+<span>def <span class="ident">retrieve_by_name</span></span>(<span>self, name: str) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retrieves a content source by its name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def retrieve_by_name(self, name:str) -&gt; list:
+    &#34;&#34;&#34;
+    Retrieves a content source by its name.
+    &#34;&#34;&#34;
+    # TODO also optionally provide a relevance target?
+    results = []
+    if self.name_to_document is not None and name in self.name_to_document:
+        docs = self.name_to_document[name]
+        for i, doc in enumerate(docs):
+            if doc is not None:
+                content = f&#34;SOURCE: {name}\n&#34;
+                content += f&#34;PAGE: {i}\n&#34;
+                content += &#34;CONTENT: \n&#34; + doc.text[:10000] # TODO a more intelligent way to limit the content
+                results.append(content)
+                
+    return results</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.retrieve_relevant"><code class="name flex">
+<span>def <span class="ident">retrieve_relevant</span></span>(<span>self, relevance_target: str, top_k=20) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retrieves all values from memory that are relevant to a given target.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def retrieve_relevant(self, relevance_target:str, top_k=20) -&gt; list:
+    &#34;&#34;&#34;
+    Retrieves all values from memory that are relevant to a given target.
+    &#34;&#34;&#34;
+    # Handle empty or None query
+    if not relevance_target or not relevance_target.strip():
+        return []
+        
+    if self.index is not None:
+        retriever = self.index.as_retriever(similarity_top_k=top_k)
+        nodes = retriever.retrieve(relevance_target)
+    else:
+        nodes = []
+
+    retrieved = []
+    for node in nodes:
+        content = &#34;SOURCE: &#34; + node.metadata.get(&#39;file_name&#39;, &#39;(unknown)&#39;)
+        content += &#34;\n&#34; + &#34;SIMILARITY SCORE:&#34; + str(node.score)
+        content += &#34;\n&#34; + &#34;RELEVANT CONTENT:&#34; + node.text
+        retrieved.append(content)
+
+        logger.debug(f&#34;Content retrieved: {content[:200]}&#34;)
+
+    return retrieved</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="tinytroupe.agent.grounding.GroundingConnector" href="#tinytroupe.agent.grounding.GroundingConnector">GroundingConnector</a></b></code>:
+<ul class="hlist">
+<li><code><a title="tinytroupe.agent.grounding.GroundingConnector.from_json" href="../utils/json.html#tinytroupe.utils.json.JsonSerializableRegistry.from_json">from_json</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.GroundingConnector.to_json" href="../utils/json.html#tinytroupe.utils.json.JsonSerializableRegistry.to_json">to_json</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="tinytroupe.agent.grounding.GroundingConnector"><code class="flex name class">
+<span>class <span class="ident">GroundingConnector</span></span>
+<span>(</span><span>name: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>An abstract class representing a grounding connector. A grounding connector is a component that allows an agent to ground
+its knowledge in external sources, such as files, web pages, databases, etc.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class GroundingConnector(JsonSerializableRegistry):
+    &#34;&#34;&#34;
+    An abstract class representing a grounding connector. A grounding connector is a component that allows an agent to ground
+    its knowledge in external sources, such as files, web pages, databases, etc.
+    &#34;&#34;&#34;
+
+    serializable_attributes = [&#34;name&#34;]
+
+    def __init__(self, name:str) -&gt; None:
+        self.name = name
+    
+    def retrieve_relevant(self, relevance_target:str, source:str, top_k=20) -&gt; list:
+        raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)
+    
+    def retrieve_by_name(self, name:str) -&gt; str:
+        raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)
+    
+    def list_sources(self) -&gt; list:
+        raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="tinytroupe.utils.json.JsonSerializableRegistry" href="../utils/json.html#tinytroupe.utils.json.JsonSerializableRegistry">JsonSerializableRegistry</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector" href="#tinytroupe.agent.grounding.BaseSemanticGroundingConnector">BaseSemanticGroundingConnector</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="tinytroupe.agent.grounding.GroundingConnector.serializable_attributes"><code class="name">var <span class="ident">serializable_attributes</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="tinytroupe.agent.grounding.GroundingConnector.list_sources"><code class="name flex">
+<span>def <span class="ident">list_sources</span></span>(<span>self) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_sources(self) -&gt; list:
+    raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.agent.grounding.GroundingConnector.retrieve_by_name"><code class="name flex">
+<span>def <span class="ident">retrieve_by_name</span></span>(<span>self, name: str) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def retrieve_by_name(self, name:str) -&gt; str:
+    raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.agent.grounding.GroundingConnector.retrieve_relevant"><code class="name flex">
+<span>def <span class="ident">retrieve_relevant</span></span>(<span>self, relevance_target: str, source: str, top_k=20) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def retrieve_relevant(self, relevance_target:str, source:str, top_k=20) -&gt; list:
+    raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="tinytroupe.utils.json.JsonSerializableRegistry" href="../utils/json.html#tinytroupe.utils.json.JsonSerializableRegistry">JsonSerializableRegistry</a></b></code>:
+<ul class="hlist">
+<li><code><a title="tinytroupe.utils.json.JsonSerializableRegistry.from_json" href="../utils/json.html#tinytroupe.utils.json.JsonSerializableRegistry.from_json">from_json</a></code></li>
+<li><code><a title="tinytroupe.utils.json.JsonSerializableRegistry.to_json" href="../utils/json.html#tinytroupe.utils.json.JsonSerializableRegistry.to_json">to_json</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="tinytroupe.agent.grounding.LocalFilesGroundingConnector"><code class="flex name class">
+<span>class <span class="ident">LocalFilesGroundingConnector</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A base class for semantic grounding connectors. A semantic grounding connector is a component that indexes and retrieves
+documents based on so-called "semantic search" (i.e, embeddings-based search). This specific implementation
+is based on the VectorStoreIndex class from the LLaMa-Index library. Here, "documents" refer to the llama-index's
+data structure that stores a unit of content, not necessarily a file.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@utils.post_init
+class LocalFilesGroundingConnector(BaseSemanticGroundingConnector):
+
+    serializable_attributes = [&#34;folders_paths&#34;]
+
+    def __init__(self, name:str=&#34;Local Files&#34;, folders_paths: list=None) -&gt; None:
+        super().__init__(name)
+
+        self.folders_paths = folders_paths
+
+        # @post_init ensures that _post_init is called after the __init__ method
+    
+    def _post_init(self):
+        &#34;&#34;&#34;
+        This will run after __init__, since the class has the @post_init decorator.
+        It is convenient to separate some of the initialization processes to make deserialize easier.
+        &#34;&#34;&#34;
+        self.loaded_folders_paths = []
+
+        if not hasattr(self, &#39;folders_paths&#39;) or self.folders_paths is None:
+            self.folders_paths = []
+
+        self.add_folders(self.folders_paths)
+
+    def add_folders(self, folders_paths:list) -&gt; None:
+        &#34;&#34;&#34;
+        Adds a path to a folder with files used for grounding.
+        &#34;&#34;&#34;
+
+        if folders_paths is not None:
+            for folder_path in folders_paths:
+                try:
+                    logger.debug(f&#34;Adding the following folder to grounding index: {folder_path}&#34;)
+                    self.add_folder(folder_path)
+                except (FileNotFoundError, ValueError) as e:
+                    print(f&#34;Error: {e}&#34;)
+                    print(f&#34;Current working directory: {os.getcwd()}&#34;)
+                    print(f&#34;Provided path: {folder_path}&#34;)
+                    print(&#34;Please check if the path exists and is accessible.&#34;)
+
+    def add_folder(self, folder_path:str) -&gt; None:
+        &#34;&#34;&#34;
+        Adds a path to a folder with files used for grounding.
+        &#34;&#34;&#34;
+
+        if folder_path not in self.loaded_folders_paths:
+            self._mark_folder_as_loaded(folder_path)
+
+            # for PDF files, please note that the document will be split into pages: https://github.com/run-llama/llama_index/issues/15903
+            new_files = SimpleDirectoryReader(folder_path).load_data()
+            BaseSemanticGroundingConnector._set_internal_id_to_documents(new_files, &#34;file_name&#34;)
+
+            self.add_documents(new_files)
+    
+    def add_file_path(self, file_path:str) -&gt; None:
+        &#34;&#34;&#34;
+        Adds a path to a file used for grounding.
+        &#34;&#34;&#34;
+        # a trick to make SimpleDirectoryReader work with a single file
+        new_files = SimpleDirectoryReader(input_files=[file_path]).load_data()
+        
+        logger.debug(f&#34;Adding the following file to grounding index: {new_files}&#34;)
+        BaseSemanticGroundingConnector._set_internal_id_to_documents(new_files, &#34;file_name&#34;)
+    
+    def _mark_folder_as_loaded(self, folder_path:str) -&gt; None:
+        if folder_path not in self.loaded_folders_paths:
+            self.loaded_folders_paths.append(folder_path)
+        
+        if folder_path not in self.folders_paths:
+            self.folders_paths.append(folder_path)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector" href="#tinytroupe.agent.grounding.BaseSemanticGroundingConnector">BaseSemanticGroundingConnector</a></li>
+<li><a title="tinytroupe.agent.grounding.GroundingConnector" href="#tinytroupe.agent.grounding.GroundingConnector">GroundingConnector</a></li>
+<li><a title="tinytroupe.utils.json.JsonSerializableRegistry" href="../utils/json.html#tinytroupe.utils.json.JsonSerializableRegistry">JsonSerializableRegistry</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="tinytroupe.agent.grounding.LocalFilesGroundingConnector.custom_deserializers"><code class="name">var <span class="ident">custom_deserializers</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.agent.grounding.LocalFilesGroundingConnector.custom_serializers"><code class="name">var <span class="ident">custom_serializers</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.agent.grounding.LocalFilesGroundingConnector.serializable_attributes"><code class="name">var <span class="ident">serializable_attributes</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="tinytroupe.agent.grounding.LocalFilesGroundingConnector.add_file_path"><code class="name flex">
+<span>def <span class="ident">add_file_path</span></span>(<span>self, file_path: str) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds a path to a file used for grounding.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_file_path(self, file_path:str) -&gt; None:
+    &#34;&#34;&#34;
+    Adds a path to a file used for grounding.
+    &#34;&#34;&#34;
+    # a trick to make SimpleDirectoryReader work with a single file
+    new_files = SimpleDirectoryReader(input_files=[file_path]).load_data()
+    
+    logger.debug(f&#34;Adding the following file to grounding index: {new_files}&#34;)
+    BaseSemanticGroundingConnector._set_internal_id_to_documents(new_files, &#34;file_name&#34;)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.agent.grounding.LocalFilesGroundingConnector.add_folder"><code class="name flex">
+<span>def <span class="ident">add_folder</span></span>(<span>self, folder_path: str) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds a path to a folder with files used for grounding.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_folder(self, folder_path:str) -&gt; None:
+    &#34;&#34;&#34;
+    Adds a path to a folder with files used for grounding.
+    &#34;&#34;&#34;
+
+    if folder_path not in self.loaded_folders_paths:
+        self._mark_folder_as_loaded(folder_path)
+
+        # for PDF files, please note that the document will be split into pages: https://github.com/run-llama/llama_index/issues/15903
+        new_files = SimpleDirectoryReader(folder_path).load_data()
+        BaseSemanticGroundingConnector._set_internal_id_to_documents(new_files, &#34;file_name&#34;)
+
+        self.add_documents(new_files)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.agent.grounding.LocalFilesGroundingConnector.add_folders"><code class="name flex">
+<span>def <span class="ident">add_folders</span></span>(<span>self, folders_paths: list) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds a path to a folder with files used for grounding.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_folders(self, folders_paths:list) -&gt; None:
+    &#34;&#34;&#34;
+    Adds a path to a folder with files used for grounding.
+    &#34;&#34;&#34;
+
+    if folders_paths is not None:
+        for folder_path in folders_paths:
+            try:
+                logger.debug(f&#34;Adding the following folder to grounding index: {folder_path}&#34;)
+                self.add_folder(folder_path)
+            except (FileNotFoundError, ValueError) as e:
+                print(f&#34;Error: {e}&#34;)
+                print(f&#34;Current working directory: {os.getcwd()}&#34;)
+                print(f&#34;Provided path: {folder_path}&#34;)
+                print(&#34;Please check if the path exists and is accessible.&#34;)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector" href="#tinytroupe.agent.grounding.BaseSemanticGroundingConnector">BaseSemanticGroundingConnector</a></b></code>:
+<ul class="hlist">
+<li><code><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.add_document" href="#tinytroupe.agent.grounding.BaseSemanticGroundingConnector.add_document">add_document</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.add_documents" href="#tinytroupe.agent.grounding.BaseSemanticGroundingConnector.add_documents">add_documents</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.from_json" href="../utils/json.html#tinytroupe.utils.json.JsonSerializableRegistry.from_json">from_json</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.list_sources" href="#tinytroupe.agent.grounding.BaseSemanticGroundingConnector.list_sources">list_sources</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.retrieve_by_name" href="#tinytroupe.agent.grounding.BaseSemanticGroundingConnector.retrieve_by_name">retrieve_by_name</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.retrieve_relevant" href="#tinytroupe.agent.grounding.BaseSemanticGroundingConnector.retrieve_relevant">retrieve_relevant</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.to_json" href="../utils/json.html#tinytroupe.utils.json.JsonSerializableRegistry.to_json">to_json</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="tinytroupe.agent.grounding.WebPagesGroundingConnector"><code class="flex name class">
+<span>class <span class="ident">WebPagesGroundingConnector</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A base class for semantic grounding connectors. A semantic grounding connector is a component that indexes and retrieves
+documents based on so-called "semantic search" (i.e, embeddings-based search). This specific implementation
+is based on the VectorStoreIndex class from the LLaMa-Index library. Here, "documents" refer to the llama-index's
+data structure that stores a unit of content, not necessarily a file.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@utils.post_init
+class WebPagesGroundingConnector(BaseSemanticGroundingConnector):
+
+    serializable_attributes = [&#34;web_urls&#34;]
+
+    def __init__(self, name:str=&#34;Web Pages&#34;, web_urls: list=None) -&gt; None:
+        super().__init__(name)
+
+        self.web_urls = web_urls
+
+        # @post_init ensures that _post_init is called after the __init__ method
+    
+    def _post_init(self):
+        self.loaded_web_urls = []
+
+        if not hasattr(self, &#39;web_urls&#39;) or self.web_urls is None:
+            self.web_urls = []
+
+        # load web urls
+        self.add_web_urls(self.web_urls)
+    
+    def add_web_urls(self, web_urls:list) -&gt; None:
+        &#34;&#34;&#34; 
+        Adds the data retrieved from the specified URLs to grounding.
+        &#34;&#34;&#34;
+        filtered_web_urls = [url for url in web_urls if url not in self.loaded_web_urls]
+        for url in filtered_web_urls:
+            self._mark_web_url_as_loaded(url)
+
+        if len(filtered_web_urls) &gt; 0:
+            new_documents = SimpleWebPageReader(html_to_text=True).load_data(filtered_web_urls)
+            BaseSemanticGroundingConnector._set_internal_id_to_documents(new_documents, &#34;url&#34;)
+            self.add_documents(new_documents)
+    
+    def add_web_url(self, web_url:str) -&gt; None:
+        &#34;&#34;&#34;
+        Adds the data retrieved from the specified URL to grounding.
+        &#34;&#34;&#34;
+        # we do it like this because the add_web_urls could run scrapes in parallel, so it is better
+        # to implement this one in terms of the other
+        self.add_web_urls([web_url])
+    
+    def _mark_web_url_as_loaded(self, web_url:str) -&gt; None:
+        if web_url not in self.loaded_web_urls:
+            self.loaded_web_urls.append(web_url)
+        
+        if web_url not in self.web_urls:
+            self.web_urls.append(web_url)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector" href="#tinytroupe.agent.grounding.BaseSemanticGroundingConnector">BaseSemanticGroundingConnector</a></li>
+<li><a title="tinytroupe.agent.grounding.GroundingConnector" href="#tinytroupe.agent.grounding.GroundingConnector">GroundingConnector</a></li>
+<li><a title="tinytroupe.utils.json.JsonSerializableRegistry" href="../utils/json.html#tinytroupe.utils.json.JsonSerializableRegistry">JsonSerializableRegistry</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="tinytroupe.agent.grounding.WebPagesGroundingConnector.custom_deserializers"><code class="name">var <span class="ident">custom_deserializers</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.agent.grounding.WebPagesGroundingConnector.custom_serializers"><code class="name">var <span class="ident">custom_serializers</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.agent.grounding.WebPagesGroundingConnector.serializable_attributes"><code class="name">var <span class="ident">serializable_attributes</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="tinytroupe.agent.grounding.WebPagesGroundingConnector.add_web_url"><code class="name flex">
+<span>def <span class="ident">add_web_url</span></span>(<span>self, web_url: str) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds the data retrieved from the specified URL to grounding.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_web_url(self, web_url:str) -&gt; None:
+    &#34;&#34;&#34;
+    Adds the data retrieved from the specified URL to grounding.
+    &#34;&#34;&#34;
+    # we do it like this because the add_web_urls could run scrapes in parallel, so it is better
+    # to implement this one in terms of the other
+    self.add_web_urls([web_url])</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.agent.grounding.WebPagesGroundingConnector.add_web_urls"><code class="name flex">
+<span>def <span class="ident">add_web_urls</span></span>(<span>self, web_urls: list) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds the data retrieved from the specified URLs to grounding.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_web_urls(self, web_urls:list) -&gt; None:
+    &#34;&#34;&#34; 
+    Adds the data retrieved from the specified URLs to grounding.
+    &#34;&#34;&#34;
+    filtered_web_urls = [url for url in web_urls if url not in self.loaded_web_urls]
+    for url in filtered_web_urls:
+        self._mark_web_url_as_loaded(url)
+
+    if len(filtered_web_urls) &gt; 0:
+        new_documents = SimpleWebPageReader(html_to_text=True).load_data(filtered_web_urls)
+        BaseSemanticGroundingConnector._set_internal_id_to_documents(new_documents, &#34;url&#34;)
+        self.add_documents(new_documents)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector" href="#tinytroupe.agent.grounding.BaseSemanticGroundingConnector">BaseSemanticGroundingConnector</a></b></code>:
+<ul class="hlist">
+<li><code><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.add_document" href="#tinytroupe.agent.grounding.BaseSemanticGroundingConnector.add_document">add_document</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.add_documents" href="#tinytroupe.agent.grounding.BaseSemanticGroundingConnector.add_documents">add_documents</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.from_json" href="../utils/json.html#tinytroupe.utils.json.JsonSerializableRegistry.from_json">from_json</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.list_sources" href="#tinytroupe.agent.grounding.BaseSemanticGroundingConnector.list_sources">list_sources</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.retrieve_by_name" href="#tinytroupe.agent.grounding.BaseSemanticGroundingConnector.retrieve_by_name">retrieve_by_name</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.retrieve_relevant" href="#tinytroupe.agent.grounding.BaseSemanticGroundingConnector.retrieve_relevant">retrieve_relevant</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.to_json" href="../utils/json.html#tinytroupe.utils.json.JsonSerializableRegistry.to_json">to_json</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="tinytroupe.agent" href="index.html">tinytroupe.agent</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector" href="#tinytroupe.agent.grounding.BaseSemanticGroundingConnector">BaseSemanticGroundingConnector</a></code></h4>
+<ul class="">
+<li><code><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.add_document" href="#tinytroupe.agent.grounding.BaseSemanticGroundingConnector.add_document">add_document</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.add_documents" href="#tinytroupe.agent.grounding.BaseSemanticGroundingConnector.add_documents">add_documents</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.custom_deserializers" href="#tinytroupe.agent.grounding.BaseSemanticGroundingConnector.custom_deserializers">custom_deserializers</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.custom_serializers" href="#tinytroupe.agent.grounding.BaseSemanticGroundingConnector.custom_serializers">custom_serializers</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.list_sources" href="#tinytroupe.agent.grounding.BaseSemanticGroundingConnector.list_sources">list_sources</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.retrieve_by_name" href="#tinytroupe.agent.grounding.BaseSemanticGroundingConnector.retrieve_by_name">retrieve_by_name</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.retrieve_relevant" href="#tinytroupe.agent.grounding.BaseSemanticGroundingConnector.retrieve_relevant">retrieve_relevant</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.serializable_attributes" href="#tinytroupe.agent.grounding.BaseSemanticGroundingConnector.serializable_attributes">serializable_attributes</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="tinytroupe.agent.grounding.GroundingConnector" href="#tinytroupe.agent.grounding.GroundingConnector">GroundingConnector</a></code></h4>
+<ul class="">
+<li><code><a title="tinytroupe.agent.grounding.GroundingConnector.list_sources" href="#tinytroupe.agent.grounding.GroundingConnector.list_sources">list_sources</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.GroundingConnector.retrieve_by_name" href="#tinytroupe.agent.grounding.GroundingConnector.retrieve_by_name">retrieve_by_name</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.GroundingConnector.retrieve_relevant" href="#tinytroupe.agent.grounding.GroundingConnector.retrieve_relevant">retrieve_relevant</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.GroundingConnector.serializable_attributes" href="#tinytroupe.agent.grounding.GroundingConnector.serializable_attributes">serializable_attributes</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="tinytroupe.agent.grounding.LocalFilesGroundingConnector" href="#tinytroupe.agent.grounding.LocalFilesGroundingConnector">LocalFilesGroundingConnector</a></code></h4>
+<ul class="">
+<li><code><a title="tinytroupe.agent.grounding.LocalFilesGroundingConnector.add_file_path" href="#tinytroupe.agent.grounding.LocalFilesGroundingConnector.add_file_path">add_file_path</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.LocalFilesGroundingConnector.add_folder" href="#tinytroupe.agent.grounding.LocalFilesGroundingConnector.add_folder">add_folder</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.LocalFilesGroundingConnector.add_folders" href="#tinytroupe.agent.grounding.LocalFilesGroundingConnector.add_folders">add_folders</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.LocalFilesGroundingConnector.custom_deserializers" href="#tinytroupe.agent.grounding.LocalFilesGroundingConnector.custom_deserializers">custom_deserializers</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.LocalFilesGroundingConnector.custom_serializers" href="#tinytroupe.agent.grounding.LocalFilesGroundingConnector.custom_serializers">custom_serializers</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.LocalFilesGroundingConnector.serializable_attributes" href="#tinytroupe.agent.grounding.LocalFilesGroundingConnector.serializable_attributes">serializable_attributes</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="tinytroupe.agent.grounding.WebPagesGroundingConnector" href="#tinytroupe.agent.grounding.WebPagesGroundingConnector">WebPagesGroundingConnector</a></code></h4>
+<ul class="">
+<li><code><a title="tinytroupe.agent.grounding.WebPagesGroundingConnector.add_web_url" href="#tinytroupe.agent.grounding.WebPagesGroundingConnector.add_web_url">add_web_url</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.WebPagesGroundingConnector.add_web_urls" href="#tinytroupe.agent.grounding.WebPagesGroundingConnector.add_web_urls">add_web_urls</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.WebPagesGroundingConnector.custom_deserializers" href="#tinytroupe.agent.grounding.WebPagesGroundingConnector.custom_deserializers">custom_deserializers</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.WebPagesGroundingConnector.custom_serializers" href="#tinytroupe.agent.grounding.WebPagesGroundingConnector.custom_serializers">custom_serializers</a></code></li>
+<li><code><a title="tinytroupe.agent.grounding.WebPagesGroundingConnector.serializable_attributes" href="#tinytroupe.agent.grounding.WebPagesGroundingConnector.serializable_attributes">serializable_attributes</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

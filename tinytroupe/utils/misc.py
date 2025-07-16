@@ -5,6 +5,21 @@ AgentOrWorld = Union["TinyPerson", "TinyWorld"]
 ################################################################################
 # Other
 ################################################################################
+def first_non_none(*args):
+    """
+    Returns the first non-None argument from the provided arguments.
+    
+    Args:
+        *args: Variable length argument list.
+    
+    Returns:
+        The first non-None argument, or None if all are None.
+    """
+    for arg in args:
+        if arg is not None:
+            return arg
+    return None
+
 def name_or_empty(named_entity: AgentOrWorld):
     """
     Returns the name of the specified agent or environment, or an empty string if the agent is None.

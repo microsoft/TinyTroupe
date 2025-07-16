@@ -1,10 +1,11 @@
-
-
 from tinytroupe.tools import logger
 from tinytroupe.utils import JsonSerializableRegistry
 
 
 class TinyTool(JsonSerializableRegistry):
+
+    # Define what attributes should be serialized
+    serializable_attributes = ["name", "description", "real_world_side_effects"]
 
     def __init__(self, name, description, owner=None, real_world_side_effects=False, exporter=None, enricher=None):
         """
@@ -50,4 +51,4 @@ class TinyTool(JsonSerializableRegistry):
     def process_action(self, agent, action: dict) -> bool:
         self._protect_real_world()
         self._enforce_ownership(agent)
-        self._process_action(agent, action)
+        return self._process_action(agent, action)

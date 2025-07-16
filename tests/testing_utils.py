@@ -12,6 +12,8 @@ sys.path.insert(0, '..')
 import tinytroupe.openai_utils as openai_utils
 from tinytroupe.agent import TinyPerson
 from tinytroupe.environment import TinyWorld, TinySocialNetwork
+from tinytroupe.factory import TinyPersonFactory
+from tinytroupe.factory.tiny_factory import TinyFactory
 import pytest
 import importlib
 
@@ -212,5 +214,7 @@ def focus_group_world():
 def setup():
     TinyPerson.clear_agents()
     TinyWorld.clear_environments()
+    TinyFactory.clear_factories()
+    TinyPersonFactory.clear_factories()
 
     yield

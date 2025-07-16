@@ -1,4 +1,5 @@
 import copy
+import random
 
 from tinytroupe.factory import logger
 import tinytroupe.utils as utils
@@ -8,6 +9,10 @@ class TinyFactory:
     A base class for various types of factories. This is important because it makes it easier to extend the system, particularly 
     regarding transaction caching.
     """
+
+    # common randomizer used for samplings, with a default initial seed to allow for reproducibility. 
+    # subclases can use this directly as well.
+    randomizer = random.Random(42)
 
     # A dict of all factories created so far.
     all_factories = {} # name -> factories
@@ -48,12 +53,20 @@ class TinyFactory:
         else:
             TinyFactory.all_factories[factory.name] = factory
     
-    @staticmethod
-    def clear_factories():
+    @classmethod
+    def clear_factories(cls):
         """
         Clears the global list of all factories.
         """
-        TinyFactory.all_factories = {}
+        cls.all_factories = {}
+        cls._clear_factories()
+
+    @classmethod
+    def _clear_factories(cls):
+        """
+        Additional cleanup actions can be performed here by subclasses if needed.
+        """
+        pass
 
     ################################################################################################
     # Caching mechanisms

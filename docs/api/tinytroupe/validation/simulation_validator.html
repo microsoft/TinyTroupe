@@ -1,0 +1,1897 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>tinytroupe.validation.simulation_validator API documentation</title>
+<meta name="description" content="Simulation experiment empirical validation mechanisms for TinyTroupe …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>tinytroupe.validation.simulation_validator</code></h1>
+</header>
+<section id="section-intro">
+<p>Simulation experiment empirical validation mechanisms for TinyTroupe.</p>
+<p>This module provides tools to validate simulation experiment results against empirical control data,
+supporting both statistical hypothesis testing and semantic validation approaches.
+This is distinct from LLM-based evaluations, focusing on data-driven validation
+against known empirical benchmarks.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+Simulation experiment empirical validation mechanisms for TinyTroupe.
+
+This module provides tools to validate simulation experiment results against empirical control data,
+supporting both statistical hypothesis testing and semantic validation approaches.
+This is distinct from LLM-based evaluations, focusing on data-driven validation
+against known empirical benchmarks.
+&#34;&#34;&#34;
+
+from typing import Dict, List, Optional, Union, Any
+import json
+from datetime import datetime
+from pydantic import BaseModel, Field
+
+from tinytroupe.experimentation.statistical_tests import StatisticalTester
+from tinytroupe.utils.semantics import compute_semantic_proximity
+
+# TODO Work-in-Progress below
+
+class SimulationExperimentDataset(BaseModel):
+    &#34;&#34;&#34;
+    Represents a dataset from a simulation experiment or empirical study.
+    
+    This contains data that can be used for validation, including quantitative metrics 
+    and qualitative agent justifications from simulation experiments or empirical studies.
+    
+    Attributes:
+        name: Optional name for the dataset
+        description: Optional description of the dataset
+        key_results: Map from result names to their values (numbers, proportions, booleans, etc.)
+        result_types: Map indicating whether each result is &#34;aggregate&#34; or &#34;per_agent&#34;
+        agent_names: Optional list of agent names (can be referenced by index in results)
+        agent_justifications: List of justifications (with optional agent references)
+        justification_summary: Optional summary of all agent justifications
+    &#34;&#34;&#34;
+    name: Optional[str] = None
+    description: Optional[str] = None
+    key_results: Dict[str, Union[float, int, bool, List[Union[float, int, bool, None]], None]] = Field(default_factory=dict)
+    result_types: Dict[str, str] = Field(default_factory=dict, description=&#34;Map from result name to &#39;aggregate&#39; or &#39;per_agent&#39;&#34;)
+    agent_names: Optional[List[Optional[str]]] = Field(None, description=&#34;Optional list of agent names for reference (can contain None for unnamed agents)&#34;)
+    agent_justifications: List[Union[str, Dict[str, Union[str, int]]]] = Field(
+        default_factory=list, 
+        description=&#34;List of justifications as strings or dicts with optional &#39;agent_name&#39;/&#39;agent_index&#39; and &#39;justification&#39;&#34;
+    )
+    justification_summary: Optional[str] = None
+
+    class Config:
+        &#34;&#34;&#34;Pydantic configuration.&#34;&#34;&#34;
+        extra = &#34;forbid&#34;  # Prevent accidental extra fields
+        validate_assignment = True  # Validate on assignment after creation
+    
+    def get_agent_name(self, index: int) -&gt; Optional[str]:
+        &#34;&#34;&#34;Get agent name by index, if available.&#34;&#34;&#34;
+        if self.agent_names and 0 &lt;= index &lt; len(self.agent_names):
+            agent_name = self.agent_names[index]
+            return agent_name if agent_name is not None else None
+        return None
+    
+    def get_agent_data(self, metric_name: str, agent_index: int) -&gt; Optional[Union[float, int, bool]]:
+        &#34;&#34;&#34;Get a specific agent&#39;s data for a given metric. Returns None for missing data.&#34;&#34;&#34;
+        if metric_name not in self.key_results:
+            return None
+            
+        metric_data = self.key_results[metric_name]
+        
+        # Check if it&#39;s per-agent data
+        if self.result_types.get(metric_name) == &#34;per_agent&#34; and isinstance(metric_data, list):
+            if 0 &lt;= agent_index &lt; len(metric_data):
+                return metric_data[agent_index]  # This can be None for missing data
+        
+        return None
+    
+    def get_all_agent_data(self, metric_name: str) -&gt; Dict[str, Union[float, int, bool]]:
+        &#34;&#34;&#34;Get all agents&#39; data for a given metric as a dictionary mapping agent names/indices to values.&#34;&#34;&#34;
+        if metric_name not in self.key_results:
+            return {}
+            
+        metric_data = self.key_results[metric_name]
+        result = {}
+        
+        # For per-agent data, create mapping
+        if self.result_types.get(metric_name) == &#34;per_agent&#34; and isinstance(metric_data, list):
+            for i, value in enumerate(metric_data):
+                agent_name = self.get_agent_name(i) or f&#34;Agent_{i}&#34;
+                # Only include non-None values in the result
+                if value is not None:
+                    result[agent_name] = value
+        
+        # For aggregate data, return single value  
+        elif self.result_types.get(metric_name) == &#34;aggregate&#34;:
+            result[&#34;aggregate&#34;] = metric_data
+            
+        return result
+    
+    def get_valid_agent_data(self, metric_name: str) -&gt; List[Union[float, int, bool]]:
+        &#34;&#34;&#34;Get only valid (non-None) values for a per-agent metric.&#34;&#34;&#34;
+        if metric_name not in self.key_results:
+            return []
+            
+        metric_data = self.key_results[metric_name]
+        
+        if self.result_types.get(metric_name) == &#34;per_agent&#34; and isinstance(metric_data, list):
+            return [value for value in metric_data if value is not None]
+        
+        return []
+    
+    def validate_data_consistency(self) -&gt; List[str]:
+        &#34;&#34;&#34;Validate that per-agent data is consistent across metrics and with agent names.&#34;&#34;&#34;
+        errors = []
+        warnings = []
+        
+        # Check per-agent metrics have consistent lengths
+        per_agent_lengths = []
+        per_agent_metrics = []
+        
+        for metric_name, result_type in self.result_types.items():
+            if result_type == &#34;per_agent&#34; and metric_name in self.key_results:
+                metric_data = self.key_results[metric_name]
+                if isinstance(metric_data, list):
+                    per_agent_lengths.append(len(metric_data))
+                    per_agent_metrics.append(metric_name)
+                else:
+                    errors.append(f&#34;Metric &#39;{metric_name}&#39; marked as per_agent but is not a list&#34;)
+        
+        # Check all per-agent metrics have same length
+        if per_agent_lengths and len(set(per_agent_lengths)) &gt; 1:
+            errors.append(f&#34;Per-agent metrics have inconsistent lengths: {dict(zip(per_agent_metrics, per_agent_lengths))}&#34;)
+        
+        # Check agent_names length matches per-agent data length
+        if self.agent_names and per_agent_lengths:
+            agent_count = len(self.agent_names)
+            data_length = per_agent_lengths[0] if per_agent_lengths else 0
+            if agent_count != data_length:
+                errors.append(f&#34;agent_names length ({agent_count}) doesn&#39;t match per-agent data length ({data_length})&#34;)
+        
+        # Check for None values in agent_names and provide warnings
+        if self.agent_names:
+            none_indices = [i for i, name in enumerate(self.agent_names) if name is None]
+            if none_indices:
+                warnings.append(f&#34;agent_names contains None values at indices: {none_indices}&#34;)
+        
+        # Check for None values in per-agent data and provide info
+        for metric_name in per_agent_metrics:
+            if metric_name in self.key_results:
+                metric_data = self.key_results[metric_name]
+                none_indices = [i for i, value in enumerate(metric_data) if value is None]
+                if none_indices:
+                    warnings.append(f&#34;Metric &#39;{metric_name}&#39; has missing data (None) at indices: {none_indices}&#34;)
+        
+        # Return errors and warnings combined
+        return errors + [f&#34;WARNING: {warning}&#34; for warning in warnings]
+    
+    def get_justification_text(self, justification_item: Union[str, Dict[str, Union[str, int]]]) -&gt; str:
+        &#34;&#34;&#34;Extract justification text from various formats.&#34;&#34;&#34;
+        if isinstance(justification_item, str):
+            return justification_item
+        elif isinstance(justification_item, dict):
+            return justification_item.get(&#34;justification&#34;, &#34;&#34;)
+        return &#34;&#34;
+    
+    def get_justification_agent_reference(self, justification_item: Union[str, Dict[str, Union[str, int]]]) -&gt; Optional[str]:
+        &#34;&#34;&#34;Get agent reference from justification, returning name if available.&#34;&#34;&#34;
+        if isinstance(justification_item, dict):
+            # Direct agent name
+            if &#34;agent_name&#34; in justification_item:
+                return justification_item[&#34;agent_name&#34;]
+            # Agent index reference
+            elif &#34;agent_index&#34; in justification_item:
+                return self.get_agent_name(justification_item[&#34;agent_index&#34;])
+        return None
+
+
+class SimulationExperimentEmpiricalValidationResult(BaseModel):
+    &#34;&#34;&#34;
+    Contains the results of a simulation experiment validation against empirical data.
+    
+    This represents the outcome of validating simulation experiment data
+    against empirical benchmarks, using statistical and semantic methods.
+    
+    Attributes:
+        validation_type: Type of validation performed
+        control_name: Name of the control/empirical dataset
+        treatment_name: Name of the treatment/simulation experiment dataset
+        statistical_results: Results from statistical tests (if performed)
+        semantic_results: Results from semantic proximity analysis (if performed)
+        overall_score: Overall validation score (0.0 to 1.0)
+        summary: Summary of validation findings
+        timestamp: When the validation was performed
+    &#34;&#34;&#34;
+    validation_type: str
+    control_name: str
+    treatment_name: str
+    statistical_results: Optional[Dict[str, Any]] = None
+    semantic_results: Optional[Dict[str, Any]] = None
+    overall_score: Optional[float] = Field(None, ge=0.0, le=1.0, description=&#34;Overall validation score between 0.0 and 1.0&#34;)
+    summary: str = &#34;&#34;
+    timestamp: str = Field(default_factory=lambda: datetime.now().isoformat())
+
+    class Config:
+        &#34;&#34;&#34;Pydantic configuration.&#34;&#34;&#34;
+        extra = &#34;forbid&#34;
+        validate_assignment = True
+
+
+class SimulationExperimentEmpiricalValidator:
+    &#34;&#34;&#34;
+    A validator for comparing simulation experiment data against empirical control data.
+    
+    This validator performs data-driven validation using statistical hypothesis testing
+    and semantic proximity analysis of agent justifications. It is designed to validate
+    simulation experiment results against known empirical benchmarks, distinct from LLM-based evaluations.
+    &#34;&#34;&#34;
+
+    def __init__(self):
+        &#34;&#34;&#34;Initialize the simulation experiment empirical validator.&#34;&#34;&#34;
+        pass
+
+    def validate(self, 
+                 control: SimulationExperimentDataset, 
+                 treatment: SimulationExperimentDataset,
+                 validation_types: List[str] = [&#34;statistical&#34;, &#34;semantic&#34;],
+                 significance_level: float = 0.05,
+                 output_format: str = &#34;values&#34;) -&gt; Union[SimulationExperimentEmpiricalValidationResult, str]:
+        &#34;&#34;&#34;
+        Validate a simulation experiment dataset against an empirical control dataset.
+        
+        Args:
+            control: The control/empirical reference dataset
+            treatment: The treatment/simulation experiment dataset to validate
+            validation_types: List of validation types to perform (&#34;statistical&#34;, &#34;semantic&#34;)
+            significance_level: Significance level for statistical tests
+            output_format: &#34;values&#34; for SimulationExperimentEmpiricalValidationResult object, &#34;report&#34; for markdown report
+            
+        Returns:
+            SimulationExperimentEmpiricalValidationResult object or markdown report string
+        &#34;&#34;&#34;
+        result = SimulationExperimentEmpiricalValidationResult(
+            validation_type=&#34;, &#34;.join(validation_types),
+            control_name=control.name or &#34;Control&#34;,
+            treatment_name=treatment.name or &#34;Treatment&#34;
+        )
+
+        # Perform statistical validation
+        if &#34;statistical&#34; in validation_types:
+            result.statistical_results = self._perform_statistical_validation(
+                control, treatment, significance_level
+            )
+
+        # Perform semantic validation
+        if &#34;semantic&#34; in validation_types:
+            result.semantic_results = self._perform_semantic_validation(
+                control, treatment
+            )
+
+        # Calculate overall score and summary
+        result.overall_score = self._calculate_overall_score(result)
+        result.summary = self._generate_summary(result)
+
+        if output_format == &#34;report&#34;:
+            return self._generate_markdown_report(result)
+        else:
+            return result
+
+    def _perform_statistical_validation(self, 
+                                      control: SimulationExperimentDataset, 
+                                      treatment: SimulationExperimentDataset,
+                                      significance_level: float) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Perform statistical hypothesis testing on simulation experiment key results.&#34;&#34;&#34;
+        if not control.key_results or not treatment.key_results:
+            return {&#34;error&#34;: &#34;No key results available for statistical testing&#34;}
+
+        try:
+            # Prepare data for StatisticalTester
+            control_data = {&#34;control&#34;: {}}
+            treatment_data = {&#34;treatment&#34;: {}}
+
+            # Convert single values to lists if needed and find common metrics
+            common_metrics = set(control.key_results.keys()) &amp; set(treatment.key_results.keys())
+            
+            for metric in common_metrics:
+                control_value = control.key_results[metric]
+                treatment_value = treatment.key_results[metric]
+                
+                # Convert single values to lists and filter out None values
+                if not isinstance(control_value, list):
+                    control_value = [control_value] if control_value is not None else []
+                else:
+                    control_value = [v for v in control_value if v is not None]
+                    
+                if not isinstance(treatment_value, list):
+                    treatment_value = [treatment_value] if treatment_value is not None else []
+                else:
+                    treatment_value = [v for v in treatment_value if v is not None]
+                
+                # Only include metrics that have valid data points
+                if len(control_value) &gt; 0 and len(treatment_value) &gt; 0:
+                    control_data[&#34;control&#34;][metric] = control_value
+                    treatment_data[&#34;treatment&#34;][metric] = treatment_value
+
+            if not common_metrics:
+                return {&#34;error&#34;: &#34;No common metrics found between control and treatment&#34;}
+
+            # Run statistical tests
+            tester = StatisticalTester(control_data, treatment_data)
+            test_results = tester.run_test(
+                test_type=&#34;welch_t_test&#34;,
+                alpha=significance_level
+            )
+
+            return {
+                &#34;common_metrics&#34;: list(common_metrics),
+                &#34;test_results&#34;: test_results,
+                &#34;significance_level&#34;: significance_level
+            }
+
+        except Exception as e:
+            return {&#34;error&#34;: f&#34;Statistical testing failed: {str(e)}&#34;}
+
+    def _perform_semantic_validation(self, 
+                                   control: SimulationExperimentDataset, 
+                                   treatment: SimulationExperimentDataset) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Perform semantic proximity analysis on simulation experiment agent justifications.&#34;&#34;&#34;
+        results = {
+            &#34;individual_comparisons&#34;: [],
+            &#34;summary_comparison&#34;: None,
+            &#34;average_proximity&#34;: None
+        }
+
+        # Compare individual justifications if available
+        if control.agent_justifications and treatment.agent_justifications:
+            proximities = []
+            
+            for i, control_just in enumerate(control.agent_justifications):
+                for j, treatment_just in enumerate(treatment.agent_justifications):
+                    control_text = control.get_justification_text(control_just)
+                    treatment_text = treatment.get_justification_text(treatment_just)
+                    
+                    if control_text and treatment_text:
+                        proximity_result = compute_semantic_proximity(
+                            control_text, 
+                            treatment_text,
+                            context=&#34;Comparing agent justifications from simulation experiments&#34;
+                        )
+                        
+                        # Get agent references (names or indices)
+                        control_agent_ref = control.get_justification_agent_reference(control_just) or f&#34;Agent_{i}&#34;
+                        treatment_agent_ref = treatment.get_justification_agent_reference(treatment_just) or f&#34;Agent_{j}&#34;
+                        
+                        comparison = {
+                            &#34;control_agent&#34;: control_agent_ref,
+                            &#34;treatment_agent&#34;: treatment_agent_ref,
+                            &#34;proximity_score&#34;: proximity_result[&#34;proximity_score&#34;],
+                            &#34;justification&#34;: proximity_result[&#34;justification&#34;]
+                        }
+                        
+                        results[&#34;individual_comparisons&#34;].append(comparison)
+                        proximities.append(proximity_result[&#34;proximity_score&#34;])
+            
+            if proximities:
+                results[&#34;average_proximity&#34;] = sum(proximities) / len(proximities)
+
+        # Compare summary justifications if available
+        if control.justification_summary and treatment.justification_summary:
+            summary_proximity = compute_semantic_proximity(
+                control.justification_summary,
+                treatment.justification_summary,
+                context=&#34;Comparing summary justifications from simulation experiments&#34;
+            )
+            results[&#34;summary_comparison&#34;] = summary_proximity
+
+        return results
+
+    def _calculate_overall_score(self, result: SimulationExperimentEmpiricalValidationResult) -&gt; float:
+        &#34;&#34;&#34;Calculate an overall simulation experiment empirical validation score based on statistical and semantic results.&#34;&#34;&#34;
+        scores = []
+        
+        # Statistical component based on effect sizes
+        if result.statistical_results and &#34;test_results&#34; in result.statistical_results:
+            test_results = result.statistical_results[&#34;test_results&#34;]
+            effect_sizes = []
+            
+            for treatment_name, treatment_results in test_results.items():
+                for metric, metric_result in treatment_results.items():
+                    # Extract effect size based on test type
+                    effect_size = self._extract_effect_size(metric_result)
+                    if effect_size is not None:
+                        effect_sizes.append(effect_size)
+            
+            if effect_sizes:
+                # Convert effect sizes to similarity scores (closer to 0 = more similar)
+                # Use inverse transformation: similarity = 1 / (1 + |effect_size|)
+                similarity_scores = [1.0 / (1.0 + abs(es)) for es in effect_sizes]
+                statistical_score = sum(similarity_scores) / len(similarity_scores)
+                scores.append(statistical_score)
+
+        # Semantic component
+        if result.semantic_results:
+            semantic_scores = []
+            
+            # Average proximity from individual comparisons
+            if result.semantic_results.get(&#34;average_proximity&#34;) is not None:
+                semantic_scores.append(result.semantic_results[&#34;average_proximity&#34;])
+            
+            # Summary proximity
+            if result.semantic_results.get(&#34;summary_comparison&#34;):
+                semantic_scores.append(result.semantic_results[&#34;summary_comparison&#34;][&#34;proximity_score&#34;])
+            
+            if semantic_scores:
+                scores.append(sum(semantic_scores) / len(semantic_scores))
+
+        return sum(scores) / len(scores) if scores else 0.0
+
+    def _generate_summary(self, result: SimulationExperimentEmpiricalValidationResult) -&gt; str:
+        &#34;&#34;&#34;Generate a text summary of the simulation experiment empirical validation results.&#34;&#34;&#34;
+        summary_parts = []
+        
+        if result.statistical_results:
+            if &#34;error&#34; in result.statistical_results:
+                summary_parts.append(f&#34;Statistical validation: {result.statistical_results[&#39;error&#39;]}&#34;)
+            else:
+                test_results = result.statistical_results.get(&#34;test_results&#34;, {})
+                effect_sizes = []
+                significant_tests = 0
+                total_tests = 0
+                
+                for treatment_results in test_results.values():
+                    for metric_result in treatment_results.values():
+                        total_tests += 1
+                        if metric_result.get(&#34;significant&#34;, False):
+                            significant_tests += 1
+                        
+                        # Collect effect sizes
+                        effect_size = self._extract_effect_size(metric_result)
+                        if effect_size is not None:
+                            effect_sizes.append(abs(effect_size))
+                
+                if effect_sizes:
+                    avg_effect_size = sum(effect_sizes) / len(effect_sizes)
+                    summary_parts.append(
+                        f&#34;Statistical validation: {significant_tests}/{total_tests} tests significant, &#34;
+                        f&#34;average effect size: {avg_effect_size:.3f}&#34;
+                    )
+                else:
+                    summary_parts.append(
+                        f&#34;Statistical validation: {significant_tests}/{total_tests} tests showed significant differences&#34;
+                    )
+
+        if result.semantic_results:
+            avg_proximity = result.semantic_results.get(&#34;average_proximity&#34;)
+            if avg_proximity is not None:
+                summary_parts.append(
+                    f&#34;Semantic validation: Average proximity score of {avg_proximity:.3f}&#34;
+                )
+            
+            summary_comparison = result.semantic_results.get(&#34;summary_comparison&#34;)
+            if summary_comparison:
+                summary_parts.append(
+                    f&#34;Summary proximity: {summary_comparison[&#39;proximity_score&#39;]:.3f}&#34;
+                )
+
+        if result.overall_score is not None:
+            summary_parts.append(f&#34;Overall validation score: {result.overall_score:.3f}&#34;)
+
+        return &#34;; &#34;.join(summary_parts) if summary_parts else &#34;No validation results available&#34;
+
+    def _generate_markdown_report(self, result: SimulationExperimentEmpiricalValidationResult) -&gt; str:
+        &#34;&#34;&#34;Generate a comprehensive markdown report for simulation experiment empirical validation.&#34;&#34;&#34;
+        overall_score_str = f&#34;{result.overall_score:.3f}&#34; if result.overall_score is not None else &#34;N/A&#34;
+        
+        report = f&#34;&#34;&#34;# Simulation Experiment Empirical Validation Report
+
+**Validation Type:** {result.validation_type}  
+**Control/Empirical:** {result.control_name}  
+**Treatment/Simulation:** {result.treatment_name}  
+**Timestamp:** {result.timestamp}  
+**Overall Score:** {overall_score_str}
+
+## Summary
+
+{result.summary}
+
+&#34;&#34;&#34;
+
+        # Statistical Results Section
+        if result.statistical_results:
+            report += &#34;## Statistical Validation\n\n&#34;
+            
+            if &#34;error&#34; in result.statistical_results:
+                report += f&#34;**Error:** {result.statistical_results[&#39;error&#39;]}\n\n&#34;
+            else:
+                stats = result.statistical_results
+                report += f&#34;**Common Metrics:** {&#39;, &#39;.join(stats.get(&#39;common_metrics&#39;, []))}\n\n&#34;
+                report += f&#34;**Significance Level:** {stats.get(&#39;significance_level&#39;, &#39;N/A&#39;)}\n\n&#34;
+                
+                test_results = stats.get(&#34;test_results&#34;, {})
+                if test_results:
+                    report += &#34;### Test Results\n\n&#34;
+                    
+                    for treatment_name, treatment_results in test_results.items():
+                        report += f&#34;#### {treatment_name}\n\n&#34;
+                        
+                        for metric, metric_result in treatment_results.items():
+                            report += f&#34;**{metric}:**\n\n&#34;
+                            
+                            significant = metric_result.get(&#34;significant&#34;, False)
+                            p_value = metric_result.get(&#34;p_value&#34;, &#34;N/A&#34;)
+                            test_type = metric_result.get(&#34;test_type&#34;, &#34;N/A&#34;)
+                            effect_size = self._extract_effect_size(metric_result)
+                            
+                            # Get the appropriate statistic based on test type
+                            statistic = &#34;N/A&#34;
+                            if &#34;t_statistic&#34; in metric_result:
+                                statistic = metric_result[&#34;t_statistic&#34;]
+                            elif &#34;u_statistic&#34; in metric_result:
+                                statistic = metric_result[&#34;u_statistic&#34;]
+                            elif &#34;f_statistic&#34; in metric_result:
+                                statistic = metric_result[&#34;f_statistic&#34;]
+                            elif &#34;chi2_statistic&#34; in metric_result:
+                                statistic = metric_result[&#34;chi2_statistic&#34;]
+                            
+                            status = &#34;✅ Significant&#34; if significant else &#34;❌ Not Significant&#34;
+                            
+                            report += f&#34;- **{test_type}:** {status}\n&#34;
+                            report += f&#34;  - p-value: {p_value}\n&#34;
+                            report += f&#34;  - statistic: {statistic}\n&#34;
+                            if effect_size is not None:
+                                effect_interpretation = self._interpret_effect_size(abs(effect_size))
+                                report += f&#34;  - effect size: {effect_size:.3f} ({effect_interpretation})\n&#34;
+                            
+                            report += &#34;\n&#34;
+
+        # Semantic Results Section
+        if result.semantic_results:
+            report += &#34;## Semantic Validation\n\n&#34;
+            
+            semantic = result.semantic_results
+            
+            # Individual comparisons
+            individual_comps = semantic.get(&#34;individual_comparisons&#34;, [])
+            if individual_comps:
+                report += &#34;### Individual Agent Comparisons\n\n&#34;
+                
+                for comp in individual_comps:
+                    score = comp[&#34;proximity_score&#34;]
+                    control_agent = comp[&#34;control_agent&#34;]
+                    treatment_agent = comp[&#34;treatment_agent&#34;]
+                    justification = comp[&#34;justification&#34;]
+                    
+                    report += f&#34;**{control_agent} vs {treatment_agent}:** {score:.3f}\n\n&#34;
+                    report += f&#34;{justification}\n\n&#34;
+                
+                avg_proximity = semantic.get(&#34;average_proximity&#34;)
+                if avg_proximity:
+                    report += f&#34;**Average Proximity Score:** {avg_proximity:.3f}\n\n&#34;
+            
+            # Summary comparison
+            summary_comp = semantic.get(&#34;summary_comparison&#34;)
+            if summary_comp:
+                report += &#34;### Summary Comparison\n\n&#34;
+                report += f&#34;**Proximity Score:** {summary_comp[&#39;proximity_score&#39;]:.3f}\n\n&#34;
+                report += f&#34;**Justification:** {summary_comp[&#39;justification&#39;]}\n\n&#34;
+
+        return report
+
+    def _extract_effect_size(self, metric_result: Dict[str, Any]) -&gt; Optional[float]:
+        &#34;&#34;&#34;Extract effect size from statistical test result, regardless of test type.&#34;&#34;&#34;
+        # Cohen&#39;s d for t-tests (most common)
+        if &#34;effect_size&#34; in metric_result:
+            return metric_result[&#34;effect_size&#34;]
+        
+        # For tests that don&#39;t provide Cohen&#39;s d, calculate standardized effect size
+        test_type = metric_result.get(&#34;test_type&#34;, &#34;&#34;).lower()
+        
+        if &#34;t-test&#34; in test_type:
+            # For t-tests, effect_size should be Cohen&#39;s d
+            return metric_result.get(&#34;effect_size&#34;, 0.0)
+        
+        elif &#34;mann-whitney&#34; in test_type:
+            # For Mann-Whitney, use Common Language Effect Size (CLES)
+            # Convert CLES to Cohen&#39;s d equivalent: d ≈ 2 * Φ^(-1)(CLES)
+            cles = metric_result.get(&#34;effect_size&#34;, 0.5)
+            # Simple approximation: convert CLES to d-like measure
+            # CLES of 0.5 = no effect, CLES of 0.71 ≈ small effect (d=0.2)
+            return 2 * (cles - 0.5)
+        
+        elif &#34;anova&#34; in test_type:
+            # For ANOVA, use eta-squared and convert to Cohen&#39;s d equivalent
+            eta_squared = metric_result.get(&#34;effect_size&#34;, 0.0)
+            # Convert eta-squared to Cohen&#39;s d: d = 2 * sqrt(eta^2 / (1 - eta^2))
+            if eta_squared &gt; 0 and eta_squared &lt; 1:
+                return 2 * (eta_squared / (1 - eta_squared)) ** 0.5
+            return 0.0
+        
+        elif &#34;chi-square&#34; in test_type:
+            # For Chi-square, use Cramer&#39;s V and convert to Cohen&#39;s d equivalent
+            cramers_v = metric_result.get(&#34;effect_size&#34;, 0.0)
+            # Rough conversion: d ≈ 2 * Cramer&#39;s V
+            return 2 * cramers_v
+        
+        # Fallback: try to calculate from means and standard deviations
+        if all(k in metric_result for k in [&#34;control_mean&#34;, &#34;treatment_mean&#34;, &#34;control_std&#34;, &#34;treatment_std&#34;]):
+            control_mean = metric_result[&#34;control_mean&#34;]
+            treatment_mean = metric_result[&#34;treatment_mean&#34;]
+            control_std = metric_result[&#34;control_std&#34;]
+            treatment_std = metric_result[&#34;treatment_std&#34;]
+            
+            # Calculate pooled standard deviation
+            pooled_std = ((control_std ** 2 + treatment_std ** 2) / 2) ** 0.5
+            if pooled_std &gt; 0:
+                return abs(treatment_mean - control_mean) / pooled_std
+        
+        # If all else fails, return 0 (no effect)
+        return 0.0
+
+    def _interpret_effect_size(self, effect_size: float) -&gt; str:
+        &#34;&#34;&#34;Provide interpretation of effect size magnitude (Cohen&#39;s conventions).&#34;&#34;&#34;
+        if effect_size &lt; 0.2:
+            return &#34;negligible&#34;
+        elif effect_size &lt; 0.5:
+            return &#34;small&#34;
+        elif effect_size &lt; 0.8:
+            return &#34;medium&#34;
+        else:
+            return &#34;large&#34;
+
+
+def validate_simulation_experiment_empirically(control_data: Dict[str, Any],
+                                              treatment_data: Dict[str, Any],
+                                              validation_types: List[str] = [&#34;statistical&#34;, &#34;semantic&#34;],
+                                              significance_level: float = 0.05,
+                                              output_format: str = &#34;values&#34;) -&gt; Union[SimulationExperimentEmpiricalValidationResult, str]:
+    &#34;&#34;&#34;
+    Convenience function to validate simulation experiment data against empirical control data.
+    
+    This performs data-driven validation using statistical and semantic methods,
+    distinct from LLM-based evaluations.
+    
+    Args:
+        control_data: Dictionary containing control/empirical data
+        treatment_data: Dictionary containing treatment/simulation experiment data
+        validation_types: List of validation types to perform
+        significance_level: Significance level for statistical tests
+        output_format: &#34;values&#34; for SimulationExperimentEmpiricalValidationResult object, &#34;report&#34; for markdown report
+        
+    Returns:
+        SimulationExperimentEmpiricalValidationResult object or markdown report string
+    &#34;&#34;&#34;
+    # Use Pydantic&#39;s built-in parsing instead of from_dict
+    control_dataset = SimulationExperimentDataset.parse_obj(control_data)
+    treatment_dataset = SimulationExperimentDataset.parse_obj(treatment_data)
+    
+    validator = SimulationExperimentEmpiricalValidator()
+    return validator.validate(
+        control_dataset,
+        treatment_dataset,
+        validation_types=validation_types,
+        significance_level=significance_level,
+        output_format=output_format
+    )</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="tinytroupe.validation.simulation_validator.validate_simulation_experiment_empirically"><code class="name flex">
+<span>def <span class="ident">validate_simulation_experiment_empirically</span></span>(<span>control_data: Dict[str, Any], treatment_data: Dict[str, Any], validation_types: List[str] = ['statistical', 'semantic'], significance_level: float = 0.05, output_format: str = 'values') ‑> Union[<a title="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult" href="#tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult">SimulationExperimentEmpiricalValidationResult</a>, str]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Convenience function to validate simulation experiment data against empirical control data.</p>
+<p>This performs data-driven validation using statistical and semantic methods,
+distinct from LLM-based evaluations.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>control_data</code></strong></dt>
+<dd>Dictionary containing control/empirical data</dd>
+<dt><strong><code>treatment_data</code></strong></dt>
+<dd>Dictionary containing treatment/simulation experiment data</dd>
+<dt><strong><code>validation_types</code></strong></dt>
+<dd>List of validation types to perform</dd>
+<dt><strong><code>significance_level</code></strong></dt>
+<dd>Significance level for statistical tests</dd>
+<dt><strong><code>output_format</code></strong></dt>
+<dd>"values" for SimulationExperimentEmpiricalValidationResult object, "report" for markdown report</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>SimulationExperimentEmpiricalValidationResult object or markdown report string</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def validate_simulation_experiment_empirically(control_data: Dict[str, Any],
+                                              treatment_data: Dict[str, Any],
+                                              validation_types: List[str] = [&#34;statistical&#34;, &#34;semantic&#34;],
+                                              significance_level: float = 0.05,
+                                              output_format: str = &#34;values&#34;) -&gt; Union[SimulationExperimentEmpiricalValidationResult, str]:
+    &#34;&#34;&#34;
+    Convenience function to validate simulation experiment data against empirical control data.
+    
+    This performs data-driven validation using statistical and semantic methods,
+    distinct from LLM-based evaluations.
+    
+    Args:
+        control_data: Dictionary containing control/empirical data
+        treatment_data: Dictionary containing treatment/simulation experiment data
+        validation_types: List of validation types to perform
+        significance_level: Significance level for statistical tests
+        output_format: &#34;values&#34; for SimulationExperimentEmpiricalValidationResult object, &#34;report&#34; for markdown report
+        
+    Returns:
+        SimulationExperimentEmpiricalValidationResult object or markdown report string
+    &#34;&#34;&#34;
+    # Use Pydantic&#39;s built-in parsing instead of from_dict
+    control_dataset = SimulationExperimentDataset.parse_obj(control_data)
+    treatment_dataset = SimulationExperimentDataset.parse_obj(treatment_data)
+    
+    validator = SimulationExperimentEmpiricalValidator()
+    return validator.validate(
+        control_dataset,
+        treatment_dataset,
+        validation_types=validation_types,
+        significance_level=significance_level,
+        output_format=output_format
+    )</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentDataset"><code class="flex name class">
+<span>class <span class="ident">SimulationExperimentDataset</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Represents a dataset from a simulation experiment or empirical study.</p>
+<p>This contains data that can be used for validation, including quantitative metrics
+and qualitative agent justifications from simulation experiments or empirical studies.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>name</code></strong></dt>
+<dd>Optional name for the dataset</dd>
+<dt><strong><code>description</code></strong></dt>
+<dd>Optional description of the dataset</dd>
+<dt><strong><code>key_results</code></strong></dt>
+<dd>Map from result names to their values (numbers, proportions, booleans, etc.)</dd>
+<dt><strong><code>result_types</code></strong></dt>
+<dd>Map indicating whether each result is "aggregate" or "per_agent"</dd>
+<dt><strong><code>agent_names</code></strong></dt>
+<dd>Optional list of agent names (can be referenced by index in results)</dd>
+<dt><strong><code>agent_justifications</code></strong></dt>
+<dd>List of justifications (with optional agent references)</dd>
+<dt><strong><code>justification_summary</code></strong></dt>
+<dd>Optional summary of all agent justifications</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>__init__</code> uses <code>__pydantic_self__</code> instead of the more common <code>self</code> for the first arg to
+allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SimulationExperimentDataset(BaseModel):
+    &#34;&#34;&#34;
+    Represents a dataset from a simulation experiment or empirical study.
+    
+    This contains data that can be used for validation, including quantitative metrics 
+    and qualitative agent justifications from simulation experiments or empirical studies.
+    
+    Attributes:
+        name: Optional name for the dataset
+        description: Optional description of the dataset
+        key_results: Map from result names to their values (numbers, proportions, booleans, etc.)
+        result_types: Map indicating whether each result is &#34;aggregate&#34; or &#34;per_agent&#34;
+        agent_names: Optional list of agent names (can be referenced by index in results)
+        agent_justifications: List of justifications (with optional agent references)
+        justification_summary: Optional summary of all agent justifications
+    &#34;&#34;&#34;
+    name: Optional[str] = None
+    description: Optional[str] = None
+    key_results: Dict[str, Union[float, int, bool, List[Union[float, int, bool, None]], None]] = Field(default_factory=dict)
+    result_types: Dict[str, str] = Field(default_factory=dict, description=&#34;Map from result name to &#39;aggregate&#39; or &#39;per_agent&#39;&#34;)
+    agent_names: Optional[List[Optional[str]]] = Field(None, description=&#34;Optional list of agent names for reference (can contain None for unnamed agents)&#34;)
+    agent_justifications: List[Union[str, Dict[str, Union[str, int]]]] = Field(
+        default_factory=list, 
+        description=&#34;List of justifications as strings or dicts with optional &#39;agent_name&#39;/&#39;agent_index&#39; and &#39;justification&#39;&#34;
+    )
+    justification_summary: Optional[str] = None
+
+    class Config:
+        &#34;&#34;&#34;Pydantic configuration.&#34;&#34;&#34;
+        extra = &#34;forbid&#34;  # Prevent accidental extra fields
+        validate_assignment = True  # Validate on assignment after creation
+    
+    def get_agent_name(self, index: int) -&gt; Optional[str]:
+        &#34;&#34;&#34;Get agent name by index, if available.&#34;&#34;&#34;
+        if self.agent_names and 0 &lt;= index &lt; len(self.agent_names):
+            agent_name = self.agent_names[index]
+            return agent_name if agent_name is not None else None
+        return None
+    
+    def get_agent_data(self, metric_name: str, agent_index: int) -&gt; Optional[Union[float, int, bool]]:
+        &#34;&#34;&#34;Get a specific agent&#39;s data for a given metric. Returns None for missing data.&#34;&#34;&#34;
+        if metric_name not in self.key_results:
+            return None
+            
+        metric_data = self.key_results[metric_name]
+        
+        # Check if it&#39;s per-agent data
+        if self.result_types.get(metric_name) == &#34;per_agent&#34; and isinstance(metric_data, list):
+            if 0 &lt;= agent_index &lt; len(metric_data):
+                return metric_data[agent_index]  # This can be None for missing data
+        
+        return None
+    
+    def get_all_agent_data(self, metric_name: str) -&gt; Dict[str, Union[float, int, bool]]:
+        &#34;&#34;&#34;Get all agents&#39; data for a given metric as a dictionary mapping agent names/indices to values.&#34;&#34;&#34;
+        if metric_name not in self.key_results:
+            return {}
+            
+        metric_data = self.key_results[metric_name]
+        result = {}
+        
+        # For per-agent data, create mapping
+        if self.result_types.get(metric_name) == &#34;per_agent&#34; and isinstance(metric_data, list):
+            for i, value in enumerate(metric_data):
+                agent_name = self.get_agent_name(i) or f&#34;Agent_{i}&#34;
+                # Only include non-None values in the result
+                if value is not None:
+                    result[agent_name] = value
+        
+        # For aggregate data, return single value  
+        elif self.result_types.get(metric_name) == &#34;aggregate&#34;:
+            result[&#34;aggregate&#34;] = metric_data
+            
+        return result
+    
+    def get_valid_agent_data(self, metric_name: str) -&gt; List[Union[float, int, bool]]:
+        &#34;&#34;&#34;Get only valid (non-None) values for a per-agent metric.&#34;&#34;&#34;
+        if metric_name not in self.key_results:
+            return []
+            
+        metric_data = self.key_results[metric_name]
+        
+        if self.result_types.get(metric_name) == &#34;per_agent&#34; and isinstance(metric_data, list):
+            return [value for value in metric_data if value is not None]
+        
+        return []
+    
+    def validate_data_consistency(self) -&gt; List[str]:
+        &#34;&#34;&#34;Validate that per-agent data is consistent across metrics and with agent names.&#34;&#34;&#34;
+        errors = []
+        warnings = []
+        
+        # Check per-agent metrics have consistent lengths
+        per_agent_lengths = []
+        per_agent_metrics = []
+        
+        for metric_name, result_type in self.result_types.items():
+            if result_type == &#34;per_agent&#34; and metric_name in self.key_results:
+                metric_data = self.key_results[metric_name]
+                if isinstance(metric_data, list):
+                    per_agent_lengths.append(len(metric_data))
+                    per_agent_metrics.append(metric_name)
+                else:
+                    errors.append(f&#34;Metric &#39;{metric_name}&#39; marked as per_agent but is not a list&#34;)
+        
+        # Check all per-agent metrics have same length
+        if per_agent_lengths and len(set(per_agent_lengths)) &gt; 1:
+            errors.append(f&#34;Per-agent metrics have inconsistent lengths: {dict(zip(per_agent_metrics, per_agent_lengths))}&#34;)
+        
+        # Check agent_names length matches per-agent data length
+        if self.agent_names and per_agent_lengths:
+            agent_count = len(self.agent_names)
+            data_length = per_agent_lengths[0] if per_agent_lengths else 0
+            if agent_count != data_length:
+                errors.append(f&#34;agent_names length ({agent_count}) doesn&#39;t match per-agent data length ({data_length})&#34;)
+        
+        # Check for None values in agent_names and provide warnings
+        if self.agent_names:
+            none_indices = [i for i, name in enumerate(self.agent_names) if name is None]
+            if none_indices:
+                warnings.append(f&#34;agent_names contains None values at indices: {none_indices}&#34;)
+        
+        # Check for None values in per-agent data and provide info
+        for metric_name in per_agent_metrics:
+            if metric_name in self.key_results:
+                metric_data = self.key_results[metric_name]
+                none_indices = [i for i, value in enumerate(metric_data) if value is None]
+                if none_indices:
+                    warnings.append(f&#34;Metric &#39;{metric_name}&#39; has missing data (None) at indices: {none_indices}&#34;)
+        
+        # Return errors and warnings combined
+        return errors + [f&#34;WARNING: {warning}&#34; for warning in warnings]
+    
+    def get_justification_text(self, justification_item: Union[str, Dict[str, Union[str, int]]]) -&gt; str:
+        &#34;&#34;&#34;Extract justification text from various formats.&#34;&#34;&#34;
+        if isinstance(justification_item, str):
+            return justification_item
+        elif isinstance(justification_item, dict):
+            return justification_item.get(&#34;justification&#34;, &#34;&#34;)
+        return &#34;&#34;
+    
+    def get_justification_agent_reference(self, justification_item: Union[str, Dict[str, Union[str, int]]]) -&gt; Optional[str]:
+        &#34;&#34;&#34;Get agent reference from justification, returning name if available.&#34;&#34;&#34;
+        if isinstance(justification_item, dict):
+            # Direct agent name
+            if &#34;agent_name&#34; in justification_item:
+                return justification_item[&#34;agent_name&#34;]
+            # Agent index reference
+            elif &#34;agent_index&#34; in justification_item:
+                return self.get_agent_name(justification_item[&#34;agent_index&#34;])
+        return None</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.Config"><code class="name">var <span class="ident">Config</span></code></dt>
+<dd>
+<div class="desc"><p>Pydantic configuration.</p></div>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.agent_justifications"><code class="name">var <span class="ident">agent_justifications</span> : List[Union[str, Dict[str, Union[str, int]]]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.agent_names"><code class="name">var <span class="ident">agent_names</span> : Optional[List[Optional[str]]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.description"><code class="name">var <span class="ident">description</span> : Optional[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.justification_summary"><code class="name">var <span class="ident">justification_summary</span> : Optional[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.key_results"><code class="name">var <span class="ident">key_results</span> : Dict[str, Union[float, int, bool, List[Union[float, int, bool, ForwardRef(None)]], ForwardRef(None)]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.name"><code class="name">var <span class="ident">name</span> : Optional[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.result_types"><code class="name">var <span class="ident">result_types</span> : Dict[str, str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.get_agent_data"><code class="name flex">
+<span>def <span class="ident">get_agent_data</span></span>(<span>self, metric_name: str, agent_index: int) ‑> Union[float, int, bool, ForwardRef(None)]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get a specific agent's data for a given metric. Returns None for missing data.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_agent_data(self, metric_name: str, agent_index: int) -&gt; Optional[Union[float, int, bool]]:
+    &#34;&#34;&#34;Get a specific agent&#39;s data for a given metric. Returns None for missing data.&#34;&#34;&#34;
+    if metric_name not in self.key_results:
+        return None
+        
+    metric_data = self.key_results[metric_name]
+    
+    # Check if it&#39;s per-agent data
+    if self.result_types.get(metric_name) == &#34;per_agent&#34; and isinstance(metric_data, list):
+        if 0 &lt;= agent_index &lt; len(metric_data):
+            return metric_data[agent_index]  # This can be None for missing data
+    
+    return None</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.get_agent_name"><code class="name flex">
+<span>def <span class="ident">get_agent_name</span></span>(<span>self, index: int) ‑> Optional[str]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get agent name by index, if available.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_agent_name(self, index: int) -&gt; Optional[str]:
+    &#34;&#34;&#34;Get agent name by index, if available.&#34;&#34;&#34;
+    if self.agent_names and 0 &lt;= index &lt; len(self.agent_names):
+        agent_name = self.agent_names[index]
+        return agent_name if agent_name is not None else None
+    return None</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.get_all_agent_data"><code class="name flex">
+<span>def <span class="ident">get_all_agent_data</span></span>(<span>self, metric_name: str) ‑> Dict[str, Union[float, int, bool]]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get all agents' data for a given metric as a dictionary mapping agent names/indices to values.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_all_agent_data(self, metric_name: str) -&gt; Dict[str, Union[float, int, bool]]:
+    &#34;&#34;&#34;Get all agents&#39; data for a given metric as a dictionary mapping agent names/indices to values.&#34;&#34;&#34;
+    if metric_name not in self.key_results:
+        return {}
+        
+    metric_data = self.key_results[metric_name]
+    result = {}
+    
+    # For per-agent data, create mapping
+    if self.result_types.get(metric_name) == &#34;per_agent&#34; and isinstance(metric_data, list):
+        for i, value in enumerate(metric_data):
+            agent_name = self.get_agent_name(i) or f&#34;Agent_{i}&#34;
+            # Only include non-None values in the result
+            if value is not None:
+                result[agent_name] = value
+    
+    # For aggregate data, return single value  
+    elif self.result_types.get(metric_name) == &#34;aggregate&#34;:
+        result[&#34;aggregate&#34;] = metric_data
+        
+    return result</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.get_justification_agent_reference"><code class="name flex">
+<span>def <span class="ident">get_justification_agent_reference</span></span>(<span>self, justification_item: Union[str, Dict[str, Union[str, int]]]) ‑> Optional[str]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get agent reference from justification, returning name if available.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_justification_agent_reference(self, justification_item: Union[str, Dict[str, Union[str, int]]]) -&gt; Optional[str]:
+    &#34;&#34;&#34;Get agent reference from justification, returning name if available.&#34;&#34;&#34;
+    if isinstance(justification_item, dict):
+        # Direct agent name
+        if &#34;agent_name&#34; in justification_item:
+            return justification_item[&#34;agent_name&#34;]
+        # Agent index reference
+        elif &#34;agent_index&#34; in justification_item:
+            return self.get_agent_name(justification_item[&#34;agent_index&#34;])
+    return None</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.get_justification_text"><code class="name flex">
+<span>def <span class="ident">get_justification_text</span></span>(<span>self, justification_item: Union[str, Dict[str, Union[str, int]]]) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Extract justification text from various formats.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_justification_text(self, justification_item: Union[str, Dict[str, Union[str, int]]]) -&gt; str:
+    &#34;&#34;&#34;Extract justification text from various formats.&#34;&#34;&#34;
+    if isinstance(justification_item, str):
+        return justification_item
+    elif isinstance(justification_item, dict):
+        return justification_item.get(&#34;justification&#34;, &#34;&#34;)
+    return &#34;&#34;</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.get_valid_agent_data"><code class="name flex">
+<span>def <span class="ident">get_valid_agent_data</span></span>(<span>self, metric_name: str) ‑> List[Union[float, int, bool]]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get only valid (non-None) values for a per-agent metric.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_valid_agent_data(self, metric_name: str) -&gt; List[Union[float, int, bool]]:
+    &#34;&#34;&#34;Get only valid (non-None) values for a per-agent metric.&#34;&#34;&#34;
+    if metric_name not in self.key_results:
+        return []
+        
+    metric_data = self.key_results[metric_name]
+    
+    if self.result_types.get(metric_name) == &#34;per_agent&#34; and isinstance(metric_data, list):
+        return [value for value in metric_data if value is not None]
+    
+    return []</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.validate_data_consistency"><code class="name flex">
+<span>def <span class="ident">validate_data_consistency</span></span>(<span>self) ‑> List[str]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Validate that per-agent data is consistent across metrics and with agent names.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def validate_data_consistency(self) -&gt; List[str]:
+    &#34;&#34;&#34;Validate that per-agent data is consistent across metrics and with agent names.&#34;&#34;&#34;
+    errors = []
+    warnings = []
+    
+    # Check per-agent metrics have consistent lengths
+    per_agent_lengths = []
+    per_agent_metrics = []
+    
+    for metric_name, result_type in self.result_types.items():
+        if result_type == &#34;per_agent&#34; and metric_name in self.key_results:
+            metric_data = self.key_results[metric_name]
+            if isinstance(metric_data, list):
+                per_agent_lengths.append(len(metric_data))
+                per_agent_metrics.append(metric_name)
+            else:
+                errors.append(f&#34;Metric &#39;{metric_name}&#39; marked as per_agent but is not a list&#34;)
+    
+    # Check all per-agent metrics have same length
+    if per_agent_lengths and len(set(per_agent_lengths)) &gt; 1:
+        errors.append(f&#34;Per-agent metrics have inconsistent lengths: {dict(zip(per_agent_metrics, per_agent_lengths))}&#34;)
+    
+    # Check agent_names length matches per-agent data length
+    if self.agent_names and per_agent_lengths:
+        agent_count = len(self.agent_names)
+        data_length = per_agent_lengths[0] if per_agent_lengths else 0
+        if agent_count != data_length:
+            errors.append(f&#34;agent_names length ({agent_count}) doesn&#39;t match per-agent data length ({data_length})&#34;)
+    
+    # Check for None values in agent_names and provide warnings
+    if self.agent_names:
+        none_indices = [i for i, name in enumerate(self.agent_names) if name is None]
+        if none_indices:
+            warnings.append(f&#34;agent_names contains None values at indices: {none_indices}&#34;)
+    
+    # Check for None values in per-agent data and provide info
+    for metric_name in per_agent_metrics:
+        if metric_name in self.key_results:
+            metric_data = self.key_results[metric_name]
+            none_indices = [i for i, value in enumerate(metric_data) if value is None]
+            if none_indices:
+                warnings.append(f&#34;Metric &#39;{metric_name}&#39; has missing data (None) at indices: {none_indices}&#34;)
+    
+    # Return errors and warnings combined
+    return errors + [f&#34;WARNING: {warning}&#34; for warning in warnings]</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult"><code class="flex name class">
+<span>class <span class="ident">SimulationExperimentEmpiricalValidationResult</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Contains the results of a simulation experiment validation against empirical data.</p>
+<p>This represents the outcome of validating simulation experiment data
+against empirical benchmarks, using statistical and semantic methods.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>validation_type</code></strong></dt>
+<dd>Type of validation performed</dd>
+<dt><strong><code>control_name</code></strong></dt>
+<dd>Name of the control/empirical dataset</dd>
+<dt><strong><code>treatment_name</code></strong></dt>
+<dd>Name of the treatment/simulation experiment dataset</dd>
+<dt><strong><code>statistical_results</code></strong></dt>
+<dd>Results from statistical tests (if performed)</dd>
+<dt><strong><code>semantic_results</code></strong></dt>
+<dd>Results from semantic proximity analysis (if performed)</dd>
+<dt><strong><code>overall_score</code></strong></dt>
+<dd>Overall validation score (0.0 to 1.0)</dd>
+<dt><strong><code>summary</code></strong></dt>
+<dd>Summary of validation findings</dd>
+<dt><strong><code>timestamp</code></strong></dt>
+<dd>When the validation was performed</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>__init__</code> uses <code>__pydantic_self__</code> instead of the more common <code>self</code> for the first arg to
+allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SimulationExperimentEmpiricalValidationResult(BaseModel):
+    &#34;&#34;&#34;
+    Contains the results of a simulation experiment validation against empirical data.
+    
+    This represents the outcome of validating simulation experiment data
+    against empirical benchmarks, using statistical and semantic methods.
+    
+    Attributes:
+        validation_type: Type of validation performed
+        control_name: Name of the control/empirical dataset
+        treatment_name: Name of the treatment/simulation experiment dataset
+        statistical_results: Results from statistical tests (if performed)
+        semantic_results: Results from semantic proximity analysis (if performed)
+        overall_score: Overall validation score (0.0 to 1.0)
+        summary: Summary of validation findings
+        timestamp: When the validation was performed
+    &#34;&#34;&#34;
+    validation_type: str
+    control_name: str
+    treatment_name: str
+    statistical_results: Optional[Dict[str, Any]] = None
+    semantic_results: Optional[Dict[str, Any]] = None
+    overall_score: Optional[float] = Field(None, ge=0.0, le=1.0, description=&#34;Overall validation score between 0.0 and 1.0&#34;)
+    summary: str = &#34;&#34;
+    timestamp: str = Field(default_factory=lambda: datetime.now().isoformat())
+
+    class Config:
+        &#34;&#34;&#34;Pydantic configuration.&#34;&#34;&#34;
+        extra = &#34;forbid&#34;
+        validate_assignment = True</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.Config"><code class="name">var <span class="ident">Config</span></code></dt>
+<dd>
+<div class="desc"><p>Pydantic configuration.</p></div>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.control_name"><code class="name">var <span class="ident">control_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.overall_score"><code class="name">var <span class="ident">overall_score</span> : Optional[float]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.semantic_results"><code class="name">var <span class="ident">semantic_results</span> : Optional[Dict[str, Any]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.statistical_results"><code class="name">var <span class="ident">statistical_results</span> : Optional[Dict[str, Any]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.summary"><code class="name">var <span class="ident">summary</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.timestamp"><code class="name">var <span class="ident">timestamp</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.treatment_name"><code class="name">var <span class="ident">treatment_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.validation_type"><code class="name">var <span class="ident">validation_type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidator"><code class="flex name class">
+<span>class <span class="ident">SimulationExperimentEmpiricalValidator</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>A validator for comparing simulation experiment data against empirical control data.</p>
+<p>This validator performs data-driven validation using statistical hypothesis testing
+and semantic proximity analysis of agent justifications. It is designed to validate
+simulation experiment results against known empirical benchmarks, distinct from LLM-based evaluations.</p>
+<p>Initialize the simulation experiment empirical validator.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SimulationExperimentEmpiricalValidator:
+    &#34;&#34;&#34;
+    A validator for comparing simulation experiment data against empirical control data.
+    
+    This validator performs data-driven validation using statistical hypothesis testing
+    and semantic proximity analysis of agent justifications. It is designed to validate
+    simulation experiment results against known empirical benchmarks, distinct from LLM-based evaluations.
+    &#34;&#34;&#34;
+
+    def __init__(self):
+        &#34;&#34;&#34;Initialize the simulation experiment empirical validator.&#34;&#34;&#34;
+        pass
+
+    def validate(self, 
+                 control: SimulationExperimentDataset, 
+                 treatment: SimulationExperimentDataset,
+                 validation_types: List[str] = [&#34;statistical&#34;, &#34;semantic&#34;],
+                 significance_level: float = 0.05,
+                 output_format: str = &#34;values&#34;) -&gt; Union[SimulationExperimentEmpiricalValidationResult, str]:
+        &#34;&#34;&#34;
+        Validate a simulation experiment dataset against an empirical control dataset.
+        
+        Args:
+            control: The control/empirical reference dataset
+            treatment: The treatment/simulation experiment dataset to validate
+            validation_types: List of validation types to perform (&#34;statistical&#34;, &#34;semantic&#34;)
+            significance_level: Significance level for statistical tests
+            output_format: &#34;values&#34; for SimulationExperimentEmpiricalValidationResult object, &#34;report&#34; for markdown report
+            
+        Returns:
+            SimulationExperimentEmpiricalValidationResult object or markdown report string
+        &#34;&#34;&#34;
+        result = SimulationExperimentEmpiricalValidationResult(
+            validation_type=&#34;, &#34;.join(validation_types),
+            control_name=control.name or &#34;Control&#34;,
+            treatment_name=treatment.name or &#34;Treatment&#34;
+        )
+
+        # Perform statistical validation
+        if &#34;statistical&#34; in validation_types:
+            result.statistical_results = self._perform_statistical_validation(
+                control, treatment, significance_level
+            )
+
+        # Perform semantic validation
+        if &#34;semantic&#34; in validation_types:
+            result.semantic_results = self._perform_semantic_validation(
+                control, treatment
+            )
+
+        # Calculate overall score and summary
+        result.overall_score = self._calculate_overall_score(result)
+        result.summary = self._generate_summary(result)
+
+        if output_format == &#34;report&#34;:
+            return self._generate_markdown_report(result)
+        else:
+            return result
+
+    def _perform_statistical_validation(self, 
+                                      control: SimulationExperimentDataset, 
+                                      treatment: SimulationExperimentDataset,
+                                      significance_level: float) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Perform statistical hypothesis testing on simulation experiment key results.&#34;&#34;&#34;
+        if not control.key_results or not treatment.key_results:
+            return {&#34;error&#34;: &#34;No key results available for statistical testing&#34;}
+
+        try:
+            # Prepare data for StatisticalTester
+            control_data = {&#34;control&#34;: {}}
+            treatment_data = {&#34;treatment&#34;: {}}
+
+            # Convert single values to lists if needed and find common metrics
+            common_metrics = set(control.key_results.keys()) &amp; set(treatment.key_results.keys())
+            
+            for metric in common_metrics:
+                control_value = control.key_results[metric]
+                treatment_value = treatment.key_results[metric]
+                
+                # Convert single values to lists and filter out None values
+                if not isinstance(control_value, list):
+                    control_value = [control_value] if control_value is not None else []
+                else:
+                    control_value = [v for v in control_value if v is not None]
+                    
+                if not isinstance(treatment_value, list):
+                    treatment_value = [treatment_value] if treatment_value is not None else []
+                else:
+                    treatment_value = [v for v in treatment_value if v is not None]
+                
+                # Only include metrics that have valid data points
+                if len(control_value) &gt; 0 and len(treatment_value) &gt; 0:
+                    control_data[&#34;control&#34;][metric] = control_value
+                    treatment_data[&#34;treatment&#34;][metric] = treatment_value
+
+            if not common_metrics:
+                return {&#34;error&#34;: &#34;No common metrics found between control and treatment&#34;}
+
+            # Run statistical tests
+            tester = StatisticalTester(control_data, treatment_data)
+            test_results = tester.run_test(
+                test_type=&#34;welch_t_test&#34;,
+                alpha=significance_level
+            )
+
+            return {
+                &#34;common_metrics&#34;: list(common_metrics),
+                &#34;test_results&#34;: test_results,
+                &#34;significance_level&#34;: significance_level
+            }
+
+        except Exception as e:
+            return {&#34;error&#34;: f&#34;Statistical testing failed: {str(e)}&#34;}
+
+    def _perform_semantic_validation(self, 
+                                   control: SimulationExperimentDataset, 
+                                   treatment: SimulationExperimentDataset) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;Perform semantic proximity analysis on simulation experiment agent justifications.&#34;&#34;&#34;
+        results = {
+            &#34;individual_comparisons&#34;: [],
+            &#34;summary_comparison&#34;: None,
+            &#34;average_proximity&#34;: None
+        }
+
+        # Compare individual justifications if available
+        if control.agent_justifications and treatment.agent_justifications:
+            proximities = []
+            
+            for i, control_just in enumerate(control.agent_justifications):
+                for j, treatment_just in enumerate(treatment.agent_justifications):
+                    control_text = control.get_justification_text(control_just)
+                    treatment_text = treatment.get_justification_text(treatment_just)
+                    
+                    if control_text and treatment_text:
+                        proximity_result = compute_semantic_proximity(
+                            control_text, 
+                            treatment_text,
+                            context=&#34;Comparing agent justifications from simulation experiments&#34;
+                        )
+                        
+                        # Get agent references (names or indices)
+                        control_agent_ref = control.get_justification_agent_reference(control_just) or f&#34;Agent_{i}&#34;
+                        treatment_agent_ref = treatment.get_justification_agent_reference(treatment_just) or f&#34;Agent_{j}&#34;
+                        
+                        comparison = {
+                            &#34;control_agent&#34;: control_agent_ref,
+                            &#34;treatment_agent&#34;: treatment_agent_ref,
+                            &#34;proximity_score&#34;: proximity_result[&#34;proximity_score&#34;],
+                            &#34;justification&#34;: proximity_result[&#34;justification&#34;]
+                        }
+                        
+                        results[&#34;individual_comparisons&#34;].append(comparison)
+                        proximities.append(proximity_result[&#34;proximity_score&#34;])
+            
+            if proximities:
+                results[&#34;average_proximity&#34;] = sum(proximities) / len(proximities)
+
+        # Compare summary justifications if available
+        if control.justification_summary and treatment.justification_summary:
+            summary_proximity = compute_semantic_proximity(
+                control.justification_summary,
+                treatment.justification_summary,
+                context=&#34;Comparing summary justifications from simulation experiments&#34;
+            )
+            results[&#34;summary_comparison&#34;] = summary_proximity
+
+        return results
+
+    def _calculate_overall_score(self, result: SimulationExperimentEmpiricalValidationResult) -&gt; float:
+        &#34;&#34;&#34;Calculate an overall simulation experiment empirical validation score based on statistical and semantic results.&#34;&#34;&#34;
+        scores = []
+        
+        # Statistical component based on effect sizes
+        if result.statistical_results and &#34;test_results&#34; in result.statistical_results:
+            test_results = result.statistical_results[&#34;test_results&#34;]
+            effect_sizes = []
+            
+            for treatment_name, treatment_results in test_results.items():
+                for metric, metric_result in treatment_results.items():
+                    # Extract effect size based on test type
+                    effect_size = self._extract_effect_size(metric_result)
+                    if effect_size is not None:
+                        effect_sizes.append(effect_size)
+            
+            if effect_sizes:
+                # Convert effect sizes to similarity scores (closer to 0 = more similar)
+                # Use inverse transformation: similarity = 1 / (1 + |effect_size|)
+                similarity_scores = [1.0 / (1.0 + abs(es)) for es in effect_sizes]
+                statistical_score = sum(similarity_scores) / len(similarity_scores)
+                scores.append(statistical_score)
+
+        # Semantic component
+        if result.semantic_results:
+            semantic_scores = []
+            
+            # Average proximity from individual comparisons
+            if result.semantic_results.get(&#34;average_proximity&#34;) is not None:
+                semantic_scores.append(result.semantic_results[&#34;average_proximity&#34;])
+            
+            # Summary proximity
+            if result.semantic_results.get(&#34;summary_comparison&#34;):
+                semantic_scores.append(result.semantic_results[&#34;summary_comparison&#34;][&#34;proximity_score&#34;])
+            
+            if semantic_scores:
+                scores.append(sum(semantic_scores) / len(semantic_scores))
+
+        return sum(scores) / len(scores) if scores else 0.0
+
+    def _generate_summary(self, result: SimulationExperimentEmpiricalValidationResult) -&gt; str:
+        &#34;&#34;&#34;Generate a text summary of the simulation experiment empirical validation results.&#34;&#34;&#34;
+        summary_parts = []
+        
+        if result.statistical_results:
+            if &#34;error&#34; in result.statistical_results:
+                summary_parts.append(f&#34;Statistical validation: {result.statistical_results[&#39;error&#39;]}&#34;)
+            else:
+                test_results = result.statistical_results.get(&#34;test_results&#34;, {})
+                effect_sizes = []
+                significant_tests = 0
+                total_tests = 0
+                
+                for treatment_results in test_results.values():
+                    for metric_result in treatment_results.values():
+                        total_tests += 1
+                        if metric_result.get(&#34;significant&#34;, False):
+                            significant_tests += 1
+                        
+                        # Collect effect sizes
+                        effect_size = self._extract_effect_size(metric_result)
+                        if effect_size is not None:
+                            effect_sizes.append(abs(effect_size))
+                
+                if effect_sizes:
+                    avg_effect_size = sum(effect_sizes) / len(effect_sizes)
+                    summary_parts.append(
+                        f&#34;Statistical validation: {significant_tests}/{total_tests} tests significant, &#34;
+                        f&#34;average effect size: {avg_effect_size:.3f}&#34;
+                    )
+                else:
+                    summary_parts.append(
+                        f&#34;Statistical validation: {significant_tests}/{total_tests} tests showed significant differences&#34;
+                    )
+
+        if result.semantic_results:
+            avg_proximity = result.semantic_results.get(&#34;average_proximity&#34;)
+            if avg_proximity is not None:
+                summary_parts.append(
+                    f&#34;Semantic validation: Average proximity score of {avg_proximity:.3f}&#34;
+                )
+            
+            summary_comparison = result.semantic_results.get(&#34;summary_comparison&#34;)
+            if summary_comparison:
+                summary_parts.append(
+                    f&#34;Summary proximity: {summary_comparison[&#39;proximity_score&#39;]:.3f}&#34;
+                )
+
+        if result.overall_score is not None:
+            summary_parts.append(f&#34;Overall validation score: {result.overall_score:.3f}&#34;)
+
+        return &#34;; &#34;.join(summary_parts) if summary_parts else &#34;No validation results available&#34;
+
+    def _generate_markdown_report(self, result: SimulationExperimentEmpiricalValidationResult) -&gt; str:
+        &#34;&#34;&#34;Generate a comprehensive markdown report for simulation experiment empirical validation.&#34;&#34;&#34;
+        overall_score_str = f&#34;{result.overall_score:.3f}&#34; if result.overall_score is not None else &#34;N/A&#34;
+        
+        report = f&#34;&#34;&#34;# Simulation Experiment Empirical Validation Report
+
+**Validation Type:** {result.validation_type}  
+**Control/Empirical:** {result.control_name}  
+**Treatment/Simulation:** {result.treatment_name}  
+**Timestamp:** {result.timestamp}  
+**Overall Score:** {overall_score_str}
+
+## Summary
+
+{result.summary}
+
+&#34;&#34;&#34;
+
+        # Statistical Results Section
+        if result.statistical_results:
+            report += &#34;## Statistical Validation\n\n&#34;
+            
+            if &#34;error&#34; in result.statistical_results:
+                report += f&#34;**Error:** {result.statistical_results[&#39;error&#39;]}\n\n&#34;
+            else:
+                stats = result.statistical_results
+                report += f&#34;**Common Metrics:** {&#39;, &#39;.join(stats.get(&#39;common_metrics&#39;, []))}\n\n&#34;
+                report += f&#34;**Significance Level:** {stats.get(&#39;significance_level&#39;, &#39;N/A&#39;)}\n\n&#34;
+                
+                test_results = stats.get(&#34;test_results&#34;, {})
+                if test_results:
+                    report += &#34;### Test Results\n\n&#34;
+                    
+                    for treatment_name, treatment_results in test_results.items():
+                        report += f&#34;#### {treatment_name}\n\n&#34;
+                        
+                        for metric, metric_result in treatment_results.items():
+                            report += f&#34;**{metric}:**\n\n&#34;
+                            
+                            significant = metric_result.get(&#34;significant&#34;, False)
+                            p_value = metric_result.get(&#34;p_value&#34;, &#34;N/A&#34;)
+                            test_type = metric_result.get(&#34;test_type&#34;, &#34;N/A&#34;)
+                            effect_size = self._extract_effect_size(metric_result)
+                            
+                            # Get the appropriate statistic based on test type
+                            statistic = &#34;N/A&#34;
+                            if &#34;t_statistic&#34; in metric_result:
+                                statistic = metric_result[&#34;t_statistic&#34;]
+                            elif &#34;u_statistic&#34; in metric_result:
+                                statistic = metric_result[&#34;u_statistic&#34;]
+                            elif &#34;f_statistic&#34; in metric_result:
+                                statistic = metric_result[&#34;f_statistic&#34;]
+                            elif &#34;chi2_statistic&#34; in metric_result:
+                                statistic = metric_result[&#34;chi2_statistic&#34;]
+                            
+                            status = &#34;✅ Significant&#34; if significant else &#34;❌ Not Significant&#34;
+                            
+                            report += f&#34;- **{test_type}:** {status}\n&#34;
+                            report += f&#34;  - p-value: {p_value}\n&#34;
+                            report += f&#34;  - statistic: {statistic}\n&#34;
+                            if effect_size is not None:
+                                effect_interpretation = self._interpret_effect_size(abs(effect_size))
+                                report += f&#34;  - effect size: {effect_size:.3f} ({effect_interpretation})\n&#34;
+                            
+                            report += &#34;\n&#34;
+
+        # Semantic Results Section
+        if result.semantic_results:
+            report += &#34;## Semantic Validation\n\n&#34;
+            
+            semantic = result.semantic_results
+            
+            # Individual comparisons
+            individual_comps = semantic.get(&#34;individual_comparisons&#34;, [])
+            if individual_comps:
+                report += &#34;### Individual Agent Comparisons\n\n&#34;
+                
+                for comp in individual_comps:
+                    score = comp[&#34;proximity_score&#34;]
+                    control_agent = comp[&#34;control_agent&#34;]
+                    treatment_agent = comp[&#34;treatment_agent&#34;]
+                    justification = comp[&#34;justification&#34;]
+                    
+                    report += f&#34;**{control_agent} vs {treatment_agent}:** {score:.3f}\n\n&#34;
+                    report += f&#34;{justification}\n\n&#34;
+                
+                avg_proximity = semantic.get(&#34;average_proximity&#34;)
+                if avg_proximity:
+                    report += f&#34;**Average Proximity Score:** {avg_proximity:.3f}\n\n&#34;
+            
+            # Summary comparison
+            summary_comp = semantic.get(&#34;summary_comparison&#34;)
+            if summary_comp:
+                report += &#34;### Summary Comparison\n\n&#34;
+                report += f&#34;**Proximity Score:** {summary_comp[&#39;proximity_score&#39;]:.3f}\n\n&#34;
+                report += f&#34;**Justification:** {summary_comp[&#39;justification&#39;]}\n\n&#34;
+
+        return report
+
+    def _extract_effect_size(self, metric_result: Dict[str, Any]) -&gt; Optional[float]:
+        &#34;&#34;&#34;Extract effect size from statistical test result, regardless of test type.&#34;&#34;&#34;
+        # Cohen&#39;s d for t-tests (most common)
+        if &#34;effect_size&#34; in metric_result:
+            return metric_result[&#34;effect_size&#34;]
+        
+        # For tests that don&#39;t provide Cohen&#39;s d, calculate standardized effect size
+        test_type = metric_result.get(&#34;test_type&#34;, &#34;&#34;).lower()
+        
+        if &#34;t-test&#34; in test_type:
+            # For t-tests, effect_size should be Cohen&#39;s d
+            return metric_result.get(&#34;effect_size&#34;, 0.0)
+        
+        elif &#34;mann-whitney&#34; in test_type:
+            # For Mann-Whitney, use Common Language Effect Size (CLES)
+            # Convert CLES to Cohen&#39;s d equivalent: d ≈ 2 * Φ^(-1)(CLES)
+            cles = metric_result.get(&#34;effect_size&#34;, 0.5)
+            # Simple approximation: convert CLES to d-like measure
+            # CLES of 0.5 = no effect, CLES of 0.71 ≈ small effect (d=0.2)
+            return 2 * (cles - 0.5)
+        
+        elif &#34;anova&#34; in test_type:
+            # For ANOVA, use eta-squared and convert to Cohen&#39;s d equivalent
+            eta_squared = metric_result.get(&#34;effect_size&#34;, 0.0)
+            # Convert eta-squared to Cohen&#39;s d: d = 2 * sqrt(eta^2 / (1 - eta^2))
+            if eta_squared &gt; 0 and eta_squared &lt; 1:
+                return 2 * (eta_squared / (1 - eta_squared)) ** 0.5
+            return 0.0
+        
+        elif &#34;chi-square&#34; in test_type:
+            # For Chi-square, use Cramer&#39;s V and convert to Cohen&#39;s d equivalent
+            cramers_v = metric_result.get(&#34;effect_size&#34;, 0.0)
+            # Rough conversion: d ≈ 2 * Cramer&#39;s V
+            return 2 * cramers_v
+        
+        # Fallback: try to calculate from means and standard deviations
+        if all(k in metric_result for k in [&#34;control_mean&#34;, &#34;treatment_mean&#34;, &#34;control_std&#34;, &#34;treatment_std&#34;]):
+            control_mean = metric_result[&#34;control_mean&#34;]
+            treatment_mean = metric_result[&#34;treatment_mean&#34;]
+            control_std = metric_result[&#34;control_std&#34;]
+            treatment_std = metric_result[&#34;treatment_std&#34;]
+            
+            # Calculate pooled standard deviation
+            pooled_std = ((control_std ** 2 + treatment_std ** 2) / 2) ** 0.5
+            if pooled_std &gt; 0:
+                return abs(treatment_mean - control_mean) / pooled_std
+        
+        # If all else fails, return 0 (no effect)
+        return 0.0
+
+    def _interpret_effect_size(self, effect_size: float) -&gt; str:
+        &#34;&#34;&#34;Provide interpretation of effect size magnitude (Cohen&#39;s conventions).&#34;&#34;&#34;
+        if effect_size &lt; 0.2:
+            return &#34;negligible&#34;
+        elif effect_size &lt; 0.5:
+            return &#34;small&#34;
+        elif effect_size &lt; 0.8:
+            return &#34;medium&#34;
+        else:
+            return &#34;large&#34;</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidator.validate"><code class="name flex">
+<span>def <span class="ident">validate</span></span>(<span>self, control: <a title="tinytroupe.validation.simulation_validator.SimulationExperimentDataset" href="#tinytroupe.validation.simulation_validator.SimulationExperimentDataset">SimulationExperimentDataset</a>, treatment: <a title="tinytroupe.validation.simulation_validator.SimulationExperimentDataset" href="#tinytroupe.validation.simulation_validator.SimulationExperimentDataset">SimulationExperimentDataset</a>, validation_types: List[str] = ['statistical', 'semantic'], significance_level: float = 0.05, output_format: str = 'values') ‑> Union[<a title="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult" href="#tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult">SimulationExperimentEmpiricalValidationResult</a>, str]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Validate a simulation experiment dataset against an empirical control dataset.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>control</code></strong></dt>
+<dd>The control/empirical reference dataset</dd>
+<dt><strong><code>treatment</code></strong></dt>
+<dd>The treatment/simulation experiment dataset to validate</dd>
+<dt><strong><code>validation_types</code></strong></dt>
+<dd>List of validation types to perform ("statistical", "semantic")</dd>
+<dt><strong><code>significance_level</code></strong></dt>
+<dd>Significance level for statistical tests</dd>
+<dt><strong><code>output_format</code></strong></dt>
+<dd>"values" for SimulationExperimentEmpiricalValidationResult object, "report" for markdown report</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>SimulationExperimentEmpiricalValidationResult object or markdown report string</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def validate(self, 
+             control: SimulationExperimentDataset, 
+             treatment: SimulationExperimentDataset,
+             validation_types: List[str] = [&#34;statistical&#34;, &#34;semantic&#34;],
+             significance_level: float = 0.05,
+             output_format: str = &#34;values&#34;) -&gt; Union[SimulationExperimentEmpiricalValidationResult, str]:
+    &#34;&#34;&#34;
+    Validate a simulation experiment dataset against an empirical control dataset.
+    
+    Args:
+        control: The control/empirical reference dataset
+        treatment: The treatment/simulation experiment dataset to validate
+        validation_types: List of validation types to perform (&#34;statistical&#34;, &#34;semantic&#34;)
+        significance_level: Significance level for statistical tests
+        output_format: &#34;values&#34; for SimulationExperimentEmpiricalValidationResult object, &#34;report&#34; for markdown report
+        
+    Returns:
+        SimulationExperimentEmpiricalValidationResult object or markdown report string
+    &#34;&#34;&#34;
+    result = SimulationExperimentEmpiricalValidationResult(
+        validation_type=&#34;, &#34;.join(validation_types),
+        control_name=control.name or &#34;Control&#34;,
+        treatment_name=treatment.name or &#34;Treatment&#34;
+    )
+
+    # Perform statistical validation
+    if &#34;statistical&#34; in validation_types:
+        result.statistical_results = self._perform_statistical_validation(
+            control, treatment, significance_level
+        )
+
+    # Perform semantic validation
+    if &#34;semantic&#34; in validation_types:
+        result.semantic_results = self._perform_semantic_validation(
+            control, treatment
+        )
+
+    # Calculate overall score and summary
+    result.overall_score = self._calculate_overall_score(result)
+    result.summary = self._generate_summary(result)
+
+    if output_format == &#34;report&#34;:
+        return self._generate_markdown_report(result)
+    else:
+        return result</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="tinytroupe.validation" href="index.html">tinytroupe.validation</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="tinytroupe.validation.simulation_validator.validate_simulation_experiment_empirically" href="#tinytroupe.validation.simulation_validator.validate_simulation_experiment_empirically">validate_simulation_experiment_empirically</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentDataset" href="#tinytroupe.validation.simulation_validator.SimulationExperimentDataset">SimulationExperimentDataset</a></code></h4>
+<ul class="">
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.Config" href="#tinytroupe.validation.simulation_validator.SimulationExperimentDataset.Config">Config</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.agent_justifications" href="#tinytroupe.validation.simulation_validator.SimulationExperimentDataset.agent_justifications">agent_justifications</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.agent_names" href="#tinytroupe.validation.simulation_validator.SimulationExperimentDataset.agent_names">agent_names</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.description" href="#tinytroupe.validation.simulation_validator.SimulationExperimentDataset.description">description</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.get_agent_data" href="#tinytroupe.validation.simulation_validator.SimulationExperimentDataset.get_agent_data">get_agent_data</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.get_agent_name" href="#tinytroupe.validation.simulation_validator.SimulationExperimentDataset.get_agent_name">get_agent_name</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.get_all_agent_data" href="#tinytroupe.validation.simulation_validator.SimulationExperimentDataset.get_all_agent_data">get_all_agent_data</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.get_justification_agent_reference" href="#tinytroupe.validation.simulation_validator.SimulationExperimentDataset.get_justification_agent_reference">get_justification_agent_reference</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.get_justification_text" href="#tinytroupe.validation.simulation_validator.SimulationExperimentDataset.get_justification_text">get_justification_text</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.get_valid_agent_data" href="#tinytroupe.validation.simulation_validator.SimulationExperimentDataset.get_valid_agent_data">get_valid_agent_data</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.justification_summary" href="#tinytroupe.validation.simulation_validator.SimulationExperimentDataset.justification_summary">justification_summary</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.key_results" href="#tinytroupe.validation.simulation_validator.SimulationExperimentDataset.key_results">key_results</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.model_config" href="#tinytroupe.validation.simulation_validator.SimulationExperimentDataset.model_config">model_config</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.model_fields" href="#tinytroupe.validation.simulation_validator.SimulationExperimentDataset.model_fields">model_fields</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.name" href="#tinytroupe.validation.simulation_validator.SimulationExperimentDataset.name">name</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.result_types" href="#tinytroupe.validation.simulation_validator.SimulationExperimentDataset.result_types">result_types</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentDataset.validate_data_consistency" href="#tinytroupe.validation.simulation_validator.SimulationExperimentDataset.validate_data_consistency">validate_data_consistency</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult" href="#tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult">SimulationExperimentEmpiricalValidationResult</a></code></h4>
+<ul class="two-column">
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.Config" href="#tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.Config">Config</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.control_name" href="#tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.control_name">control_name</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.model_config" href="#tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.model_config">model_config</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.model_fields" href="#tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.model_fields">model_fields</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.overall_score" href="#tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.overall_score">overall_score</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.semantic_results" href="#tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.semantic_results">semantic_results</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.statistical_results" href="#tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.statistical_results">statistical_results</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.summary" href="#tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.summary">summary</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.timestamp" href="#tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.timestamp">timestamp</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.treatment_name" href="#tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.treatment_name">treatment_name</a></code></li>
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.validation_type" href="#tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidationResult.validation_type">validation_type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidator" href="#tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidator">SimulationExperimentEmpiricalValidator</a></code></h4>
+<ul class="">
+<li><code><a title="tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidator.validate" href="#tinytroupe.validation.simulation_validator.SimulationExperimentEmpiricalValidator.validate">validate</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

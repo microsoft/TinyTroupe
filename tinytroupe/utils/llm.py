@@ -1,5 +1,6 @@
 import re
 import json
+import ast
 import os
 import chevron
 from typing import Collection, Dict, List, Union
@@ -62,11 +63,12 @@ class LLMScalarWithJustificationResponse(BaseModel):
     """
     Represents a typed response from an LLM (Language Learning Model) including justification.
     Attributes:
-        value (str, int, float, bool): The value of the response.
         justification (str): The justification or explanation for the response.
+        value (str, int, float, bool): The value of the response.
+        confidence (float): The confidence level of the response.        
     """
-    value: Union[str, int, float, bool]
     justification: str
+    value: Union[str, int, float, bool]    
     confidence: float
 
 class LLMScalarWithJustificationAndReasoningResponse(BaseModel):
@@ -74,16 +76,16 @@ class LLMScalarWithJustificationAndReasoningResponse(BaseModel):
     Represents a typed response from an LLM (Language Learning Model) including justification and reasoning.
     Attributes:
         reasoning (str): The reasoning behind the response.
-        value (str, int, float, bool): The value of the response.
         justification (str): The justification or explanation for the response.
+        value (str, int, float, bool): The value of the response.
         confidence (float): The confidence level of the response.
     """
     reasoning: str
 
     # we need to repeat these fields here, instead of inheriting from LLMScalarWithJustificationResponse,
     # because we need to ensure `reasoning` is always the first field in the JSON object.
-    value: Union[str, int, float, bool]
     justification: str
+    value: Union[str, int, float, bool]
     confidence: float
 
 
@@ -102,6 +104,8 @@ class LLMChat:
                  user_template_name:str=None, user_prompt:str=None,
                  base_module_folder=None,
                  output_type=None,
+                 enable_json_output_format:bool=True,
+                 enable_justification_step:bool=True,
                  enable_reasoning_step:bool=False,
                  **model_params):
         """
@@ -117,6 +121,8 @@ class LLMChat:
             output_type (type): Expected type of the model output.
             enable_reasoning_step (bool): Flag to enable reasoning step in the conversation. This IS NOT the use of "reasoning models" (e.g., o1, o3),
               but rather the use of an additional reasoning step in the regular text completion.
+            enable_justification_step (bool): Flag to enable justification step in the conversation. Must be True if reasoning step is enabled as well.
+            enable_json_output_format (bool): Flag to enable JSON output format for the model response. Must be True if reasoning or justification steps are enabled.
             **model_params: Additional parameters for the LLM model call.
 
         """
@@ -137,6 +143,8 @@ class LLMChat:
         self.output_type = output_type
 
         self.enable_reasoning_step = enable_reasoning_step
+        self.enable_justification_step = enable_justification_step
+        self.enable_json_output_format = enable_json_output_format
 
         self.model_params = model_params
         
@@ -249,13 +257,20 @@ class LLMChat:
         self.messages.append({"role": "assistant", "content": content})
         return self
 
-    def call(self, output_type="default", **rendering_configs):
+    def call(self, output_type="default", 
+                   enable_json_output_format:bool=None,        
+                   enable_justification_step:bool=None,
+                   enable_reasoning_step:bool=None, 
+                   **rendering_configs):
         """
         Initiates or continues the conversation with the LLM model using the current message history.
 
         Args:
             output_type: Optional parameter to override the output type for this specific call. If set to "default", it uses the instance's output_type.
                          If set to None, removes all output formatting and coercion.
+            enable_json_output_format: Optional flag to enable JSON output format for the model response. If None, uses the instance's setting.
+            enable_justification_step: Optional flag to enable justification step in the conversation. If None, uses the instance's setting.
+            enable_reasoning_step: Optional flag to enable reasoning step in the conversation. If None, uses the instance's setting.
             rendering_configs: The rendering configurations (template variables) to use when composing the initial messages.
 
         Returns:
@@ -263,140 +278,198 @@ class LLMChat:
         """
         from tinytroupe.openai_utils import client # import here to avoid circular import
 
-        # Initialize the conversation if this is the first call
-        if not self.messages:
-            if self.system_template_name is not None and self.user_template_name is not None:
-                self.messages = utils.compose_initial_LLM_messages_with_templates(
-                    self.system_template_name, 
-                    self.user_template_name, 
-                    base_module_folder=self.base_module_folder,
-                    rendering_configs=rendering_configs
-                )
-            else:
-                if self.system_prompt:
-                    self.messages.append({"role": "system", "content": self.system_prompt})
-                if self.user_prompt:
-                    self.messages.append({"role": "user", "content": self.user_prompt})
+        try:
 
-        # Use the provided output_type if specified, otherwise fall back to the instance's output_type
-        current_output_type = output_type if output_type != "default" else self.output_type
-
-        # Set up typing for the output
-        if current_output_type is not None:
-            
-            # TODO obsolete?
-            #
-            ## Add type coercion instructions if not already added
-            #if not any(msg.get("content", "").startswith("In your response, you **MUST** provide a value") 
-            #          for msg in self.messages if msg.get("role") == "system"):
-                
-            if not self.enable_reasoning_step:
-                # Default structured output
-                self.model_params["response_format"] = LLMScalarWithJustificationResponse
-                
-                typing_instruction = {"role": "system",
-                    "content": "In your response, you **MUST** provide a value, along with a justification and your confidence level that the value and justification are correct (0.0 means no confidence, 1.0 means complete confidence)."+
-                    "Furtheremore, your response **MUST** be a JSON object with the following structure: {\"value\": value, \"justification\": justification, \"confidence\": confidence}."}
-            
-            else: 
-                # Override the response format to also use a reasoning step
-                self.model_params["response_format"] = LLMScalarWithJustificationAndReasoningResponse
-                
-                typing_instruction = {"role": "system",
-                    "content": \
-                        "In your response, you **FIRST** think step-by-step on how you are going to compute the value, and you put this reasoning in the \"reasoning\" field (which must come before all others). "+
-                        "This allows you to think carefully as much as you need to deduce the best and most correct value. "+
-                        "After that, you **MUST** provide the resulting value, along with a justification (which can tap into the previous reasoning), and your confidence level that the value and justification are correct (0.0 means no confidence, 1.0 means complete confidence)."+
-                        "Furtheremore, your response **MUST** be a JSON object with the following structure: {\"reasoning\": reasoning, \"value\": value, \"justification\": justification, \"confidence\": confidence}."}
-                
-            
-            # Specify the value type
-            if current_output_type == bool:
-                typing_instruction["content"] += " " + self._request_bool_llm_message()["content"]
-            elif current_output_type == int:
-                typing_instruction["content"] += " " + self._request_integer_llm_message()["content"]
-            elif current_output_type == float:
-                typing_instruction["content"] += " " + self._request_float_llm_message()["content"]
-            elif isinstance(current_output_type, list) and all(isinstance(option, str) for option in current_output_type):
-                typing_instruction["content"] += " " + self._request_enumerable_llm_message(current_output_type)["content"]
-            elif current_output_type == List[Dict[str, any]]:
-                # Override the response format
-                self.model_params["response_format"] = {"type": "json_object"}
-                typing_instruction["content"] += " " + self._request_list_of_dict_llm_message()["content"]
-            elif current_output_type == dict or current_output_type == "json":
-                # Override the response format
-                self.model_params["response_format"] = {"type": "json_object"}
-                typing_instruction["content"] += " " + self._request_dict_llm_message()["content"]
-            elif current_output_type == list:
-                # Override the response format
-                self.model_params["response_format"] = {"type": "json_object"}
-                typing_instruction["content"] += " " + self._request_list_llm_message()["content"]
-            # Check if it is actually a pydantic model
-            elif issubclass(current_output_type, BaseModel):
-                # Completely override the response format
-                self.model_params["response_format"] = current_output_type
-                typing_instruction = {"role": "system", "content": "Your response **MUST** be a JSON object."}
-            elif current_output_type == str:
-                typing_instruction["content"] += " " + self._request_str_llm_message()["content"]
-                #pass # no coercion needed, it is already a string
-            else:
-                raise ValueError(f"Unsupported output type: {current_output_type}")
-            
-            self.messages.append(typing_instruction)
-        
-        else: # output_type is None
-            self.model_params["response_format"] = None
-            typing_instruction = {"role": "system", "content": \
-                                     "If you were given instructions before about the **format** of your response, please ignore them from now on. "+
-                                     "The needs of the user have changed. You **must** now use regular text -- not numbers, not booleans, not JSON. "+
-                                     "There are no fields, no types, no special formats. Just regular text appropriate to respond to the last user request."}
-            self.messages.append(typing_instruction)
-            #pass  # nothing here for now
-
-
-        # Call the LLM model with all messages in the conversation
-        model_output = client().send_message(self.messages, **self.model_params)
-
-        if 'content' in model_output:
-            self.response_raw = self.response_value = model_output['content']
-            
-            # Add the assistant's response to the conversation history
-            self.add_assistant_message(self.response_raw)
-            self.conversation_history.append({"messages": copy.deepcopy(self.messages)})
-
-            # Type coercion if output type is specified
-            if current_output_type is not None:
-                self.response_json = utils.extract_json(self.response_raw)
-
-                self.response_reasoning = self.response_json.get("reasoning", None)
-                self.response_value = self.response_json.get("value", None)
-                self.response_justification = self.response_json.get("justification", None)
-                self.response_confidence = self.response_json.get("confidence", None)
-
-                if current_output_type == bool:
-                    self.response_value = self._coerce_to_bool(self.response_value)
-                elif current_output_type == int:
-                    self.response_value = self._coerce_to_integer(self.response_value)
-                elif current_output_type == float:
-                    self.response_value = self._coerce_to_float(self.response_value)
-                elif isinstance(current_output_type, list) and all(isinstance(option, str) for option in current_output_type):
-                    self.response_value = self._coerce_to_enumerable(self.response_value, current_output_type)
-                elif current_output_type == List[Dict[str, any]]:
-                    self.response_value = self._coerce_to_dict_or_list(self.response_value)
-                elif current_output_type == dict or current_output_type == "json":
-                    self.response_value = self._coerce_to_dict_or_list(self.response_value)
-                elif current_output_type == list:
-                    self.response_value = self._coerce_to_list(self.response_value)
-                elif issubclass(current_output_type, BaseModel):
-                    self.response_value = current_output_type.parse_obj(self.response_json)
-                elif current_output_type == str:
-                    pass # no coercion needed, it is already a string
+            # Initialize the conversation if this is the first call
+            if not self.messages:
+                if self.system_template_name is not None and self.user_template_name is not None:
+                    self.messages = utils.compose_initial_LLM_messages_with_templates(
+                        self.system_template_name, 
+                        self.user_template_name, 
+                        base_module_folder=self.base_module_folder,
+                        rendering_configs=rendering_configs
+                    )
                 else:
-                    raise ValueError(f"Unsupported output type: {current_output_type}")
+                    if self.system_prompt:
+                        self.messages.append({"role": "system", "content": self.system_prompt})
+                    if self.user_prompt:
+                        self.messages.append({"role": "user", "content": self.user_prompt})
 
-            return self.response_value
-        else:
-            logger.error(f"Model output does not contain 'content' key: {model_output}")
+            # Use the provided output_type if specified, otherwise fall back to the instance's output_type
+            current_output_type = output_type if output_type != "default" else self.output_type
+
+            # Set up typing for the output
+            if current_output_type is not None:
+                
+                # TODO obsolete?
+                #
+                ## Add type coercion instructions if not already added
+                #if not any(msg.get("content", "").startswith("In your response, you **MUST** provide a value") 
+                #          for msg in self.messages if msg.get("role") == "system"):
+                
+                # the user can override the response format by specifying it in the model_params, otherwise
+                # we will use the default response format
+                if "response_format" not in self.model_params:
+
+                    if utils.first_non_none(enable_json_output_format, self.enable_json_output_format):
+
+                        self.model_params["response_format"] = {"type": "json_object"}
+
+                        typing_instruction = {"role": "system",
+                            "content": "Your response **MUST** be a JSON object."}
+
+                        # Special justification format can be used (will also include confidence level)
+                        if utils.first_non_none(enable_justification_step, self.enable_justification_step):
+
+                            # Add reasoning step if enabled provides further mechanism to think step-by-step
+                            if not (utils.first_non_none(enable_reasoning_step, self.enable_reasoning_step)):
+                                # Default structured output
+                                self.model_params["response_format"] = LLMScalarWithJustificationResponse
+                                
+                                typing_instruction = {"role": "system",
+                                    "content": "In your response, you **MUST** provide a value, along with a justification and your confidence level that the value and justification are correct (0.0 means no confidence, 1.0 means complete confidence). "+
+                                    "Furtheremore, your response **MUST** be a JSON object with the following structure: {\"justification\": justification, \"value\": value, \"confidence\": confidence}. "+
+                                    "Note that \"justification\" comes first in order to help you think about the value you are providing."}
+                            
+                            else: 
+                                # Override the response format to also use a reasoning step
+                                self.model_params["response_format"] = LLMScalarWithJustificationAndReasoningResponse
+                                
+                                typing_instruction = {"role": "system",
+                                    "content": \
+                                        "In your response, you **FIRST** think step-by-step on how you are going to compute the value, and you put this reasoning in the \"reasoning\" field (which must come before all others). "+
+                                        "This allows you to think carefully as much as you need to deduce the best and most correct value. "+
+                                        "After that, you **MUST** provide the resulting value, along with a justification (which can tap into the previous reasoning), and your confidence level that the value and justification are correct (0.0 means no confidence, 1.0 means complete confidence)."+
+                                        "Furtheremore, your response **MUST** be a JSON object with the following structure: {\"reasoning\": reasoning, \"justification\": justification, \"value\": value, \"confidence\": confidence}." +
+                                        " Note that \"justification\" comes after \"reasoning\" but before \"value\" to help with further formulation of the resulting \"value\"."}
+                        
+                    
+                        # Specify the value type
+                        if current_output_type == bool:
+                            typing_instruction["content"] += " " + self._request_bool_llm_message()["content"]
+                        elif current_output_type == int:
+                            typing_instruction["content"] += " " + self._request_integer_llm_message()["content"]
+                        elif current_output_type == float:
+                            typing_instruction["content"] += " " + self._request_float_llm_message()["content"]
+                        elif isinstance(current_output_type, list) and all(isinstance(option, str) for option in current_output_type):
+                            typing_instruction["content"] += " " + self._request_enumerable_llm_message(current_output_type)["content"]
+                        elif current_output_type == List[Dict[str, any]]:
+                            # Override the response format
+                            self.model_params["response_format"] = {"type": "json_object"}
+                            typing_instruction["content"] += " " + self._request_list_of_dict_llm_message()["content"]
+                        elif current_output_type == dict or current_output_type == "json":
+                            # Override the response format
+                            self.model_params["response_format"] = {"type": "json_object"}
+                            typing_instruction["content"] += " " + self._request_dict_llm_message()["content"]
+                        elif current_output_type == list:
+                            # Override the response format
+                            self.model_params["response_format"] = {"type": "json_object"}
+                            typing_instruction["content"] += " " + self._request_list_llm_message()["content"]
+                        # Check if it is actually a pydantic model
+                        elif issubclass(current_output_type, BaseModel):
+                            # Completely override the response format
+                            self.model_params["response_format"] = current_output_type
+                            typing_instruction = {"role": "system", "content": "Your response **MUST** be a JSON object."}
+                        elif current_output_type == str:
+                            typing_instruction["content"] += " " + self._request_str_llm_message()["content"]
+                            #pass # no coercion needed, it is already a string
+                        else:
+                            raise ValueError(f"Unsupported output type: {current_output_type}")
+                        
+                        self.messages.append(typing_instruction)
+                    
+                    else: # output_type is None
+                        self.model_params["response_format"] = None
+                        typing_instruction = {"role": "system", "content": \
+                                                "If you were given instructions before about the **format** of your response, please ignore them from now on. "+
+                                                "The needs of the user have changed. You **must** now use regular text -- not numbers, not booleans, not JSON. "+
+                                                "There are no fields, no types, no special formats. Just regular text appropriate to respond to the last user request."}
+                        self.messages.append(typing_instruction)
+                        #pass  # nothing here for now
+
+
+            # Call the LLM model with all messages in the conversation
+            model_output = client().send_message(self.messages, **self.model_params)
+
+            if 'content' in model_output:
+                self.response_raw = self.response_value = model_output['content']
+                logger.debug(f"Model raw 'content'  response: {self.response_raw}")
+                
+                # Add the assistant's response to the conversation history
+                self.add_assistant_message(self.response_raw)
+                self.conversation_history.append({"messages": copy.deepcopy(self.messages)})
+
+                # Type coercion if output type is specified
+                if current_output_type is not None:
+                    
+                    if self.enable_json_output_format:
+                        # output is supposed to be a JSON object
+                        self.response_json = self.response_value = utils.extract_json(self.response_raw)
+                        logger.debug(f"Model output JSON response: {self.response_json}")
+
+                        if self.enable_justification_step and not (hasattr(current_output_type, 'model_validate') or hasattr(current_output_type, 'parse_obj')):
+                            # if justification step is enabled, we expect a JSON object with reasoning (optionally), justification, value, and confidence
+                            # BUT not for Pydantic models which expect direct JSON structure
+                            self.response_reasoning = self.response_json.get("reasoning", None)
+                            self.response_value = self.response_json.get("value", None)
+                            self.response_justification = self.response_json.get("justification", None)
+                            self.response_confidence = self.response_json.get("confidence", None)
+                        else:
+                            # For direct JSON output (like Pydantic models), use the whole JSON as the value
+                            self.response_value = self.response_json
+                        
+                    # if output type was specified, we need to coerce the response value
+                    if self.response_value is not None:
+                        if current_output_type == bool:
+                            self.response_value = self._coerce_to_bool(self.response_value)
+                        elif current_output_type == int:
+                            self.response_value = self._coerce_to_integer(self.response_value)
+                        elif current_output_type == float:
+                            self.response_value = self._coerce_to_float(self.response_value)
+                        elif isinstance(current_output_type, list) and all(isinstance(option, str) for option in current_output_type):
+                            self.response_value = self._coerce_to_enumerable(self.response_value, current_output_type)
+                        elif current_output_type == List[Dict[str, any]]:
+                            self.response_value = self._coerce_to_dict_or_list(self.response_value)
+                        elif current_output_type == dict or current_output_type == "json":
+                            self.response_value = self._coerce_to_dict_or_list(self.response_value)
+                        elif current_output_type == list:
+                            self.response_value = self._coerce_to_list(self.response_value)
+                        elif hasattr(current_output_type, 'model_validate') or hasattr(current_output_type, 'parse_obj'):
+                            # Handle Pydantic model - try modern approach first, then fallback
+                            try:
+                                if hasattr(current_output_type, 'model_validate'):
+                                    self.response_value = current_output_type.model_validate(self.response_json)
+                                else:
+                                    self.response_value = current_output_type.parse_obj(self.response_json)
+                            except Exception as e:
+                                logger.error(f"Failed to parse Pydantic model: {e}")
+                                raise
+                        elif current_output_type == str:
+                            pass # no coercion needed, it is already a string
+                        else:
+                            raise ValueError(f"Unsupported output type: {current_output_type}")
+                    
+                    else:
+                        logger.error(f"Model output is None: {self.response_raw}")
+                
+                logger.debug(f"Model output coerced response value: {self.response_value}")
+                logger.debug(f"Model output coerced response justification: {self.response_justification}")
+                logger.debug(f"Model output coerced response confidence: {self.response_confidence}")
+
+                return self.response_value
+            else:
+                logger.error(f"Model output does not contain 'content' key: {model_output}")
+                return None
+        
+        except ValueError as ve:
+            # Re-raise ValueError exceptions (like unsupported output type) instead of catching them
+            if "Unsupported output type" in str(ve):
+                raise
+            else:
+                logger.error(f"Error during LLM call: {ve}. Will return None instead of failing.")
+                return None
+        except Exception as e:
+            logger.error(f"Error during LLM call: {e}. Will return None instead of failing.")
             return None
     
     def continue_conversation(self, user_message=None, **rendering_configs):
@@ -470,7 +543,7 @@ class LLMChat:
             elif first_match in ["false", "no", "negative"]:
                 return False
 
-        raise ValueError("The LLM output does not contain a recognizable boolean value.")
+        raise ValueError("Cannot convert the LLM output to a boolean value.")
 
     def _request_str_llm_message(self):
         return {"role": "user",
@@ -500,15 +573,31 @@ class LLMChat:
         # if the LLM output is already an integer, we return it
         if isinstance(llm_output, int):
             return llm_output
+        
+        # if it's a float that represents a whole number, convert it
+        if isinstance(llm_output, float):
+            if llm_output.is_integer():
+                return int(llm_output)
+            else:
+                raise ValueError("Cannot convert the LLM output to an integer value.")
+
+        # Convert to string for regex processing
+        llm_output_str = str(llm_output)
 
         # let's extract the first occurrence of an integer in the LLM output.
         # using a regular expression
         import re
-        match = re.search(r'\b\d+\b', llm_output)
+        # Match integers that are not part of a decimal number
+        # First check if the string contains a decimal point - if so, reject it for integer coercion
+        if '.' in llm_output_str and any(c.isdigit() for c in llm_output_str.split('.')[1]):
+            # This looks like a decimal number, not a pure integer
+            raise ValueError("Cannot convert the LLM output to an integer value.")
+        
+        match = re.search(r'-?\b\d+\b', llm_output_str)
         if match:
             return int(match.group(0))
 
-        raise ValueError("The LLM output does not contain a recognizable integer value.")
+        raise ValueError("Cannot convert the LLM output to an integer value.")
 
     def _request_integer_llm_message(self):
         return {"role": "user",
@@ -532,16 +621,19 @@ class LLMChat:
         # if the LLM output is already a float, we return it
         if isinstance(llm_output, float):
             return llm_output
+        
+        # if it's an integer, convert to float
+        if isinstance(llm_output, int):
+            return float(llm_output)
 
-
-        # let's extract the first occurrence of a float in the LLM output.
-        # using a regular expression
+        # let's extract the first occurrence of a number (float or int) in the LLM output.
+        # using a regular expression that handles negative numbers and both int/float formats
         import re
-        match = re.search(r'\b\d+\.\d+\b', llm_output)
+        match = re.search(r'-?\b\d+(?:\.\d+)?\b', llm_output)
         if match:
             return float(match.group(0))
 
-        raise ValueError("The LLM output does not contain a recognizable float value.")
+        raise ValueError("Cannot convert the LLM output to a float value.")
 
     def _request_float_llm_message(self):
         return {"role": "user",
@@ -568,9 +660,14 @@ class LLMChat:
         import re
         match = re.search(r'\b(?:' + '|'.join(options) + r')\b', llm_output, re.IGNORECASE)
         if match:
-            return match.group(0)
+            # Return the canonical option (from the options list) instead of the matched text
+            matched_text = match.group(0).lower()
+            for option in options:
+                if option.lower() == matched_text:
+                    return option
+            return match.group(0)  # fallback
 
-        raise ValueError("The LLM output does not contain a recognizable option value.")
+        raise ValueError("Cannot find any of the specified options in the LLM output.")
 
     def _request_enumerable_llm_message(self, options:list):
         options_list_as_string = ', '.join([f"'{o}'" for o in options])
@@ -592,11 +689,21 @@ class LLMChat:
             The dictionary value of the LLM output.
         """
 
-        # if the LLM output is already a dictionary, we return it
-        if isinstance(llm_output, dict):
+        # if the LLM output is already a dictionary or list, we return it
+        if isinstance(llm_output, (dict, list)):
             return llm_output
 
-        return utils.extract_json(llm_output)
+        try:
+            result = utils.extract_json(llm_output)
+            # extract_json returns {} on failure, but we need dict or list
+            if result == {} and not (isinstance(llm_output, str) and ('{}' in llm_output or '{' in llm_output and '}' in llm_output)):
+                raise ValueError("Cannot convert the LLM output to a dict or list value.")
+            # Check if result is actually dict or list
+            if not isinstance(result, (dict, list)):
+                raise ValueError("Cannot convert the LLM output to a dict or list value.")
+            return result
+        except Exception:
+            raise ValueError("Cannot convert the LLM output to a dict or list value.")
 
     def _request_dict_llm_message(self):
             return {"role": "user",
@@ -631,7 +738,7 @@ class LLMChat:
         if match:
             return json.loads(match.group(0))
 
-        raise ValueError("The LLM output does not contain a recognizable list value.")
+        raise ValueError("Cannot convert the LLM output to a list.")
 
     def _request_list_llm_message(self):
         return {"role": "user",
@@ -641,7 +748,7 @@ class LLMChat:
         return f"LLMChat(messages={self.messages}, model_params={self.model_params})"
 
 
-def llm(**model_overrides):
+def llm(enable_json_output_format:bool=True, enable_justification_step:bool=True, enable_reasoning_step:bool=False, **model_overrides):
     """
     Decorator that turns the decorated function into an LLM-based function.
     The decorated function must either return a string (the instruction to the LLM)
@@ -696,9 +803,9 @@ def llm(**model_overrides):
                 #if len(args) > 0:
                 #    raise ValueError("Positional arguments are not allowed in LLM-based functions whose body does not return a string.")               
 
-                user_prompt  = f"Execute your computation as best as you can using the following input parameter values: \n"
-                user_prompt += f"  - Unnamed parameters: {json.dumps(args, indent=4)}" 
-                user_prompt += f"  - Named parameters: {json.dumps(kwargs, indent=4)}" 
+                user_prompt  = f"Execute your computation as best as you can using the following input parameter values.\n\n"
+                user_prompt += f" ## Unnamed parameters\n{json.dumps(args, indent=4)}\n\n" 
+                user_prompt += f" ## Named parameters\n{json.dumps(kwargs, indent=4)}\n\n" 
             
             #
             # Set the post-processing function if the function returns a function
@@ -709,9 +816,12 @@ def llm(**model_overrides):
             
             
             llm_req = LLMChat(system_prompt=system_prompt,
-                                 user_prompt=user_prompt,
-                                 output_type=return_type,
-                                 **model_overrides)
+                              user_prompt=user_prompt,
+                              output_type=return_type,
+                              enable_json_output_format=enable_json_output_format,
+                              enable_justification_step=enable_justification_step,
+                              enable_reasoning_step=enable_reasoning_step,
+                              **model_overrides)
             
             llm_result = postprocessing_func(llm_req.call())
             
@@ -755,8 +865,24 @@ def extract_json(text: str) -> dict:
         filtered_text = re.sub("\\'", "'", filtered_text) # replace \' with just '
         filtered_text = re.sub("\\,", ",", filtered_text)
 
-        # use strict=False to correctly parse new lines, tabs, etc.
-        parsed = json.loads(filtered_text, strict=False)
+        # parse the final JSON in a robust manner, to account for potentially messy LLM outputs
+        try:
+            # First try standard JSON parsing
+            # use strict=False to correctly parse new lines, tabs, etc.
+            parsed = json.loads(filtered_text, strict=False)
+        except json.JSONDecodeError:
+            # If JSON parsing fails, try ast.literal_eval which accepts single quotes
+            try:
+                parsed = ast.literal_eval(filtered_text)
+                logger.debug("Used ast.literal_eval as fallback for single-quoted JSON-like text")
+            except:
+                # If both fail, try converting single quotes to double quotes and parse again
+                # Replace single-quoted keys and values with double quotes, without using look-behind
+                # This will match single-quoted strings that are keys or values in JSON-like structures
+                # It may not be perfect for all edge cases, but works for most LLM outputs
+                converted_text = re.sub(r"'([^']*)'", r'"\1"', filtered_text)
+                parsed = json.loads(converted_text, strict=False)
+                logger.debug("Converted single quotes to double quotes before parsing")
         
         # return the parsed JSON object
         return parsed
