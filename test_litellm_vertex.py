@@ -21,10 +21,15 @@ try:
     try:
         credentials, project = google.auth.default()
         print(f"✅ Successfully authenticated with Google Cloud. Project ID: {project}")
+        os.environ["GOOGLE_CLOUD_PROJECT_ID"] = project
     except Exception as e:
-        print(f"❌ Failed to authenticate with Google Cloud: {str(e)}")
-        print("Setting project ID to 'default-project' for testing purposes")
-        project = "default-project"
+        print(f"⚠️ Failed to authenticate with Google Cloud: {str(e)}")
+        print("You need to set up authentication. Options:")
+        print("1. Run: gcloud auth application-default login") 
+        print("2. Set GOOGLE_APPLICATION_CREDENTIALS environment variable")
+        print("3. Use a service account key file")
+        project = "your-project-id"  # Replace with your actual project ID
+        os.environ["GOOGLE_CLOUD_PROJECT_ID"] = project
 except ImportError as e:
     print(f"❌ Failed to import google.auth: {str(e)}")
     sys.exit(1)
@@ -33,14 +38,18 @@ except ImportError as e:
 try:
     print("\nTrying to get a response from Vertex AI using litellm_utils...")
     
-    # Set project ID for Vertex AI
-    os.environ["GOOGLE_CLOUD_PROJECT_ID"] = project
+    # Use the default litellm API type (which is the universal interface)
+    # The provider (vertex_ai) is handled through the model configuration
+    litellm_utils.force_api_type("litellm")
     
-    # Try to get a response from Vertex AI
-    response = litellm_utils.get_completion(
-        provider="vertex_ai",
-        model="gemini-1.5-flash",
-        messages=[{"role": "user", "content": "Hello, how are you?"}],
+    # Get the client instance from litellm_utils
+    client = litellm_utils.client()
+    
+    # Try to get a response from Vertex AI using send_message
+    # The model is configured in config.ini as vertex_ai/gemini-2.0-flash
+    messages = [{"role": "user", "content": "Hello, how are you? Please respond briefly."}]
+    response = client.send_message(
+        current_messages=messages,
         max_tokens=50
     )
     

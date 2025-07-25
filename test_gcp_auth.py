@@ -4,7 +4,8 @@ Simple script to test Google Cloud authentication for Vertex AI.
 import os
 
 # Check for Google Cloud credentials
-credentials_file = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
+# credentials_file = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
+credentials_file = "generativeus-0d0773590ed1.json"
 print(f"GOOGLE_APPLICATION_CREDENTIALS: {credentials_file}")
 
 if credentials_file:
