@@ -28,6 +28,11 @@ class ConfigManager:
     Manages configuration values with the ability to override defaults.
     Provides dynamic access to the latest config values.
     """
+
+    # this is used in more than one place below, so we define it here
+    # to avoid errors in later changes
+    LOGLEVEL_KEY = "loglevel"
+
     def __init__(self):
         self._config = {}
         self._initialize_from_config()
@@ -83,6 +88,9 @@ class ConfigManager:
         self._config["action_generator_continue_on_failure"] = config["ActionGenerator"].getboolean("CONTINUE_ON_FAILURE", True)
         self._config["action_generator_quality_threshold"] = config["ActionGenerator"].getint("QUALITY_THRESHOLD", 2)
         
+        # LOGLEVEL
+        self._config[ConfigManager.LOGLEVEL_KEY] = config["Logging"].get("LOGLEVEL", "INFO").upper()
+
         self._raw_config = config
     
     def update(self, key, value):
@@ -97,8 +105,17 @@ class ConfigManager:
             None
         """
         if key in self._config:
+
+            # make sure it is always lowercase
+            if isinstance(value, str):
+                value = value.lower()
+
             self._config[key] = value
             logging.info(f"Updated config: {key} = {value}")
+            
+            # Special handling for loglevel - also update the logger immediately
+            if key == ConfigManager.LOGLEVEL_KEY:
+                utils.set_loglevel(value)
         else:
             logging.warning(f"Attempted to update unknown config key: {key}")
     
@@ -173,6 +190,7 @@ class ConfigManager:
         
         return decorator
 
+
 # Create global instance of the configuration manager
 config = utils.read_config_file()
 utils.pretty_print_tinytroupe_version()
@@ -181,6 +199,9 @@ utils.pretty_print_config(config)
 utils.start_logger(config)
 
 config_manager = ConfigManager()
+
+
+
 
 # For backwards compatibility, maintain the default dict
 # but it's recommended to use config_manager instead

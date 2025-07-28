@@ -2,6 +2,8 @@ import os
 import json
 import chevron
 import logging
+from pydantic import BaseModel
+from typing import Optional, List
 
 from tinytroupe import openai_utils
 from tinytroupe.agent import TinyPerson
@@ -10,6 +12,15 @@ import tinytroupe.utils as utils
 
 
 default_max_content_display_length = config["OpenAI"].getint("MAX_CONTENT_DISPLAY_LENGTH", 1024)
+
+
+class ValidationResponse(BaseModel):
+    """Response structure for the validation process"""
+    questions: Optional[List[str]] = None
+    next_phase_description: Optional[str] = None
+    score: Optional[float] = None
+    justification: Optional[str] = None
+    is_complete: bool = False
 
 
 class TinyPersonValidator:
@@ -38,7 +49,7 @@ class TinyPersonValidator:
         
         # Generating the prompt to check the person
         check_person_prompt_template_path = os.path.join(os.path.dirname(__file__), 'prompts/check_person.mustache')
-        with open(check_person_prompt_template_path, 'r') as f:
+        with open(check_person_prompt_template_path, 'r', encoding='utf-8', errors='replace') as f:
             check_agent_prompt_template = f.read()
         
         system_prompt = chevron.render(check_agent_prompt_template, {"expectations": expectations})
@@ -54,8 +65,10 @@ class TinyPersonValidator:
 
         if include_agent_spec:
             user_prompt += f"\n\n{json.dumps(person._persona, indent=4)}"
-        else:
-            user_prompt += f"\n\nMini-biography of the person being interviewed: {person.minibio()}"
+        
+        # TODO this was confusing the expectations
+        #else:
+        #    user_prompt += f"\n\nMini-biography of the person being interviewed: {person.minibio()}"
 
 
         logger = logging.getLogger("tinytroupe")
@@ -66,37 +79,42 @@ class TinyPersonValidator:
         current_messages.append({"role": "system", "content": system_prompt})
         current_messages.append({"role": "user", "content": user_prompt})
 
-        message = openai_utils.client().send_message(current_messages)
+        message = openai_utils.client().send_message(current_messages, response_format=ValidationResponse, enable_pydantic_model_return=True)
 
-        # What string to look for to terminate the conversation
-        termination_mark = "```json"
         max_iterations = 10  # Limit the number of iterations to prevent infinite loops
         cur_iteration = 0
-        while cur_iteration < max_iterations and message is not None and not (termination_mark in message["content"]):
+        while cur_iteration < max_iterations and message is not None and not message.is_complete:
             cur_iteration += 1
             
-            # Appending the questions to the current messages
-            questions = message["content"]
-            current_messages.append({"role": message["role"], "content": questions})
-            logger.info(f"Question validation:\n{questions}")
+            # Check if we have questions to ask
+            if message.questions:
+                # Format questions as a text block
+                if message.next_phase_description:
+                    questions_text = f"{message.next_phase_description}\n\n"
+                else:
+                    questions_text = ""
+                
+                questions_text += "\n".join([f"{i+1}. {q}" for i, q in enumerate(message.questions)])
+                
+                current_messages.append({"role": "assistant", "content": questions_text})
+                logger.info(f"Question validation:\n{questions_text}")
 
-            # Asking the questions to the person
-            person.listen_and_act(questions, max_content_length=max_content_length)
-            responses = person.pop_actions_and_get_contents_for("TALK", False)
-            logger.info(f"Person reply:\n{responses}")
+                # Asking the questions to the persona
+                person.listen_and_act(questions_text, max_content_length=max_content_length)
+                responses = person.pop_actions_and_get_contents_for("TALK", False)
+                logger.info(f"Person reply:\n{responses}")
 
-            # Appending the responses to the current conversation and checking the next message
-            current_messages.append({"role": "user", "content": responses})
-            message = openai_utils.client().send_message(current_messages)
+                # Appending the responses to the current conversation and checking the next message
+                current_messages.append({"role": "user", "content": responses})
+                message = openai_utils.client().send_message(current_messages, response_format=ValidationResponse, enable_pydantic_model_return=True)
+            else:
+                # If no questions but not complete, something went wrong
+                logger.warning("LLM did not provide questions but validation is not complete")
+                break
 
-        if message is not None:
-            json_content = utils.extract_json(message['content'])
-            # read score and justification
-            score = float(json_content["score"])
-            justification = json_content["justification"]
-            logger.info(f"Validation score: {score:.2f}; Justification: {justification}")
-            
-            return score, justification
-        
+        if message is not None and message.is_complete and message.score is not None:
+            logger.info(f"Validation score: {message.score:.2f}; Justification: {message.justification}")
+            return message.score, message.justification
         else:
+            logger.error("Validation process failed to complete properly")
             return None, None

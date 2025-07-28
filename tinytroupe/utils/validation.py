@@ -2,6 +2,7 @@ import json
 import sys
 import unicodedata
 
+from pydantic import ValidationError, BaseModel
 from tinytroupe.utils import logger
 
 ################################################################################
@@ -47,3 +48,20 @@ def sanitize_dict(value: dict) -> dict:
 
     # ensure that the dictionary is not too deeply nested
     return value
+
+def to_pydantic_or_sanitized_dict(value: dict, model: BaseModel=None) -> dict:
+    """
+    Converts the specified model response dictionary to a Pydantic model instance, or sanitizes it if the model is not valid.
+    It is assumed that the dict contains the `content` key.
+    """
+
+    if model is not None and (isinstance(model, type) and issubclass(model, BaseModel)):
+        # If a model is provided, try to validate the value against the model
+        try:
+            res = model.model_validate(sanitize_dict(json.loads(value['content'])))
+            return res
+        except ValidationError as e:
+            logger.warning(f"Validation error: {e}")
+            return sanitize_dict(value)
+    else:
+        return sanitize_dict(value)  # If no model, just sanitize the dict

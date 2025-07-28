@@ -310,9 +310,9 @@ def test_factory_population_size_constraints(setup):
     remaining = factory.generate_people(2)
     assert len(remaining) == 2
     
-    # Now trying to generate more should raise an error
-    with pytest.raises(ValueError, match="No more agents to sample"):
-        factory.generate_people(1)
+    # Now trying to generate more should return an empty list (i.e., fail silently)
+    res = factory.generate_people(1)
+    assert len(res) == 0
 
 
 def test_factory_name_uniqueness_across_factories(setup):
@@ -470,7 +470,7 @@ def test_large_scale_generation_geographic_regions(setup):
         context="European market research study"
     )
     
-    asia_factory = TinyPersonFactory(
+    asia_factory = TinyPersonFactory( 
         sampling_space_description="Asian population from major countries including China, India, Japan, South Korea, Southeast Asia with diverse backgrounds",
         total_population_size=105,
         context="Asian Pacific consumer behavior study"

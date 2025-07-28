@@ -243,7 +243,7 @@ class TinyPerson(JsonSerializableRegistry):
 
 
     def generate_agent_system_prompt(self):
-        with open(self._prompt_template_path, "r") as f:
+        with open(self._prompt_template_path, "r", encoding="utf-8", errors="replace") as f:
             agent_prompt_template = f.read()
 
         # let's operate on top of a copy of the configuration, because we'll need to add more variables, etc.
@@ -346,7 +346,7 @@ class TinyPerson(JsonSerializableRegistry):
         """
         Imports a fragment of a persona configuration from a JSON file.
         """
-        with open(path, "r") as f:
+        with open(path, "r", encoding="utf-8", errors="replace") as f:
             fragment = json.load(f)
 
         # check the type is "Fragment" and that there's also a "persona" key
@@ -504,6 +504,7 @@ class TinyPerson(JsonSerializableRegistry):
         n=None,
         return_actions=False,
         max_content_length=None,
+        communication_display:bool=None
     ):
         """
         Acts in the environment and updates its internal cognitive state.
@@ -514,6 +515,8 @@ class TinyPerson(JsonSerializableRegistry):
             until_done (bool): Whether to keep acting until the agent is done and needs additional stimuli.
             n (int): The number of actions to perform. Defaults to None.
             return_actions (bool): Whether to return the actions or not. Defaults to False.
+            max_content_length (int): The maximum length of the content to display. Defaults to None, which uses the global configuration value.
+            communication_display (bool): Whether to display the communication or not, will override the global setting if provided. Defaults to None.
         """
 
         # either act until done or act a fixed number of times, but not both
@@ -592,7 +595,7 @@ class TinyPerson(JsonSerializableRegistry):
                                              emotions=cognitive_state.get("emotions", None))
             
             contents.append(content)          
-            if TinyPerson.communication_display:
+            if utils.first_non_none(communication_display, TinyPerson.communication_display):
                 self._display_communication(role=role, content=content, kind='action', simplified=True, max_content_length=max_content_length)
             
             #
@@ -678,6 +681,7 @@ class TinyPerson(JsonSerializableRegistry):
         speech,
         source: AgentOrWorld = None,
         max_content_length=None,
+        communication_display:bool=None
     ):
         """
         Listens to another agent (artificial or human) and updates its internal cognitive state.
@@ -685,6 +689,9 @@ class TinyPerson(JsonSerializableRegistry):
         Args:
             speech (str): The speech to listen to.
             source (AgentOrWorld, optional): The source of the speech. Defaults to None.
+            max_content_length (int, optional): The maximum length of the content to display. Defaults to None, which uses the global configuration value.
+            communication_display (bool): Whether to display the communication or not, will override the global setting if provided. Defaults to None.
+        
         """
 
         return self._observe(
@@ -694,6 +701,7 @@ class TinyPerson(JsonSerializableRegistry):
                 "source": name_or_empty(source),
             },
             max_content_length=max_content_length,
+            communication_display=communication_display
         )
 
     @config_manager.config_defaults(max_content_length="max_content_display_length")
@@ -775,7 +783,15 @@ class TinyPerson(JsonSerializableRegistry):
 
     @transactional()
     @config_manager.config_defaults(max_content_length="max_content_display_length")
-    def _observe(self, stimulus, max_content_length=None):
+    def _observe(self, stimulus, max_content_length=None, communication_display:bool=None):
+        """
+        Observes a stimulus and updates its internal cognitive state.
+
+        Args:
+            stimulus (dict): The stimulus to observe. It must contain a 'type' and 'content' keys.
+            max_content_length (int, optional): The maximum length of the content to display. Defaults to None, which uses the global configuration value.
+            communication_display (bool): Whether to display the communication or not, will override the global setting if provided. Defaults to None.
+        """
         stimuli = [stimulus]
 
         content = {"stimuli": stimuli}
@@ -789,7 +805,7 @@ class TinyPerson(JsonSerializableRegistry):
                               'type': 'stimulus',
                               'simulation_timestamp': self.iso_datetime()})
 
-        if TinyPerson.communication_display:
+        if utils.first_non_none(communication_display, TinyPerson.communication_display):
             self._display_communication(
                 role="user",
                 content=content,
@@ -809,14 +825,15 @@ max_content_length=max_content_length,
         speech,
         return_actions=False,
         max_content_length=None,
+        communication_display:bool=None
     ):
         """
         Convenience method that combines the `listen` and `act` methods.
         """
 
-        self.listen(speech, max_content_length=max_content_length)
+        self.listen(speech, max_content_length=max_content_length, communication_display=communication_display)
         return self.act(
-            return_actions=return_actions, max_content_length=max_content_length
+            return_actions=return_actions, max_content_length=max_content_length, communication_display=communication_display
         )
 
     @transactional()
@@ -1000,7 +1017,16 @@ max_content_length=max_content_length,
     # Memory management
     ###########################################################
 
-    def store_in_memory(self, value: Any) -> list:
+    def store_in_memory(self, value: Any) -> None:
+        """
+        Stores a value in episodic memory and manages episode length.
+        
+        Args:
+            value: The memory item to store (e.g., action, stimulus, thought)
+            
+        Returns:
+            None
+        """
         self.episodic_memory.store(value)
         
         self._current_episode_event_count += 1
@@ -1011,9 +1037,12 @@ max_content_length=max_content_length,
             logger.warning(f"[{self.name}] Episode length exceeded {self.MAX_EPISODE_LENGTH} events. Committing episode to memory. Please check whether this was expected or not.")
             self.consolidate_episode_memories()
     
-    def consolidate_episode_memories(self):
+    def consolidate_episode_memories(self) -> bool:
         """
         Applies all memory consolidation or transformation processes appropriate to the conclusion of one simulation episode.
+        
+        Returns:
+            bool: True if memories were successfully consolidated, False otherwise.
         """
         # a minimum length of the episode is required to consolidate it, to avoid excessive fragments in the semantic memory
         if self._current_episode_event_count > self.MIN_EPISODE_LENGTH:
@@ -1026,14 +1055,13 @@ max_content_length=max_content_length,
                     episodic_consolidator = EpisodicConsolidator()
                     episode = self.episodic_memory.get_current_episode(item_types=["action", "stimulus"],)
                     logger.debug(f"[{self.name}] Current episode: {episode}")
-                    consolidated_memories = episodic_consolidator.process(episode, timestamp=self._mental_state["datetime"], context=self._mental_state, persona=self.minibio())["consolidation"]
+                    consolidated_memories = episodic_consolidator.process(episode, timestamp=self._mental_state["datetime"], context=self._mental_state, persona=self.minibio()).get("consolidation", None)
                     if consolidated_memories is not None:
                         logger.info(f"[{self.name}] Consolidating current {len(episode)} episodic events as consolidated semantic memories.")
                         logger.debug(f"[{self.name}] Consolidated memories: {consolidated_memories}")
                         self.semantic_memory.store_all(consolidated_memories)
                     else:
-                        logger.debug(f"[{self.name}] No memories to consolidate from the current episode.")
-                
+                        logger.warning(f"[{self.name}] No memories to consolidate from the current episode.")
 
             else:
                 logger.warning(f"[{self.name}] Memory consolidation is disabled. Not consolidating current episode memories into semantic memory.")
@@ -1078,24 +1106,36 @@ max_content_length=max_content_length,
         return relevant
 
     def retrieve_relevant_memories_for_current_context(self, top_k=7) -> list:
-        # current context is composed of th recent memories, plus context, goals, attention, and emotions
-        context = self._mental_state["context"]
-        goals = self._mental_state["goals"]
-        attention = self._mental_state["attention"]
-        emotions = self._mental_state["emotions"]
-        recent_memories = "\n".join([f"  - {m['content']}"  for m in self.retrieve_memories(first_n=10, last_n=20, max_content_length=500)])
+        """
+        Retrieves memories relevant to the current context by combining current state with recent memories.
+        
+        Args:
+            top_k (int): Number of top relevant memories to retrieve. Defaults to 7.
+            
+        Returns:
+            list: List of relevant memories for the current context.
+        """
+        # Extract current mental state components
+        context = self._mental_state.get("context", "")
+        goals = self._mental_state.get("goals", "")
+        attention = self._mental_state.get("attention", "")
+        emotions = self._mental_state.get("emotions", "")
+        
+        # Retrieve recent memories efficiently
+        recent_memories_list = self.retrieve_memories(first_n=10, last_n=20, max_content_length=500)
+        recent_memories = "\n".join([f"  - {m.get('content', '')}" for m in recent_memories_list])
 
-        # put everything together in a nice markdown string to fetch relevant memories
-        target = f"""
+        # Build contextual target for memory retrieval using textwrap.dedent for cleaner formatting
+        target = textwrap.dedent(f"""
         Current Context: {context}
         Current Goals: {goals}
         Current Attention: {attention}
         Current Emotions: {emotions}
         Selected Episodic Memories (from oldest to newest):
         {recent_memories}
-        """
+        """).strip()
 
-        logger.debug(f"Retrieving relevant memories for contextual target: {target}")
+        logger.debug(f"[{self.name}] Retrieving relevant memories for contextual target: {target}")
 
         return self.retrieve_relevant_memories(target, top_k=top_k)
 
@@ -1117,12 +1157,15 @@ max_content_length=max_content_length,
     # Inspection conveniences
     ###########################################################
 
-    def last_remembered_action(self, ignore_done:bool=True):
+    def last_remembered_action(self, ignore_done: bool = True):
         """
         Returns the last remembered action.
 
         Args:
             ignore_done (bool): Whether to ignore the "DONE" action or not. Defaults to True.
+            
+        Returns:
+            dict or None: The last remembered action, or None if no suitable action found.
         """
         action = None 
         
@@ -1131,17 +1174,14 @@ max_content_length=max_content_length,
         if len(memory_items_list) > 0:
             # iterate from last to first while the action type is not "DONE"
             for candidate_item in memory_items_list[::-1]:
-                if candidate_item["content"]["action"]["type"] != "DONE":
-                    action = candidate_item["content"]["action"]
+                action_content = candidate_item.get("content", {}).get("action", {})
+                action_type = action_content.get("type", "")
+                
+                if not ignore_done or action_type != "DONE":
+                    action = action_content
                     break
-                else:
-                    if ignore_done:
-                        continue
-                    else:
-                        action = candidate_item["content"]["action"]
-                        break
 
-        return action 
+        return action
 
 
     ###########################################################

@@ -117,7 +117,7 @@ class BaseSemanticGroundingConnector(GroundingConnector):
                 for filename in os.listdir(temp_dir):
                     filepath = os.path.join(temp_dir, filename)
                     if os.path.isfile(filepath):
-                        with open(filepath, 'r') as f:
+                        with open(filepath, 'r', encoding="utf-8", errors="replace") as f:
                             persisted_data[filename] = f.read()
                 
                 return persisted_data
@@ -137,7 +137,7 @@ class BaseSemanticGroundingConnector(GroundingConnector):
                 # Write all the persisted files to the temporary directory
                 for filename, content in index_data.items():
                     filepath = os.path.join(temp_dir, filename)
-                    with open(filepath, 'w') as f:
+                    with open(filepath, 'w', encoding="utf-8", errors="replace") as f:
                         f.write(content)
                 
                 # Load the index from the temporary directory

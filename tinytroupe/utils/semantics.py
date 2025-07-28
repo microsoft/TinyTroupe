@@ -240,9 +240,9 @@ def accumulate_based_on_query(query: str, new_entry:str, current_accumulation:st
     # llm decorator will handle the body of this function
 
 @llm()
-def compute_semantic_proximity(text1: str, text2: str, context: str = None) -> dict:
+def compute_semantic_proximity(text1: str, text2: str, context: str = None) -> float:
     """
-    Computes the semantic proximity between two texts and returns a proximity score along with justification.
+    Computes the semantic proximity between two texts and returns a proximity score.
     This function is particularly useful for comparing agent justifications, explanations, or reasoning
     to assess how similar they are in meaning and content.
 
@@ -254,19 +254,14 @@ def compute_semantic_proximity(text1: str, text2: str, context: str = None) -> d
                                 or the purpose of the comparison.
 
     Returns:
-        dict: A dictionary containing:
-            - 'proximity_score' (float): A score between 0.0 and 1.0, where 0.0 means completely different
-                                       and 1.0 means semantically identical.
-            - 'justification' (str): A detailed explanation of why this score was assigned, including
-                                   specific similarities and differences found between the texts.
+        float
     
     Example:
         >>> result = compute_semantic_proximity(
         ...     "I prefer luxury travel because I enjoy comfort and high-quality service",
         ...     "I like premium vacations since I value convenience and excellent amenities"
         ... )
-        >>> print(result['proximity_score'])  # Expected: ~0.85
-        >>> print(result['justification'])    # Detailed explanation of similarities
+        >>> print(result)  # Expected: ~0.85
     """
     # llm decorator will handle the body of this function
 

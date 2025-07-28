@@ -33,9 +33,13 @@ def test_story_telling_scenario(setup):
     # Create a small group of diverse characters
     factory = TinyPersonFactory("A creative writing workshop with diverse participants.")
     
-    writer = factory.generate_person("A creative writer who loves storytelling.")
-    editor = factory.generate_person("An editor with strong narrative sense.")
-    
+    writer = factory.generate_person("A creative writer who loves storytelling, and always insists in including dogs in all stories.")
+    editor = factory.generate_person("An editor with strong narrative sense, and always insists in including cats in all stories.")
+
+    # print minibios
+    print("Writer:", writer.minibio())
+    print("Editor:", editor.minibio())
+
     world = TinyWorld("Creative Writing Workshop", [writer, editor])
     world.make_everyone_accessible()
 
@@ -48,7 +52,10 @@ def test_story_telling_scenario(setup):
     """
 
     world.broadcast(story_beginning)
-    world.run(2)
+    writer.think("Let me suggest a dog somewhere of course.")
+    editor.think("Let me suggest a cat somewhere of course.")
+
+    world.run(3)
 
     # Extract the story content
     extractor = ResultsExtractor()
@@ -56,9 +63,11 @@ def test_story_telling_scenario(setup):
                                                         extraction_objective="Extract the collaborative story content that was created",
                                                         situation="A creative writing workshop where people are telling a story together")
 
+    print("Story Content:", story_content)
+
     # Verify story elements exist
     assert proposition_holds(f"The following contains a narrative story with characters and plot: '{story_content}'"), "Story should contain narrative elements"
-    assert proposition_holds(f"The following shows evidence of collaborative creative writing: '{story_content}'"), "Should show collaborative storytelling"
+    assert proposition_holds(f"The following contains mentions of both cats and dogs: '{story_content}'"), "Should show collaborative storytelling"
 
 
 def test_synthetic_conversation_generation(setup):

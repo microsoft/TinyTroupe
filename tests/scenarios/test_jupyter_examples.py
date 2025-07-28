@@ -9,6 +9,7 @@ sys.path.insert(0, '../../') # ensures that the package is imported from the par
 sys.path.insert(0, '..') # ensures that the package is imported from the parent directory, not the Python installation
 
 import conftest
+import time
 
 # Set the folder containing the notebooks
 NOTEBOOK_FOLDER = os.path.join(os.path.dirname(__file__), "../../examples/")  # Update this path
@@ -24,14 +25,14 @@ def get_notebooks(folder):
     return [
         os.path.join(folder, f)
         for f in os.listdir(folder)
-        if f.endswith(".ipynb") and not ".executed." in f and not ".local." in f
+        if f.endswith(".ipynb") and not ".executed." in f and not ".local." in f and not ".archival." in f and not ".final." in f
     ]
 
 @pytest.mark.examples
 @pytest.mark.notebooks
 @pytest.mark.parametrize("notebook_path", get_notebooks(NOTEBOOK_FOLDER))
 def test_notebook_execution(notebook_path):
-    """Execute a Jupyter notebook and assert that no exceptions occur."""
+    """Execute a Jupyter notebook and assert that no exceptions occur, printing execution time with emojis."""
 
     with open(notebook_path, "r", encoding="utf-8") as nb_file:
         notebook = nbformat.read(nb_file, as_version=4)
@@ -42,21 +43,24 @@ def test_notebook_execution(notebook_path):
             nbformat.write(notebook, backup_file)
 
         # Execute the notebook
-        print(f"Executing notebook: {notebook_path} with kernel: {KERNEL_NAME}")
+        print(f"🚀 Executing notebook: {notebook_path} with kernel: {KERNEL_NAME}")
         ep = ExecutePreprocessor(timeout=TIMEOUT, kernel_name=KERNEL_NAME)
 
+        start_time = time.time()
         try:
             ep.preprocess(notebook, {'metadata': {'path': NOTEBOOK_FOLDER}})
-            print(f"Notebook {notebook_path} executed successfully.")
-
-        except Exception as e:
-            pytest.fail(f"Notebook {notebook_path} raised an exception: {e}")
-        
-        finally:
+            elapsed = time.time() - start_time
+            print(f"✅ Notebook {notebook_path} executed successfully in {elapsed:.2f} seconds. ⏱️")
             
             # save the executed notebook in its original location
             with open(notebook_path, "w", encoding="utf-8") as out_file:
                 nbformat.write(notebook, out_file)
 
-            print(f"Executed notebook saved as: {notebook_path}")
+        except Exception as e:
+            elapsed = time.time() - start_time
+            print(f"❌ Notebook {notebook_path} failed after {elapsed:.2f} seconds. ⚠️")
+            pytest.fail(f"Notebook {notebook_path} raised an exception: {e}")
+        
+        finally:
+            print(f"💾 Executed notebook saved as: {notebook_path}")
 

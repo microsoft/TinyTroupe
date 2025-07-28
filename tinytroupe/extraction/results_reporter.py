@@ -197,8 +197,8 @@ class ResultsReporter:
             
         if verbose is None:
             verbose = self.verbose
-            
-        with open(filename, 'w', encoding='utf-8') as f:
+
+        with open(filename, 'w', encoding='utf-8', errors='replace') as f:
             f.write(report)
             
         if verbose:

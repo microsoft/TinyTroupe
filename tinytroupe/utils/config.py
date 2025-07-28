@@ -73,6 +73,14 @@ def start_logger(config: configparser.ConfigParser):
     log_level = config['Logging'].get('LOGLEVEL', 'INFO').upper()
     logger.setLevel(level=log_level)
 
+    # Clear any existing handlers to prevent duplicates
+    # This is especially important in Jupyter notebooks where modules get reloaded
+    for handler in logger.handlers[:]:
+        logger.removeHandler(handler)
+    
+    # Prevent propagation to avoid duplicate messages from parent loggers
+    logger.propagate = False
+
     # create console handler and set level to debug
     ch = logging.StreamHandler()
     ch.setLevel(log_level)
@@ -85,3 +93,16 @@ def start_logger(config: configparser.ConfigParser):
 
     # add ch to logger
     logger.addHandler(ch)
+
+def set_loglevel(log_level):
+    """
+    Sets the log level for the TinyTroupe logger.
+    Args:
+        log_level (str): The log level to set (e.g., 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL').
+    """
+    logger = logging.getLogger("tinytroupe")
+    logger.setLevel(level=log_level)
+    
+    # Also update all handlers to the new log level
+    for handler in logger.handlers:
+        handler.setLevel(log_level)

@@ -59,7 +59,7 @@ def indent_at_current_level(text: str) -> str:
     frame = inspect.currentframe().f_back
     line = frame.f_lineno
     filename = frame.f_code.co_filename
-    with open(filename, 'r') as f:
+    with open(filename, 'r', encoding='utf-8', errors='replace') as f:
         lines = f.readlines()
     current_line = lines[line - 1]
     

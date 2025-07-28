@@ -108,7 +108,7 @@ class StatisticalTester:
 
         Args:
             test_type (str): Type of statistical test to run. 
-                Options: 't_test', 'welch_t_test', 'mann_whitney', 'anova', 'chi_square'
+                Options: 't_test', 'welch_t_test', 'mann_whitney', 'anova', 'chi_square', 'ks_test'
             alpha (float): Significance level, defaults to 0.05
             **kwargs: Additional arguments for specific test types.
 
@@ -121,7 +121,8 @@ class StatisticalTester:
             'welch_t_test': self._run_welch_t_test,
             'mann_whitney': self._run_mann_whitney,
             'anova': self._run_anova,
-            'chi_square': self._run_chi_square
+            'chi_square': self._run_chi_square,
+            'ks_test': self._run_ks_test
         }
         
         if test_type not in supported_tests:
@@ -454,6 +455,100 @@ class StatisticalTester:
                 return 'welch_t_test'
         else:
             return 'mann_whitney'
+
+    def _run_ks_test(self, control_values: list, treatment_values: list, alpha: float, **kwargs) -> Dict[str, Any]:
+        """
+        Run Kolmogorov-Smirnov test to compare distributions.
+        
+        This test compares the empirical cumulative distribution functions (ECDFs) of two samples
+        to determine if they come from the same distribution. It's particularly useful for:
+        - Categorical responses (e.g., "Yes"/"No"/"Maybe") when converted to ordinal values
+        - Continuous data where you want to compare entire distributions, not just means
+        - Detecting differences in distribution shape, spread, or location
+        """
+        # Convert to numpy arrays
+        control = np.array(control_values, dtype=float)
+        treatment = np.array(treatment_values, dtype=float)
+        
+        # Calculate basic statistics
+        control_median = np.median(control)
+        treatment_median = np.median(treatment)
+        control_mean = np.mean(control)
+        treatment_mean = np.mean(treatment)
+        
+        # Run the Kolmogorov-Smirnov test
+        ks_stat, p_value = stats.ks_2samp(control, treatment)
+        
+        # Calculate distribution characteristics
+        control_std = np.std(control, ddof=1) 
+        treatment_std = np.std(treatment, ddof=1)
+        
+        # Calculate effect size using the KS statistic itself as a measure
+        # KS statistic ranges from 0 (identical distributions) to 1 (completely different)
+        effect_size = ks_stat
+        
+        # Additional distribution comparison metrics
+        # Calculate overlap coefficient (area under the minimum of two PDFs)
+        try:
+            # Create histograms for overlap calculation
+            combined_range = np.linspace(
+                min(np.min(control), np.min(treatment)),
+                max(np.max(control), np.max(treatment)),
+                50
+            )
+            control_hist, _ = np.histogram(control, bins=combined_range, density=True)
+            treatment_hist, _ = np.histogram(treatment, bins=combined_range, density=True)
+            
+            # Calculate overlap (intersection over union-like metric)
+            overlap = np.sum(np.minimum(control_hist, treatment_hist)) / np.sum(np.maximum(control_hist, treatment_hist))
+            overlap = overlap if not np.isnan(overlap) else 0.0
+        except:
+            overlap = None
+        
+        # Calculate percentile differences for additional insights
+        percentiles = [25, 50, 75, 90, 95]
+        percentile_diffs = {}
+        for p in percentiles:
+            control_p = np.percentile(control, p)
+            treatment_p = np.percentile(treatment, p)
+            percentile_diffs[f"p{p}_diff"] = treatment_p - control_p
+        
+        # Determine significance
+        significant = p_value < alpha
+        
+        return {
+            'test_type': 'Kolmogorov-Smirnov test',
+            'control_mean': control_mean,
+            'treatment_mean': treatment_mean,
+            'control_median': control_median,
+            'treatment_median': treatment_median,
+            'control_std': control_std,
+            'treatment_std': treatment_std,
+            'ks_statistic': ks_stat,
+            'p_value': p_value,
+            'significant': significant,
+            'control_sample_size': len(control),
+            'treatment_sample_size': len(treatment),
+            'effect_size': effect_size,
+            'overlap_coefficient': overlap,
+            'percentile_differences': percentile_diffs,
+            'interpretation': self._interpret_ks_result(ks_stat, significant),
+            'confidence_level': 1 - alpha
+        }
+    
+    def _interpret_ks_result(self, ks_stat: float, significant: bool) -> str:
+        """Provide interpretation of KS test results."""
+        if not significant:
+            return "No significant difference between distributions"
+        
+        if ks_stat < 0.1:
+            return "Very small difference between distributions"
+        elif ks_stat < 0.25:
+            return "Small difference between distributions"
+        elif ks_stat < 0.5:
+            return "Moderate difference between distributions"
+        else:
+            return "Large difference between distributions"
 
 
 def cohen_d(x: Union[list, np.ndarray], y: Union[list, np.ndarray]) -> float:

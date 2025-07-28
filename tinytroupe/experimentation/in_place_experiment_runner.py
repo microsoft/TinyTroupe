@@ -267,11 +267,11 @@ class InPlaceExperimentRunner:
 
     def _load_config(self, config_file_path: str):
         import json
-        with open(config_file_path, 'r') as file:
+        with open(config_file_path, 'r', encoding="utf-8", errors="replace") as file:
             config = json.load(file)
         return config
     
     def _save_config(self):
         import json
-        with open(self.config_file_path, 'w') as file:
+        with open(self.config_file_path, 'w', encoding="utf-8", errors="replace") as file:
             json.dump(self.experiment_config, file, indent=4)

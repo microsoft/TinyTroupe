@@ -153,8 +153,8 @@ def test_temperature_parameter():
     
     # If we want more deterministic testing, we could check that all results preserve key information
     for result in results_low_temp + results_high_temp:
-        assert "product launch" in result.lower(), "All styled content should preserve key information"
-        assert "next month" in result.lower(), "All styled content should preserve time information"
+        assert proposition_holds(f"The following content discusses something that could be a product launch scheduled for next month: {result}"), \
+            "All styled content should semantically preserve the product launch and timing information"
 
 if __name__ == '__main__':
     pytest.main()

@@ -84,6 +84,7 @@ class OpenAIClient:
                     exponential_backoff_factor=None,
                     n = 1,
                     response_format=None,
+                    enable_pydantic_model_return=False,
                     echo=False):
         """
         Sends a message to the OpenAI API and returns the response.
@@ -104,6 +105,8 @@ class OpenAIClient:
         exponential_backoff_factor (int): The factor by which to increase the waiting time between requests.
         n (int): The number of completions to generate.
         response_format: The format of the response, if any.
+        echo (bool): Whether to echo the input message in the response.
+        enable_pydantic_model_return (bool): Whether to enable Pydantic model return instead of dict when possible.
 
         Returns:
         A dictionary representing the generated response.
@@ -185,7 +188,10 @@ class OpenAIClient:
                 logger.debug(
                     f"Got response in {end_time - start_time:.2f} seconds after {i} attempts.")
 
-                return utils.sanitize_dict(self._raw_model_response_extractor(response))
+                if enable_pydantic_model_return:
+                    return utils.to_pydantic_or_sanitized_dict(self._raw_model_response_extractor(response), model=response_format)
+                else:
+                    return utils.sanitize_dict(self._raw_model_response_extractor(response))
 
             except InvalidRequestError as e:
                 logger.error(f"[{i}] Invalid request error, won't retry: {e}")
@@ -247,15 +253,18 @@ class OpenAIClient:
             if "stream" in chat_api_params:
                 del chat_api_params["stream"]
 
-            logger.info(f"Calling LLM model (using .parse too) with these parameters: {logged_params}. Not showing 'messages' parameter.")
+            logger.debug(f"Calling LLM model (using .parse too) with these parameters: {logged_params}. Not showing 'messages' parameter.")
             # complete message
             logger.debug(f"   --> Complete messages sent to LLM: {chat_api_params['messages']}")
-            return self.client.beta.chat.completions.parse(
+
+            result_message = self.client.beta.chat.completions.parse(
                     **chat_api_params
                 )
+
+            return result_message 
         
         else:
-            logger.info(f"Calling LLM model with these parameters: {logged_params}. Not showing 'messages' parameter.")
+            logger.debug(f"Calling LLM model with these parameters: {logged_params}. Not showing 'messages' parameter.")
             return self.client.chat.completions.create(
                         **chat_api_params
                     )
@@ -331,7 +340,7 @@ class OpenAIClient:
         are not JSON serializable.
         """
         # use pickle to save the cache
-        pickle.dump(self.api_cache, open(self.cache_file_name, "wb"))
+        pickle.dump(self.api_cache, open(self.cache_file_name, "wb", encoding="utf-8", errors="replace"))
 
     
     def _load_cache(self):
@@ -340,7 +349,7 @@ class OpenAIClient:
         Loads the API cache from disk.
         """
         # unpickle
-        return pickle.load(open(self.cache_file_name, "rb")) if os.path.exists(self.cache_file_name) else {}
+        return pickle.load(open(self.cache_file_name, "rb", encoding="utf-8", errors="replace")) if os.path.exists(self.cache_file_name) else {}
 
     def get_embedding(self, text, model=default["embedding_model"]):
         """

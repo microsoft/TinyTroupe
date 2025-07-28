@@ -108,7 +108,7 @@ class ResultsExtractor:
         
         messages.append({"role": "system", 
                          "content": chevron.render(
-                             open(self._extraction_prompt_template_path).read(), 
+                             open(self._extraction_prompt_template_path, 'r', encoding='utf-8', errors='replace').read(), 
                              rendering_configs)})
 
 
@@ -185,7 +185,7 @@ performed.
         
         messages.append({"role": "system", 
                          "content": chevron.render(
-                             open(self._extraction_prompt_template_path).read(), 
+                             open(self._extraction_prompt_template_path, 'r', encoding='utf-8', errors='replace').read(), 
                              rendering_configs)})
 
         # TODO: either summarize first or break up into multiple tasks
@@ -235,7 +235,7 @@ Each interaction history includes stimuli the corresponding agent received as we
             filename (str): The filename to save the JSON to.
             verbose (bool, optional): Whether to print debug messages. Defaults to False.
         """
-        with open(filename, 'w') as f:
+        with open(filename, 'w', encoding="utf-8", errors="replace") as f:
             json.dump({"agent_extractions": self.agent_extraction, 
                        "world_extraction": self.world_extraction}, f, indent=4)
         

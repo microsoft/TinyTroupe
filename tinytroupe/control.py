@@ -332,7 +332,7 @@ class Simulation:
         Loads the cache file from the given path.
         """
         try:
-            self.cached_trace = json.load(open(cache_path, "r"))
+            self.cached_trace = json.load(open(cache_path, "r", encoding="utf-8", errors="replace"))
         except FileNotFoundError:
             logger.info(f"Cache file not found on path: {cache_path}.")
             self.cached_trace = []
@@ -565,7 +565,7 @@ class Transaction:
                 self.simulation.cache_hits += 1
 
                 # Restore the full state and return the cached output
-                logger.info(f"Skipping execution of {self.function_name} with args {self.args} and kwargs {self.kwargs} because it is already cached.")
+                logger.debug(f"Skipping execution of {self.function_name} with args {self.args} and kwargs {self.kwargs} because it is already cached.")
 
                 # SEQUENTIAL
                 if not self.simulation.is_under_parallel_transactions():

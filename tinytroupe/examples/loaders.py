@@ -11,7 +11,7 @@ def load_example_agent_specification(name:str):
     Returns:
         dict: The agent specification.
     """
-    return json.load(open(os.path.join(os.path.dirname(__file__), f'./agents/{name}.agent.json')))
+    return json.load(open(os.path.join(os.path.dirname(__file__), f'./agents/{name}.agent.json'), 'r', encoding='utf-8', errors='replace'))
 
 def load_example_fragment_specification(name:str):
     """
@@ -23,7 +23,7 @@ def load_example_fragment_specification(name:str):
     Returns:
         dict: The fragment specification.
     """
-    return json.load(open(os.path.join(os.path.dirname(__file__), f'./fragments/{name}.fragment.json')))
+    return json.load(open(os.path.join(os.path.dirname(__file__), f'./fragments/{name}.fragment.json'), 'r', encoding='utf-8', errors='replace'))
 
 def list_example_agents():
     """

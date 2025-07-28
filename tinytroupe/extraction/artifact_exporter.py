@@ -68,7 +68,7 @@ class ArtifactExporter(JsonSerializableRegistry):
         Exports the specified artifact data to a text file.
         """
 
-        with open(artifact_file_path, 'w', encoding="utf-8") as f:
+        with open(artifact_file_path, 'w', encoding="utf-8", errors="replace") as f:
             if isinstance(artifact_data, dict):
                 content = artifact_data['content']
             else:
@@ -81,7 +81,7 @@ class ArtifactExporter(JsonSerializableRegistry):
         Exports the specified artifact data to a JSON file.
         """
 
-        with open(artifact_file_path, 'w', encoding="utf-8") as f:
+        with open(artifact_file_path, 'w', encoding="utf-8", errors="replace") as f:
             if isinstance(artifact_data, dict):
                 json.dump(artifact_data, f, indent=4)                
             else:
@@ -112,7 +112,7 @@ class ArtifactExporter(JsonSerializableRegistry):
 
         ## write this intermediary HTML to file
         #html_file_path = artifact_file_path.replace(".docx", ".html")
-        #with open(html_file_path, 'w', encoding="utf-8") as f:
+        #with open(html_file_path, 'w', encoding="utf-8", errors="replace") as f:
         #    f.write(html_content)
 
         # then, convert to DOCX

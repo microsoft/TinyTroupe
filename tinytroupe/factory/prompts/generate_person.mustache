@@ -1,6 +1,6 @@
 # Agent Generator
 
-Please generate an agent specification based on a general context and the particularities of the agent (if any). The generated agent specification will be used in a simulation to realistically represent a real person.
+Please generate a highly detailed agent specification based on a general context and the particularities of the agent (if any). The generated agent specification will be used in a simulation to realistically represent a real person. Therefore, it must include a wide range of nuanced details that are consistent with the provided context and agent particularities.
 
 ## General Context
 
@@ -32,37 +32,54 @@ context (if any).
 
 To generate the requested agents, you **must** to follow these directives:
   - If a general context is provided, you must ensure the generated agent has relevant details that will allow the a realistic simulation of a real person in that context. To do so, you should include nunanced details that could be relevant for the simulation in that context.
-  - Given the context and agent particularities, please, be creative to generate details about the person for each of the fields in the response. Sample from a wide range of reasonable possibilities. For instance, if one asks for "a typical worker", consider different possibilities like manual workers, office workers, medical workers, self-employed workers, etc.
+  - Given the agent particularities, please, be creative and deep to generate details about the person for each of the fields in the response. Sample from a wide range of reasonable possibilities. For instance, if one asks for "a typical worker", consider different possibilities like manual workers, office workers, medical workers, self-employed workers, etc.
   - You must add as much details as possible, but make sure they are consistent with the context and agent particularities. That is to say, the details can be completely unrelated to the context and agent particularities, but they must not contradict them.
   - The agents you generate must sound authentic and realistic, considering the context and particularities provided. Avoid platitudes and cliches. The agents you generate represent real humans, and as such encompass all the diversity and complexity of real people. So not only happy and successful people, but also people with problems, fears, and difficulties.
   - When generating a person specification, be free to use whatever elements are most realistic, even if they are typically considered undesireable (e.g., vicious people are part of the general population). We need a realistic sample of people, not a caricature. So think deeply about what would make each person you generate authentic with respect the provided context and particularities.
+  - There are many ways to instantiate the context and agent particularities into a specific concrete agent, so avoid common stereotypes and cliches. Instead, try to think deeply about the context and agent particularities, and how they would manifest in a real person, and thus create an authentic-looking agent.
+  - Some fields are naturally simple, like name, age, gender, nationality and residence. Others are more complex, like education, occupation, style, personality, preferences, beliefs, skills, behaviors, health, relationships and other facts. For these complex fields, you must provide a rich description with many details,
+    always consistent with the context and agent particularities.
 
 ## Output Format Rules
 Your output **must** follow these rules:
   - You'll generate this response **only** in JSON format, no extra text, no Markdown elements.
   - Make sure you **always** produce valid JSON. In particular, **always** use double quotes for field names and string values.
-  - The format for this JSON response is as described in the examples. At a minimum, the response must contain the following fields:
-    * "name"
-    * "age"
-    * "gender"
-    * "nationality"
-    * "residence"
-    * "education"
-    * "long_term_goals": general aspirations for the future; life purposes.
-    * "occupation": details of the person's job, company, profession or trade.
-    * "style": the person's general way of being, speaking, and behaving. All other persona characteristics are transformed via this style before manifesting as actions.
-    * "personality"
-    * "preferences": interests, things that the agent likes or dislikes. Can be both broad categories and specific items.
-    * "skills"
-    * "beliefs"
-    * "behaviors"
-    * "health"
-    * "relationships"
-    * "other_facts": anything that doesn't fit in the other fields and sections.
+  - The format for this JSON response is as described in the examples. At a minimum, the response **must** contain the following **mandatory** fields:
+    * "name" (simple field)
+    * "age" (simple field)
+    * "gender" (simple field)
+    * "nationality" (simple field)
+    * "residence" (simple field)
+    * "education" (complex field)
+    * "long_term_goals" (complex field): general aspirations for the future; life purposes.
+    * "occupation" (complex field): details of the person's job, company, profession or trade. Avoid fashionable or trendy jobs, 
+                                    and instead focus on more traditional or realistic occupations, to the extent that
+                                    this is consistent with the context and agent particularities. So please less
+                                    "Enviromental Scientist"/"Sustainability Expert"/"Marketing Specialist" and more "University Professor"/"Construction Worker"/"IT Consultant".
+               Make sure to include details like the person's role, responsibilities, and any relevant skills or expertise.
+    * "style" (complex field): the person's general way of being, speaking, and behaving. Make sure to specify relevant accents, mannerisms, whether colloquial or formal is typical, etc. 
+               We need A LOT of details here to be able to later produce a realistic simulation of the words and actions of the person.
+    * "personality" (very complex field): a detailed exploration of the person's character traits, including their temperament, emotional responses, and social behavior. 
+                                          Include at least 10 traits, and also make sure you fill in the Big-5 personality traits (Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism) 
+                                          with specific values for each trait. Make sure the personality described is not generic, but rather nuanced, deep, authentic, and realistic.
+    * "preferences" (very complex field): interests, things that the agent likes or dislikes. Can be both broad categories and specific items. If specific areas are requested, make sure to include many many
+                     details about those areas. For example, if the agent is meant to like coffee shops, also include things like their favorite drinks, ambiance preferences, 
+                     any specific coffee shop chains they prefer, snacks they enjoy having together, whether they go there to work or socialize, etc. At least 20 details per area. Put more if 
+                      you can.
+    * "beliefs"(very complex field): deeply held convictions or opinions that influence the person's behavior and decision-making. Include many many details here, at least 30, so that we can later produce 
+                 a realistic simulation of the words and actions of the person. These details must explore in depth all the areas mentioned in the agent's particularities.
+    * "skills" (complex field): specific abilities or expertise that the person possesses, relevant to their personal or professional life.
+    * "behaviors" (complex field): typical actions, habits, rotines, or mannerisms that characterize the person.
+    * "health" (complex field): information about the person's physical and mental well-being, including any relevant medical history.
+    * "relationships" (complex field): details about the person's social connections, including family, friends, and professional contacts.
+    * "other_facts"(very complex field): anything that doesn't fit in the other fields and sections. This is where you should go wild and add many facts, ad-hoc details, past stories,
+                                         important memories, etc. Make this very long, at least 30 entries.
 
+DO NOT SPARE space for complex fields, use as much as you need to create a truly realistic person, with a lot of nuances, details, and depth.
 
 ## Examples
 Please follow the precise format in the examples below when generating the agent. Thes examples show the format and the style to be followed, but NOT the content itself - you can be creative in generating the content for each field, to match the general context and agent particularities as close as possible.
+In particular, in your output, make sure you include much more detail than in the examples.
 
 ### Example 1
   - General context: "Awesome Inc., a company that builds apartment buildings. Their differential is to offer pre-designed configurations for apartments, thus providing a cost-effective selection."

@@ -325,6 +325,9 @@ def test_begin_checkpoint_end_with_factory_demography(setup):
     logger.debug(">>>>>>>>>>>>>>>>>>>>>>>>>> Second simulation...")
     agents_2 = aux_simulation_to_repeat(2, verbose=True)
     assert len(agents_2) == 3, "Should have generated 3 agents"
+    for agent in agents_2:
+        print("Persona=", agent._persona)
+
     ages_2 = [agent.get("age") for agent in agents_2]
     nationalities_2 = [agent.get("nationality") for agent in agents_2]
     minibios_2 = [agent.minibio() for agent in agents_2]

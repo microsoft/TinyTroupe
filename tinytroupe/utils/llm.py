@@ -43,14 +43,14 @@ def compose_initial_LLM_messages_with_templates(system_template_name:str, user_t
 
     messages.append({"role": "system", 
                          "content": chevron.render(
-                             open(system_prompt_template_path).read(), 
+                             open(system_prompt_template_path, 'r', encoding='utf-8', errors='replace').read(), 
                              rendering_configs)})
     
     # optionally add a user message
     if user_template_name is not None:
         messages.append({"role": "user", 
                             "content": chevron.render(
-                                    open(user_prompt_template_path).read(), 
+                                    open(user_prompt_template_path, 'r', encoding='utf-8', errors='replace').read(), 
                                     rendering_configs)})
     return messages
 
@@ -182,8 +182,8 @@ class LLMChat:
             
         base_template_folder = os.path.join(os.path.dirname(__file__), sub_folder)
         template_path = os.path.join(base_template_folder, template_name)
-        
-        return chevron.render(open(template_path).read(), rendering_configs)
+
+        return chevron.render(open(template_path, 'r', encoding='utf-8', errors='replace').read(), rendering_configs)
 
     def add_user_message(self, message=None, template_name=None, base_module_folder=None, rendering_configs={}):
         """
@@ -257,6 +257,16 @@ class LLMChat:
         self.messages.append({"role": "assistant", "content": content})
         return self
 
+    def set_model_params(self, **model_params):
+        """
+        Set or update the model parameters for the LLM call.
+        
+        Args:
+            model_params: Key-value pairs of model parameters to set or update
+        """
+        self.model_params.update(model_params)
+        return self
+
     def call(self, output_type="default", 
                    enable_json_output_format:bool=None,        
                    enable_justification_step:bool=None,
@@ -309,7 +319,7 @@ class LLMChat:
                 
                 # the user can override the response format by specifying it in the model_params, otherwise
                 # we will use the default response format
-                if "response_format" not in self.model_params:
+                if "response_format" not in self.model_params or self.model_params["response_format"] is None:
 
                     if utils.first_non_none(enable_json_output_format, self.enable_json_output_format):
 
@@ -344,39 +354,39 @@ class LLMChat:
                                         " Note that \"justification\" comes after \"reasoning\" but before \"value\" to help with further formulation of the resulting \"value\"."}
                         
                     
-                        # Specify the value type
-                        if current_output_type == bool:
-                            typing_instruction["content"] += " " + self._request_bool_llm_message()["content"]
-                        elif current_output_type == int:
-                            typing_instruction["content"] += " " + self._request_integer_llm_message()["content"]
-                        elif current_output_type == float:
-                            typing_instruction["content"] += " " + self._request_float_llm_message()["content"]
-                        elif isinstance(current_output_type, list) and all(isinstance(option, str) for option in current_output_type):
-                            typing_instruction["content"] += " " + self._request_enumerable_llm_message(current_output_type)["content"]
-                        elif current_output_type == List[Dict[str, any]]:
-                            # Override the response format
-                            self.model_params["response_format"] = {"type": "json_object"}
-                            typing_instruction["content"] += " " + self._request_list_of_dict_llm_message()["content"]
-                        elif current_output_type == dict or current_output_type == "json":
-                            # Override the response format
-                            self.model_params["response_format"] = {"type": "json_object"}
-                            typing_instruction["content"] += " " + self._request_dict_llm_message()["content"]
-                        elif current_output_type == list:
-                            # Override the response format
-                            self.model_params["response_format"] = {"type": "json_object"}
-                            typing_instruction["content"] += " " + self._request_list_llm_message()["content"]
-                        # Check if it is actually a pydantic model
-                        elif issubclass(current_output_type, BaseModel):
-                            # Completely override the response format
-                            self.model_params["response_format"] = current_output_type
-                            typing_instruction = {"role": "system", "content": "Your response **MUST** be a JSON object."}
-                        elif current_output_type == str:
-                            typing_instruction["content"] += " " + self._request_str_llm_message()["content"]
-                            #pass # no coercion needed, it is already a string
-                        else:
-                            raise ValueError(f"Unsupported output type: {current_output_type}")
-                        
-                        self.messages.append(typing_instruction)
+                            # Specify the value type
+                            if current_output_type == bool:
+                                typing_instruction["content"] += " " + self._request_bool_llm_message()["content"]
+                            elif current_output_type == int:
+                                typing_instruction["content"] += " " + self._request_integer_llm_message()["content"]
+                            elif current_output_type == float:
+                                typing_instruction["content"] += " " + self._request_float_llm_message()["content"]
+                            elif isinstance(current_output_type, list) and all(isinstance(option, str) for option in current_output_type):
+                                typing_instruction["content"] += " " + self._request_enumerable_llm_message(current_output_type)["content"]
+                            elif current_output_type == List[Dict[str, any]]:
+                                # Override the response format
+                                self.model_params["response_format"] = {"type": "json_object"}
+                                typing_instruction["content"] += " " + self._request_list_of_dict_llm_message()["content"]
+                            elif current_output_type == dict or current_output_type == "json":
+                                # Override the response format
+                                self.model_params["response_format"] = {"type": "json_object"}
+                                typing_instruction["content"] += " " + self._request_dict_llm_message()["content"]
+                            elif current_output_type == list:
+                                # Override the response format
+                                self.model_params["response_format"] = {"type": "json_object"}
+                                typing_instruction["content"] += " " + self._request_list_llm_message()["content"]
+                            # Check if it is actually a pydantic model
+                            elif issubclass(current_output_type, BaseModel):
+                                # Completely override the response format
+                                self.model_params["response_format"] = current_output_type
+                                typing_instruction = {"role": "system", "content": "Your response **MUST** be a JSON object."}
+                            elif current_output_type == str:
+                                typing_instruction["content"] += " " + self._request_str_llm_message()["content"]
+                                #pass # no coercion needed, it is already a string
+                            else:
+                                raise ValueError(f"Unsupported output type: {current_output_type}")
+                            
+                            self.messages.append(typing_instruction)
                     
                     else: # output_type is None
                         self.model_params["response_format"] = None
@@ -980,13 +990,13 @@ def add_rai_template_variables_if_enabled(template_variables: dict) -> dict:
     )
 
     # Harmful content
-    with open(os.path.join(os.path.dirname(__file__), "prompts/rai_harmful_content_prevention.md"), "r") as f:
+    with open(os.path.join(os.path.dirname(__file__), "prompts/rai_harmful_content_prevention.md"), "r", encoding="utf-8", errors="replace") as f:
         rai_harmful_content_prevention_content = f.read()
 
     template_variables['rai_harmful_content_prevention'] = rai_harmful_content_prevention_content if rai_harmful_content_prevention else None
 
     # Copyright infringement
-    with open(os.path.join(os.path.dirname(__file__), "prompts/rai_copyright_infringement_prevention.md"), "r") as f:
+    with open(os.path.join(os.path.dirname(__file__), "prompts/rai_copyright_infringement_prevention.md"), "r", encoding="utf-8", errors="replace") as f:
         rai_copyright_infringement_prevention_content = f.read()
 
     template_variables['rai_copyright_infringement_prevention'] = rai_copyright_infringement_prevention_content if rai_copyright_infringement_prevention else None
