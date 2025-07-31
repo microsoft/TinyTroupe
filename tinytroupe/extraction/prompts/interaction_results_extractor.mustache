@@ -34,10 +34,10 @@ On your output format:
   {{/fields}}
 
   {{#fields_hints}}
-    - Additional contraint for field `{{0}}`: {{1}}
+  - Extract the following information for field `{{0}}`: {{1}}
   {{/fields_hints}}
 
-
+If the information requested is not explicitly present, you must infer or summarize it based on the context, rather than returning null.
 
 ## Examples
 
@@ -53,16 +53,4 @@ Example input:
 
 Example output:
 {"choice": "Diapers"}
-
-
-### Example 2
-Example input:
-   Extraction objective: obtain the baby product that was purchased (field "choice").
-
-   Situation: you have a baby at home, just a little money right now, and you need to buy only what is urgent.
-
-   [TALK] Actually, there's nothing that I need right now. I wanted diapers, but they don't have the right size. So I won't buy anything.
-
-Example output:
-{"choice": null}
 

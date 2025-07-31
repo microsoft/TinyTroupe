@@ -279,5 +279,8 @@ extractor = ResultsExtractor()
 extractor.extract_results_from_world(focus_group,
                                      extraction_objective="Detailed reports of insights, acceptance rates, suggestions for the service.",
                                      fields=["ad_copy"],
+                                     fields_hints={
+                                         "ad_copy": "A concise summary of the agent's overall impression and feedback on the MusicALL app, suitable for marketing material."
+                                     },
                                     verbose=True)
 extractor.save_as_json("extraction.json")

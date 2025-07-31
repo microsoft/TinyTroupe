@@ -273,27 +273,92 @@ def remove_duplicates(lst):
 def extract_json(text: str) -> dict:
     """
     Extracts a JSON object from a string.
-    Handles JSON within markdown code blocks.
-    
+    Handles JSON within markdown code blocks, ignores extra data, and fixes invalid escape sequences.
+    Prioritizes JSON objects containing 'action' and 'cognitive_state' keys.
+
     Args:
         text (str): The string to extract the JSON object from.
-        
+
     Returns:
         dict: The extracted JSON object.
     """
-    try:
-        # First, try to extract from a markdown code block
-        match = re.search(r"```json\n(.*?)\n```", text, re.DOTALL)
-        if match:
-            json_text = match.group(1)
-        else:
-            # If no markdown block, try to find a raw JSON object
-            match = re.search(r'\{.*\}', text, re.DOTALL)
-            if not match:
-                raise ValueError("No JSON object found in the text.")
-            json_text = match.group(0)
-        
-        return json.loads(json_text)
-    except (json.JSONDecodeError, ValueError) as e:
-        logger.error(f"Error occurred while extracting JSON: {e}")
-        raise
+    # Helper function to clean and load JSON
+    def _clean_and_load_json(json_string: str) -> dict:
+        # Handle explicit 'null' JSON
+        if json_string.strip().lower() == "null":
+            return {}
+        # Pre-process the JSON string to handle invalid escape sequences
+        cleaned_json_string = re.sub(r'\\(?!["\\/bfnrtu])', r'\\\\', json_string)
+        return json.loads(cleaned_json_string)
+
+    best_json_candidate = None
+    best_priority = -1 # 3: action+cognitive_state, 2: action, 1: cognitive_state, 0: any dict
+
+    # Try to find JSON within markdown code blocks first (more flexible regex)
+    markdown_match = re.search(r"```json\s*(.*?)\s*```", text, re.DOTALL)
+    if markdown_match:
+        json_candidate = markdown_match.group(1)
+        try:
+            decoded_json = _clean_and_load_json(json_candidate)
+            if isinstance(decoded_json, dict):
+                if "action" in decoded_json and "cognitive_state" in decoded_json:
+                    return decoded_json # Highest priority, return immediately
+                elif "action" in decoded_json and 2 > best_priority:
+                    best_json_candidate = decoded_json
+                    best_priority = 2
+                elif "cognitive_state" in decoded_json and 1 > best_priority:
+                    best_json_candidate = decoded_json
+                    best_priority = 1
+                elif 0 > best_priority: # Any valid dict
+                    best_json_candidate = decoded_json
+                    best_priority = 0
+            else:
+                logger.warning("JSON from markdown block is not a dict. Trying general JSON extraction.")
+        except json.JSONDecodeError as e:
+            logger.warning(f"Failed to decode JSON from markdown block: {e}. Trying general JSON extraction.")
+        except Exception as e:
+            logger.warning(f"Unexpected error during JSON decode from markdown block: {e}. Trying general JSON extraction.")
+
+    # Stack-based approach to find all balanced JSON objects
+    stack = []
+    start_index = -1
+    for i, char in enumerate(text):
+        if char == '{':
+            if not stack: # Start of a new potential JSON object
+                start_index = i
+            stack.append(char)
+        elif char == '}':
+            if stack and stack[-1] == '{':
+                stack.pop()
+                if not stack and start_index != -1: # Found a balanced JSON object
+                    json_candidate = text[start_index : i + 1]
+                    try:
+                        decoded_json = _clean_and_load_json(json_candidate)
+                        if isinstance(decoded_json, dict):
+                            if "action" in decoded_json and "cognitive_state" in decoded_json:
+                                return decoded_json # Highest priority, return immediately
+                            elif "action" in decoded_json and 2 > best_priority:
+                                best_json_candidate = decoded_json
+                                best_priority = 2
+                            elif "cognitive_state" in decoded_json and 1 > best_priority:
+                                best_json_candidate = decoded_json
+                                best_priority = 1
+                            elif 0 > best_priority: # Any valid dict
+                                best_json_candidate = decoded_json
+                                best_priority = 0
+                    except json.JSONDecodeError as e:
+                        logger.debug(f"Failed to decode JSON candidate from stack: {e}. Skipping.")
+                    except Exception as e:
+                        logger.debug(f"Unexpected error during JSON decode from stack: {e}. Skipping.")
+            else:
+                # Mismatched closing brace, ignore or handle as error
+                pass
+        # Add handling for string literals to avoid misinterpreting braces/brackets within strings
+        # This simple stack-based approach might be fooled by braces/brackets inside strings. 
+        # For full robustness, a proper JSON parser or more complex state machine is needed.
+
+    if best_json_candidate is not None:
+        return best_json_candidate
+
+    # If no valid JSON object was found after trying all possibilities
+    raise ValueError("No valid JSON object found in the text.")

@@ -445,15 +445,21 @@ class TinyPerson(JsonSerializableRegistry):
         def aux_act_once():
             role, content = self._produce_message()
 
-            cognitive_state = content["cognitive_state"]
+            cognitive_state = content.get("cognitive_state")
+            if cognitive_state is None:
+                logger.warning(f"[{self.name}] 'cognitive_state' not found in LLM response. Using default values.")
+                goals = []
+                attention = ""
+                emotions = ""
+            else:
+                goals = cognitive_state.get('goals', [])
+                attention = cognitive_state.get('attention', "")
+                emotions = cognitive_state.get('emotions', "")
 
-
-            action = content['action']
+            action = content.get('action')
+            if action is None:
+                raise ValueError(f"[{self.name}] 'action' not found in LLM response.")
             logger.debug(f"{self.name}'s action: {action}")
-
-            goals = cognitive_state['goals']
-            attention = cognitive_state['attention']
-            emotions = cognitive_state['emotions']
 
             self.store_in_memory({'role': role, 'content': content, 
                                   'type': 'action', 
