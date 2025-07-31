@@ -1,5 +1,6 @@
 import json
 import copy
+import re
 
 from tinytroupe.utils import logger
 
@@ -267,3 +268,32 @@ def remove_duplicates(lst):
                 seen.append(item_key)
                 result.append(item)
         return result
+
+
+def extract_json(text: str) -> dict:
+    """
+    Extracts a JSON object from a string.
+    Handles JSON within markdown code blocks.
+    
+    Args:
+        text (str): The string to extract the JSON object from.
+        
+    Returns:
+        dict: The extracted JSON object.
+    """
+    try:
+        # First, try to extract from a markdown code block
+        match = re.search(r"```json\n(.*?)\n```", text, re.DOTALL)
+        if match:
+            json_text = match.group(1)
+        else:
+            # If no markdown block, try to find a raw JSON object
+            match = re.search(r'\{.*\}', text, re.DOTALL)
+            if not match:
+                raise ValueError("No JSON object found in the text.")
+            json_text = match.group(0)
+        
+        return json.loads(json_text)
+    except (json.JSONDecodeError, ValueError) as e:
+        logger.error(f"Error occurred while extracting JSON: {e}")
+        raise

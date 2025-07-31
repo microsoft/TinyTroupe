@@ -487,9 +487,7 @@ class TinyPerson(JsonSerializableRegistry):
 
         ##### Option 2: run until DONE ######
         elif until_done:
-            while (len(contents) == 0) or (
-                not contents[-1]["action"]["type"] == "DONE"
-            ):
+            while (len(contents) == 0) or (                not contents[-1]["action"]["type"] == "DONE"            ):
 
 
                 # check if the agent is acting without ever stopping
