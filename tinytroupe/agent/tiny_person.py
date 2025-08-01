@@ -242,11 +242,8 @@ class TinyPerson(JsonSerializableRegistry):
 
         # add a final user message, which is neither stimuli or action, to instigate the agent to act properly
         self.current_messages.append({"role": "user", 
-                                      "content": "Now you **must** generate a sequence of actions following your interaction directives, " +\
-                                                 "and complying with **all** instructions and contraints related to the action you use." +\
-                                                 "DO NOT repeat the exact same action more than once in a row!" +\
-                                                 "DO NOT keep saying or doing very similar things, but instead try to adapt and make the interactions look natural." +\
-                                                 "These actions **MUST** be rendered following the JSON specification perfectly, including all required keys (even if their value is empty), **ALWAYS**."
+                                      "content": "Now, think about what action you should take next and what your internal cognitive state is. " +\
+                                                 "Describe your chosen action (including its type, content, and target) and your cognitive state (goals, attention, and emotions) in natural language."
                                      })
 
     def get(self, key):
@@ -458,7 +455,9 @@ class TinyPerson(JsonSerializableRegistry):
 
             action = content.get('action')
             if action is None:
-                raise ValueError(f"[{self.name}] 'action' not found in LLM response.")
+                logger.warning(f"[{self.name}] 'action' not found in LLM response. Retrying.")
+                return # This will cause the loop in act() to try again.
+
             logger.debug(f"{self.name}'s action: {action}")
 
             self.store_in_memory({'role': role, 'content': content, 
@@ -466,9 +465,10 @@ class TinyPerson(JsonSerializableRegistry):
                                   'simulation_timestamp': self.iso_datetime()})
 
             self._actions_buffer.append(action)
-            self._update_cognitive_state(goals=cognitive_state['goals'],
-                                        attention=cognitive_state['attention'],
-                                        emotions=cognitive_state['emotions'])
+            if cognitive_state: # Ensure cognitive_state is not None before accessing keys
+                self._update_cognitive_state(goals=cognitive_state.get('goals'),
+                                            attention=cognitive_state.get('attention'),
+                                            emotions=cognitive_state.get('emotions'))
             
             contents.append(content)          
             if TinyPerson.communication_display:
@@ -775,25 +775,48 @@ class TinyPerson(JsonSerializableRegistry):
 
     @transactional
     def _produce_message(self):
-        # logger.debug(f"Current messages: {self.current_messages}")
-
         # ensure we have the latest prompt (initial system message + selected messages from memory)
         self.reset_prompt()
 
-        messages = [
+        # First LLM call: Get the agent's natural language response
+        main_messages = [
             {"role": msg["role"], "content": json.dumps(msg["content"])}
             for msg in self.current_messages
         ]
 
-        logger.debug(f"[{self.name}] Sending messages to LiteLLM API")
-        logger.debug(f"[{self.name}] Last interaction: {messages[-1]}")
+        logger.debug(f"[{self.name}] Sending main prompt to LiteLLM API")
+        natural_language_response = litellm_utils.client().send_message(main_messages)
+        logger.debug(f"[{self.name}] Received natural language response: {natural_language_response}")
 
-        # Pass in response_model instead of the class to avoid serialization issues
-        next_message = litellm_utils.client().send_message(messages)
+        # Second LLM call: Extract structured JSON from the natural language response
+        extraction_prompt = f"""
+        You are a JSON extraction system. You will be given a text from an AI agent.
+        Your task is to extract the agent's action and cognitive state into a valid JSON object.
+        The JSON object must have two keys: 'action' and 'cognitive_state'.
+        The 'action' key must contain an object with 'type', 'content', and 'target'.
+        The 'cognitive_state' key must contain an object with 'goals', 'attention', and 'emotions'.
 
-        logger.debug(f"[{self.name}] Received message: {next_message}")
+        Valid action types are: TALK, THINK, DONE, REACH_OUT.
 
-        return next_message["role"], utils.extract_json(next_message["content"])
+        Here is the text to process:
+        ---
+        {natural_language_response['content']}
+        ---
+
+        Now, provide only the JSON object, with no other text or markdown.
+        """
+
+        extraction_messages = [
+            {"role": "system", "content": "You are an expert JSON extractor."},
+            {"role": "user", "content": extraction_prompt}
+        ]
+
+        logger.debug(f"[{self.name}] Sending extraction prompt to LiteLLM API")
+        structured_response = litellm_utils.client().send_message(extraction_messages)
+        logger.debug(f"[{self.name}] Received structured response: {structured_response}")
+
+        # Now, extract the JSON from the (hopefully) clean response of the second call
+        return structured_response["role"], utils.extract_json(structured_response["content"])
 
     ###########################################################
     # Internal cognitive state changes
