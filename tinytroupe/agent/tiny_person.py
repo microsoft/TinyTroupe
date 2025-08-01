@@ -242,8 +242,9 @@ class TinyPerson(JsonSerializableRegistry):
 
         # add a final user message, which is neither stimuli or action, to instigate the agent to act properly
         self.current_messages.append({"role": "user", 
-                                      "content": "Now, think about what action you should take next and what your internal cognitive state is. " +\
-                                                 "Describe your chosen action (including its type, content, and target) and your cognitive state (goals, attention, and emotions) in natural language."
+                                      "content": "Now you **must** generate an action. Engage in conversation, answer questions, and talk to other agents when appropriate. " +\
+                                                 "If you receive a CONVERSATION stimulus, you should respond with a TALK action directed at the source. " +\
+                                                 "Describe the action you have chosen and your current cognitive state in natural language. Do not format it as JSON."
                                      })
 
     def get(self, key):
