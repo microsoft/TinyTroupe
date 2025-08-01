@@ -7,7 +7,7 @@ from tinytroupe.utils import logger
 
 
 ################################################################################
-# Rendering and markup 
+# Rendering and markup
 ################################################################################
 def inject_html_css_style_prefix(html, style_prefix_attributes):
     """
@@ -24,6 +24,9 @@ def break_text_at_length(text: Union[str, dict], max_length: int=None) -> str:
     Breaks the text (or JSON) at the specified length, inserting a "(...)" string at the break point.
     If the maximum length is `None`, the content is returned as is.
     """
+    if text is None:
+        return ""
+
     if isinstance(text, dict):
         text = json.dumps(text, indent=4)
 
@@ -51,13 +54,13 @@ def wrap_text(text: str, width: int=100) -> str:
     return textwrap.fill(text, width=width)
 
 class RichTextStyle:
-    
+
     # Consult color options here: https://rich.readthedocs.io/en/stable/appendix/colors.html
 
     STIMULUS_CONVERSATION_STYLE = "bold italic cyan1"
     STIMULUS_THOUGHT_STYLE = "dim italic cyan1"
     STIMULUS_DEFAULT_STYLE = "italic"
-    
+
     ACTION_DONE_STYLE = "grey82"
     ACTION_TALK_STYLE = "bold green3"
     ACTION_THINK_STYLE = "green"
@@ -74,7 +77,7 @@ class RichTextStyle:
                 return cls.STIMULUS_THOUGHT_STYLE
             else:
                 return cls.STIMULUS_DEFAULT_STYLE
-            
+
         elif kind == "action":
             if event_type == "DONE":
                 return cls.ACTION_DONE_STYLE
@@ -84,7 +87,6 @@ class RichTextStyle:
                 return cls.ACTION_THINK_STYLE
             else:
                 return cls.ACTION_DEFAULT_STYLE
-        
+
         elif kind == "intervention":
             return cls.INTERVENTION_DEFAULT_STYLE
-
