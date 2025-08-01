@@ -272,7 +272,7 @@ focus_group = TinyWorld("Focus group", [TinyPerson("PERSON_1"), TinyPerson("PERS
 focus_group.broadcast(SITUATION)
 focus_group.broadcast(MUSICAL)
 focus_group.broadcast(TASK)
-focus_group.run(1)
+focus_group.run(6)
 
 extractor = ResultsExtractor()
 
