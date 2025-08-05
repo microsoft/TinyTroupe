@@ -2,7 +2,7 @@ from tinytroupe.enrichment import logger
 from tinytroupe.utils import JsonSerializableRegistry
 
 
-from tinytroupe import openai_utils
+from tinytroupe.clients import client
 import tinytroupe.utils as utils
 
 class TinyEnricher(JsonSerializableRegistry):
@@ -24,7 +24,7 @@ class TinyEnricher(JsonSerializableRegistry):
                                                                      base_module_folder = "enrichment",
                                                                      rendering_configs=rendering_configs)
         
-        next_message = openai_utils.client().send_message(messages, temperature=1.0, frequency_penalty=0.0, presence_penalty=0.0)
+        next_message = client().send_message(messages, temperature=1.0, frequency_penalty=0.0, presence_penalty=0.0)
         
         debug_msg = f"Enrichment result message: {next_message}"
         logger.debug(debug_msg)

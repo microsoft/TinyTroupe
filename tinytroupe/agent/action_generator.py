@@ -3,7 +3,7 @@ import statistics  # Add this import
 
 import tinytroupe.utils as utils
 from tinytroupe.control import transactional, current_simulation
-import tinytroupe.openai_utils as openai_utils
+from tinytroupe.clients import client
 from tinytroupe.validation import propositions
 from tinytroupe.utils import JsonSerializableRegistry
 from tinytroupe.experimentation import Proposition
@@ -288,8 +288,8 @@ class ActionGenerator(JsonSerializableRegistry):
 
         if not self.enable_reasoning_step:
             logger.debug(f"[{agent.name}] Reasoning step disabled.")
-            next_message = openai_utils.client().send_message(current_messages_context, response_format=CognitiveActionModel)
-            
+            next_message = client().send_message(current_messages_context, response_format=CognitiveActionModel)
+
         else:
             logger.debug(f"[{agent.name}] Reasoning step enabled.")
 
@@ -302,7 +302,7 @@ class ActionGenerator(JsonSerializableRegistry):
             current_messages_context.append({"role": "system",
                                             "content": "Use the \"reasoning\" field to add any reasoning process you might wish to use before generating the next action and cognitive state. "})
 
-            next_message = openai_utils.client().send_message(current_messages_context, response_format=CognitiveActionModelWithReasoning)
+            next_message = client().send_message(current_messages_context, response_format=CognitiveActionModelWithReasoning)
 
         logger.debug(f"[{agent.name}] Received message: {next_message}")
 
