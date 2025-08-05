@@ -1,4 +1,4 @@
-from tinytroupe.environment import logger, default
+from tinytroupe.environment import logger
 
 import copy
 from datetime import datetime, timedelta
@@ -734,7 +734,8 @@ class TinyWorld:
         """
         print(self.pretty_current_interactions(simplified=simplified, skip_system=skip_system))
 
-    def pretty_current_interactions(self, simplified=True, skip_system=True, max_content_length=default["max_content_display_length"], first_n=None, last_n=None, include_omission_info:bool=True):
+    @config_manager.config_defaults(max_content_length="max_content_display_length")
+    def pretty_current_interactions(self, simplified=True, skip_system=True, max_content_length=None, first_n=None, last_n=None, include_omission_info:bool=True):
       """
       Returns a pretty, readable, string with the current messages of agents in this environment.
       """

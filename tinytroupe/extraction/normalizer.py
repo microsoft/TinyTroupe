@@ -3,7 +3,7 @@ from typing import Union, List
 
 from tinytroupe.extraction import logger
 
-from tinytroupe import openai_utils
+from tinytroupe.clients import client
 import tinytroupe.utils as utils
 class Normalizer:
     """
@@ -37,7 +37,7 @@ class Normalizer:
                                                                      base_module_folder="extraction",
                                                                      rendering_configs=rendering_configs)
         
-        next_message = openai_utils.client().send_message(messages, temperature=0.1)
+        next_message = client().send_message(messages, temperature=0.1)
         
         debug_msg = f"Normalization result message: {next_message}"
         logger.debug(debug_msg)
@@ -93,7 +93,7 @@ class Normalizer:
                                                                      base_module_folder="extraction",
                                                                      rendering_configs=rendering_configs)
             
-            next_message = openai_utils.client().send_message(messages, temperature=0.1)
+            next_message = client().send_message(messages, temperature=0.1)
             
             debug_msg = f"Normalization result message: {next_message}"
             logger.debug(debug_msg)

@@ -7,7 +7,7 @@ import copy
 
 from .tiny_factory import TinyFactory
 from tinytroupe.factory import logger
-from tinytroupe import openai_utils
+from tinytroupe.clients import client
 from tinytroupe.agent import TinyPerson
 import tinytroupe.utils as utils
 from tinytroupe.control import transactional
@@ -79,7 +79,7 @@ class TinyPersonFactory(TinyFactory):
 
         messages.append({"role": "user", "content": user_prompt})
 
-        response = openai_utils.client().send_message(messages)
+        response = client().send_message(messages)
 
         if response is not None:
             result = utils.extract_json(response["content"])
@@ -1289,7 +1289,7 @@ class TinyPersonFactory(TinyFactory):
         due too a technicality - otherwise, the agent creation would be skipped during cache reutilization, and
         we don't want that.
         """
-        return openai_utils.client().send_message(messages, 
+        return client().send_message(messages, 
                                                   temperature=temperature, 
                                                   frequency_penalty=frequency_penalty, 
                                                   presence_penalty=presence_penalty,
