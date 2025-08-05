@@ -4,7 +4,7 @@ from tinytroupe.extraction import logger
 from tinytroupe.agent import TinyPerson
 from tinytroupe.environment import TinyWorld
 import tinytroupe.utils as utils
-from tinytroupe import openai_utils
+from tinytroupe.clients import client
 
 class TinyStory:
     """
@@ -62,7 +62,7 @@ class TinyStory:
         messages = utils.compose_initial_LLM_messages_with_templates("story.start.system.mustache", "story.start.user.mustache", 
                                                                      base_module_folder="steering",
                                                                      rendering_configs=rendering_configs)
-        next_message = openai_utils.client().send_message(messages, temperature=1.5)
+        next_message = client().send_message(messages, temperature=1.5)
 
         start = next_message["content"]
 
@@ -94,7 +94,7 @@ class TinyStory:
         messages = utils.compose_initial_LLM_messages_with_templates("story.continuation.system.mustache", "story.continuation.user.mustache", 
                                                                      base_module_folder="steering",
                                                                      rendering_configs=rendering_configs)
-        next_message = openai_utils.client().send_message(messages)#, temperature=1.5)
+        next_message = client().send_message(messages)#, temperature=1.5)
 
         continuation = next_message["content"]
 

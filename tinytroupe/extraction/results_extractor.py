@@ -8,7 +8,7 @@ from tinytroupe.extraction import logger
 from tinytroupe.agent import TinyPerson
 from tinytroupe.environment import TinyWorld
 
-from tinytroupe import openai_utils
+from tinytroupe.clients import client
 import tinytroupe.utils as utils
 
 
@@ -133,7 +133,7 @@ performed.
 """
         messages.append({"role": "user", "content": extraction_request_prompt})
 
-        next_message = openai_utils.client().send_message(messages, temperature=0.0, frequency_penalty=0.0, presence_penalty=0.0)
+        next_message = client().send_message(messages, temperature=0.0, frequency_penalty=0.0, presence_penalty=0.0)
         
         debug_msg = f"Extraction raw result message: {next_message}"
         logger.debug(debug_msg)
@@ -210,7 +210,7 @@ Each interaction history includes stimuli the corresponding agent received as we
 """
         messages.append({"role": "user", "content": extraction_request_prompt})
 
-        next_message = openai_utils.client().send_message(messages, temperature=0.0)
+        next_message = client().send_message(messages, temperature=0.0)
         
         debug_msg = f"Extraction raw result message: {next_message}"
         logger.debug(debug_msg)

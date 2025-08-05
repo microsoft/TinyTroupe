@@ -1,6 +1,5 @@
-from tinytroupe.agent import logger, default, Self, AgentOrWorld, CognitiveActionModel
+from tinytroupe.agent import logger, Self, AgentOrWorld, CognitiveActionModel
 from tinytroupe.agent.memory import EpisodicMemory, SemanticMemory, EpisodicConsolidator
-import tinytroupe.openai_utils as openai_utils
 from tinytroupe.utils import JsonSerializableRegistry, repeat_on_error, name_or_empty
 import tinytroupe.utils as utils
 from tinytroupe.control import transactional, current_simulation
@@ -1188,13 +1187,14 @@ max_content_length=max_content_length,
     # Communication display and action execution 
     ###########################################################
 
+    @config_manager.config_defaults(max_content_length="max_content_display_length")
     def _display_communication(
         self,
         role,
         content,
         kind,
         simplified=True,
-        max_content_length=default["max_content_display_length"],
+        max_content_length=None
     ):
         """
         Displays the current communication and stores it in a buffer for later use.
@@ -1349,12 +1349,13 @@ max_content_length=max_content_length,
 
         return biography
 
+    @config_manager.config_defaults(max_content_length="max_content_display_length")
     def pp_current_interactions(
         self,
         simplified=True,
         skip_system=True,
-        max_content_length=default["max_content_display_length"],
-        first_n=None, 
+        max_content_length=None,
+        first_n=None,
         last_n=None, 
         include_omission_info:bool=True
     ):
@@ -1372,12 +1373,13 @@ max_content_length=max_content_length,
             )
         )
 
+    @config_manager.config_defaults(max_content_length="max_content_display_length")
     def pp_last_interactions(
         self,
         n=3,
         simplified=True,
         skip_system=True,
-        max_content_length=default["max_content_display_length"],
+        max_content_length=None,
         include_omission_info:bool=True
     ):
         """
@@ -1394,7 +1396,8 @@ max_content_length=max_content_length,
             )
         )
 
-    def pretty_current_interactions(self, simplified=True, skip_system=True, max_content_length=default["max_content_display_length"], first_n=None, last_n=None, include_omission_info:bool=True):
+    @config_manager.config_defaults(max_content_length="max_content_display_length")
+    def pretty_current_interactions(self, simplified=True, skip_system=True, max_content_length=None, first_n=None, last_n=None, include_omission_info:bool=True):
       """
       Returns a pretty, readable, string with the current messages.
       """
@@ -1449,12 +1452,13 @@ max_content_length=max_content_length,
       lines.append(f"**** END SIMULATION TRAJECTORY FOR {self.name} ****\n\n")
       return "\n".join(lines)
 
+    @config_manager.config_defaults(max_content_length="max_content_display_length")
     def _pretty_stimuli(
         self,
         role,
         content,
         simplified=True,
-        max_content_length=default["max_content_display_length"],
+        max_content_length=None,
     ) -> list:
         """
         Pretty prints stimuli.
@@ -1496,12 +1500,13 @@ max_content_length=max_content_length,
 
         return "\n".join(lines)
 
+    @config_manager.config_defaults(max_content_length="max_content_display_length")
     def _pretty_action(
         self,
         role,
         content,
         simplified=True,
-        max_content_length=default["max_content_display_length"],
+        max_content_length=None,
     ) -> str:
         """
         Pretty prints an action.
