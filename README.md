@@ -46,6 +46,9 @@ We are releasing *TinyTroupe* at a relatively early stage, with considerable wor
 
 
 ## LATEST NEWS
+**[???] Release 0.6.0:**
+  - Adds experimental/limited Ollama support. See [Ollama Support](./docs/guides/ollama.md) for details.
+  - 
 **[2025-07-31] Release 0.5.2:**  Mostly just changes the default model, which is now set to GPT-4.1-mini. It seems to bring considerable quality improvements. 
    **Note that GPT-4.1-mini can have significant differences in behavior w.r.t. to the previous default of GPT-4o-mini, so please make sure you retest your important scenarios using GPT-4.1-mini and adjust accordingly.**
 
@@ -129,10 +132,15 @@ To run the library, you need:
   - Access to Azure OpenAI Service or Open AI GPT-4 APIs. You can get access to the Azure OpenAI Service [here](https://azure.microsoft.com/en-us/products/ai-services/openai-service), and to the OpenAI API [here](https://platform.openai.com/). 
       * For Azure OpenAI Service, you will need to set the `AZURE_OPENAI_KEY` and `AZURE_OPENAI_ENDPOINT` environment variables to your API key and endpoint, respectively.
       * For OpenAI, you will need to set the `OPENAI_API_KEY` environment variable to your API key.
-  - By default, TinyTroupe `config.ini` is set to use OpenAI API with `gpt-4o-mini` as the main model. You can customize these values by including your own `config.ini` file in the same folder as the program or notebook you are running. An example of a `config.ini` file is provided in the [examples/](./examples/) folder.
+  - By default, TinyTroupe `config.ini` is set to use OpenAI API with `gpt-4.1-mini` as the main model. You can customize these values by including your own `config.ini` file in the same folder as the program or notebook you are running. An example of a `config.ini` file is provided in the [examples/](./examples/) folder.
 
 >[!IMPORTANT]
 > **Content Filters**: To ensure no harmful content is generated during simulations, it is strongly recommended to use content filters whenever available at the API level. In particular, **if using Azure OpenAI, there's extensive support for content moderation, and we urge you to use it.** For details about how to do so, please consult [the corresponding Azure OpenAI documentation](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/content-filter). If content filters are in place, and an API call is rejected by them, the library will raise an exception, as it will be unable to proceed with the simulation at that point.
+
+### Ollama Support
+TinyTroupe is developed primarily with OpenAI models and compatible endpoints in mind, in order to simplify development and focus on making the best use of specific models, instead of investing time to try to make it work well with any model (which might not be feasible anyway). **So, if you can, please use OpenAI models and compatible endpoints.** That said, there's significant community demand for local model support, so we are now experimenting with making this available via partial [Ollama](https://ollama.com/) support and the help of community contributors. Furtheremore, another reason to use local models would be to do research in custom models designed specifically for persona simulation -- ultimately, this might be the best reason to support such a feature. In any case, this is not currently a priority for the core team, though we are doing what we can to allow this possibility. 
+
+See [Ollama Support](./docs/guides/ollama.md) for details on how to use Ollama with TinyTroupe.
 
 
 ## Installation
@@ -184,7 +192,7 @@ If you want to modify TinyTroupe itself, you can install it in editable mode (i.
     ```
 
 ## Principles 
-Recently, we have seen LLMs used to simulate people (such as [this](https://github.com/joonspk-research/generative_agents)), but largely in a “game-like” setting for contemplative or entertainment purposes. There are also libraries for building multiagent systems for problem-solving and assistive AI, like [Autogen](https://microsoft.github.io/) and [Crew AI](https://docs.crewai.com/). What if we combine these ideas and simulate people to support productivity tasks? TinyTroupe is our attempt. To do so, it follows these principles:
+Recently, we have seen LLMs used to simulate people (such as [this](https://github.com/joonspk-research/generative_agents)), but largely in a “game-like” setting for contemplative or entertainment purposes. There are also libraries for building multiagent systems for problem-solving and assistive AI, like [Autogen](https://microsoft.github.io/autogen/) and [Crew AI](https://docs.crewai.com/). What if we combine these ideas and simulate people to support productivity tasks? TinyTroupe is our attempt. To do so, it follows these principles:
 
   1. **Programmatic**: agents and environments are defined programmatically (in Python and JSON), allowing very flexible uses. They can also underpin other software apps!
   2. **Analytical**: meant to improve our understanding of people, users and society. Unlike entertainment applications, this is one aspect that is critical for business and productivity use cases. This is also why we recommend using Jupyter notebooks for simulations, just like one uses them for data analysis.

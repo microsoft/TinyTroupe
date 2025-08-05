@@ -5,7 +5,7 @@ import logging
 from pydantic import BaseModel
 from typing import Optional, List
 
-from tinytroupe import openai_utils
+from tinytroupe.clients import client
 from tinytroupe.agent import TinyPerson
 from tinytroupe import config
 import tinytroupe.utils as utils
@@ -66,7 +66,7 @@ class TinyPersonValidator:
         if include_agent_spec:
             user_prompt += f"\n\n{json.dumps(person._persona, indent=4)}"
         
-        # TODO this was confusing the expectations
+        # TODO this was confusing the expect
         #else:
         #    user_prompt += f"\n\nMini-biography of the person being interviewed: {person.minibio()}"
 
@@ -79,7 +79,7 @@ class TinyPersonValidator:
         current_messages.append({"role": "system", "content": system_prompt})
         current_messages.append({"role": "user", "content": user_prompt})
 
-        message = openai_utils.client().send_message(current_messages, response_format=ValidationResponse, enable_pydantic_model_return=True)
+        message = client().send_message(current_messages, response_format=ValidationResponse, enable_pydantic_model_return=True)
 
         max_iterations = 10  # Limit the number of iterations to prevent infinite loops
         cur_iteration = 0
@@ -106,7 +106,7 @@ class TinyPersonValidator:
 
                 # Appending the responses to the current conversation and checking the next message
                 current_messages.append({"role": "user", "content": responses})
-                message = openai_utils.client().send_message(current_messages, response_format=ValidationResponse, enable_pydantic_model_return=True)
+                message = client().send_message(current_messages, response_format=ValidationResponse, enable_pydantic_model_return=True)
             else:
                 # If no questions but not complete, something went wrong
                 logger.warning("LLM did not provide questions but validation is not complete")

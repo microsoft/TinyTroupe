@@ -6,8 +6,6 @@ agents interact with each other as well as external entities (e.g., search engin
 import logging
 logger = logging.getLogger("tinytroupe")
 
-from tinytroupe import default
-
 ###########################################################################
 # Exposed API
 ###########################################################################

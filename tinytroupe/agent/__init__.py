@@ -19,8 +19,6 @@ from pydantic import BaseModel
 import logging
 logger = logging.getLogger("tinytroupe")
 
-from tinytroupe import default
-
 ###########################################################################
 # Types and constants
 ###########################################################################
