@@ -385,7 +385,7 @@ class OpenAIClient:
 class AzureClient(OpenAIClient):
 
     def __init__(self, cache_api_calls=default["cache_api_calls"], cache_file_name=default["cache_file_name"]) -> None:
-        logger.debug("Initializing AzureClient")
+        logger.info("Initializing AzureClient")
 
         super().__init__(cache_api_calls, cache_file_name)
     
@@ -395,12 +395,12 @@ class AzureClient(OpenAIClient):
         including the API endpoint and key.
         """
         if os.getenv("AZURE_OPENAI_KEY"):
-            logger.info("Using Azure OpenAI Service API with key.")
+            logger.debug("Using Azure OpenAI Service API with key.")
             self.client = AzureOpenAI(azure_endpoint= os.getenv("AZURE_OPENAI_ENDPOINT"),
                                     api_version = config["OpenAI"]["AZURE_API_VERSION"],
                                     api_key = os.getenv("AZURE_OPENAI_KEY"))
         else:  # Use Entra ID Auth
-            logger.info("Using Azure OpenAI Service API with Entra ID Auth.")
+            logger.debug("Using Azure OpenAI Service API with Entra ID Auth.")
             from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 
             credential = DefaultAzureCredential()

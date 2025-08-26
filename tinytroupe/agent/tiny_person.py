@@ -528,11 +528,11 @@ class TinyPerson(JsonSerializableRegistry):
 
         # A separate function to run before each action, which is not meant to be repeated in case of errors.
         def aux_pre_act():
-            # TODO maybe we don't need this at all anymore?
+            # TODO maybe we don't need this at all anymore?  Make it a config option?
             #
             # A quick thought before the action. This seems to help with better model responses, perhaps because
             # it interleaves user with assistant messages.
-            pass # self.think("I will now think, reflect and act a bit, and then issue DONE.")        
+            pass #self.think("I will now think, reflect and act a bit, and then issue DONE. I'll prefer to issue DONE over repeating my thoughts or actions.")        
 
         # Aux function to perform exactly one action.
         # Occasionally, the model will return JSON missing important keys, so we just ask it to try again

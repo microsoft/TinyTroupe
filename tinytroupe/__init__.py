@@ -244,10 +244,21 @@ from llama_index.readers.web import SimpleWebPageReader
 ##)
 
 if config["OpenAI"].get("API_TYPE") == "azure":
+    from azure.identity import DefaultAzureCredential
+
+    # Create a token provider function
+    def get_azure_ad_token():
+        credential = DefaultAzureCredential()
+        token = credential.get_token("https://cognitiveservices.azure.com/.default")
+        return token.token
+
     llamaindex_openai_embed_model = AzureOpenAIEmbedding(model=default["embedding_model"],
-                                                        deployment_name=default["embedding_model"],
-                                                        api_version=default["azure_embedding_model_api_version"],
-                                                        embed_batch_size=10)
+                                                    deployment_name=default["embedding_model"],
+                                                    api_version=default["azure_embedding_model_api_version"],
+                                                    azure_endpoint=config["OpenAI"].get("AZURE_OPENAI_ENDPOINT"),
+                                                    use_azure_ad=True,
+                                                    azure_ad_token_provider=get_azure_ad_token,
+                                                    embed_batch_size=10)
 else:
     llamaindex_openai_embed_model = OpenAIEmbedding(model=default["embedding_model"], embed_batch_size=10)
 Settings.embed_model = llamaindex_openai_embed_model
