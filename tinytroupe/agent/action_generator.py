@@ -288,7 +288,19 @@ class ActionGenerator(JsonSerializableRegistry):
 
         if not self.enable_reasoning_step:
             logger.debug(f"[{agent.name}] Reasoning step disabled.")
-            next_message = openai_utils.client().send_message(current_messages_context, response_format=CognitiveActionModel)
+            # Prefer Responses API JSON Schema when API_MODE=responses; fallback to Pydantic class on legacy
+            response_format = CognitiveActionModel
+            try:
+                # If running in responses mode, provide a JSON Schema envelope with strict mode
+                from pydantic import TypeAdapter
+                schema = TypeAdapter(CognitiveActionModel).json_schema()
+                response_format = {
+                    "type": "json_schema",
+                    "json_schema": {"name": "CognitiveActionModel", "schema": schema, "strict": True},
+                }
+            except Exception:
+                pass
+            next_message = openai_utils.client().send_message(current_messages_context, response_format=response_format)
             
         else:
             logger.debug(f"[{agent.name}] Reasoning step enabled.")
@@ -302,11 +314,31 @@ class ActionGenerator(JsonSerializableRegistry):
             current_messages_context.append({"role": "system",
                                             "content": "Use the \"reasoning\" field to add any reasoning process you might wish to use before generating the next action and cognitive state. "})
 
-            next_message = openai_utils.client().send_message(current_messages_context, response_format=CognitiveActionModelWithReasoning)
+            response_format = CognitiveActionModelWithReasoning
+            try:
+                from pydantic import TypeAdapter
+                schema = TypeAdapter(CognitiveActionModelWithReasoning).json_schema()
+                response_format = {
+                    "type": "json_schema",
+                    "json_schema": {"name": "CognitiveActionModelWithReasoning", "schema": schema, "strict": True},
+                }
+            except Exception:
+                pass
+            next_message = openai_utils.client().send_message(current_messages_context, response_format=response_format)
 
         logger.debug(f"[{agent.name}] Received message: {next_message}")
 
-        role, content = next_message["role"], utils.extract_json(next_message["content"])
+        # Prefer typed parsed payload when available; otherwise, fall back to JSON extraction
+        role = next_message.get("role", "assistant")
+
+        # Handle explicit refusal from provider payloads when present
+        refusal = next_message.get("refusal")
+        if refusal:
+            # Log and raise a specialized exception to surface actionable errors
+            logger.warning(f"[{agent.name}] Model refusal received: {refusal}")
+            raise ActionRefusedException(refusal)
+
+        content = next_message.get("parsed") or utils.extract_json(next_message["content"])
 
         action = content['action']
         logger.debug(f"{agent.name}'s action: {action}")
@@ -530,3 +562,8 @@ class PoorQualityActionException(Exception):
     def __init__(self, message="The generated action is of poor quality"):
         self.message = message
         super().__init__(self.message)
+
+
+class ActionRefusedException(Exception):
+    def __init__(self, refusal_message: str = "The model refused to generate an action"):
+        super().__init__(refusal_message)
