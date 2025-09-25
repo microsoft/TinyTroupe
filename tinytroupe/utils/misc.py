@@ -1,6 +1,8 @@
 import hashlib
 from typing import Union
+
 AgentOrWorld = Union["TinyPerson", "TinyWorld"]
+
 
 ################################################################################
 # Other
@@ -14,6 +16,7 @@ def name_or_empty(named_entity: AgentOrWorld):
     else:
         return named_entity.name
 
+
 def custom_hash(obj):
     """
     Returns a hash for the specified object. The object is first converted
@@ -23,7 +26,10 @@ def custom_hash(obj):
 
     return hashlib.sha256(str(obj).encode()).hexdigest()
 
+
 _fresh_id_counter = 0
+
+
 def fresh_id():
     """
     Returns a fresh ID for a new object. This is useful for generating unique IDs for objects.
@@ -31,6 +37,7 @@ def fresh_id():
     global _fresh_id_counter
     _fresh_id_counter += 1
     return _fresh_id_counter
+
 
 def reset_fresh_id():
     """

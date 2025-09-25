@@ -1,13 +1,21 @@
 import random
+
 import pandas as pd
+
 from tinytroupe.agent import TinyPerson
 
-class ABRandomizer():
 
-    def __init__(self, real_name_1="control", real_name_2="treatment",
-                       blind_name_a="A", blind_name_b="B",
-                       passtrough_name=[],
-                       random_seed=42):
+class ABRandomizer:
+
+    def __init__(
+        self,
+        real_name_1="control",
+        real_name_2="treatment",
+        blind_name_a="A",
+        blind_name_b="B",
+        passtrough_name=[],
+        random_seed=42,
+    ):
         """
         An utility class to randomize between two options, and de-randomize later.
         The choices are stored in a dictionary, with the index of the item as the key.
@@ -48,11 +56,11 @@ class ABRandomizer():
         if random.Random(self.random_seed).random() < 0.5:
             self.choices[i] = (0, 1)
             return a, b
-            
+
         else:
             self.choices[i] = (1, 0)
             return b, a
-    
+
     def derandomize(self, i, a, b):
         """
         De-randomize the choices for item i, and return the choices.
@@ -68,10 +76,10 @@ class ABRandomizer():
             return b, a
         else:
             raise Exception(f"No randomization found for item {i}")
-    
+
     def derandomize_name(self, i, blind_name):
         """
-        Decode the choice made by the user, and return the choice. 
+        Decode the choice made by the user, and return the choice.
 
         Args:
             i (int): index of the item
@@ -89,7 +97,7 @@ class ABRandomizer():
                 return blind_name
             else:
                 raise Exception(f"Choice '{blind_name}' not recognized")
-            
+
         elif self.choices[i] == (1, 0):
             # yes, it was randomized, so return the opposite choice
             if blind_name == self.blind_name_a:
@@ -102,4 +110,3 @@ class ABRandomizer():
                 raise Exception(f"Choice '{blind_name}' not recognized")
         else:
             raise Exception(f"No randomization found for item {i}")
-

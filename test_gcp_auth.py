@@ -1,6 +1,7 @@
 """
 Simple script to test Google Cloud authentication for Vertex AI.
 """
+
 import os
 
 # Check for Google Cloud credentials
@@ -20,7 +21,7 @@ else:
 try:
     import google.auth
     from google.cloud import aiplatform
-    
+
     print("\nTrying to authenticate with Google Cloud...")
     try:
         # Try to get default credentials
@@ -28,7 +29,7 @@ try:
         print(f"✅ Successfully authenticated with Google Cloud. Project ID: {project}")
     except Exception as e:
         print(f"❌ Failed to authenticate with Google Cloud: {str(e)}")
-        
+
     # Try to initialize Vertex AI
     try:
         print("\nTrying to initialize Vertex AI...")
@@ -36,6 +37,6 @@ try:
         print("✅ Successfully initialized Vertex AI")
     except Exception as e:
         print(f"❌ Failed to initialize Vertex AI: {str(e)}")
-        
+
 except ImportError as e:
     print(f"❌ Failed to import Google Cloud libraries: {str(e)}")

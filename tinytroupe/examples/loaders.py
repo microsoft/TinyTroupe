@@ -1,7 +1,8 @@
-import json 
+import json
 import os
 
-def load_example_agent_specification(name:str):
+
+def load_example_agent_specification(name: str):
     """
     Load an example agent specification.
 
@@ -11,9 +12,12 @@ def load_example_agent_specification(name:str):
     Returns:
         dict: The agent specification.
     """
-    return json.load(open(os.path.join(os.path.dirname(__file__), f'./agents/{name}.agent.json')))
+    return json.load(
+        open(os.path.join(os.path.dirname(__file__), f"./agents/{name}.agent.json"))
+    )
 
-def load_example_fragment_specification(name:str):
+
+def load_example_fragment_specification(name: str):
     """
     Load an example fragment specification.
 
@@ -23,7 +27,12 @@ def load_example_fragment_specification(name:str):
     Returns:
         dict: The fragment specification.
     """
-    return json.load(open(os.path.join(os.path.dirname(__file__), f'./fragments/{name}.fragment.json')))
+    return json.load(
+        open(
+            os.path.join(os.path.dirname(__file__), f"./fragments/{name}.fragment.json")
+        )
+    )
+
 
 def list_example_agents():
     """
@@ -32,7 +41,11 @@ def list_example_agents():
     Returns:
         list: A list of the available example agents.
     """
-    return [f.replace('.agent.json', '') for f in os.listdir(os.path.join(os.path.dirname(__file__), './agents'))]
+    return [
+        f.replace(".agent.json", "")
+        for f in os.listdir(os.path.join(os.path.dirname(__file__), "./agents"))
+    ]
+
 
 def list_example_fragments():
     """
@@ -41,4 +54,7 @@ def list_example_fragments():
     Returns:
         list: A list of the available example fragments.
     """
-    return [f.replace('.fragment.json', '') for f in os.listdir(os.path.join(os.path.dirname(__file__), './fragments'))]
+    return [
+        f.replace(".fragment.json", "")
+        for f in os.listdir(os.path.join(os.path.dirname(__file__), "./fragments"))
+    ]

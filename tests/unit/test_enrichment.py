@@ -1,22 +1,25 @@
-import pytest
+import logging
 import textwrap
 
-import logging
+import pytest
+
 logger = logging.getLogger("tinytroupe")
 
 import sys
-sys.path.append('../../tinytroupe/')
-sys.path.append('../../')
-sys.path.append('..')
+
+sys.path.append("../../tinytroupe/")
+sys.path.append("../../")
+sys.path.append("..")
 
 from testing_utils import *
 
 from tinytroupe.enrichment import TinyEnricher
 
+
 def test_enrich_content():
 
-    content_to_enrich = textwrap.dedent(\
-    """
+    content_to_enrich = textwrap.dedent(
+        """
     # WonderCode & Microsoft Partnership: Integration of WonderWand with GitHub
     ## Executive Summary
     This document outlines the strategic approach and considerations for the partnership between WonderCode and Microsoft, focusing on the integration of WonderWand with GitHub. It captures the collaborative efforts and insights from various departments within WonderCode.
@@ -42,25 +45,31 @@ def test_enrich_content():
     - **Cost-Benefit Analysis**: Assess potential revenue against integration development and maintenance costs.
     - **Financial Projections**: Establish clear projections for ROI measurement.
 
-    """).strip()
-
-    requirements = textwrap.dedent(\
     """
+    ).strip()
+
+    requirements = textwrap.dedent(
+        """
     Turn any draft or outline into an actual and long document, with many, many details. Include tables, lists, and other elements.
     The result **MUST** be at least 3 times larger than the original content in terms of characters - do whatever it takes to make it this long and detailed.
-    """).strip()
-    
-    result = TinyEnricher().enrich_content(requirements=requirements, 
-                                       content=content_to_enrich, 
-                                       content_type="Document", 
-                                       context_info="WonderCode was approached by Microsoft to for a partnership.",
-                                       context_cache=None, verbose=True)    
-    
+    """
+    ).strip()
+
+    result = TinyEnricher().enrich_content(
+        requirements=requirements,
+        content=content_to_enrich,
+        content_type="Document",
+        context_info="WonderCode was approached by Microsoft to for a partnership.",
+        context_cache=None,
+        verbose=True,
+    )
+
     assert result is not None, "The result should not be None."
 
-    logger.debug(f"Enrichment result: {result}\n Length: {len(result)}\n Original length: {len(content_to_enrich)}\n")
+    logger.debug(
+        f"Enrichment result: {result}\n Length: {len(result)}\n Original length: {len(content_to_enrich)}\n"
+    )
 
-    assert len(result) >= len(content_to_enrich) * 3, "The result should be at least 3 times larger than the original content."
-
-
-    
+    assert (
+        len(result) >= len(content_to_enrich) * 3
+    ), "The result should be at least 3 times larger than the original content."

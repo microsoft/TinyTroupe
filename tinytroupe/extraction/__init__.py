@@ -4,12 +4,13 @@ Simulations produce a lot of data, and it is often useful to extract these data 
   - Generate synthetic data from a simulation, so that you can use it for training machine learning models or testing software.
   - Simply turn some of the data into a more machine-readable format, such as JSON or CSV, so that you can analyze it more easily.
 
-This module provides various utilities to help you extract data from TinyTroupe elements, such as agents and worlds. It also provides a 
-mechanism to reduce the extracted data to a more concise form, and to export artifacts from TinyTroupe elements. Incidentaly, it showcases 
+This module provides various utilities to help you extract data from TinyTroupe elements, such as agents and worlds. It also provides a
+mechanism to reduce the extracted data to a more concise form, and to export artifacts from TinyTroupe elements. Incidentaly, it showcases
 one of the many ways in which agent simulations differ from AI assistants, as the latter are not designed to be introspected in this way.
 """
 
 import logging
+
 logger = logging.getLogger("tinytroupe")
 
 ###########################################################################

@@ -1,21 +1,27 @@
-import os
 import json
-import chevron
 import logging
+import os
 
-from tinytroupe import litellm_utils
-from tinytroupe.agent import TinyPerson
-from tinytroupe import config
+import chevron
+
 import tinytroupe.utils as utils
+from tinytroupe import config, litellm_utils
+from tinytroupe.agent import TinyPerson
 
-
-default_max_content_display_length = config["OpenAI"].getint("MAX_CONTENT_DISPLAY_LENGTH", 1024)
+default_max_content_display_length = config["OpenAI"].getint(
+    "MAX_CONTENT_DISPLAY_LENGTH", 1024
+)
 
 
 class TinyPersonValidator:
 
     @staticmethod
-    def validate_person(person, expectations=None, include_agent_spec=True, max_content_length=default_max_content_display_length) -> tuple[float, str]:
+    def validate_person(
+        person,
+        expectations=None,
+        include_agent_spec=True,
+        max_content_length=default_max_content_display_length,
+    ) -> tuple[float, str]:
         """
         Validate a TinyPerson instance using OpenAI's LLM.
 
@@ -35,28 +41,33 @@ class TinyPersonValidator:
         """
         # Initiating the current messages
         current_messages = []
-        
+
         # Generating the prompt to check the person
-        check_person_prompt_template_path = os.path.join(os.path.dirname(__file__), 'prompts/check_person.mustache')
-        with open(check_person_prompt_template_path, 'r') as f:
+        check_person_prompt_template_path = os.path.join(
+            os.path.dirname(__file__), "prompts/check_person.mustache"
+        )
+        with open(check_person_prompt_template_path, "r") as f:
             check_agent_prompt_template = f.read()
-        
-        system_prompt = chevron.render(check_agent_prompt_template, {"expectations": expectations})
+
+        system_prompt = chevron.render(
+            check_agent_prompt_template, {"expectations": expectations}
+        )
 
         # use dedent
         import textwrap
-        user_prompt = textwrap.dedent(\
-        """
+
+        user_prompt = textwrap.dedent(
+            """
         Now, based on the following characteristics of the person being interviewed, and following the rules given previously, 
         create your questions and interview the person. Good luck!
 
-        """)
+        """
+        )
 
         if include_agent_spec:
             user_prompt += f"\n\n{json.dumps(person._persona, indent=4)}"
         else:
             user_prompt += f"\n\nMini-biography of the person being interviewed: {person.minibio()}"
-
 
         logger = logging.getLogger("tinytroupe")
 
@@ -87,13 +98,15 @@ class TinyPersonValidator:
             message = litellm_utils.client().send_message(current_messages)
 
         if message is not None:
-            json_content = utils.extract_json(message['content'])
+            json_content = utils.extract_json(message["content"])
             # read score and justification
             score = float(json_content["score"])
             justification = json_content["justification"]
-            logger.info(f"Validation score: {score:.2f}; Justification: {justification}")
-            
+            logger.info(
+                f"Validation score: {score:.2f}; Justification: {justification}"
+            )
+
             return score, justification
-        
+
         else:
             return None, None

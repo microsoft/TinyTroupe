@@ -19,7 +19,8 @@ def inject_html_css_style_prefix(html, style_prefix_attributes):
     """
     return html.replace('style="', f'style="{style_prefix_attributes};')
 
-def break_text_at_length(text: Union[str, dict], max_length: int=None) -> str:
+
+def break_text_at_length(text: Union[str, dict], max_length: int = None) -> str:
     """
     Breaks the text (or JSON) at the specified length, inserting a "(...)" string at the break point.
     If the maximum length is `None`, the content is returned as is.
@@ -35,11 +36,13 @@ def break_text_at_length(text: Union[str, dict], max_length: int=None) -> str:
     else:
         return text[:max_length] + " (...)"
 
+
 def pretty_datetime(dt: datetime) -> str:
     """
     Returns a pretty string representation of the specified datetime object.
     """
     return dt.strftime("%Y-%m-%d %H:%M")
+
 
 def dedent(text: str) -> str:
     """
@@ -47,11 +50,13 @@ def dedent(text: str) -> str:
     """
     return textwrap.dedent(text).strip()
 
-def wrap_text(text: str, width: int=100) -> str:
+
+def wrap_text(text: str, width: int = 100) -> str:
     """
     Wraps the text at the specified width.
     """
     return textwrap.fill(text, width=width)
+
 
 class RichTextStyle:
 
@@ -69,8 +74,8 @@ class RichTextStyle:
     INTERVENTION_DEFAULT_STYLE = "bright_magenta"
 
     @classmethod
-    def get_style_for(cls, kind:str, event_type:str=None):
-        if kind == "stimulus" or kind=="stimuli":
+    def get_style_for(cls, kind: str, event_type: str = None):
+        if kind == "stimulus" or kind == "stimuli":
             if event_type == "CONVERSATION":
                 return cls.STIMULUS_CONVERSATION_STYLE
             elif event_type == "THOUGHT":

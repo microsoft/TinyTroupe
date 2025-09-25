@@ -1,15 +1,14 @@
-from tinytroupe.environment.tiny_world import TinyWorld
-from tinytroupe.environment import logger
-
 import copy
 from datetime import datetime, timedelta
+from typing import Any, TypeVar, Union
+
+from rich.console import Console
 
 from tinytroupe.agent import *
 from tinytroupe.control import transactional
- 
-from rich.console import Console
+from tinytroupe.environment import logger
+from tinytroupe.environment.tiny_world import TinyWorld
 
-from typing import Any, TypeVar, Union
 AgentOrWorld = Union["TinyPerson", "TinyWorld"]
 
 
@@ -24,23 +23,25 @@ class TinySocialNetwork(TinyWorld):
             broadcast_if_no_target (bool): If True, broadcast actions through an agent's available relations
               if the target of an action is not found.
         """
-        
+
         super().__init__(name, broadcast_if_no_target=broadcast_if_no_target)
 
         self.relations = {}
-    
+
     @transactional
     def add_relation(self, agent_1, agent_2, name="default"):
         """
         Adds a relation between two agents.
-        
+
         Args:
             agent_1 (TinyPerson): The first agent.
             agent_2 (TinyPerson): The second agent.
             name (str): The name of the relation.
         """
 
-        logger.debug(f"Adding relation {name} between {agent_1.name} and {agent_2.name}.")
+        logger.debug(
+            f"Adding relation {name} between {agent_1.name} and {agent_2.name}."
+        )
 
         # agents must already be in the environment, if not they are first added
         if agent_1 not in self.agents:
@@ -53,8 +54,8 @@ class TinySocialNetwork(TinyWorld):
         else:
             self.relations[name] = [(agent_1, agent_2)]
 
-        return self # for chaining
-    
+        return self  # for chaining
+
     @transactional
     def _update_agents_contexts(self):
         """
@@ -76,9 +77,9 @@ class TinySocialNetwork(TinyWorld):
     def _step(self):
         self._update_agents_contexts()
 
-        #call super
+        # call super
         super()._step()
-    
+
     @transactional
     def _handle_reach_out(self, source_agent: TinyPerson, content: str, target: str):
         """
@@ -90,14 +91,16 @@ class TinySocialNetwork(TinyWorld):
             content (str): The content of the message.
             target (str): The target of the message.
         """
-            
+
         # check if the target is in the same relation as the source
         if self.is_in_relation_with(source_agent, self.get_agent_by_name(target)):
             super()._handle_reach_out(source_agent, content, target)
-            
-        # if we get here, the target is not in the same relation as the source
-        source_agent.socialize(f"{target} is not in the same relation as you, so you cannot reach out to them.", source=self)
 
+        # if we get here, the target is not in the same relation as the source
+        source_agent.socialize(
+            f"{target} is not in the same relation as you, so you cannot reach out to them.",
+            source=self,
+        )
 
     # TODO implement _handle_talk using broadcast_if_no_target too
 
@@ -105,7 +108,9 @@ class TinySocialNetwork(TinyWorld):
     # Utilities and conveniences
     #######################################################################
 
-    def is_in_relation_with(self, agent_1:TinyPerson, agent_2:TinyPerson, relation_name=None) -> bool:
+    def is_in_relation_with(
+        self, agent_1: TinyPerson, agent_2: TinyPerson, relation_name=None
+    ) -> bool:
         """
         Checks if two agents are in a relation. If the relation name is given, check that
         the agents are in that relation. If no relation name is given, check that the agents
@@ -124,9 +129,12 @@ class TinySocialNetwork(TinyWorld):
                 if (agent_1, agent_2) in relation or (agent_2, agent_1) in relation:
                     return True
             return False
-        
+
         else:
             if relation_name in self.relations:
-                return (agent_1, agent_2) in self.relations[relation_name] or (agent_2, agent_1) in self.relations[relation_name]
+                return (agent_1, agent_2) in self.relations[relation_name] or (
+                    agent_2,
+                    agent_1,
+                ) in self.relations[relation_name]
             else:
                 return False

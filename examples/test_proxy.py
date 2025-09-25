@@ -11,26 +11,25 @@ os.environ["LITELLM_URL"] = "https://utils-litellm-app.nvdvcu.easypanel.host/"
 os.environ["LITELLM_KEY"] = "sk-mfOXFYylzZg_hi-24TvBAg"
 
 # Add the tinytroupe directory to the path
-sys.path.insert(0, '../tinytroupe')
+sys.path.insert(0, "../tinytroupe")
 
 # Now import
 import tinytroupe.litellm_utils as litellm_utils
 
+
 def test_proxy_connection():
     """Test connection to LiteLLM proxy."""
     print("Testing LiteLLM proxy connection...")
-    
+
     client = litellm_utils.client()
-    
-    messages = [
-        {"role": "user", "content": "Say 'Hello from proxy!'"}
-    ]
-    
+
+    messages = [{"role": "user", "content": "Say 'Hello from proxy!'"}]
+
     # Try different model names that might work with the proxy
     model_names_to_try = [
-        "groq/llama3-8b-8192",    # Original format        
+        "groq/llama3-8b-8192",  # Original format
     ]
-    
+
     for model_name in model_names_to_try:
         try:
             print(f"\nTesting model: {model_name}")
@@ -40,6 +39,7 @@ def test_proxy_connection():
             break  # If one works, we're good
         except Exception as e:
             print(f"✗ Failed with {model_name}: {str(e)[:100]}...")
-    
+
+
 if __name__ == "__main__":
     test_proxy_connection()

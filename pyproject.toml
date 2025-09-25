@@ -45,6 +45,8 @@ dependencies = [
     "google-cloud>=0.34.0",
     "google-cloud-aiplatform>=1.105.0",
     "openai>=1.35.0",
+    "black>=25.1.0",
+    "isort>=6.0.1",
 ]
 
 [project.urls]

@@ -4,14 +4,14 @@ agents interact with each other as well as external entities (e.g., search engin
 """
 
 import logging
+
 logger = logging.getLogger("tinytroupe")
 
 from tinytroupe import default
-
+from tinytroupe.environment.tiny_social_network import TinySocialNetwork
 ###########################################################################
 # Exposed API
 ###########################################################################
 from tinytroupe.environment.tiny_world import TinyWorld
-from tinytroupe.environment.tiny_social_network import TinySocialNetwork
 
 __all__ = ["TinyWorld", "TinySocialNetwork"]

@@ -1,19 +1,19 @@
-from tinytroupe.environment import logger, default
-
 import copy
-from datetime import datetime, timedelta
 import textwrap
-
-from tinytroupe.agent import *
-from tinytroupe.utils import name_or_empty, pretty_datetime
-import tinytroupe.control as control
-from tinytroupe.control import transactional
-from tinytroupe import utils
+from datetime import datetime, timedelta
+from typing import Any, TypeVar, Union
 
 from rich.console import Console
 
-from typing import Any, TypeVar, Union
+import tinytroupe.control as control
+from tinytroupe import utils
+from tinytroupe.agent import *
+from tinytroupe.control import transactional
+from tinytroupe.environment import default, logger
+from tinytroupe.utils import name_or_empty, pretty_datetime
+
 AgentOrWorld = Union["TinyPerson", "TinyWorld"]
+
 
 class TinyWorld:
     """
@@ -21,16 +21,20 @@ class TinyWorld:
     """
 
     # A dict of all environments created so far.
-    all_environments = {} # name -> environment
+    all_environments = {}  # name -> environment
 
     # Whether to display environments communications or not, for all environments.
     communication_display = True
 
-    def __init__(self, name: str="A TinyWorld", agents=[],
-                 initial_datetime=datetime.now(),
-                 interventions=[],
-                 broadcast_if_no_target=True,
-                 max_additional_targets_to_display=3):
+    def __init__(
+        self,
+        name: str = "A TinyWorld",
+        agents=[],
+        initial_datetime=datetime.now(),
+        interventions=[],
+        broadcast_if_no_target=True,
+        max_additional_targets_to_display=3,
+    ):
         """
         Initializes an environment.
 
@@ -48,10 +52,10 @@ class TinyWorld:
         self.name = name
         self.current_datetime = initial_datetime
         self.broadcast_if_no_target = broadcast_if_no_target
-        self.simulation_id = None # will be reset later if the agent is used within a specific simulation scope
+        self.simulation_id = None  # will be reset later if the agent is used within a specific simulation scope
 
         self.agents = []
-        self.name_to_agent = {} # {agent_name: agent, agent_name_2: agent_2, ...}
+        self.name_to_agent = {}  # {agent_name: agent, agent_name_2: agent_2, ...}
 
         self._interventions = interventions
 
@@ -94,7 +98,9 @@ class TinyWorld:
                     self._display_intervention_communication(intervention)
                 intervention.apply_effect()
 
-                logger.debug(f"[{self.name}] Intervention '{intervention.name}' was applied.")
+                logger.debug(
+                    f"[{self.name}] Intervention '{intervention.name}' was applied."
+                )
 
         # Agents act in a turn-based manner until all have issued a DONE action.
         agents_actions = {agent.name: [] for agent in self.agents}
@@ -111,33 +117,40 @@ class TinyWorld:
             # Use a copy of the list to allow safe removal during iteration
             for agent in list(active_agents):
                 if agent not in active_agents:
-                    continue # Agent was made inactive in this same turn
+                    continue  # Agent was made inactive in this same turn
 
-                logger.debug(f"[{self.name}] Agent {name_or_empty(agent)} is taking a single action.")
+                logger.debug(
+                    f"[{self.name}] Agent {name_or_empty(agent)} is taking a single action."
+                )
                 # Agent acts one action at a time
                 action_content = agent.act(until_done=False, n=1, return_actions=True)
 
                 # Check if the agent is done
-                if action_content and action_content[0].get('action'):
-                    action = action_content[0]['action']
+                if action_content and action_content[0].get("action"):
+                    action = action_content[0]["action"]
                     agents_actions[agent.name].extend(action_content)
 
                     # Immediately handle the action
                     self._handle_actions(agent, agent.pop_latest_actions())
 
-                    if action['type'] == "DONE":
-                        logger.debug(f"[{self.name}] Agent {name_or_empty(agent)} is now done for this step.")
+                    if action["type"] == "DONE":
+                        logger.debug(
+                            f"[{self.name}] Agent {name_or_empty(agent)} is now done for this step."
+                        )
                         active_agents.remove(agent)
                 else:
                     # If agent.act(n=1) returns nothing or a malformed action, it's considered done for this step.
-                    logger.warning(f"[{self.name}] Agent {name_or_empty(agent)} produced no valid action and is being marked as done for this step.")
+                    logger.warning(
+                        f"[{self.name}] Agent {name_or_empty(agent)} produced no valid action and is being marked as done for this step."
+                    )
                     active_agents.remove(agent)
 
-        else: # This 'else' belongs to the 'for' loop
-             logger.warning(f"[{self.name}] World simulation step reached max_turns ({max_turns}). Some agents may not have completed their turn.")
+        else:  # This 'else' belongs to the 'for' loop
+            logger.warning(
+                f"[{self.name}] World simulation step reached max_turns ({max_turns}). Some agents may not have completed their turn."
+            )
 
         return agents_actions
-
 
     def _advance_datetime(self, timedelta):
         """
@@ -149,7 +162,9 @@ class TinyWorld:
         if timedelta is not None:
             self.current_datetime += timedelta
         else:
-            logger.info(f"[{self.name}] No timedelta provided, so the datetime was not advanced.")
+            logger.info(
+                f"[{self.name}] No timedelta provided, so the datetime was not advanced."
+            )
 
     @transactional
     def run(self, steps: int, timedelta_per_step=None, return_actions=False):
@@ -167,10 +182,16 @@ class TinyWorld:
         """
         agents_actions_over_time = []
         for i in range(steps):
-            logger.info(f"[{self.name}] Running world simulation step {i+1} of {steps}.")
+            logger.info(
+                f"[{self.name}] Running world simulation step {i+1} of {steps}."
+            )
 
             if TinyWorld.communication_display:
-                self._display_step_communication(cur_step=i+1, total_steps=steps, timedelta_per_step=timedelta_per_step)
+                self._display_step_communication(
+                    cur_step=i + 1,
+                    total_steps=steps,
+                    timedelta_per_step=timedelta_per_step,
+                )
 
             agents_actions = self._step(timedelta_per_step=timedelta_per_step)
             agents_actions_over_time.append(agents_actions)
@@ -311,7 +332,7 @@ class TinyWorld:
         for agent in agents:
             self.add_agent(agent)
 
-        return self # for chaining
+        return self  # for chaining
 
     def add_agent(self, agent: TinyPerson):
         """
@@ -335,11 +356,13 @@ class TinyWorld:
                 self.agents.append(agent)
                 self.name_to_agent[agent.name] = agent
             else:
-                raise ValueError(f"Agent names must be unique, but '{agent.name}' is already in the environment.")
+                raise ValueError(
+                    f"Agent names must be unique, but '{agent.name}' is already in the environment."
+                )
         else:
             logger.warn(f"Agent {agent.name} is already in the environment.")
 
-        return self # for chaining
+        return self  # for chaining
 
     def remove_agent(self, agent: TinyPerson):
         """
@@ -352,7 +375,7 @@ class TinyWorld:
         self.agents.remove(agent)
         del self.name_to_agent[agent.name]
 
-        return self # for chaining
+        return self  # for chaining
 
     def remove_all_agents(self):
         """
@@ -362,7 +385,7 @@ class TinyWorld:
         self.agents = []
         self.name_to_agent = {}
 
-        return self # for chaining
+        return self  # for chaining
 
     def get_agent_by_name(self, name: str) -> TinyPerson:
         """
@@ -411,11 +434,13 @@ class TinyWorld:
 
         """
         for action in actions:
-            action_type = action["type"] # this is the only required field
+            action_type = action["type"]  # this is the only required field
             content = action["content"] if "content" in action else None
             target = action["target"] if "target" in action else None
 
-            logger.debug(f"[{self.name}] Handling action {action_type} from agent {name_or_empty(source)}. Content: {content}, target: {target}.")
+            logger.debug(
+                f"[{self.name}] Handling action {action_type} from agent {name_or_empty(source)}. Content: {content}, target: {target}."
+            )
 
             # only some actions require the enviroment to intervene
             if action_type == "REACH_OUT":
@@ -442,11 +467,19 @@ class TinyWorld:
             source_agent.make_agent_accessible(target_agent)
             target_agent.make_agent_accessible(source_agent)
 
-            source_agent.socialize(f"{name_or_empty(target_agent)} was successfully reached out, and is now available for interaction.", source=self)
-            target_agent.socialize(f"{name_or_empty(source_agent)} reached out to you, and is now available for interaction.", source=self)
+            source_agent.socialize(
+                f"{name_or_empty(target_agent)} was successfully reached out, and is now available for interaction.",
+                source=self,
+            )
+            target_agent.socialize(
+                f"{name_or_empty(source_agent)} reached out to you, and is now available for interaction.",
+                source=self,
+            )
 
         else:
-            logger.debug(f"[{self.name}] REACH_OUT action failed: target agent '{target}' not found.")
+            logger.debug(
+                f"[{self.name}] REACH_OUT action failed: target agent '{target}' not found."
+            )
 
     @transactional
     def _handle_talk(self, source_agent: TinyPerson, content: str, target: str):
@@ -460,7 +493,9 @@ class TinyWorld:
         """
         target_agent = self.get_agent_by_name(target)
 
-        logger.debug(f"[{self.name}] Delivering message from {name_or_empty(source_agent)} to {name_or_empty(target_agent)}.")
+        logger.debug(
+            f"[{self.name}] Delivering message from {name_or_empty(source_agent)} to {name_or_empty(target_agent)}."
+        )
 
         if target_agent is not None:
             target_agent.listen(content, source=source_agent)
@@ -471,7 +506,7 @@ class TinyWorld:
     # Interaction methods
     #######################################################################
     @transactional
-    def broadcast(self, speech: str, source: AgentOrWorld=None):
+    def broadcast(self, speech: str, source: AgentOrWorld = None):
         """
         Delivers a speech to all agents in the environment.
 
@@ -487,7 +522,7 @@ class TinyWorld:
                 agent.listen(speech, source=source)
 
     @transactional
-    def broadcast_thought(self, thought: str, source: AgentOrWorld=None):
+    def broadcast_thought(self, thought: str, source: AgentOrWorld = None):
         """
         Broadcasts a thought to all agents in the environment.
 
@@ -513,7 +548,7 @@ class TinyWorld:
             agent.internalize_goal(internal_goal)
 
     @transactional
-    def broadcast_context_change(self, context:list):
+    def broadcast_context_change(self, context: list):
         """
         Broadcasts a context change to all agents in the environment.
 
@@ -534,26 +569,47 @@ class TinyWorld:
                 if agent_1 != agent_2:
                     agent_1.make_agent_accessible(agent_2)
 
-
     ###########################################################
     # Formatting conveniences
     ###########################################################
 
     # TODO better names for these "display" methods
-    def _display_step_communication(self, cur_step, total_steps, timedelta_per_step=None):
+    def _display_step_communication(
+        self, cur_step, total_steps, timedelta_per_step=None
+    ):
         """
         Displays the current communication and stores it in a buffer for later use.
         """
-        rendering = self._pretty_step(cur_step=cur_step, total_steps=total_steps, timedelta_per_step=timedelta_per_step)
+        rendering = self._pretty_step(
+            cur_step=cur_step,
+            total_steps=total_steps,
+            timedelta_per_step=timedelta_per_step,
+        )
 
-        self._push_and_display_latest_communication({"kind": 'step', "rendering": rendering, "content": None, "source":  None, "target": None})
+        self._push_and_display_latest_communication(
+            {
+                "kind": "step",
+                "rendering": rendering,
+                "content": None,
+                "source": None,
+                "target": None,
+            }
+        )
 
     def _display_intervention_communication(self, intervention):
         """
         Displays the current intervention communication and stores it in a buffer for later use.
         """
         rendering = self._pretty_intervention(intervention)
-        self._push_and_display_latest_communication({"kind": 'intervention', "rendering": rendering, "content": None, "source":  None, "target": None})
+        self._push_and_display_latest_communication(
+            {
+                "kind": "intervention",
+                "rendering": rendering,
+                "content": None,
+                "source": None,
+                "target": None,
+            }
+        )
 
     def _push_and_display_latest_communication(self, communication):
         """
@@ -568,13 +624,13 @@ class TinyWorld:
             last_kind = last_communication["kind"]
             last_target = last_communication["target"]
             last_source = last_communication["source"]
-            if last_kind == 'action':
+            if last_kind == "action":
                 last_content = last_communication["content"]["action"]["content"]
                 last_type = last_communication["content"]["action"]["type"]
-            elif last_kind == 'stimulus':
+            elif last_kind == "stimulus":
                 last_content = last_communication["content"]["stimulus"]["content"]
                 last_type = last_communication["content"]["stimulus"]["type"]
-            elif last_kind == 'stimuli':
+            elif last_kind == "stimuli":
                 last_stimulus = last_communication["content"]["stimuli"][0]
                 last_content = last_stimulus["content"]
                 last_type = last_stimulus["type"]
@@ -586,13 +642,13 @@ class TinyWorld:
             current_kind = communication["kind"]
             current_target = communication["target"]
             current_source = communication["source"]
-            if current_kind == 'action':
+            if current_kind == "action":
                 current_content = communication["content"]["action"]["content"]
                 current_type = communication["content"]["action"]["type"]
-            elif current_kind == 'stimulus':
+            elif current_kind == "stimulus":
                 current_content = communication["content"]["stimulus"]["content"]
                 current_type = communication["content"]["stimulus"]["type"]
-            elif current_kind == 'stimuli':
+            elif current_kind == "stimuli":
                 current_stimulus = communication["content"]["stimuli"][0]
                 current_content = current_stimulus["content"]
                 current_type = current_stimulus["type"]
@@ -601,9 +657,14 @@ class TinyWorld:
                 current_type = None
 
             # if we are repeating the last communication, let's simplify the rendering
-            if (last_source == current_source) and (last_type == current_type) and (last_kind == current_kind) and \
-               (last_content is not None) and (last_content == current_content) and \
-               (current_target is not None):
+            if (
+                (last_source == current_source)
+                and (last_type == current_type)
+                and (last_kind == current_kind)
+                and (last_content is not None)
+                and (last_content == current_content)
+                and (current_target is not None)
+            ):
 
                 self._target_display_communications_buffer.append(current_target)
 
@@ -611,25 +672,33 @@ class TinyWorld:
 
                 # print the additional target a limited number of times if a max is set, or
                 # always if no max is set.
-                if (self._max_additional_targets_to_display is None) or\
-                   len(self._target_display_communications_buffer) < self._max_additional_targets_to_display:
-                    communication["rendering"] = " " * len(last_source) + f"[{rich_style}]       + --> [underline]{current_target}[/][/]"
+                if (self._max_additional_targets_to_display is None) or len(
+                    self._target_display_communications_buffer
+                ) < self._max_additional_targets_to_display:
+                    communication["rendering"] = (
+                        " " * len(last_source)
+                        + f"[{rich_style}]       + --> [underline]{current_target}[/][/]"
+                    )
 
-                elif len(self._target_display_communications_buffer) == self._max_additional_targets_to_display:
-                    communication["rendering"] = " " * len(last_source) + f"[{rich_style}]       + --> ...others...[/]"
+                elif (
+                    len(self._target_display_communications_buffer)
+                    == self._max_additional_targets_to_display
+                ):
+                    communication["rendering"] = (
+                        " " * len(last_source)
+                        + f"[{rich_style}]       + --> ...others...[/]"
+                    )
 
-                else: # don't display anything anymore
+                else:  # don't display anything anymore
                     communication["rendering"] = None
 
             else:
                 # no repetition, so just display the communication and reset the targets buffer
-                self._target_display_communications_buffer = [] # resets
+                self._target_display_communications_buffer = []  # resets
 
         else:
             # no repetition, so just display the communication and reset the targets buffer
-            self._target_display_communications_buffer = [] # resets
-
-
+            self._target_display_communications_buffer = []  # resets
 
         self._displayed_communications_buffer.append(communication)
         self._display(communication)
@@ -646,14 +715,14 @@ class TinyWorld:
 
         return communications
 
-    def _display(self, communication:dict):
+    def _display(self, communication: dict):
         # unpack the rendering to find more info
         content = communication["rendering"]
         kind = communication["kind"]
 
         if content is not None:
             # render as appropriate
-            if kind == 'step':
+            if kind == "step":
                 self.console.rule(content)
             else:
                 self.console.print(content)
@@ -684,8 +753,10 @@ class TinyWorld:
         )
 
         rich_style = utils.RichTextStyle.get_style_for("intervention")
-        rendering = f"[{rich_style}] :zap: [bold] <<{intervention.name}>> Triggered, effects are being applied...[/] \n" + \
-                    f"[italic]{justification}[/][/]"
+        rendering = (
+            f"[{rich_style}] :zap: [bold] <<{intervention.name}>> Triggered, effects are being applied...[/] \n"
+            + f"[italic]{justification}[/][/]"
+        )
         # TODO add details about why the intervention was applied
 
         return rendering
@@ -694,22 +765,46 @@ class TinyWorld:
         """
         Pretty prints the current messages from agents in this environment.
         """
-        print(self.pretty_current_interactions(simplified=simplified, skip_system=skip_system))
+        print(
+            self.pretty_current_interactions(
+                simplified=simplified, skip_system=skip_system
+            )
+        )
 
-    def pretty_current_interactions(self, simplified=True, skip_system=True, max_content_length=default["max_content_display_length"], first_n=None, last_n=None, include_omission_info:bool=True):
-      """
-      Returns a pretty, readable, string with the current messages of agents in this environment.
-      """
-      agent_contents = []
+    def pretty_current_interactions(
+        self,
+        simplified=True,
+        skip_system=True,
+        max_content_length=default["max_content_display_length"],
+        first_n=None,
+        last_n=None,
+        include_omission_info: bool = True,
+    ):
+        """
+        Returns a pretty, readable, string with the current messages of agents in this environment.
+        """
+        agent_contents = []
 
-      for agent in self.agents:
-          agent_content = f"#### Interactions from the point of view of {agent.name} agent:\n"
-          agent_content += f"**BEGIN AGENT {agent.name} HISTORY.**\n "
-          agent_content += agent.pretty_current_interactions(simplified=simplified, skip_system=skip_system, max_content_length=max_content_length, first_n=first_n, last_n=last_n, include_omission_info=include_omission_info) + "\n"
-          agent_content += f"**FINISHED AGENT {agent.name} HISTORY.**\n\n"
-          agent_contents.append(agent_content)
+        for agent in self.agents:
+            agent_content = (
+                f"#### Interactions from the point of view of {agent.name} agent:\n"
+            )
+            agent_content += f"**BEGIN AGENT {agent.name} HISTORY.**\n "
+            agent_content += (
+                agent.pretty_current_interactions(
+                    simplified=simplified,
+                    skip_system=skip_system,
+                    max_content_length=max_content_length,
+                    first_n=first_n,
+                    last_n=last_n,
+                    include_omission_info=include_omission_info,
+                )
+                + "\n"
+            )
+            agent_content += f"**FINISHED AGENT {agent.name} HISTORY.**\n\n"
+            agent_contents.append(agent_content)
 
-      return "\n".join(agent_contents)
+        return "\n".join(agent_contents)
 
     #######################################################################
     # IO
@@ -725,11 +820,11 @@ class TinyWorld:
         to_copy = copy.copy(self.__dict__)
 
         # remove the logger and other fields
-        del to_copy['console']
-        del to_copy['agents']
-        del to_copy['name_to_agent']
-        del to_copy['current_datetime']
-        del to_copy['_interventions'] # TODO: encode interventions
+        del to_copy["console"]
+        del to_copy["agents"]
+        del to_copy["name_to_agent"]
+        del to_copy["current_datetime"]
+        del to_copy["_interventions"]  # TODO: encode interventions
 
         state = copy.deepcopy(to_copy)
 
@@ -741,7 +836,7 @@ class TinyWorld:
 
         return state
 
-    def decode_complete_state(self, state:dict):
+    def decode_complete_state(self, state: dict):
         """
         Decodes the complete state of the environment from a dictionary.
 
@@ -762,13 +857,17 @@ class TinyWorld:
                 try:
                     agent = TinyPerson.get_agent_by_name(agent_state["name"])
                 except Exception as e:
-                    raise ValueError(f"Could not find agent {agent_state['name']} for environment {self.name}.") from e
+                    raise ValueError(
+                        f"Could not find agent {agent_state['name']} for environment {self.name}."
+                    ) from e
 
                 agent.decode_complete_state(agent_state)
                 self.add_agent(agent)
 
             except Exception as e:
-                raise ValueError(f"Could not decode agent {agent_state['name']} for environment {self.name}.") from e
+                raise ValueError(
+                    f"Could not decode agent {agent_state['name']} for environment {self.name}."
+                ) from e
 
         # remove the agent states to update the rest of the environment
         del state["agents"]
@@ -788,10 +887,11 @@ class TinyWorld:
         so if an environment with the same name already exists, an error is raised.
         """
         if environment.name in TinyWorld.all_environments:
-            raise ValueError(f"Environment names must be unique, but '{environment.name}' is already defined.")
+            raise ValueError(
+                f"Environment names must be unique, but '{environment.name}' is already defined."
+            )
         else:
             TinyWorld.all_environments[environment.name] = environment
-
 
     @staticmethod
     def set_simulation_for_free_environments(simulation):

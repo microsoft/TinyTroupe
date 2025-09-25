@@ -1,5 +1,5 @@
-
 import logging
+
 logger = logging.getLogger("tinytroupe")
 
 from tinytroupe import default

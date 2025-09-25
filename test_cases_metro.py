@@ -1,9 +1,11 @@
 import sys
-sys.path.insert(0, '..')
+
+sys.path.insert(0, "..")
 
 from tinytroupe.agent import TinyPerson
 from tinytroupe.environment import TinyWorld
 from tinytroupe.extraction import ResultsExtractor
+
 
 def load_example_agent_specification(name: str, agent_specs: dict):
     """
@@ -17,6 +19,7 @@ def load_example_agent_specification(name: str, agent_specs: dict):
         dict: The agent specification.
     """
     return agent_specs.get(name)
+
 
 SITUATION_3 = """
     The Montreal City Hall is considering a significant change to the metro's operating hours:
@@ -62,12 +65,12 @@ PERSON_1 = {
         "long_term_goals": [
             "Maintain punctuality at work.",
             "Balance work and family life.",
-            "Reduce commuting stress."
+            "Reduce commuting stress.",
         ],
         "occupation": {
             "title": "Accountant",
             "organization": "Downtown Firm",
-            "description": "Works regular office hours, relies on early metro service."
+            "description": "Works regular office hours, relies on early metro service.",
         },
         "style": "Professional, practical, and organized.",
         "personality": {
@@ -75,84 +78,53 @@ PERSON_1 = {
                 "Routine-oriented.",
                 "Dependable.",
                 "Values efficiency.",
-                "Dislikes disruptions."
+                "Dislikes disruptions.",
             ],
             "big_five": {
                 "openness": "Medium. Prefers predictability.",
                 "conscientiousness": "High. Always on time.",
                 "extraversion": "Low. Quiet commuter.",
                 "agreeableness": "Medium. Cooperative but reserved.",
-                "neuroticism": "Medium. Sensitive to schedule changes."
-            }
+                "neuroticism": "Medium. Sensitive to schedule changes.",
+            },
         },
         "preferences": {
-            "interests": [
-                "Reading news during commute",
-                "Family time",
-                "Coffee shops"
-            ],
-            "likes": [
-                "Reliable transit",
-                "Quiet mornings",
-                "Early start to the day"
-            ],
-            "dislikes": [
-                "Delays",
-                "Crowded trains",
-                "Unpredictable schedules"
-            ]
+            "interests": ["Reading news during commute", "Family time", "Coffee shops"],
+            "likes": ["Reliable transit", "Quiet mornings", "Early start to the day"],
+            "dislikes": ["Delays", "Crowded trains", "Unpredictable schedules"],
         },
-        "skills": [
-            "Time management.",
-            "Budgeting.",
-            "Planning efficient routes."
-        ],
+        "skills": ["Time management.", "Budgeting.", "Planning efficient routes."],
         "beliefs": [
             "Punctuality is important.",
             "Public transit should serve all schedules.",
-            "Routine brings peace of mind."
+            "Routine brings peace of mind.",
         ],
         "behaviors": {
             "general": [
                 "Boards first metro of the day.",
                 "Prepares for work during commute.",
-                "Avoids late nights."
+                "Avoids late nights.",
             ],
             "routines": {
-                "morning": [
-                    "Wakes up early.",
-                    "Catches 5:30 AM metro."
-                ],
+                "morning": ["Wakes up early.", "Catches 5:30 AM metro."],
                 "workday": [
                     "Arrives at office before 7 AM.",
-                    "Eats breakfast at desk."
+                    "Eats breakfast at desk.",
                 ],
-                "evening": [
-                    "Returns home by 6 PM.",
-                    "Spends time with family."
-                ],
-                "weekend": [
-                    "Occasional early errands.",
-                    "Family outings."
-                ]
-            }
+                "evening": ["Returns home by 6 PM.", "Spends time with family."],
+                "weekend": ["Occasional early errands.", "Family outings."],
+            },
         },
         "health": "Good, prioritizes sleep.",
         "relationships": [
-            {
-                "name": "Family",
-                "description": "Spouse and two children."
-            },
-            {
-                "name": "Colleagues",
-                "description": "Works closely with a small team."
-            }
+            {"name": "Family", "description": "Spouse and two children."},
+            {"name": "Colleagues", "description": "Works closely with a small team."},
         ],
         "other_facts": [
             "Has used the metro for over 15 years.",
-            "Rarely uses alternative transport."
-        ]
-    }
+            "Rarely uses alternative transport.",
+        ],
+    },
 }
 
 PERSON_2 = {
@@ -167,12 +139,12 @@ PERSON_2 = {
         "long_term_goals": [
             "Advance in hospitality career.",
             "Enjoy vibrant city life.",
-            "Save for future travel."
+            "Save for future travel.",
         ],
         "occupation": {
             "title": "Bartender",
             "organization": "Popular Nightclub",
-            "description": "Works late shifts, depends on late-night transit."
+            "description": "Works late shifts, depends on late-night transit.",
         },
         "style": "Trendy, energetic, and sociable.",
         "personality": {
@@ -180,90 +152,53 @@ PERSON_2 = {
                 "Outgoing.",
                 "Flexible with hours.",
                 "Enjoys nightlife.",
-                "Resourceful."
+                "Resourceful.",
             ],
             "big_five": {
                 "openness": "High. Loves new experiences.",
                 "conscientiousness": "Medium. Balances work and fun.",
                 "extraversion": "High. Social and lively.",
                 "agreeableness": "High. Gets along with diverse people.",
-                "neuroticism": "Low. Handles late nights well."
-            }
+                "neuroticism": "Low. Handles late nights well.",
+            },
         },
         "preferences": {
-            "interests": [
-                "Live music",
-                "Nightlife",
-                "Food trucks"
-            ],
-            "likes": [
-                "Late-night metro",
-                "After-hours events",
-                "Meeting new people"
-            ],
-            "dislikes": [
-                "Expensive taxis",
-                "Long waits for buses",
-                "Early last calls"
-            ]
+            "interests": ["Live music", "Nightlife", "Food trucks"],
+            "likes": ["Late-night metro", "After-hours events", "Meeting new people"],
+            "dislikes": ["Expensive taxis", "Long waits for buses", "Early last calls"],
         },
-        "skills": [
-            "Mixology.",
-            "Event planning.",
-            "Networking."
-        ],
+        "skills": ["Mixology.", "Event planning.", "Networking."],
         "beliefs": [
             "City should support nightlife.",
             "Safe late-night transit is essential.",
-            "Flexibility is key to success."
+            "Flexibility is key to success.",
         ],
         "behaviors": {
             "general": [
                 "Finishes work after midnight.",
                 "Socializes after shifts.",
-                "Uses metro to get home late."
+                "Uses metro to get home late.",
             ],
             "routines": {
-                "morning": [
-                    "Sleeps in.",
-                    "Brunch with friends."
-                ],
-                "workday": [
-                    "Prepares bar in afternoon.",
-                    "Works until 2 AM."
-                ],
-                "evening": [
-                    "Active at work.",
-                    "Attends events post-shift."
-                ],
-                "weekend": [
-                    "Works busiest nights.",
-                    "Explores new venues."
-                ]
-            }
+                "morning": ["Sleeps in.", "Brunch with friends."],
+                "workday": ["Prepares bar in afternoon.", "Works until 2 AM."],
+                "evening": ["Active at work.", "Attends events post-shift."],
+                "weekend": ["Works busiest nights.", "Explores new venues."],
+            },
         },
         "health": "Good, adapts to late hours.",
         "relationships": [
-            {
-                "name": "Coworkers",
-                "description": "Close-knit bar staff."
-            },
-            {
-                "name": "Friends",
-                "description": "Social circle from nightlife scene."
-            }
+            {"name": "Coworkers", "description": "Close-knit bar staff."},
+            {"name": "Friends", "description": "Social circle from nightlife scene."},
         ],
         "other_facts": [
             "Advocates for extended metro hours.",
-            "Often helps tourists navigate city at night."
-        ]
-    }
+            "Often helps tourists navigate city at night.",
+        ],
+    },
 }
 
-agent_specs_metro = {
-    "PERSON_1": PERSON_1,
-    "PERSON_2": PERSON_2
-}
+agent_specs_metro = {"PERSON_1": PERSON_1, "PERSON_2": PERSON_2}
 
 agent_specs = {"PERSON_1": PERSON_1, "PERSON_2": PERSON_2}
 
@@ -285,6 +220,6 @@ extractor.extract_results_from_world(
     fields_hints={
         "summary_feedback": "A concise summary of the agent's overall impression and feedback on the proposed metro schedule change, including specific impacts on their routine, perceived positives/negatives, and any suggestions for improvement."
     },
-    verbose=True
+    verbose=True,
 )
 extractor.save_as_json("metro_schedule_feedback.json")

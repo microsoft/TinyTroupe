@@ -1,9 +1,11 @@
 import sys
-sys.path.insert(0, '..')
+
+sys.path.insert(0, "..")
 
 from tinytroupe.agent import TinyPerson
 from tinytroupe.environment import TinyWorld
 from tinytroupe.extraction import ResultsExtractor
+
 
 def load_example_agent_specification(name: str, agent_specs: dict):
     """
@@ -60,12 +62,12 @@ PERSONA_1 = {
         "long_term_goals": [
             "Maintain a healthy lifestyle.",
             "Support sustainable businesses.",
-            "Explore new food experiences."
+            "Explore new food experiences.",
         ],
         "occupation": {
             "title": "Marketing Specialist",
             "organization": "Eco-friendly Startup",
-            "description": "Works in sustainability marketing, values ethical consumption."
+            "description": "Works in sustainability marketing, values ethical consumption.",
         },
         "style": "Eco-chic, minimalist, and modern.",
         "personality": {
@@ -73,85 +75,68 @@ PERSONA_1 = {
                 "Adventurous eater.",
                 "Environmentally conscious.",
                 "Social and outgoing.",
-                "Enjoys discovering new trends."
+                "Enjoys discovering new trends.",
             ],
             "big_five": {
                 "openness": "High. Loves new food concepts.",
                 "conscientiousness": "High. Plans meals and activities.",
                 "extraversion": "Medium. Enjoys group outings.",
                 "agreeableness": "High. Supportive of friends' ideas.",
-                "neuroticism": "Low. Handles change well."
-            }
+                "neuroticism": "Low. Handles change well.",
+            },
         },
         "preferences": {
             "interests": [
                 "Vegan cuisine",
                 "Yoga",
                 "Farmers' markets",
-                "Sustainable living"
+                "Sustainable living",
             ],
-            "likes": [
-                "Plant-based restaurants",
-                "Seasonal menus",
-                "Community events"
-            ],
-            "dislikes": [
-                "Processed foods",
-                "Wasteful packaging",
-                "Uninspired menus"
-            ]
+            "likes": ["Plant-based restaurants", "Seasonal menus", "Community events"],
+            "dislikes": ["Processed foods", "Wasteful packaging", "Uninspired menus"],
         },
         "skills": [
             "Organizes group dinners.",
             "Researches new restaurants.",
-            "Advocates for sustainability."
+            "Advocates for sustainability.",
         ],
         "beliefs": [
             "Food choices impact the planet.",
             "Healthy eating is essential.",
-            "Supporting local is important."
+            "Supporting local is important.",
         ],
         "behaviors": {
             "general": [
                 "Tries new vegan spots monthly.",
                 "Shares food experiences online.",
-                "Attends wellness workshops."
+                "Attends wellness workshops.",
             ],
             "routines": {
-                "morning": [
-                    "Smoothie and yoga.",
-                    "Reads food blogs."
-                ],
-                "workday": [
-                    "Lunch at healthy cafes.",
-                    "Walks or bikes to work."
-                ],
-                "evening": [
-                    "Cooks plant-based meals.",
-                    "Socializes at local events."
-                ],
+                "morning": ["Smoothie and yoga.", "Reads food blogs."],
+                "workday": ["Lunch at healthy cafes.", "Walks or bikes to work."],
+                "evening": ["Cooks plant-based meals.", "Socializes at local events."],
                 "weekend": [
                     "Visits new restaurants.",
-                    "Explores Montreal neighborhoods."
-                ]
-            }
+                    "Explores Montreal neighborhoods.",
+                ],
+            },
         },
         "health": "Excellent, prioritizes wellness.",
         "relationships": [
             {
                 "name": "Yoga Group",
-                "description": "Friends from yoga and wellness community."
+                "description": "Friends from yoga and wellness community.",
             },
             {
                 "name": "Colleagues",
-                "description": "Work together on sustainability projects."
-            }
+                "description": "Work together on sustainability projects.",
+            },
         ],
         "other_facts": [
             "Prefers restaurants with eco-friendly practices.",
-            "Often recommends new places to friends."
-        ]
-    }
+            "Often recommends new places to friends.",
+        ],
+    },
 }
 
 PERSONA_2 = {
@@ -166,12 +151,12 @@ PERSONA_2 = {
         "long_term_goals": [
             "Graduate and become a dietitian.",
             "Promote plant-based diets.",
-            "Enjoy Montreal's food scene."
+            "Enjoy Montreal's food scene.",
         ],
         "occupation": {
             "title": "Student",
             "organization": "McGill University",
-            "description": "Active in vegan student groups, passionate about food and health."
+            "description": "Active in vegan student groups, passionate about food and health.",
         },
         "style": "Casual, colorful, and expressive.",
         "personality": {
@@ -179,85 +164,69 @@ PERSONA_2 = {
                 "Budget-conscious.",
                 "Curious about new foods.",
                 "Active in student life.",
-                "Values inclusivity."
+                "Values inclusivity.",
             ],
             "big_five": {
                 "openness": "High. Loves trying new vegan dishes.",
                 "conscientiousness": "Medium. Balances studies and fun.",
                 "extraversion": "High. Enjoys group activities.",
                 "agreeableness": "High. Friendly and supportive.",
-                "neuroticism": "Medium. Sometimes stressed by exams."
-            }
+                "neuroticism": "Medium. Sometimes stressed by exams.",
+            },
         },
         "preferences": {
             "interests": [
                 "Vegan cooking",
                 "Student activism",
                 "Music festivals",
-                "Affordable dining"
+                "Affordable dining",
             ],
-            "likes": [
-                "Creative vegan menus",
-                "Student discounts",
-                "Community spaces"
-            ],
+            "likes": ["Creative vegan menus", "Student discounts", "Community spaces"],
             "dislikes": [
                 "Expensive restaurants",
                 "Limited vegan options",
-                "Unwelcoming atmospheres"
-            ]
+                "Unwelcoming atmospheres",
+            ],
         },
         "skills": [
             "Organizes vegan potlucks.",
             "Finds best deals for students.",
-            "Promotes events on social media."
+            "Promotes events on social media.",
         ],
         "beliefs": [
             "Plant-based is the future.",
             "Food should be accessible.",
-            "Community matters."
+            "Community matters.",
         ],
         "behaviors": {
             "general": [
                 "Explores new vegan spots.",
                 "Attends student events.",
-                "Shares food reviews online."
+                "Shares food reviews online.",
             ],
             "routines": {
-                "morning": [
-                    "Quick breakfast before class.",
-                    "Listens to podcasts."
-                ],
-                "workday": [
-                    "Studies in cafes.",
-                    "Lunch with friends."
-                ],
-                "evening": [
-                    "Cooks or eats out.",
-                    "Attends club meetings."
-                ],
-                "weekend": [
-                    "Visits markets.",
-                    "Discovers new restaurants."
-                ]
-            }
+                "morning": ["Quick breakfast before class.", "Listens to podcasts."],
+                "workday": ["Studies in cafes.", "Lunch with friends."],
+                "evening": ["Cooks or eats out.", "Attends club meetings."],
+                "weekend": ["Visits markets.", "Discovers new restaurants."],
+            },
         },
         "health": "Good, manages stress with activities.",
         "relationships": [
             {
                 "name": "Roommates",
-                "description": "Shares apartment with other students."
+                "description": "Shares apartment with other students.",
             },
             {
                 "name": "Vegan Club",
-                "description": "Active member of university vegan group."
-            }
+                "description": "Active member of university vegan group.",
+            },
         ],
         "other_facts": [
             "Always looking for new vegan places.",
-            "Enjoys organizing group outings."
-        ]
-    }
+            "Enjoys organizing group outings.",
+        ],
+    },
 }
 
 
@@ -274,11 +243,13 @@ focus_group.run(6)
 
 extractor = ResultsExtractor()
 
-extractor.extract_results_from_world(focus_group,
-                                     extraction_objective="Detailed reports of insights, acceptance rates, suggestions for the service.",
-                                     fields=["ad_copy"],
-                                     fields_hints={
-                                         "ad_copy": "A concise summary of the agent's overall impression and feedback on the Mediterranean vegan restaurant concept, suitable for marketing material."
-                                     },
-                                    verbose=True)
-extractor.save_as_json("extraction2.json")
+extractor.extract_results_from_world(
+    focus_group,
+    extraction_objective="Detailed reports of insights, acceptance rates, suggestions for the service.",
+    fields=["ad_copy"],
+    fields_hints={
+        "ad_copy": "A concise summary of the agent's overall impression and feedback on the Mediterranean vegan restaurant concept, suitable for marketing material."
+    },
+    verbose=True,
+)
+extractor.save_as_json("restaurant_extraction.json")

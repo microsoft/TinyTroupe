@@ -1,8 +1,9 @@
-import json 
+import json
 import sys
 import unicodedata
 
 from tinytroupe.utils import logger
+
 
 ################################################################################
 # Validation
@@ -13,14 +14,17 @@ def check_valid_fields(obj: dict, valid_fields: list) -> None:
     """
     for key in obj:
         if key not in valid_fields:
-            raise ValueError(f"Invalid key {key} in dictionary. Valid keys are: {valid_fields}")
+            raise ValueError(
+                f"Invalid key {key} in dictionary. Valid keys are: {valid_fields}"
+            )
+
 
 def sanitize_raw_string(value: str) -> str:
     """
-    Sanitizes the specified string by: 
+    Sanitizes the specified string by:
       - removing any invalid characters.
       - ensuring it is not longer than the maximum Python string length.
-    
+
     This is for an abundance of caution with security, to avoid any potential issues with the string.
     """
 
@@ -29,9 +33,9 @@ def sanitize_raw_string(value: str) -> str:
 
     value = unicodedata.normalize("NFC", value)
 
-
     # ensure it is not longer than the maximum Python string length
-    return value[:sys.maxsize]
+    return value[: sys.maxsize]
+
 
 def sanitize_dict(value: dict) -> dict:
     """
