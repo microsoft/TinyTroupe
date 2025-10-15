@@ -229,36 +229,48 @@ class OpenAIClient:
         override this method to implement their own API calls.
         """   
 
+        # Create a copy to avoid mutating the original parameters
+        api_params = chat_api_params.copy()
+
         # adjust parameters depending on the model
         if self._is_reasoning_model(model):
             # Reasoning models have slightly different parameters
-            del chat_api_params["stream"]
-            del chat_api_params["temperature"]
-            del chat_api_params["top_p"]
-            del chat_api_params["frequency_penalty"]
-            del chat_api_params["presence_penalty"]            
+            if "stream" in api_params:
+                del api_params["stream"]
+            if "temperature" in api_params:
+                del api_params["temperature"]
+            if "top_p" in api_params:
+                del api_params["top_p"]
+            if "frequency_penalty" in api_params:
+                del api_params["frequency_penalty"]
+            if "presence_penalty" in api_params:
+                del api_params["presence_penalty"]
+        if self._is_model_gpt5(model):
+            if "stop" in api_params:
+                del api_params["stop"]
 
-            chat_api_params["max_completion_tokens"] = chat_api_params["max_tokens"]
-            del chat_api_params["max_tokens"]
+            if "max_tokens" in api_params:
+                api_params["max_completion_tokens"] = api_params["max_tokens"]
+                del api_params["max_tokens"]
 
-            chat_api_params["reasoning_effort"] = default["reasoning_effort"]
+            api_params["reasoning_effort"] = default["reasoning_effort"]
 
 
         # To make the log cleaner, we remove the messages from the logged parameters
-        logged_params = {k: v for k, v in chat_api_params.items() if k != "messages"} 
+        logged_params = {k: v for k, v in api_params.items() if k != "messages"} 
 
-        if "response_format" in chat_api_params:
+        if "response_format" in api_params:
             # to enforce the response format via pydantic, we need to use a different method
 
-            if "stream" in chat_api_params:
-                del chat_api_params["stream"]
+            if "stream" in api_params:
+                del api_params["stream"]
 
             logger.debug(f"Calling LLM model (using .parse too) with these parameters: {logged_params}. Not showing 'messages' parameter.")
             # complete message
-            logger.debug(f"   --> Complete messages sent to LLM: {chat_api_params['messages']}")
+            logger.debug(f"   --> Complete messages sent to LLM: {api_params['messages']}")
 
             result_message = self.client.beta.chat.completions.parse(
-                    **chat_api_params
+                    **api_params
                 )
 
             return result_message 
@@ -266,11 +278,14 @@ class OpenAIClient:
         else:
             logger.debug(f"Calling LLM model with these parameters: {logged_params}. Not showing 'messages' parameter.")
             return self.client.chat.completions.create(
-                        **chat_api_params
+                        **api_params
                     )
 
     def _is_reasoning_model(self, model):
-        return "o1" in model or "o3" in model
+        return "o1" in model or "o3" in model or "gpt-5" in model # assuming o1/3 and gpt-5 models are reasoning models
+
+    def _is_model_gpt5(self, model):
+        return "gpt-5" in model
 
     def _raw_model_response_extractor(self, response):
         """
@@ -303,7 +318,7 @@ class OpenAIClient:
                 "gpt-4-32k-0314",
                 "gpt-4-0613",
                 "gpt-4-32k-0613",
-                } or "o1" in model or "o3" in model: # assuming o1/3 models work the same way
+                } or "o1" in model or "o3" in model or "gpt-5" in model: # assuming o1/3 and gpt-5 models work the same way
                 tokens_per_message = 3
                 tokens_per_name = 1
             elif model == "gpt-3.5-turbo-0301":
@@ -312,9 +327,12 @@ class OpenAIClient:
             elif "gpt-3.5-turbo" in model:
                 logger.debug("Token count: gpt-3.5-turbo may update over time. Returning num tokens assuming gpt-3.5-turbo-0613.")
                 return self._count_tokens(messages, model="gpt-3.5-turbo-0613")
-            elif ("gpt-4" in model) or ("ppo" in model) :
+            elif ("gpt-4" in model) or ("ppo" in model):
                 logger.debug("Token count: gpt-4 may update over time. Returning num tokens assuming gpt-4-0613.")
                 return self._count_tokens(messages, model="gpt-4-0613")
+            elif "gpt-5" in model: # Temporary solution until we know how gpt-5 works
+                logger.debug("Token count: gpt-5 may update over time. Returning num tokens assuming gpt-4-0613.")
+                return self._count_tokens(messages, model="gpt-5")
             else:
                 raise NotImplementedError(
                     f"""_count_tokens() is not implemented for model {model}. See https://github.com/openai/openai-python/blob/main/chatml.md for information on how messages are converted to tokens."""
@@ -394,11 +412,11 @@ class AzureClient(OpenAIClient):
         Sets up the Azure OpenAI Service API configurations for this client,
         including the API endpoint and key.
         """
-        if os.getenv("AZURE_OPENAI_KEY"):
+        if os.getenv("AZURE_OPENAI_API_KEY"):
             logger.info("Using Azure OpenAI Service API with key.")
             self.client = AzureOpenAI(azure_endpoint= os.getenv("AZURE_OPENAI_ENDPOINT"),
                                     api_version = config["OpenAI"]["AZURE_API_VERSION"],
-                                    api_key = os.getenv("AZURE_OPENAI_KEY"))
+                                    api_key = os.getenv("AZURE_OPENAI_API_KEY"))
         else:  # Use Entra ID Auth
             logger.info("Using Azure OpenAI Service API with Entra ID Auth.")
             from azure.identity import DefaultAzureCredential, get_bearer_token_provider
