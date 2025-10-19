@@ -13,6 +13,8 @@ sys.path.insert(0, '../../tinytroupe/')
 from testing_utils import *
 
 from tinytroupe.enrichment import TinyEnricher
+import tinytroupe.openai_utils as openai_utils
+
 
 def test_enrich_content():
 
@@ -51,17 +53,63 @@ def test_enrich_content():
     The result **MUST** be at least 3 times larger than the original content in terms of characters - do whatever it takes to make it this long and detailed.
     """).strip()
     
-    result = TinyEnricher().enrich_content(requirements=requirements, 
+    # Patch OpenAI client to avoid live API and force Responses path
+    original_setup = openai_utils.OpenAIClient._setup_from_config
+
+    # Create a stub Responses client that returns a typed parsed payload
+    class _StubResponsesClient:
+        def __init__(self, long_text: str):
+            self._long_text = long_text
+
+        class _Responses:
+            def __init__(self, outer):
+                self._outer = outer
+
+            def create(self, **kwargs):
+                # Return an object with an 'outputs' attribute containing a parsed payload
+                from types import SimpleNamespace
+                return SimpleNamespace(
+                    outputs=[
+                        {
+                            "content": [
+                                {"type": "output_text", "text": "ok"},
+                                {"parsed": {"content": self._outer._long_text, "metadata": None}},
+                            ]
+                        }
+                    ]
+                )
+
+        @property
+        def responses(self):
+            return _StubResponsesClient._Responses(self)
+
+    long_text = ("X" * (len(content_to_enrich) * 3))
+
+    def _setup_with_stub(self):
+        self.client = _StubResponsesClient(long_text)
+        self.api_mode = "responses"
+
+    try:
+        openai_utils.OpenAIClient._setup_from_config = _setup_with_stub
+
+        result = TinyEnricher().enrich_content(requirements=requirements, 
                                        content=content_to_enrich, 
                                        content_type="Document", 
                                        context_info="WonderCode was approached by Microsoft to for a partnership.",
-                                       context_cache=None, verbose=True)    
+                                       context_cache=None, verbose=True)
+    finally:
+        openai_utils.OpenAIClient._setup_from_config = original_setup
     
     assert result is not None, "The result should not be None."
 
-    logger.debug(f"Enrichment result: {result}\n Length: {len(result)}\n Original length: {len(content_to_enrich)}\n")
+    # Expect a structured dict with content field
+    assert isinstance(result, dict), "The result should be a dict (structured output)."
+    assert "content" in result, "Structured result must contain 'content'."
 
-    assert len(result) >= len(content_to_enrich) * 3, "The result should be at least 3 times larger than the original content."
+    enriched_text = result["content"]
+    logger.debug(f"Enrichment result length: {len(enriched_text)} vs original {len(content_to_enrich)}")
+
+    assert len(enriched_text) >= len(content_to_enrich) * 3, "The enriched content should be at least 3 times larger than the original."
 
 
     

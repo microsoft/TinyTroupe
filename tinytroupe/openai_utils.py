@@ -261,16 +261,14 @@ class OpenAIClient:
             responses_params = self._build_responses_params(model, chat_api_params)
 
             # Log sanitized params and full messages separately
-            rp_logged = {k: v for k, v in responses_params.items() if k != "input" and k != "messages"}
+            rp_logged = {k: v for k, v in responses_params.items() if k != "input"}
             logger.debug(f"Calling LLM model (Responses API) with these parameters: {rp_logged}. Not showing 'messages'/'input' parameter.")
-            logger.debug(f"   --> Complete messages sent to LLM: {responses_params.get('messages') or responses_params.get('input')}")
+            logger.debug(f"   --> Complete messages sent to LLM: {responses_params.get('input')}")
 
-            # If using Pydantic model, prefer parse helper when available
-            if isinstance(chat_api_params.get("response_format"), type):
-                # Responses parse path with Pydantic model
+            # Use parse helper when a text_format (Pydantic model) is provided
+            if "text_format" in responses_params:
                 return self.client.responses.parse(**responses_params)
-            else:
-                return self.client.responses.create(**responses_params)
+            return self.client.responses.create(**responses_params)
 
         # Legacy Chat Completions path
         if "response_format" in chat_api_params:
@@ -293,26 +291,55 @@ class OpenAIClient:
         - If response_format is a Pydantic model class, pass it directly (Responses parse supports Pydantic);
           if it's a dict (JSON Schema), pass as-is with strict mode expected to be set by caller.
         """
+        # Map legacy chat messages to Responses API 'input' with content parts
+        legacy_messages = chat_api_params.get("messages") or []
+
+        def _to_responses_message(msg):
+            role = msg.get("role", "user")
+            content = msg.get("content")
+            if isinstance(content, str):
+                content_parts = [{"type": "input_text", "text": content}]
+            else:
+                # Assume already in responses content parts shape
+                content_parts = content
+            return {"role": role, "content": content_parts}
+
+        responses_input = [_to_responses_message(m) for m in legacy_messages]
+
         params = {
             "model": model,
-            # Latest SDKs accept either 'input' or 'messages'. We pass both for compatibility; the SDK ignores the unused one.
-            "messages": chat_api_params.get("messages"),
-            "input": chat_api_params.get("messages"),
+            "input": responses_input,
             "max_output_tokens": chat_api_params.get("max_tokens"),
             "timeout": chat_api_params.get("timeout"),
         }
 
-        # Include response_format (Pydantic class or JSON Schema dict)
-        if chat_api_params.get("response_format") is not None:
-            rf = chat_api_params["response_format"]
-            params["response_format"] = rf
+        # Map response_format into Responses API params
+        rf = chat_api_params.get("response_format")
+        if rf is not None:
+            # Pydantic model class -> parse path via text_format
+            if isinstance(rf, type):
+                params["text_format"] = rf
+            # JSON Schema envelope -> map to text.format per SDK conventions
+            elif isinstance(rf, dict):
+                js = rf.get("json_schema") or {}
+                # Per openai/lib/_parsing/_responses.py:type_to_text_format_param
+                # text.format should be {type: "json_schema", name, schema, strict?}
+                fmt = {
+                    "type": "json_schema",
+                    "name": js.get("name") or "ModelResponse",
+                    "schema": js.get("schema") or js,
+                }
+                # Preserve strict flag when present
+                if js.get("strict") is True or rf.get("strict") is True:
+                    fmt["strict"] = True
+                params["text"] = {"format": fmt}
 
         # Reasoning models: remove sampling controls and set reasoning effort
         if self._is_reasoning_model(model):
             params["reasoning"] = {"effort": default["reasoning_effort"]}
         else:
-            # Non-reasoning: sampling controls are valid
-            for key in ("temperature", "top_p", "frequency_penalty", "presence_penalty"):
+            # Non-reasoning: include only supported sampling controls for Responses API
+            for key in ("temperature", "top_p"):
                 if chat_api_params.get(key) is not None:
                     params[key] = chat_api_params[key]
 

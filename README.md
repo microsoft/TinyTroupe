@@ -338,6 +338,25 @@ The other is by defining the agent programmatically, with statements like these:
 
 You can also combine both approaches, using the JSON file as a base and then adding or modifying details programmatically.
 
+### Enrichment structured outputs
+
+`TinyEnricher.enrich_content(...)` returns a structured object when using the Responses API with strict JSON Schema. The returned value is a dict of the form `{ "content": str }`. If the provider returns a refusal, an exception is raised.
+
+Example:
+```python
+from tinytroupe.enrichment import TinyEnricher
+
+enricher = TinyEnricher()
+result = enricher.enrich_content(
+    requirements="Expand into a detailed document.",
+    content="My outline...",
+    content_type="Document",
+)
+
+# Structured result
+print(result["content"])  # long enriched text
+```
+
 #### Fragments
 
 `TinyPerson`s can also be further enriched via **fragments**, which are sub-specifications that can be added to the main specification. This is useful to reuse common parts across different agents. For example, the following fragment can be used to specify love of travel ([examples/fragments/travel_enthusiast.agent.fragment.json](./examples/fragments/travel_enthusiast.agent.fragment.json)):
