@@ -1,8 +1,10 @@
-import os
+import copy
 import json
+import os
+from typing import Any, Dict, List, Optional, Union
+
 import chevron
 import pandas as pd
-from typing import Union, List
 
 from tinytroupe.extraction import logger
 from tinytroupe.agent import TinyPerson
@@ -10,6 +12,57 @@ from tinytroupe.environment import TinyWorld
 
 from tinytroupe import openai_utils
 import tinytroupe.utils as utils
+
+
+def _build_extraction_response_format(fields: Optional[List[str]]) -> Dict[str, Any]:
+    base_object_schema: Dict[str, Any] = {"type": "object"}
+
+    if fields:
+        base_object_schema["properties"] = {field: {} for field in fields}
+        base_object_schema["additionalProperties"] = False
+    else:
+        base_object_schema["additionalProperties"] = True
+
+    object_schema = base_object_schema
+    array_schema = {"type": "array", "items": copy.deepcopy(base_object_schema)}
+
+    schema: Dict[str, Any] = {"oneOf": [object_schema, array_schema]}
+
+    return {
+        "type": "json_schema",
+        "json_schema": {
+            "name": "ExtractionOutput",
+            "schema": schema,
+            "strict": True,
+        },
+    }
+
+
+def _parse_extraction_response(next_message: Optional[Dict[str, Any]]) -> Optional[Any]:
+    if next_message is None:
+        return None
+
+    refusal = next_message.get("refusal")
+    if refusal:
+        logger.warning(f"Model refusal received in extraction: {refusal}")
+        raise ExtractionRefusedException(refusal)
+
+    parsed = next_message.get("parsed")
+    if parsed is not None:
+        return parsed
+
+    content = next_message.get("content")
+    if content:
+        try:
+            return json.loads(content)
+        except (json.JSONDecodeError, TypeError):
+            return utils.extract_json(content)
+
+    return None
+
+
+class ExtractionRefusedException(Exception):
+    pass
 
 
 class ResultsExtractor:
@@ -133,17 +186,22 @@ performed.
 """
         messages.append({"role": "user", "content": extraction_request_prompt})
 
-        next_message = openai_utils.client().send_message(messages, temperature=0.0, frequency_penalty=0.0, presence_penalty=0.0)
+        response_format = _build_extraction_response_format(fields)
+
+        next_message = openai_utils.client().send_message(
+            messages,
+            temperature=0.0,
+            frequency_penalty=0.0,
+            presence_penalty=0.0,
+            response_format=response_format,
+        )
         
         debug_msg = f"Extraction raw result message: {next_message}"
         logger.debug(debug_msg)
         if verbose:
             print(debug_msg)
 
-        if next_message is not None:
-            result = utils.extract_json(next_message["content"])
-        else:
-            result = None
+        result = _parse_extraction_response(next_message)
         
         # cache the result
         self.agent_extraction[tinyperson.name] = result
@@ -210,17 +268,20 @@ Each interaction history includes stimuli the corresponding agent received as we
 """
         messages.append({"role": "user", "content": extraction_request_prompt})
 
-        next_message = openai_utils.client().send_message(messages, temperature=0.0)
+        response_format = _build_extraction_response_format(fields)
+
+        next_message = openai_utils.client().send_message(
+            messages,
+            temperature=0.0,
+            response_format=response_format,
+        )
         
         debug_msg = f"Extraction raw result message: {next_message}"
         logger.debug(debug_msg)
         if verbose:
             print(debug_msg)
 
-        if next_message is not None:
-            result = utils.extract_json(next_message["content"])
-        else:
-            result = None
+        result = _parse_extraction_response(next_message)
         
         # cache the result
         self.world_extraction[tinyworld.name] = result

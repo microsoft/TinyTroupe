@@ -1,5 +1,7 @@
+import json
+import json
 import pandas as pd
-from typing import Union, List
+from typing import List, Optional, Dict, Any, Union
 
 from tinytroupe.extraction import logger
 
@@ -33,18 +35,36 @@ class Normalizer:
         rendering_configs = {"n": n,
                              "elements": self.elements}
 
-        messages = utils.compose_initial_LLM_messages_with_templates("normalizer.system.mustache", "normalizer.user.mustache",                                                                      
+        messages = utils.compose_initial_LLM_messages_with_templates("normalizer.system.mustache", "normalizer.user.mustache",                                                                     
                                                                      base_module_folder="extraction",
                                                                      rendering_configs=rendering_configs)
-        
-        next_message = openai_utils.client().send_message(messages, temperature=0.1)
+
+        response_format = {
+            "type": "json_schema",
+            "json_schema": {
+                "name": "NormalizationOutput",
+                "schema": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "minItems": self.n,
+                    "maxItems": self.n,
+                },
+                "strict": True,
+            },
+        }
+
+        next_message = openai_utils.client().send_message(
+            messages,
+            temperature=0.1,
+            response_format=response_format,
+        )
         
         debug_msg = f"Normalization result message: {next_message}"
         logger.debug(debug_msg)
         if self.verbose:
             print(debug_msg)
 
-        result = utils.extract_json(next_message["content"])
+        result = self._parse_initial_normalization(next_message)
         logger.debug(result)
         if self.verbose:
             print(result)
@@ -92,17 +112,33 @@ class Normalizer:
             messages = utils.compose_initial_LLM_messages_with_templates("normalizer.applier.system.mustache", "normalizer.applier.user.mustache",                                      
                                                                      base_module_folder="extraction",
                                                                      rendering_configs=rendering_configs)
-            
-            next_message = openai_utils.client().send_message(messages, temperature=0.1)
+
+            response_format = {
+                "type": "json_schema",
+                "json_schema": {
+                    "name": "NormalizationMappingOutput",
+                    "schema": {
+                        "type": "array",
+                        "items": {"type": "string"},
+                        "minItems": len(elements_to_normalize),
+                        "maxItems": len(elements_to_normalize),
+                    },
+                    "strict": True,
+                },
+            }
+
+            next_message = openai_utils.client().send_message(
+                messages,
+                temperature=0.1,
+                response_format=response_format,
+            )
             
             debug_msg = f"Normalization result message: {next_message}"
             logger.debug(debug_msg)
             if self.verbose:
                 print(debug_msg)
-    
-            normalized_elements_from_llm = utils.extract_json(next_message["content"])
-            assert isinstance(normalized_elements_from_llm, list), "The normalized element must be a list."
-            assert len(normalized_elements_from_llm) == len(elements_to_normalize), "The number of normalized elements must be equal to the number of elements to normalize."
+
+            normalized_elements_from_llm = self._parse_mapping_normalization(next_message, len(elements_to_normalize))
     
             for i, element in enumerate(elements_to_normalize):
                 normalized_element = normalized_elements_from_llm[i]
@@ -113,3 +149,48 @@ class Normalizer:
         
         return normalized_elements
         
+
+    def _parse_initial_normalization(self, next_message: Optional[Dict[str, Any]]) -> List[str]:
+        parsed = self._parse_normalizer_response(next_message)
+        self._ensure_list_output(parsed, expected_length=self.n)
+        return parsed
+
+    def _parse_mapping_normalization(self, next_message: Optional[Dict[str, Any]], expected_length: int) -> List[str]:
+        parsed = self._parse_normalizer_response(next_message)
+        self._ensure_list_output(parsed, expected_length=expected_length)
+        return parsed
+
+    def _parse_normalizer_response(self, next_message: Optional[Dict[str, Any]]) -> List[str]:
+        if next_message is None:
+            raise ValueError("Normalization response was None")
+
+        refusal = next_message.get("refusal")
+        if refusal:
+            logger.warning(f"Model refusal received in normalization: {refusal}")
+            raise NormalizationRefusedException(refusal)
+
+        parsed = next_message.get("parsed")
+        if parsed is not None:
+            return parsed
+
+        content = next_message.get("content")
+        if content:
+            try:
+                result = json.loads(content)
+            except (json.JSONDecodeError, TypeError):
+                result = utils.extract_json(content)
+            if result is None:
+                raise ValueError("Normalization response could not be parsed")
+            return result
+
+        raise ValueError("Normalization response did not contain content")
+
+    def _ensure_list_output(self, result: Any, expected_length: int) -> None:
+        if not isinstance(result, list):
+            raise ValueError("Expected list output from normalization response")
+        if len(result) != expected_length:
+            raise ValueError("Unexpected number of normalized elements")
+
+
+class NormalizationRefusedException(Exception):
+    pass
