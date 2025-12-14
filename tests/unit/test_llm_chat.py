@@ -69,14 +69,14 @@ class TestLLMChat:
             enable_justification_step=False,
             enable_reasoning_step=False,
             temperature=0.7,
-            max_tokens=100,
+            max_completion_tokens=100,
         )
 
         assert chat.enable_json_output_format == False
         assert chat.enable_justification_step == False
         assert chat.enable_reasoning_step == False
         assert chat.model_params["temperature"] == 0.7
-        assert chat.model_params["max_tokens"] == 100
+        assert chat.model_params["max_completion_tokens"] == 100
 
     # ==== BASIC FUNCTIONALITY TESTS ====
 

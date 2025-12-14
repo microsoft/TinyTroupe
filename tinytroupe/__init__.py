@@ -35,16 +35,54 @@ class ConfigManager:
     # this is used in more than one place below, so we define it here
     # to avoid errors in later changes
     LOGLEVEL_KEY = "loglevel"
+    LOGLEVEL_CONSOLE_KEY = "loglevel_console"
+    LOGLEVEL_FILE_KEY = "loglevel_file"
+    LOG_INCLUDE_THREAD_ID_KEY = "log_include_thread_id"
 
     def __init__(self):
         self._config = {}
         self._initialize_from_config()
+
+    @staticmethod
+    def _parse_concurrency_limit(value, default):
+        """Parse the max concurrent model call limit allowing disable tokens."""
+        if value is None:
+            return default
+
+        if isinstance(value, (int, float)):
+            candidate = int(value)
+        elif isinstance(value, str):
+            candidate_str = value.strip()
+            if candidate_str == "":
+                return default
+            upper = candidate_str.upper()
+            if upper in {"NONE", "OFF", "DISABLE", "DISABLED"}:
+                return None
+            try:
+                candidate = int(candidate_str)
+            except ValueError:
+                logging.warning(
+                    "Invalid MAX_CONCURRENT_MODEL_CALLS value '%s'. Using default %s instead.",
+                    value,
+                    default,
+                )
+                return default
+        else:
+            return default
+
+        if candidate <= 0:
+            return None
+
+        return candidate
 
     def _initialize_from_config(self):
         """Initialize default values from config file"""
         config = utils.read_config_file()
 
         self._config["api_type"] = config["OpenAI"].get("API_TYPE", "openai")
+        self._config["azure_api_version"] = config["OpenAI"].get(
+            "AZURE_API_VERSION", "2024-10-21"
+        )
         self._config["base_url"] = config["OpenAI"].get(
             "BASE_URL", None
         )  # by default, we will not use a custom base URL
@@ -61,14 +99,16 @@ class ConfigManager:
             "REASONING_MODEL", "o3-mini"
         )
 
-        self._config["max_tokens"] = int(config["OpenAI"].get("MAX_TOKENS", "1024"))
-        self._config["temperature"] = float(config["OpenAI"].get("TEMPERATURE", "1.0"))
-        self._config["top_p"] = int(config["OpenAI"].get("TOP_P", "0"))
-        self._config["frequency_penalty"] = float(
-            config["OpenAI"].get("FREQ_PENALTY", "0.0")
+        self._config["max_completion_tokens"] = int(
+            config["OpenAI"].get("MAX_COMPLETION_TOKENS", "1024")
         )
-        self._config["presence_penalty"] = float(
-            config["OpenAI"].get("PRESENCE_PENALTY", "0.0")
+        self._config["temperature"] = config["OpenAI"].getfloat("TEMPERATURE", None)
+        self._config["top_p"] = config["OpenAI"].getfloat("TOP_P", None)
+        self._config["frequency_penalty"] = config["OpenAI"].getfloat(
+            "FREQ_PENALTY", None
+        )
+        self._config["presence_penalty"] = config["OpenAI"].getfloat(
+            "PRESENCE_PENALTY", None
         )
         self._config["reasoning_effort"] = config["OpenAI"].get(
             "REASONING_EFFORT", "high"
@@ -83,6 +123,11 @@ class ConfigManager:
         self._config["waiting_time"] = float(config["OpenAI"].get("WAITING_TIME", "1"))
         self._config["exponential_backoff_factor"] = float(
             config["OpenAI"].get("EXPONENTIAL_BACKOFF_FACTOR", "5")
+        )
+
+        self._config["max_concurrent_model_calls"] = self._parse_concurrency_limit(
+            config["OpenAI"].get("MAX_CONCURRENT_MODEL_CALLS", None),
+            default=4,
         )
 
         self._config["cache_api_calls"] = config["OpenAI"].getboolean(
@@ -103,9 +148,12 @@ class ConfigManager:
             "PARALLEL_AGENT_GENERATION", True
         )
 
-        self._config["enable_memory_consolidation"] = config["Cognition"].get(
+        self._config["enable_memory_consolidation"] = config["Cognition"].getboolean(
             "ENABLE_MEMORY_CONSOLIDATION", True
         )
+        self._config["enable_continuous_contextual_semantic_memory_retrieval"] = config[
+            "Cognition"
+        ].getboolean("ENABLE_CONTINUOUS_CONTEXTUAL_SEMANTIC_MEMORY_RETRIEVAL", True)
         self._config["min_episode_length"] = config["Cognition"].getint(
             "MIN_EPISODE_LENGTH", 30
         )
@@ -159,9 +207,18 @@ class ConfigManager:
             "ActionGenerator"
         ].getint("QUALITY_THRESHOLD", 2)
 
-        # LOGLEVEL
-        self._config[ConfigManager.LOGLEVEL_KEY] = (
-            config["Logging"].get("LOGLEVEL", "INFO").upper()
+        # LOGLEVELS
+        default_loglevel = config["Logging"].get("LOGLEVEL", "INFO").upper()
+        loglevel_console = (
+            config["Logging"].get("LOGLEVEL_CONSOLE", default_loglevel).upper()
+        )
+        loglevel_file = config["Logging"].get("LOGLEVEL_FILE", default_loglevel).upper()
+
+        self._config[ConfigManager.LOGLEVEL_KEY] = default_loglevel
+        self._config[ConfigManager.LOGLEVEL_CONSOLE_KEY] = loglevel_console
+        self._config[ConfigManager.LOGLEVEL_FILE_KEY] = loglevel_file
+        self._config[ConfigManager.LOG_INCLUDE_THREAD_ID_KEY] = config["Logging"].getboolean(
+            "LOG_INCLUDE_THREAD_ID", fallback=False
         )
 
         self._raw_config = config
@@ -177,18 +234,52 @@ class ConfigManager:
         Returns:
             None
         """
+        # make sure the key is always lowercase
+        if isinstance(key, str):
+            key = key.lower()
+
         if key in self._config:
-
-            # make sure it is always lowercase
-            if isinstance(value, str):
-                value = value.lower()
-
             self._config[key] = value
             logging.info(f"Updated config: {key} = {value}")
+
+            if key in (
+                ConfigManager.LOGLEVEL_KEY,
+                ConfigManager.LOGLEVEL_CONSOLE_KEY,
+                ConfigManager.LOGLEVEL_FILE_KEY,
+            ):
+                normalized_value = (
+                    value.upper()
+                    if isinstance(value, str)
+                    else logging.getLevelName(value)
+                )
+                self._config[key] = normalized_value
 
             # Special handling for loglevel - also update the logger immediately
             if key == ConfigManager.LOGLEVEL_KEY:
                 utils.set_loglevel(value)
+                # synchronize specific targets when the general level changes
+                normalized = (
+                    value.upper()
+                    if isinstance(value, str)
+                    else logging.getLevelName(value)
+                )
+                self._config[ConfigManager.LOGLEVEL_CONSOLE_KEY] = normalized
+                self._config[ConfigManager.LOGLEVEL_FILE_KEY] = normalized
+            elif key == ConfigManager.LOGLEVEL_CONSOLE_KEY:
+                utils.set_console_loglevel(value)
+            elif key == ConfigManager.LOGLEVEL_FILE_KEY:
+                utils.set_file_loglevel(value)
+            elif key == ConfigManager.LOG_INCLUDE_THREAD_ID_KEY:
+                bool_value = (
+                    value.strip().lower() in {"1", "true", "yes", "on"}
+                    if isinstance(value, str)
+                    else bool(value)
+                )
+                self._config[key] = bool_value
+                utils.set_include_thread_info(bool_value)
+            elif key == "max_concurrent_model_calls":
+                parsed_value = self._parse_concurrency_limit(value, default=None)
+                self._config[key] = parsed_value
         else:
             logging.warning(f"Attempted to update unknown config key: {key}")
 
@@ -216,6 +307,10 @@ class ConfigManager:
         Returns:
             The configuration value
         """
+        # make sure the key is always lowercase
+        if isinstance(key, str):
+            key = key.lower()
+
         return self._config.get(key, default)
 
     def reset(self):
