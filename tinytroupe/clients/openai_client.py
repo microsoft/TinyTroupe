@@ -2,12 +2,15 @@ import configparser
 import logging
 import os
 import pickle
+import threading
 import time
+from contextlib import contextmanager
 from typing import Union
 
+import httpx
 import openai
 import tiktoken
-from openai import AzureOpenAI, OpenAI
+from openai import APITimeoutError, AzureOpenAI, OpenAI
 
 from tinytroupe import config_manager, utils
 from tinytroupe.control import transactional
@@ -28,11 +31,51 @@ class OpenAIClient:
     """
 
     @config_manager.config_defaults(
-        cache_api_calls="cache_api_calls", cache_file_name="cache_file_name"
+        cache_api_calls="cache_api_calls",
+        cache_file_name="cache_file_name",
+        max_concurrent_model_calls="max_concurrent_model_calls",
     )
-    def __init__(self, cache_api_calls=None, cache_file_name=None) -> None:
+    def __init__(
+        self,
+        cache_api_calls=None,
+        cache_file_name=None,
+        max_concurrent_model_calls=None,
+    ) -> None:
         logger.debug("Initializing OpenAIClient")
+        self._cache_lock = threading.RLock()
+        self._max_concurrent_model_calls = self._normalize_concurrency_limit(
+            max_concurrent_model_calls
+        )
+        self._concurrency_semaphore = (
+            threading.BoundedSemaphore(self._max_concurrent_model_calls)
+            if self._max_concurrent_model_calls is not None
+            else None
+        )
+
+        # Initialize cost tracking variables
+        self._cost_stats_lock = threading.RLock()
+        self._reset_cost_stats()
+
         self.set_api_cache(cache_api_calls, cache_file_name)
+
+    @staticmethod
+    def _normalize_concurrency_limit(value):
+        if value is None:
+            return None
+
+        try:
+            candidate = int(value)
+        except (TypeError, ValueError):
+            logger.warning(
+                "Invalid concurrency limit '%s'. Concurrency protection disabled.",
+                value,
+            )
+            return None
+
+        if candidate <= 0:
+            return None
+
+        return candidate
 
     @config_manager.config_defaults(cache_file_name="cache_file_name")
     def set_api_cache(self, cache_api_calls, cache_file_name=None):
@@ -48,17 +91,48 @@ class OpenAIClient:
             # load the cache, if any
             self.api_cache = self._load_cache()
 
-    def _setup_from_config(self):
+    def _reset_cost_stats(self):
+        """
+        Resets the cost statistics to zero.
+        """
+        with self._cost_stats_lock:
+            self._input_tokens = 0
+            self._output_tokens = 0
+            self._total_tokens = 0
+            self._model_calls = 0
+            self._cached_calls = 0
+
+    @config_manager.config_defaults(timeout="timeout")
+    def _setup_from_config(self, timeout=None):
         """
         Sets up the OpenAI API configurations for this client.
         """
-        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+        # On Sept./Oct. 2025 I noticed that the OpenAI library was randomly hanging during requests,
+        # and even the timeout was not being enforced. So after nearly going mad, I found out the
+        # strategy below to cancel problematic requests.
+
+        # Create httpx client with proper timeouts to prevent hanging
+        # This ensures timeouts work at ALL levels: connection, read, write, pool
+        httpx_client = httpx.Client(
+            timeout=httpx.Timeout(
+                timeout=timeout,  # Overall timeout
+                connect=10.0,  # Connection timeout (fixed at 10s)
+                read=timeout,  # Read timeout (from config)
+                write=10.0,  # Write timeout (fixed at 10s)
+                pool=5.0,  # Pool timeout (fixed at 5s)
+            )
+        )
+
+        # we set max_retries to 0 because we do our own retrying with customized exponential backoff
+        self.client = OpenAI(
+            api_key=os.getenv("OPENAI_API_KEY"), max_retries=0, http_client=httpx_client
+        )
 
     @config_manager.config_defaults(
         model="model",
         temperature="temperature",
-        max_tokens="max_tokens",
-        top_p="top_p",
+        max_completion_tokens="max_completion_tokens",
         frequency_penalty="frequency_penalty",
         presence_penalty="presence_penalty",
         timeout="timeout",
@@ -74,11 +148,11 @@ class OpenAIClient:
         dedent_messages=True,
         model=None,
         temperature=None,
-        max_tokens=None,
+        max_completion_tokens=None,
         top_p=None,
         frequency_penalty=None,
         presence_penalty=None,
-        stop=[],
+        stop=None,
         timeout=None,
         max_attempts=None,
         waiting_time=None,
@@ -96,7 +170,7 @@ class OpenAIClient:
         dedent_messages (bool): Whether to dedent the messages before sending them to the API.
         model (str): The ID of the model to use for generating the response.
         temperature (float): Controls the "creativity" of the response. Higher values result in more diverse responses.
-        max_tokens (int): The maximum number of tokens (words or punctuation marks) to generate in the response.
+        max_completion_tokens (int): The maximum number of tokens (words or punctuation marks) to generate in the response.
         top_p (float): Controls the "quality" of the response. Higher values result in more coherent responses.
         frequency_penalty (float): Controls the "repetition" of the response. Higher values result in less repetition.
         presence_penalty (float): Controls the "diversity" of the response. Higher values result in more diverse responses.
@@ -148,7 +222,7 @@ class OpenAIClient:
             "model": model,
             "messages": current_messages,
             "temperature": temperature,
-            "max_tokens": max_tokens,
+            "max_completion_tokens": max_completion_tokens,
             "top_p": top_p,
             "frequency_penalty": frequency_penalty,
             "presence_penalty": presence_penalty,
@@ -160,6 +234,9 @@ class OpenAIClient:
 
         if response_format is not None:
             chat_api_params["response_format"] = response_format
+
+        # remove any parameter that is None, so we use the API defaults
+        chat_api_params = {k: v for k, v in chat_api_params.items() if v is not None}
 
         i = 0
         while i < max_attempts:
@@ -182,19 +259,48 @@ class OpenAIClient:
                 # call the model, either from the cache or from the API
                 ###############################################################
                 cache_key = str((model, chat_api_params))  # need string to be hashable
-                if self.cache_api_calls and (cache_key in self.api_cache):
-                    response = self.api_cache[cache_key]
-                else:
-                    if waiting_time > 0:
-                        logger.info(
-                            f"Waiting {waiting_time} seconds before next API request (to avoid throttling)..."
-                        )
-                        time.sleep(waiting_time)
 
-                    response = self._raw_model_call(model, chat_api_params)
-                    if self.cache_api_calls:
-                        self.api_cache[cache_key] = response
-                        self._save_cache()
+                pre_cached_response = self._get_cached_response(cache_key)
+
+                should_wait_before_call = (
+                    waiting_time > 0 and pre_cached_response is None
+                )
+
+                if should_wait_before_call:
+                    logger.info(
+                        f"Waiting {waiting_time} seconds before next API request (to avoid throttling)..."
+                    )
+                    time.sleep(waiting_time)
+
+                with self._concurrency_slot():
+                    response = None
+                    cached_response = (
+                        pre_cached_response
+                        if pre_cached_response is not None
+                        else self._get_cached_response(cache_key)
+                    )
+
+                    if cached_response is not None:
+                        response = cached_response
+                    else:
+                        response = self._raw_model_call(model, chat_api_params)
+                        if self.cache_api_calls:
+                            with self._cache_lock:
+                                existing = (
+                                    self.api_cache.get(cache_key)
+                                    if hasattr(self, "api_cache")
+                                    else None
+                                )
+                                if existing is None:
+                                    self.api_cache[cache_key] = response
+                                    self._save_cache()
+                                else:
+                                    response = existing
+
+                    raw_message = self._raw_model_response_extractor(response)
+
+                    # Update cost statistics
+                    self._update_cost_stats(response, cached_response is not None)
 
                 logger.debug(f"Got response from API: {response}")
                 end_time = time.monotonic()
@@ -204,13 +310,11 @@ class OpenAIClient:
 
                 if enable_pydantic_model_return:
                     return utils.to_pydantic_or_sanitized_dict(
-                        self._raw_model_response_extractor(response),
+                        raw_message,
                         model=response_format,
                     )
                 else:
-                    return utils.sanitize_dict(
-                        self._raw_model_response_extractor(response)
-                    )
+                    return utils.sanitize_dict(raw_message)
 
             except InvalidRequestError as e:
                 logger.error(f"[{i}] Invalid request error, won't retry: {e}")
@@ -236,6 +340,10 @@ class OpenAIClient:
                 logger.error(f"[{i}] Non-terminal error: {e}")
                 aux_exponential_backoff()
 
+            except APITimeoutError as e:
+                logger.error(f"[{i}] API Timeout error: {e}")
+                # no exponential timeout backoff here, just retry
+
             except Exception as e:
                 logger.error(f"[{i}] {type(e).__name__} Error: {e}")
                 aux_exponential_backoff()
@@ -248,7 +356,6 @@ class OpenAIClient:
         Calls the OpenAI API with the given parameters. Subclasses should
         override this method to implement their own API calls.
         """
-
         # adjust parameters depending on the model
         if self._is_reasoning_model(model):
             # Reasoning models have slightly different parameters
@@ -258,8 +365,10 @@ class OpenAIClient:
             del chat_api_params["frequency_penalty"]
             del chat_api_params["presence_penalty"]
 
-            chat_api_params["max_completion_tokens"] = chat_api_params["max_tokens"]
-            del chat_api_params["max_tokens"]
+            chat_api_params["max_completion_tokens"] = chat_api_params[
+                "max_completion_tokens"
+            ]
+            del chat_api_params["max_completion_tokens"]
 
             chat_api_params["reasoning_effort"] = config_manager.get("reasoning_effort")
 
@@ -299,6 +408,29 @@ class OpenAIClient:
         override this method to implement their own response extraction.
         """
         return response.choices[0].message.to_dict()
+
+    def _get_cached_response(self, cache_key):
+        if not self.cache_api_calls:
+            return None
+
+        cache_store = getattr(self, "api_cache", None)
+        if cache_store is None:
+            return None
+
+        with self._cache_lock:
+            return cache_store.get(cache_key)
+
+    @contextmanager
+    def _concurrency_slot(self):
+        if self._concurrency_semaphore is None:
+            yield
+            return
+
+        self._concurrency_semaphore.acquire()
+        try:
+            yield
+        finally:
+            self._concurrency_semaphore.release()
 
     def _count_tokens(self, messages: list, model: str):
         """
@@ -347,6 +479,11 @@ class OpenAIClient:
             elif ("gpt-4" in model) or ("ppo" in model):
                 logger.debug(
                     "Token count: gpt-4 may update over time. Returning num tokens assuming gpt-4-0613."
+                )
+                return self._count_tokens(messages, model="gpt-4-0613")
+            elif "gpt-5" in model:
+                logger.debug(
+                    "Token count: no info on GPT-5 tokenizer yet, so we are just reusing GPT-4's."
                 )
                 return self._count_tokens(messages, model="gpt-4-0613")
             else:
@@ -420,3 +557,83 @@ class OpenAIClient:
         override this method to implement their own response extraction.
         """
         return response.data[0].embedding
+
+    def _update_cost_stats(self, response, was_cached):
+        """
+        Updates the cost statistics based on the API response.
+
+        Args:
+            response: The response object from the API.
+            was_cached (bool): Whether this response came from cache.
+        """
+        with self._cost_stats_lock:
+            if was_cached:
+                self._cached_calls += 1
+            else:
+                self._model_calls += 1
+
+            # Extract token usage from response if available
+            if hasattr(response, "usage"):
+                usage = response.usage
+                if hasattr(usage, "prompt_tokens"):
+                    self._input_tokens += usage.prompt_tokens
+                if hasattr(usage, "completion_tokens"):
+                    self._output_tokens += usage.completion_tokens
+                if hasattr(usage, "total_tokens"):
+                    self._total_tokens += usage.total_tokens
+
+                # Log the latest values in debug mode
+                logger.debug(
+                    f"Cost stats updated - Input tokens: {usage.prompt_tokens if hasattr(usage, 'prompt_tokens') else 0}, "
+                    f"Output tokens: {usage.completion_tokens if hasattr(usage, 'completion_tokens') else 0}, "
+                    f"Total tokens: {usage.total_tokens if hasattr(usage, 'total_tokens') else 0}, "
+                    f"Cached: {was_cached}"
+                )
+
+    def get_cost_stats(self):
+        """
+        Returns the current cost statistics.
+
+        Returns:
+            dict: A dictionary containing cost statistics with keys:
+                - input_tokens: Number of input/prompt tokens used
+                - output_tokens: Number of output/completion tokens used
+                - total_tokens: Total number of tokens used
+                - model_calls: Number of actual API calls made
+                - cached_calls: Number of calls served from cache
+        """
+        with self._cost_stats_lock:
+            return {
+                "input_tokens": self._input_tokens,
+                "output_tokens": self._output_tokens,
+                "total_tokens": self._total_tokens,
+                "model_calls": self._model_calls,
+                "cached_calls": self._cached_calls,
+            }
+
+    def pretty_print_cost_stats(self):
+        """
+        Pretty prints the cost statistics to the console.
+        """
+        stats = self.get_cost_stats()
+        print("\n" + "=" * 60)
+        print("LLM API COST STATISTICS")
+        print("=" * 60)
+        print(f"Input tokens:         {stats['input_tokens']:,}")
+        print(f"Output tokens:        {stats['output_tokens']:,}")
+        print(f"Total tokens:         {stats['total_tokens']:,}")
+        print(f"Model API calls:      {stats['model_calls']:,}")
+        print(f"Cached calls:         {stats['cached_calls']:,}")
+        print(f"Total calls:          {stats['model_calls'] + stats['cached_calls']:,}")
+        if stats["model_calls"] > 0:
+            print(
+                f"Avg tokens per call:  {stats['total_tokens'] / stats['model_calls']:.1f}"
+            )
+        print("=" * 60 + "\n")
+
+    def reset_cost_stats(self):
+        """
+        Resets the cost statistics. This is the public method that users should call.
+        """
+        self._reset_cost_stats()
+        logger.info("Cost statistics have been reset.")
