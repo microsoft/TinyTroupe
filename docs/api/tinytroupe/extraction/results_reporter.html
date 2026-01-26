@@ -26,27 +26,30 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">import os
-import json
-from typing import Union, List, Dict, Any
+<pre><code class="python">import json
+import os
+from typing import Any, Dict, List, Union
+
 from rich.console import Console
 from rich.markdown import Markdown
 
-from tinytroupe.extraction import logger
+from tinytroupe import config_manager
 from tinytroupe.agent import TinyPerson
 from tinytroupe.environment import TinyWorld
+from tinytroupe.extraction import logger
 from tinytroupe.utils import LLMChat
-from tinytroupe import default
 
 
 class ResultsReporter:
-    
-    def __init__(self, 
-                 default_reporting_task: str = &#34;Summarize the key findings, insights, and outcomes from the simulation data.&#34;,
-                 verbose: bool = False):
+
+    def __init__(
+        self,
+        default_reporting_task: str = &#34;Summarize the key findings, insights, and outcomes from the simulation data.&#34;,
+        verbose: bool = False,
+    ):
         &#34;&#34;&#34;
         Initializes the ResultsReporter.
-        
+
         Args:
             default_reporting_task (str): The default task to ask agents when generating reports.
             verbose (bool): Whether to print debug messages.
@@ -54,20 +57,22 @@ class ResultsReporter:
         self.default_reporting_task = default_reporting_task
         self.verbose = verbose
         self.console = Console()
-        
+
         # Cache for generated reports
         self.last_report = None
-    
-    def report_from_agents(self,
-                          agents: Union[TinyPerson, TinyWorld, List[TinyPerson]],
-                          reporting_task: str = None,
-                          report_title: str = &#34;Simulation Report&#34;,
-                          include_agent_summaries: bool = True,
-                          consolidate_responses: bool = True,
-                          requirements: str = &#34;Present the findings in a clear, structured manner.&#34;) -&gt; str:
+
+    def report_from_agents(
+        self,
+        agents: Union[TinyPerson, TinyWorld, List[TinyPerson]],
+        reporting_task: str = None,
+        report_title: str = &#34;Simulation Report&#34;,
+        include_agent_summaries: bool = True,
+        consolidate_responses: bool = True,
+        requirements: str = &#34;Present the findings in a clear, structured manner.&#34;,
+    ) -&gt; str:
         &#34;&#34;&#34;
         Option 1: Generate a report by asking agents about specific reporting tasks.
-        
+
         Args:
             agents: Single agent, TinyWorld, or list of agents to interview.
             reporting_task: The specific task to ask agents about.
@@ -75,52 +80,51 @@ class ResultsReporter:
             include_agent_summaries: Whether to include agent mini-bios in the report.
             consolidate_responses: Whether to consolidate all responses into a single report.
             requirements: Formatting or content requirements for the report.
-            
+
         Returns:
             str: The generated Markdown report.
         &#34;&#34;&#34;
         if reporting_task is None:
             reporting_task = self.default_reporting_task
-            
+
         # Extract agents from input
         agent_list = self._extract_agents(agents)
-        
+
         if self.verbose:
             logger.info(f&#34;Interviewing {len(agent_list)} agents for report generation.&#34;)
-        
+
         # Collect responses from agents
         agent_responses = []
         for agent in agent_list:
             response = self._interview_agent(agent, reporting_task)
-            agent_responses.append({
-                &#34;agent&#34;: agent,
-                &#34;response&#34;: response
-            })
-        
+            agent_responses.append({&#34;agent&#34;: agent, &#34;response&#34;: response})
+
         # Generate the report
         report = self._format_agent_interview_report(
-            agent_responses, 
-            report_title, 
+            agent_responses,
+            report_title,
             reporting_task,
             include_agent_summaries,
             consolidate_responses,
-            requirements
+            requirements,
         )
-        
+
         self.last_report = report
         return report
-    
-    def report_from_interactions(self,
-                                agents: Union[TinyPerson, TinyWorld, List[TinyPerson]],
-                                report_title: str = &#34;Interaction Analysis Report&#34;,
-                                include_agent_summaries: bool = True,
-                                first_n: int = None,
-                                last_n: int = None,
-                                max_content_length: int = None,
-                                requirements: str = &#34;Present the findings in a clear, structured manner.&#34;) -&gt; str:
+
+    def report_from_interactions(
+        self,
+        agents: Union[TinyPerson, TinyWorld, List[TinyPerson]],
+        report_title: str = &#34;Interaction Analysis Report&#34;,
+        include_agent_summaries: bool = True,
+        first_n: int = None,
+        last_n: int = None,
+        max_content_length: int = None,
+        requirements: str = &#34;Present the findings in a clear, structured manner.&#34;,
+    ) -&gt; str:
         &#34;&#34;&#34;
         Option 2: Generate a report by analyzing agents&#39; historical interactions.
-        
+
         Args:
             agents: Single agent, TinyWorld, or list of agents to analyze.
             report_title: Title for the generated report.
@@ -129,16 +133,16 @@ class ResultsReporter:
             last_n: Number of last interactions to include.
             max_content_length: Maximum content length for interactions.
             requirements: Formatting or content requirements for the report.
-            
+
         Returns:
             str: The generated Markdown report.
         &#34;&#34;&#34;
         # Extract agents from input
         agent_list = self._extract_agents(agents)
-        
+
         if self.verbose:
             logger.info(f&#34;Analyzing interactions from {len(agent_list)} agents.&#34;)
-        
+
         # Collect interaction data
         interactions_data = []
         for agent in agent_list:
@@ -146,72 +150,65 @@ class ResultsReporter:
                 simplified=True,
                 first_n=first_n,
                 last_n=last_n,
-                max_content_length=max_content_length
+                max_content_length=max_content_length,
             )
-            interactions_data.append({
-                &#34;agent&#34;: agent,
-                &#34;interactions&#34;: interactions
-            })
-        
+            interactions_data.append({&#34;agent&#34;: agent, &#34;interactions&#34;: interactions})
+
         # Generate the report
         report = self._format_interactions_report(
-            interactions_data,
-            report_title,
-            include_agent_summaries,
-            requirements
+            interactions_data, report_title, include_agent_summaries, requirements
         )
-        
+
         self.last_report = report
         return report
-    
-    def report_from_data(self,
-                        data: Union[str, Dict[str, Any], List[Dict[str, Any]]],
-                        report_title: str = &#34;Data Report&#34;,
-                        requirements: str = &#34;Present the findings in a clear, structured manner.&#34;) -&gt; str:
+
+    def report_from_data(
+        self,
+        data: Union[str, Dict[str, Any], List[Dict[str, Any]]],
+        report_title: str = &#34;Data Report&#34;,
+        requirements: str = &#34;Present the findings in a clear, structured manner.&#34;,
+    ) -&gt; str:
         &#34;&#34;&#34;
         Option 3: Generate a report from raw text or structured data.
-        
+
         Args:
             data: Raw text, dictionary, or list of dictionaries to format.
             report_title: Title for the generated report.
             requirements: Formatting or content requirements for the report. If None, uses simple formatting.
-            
+
         Returns:
             str: The generated Markdown report.
         &#34;&#34;&#34;
         if self.verbose:
             logger.info(&#34;Generating report from raw data.&#34;)
-        
+
         # Generate the report
         report = self._format_data_report(data, report_title, requirements)
-        
+
         self.last_report = report
         return report
-    
+
     def display_report(self, report: str = None):
         &#34;&#34;&#34;
         Display a report on the console with rich formatting.
-        
+
         Args:
             report: The report to display. If None, uses the last generated report.
         &#34;&#34;&#34;
         if report is None:
             report = self.last_report
-            
+
         if report is None:
             self.console.print(&#34;[red]No report available to display.[/red]&#34;)
             return
-            
+
         markdown = Markdown(report)
         self.console.print(markdown)
-    
-    def save_report(self, 
-                   filename: str,
-                   report: str = None,
-                   verbose: bool = None):
+
+    def save_report(self, filename: str, report: str = None, verbose: bool = None):
         &#34;&#34;&#34;
         Save a report to a file.
-        
+
         Args:
             filename: The filename to save the report to.
             report: The report to save. If None, uses the last generated report.
@@ -219,19 +216,19 @@ class ResultsReporter:
         &#34;&#34;&#34;
         if report is None:
             report = self.last_report
-            
+
         if report is None:
             raise ValueError(&#34;No report available to save.&#34;)
-            
+
         if verbose is None:
             verbose = self.verbose
-            
-        with open(filename, &#39;w&#39;, encoding=&#39;utf-8&#39;) as f:
+
+        with open(filename, &#34;w&#34;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as f:
             f.write(report)
-            
+
         if verbose:
             logger.info(f&#34;Report saved to {filename}&#34;)
-    
+
     def _extract_agents(self, agents) -&gt; List[TinyPerson]:
         &#34;&#34;&#34;Extract a list of TinyPerson objects from various input types.&#34;&#34;&#34;
         if isinstance(agents, TinyPerson):
@@ -241,13 +238,15 @@ class ResultsReporter:
         elif isinstance(agents, list):
             return agents
         else:
-            raise ValueError(&#34;Agents must be a TinyPerson, TinyWorld, or list of TinyPerson objects.&#34;)
-    
+            raise ValueError(
+                &#34;Agents must be a TinyPerson, TinyWorld, or list of TinyPerson objects.&#34;
+            )
+
     def _interview_agent(self, agent: TinyPerson, reporting_task: str) -&gt; str:
         &#34;&#34;&#34;Interview a single agent about the reporting task.&#34;&#34;&#34;
         if self.verbose:
             logger.debug(f&#34;Interviewing agent {agent.name} about: {reporting_task}&#34;)
-        
+
         # Following TinyTroupe patterns - directly interact with the agent
         prompt = f&#34;&#34;&#34;
         I need you to provide a comprehensive report based on your experiences and observations.
@@ -257,41 +256,40 @@ class ResultsReporter:
         Please provide detailed insights, specific examples, and key findings from your perspective.
         Focus on what you&#39;ve learned, observed, and experienced during the simulation.
         &#34;&#34;&#34;
-        
+
         # Use listen_and_act pattern to get agent&#39;s response
         agent.listen(prompt)
         actions = agent.act(return_actions=True)
-        
+
         # Extract the response from the agent&#39;s actions
         response = &#34;&#34;
         for action in actions:
             if action[&#34;action&#34;][&#34;type&#34;] == &#34;TALK&#34;:
                 response += action[&#34;action&#34;][&#34;content&#34;] + &#34;\n&#34;
-        
+
         if self.verbose:
             logger.debug(f&#34;Agent {agent.name} response received.&#34;)
-        
+
         return response.strip()
-    
-    def _format_agent_interview_report(self, 
-                                     agent_responses: List[Dict],
-                                     title: str,
-                                     task: str,
-                                     include_summaries: bool,
-                                     consolidate: bool,
-                                     requirements: str) -&gt; str:
+
+    def _format_agent_interview_report(
+        self,
+        agent_responses: List[Dict],
+        title: str,
+        task: str,
+        include_summaries: bool,
+        consolidate: bool,
+        requirements: str,
+    ) -&gt; str:
         &#34;&#34;&#34;Format agent interview responses into a Markdown report.&#34;&#34;&#34;
         # Prepare data for LLM formatting
         agents_data = []
         for resp in agent_responses:
-            agent_info = {
-                &#34;name&#34;: resp[&#34;agent&#34;].name,
-                &#34;response&#34;: resp[&#34;response&#34;]
-            }
+            agent_info = {&#34;name&#34;: resp[&#34;agent&#34;].name, &#34;response&#34;: resp[&#34;response&#34;]}
             if include_summaries:
                 agent_info[&#34;bio&#34;] = resp[&#34;agent&#34;].minibio(extended=False)
             agents_data.append(agent_info)
-        
+
         # Generate report using LLM
         return self._generate_report_with_llm(
             title=title,
@@ -299,62 +297,59 @@ class ResultsReporter:
             data={
                 &#34;reporting_task&#34;: task,
                 &#34;agents_data&#34;: agents_data,
-                &#34;consolidate&#34;: consolidate
+                &#34;consolidate&#34;: consolidate,
             },
             include_summaries=include_summaries,
-            requirements=requirements
+            requirements=requirements,
         )
-    
-    def _format_interactions_report(self,
-                                  interactions_data: List[Dict],
-                                  title: str,
-                                  include_summaries: bool,
-                                  requirements: str) -&gt; str:
+
+    def _format_interactions_report(
+        self,
+        interactions_data: List[Dict],
+        title: str,
+        include_summaries: bool,
+        requirements: str,
+    ) -&gt; str:
         &#34;&#34;&#34;Format interaction data into a Markdown report.&#34;&#34;&#34;
         # Prepare data for LLM formatting
         agents_data = []
         for data in interactions_data:
             agent_info = {
                 &#34;name&#34;: data[&#34;agent&#34;].name,
-                &#34;interactions&#34;: data[&#34;interactions&#34;]
+                &#34;interactions&#34;: data[&#34;interactions&#34;],
             }
             if include_summaries:
                 agent_info[&#34;bio&#34;] = data[&#34;agent&#34;].minibio(extended=False)
             agents_data.append(agent_info)
-        
+
         # Generate report using LLM
         return self._generate_report_with_llm(
             title=title,
             report_type=&#34;interactions&#34;,
             data={&#34;agents_data&#34;: agents_data},
             include_summaries=include_summaries,
-            requirements=requirements
-        )
-    
-    def _format_data_report(self,
-                          data: Any,
-                          title: str,
-                          requirements: str) -&gt; str:
-        &#34;&#34;&#34;Format raw data into a Markdown report.&#34;&#34;&#34;
-        return self._generate_report_with_llm(
-            title=title,
-            report_type=&#34;custom_data&#34;,
-            data=data,
-            requirements=requirements
+            requirements=requirements,
         )
 
-    
-    def _generate_report_with_llm(self,
-                                title: str,
-                                report_type: str,
-                                data: Any,
-                                include_summaries: bool = False,
-                                requirements: str = None) -&gt; str:
+    def _format_data_report(self, data: Any, title: str, requirements: str) -&gt; str:
+        &#34;&#34;&#34;Format raw data into a Markdown report.&#34;&#34;&#34;
+        return self._generate_report_with_llm(
+            title=title, report_type=&#34;custom_data&#34;, data=data, requirements=requirements
+        )
+
+    def _generate_report_with_llm(
+        self,
+        title: str,
+        report_type: str,
+        data: Any,
+        include_summaries: bool = False,
+        requirements: str = None,
+    ) -&gt; str:
         &#34;&#34;&#34;Generate a report using LLM based on the report type and data.&#34;&#34;&#34;
-        
+
         # Base system prompt
         system_prompt = &#34;You are a professional report writer who creates clear, well-structured Markdown reports.&#34;
-        
+
         # Type-specific prompts and instructions
         if report_type == &#34;agent_interview&#34;:
             system_prompt += &#34; You specialize in synthesizing interview responses from multiple agents.&#34;
@@ -386,7 +381,7 @@ class ResultsReporter:
             ## Requirements
             {requirements}
             &#34;&#34;&#34;
-            
+
         elif report_type == &#34;interactions&#34;:
             system_prompt += &#34; You specialize in analyzing and presenting agent interaction histories.&#34;
             user_prompt = f&#34;&#34;&#34;
@@ -416,7 +411,7 @@ class ResultsReporter:
             ## Requirements
             {requirements}
             &#34;&#34;&#34;
-            
+
         elif report_type == &#34;custom_data&#34;:
             # Handle arbitrary data without assuming any structure
             if isinstance(data, str):
@@ -424,7 +419,7 @@ class ResultsReporter:
             else:
                 # For any other type, convert to JSON for a clean representation
                 data_representation = json.dumps(data, indent=2)
-                
+
             user_prompt = f&#34;&#34;&#34;
             ## Task
             Create a well-structured Markdown report based on the provided data such that it fulfills the 
@@ -449,26 +444,25 @@ class ResultsReporter:
             ## Requirements
             {requirements if requirements else &#34;Use your best judgment to create a clear, informative report that presents the data in an organized and readable manner.&#34;}
             &#34;&#34;&#34;
-        
+
         else:
             raise ValueError(f&#34;Unknown report type: {report_type}&#34;)
-        
+
         # Generate the report
         report_chat = LLMChat(
             system_prompt=system_prompt,
             user_prompt=user_prompt,
             output_type=str,
             enable_json_output_format=False,
-            model=default[&#34;model&#34;],
-            temperature=0.3
+            model=config_manager.get(&#34;model&#34;),
         )
-        
+
         return report_chat()
-    
-    
+
     def _get_timestamp(self) -&gt; str:
         &#34;&#34;&#34;Get current timestamp for report headers.&#34;&#34;&#34;
         from datetime import datetime
+
         return datetime.now().strftime(&#34;%Y-%m-%d %H:%M:%S&#34;)</code></pre>
 </details>
 </section>
@@ -499,13 +493,15 @@ class ResultsReporter:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class ResultsReporter:
-    
-    def __init__(self, 
-                 default_reporting_task: str = &#34;Summarize the key findings, insights, and outcomes from the simulation data.&#34;,
-                 verbose: bool = False):
+
+    def __init__(
+        self,
+        default_reporting_task: str = &#34;Summarize the key findings, insights, and outcomes from the simulation data.&#34;,
+        verbose: bool = False,
+    ):
         &#34;&#34;&#34;
         Initializes the ResultsReporter.
-        
+
         Args:
             default_reporting_task (str): The default task to ask agents when generating reports.
             verbose (bool): Whether to print debug messages.
@@ -513,20 +509,22 @@ class ResultsReporter:
         self.default_reporting_task = default_reporting_task
         self.verbose = verbose
         self.console = Console()
-        
+
         # Cache for generated reports
         self.last_report = None
-    
-    def report_from_agents(self,
-                          agents: Union[TinyPerson, TinyWorld, List[TinyPerson]],
-                          reporting_task: str = None,
-                          report_title: str = &#34;Simulation Report&#34;,
-                          include_agent_summaries: bool = True,
-                          consolidate_responses: bool = True,
-                          requirements: str = &#34;Present the findings in a clear, structured manner.&#34;) -&gt; str:
+
+    def report_from_agents(
+        self,
+        agents: Union[TinyPerson, TinyWorld, List[TinyPerson]],
+        reporting_task: str = None,
+        report_title: str = &#34;Simulation Report&#34;,
+        include_agent_summaries: bool = True,
+        consolidate_responses: bool = True,
+        requirements: str = &#34;Present the findings in a clear, structured manner.&#34;,
+    ) -&gt; str:
         &#34;&#34;&#34;
         Option 1: Generate a report by asking agents about specific reporting tasks.
-        
+
         Args:
             agents: Single agent, TinyWorld, or list of agents to interview.
             reporting_task: The specific task to ask agents about.
@@ -534,52 +532,51 @@ class ResultsReporter:
             include_agent_summaries: Whether to include agent mini-bios in the report.
             consolidate_responses: Whether to consolidate all responses into a single report.
             requirements: Formatting or content requirements for the report.
-            
+
         Returns:
             str: The generated Markdown report.
         &#34;&#34;&#34;
         if reporting_task is None:
             reporting_task = self.default_reporting_task
-            
+
         # Extract agents from input
         agent_list = self._extract_agents(agents)
-        
+
         if self.verbose:
             logger.info(f&#34;Interviewing {len(agent_list)} agents for report generation.&#34;)
-        
+
         # Collect responses from agents
         agent_responses = []
         for agent in agent_list:
             response = self._interview_agent(agent, reporting_task)
-            agent_responses.append({
-                &#34;agent&#34;: agent,
-                &#34;response&#34;: response
-            })
-        
+            agent_responses.append({&#34;agent&#34;: agent, &#34;response&#34;: response})
+
         # Generate the report
         report = self._format_agent_interview_report(
-            agent_responses, 
-            report_title, 
+            agent_responses,
+            report_title,
             reporting_task,
             include_agent_summaries,
             consolidate_responses,
-            requirements
+            requirements,
         )
-        
+
         self.last_report = report
         return report
-    
-    def report_from_interactions(self,
-                                agents: Union[TinyPerson, TinyWorld, List[TinyPerson]],
-                                report_title: str = &#34;Interaction Analysis Report&#34;,
-                                include_agent_summaries: bool = True,
-                                first_n: int = None,
-                                last_n: int = None,
-                                max_content_length: int = None,
-                                requirements: str = &#34;Present the findings in a clear, structured manner.&#34;) -&gt; str:
+
+    def report_from_interactions(
+        self,
+        agents: Union[TinyPerson, TinyWorld, List[TinyPerson]],
+        report_title: str = &#34;Interaction Analysis Report&#34;,
+        include_agent_summaries: bool = True,
+        first_n: int = None,
+        last_n: int = None,
+        max_content_length: int = None,
+        requirements: str = &#34;Present the findings in a clear, structured manner.&#34;,
+    ) -&gt; str:
         &#34;&#34;&#34;
         Option 2: Generate a report by analyzing agents&#39; historical interactions.
-        
+
         Args:
             agents: Single agent, TinyWorld, or list of agents to analyze.
             report_title: Title for the generated report.
@@ -588,16 +585,16 @@ class ResultsReporter:
             last_n: Number of last interactions to include.
             max_content_length: Maximum content length for interactions.
             requirements: Formatting or content requirements for the report.
-            
+
         Returns:
             str: The generated Markdown report.
         &#34;&#34;&#34;
         # Extract agents from input
         agent_list = self._extract_agents(agents)
-        
+
         if self.verbose:
             logger.info(f&#34;Analyzing interactions from {len(agent_list)} agents.&#34;)
-        
+
         # Collect interaction data
         interactions_data = []
         for agent in agent_list:
@@ -605,72 +602,65 @@ class ResultsReporter:
                 simplified=True,
                 first_n=first_n,
                 last_n=last_n,
-                max_content_length=max_content_length
+                max_content_length=max_content_length,
             )
-            interactions_data.append({
-                &#34;agent&#34;: agent,
-                &#34;interactions&#34;: interactions
-            })
-        
+            interactions_data.append({&#34;agent&#34;: agent, &#34;interactions&#34;: interactions})
+
         # Generate the report
         report = self._format_interactions_report(
-            interactions_data,
-            report_title,
-            include_agent_summaries,
-            requirements
+            interactions_data, report_title, include_agent_summaries, requirements
         )
-        
+
         self.last_report = report
         return report
-    
-    def report_from_data(self,
-                        data: Union[str, Dict[str, Any], List[Dict[str, Any]]],
-                        report_title: str = &#34;Data Report&#34;,
-                        requirements: str = &#34;Present the findings in a clear, structured manner.&#34;) -&gt; str:
+
+    def report_from_data(
+        self,
+        data: Union[str, Dict[str, Any], List[Dict[str, Any]]],
+        report_title: str = &#34;Data Report&#34;,
+        requirements: str = &#34;Present the findings in a clear, structured manner.&#34;,
+    ) -&gt; str:
         &#34;&#34;&#34;
         Option 3: Generate a report from raw text or structured data.
-        
+
         Args:
             data: Raw text, dictionary, or list of dictionaries to format.
             report_title: Title for the generated report.
             requirements: Formatting or content requirements for the report. If None, uses simple formatting.
-            
+
         Returns:
             str: The generated Markdown report.
         &#34;&#34;&#34;
         if self.verbose:
             logger.info(&#34;Generating report from raw data.&#34;)
-        
+
         # Generate the report
         report = self._format_data_report(data, report_title, requirements)
-        
+
         self.last_report = report
         return report
-    
+
     def display_report(self, report: str = None):
         &#34;&#34;&#34;
         Display a report on the console with rich formatting.
-        
+
         Args:
             report: The report to display. If None, uses the last generated report.
         &#34;&#34;&#34;
         if report is None:
             report = self.last_report
-            
+
         if report is None:
             self.console.print(&#34;[red]No report available to display.[/red]&#34;)
             return
-            
+
         markdown = Markdown(report)
         self.console.print(markdown)
-    
-    def save_report(self, 
-                   filename: str,
-                   report: str = None,
-                   verbose: bool = None):
+
+    def save_report(self, filename: str, report: str = None, verbose: bool = None):
         &#34;&#34;&#34;
         Save a report to a file.
-        
+
         Args:
             filename: The filename to save the report to.
             report: The report to save. If None, uses the last generated report.
@@ -678,19 +668,19 @@ class ResultsReporter:
         &#34;&#34;&#34;
         if report is None:
             report = self.last_report
-            
+
         if report is None:
             raise ValueError(&#34;No report available to save.&#34;)
-            
+
         if verbose is None:
             verbose = self.verbose
-            
-        with open(filename, &#39;w&#39;, encoding=&#39;utf-8&#39;) as f:
+
+        with open(filename, &#34;w&#34;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as f:
             f.write(report)
-            
+
         if verbose:
             logger.info(f&#34;Report saved to {filename}&#34;)
-    
+
     def _extract_agents(self, agents) -&gt; List[TinyPerson]:
         &#34;&#34;&#34;Extract a list of TinyPerson objects from various input types.&#34;&#34;&#34;
         if isinstance(agents, TinyPerson):
@@ -700,13 +690,15 @@ class ResultsReporter:
         elif isinstance(agents, list):
             return agents
         else:
-            raise ValueError(&#34;Agents must be a TinyPerson, TinyWorld, or list of TinyPerson objects.&#34;)
-    
+            raise ValueError(
+                &#34;Agents must be a TinyPerson, TinyWorld, or list of TinyPerson objects.&#34;
+            )
+
     def _interview_agent(self, agent: TinyPerson, reporting_task: str) -&gt; str:
         &#34;&#34;&#34;Interview a single agent about the reporting task.&#34;&#34;&#34;
         if self.verbose:
             logger.debug(f&#34;Interviewing agent {agent.name} about: {reporting_task}&#34;)
-        
+
         # Following TinyTroupe patterns - directly interact with the agent
         prompt = f&#34;&#34;&#34;
         I need you to provide a comprehensive report based on your experiences and observations.
@@ -716,41 +708,40 @@ class ResultsReporter:
         Please provide detailed insights, specific examples, and key findings from your perspective.
         Focus on what you&#39;ve learned, observed, and experienced during the simulation.
         &#34;&#34;&#34;
-        
+
         # Use listen_and_act pattern to get agent&#39;s response
         agent.listen(prompt)
         actions = agent.act(return_actions=True)
-        
+
         # Extract the response from the agent&#39;s actions
         response = &#34;&#34;
         for action in actions:
             if action[&#34;action&#34;][&#34;type&#34;] == &#34;TALK&#34;:
                 response += action[&#34;action&#34;][&#34;content&#34;] + &#34;\n&#34;
-        
+
         if self.verbose:
             logger.debug(f&#34;Agent {agent.name} response received.&#34;)
-        
+
         return response.strip()
-    
-    def _format_agent_interview_report(self, 
-                                     agent_responses: List[Dict],
-                                     title: str,
-                                     task: str,
-                                     include_summaries: bool,
-                                     consolidate: bool,
-                                     requirements: str) -&gt; str:
+
+    def _format_agent_interview_report(
+        self,
+        agent_responses: List[Dict],
+        title: str,
+        task: str,
+        include_summaries: bool,
+        consolidate: bool,
+        requirements: str,
+    ) -&gt; str:
         &#34;&#34;&#34;Format agent interview responses into a Markdown report.&#34;&#34;&#34;
         # Prepare data for LLM formatting
         agents_data = []
         for resp in agent_responses:
-            agent_info = {
-                &#34;name&#34;: resp[&#34;agent&#34;].name,
-                &#34;response&#34;: resp[&#34;response&#34;]
-            }
+            agent_info = {&#34;name&#34;: resp[&#34;agent&#34;].name, &#34;response&#34;: resp[&#34;response&#34;]}
             if include_summaries:
                 agent_info[&#34;bio&#34;] = resp[&#34;agent&#34;].minibio(extended=False)
             agents_data.append(agent_info)
-        
+
         # Generate report using LLM
         return self._generate_report_with_llm(
             title=title,
@@ -758,62 +749,59 @@ class ResultsReporter:
             data={
                 &#34;reporting_task&#34;: task,
                 &#34;agents_data&#34;: agents_data,
-                &#34;consolidate&#34;: consolidate
+                &#34;consolidate&#34;: consolidate,
             },
             include_summaries=include_summaries,
-            requirements=requirements
+            requirements=requirements,
         )
-    
-    def _format_interactions_report(self,
-                                  interactions_data: List[Dict],
-                                  title: str,
-                                  include_summaries: bool,
-                                  requirements: str) -&gt; str:
+
+    def _format_interactions_report(
+        self,
+        interactions_data: List[Dict],
+        title: str,
+        include_summaries: bool,
+        requirements: str,
+    ) -&gt; str:
         &#34;&#34;&#34;Format interaction data into a Markdown report.&#34;&#34;&#34;
         # Prepare data for LLM formatting
         agents_data = []
         for data in interactions_data:
             agent_info = {
                 &#34;name&#34;: data[&#34;agent&#34;].name,
-                &#34;interactions&#34;: data[&#34;interactions&#34;]
+                &#34;interactions&#34;: data[&#34;interactions&#34;],
             }
             if include_summaries:
                 agent_info[&#34;bio&#34;] = data[&#34;agent&#34;].minibio(extended=False)
             agents_data.append(agent_info)
-        
+
         # Generate report using LLM
         return self._generate_report_with_llm(
             title=title,
             report_type=&#34;interactions&#34;,
             data={&#34;agents_data&#34;: agents_data},
             include_summaries=include_summaries,
-            requirements=requirements
-        )
-    
-    def _format_data_report(self,
-                          data: Any,
-                          title: str,
-                          requirements: str) -&gt; str:
-        &#34;&#34;&#34;Format raw data into a Markdown report.&#34;&#34;&#34;
-        return self._generate_report_with_llm(
-            title=title,
-            report_type=&#34;custom_data&#34;,
-            data=data,
-            requirements=requirements
+            requirements=requirements,
         )
 
-    
-    def _generate_report_with_llm(self,
-                                title: str,
-                                report_type: str,
-                                data: Any,
-                                include_summaries: bool = False,
-                                requirements: str = None) -&gt; str:
+    def _format_data_report(self, data: Any, title: str, requirements: str) -&gt; str:
+        &#34;&#34;&#34;Format raw data into a Markdown report.&#34;&#34;&#34;
+        return self._generate_report_with_llm(
+            title=title, report_type=&#34;custom_data&#34;, data=data, requirements=requirements
+        )
+
+    def _generate_report_with_llm(
+        self,
+        title: str,
+        report_type: str,
+        data: Any,
+        include_summaries: bool = False,
+        requirements: str = None,
+    ) -&gt; str:
         &#34;&#34;&#34;Generate a report using LLM based on the report type and data.&#34;&#34;&#34;
-        
+
         # Base system prompt
         system_prompt = &#34;You are a professional report writer who creates clear, well-structured Markdown reports.&#34;
-        
+
         # Type-specific prompts and instructions
         if report_type == &#34;agent_interview&#34;:
             system_prompt += &#34; You specialize in synthesizing interview responses from multiple agents.&#34;
@@ -845,7 +833,7 @@ class ResultsReporter:
             ## Requirements
             {requirements}
             &#34;&#34;&#34;
-            
+
         elif report_type == &#34;interactions&#34;:
             system_prompt += &#34; You specialize in analyzing and presenting agent interaction histories.&#34;
             user_prompt = f&#34;&#34;&#34;
@@ -875,7 +863,7 @@ class ResultsReporter:
             ## Requirements
             {requirements}
             &#34;&#34;&#34;
-            
+
         elif report_type == &#34;custom_data&#34;:
             # Handle arbitrary data without assuming any structure
             if isinstance(data, str):
@@ -883,7 +871,7 @@ class ResultsReporter:
             else:
                 # For any other type, convert to JSON for a clean representation
                 data_representation = json.dumps(data, indent=2)
-                
+
             user_prompt = f&#34;&#34;&#34;
             ## Task
             Create a well-structured Markdown report based on the provided data such that it fulfills the 
@@ -908,26 +896,25 @@ class ResultsReporter:
             ## Requirements
             {requirements if requirements else &#34;Use your best judgment to create a clear, informative report that presents the data in an organized and readable manner.&#34;}
             &#34;&#34;&#34;
-        
+
         else:
             raise ValueError(f&#34;Unknown report type: {report_type}&#34;)
-        
+
         # Generate the report
         report_chat = LLMChat(
             system_prompt=system_prompt,
             user_prompt=user_prompt,
             output_type=str,
             enable_json_output_format=False,
-            model=default[&#34;model&#34;],
-            temperature=0.3
+            model=config_manager.get(&#34;model&#34;),
         )
-        
+
         return report_chat()
-    
-    
+
     def _get_timestamp(self) -&gt; str:
         &#34;&#34;&#34;Get current timestamp for report headers.&#34;&#34;&#34;
         from datetime import datetime
+
         return datetime.now().strftime(&#34;%Y-%m-%d %H:%M:%S&#34;)</code></pre>
 </details>
 <h3>Methods</h3>
@@ -949,17 +936,17 @@ class ResultsReporter:
 <pre><code class="python">def display_report(self, report: str = None):
     &#34;&#34;&#34;
     Display a report on the console with rich formatting.
-    
+
     Args:
         report: The report to display. If None, uses the last generated report.
     &#34;&#34;&#34;
     if report is None:
         report = self.last_report
-        
+
     if report is None:
         self.console.print(&#34;[red]No report available to display.[/red]&#34;)
         return
-        
+
     markdown = Markdown(report)
     self.console.print(markdown)</code></pre>
 </details>
@@ -993,16 +980,18 @@ class ResultsReporter:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def report_from_agents(self,
-                      agents: Union[TinyPerson, TinyWorld, List[TinyPerson]],
-                      reporting_task: str = None,
-                      report_title: str = &#34;Simulation Report&#34;,
-                      include_agent_summaries: bool = True,
-                      consolidate_responses: bool = True,
-                      requirements: str = &#34;Present the findings in a clear, structured manner.&#34;) -&gt; str:
+<pre><code class="python">def report_from_agents(
+    self,
+    agents: Union[TinyPerson, TinyWorld, List[TinyPerson]],
+    reporting_task: str = None,
+    report_title: str = &#34;Simulation Report&#34;,
+    include_agent_summaries: bool = True,
+    consolidate_responses: bool = True,
+    requirements: str = &#34;Present the findings in a clear, structured manner.&#34;,
+) -&gt; str:
     &#34;&#34;&#34;
     Option 1: Generate a report by asking agents about specific reporting tasks.
-    
+
     Args:
         agents: Single agent, TinyWorld, or list of agents to interview.
         reporting_task: The specific task to ask agents about.
@@ -1010,38 +999,35 @@ class ResultsReporter:
         include_agent_summaries: Whether to include agent mini-bios in the report.
         consolidate_responses: Whether to consolidate all responses into a single report.
         requirements: Formatting or content requirements for the report.
-        
+
     Returns:
         str: The generated Markdown report.
     &#34;&#34;&#34;
     if reporting_task is None:
         reporting_task = self.default_reporting_task
-        
+
     # Extract agents from input
     agent_list = self._extract_agents(agents)
-    
+
     if self.verbose:
         logger.info(f&#34;Interviewing {len(agent_list)} agents for report generation.&#34;)
-    
+
     # Collect responses from agents
     agent_responses = []
     for agent in agent_list:
         response = self._interview_agent(agent, reporting_task)
-        agent_responses.append({
-            &#34;agent&#34;: agent,
-            &#34;response&#34;: response
-        })
-    
+        agent_responses.append({&#34;agent&#34;: agent, &#34;response&#34;: response})
+
     # Generate the report
     report = self._format_agent_interview_report(
-        agent_responses, 
-        report_title, 
+        agent_responses,
+        report_title,
         reporting_task,
         include_agent_summaries,
         consolidate_responses,
-        requirements
+        requirements,
     )
-    
+
     self.last_report = report
     return report</code></pre>
 </details>
@@ -1069,27 +1055,29 @@ class ResultsReporter:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def report_from_data(self,
-                    data: Union[str, Dict[str, Any], List[Dict[str, Any]]],
-                    report_title: str = &#34;Data Report&#34;,
-                    requirements: str = &#34;Present the findings in a clear, structured manner.&#34;) -&gt; str:
+<pre><code class="python">def report_from_data(
+    self,
+    data: Union[str, Dict[str, Any], List[Dict[str, Any]]],
+    report_title: str = &#34;Data Report&#34;,
+    requirements: str = &#34;Present the findings in a clear, structured manner.&#34;,
+) -&gt; str:
     &#34;&#34;&#34;
     Option 3: Generate a report from raw text or structured data.
-    
+
     Args:
         data: Raw text, dictionary, or list of dictionaries to format.
         report_title: Title for the generated report.
         requirements: Formatting or content requirements for the report. If None, uses simple formatting.
-        
+
     Returns:
         str: The generated Markdown report.
     &#34;&#34;&#34;
     if self.verbose:
         logger.info(&#34;Generating report from raw data.&#34;)
-    
+
     # Generate the report
     report = self._format_data_report(data, report_title, requirements)
-    
+
     self.last_report = report
     return report</code></pre>
 </details>
@@ -1125,17 +1113,19 @@ class ResultsReporter:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def report_from_interactions(self,
-                            agents: Union[TinyPerson, TinyWorld, List[TinyPerson]],
-                            report_title: str = &#34;Interaction Analysis Report&#34;,
-                            include_agent_summaries: bool = True,
-                            first_n: int = None,
-                            last_n: int = None,
-                            max_content_length: int = None,
-                            requirements: str = &#34;Present the findings in a clear, structured manner.&#34;) -&gt; str:
+<pre><code class="python">def report_from_interactions(
+    self,
+    agents: Union[TinyPerson, TinyWorld, List[TinyPerson]],
+    report_title: str = &#34;Interaction Analysis Report&#34;,
+    include_agent_summaries: bool = True,
+    first_n: int = None,
+    last_n: int = None,
+    max_content_length: int = None,
+    requirements: str = &#34;Present the findings in a clear, structured manner.&#34;,
+) -&gt; str:
     &#34;&#34;&#34;
     Option 2: Generate a report by analyzing agents&#39; historical interactions.
-    
+
     Args:
         agents: Single agent, TinyWorld, or list of agents to analyze.
         report_title: Title for the generated report.
@@ -1144,16 +1134,16 @@ class ResultsReporter:
         last_n: Number of last interactions to include.
         max_content_length: Maximum content length for interactions.
         requirements: Formatting or content requirements for the report.
-        
+
     Returns:
         str: The generated Markdown report.
     &#34;&#34;&#34;
     # Extract agents from input
     agent_list = self._extract_agents(agents)
-    
+
     if self.verbose:
         logger.info(f&#34;Analyzing interactions from {len(agent_list)} agents.&#34;)
-    
+
     # Collect interaction data
     interactions_data = []
     for agent in agent_list:
@@ -1161,21 +1151,15 @@ class ResultsReporter:
             simplified=True,
             first_n=first_n,
             last_n=last_n,
-            max_content_length=max_content_length
+            max_content_length=max_content_length,
         )
-        interactions_data.append({
-            &#34;agent&#34;: agent,
-            &#34;interactions&#34;: interactions
-        })
-    
+        interactions_data.append({&#34;agent&#34;: agent, &#34;interactions&#34;: interactions})
+
     # Generate the report
     report = self._format_interactions_report(
-        interactions_data,
-        report_title,
-        include_agent_summaries,
-        requirements
+        interactions_data, report_title, include_agent_summaries, requirements
     )
-    
+
     self.last_report = report
     return report</code></pre>
 </details>
@@ -1198,13 +1182,10 @@ class ResultsReporter:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def save_report(self, 
-               filename: str,
-               report: str = None,
-               verbose: bool = None):
+<pre><code class="python">def save_report(self, filename: str, report: str = None, verbose: bool = None):
     &#34;&#34;&#34;
     Save a report to a file.
-    
+
     Args:
         filename: The filename to save the report to.
         report: The report to save. If None, uses the last generated report.
@@ -1212,16 +1193,16 @@ class ResultsReporter:
     &#34;&#34;&#34;
     if report is None:
         report = self.last_report
-        
+
     if report is None:
         raise ValueError(&#34;No report available to save.&#34;)
-        
+
     if verbose is None:
         verbose = self.verbose
-        
-    with open(filename, &#39;w&#39;, encoding=&#39;utf-8&#39;) as f:
+
+    with open(filename, &#34;w&#34;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as f:
         f.write(report)
-        
+
     if verbose:
         logger.info(f&#34;Report saved to {filename}&#34;)</code></pre>
 </details>

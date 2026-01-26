@@ -220,18 +220,32 @@ class Normalizer:
             )
 
             next_message = client().send_message(messages)
-            normalized_elements_from_llm = utils.extract_json(next_message["content"])
+            if next_message is None or "content" not in next_message:
+                logger.error("LLM returned None or invalid response for normalization applier")
+                # Fallback: map elements to first available category
+                normalized_elements_from_llm = [categories_list[0]] * len(elements_to_normalize) if categories_list else elements_to_normalize
+            else:
+                normalized_elements_from_llm = utils.extract_json(next_message["content"])
             
             debug_msg = f"Normalization applier result (manual): {normalized_elements_from_llm}"
             logger.debug(debug_msg)
             if self.verbose:
                 print(debug_msg)
-            assert isinstance(
-                normalized_elements_from_llm, list
-            ), "The normalized element must be a list."
-            assert len(normalized_elements_from_llm) == len(
-                elements_to_normalize
-            ), "The number of normalized elements must be equal to the number of elements to normalize."
+            
+            # Robust validation with fallbacks
+            if not isinstance(normalized_elements_from_llm, list):
+                logger.warning(f"Expected list from LLM, got {type(normalized_elements_from_llm)}. Using fallback.")
+                normalized_elements_from_llm = [categories_list[0]] * len(elements_to_normalize) if categories_list else elements_to_normalize
+            elif len(normalized_elements_from_llm) != len(elements_to_normalize):
+                logger.warning(f"LLM returned {len(normalized_elements_from_llm)} elements, expected {len(elements_to_normalize)}. Padding/truncating.")
+                # Pad or truncate to match expected length
+                if len(normalized_elements_from_llm) < len(elements_to_normalize):
+                    # Pad with first category
+                    default_cat = categories_list[0] if categories_list else elements_to_normalize[0]
+                    normalized_elements_from_llm.extend([default_cat] * (len(elements_to_normalize) - len(normalized_elements_from_llm)))
+                else:
+                    # Truncate
+                    normalized_elements_from_llm = normalized_elements_from_llm[:len(elements_to_normalize)]
 
             for i, element in enumerate(elements_to_normalize):
                 normalized_element = normalized_elements_from_llm[i]

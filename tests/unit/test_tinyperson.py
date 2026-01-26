@@ -12,6 +12,7 @@ from tinytroupe.examples import create_oscar_the_architect, create_oscar_the_arc
 
 from testing_utils import *
 
+@pytest.mark.core
 def test_act(setup):
 
     for agent in [create_oscar_the_architect(), create_lisa_the_data_scientist()]:
@@ -32,6 +33,7 @@ def test_act(setup):
                     f"Agent should be talking about their life but said: {talk_content}"
                 break
 
+@pytest.mark.core
 def test_listen(setup):
     # test that the agent listens to a speech stimulus and updates its current messages
     for agent in [create_oscar_the_architect(), create_lisa_the_data_scientist()]:
@@ -42,6 +44,7 @@ def test_listen(setup):
         assert agent.episodic_memory.retrieve_all()[-1]['content']['stimuli'][0]['type'] == 'CONVERSATION', f"{agent.name} should have the last message as a 'CONVERSATION' stimulus."
         assert agent.episodic_memory.retrieve_all()[-1]['content']['stimuli'][0]['content'] == 'Hello, how are you?', f"{agent.name} should have the last message with the correct content."
 
+@pytest.mark.core
 def test_define(setup):
     # test that the agent defines a value to its configuration and resets its prompt
     for agent in [create_oscar_the_architect(), create_lisa_the_data_scientist()]:
@@ -60,6 +63,7 @@ def test_define(setup):
         # check that the prompt contains the new value
         assert '25' in agent.current_messages[0]['content'], f"{agent.name} should have the age in the prompt."
 
+@pytest.mark.core
 def test_define_several(setup):
     # Test that defining several values to a group works as expected
     for agent in [create_oscar_the_architect(), create_lisa_the_data_scientist()]:
@@ -69,6 +73,7 @@ def test_define_several(setup):
         assert "Machine learning" in agent._persona["skills"], f"{agent.name} should have Machine learning as a skill."
         assert "GPT-3" in agent._persona["skills"], f"{agent.name} should have GPT-3 as a skill."
 
+@pytest.mark.core
 def test_socialize(setup):
     # Test that socializing with another agent works as expected
     an_oscar = create_oscar_the_architect()
@@ -82,6 +87,7 @@ def test_socialize(setup):
         assert contains_action_type(actions, "TALK"), f"{agent.name} should have at least one TALK action to perform, since we started a conversation."
         assert contains_action_content(actions, agent_first_name(other)), f"{agent.name} should mention {other.name}'s first name in the TALK action, since they are friends."
 
+@pytest.mark.core
 def test_see(setup):
     # Test that seeing a visual stimulus works as expected
     for agent in [create_oscar_the_architect(), create_lisa_the_data_scientist()]:
@@ -99,6 +105,7 @@ def test_see(setup):
                     f"Agent should be thinking about the sunset but thought: {think_content}"
                 break
 
+@pytest.mark.core
 def test_think(setup):
     # Test that thinking about something works as expected
     for agent in [create_oscar_the_architect(), create_lisa_the_data_scientist()]:
@@ -116,6 +123,7 @@ def test_think(setup):
                     f"Agent should be expressing enthusiasm about life but said: {talk_content}"
                 break
 
+@pytest.mark.core
 def test_internalize_goal(setup):
     # Test that internalizing a goal works as expected
     for agent in [create_oscar_the_architect(), create_lisa_the_data_scientist()]:
@@ -134,6 +142,7 @@ def test_internalize_goal(setup):
                 break
 
 
+@pytest.mark.core
 def test_move_to(setup):
     # Test that moving to a new location works as expected
     for agent in [create_oscar_the_architect(), create_lisa_the_data_scientist()]:
@@ -143,6 +152,7 @@ def test_move_to(setup):
         assert "busy" in agent._mental_state["context"], f"{agent.name} should have busy as part of the current context."
         assert "diverse" in agent._mental_state["context"], f"{agent.name} should have diverse as part of the current context."
 
+@pytest.mark.core
 def test_change_context(setup):
     # Test that changing the context works as expected
     for agent in [create_oscar_the_architect(), create_lisa_the_data_scientist()]:
@@ -151,6 +161,7 @@ def test_change_context(setup):
         assert "relaxed" in agent._mental_state["context"], f"{agent.name} should have relaxed as part of the current context."
         assert "comfortable" in agent._mental_state["context"], f"{agent.name} should have comfortable as part of the current context."
 
+@pytest.mark.core
 def test_save_specification(setup):   
     for agent in [create_oscar_the_architect(), create_lisa_the_data_scientist()]:
         # save to a file

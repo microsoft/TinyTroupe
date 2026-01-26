@@ -1,0 +1,323 @@
+{
+    "experiments": {
+        "Control": {
+            "results": {
+                "Hard Persona Adherence": [
+                    3,
+                    1,
+                    0,
+                    2,
+                    0,
+                    7,
+                    3,
+                    0,
+                    0,
+                    1,
+                    4,
+                    0,
+                    1,
+                    0,
+                    0,
+                    2,
+                    0,
+                    0,
+                    1,
+                    5,
+                    3,
+                    4,
+                    1,
+                    1
+                ],
+                "Self-consistency": [
+                    9,
+                    9,
+                    8,
+                    9,
+                    7,
+                    9,
+                    9,
+                    9,
+                    9,
+                    9,
+                    2,
+                    9,
+                    9,
+                    9,
+                    9,
+                    5,
+                    9,
+                    9,
+                    9,
+                    9,
+                    9,
+                    9,
+                    9,
+                    9
+                ],
+                "Fluency": [
+                    7,
+                    8,
+                    8,
+                    8,
+                    7,
+                    8,
+                    8,
+                    9,
+                    8,
+                    6,
+                    8,
+                    8,
+                    7,
+                    7,
+                    8,
+                    8,
+                    8,
+                    8,
+                    9,
+                    8,
+                    7,
+                    8,
+                    9,
+                    8
+                ],
+                "ideas_qty": [
+                    4,
+                    5,
+                    6,
+                    4,
+                    4,
+                    4
+                ],
+                "Task Completion": [
+                    9,
+                    9,
+                    9,
+                    9,
+                    9,
+                    9
+                ],
+                "Divergence": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ]
+            },
+            "statistical_test_results_vs_others": {
+                "Treatment": {
+                    "ideas_qty": {
+                        "test_type": "Welch t-test (unequal variance)",
+                        "control_mean": 4.5,
+                        "treatment_mean": 6.75,
+                        "mean_difference": 2.25,
+                        "percent_change": 50.0,
+                        "t_statistic": -3.826036358539666,
+                        "p_value": 0.008945381503155747,
+                        "confidence_interval": [
+                            0.805859787156588,
+                            3.694140212843412
+                        ],
+                        "confidence_level": 0.95,
+                        "significant": true,
+                        "degrees_of_freedom": 5.912628025404818,
+                        "control_sample_size": 6,
+                        "treatment_sample_size": 4,
+                        "control_std": 0.8366600265340756,
+                        "treatment_std": 0.9574271077563381,
+                        "effect_size": 2.545584412271571
+                    },
+                    "Divergence": {
+                        "test_type": "Welch t-test (unequal variance)",
+                        "control_mean": 0.16666666666666666,
+                        "treatment_mean": 5.2,
+                        "mean_difference": 5.033333333333333,
+                        "percent_change": 3020.0,
+                        "t_statistic": -4.657743723491049,
+                        "p_value": 0.008560808275951268,
+                        "confidence_interval": [
+                            2.0872948990924702,
+                            7.979371767574197
+                        ],
+                        "confidence_level": 0.95,
+                        "significant": true,
+                        "degrees_of_freedom": 4.195313983607678,
+                        "control_sample_size": 6,
+                        "treatment_sample_size": 5,
+                        "control_std": 0.408248290463863,
+                        "treatment_std": 2.3874672772626644,
+                        "effect_size": 3.1060930157168363
+                    },
+                    "Self-consistency": {
+                        "test_type": "Welch t-test (unequal variance)",
+                        "control_mean": 8.416666666666666,
+                        "treatment_mean": 4.5,
+                        "mean_difference": -3.916666666666666,
+                        "percent_change": -46.53465346534653,
+                        "t_statistic": 4.324311361627458,
+                        "p_value": 0.0003364328804383476,
+                        "confidence_interval": [
+                            -5.807236128520041,
+                            -2.026097204813291
+                        ],
+                        "confidence_level": 0.95,
+                        "significant": true,
+                        "degrees_of_freedom": 19.796494845634882,
+                        "control_sample_size": 24,
+                        "treatment_sample_size": 16,
+                        "control_std": 1.6396358733271998,
+                        "treatment_std": 3.366501646120693,
+                        "effect_size": -1.5856979706607683
+                    },
+                    "Fluency": {
+                        "test_type": "Welch t-test (unequal variance)",
+                        "control_mean": 7.833333333333333,
+                        "treatment_mean": 6.375,
+                        "mean_difference": -1.458333333333333,
+                        "percent_change": -18.61702127659574,
+                        "t_statistic": 4.547906467530974,
+                        "p_value": 0.0001505807989365447,
+                        "confidence_interval": [
+                            -2.122478156276231,
+                            -0.7941885103904347
+                        ],
+                        "confidence_level": 0.95,
+                        "significant": true,
+                        "degrees_of_freedom": 22.50496198617662,
+                        "control_sample_size": 24,
+                        "treatment_sample_size": 16,
+                        "control_std": 0.701964118163034,
+                        "treatment_std": 1.1474609652039003,
+                        "effect_size": -1.61244462187815
+                    },
+                    "Hard Persona Adherence": {
+                        "test_type": "Welch t-test (unequal variance)",
+                        "control_mean": 1.625,
+                        "treatment_mean": 2.5625,
+                        "mean_difference": 0.9375,
+                        "percent_change": 57.692307692307686,
+                        "t_statistic": -1.6009840955781558,
+                        "p_value": 0.11858451320917192,
+                        "confidence_interval": [
+                            -0.25230836605241724,
+                            2.127308366052417
+                        ],
+                        "confidence_level": 0.95,
+                        "significant": false,
+                        "degrees_of_freedom": 34.177773888827986,
+                        "control_sample_size": 24,
+                        "treatment_sample_size": 16,
+                        "control_std": 1.9067956275430755,
+                        "treatment_std": 1.75,
+                        "effect_size": 0.5077189988227319
+                    },
+                    "Task Completion": {
+                        "test_type": "Welch t-test (unequal variance)",
+                        "control_mean": 9.0,
+                        "treatment_mean": 5.75,
+                        "mean_difference": -3.25,
+                        "percent_change": -36.11111111111111,
+                        "t_statistic": 5.165676192553671,
+                        "p_value": 0.014073251011506856,
+                        "confidence_interval": [
+                            -5.252245225336274,
+                            -1.2477547746637252
+                        ],
+                        "confidence_level": 0.95,
+                        "significant": true,
+                        "degrees_of_freedom": 3.0,
+                        "control_sample_size": 6,
+                        "treatment_sample_size": 4,
+                        "control_std": 0.0,
+                        "treatment_std": 1.2583057392117916,
+                        "effect_size": -4.217756949399826
+                    }
+                }
+            }
+        },
+        "Treatment": {
+            "results": {
+                "Hard Persona Adherence": [
+                    3,
+                    3,
+                    1,
+                    5,
+                    0,
+                    4,
+                    3,
+                    1,
+                    2,
+                    3,
+                    3,
+                    5,
+                    0,
+                    3,
+                    0,
+                    5
+                ],
+                "Self-consistency": [
+                    9,
+                    9,
+                    0,
+                    1,
+                    4,
+                    1,
+                    6,
+                    9,
+                    2,
+                    7,
+                    2,
+                    2,
+                    2,
+                    8,
+                    8,
+                    2
+                ],
+                "Fluency": [
+                    7,
+                    8,
+                    7,
+                    7,
+                    5,
+                    6,
+                    7,
+                    6,
+                    7,
+                    7,
+                    6,
+                    4,
+                    8,
+                    5,
+                    7,
+                    5
+                ],
+                "ideas_qty": [
+                    7,
+                    8,
+                    6,
+                    6
+                ],
+                "Task Completion": [
+                    4,
+                    7,
+                    6,
+                    6
+                ],
+                "Divergence": [
+                    6,
+                    7,
+                    1,
+                    6,
+                    6
+                ]
+            }
+        }
+    },
+    "active_experiment": null,
+    "finished_all_experiments": true,
+    "finished_experiments": [
+        "Treatment",
+        "Control"
+    ]
+}

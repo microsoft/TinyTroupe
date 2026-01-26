@@ -16,6 +16,7 @@ from testing_utils import *
 #@pytest.mark.timeout(300)
 class TestBrainstormingScenarios:
 
+    @pytest.mark.core
     def test_brainstorming_scenario(self, setup, focus_group_world):
         world = focus_group_world
 

@@ -209,8 +209,12 @@ class OllamaClient:
         Loads the API cache from disk.
         """
         if os.path.exists(self.cache_file_name):
-            with open(self.cache_file_name, "rb") as f:
-                return pickle.load(f)
+            try:
+                with open(self.cache_file_name, "rb") as f:
+                    return pickle.load(f)
+            except (EOFError, pickle.UnpicklingError) as e:
+                logger.warning(f"Cache file exists but could not be loaded: {e}. Starting with empty cache.")
+                return {}
         return {}
 
     def get_models(self):

@@ -509,7 +509,7 @@ provides useful simulation management methods:
 
 #### Caching LLM API Calls
 
-This is enabled preferably in the `config.ini` file by setting `CACHE_API_CALLS=True`, and alternatively via the `openai_utils.force_api_cache()` method.
+This is enabled preferably in the `config.ini` file by setting `CACHE_API_CALLS=True`.
 
 LLM API caching, when enabled, works at a lower and simpler level than simulation state caching. Here, what happens is very straightforward: every LLM call is kept in a map from the input to the generated output; when a new call comes and is identical to a previous one, the cached value is returned.
 

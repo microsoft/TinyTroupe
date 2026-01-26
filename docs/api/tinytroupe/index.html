@@ -26,26 +26,29 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">import os
+<pre><code class="python">import configparser
 import logging
-import configparser
-import rich # for rich console output
-import rich.jupyter
+import os
 
 # add current path to sys.path
 import sys
-sys.path.append(&#39;.&#39;)
-from tinytroupe import utils # now we can import our utils
+
+import rich  # for rich console output
+import rich.jupyter
+
+sys.path.append(&#34;.&#34;)
+from tinytroupe import utils  # now we can import our utils
 
 # AI disclaimers
-print(\
-&#34;&#34;&#34;
+print(
+    &#34;&#34;&#34;
 !!!!
 DISCLAIMER: TinyTroupe relies on Artificial Intelligence (AI) models to generate content. 
 The AI models are not perfect and may produce inappropriate or inacurate results. 
 For any serious or consequential use, please review the generated content before using it.
 !!!!
-&#34;&#34;&#34;)
+&#34;&#34;&#34;
+)
 
 
 ###########################################################################
@@ -56,111 +59,293 @@ class ConfigManager:
     Manages configuration values with the ability to override defaults.
     Provides dynamic access to the latest config values.
     &#34;&#34;&#34;
+
+    # this is used in more than one place below, so we define it here
+    # to avoid errors in later changes
+    LOGLEVEL_KEY = &#34;loglevel&#34;
+    LOGLEVEL_CONSOLE_KEY = &#34;loglevel_console&#34;
+    LOGLEVEL_FILE_KEY = &#34;loglevel_file&#34;
+    LOG_INCLUDE_THREAD_ID_KEY = &#34;log_include_thread_id&#34;
+
     def __init__(self):
         self._config = {}
         self._initialize_from_config()
-    
+
+    @staticmethod
+    def _parse_concurrency_limit(value, default):
+        &#34;&#34;&#34;Parse the max concurrent model call limit allowing disable tokens.&#34;&#34;&#34;
+        if value is None:
+            return default
+
+        if isinstance(value, (int, float)):
+            candidate = int(value)
+        elif isinstance(value, str):
+            candidate_str = value.strip()
+            if candidate_str == &#34;&#34;:
+                return default
+            upper = candidate_str.upper()
+            if upper in {&#34;NONE&#34;, &#34;OFF&#34;, &#34;DISABLE&#34;, &#34;DISABLED&#34;}:
+                return None
+            try:
+                candidate = int(candidate_str)
+            except ValueError:
+                logging.warning(
+                    &#34;Invalid MAX_CONCURRENT_MODEL_CALLS value &#39;%s&#39;. Using default %s instead.&#34;,
+                    value,
+                    default,
+                )
+                return default
+        else:
+            return default
+
+        if candidate &lt;= 0:
+            return None
+
+        return candidate
+
     def _initialize_from_config(self):
         &#34;&#34;&#34;Initialize default values from config file&#34;&#34;&#34;
         config = utils.read_config_file()
-        
-        self._config[&#34;model&#34;] = config[&#34;OpenAI&#34;].get(&#34;MODEL&#34;, &#34;gpt-4o&#34;)
-        self._config[&#34;embedding_model&#34;] = config[&#34;OpenAI&#34;].get(&#34;EMBEDDING_MODEL&#34;, &#34;text-embedding-3-small&#34;)
-        if config[&#34;OpenAI&#34;].get(&#34;API_TYPE&#34;) == &#34;azure&#34;:
-            self._config[&#34;azure_embedding_model_api_version&#34;] = config[&#34;OpenAI&#34;].get(&#34;AZURE_EMBEDDING_MODEL_API_VERSION&#34;, &#34;2023-05-15&#34;)
-        self._config[&#34;reasoning_model&#34;] = config[&#34;OpenAI&#34;].get(&#34;REASONING_MODEL&#34;, &#34;o3-mini&#34;)
 
-        self._config[&#34;max_tokens&#34;] = int(config[&#34;OpenAI&#34;].get(&#34;MAX_TOKENS&#34;, &#34;1024&#34;))
-        self._config[&#34;temperature&#34;] = float(config[&#34;OpenAI&#34;].get(&#34;TEMPERATURE&#34;, &#34;1.0&#34;))
-        self._config[&#34;top_p&#34;] = int(config[&#34;OpenAI&#34;].get(&#34;TOP_P&#34;, &#34;0&#34;))
-        self._config[&#34;frequency_penalty&#34;] = float(config[&#34;OpenAI&#34;].get(&#34;FREQ_PENALTY&#34;, &#34;0.0&#34;))
-        self._config[&#34;presence_penalty&#34;] = float(
-            config[&#34;OpenAI&#34;].get(&#34;PRESENCE_PENALTY&#34;, &#34;0.0&#34;))
-        self._config[&#34;reasoning_effort&#34;] = config[&#34;OpenAI&#34;].get(&#34;REASONING_EFFORT&#34;, &#34;high&#34;)
+        self._config[&#34;api_type&#34;] = config[&#34;OpenAI&#34;].get(&#34;API_TYPE&#34;, &#34;openai&#34;)
+        self._config[&#34;azure_api_version&#34;] = config[&#34;OpenAI&#34;].get(
+            &#34;AZURE_API_VERSION&#34;, &#34;2024-10-21&#34;
+        )
+        self._config[&#34;base_url&#34;] = config[&#34;OpenAI&#34;].get(
+            &#34;BASE_URL&#34;, None
+        )  # by default, we will not use a custom base URL
+
+        self._config[&#34;model&#34;] = config[&#34;OpenAI&#34;].get(&#34;MODEL&#34;, &#34;gpt-4o&#34;)
+        self._config[&#34;embedding_model&#34;] = config[&#34;OpenAI&#34;].get(
+            &#34;EMBEDDING_MODEL&#34;, &#34;text-embedding-3-small&#34;
+        )
+        if config[&#34;OpenAI&#34;].get(&#34;API_TYPE&#34;) == &#34;azure&#34;:
+            self._config[&#34;azure_embedding_model_api_version&#34;] = config[&#34;OpenAI&#34;].get(
+                &#34;AZURE_EMBEDDING_MODEL_API_VERSION&#34;, &#34;2023-05-15&#34;
+            )
+        self._config[&#34;reasoning_model&#34;] = config[&#34;OpenAI&#34;].get(
+            &#34;REASONING_MODEL&#34;, &#34;o3-mini&#34;
+        )
+
+        self._config[&#34;max_completion_tokens&#34;] = int(
+            config[&#34;OpenAI&#34;].get(&#34;MAX_COMPLETION_TOKENS&#34;, &#34;1024&#34;)
+        )
+        self._config[&#34;temperature&#34;] = config[&#34;OpenAI&#34;].getfloat(&#34;TEMPERATURE&#34;, None)
+        self._config[&#34;top_p&#34;] = config[&#34;OpenAI&#34;].getfloat(&#34;TOP_P&#34;, None)
+        self._config[&#34;frequency_penalty&#34;] = config[&#34;OpenAI&#34;].getfloat(
+            &#34;FREQ_PENALTY&#34;, None
+        )
+        self._config[&#34;presence_penalty&#34;] = config[&#34;OpenAI&#34;].getfloat(
+            &#34;PRESENCE_PENALTY&#34;, None
+        )
+        self._config[&#34;reasoning_effort&#34;] = config[&#34;OpenAI&#34;].get(
+            &#34;REASONING_EFFORT&#34;, &#34;high&#34;
+        )
+
+        self._config[&#34;num_ctx&#34;] = int(config[&#34;OpenAI&#34;].get(&#34;NUM_CTX&#34;, &#34;32000&#34;))
 
         self._config[&#34;timeout&#34;] = float(config[&#34;OpenAI&#34;].get(&#34;TIMEOUT&#34;, &#34;30.0&#34;))
-        self._config[&#34;max_attempts&#34;] = float(config[&#34;OpenAI&#34;].get(&#34;MAX_ATTEMPTS&#34;, &#34;0.0&#34;))
+        self._config[&#34;max_attempts&#34;] = float(
+            config[&#34;OpenAI&#34;].get(&#34;MAX_ATTEMPTS&#34;, &#34;0.0&#34;)
+        )
         self._config[&#34;waiting_time&#34;] = float(config[&#34;OpenAI&#34;].get(&#34;WAITING_TIME&#34;, &#34;1&#34;))
-        self._config[&#34;exponential_backoff_factor&#34;] = float(config[&#34;OpenAI&#34;].get(&#34;EXPONENTIAL_BACKOFF_FACTOR&#34;, &#34;5&#34;))
+        self._config[&#34;exponential_backoff_factor&#34;] = float(
+            config[&#34;OpenAI&#34;].get(&#34;EXPONENTIAL_BACKOFF_FACTOR&#34;, &#34;5&#34;)
+        )
 
-        self._config[&#34;cache_api_calls&#34;] = config[&#34;OpenAI&#34;].getboolean(&#34;CACHE_API_CALLS&#34;, False)
-        self._config[&#34;cache_file_name&#34;] = config[&#34;OpenAI&#34;].get(&#34;CACHE_FILE_NAME&#34;, &#34;openai_api_cache.pickle&#34;)
+        self._config[&#34;max_concurrent_model_calls&#34;] = self._parse_concurrency_limit(
+            config[&#34;OpenAI&#34;].get(&#34;MAX_CONCURRENT_MODEL_CALLS&#34;, None),
+            default=4,
+        )
 
-        self._config[&#34;max_content_display_length&#34;] = config[&#34;OpenAI&#34;].getint(&#34;MAX_CONTENT_DISPLAY_LENGTH&#34;, 1024)
+        self._config[&#34;cache_api_calls&#34;] = config[&#34;OpenAI&#34;].getboolean(
+            &#34;CACHE_API_CALLS&#34;, False
+        )
+        self._config[&#34;cache_file_name&#34;] = config[&#34;OpenAI&#34;].get(
+            &#34;CACHE_FILE_NAME&#34;, &#34;openai_api_cache.pickle&#34;
+        )
 
-        self._config[&#34;parallel_agent_actions&#34;] = config[&#34;Simulation&#34;].getboolean(&#34;PARALLEL_AGENT_ACTIONS&#34;, True)
-        self._config[&#34;parallel_agent_generation&#34;] = config[&#34;Simulation&#34;].getboolean(&#34;PARALLEL_AGENT_GENERATION&#34;, True)
+        self._config[&#34;max_content_display_length&#34;] = config[&#34;OpenAI&#34;].getint(
+            &#34;MAX_CONTENT_DISPLAY_LENGTH&#34;, 1024
+        )
 
-        self._config[&#34;enable_memory_consolidation&#34;] = config[&#34;Cognition&#34;].get(&#34;ENABLE_MEMORY_CONSOLIDATION&#34;, True)
-        self._config[&#34;min_episode_length&#34;] = config[&#34;Cognition&#34;].getint(&#34;MIN_EPISODE_LENGTH&#34;, 30)
-        self._config[&#34;max_episode_length&#34;] = config[&#34;Cognition&#34;].getint(&#34;MAX_EPISODE_LENGTH&#34;, 100)  
-        self._config[&#34;episodic_memory_fixed_prefix_length&#34;] = config[&#34;Cognition&#34;].getint(&#34;EPISODIC_MEMORY_FIXED_PREFIX_LENGTH&#34;, 20)
-        self._config[&#34;episodic_memory_lookback_length&#34;] = config[&#34;Cognition&#34;].getint(&#34;EPISODIC_MEMORY_LOOKBACK_LENGTH&#34;, 20)
+        self._config[&#34;parallel_agent_actions&#34;] = config[&#34;Simulation&#34;].getboolean(
+            &#34;PARALLEL_AGENT_ACTIONS&#34;, True
+        )
+        self._config[&#34;parallel_agent_generation&#34;] = config[&#34;Simulation&#34;].getboolean(
+            &#34;PARALLEL_AGENT_GENERATION&#34;, True
+        )
 
-        self._config[&#34;action_generator_max_attempts&#34;] = config[&#34;ActionGenerator&#34;].getint(&#34;MAX_ATTEMPTS&#34;, 2)
-        self._config[&#34;action_generator_enable_quality_checks&#34;] = config[&#34;ActionGenerator&#34;].getboolean(&#34;ENABLE_QUALITY_CHECKS&#34;, False)
-        self._config[&#34;action_generator_enable_regeneration&#34;] = config[&#34;ActionGenerator&#34;].getboolean(&#34;ENABLE_REGENERATION&#34;, False)
-        self._config[&#34;action_generator_enable_direct_correction&#34;] = config[&#34;ActionGenerator&#34;].getboolean(&#34;ENABLE_DIRECT_CORRECTION&#34;, False)
+        self._config[&#34;enable_memory_consolidation&#34;] = config[&#34;Cognition&#34;].getboolean(
+            &#34;ENABLE_MEMORY_CONSOLIDATION&#34;, True
+        )
+        self._config[&#34;enable_continuous_contextual_semantic_memory_retrieval&#34;] = config[
+            &#34;Cognition&#34;
+        ].getboolean(&#34;ENABLE_CONTINUOUS_CONTEXTUAL_SEMANTIC_MEMORY_RETRIEVAL&#34;, True)
+        self._config[&#34;min_episode_length&#34;] = config[&#34;Cognition&#34;].getint(
+            &#34;MIN_EPISODE_LENGTH&#34;, 30
+        )
+        self._config[&#34;max_episode_length&#34;] = config[&#34;Cognition&#34;].getint(
+            &#34;MAX_EPISODE_LENGTH&#34;, 100
+        )
+        self._config[&#34;episodic_memory_fixed_prefix_length&#34;] = config[
+            &#34;Cognition&#34;
+        ].getint(&#34;EPISODIC_MEMORY_FIXED_PREFIX_LENGTH&#34;, 20)
+        self._config[&#34;episodic_memory_lookback_length&#34;] = config[&#34;Cognition&#34;].getint(
+            &#34;EPISODIC_MEMORY_LOOKBACK_LENGTH&#34;, 20
+        )
 
-        self._config[&#34;action_generator_enable_quality_check_for_persona_adherence&#34;] = config[&#34;ActionGenerator&#34;].getboolean(&#34;ENABLE_QUALITY_CHECK_FOR_PERSONA_ADHERENCE&#34;, False)
-        self._config[&#34;action_generator_enable_quality_check_for_selfconsistency&#34;] = config[&#34;ActionGenerator&#34;].getboolean(&#34;ENABLE_QUALITY_CHECK_FOR_SELFCONSISTENCY&#34;, False)
-        self._config[&#34;action_generator_enable_quality_check_for_fluency&#34;] = config[&#34;ActionGenerator&#34;].getboolean(&#34;ENABLE_QUALITY_CHECK_FOR_FLUENCY&#34;, False)
-        self._config[&#34;action_generator_enable_quality_check_for_suitability&#34;] = config[&#34;ActionGenerator&#34;].getboolean(&#34;ENABLE_QUALITY_CHECK_FOR_SUITABILITY&#34;, False)
-        self._config[&#34;action_generator_enable_quality_check_for_similarity&#34;] = config[&#34;ActionGenerator&#34;].getboolean(&#34;ENABLE_QUALITY_CHECK_FOR_SIMILARITY&#34;, False)
+        self._config[&#34;action_generator_max_attempts&#34;] = config[
+            &#34;ActionGenerator&#34;
+        ].getint(&#34;MAX_ATTEMPTS&#34;, 2)
+        self._config[&#34;action_generator_enable_quality_checks&#34;] = config[
+            &#34;ActionGenerator&#34;
+        ].getboolean(&#34;ENABLE_QUALITY_CHECKS&#34;, False)
+        self._config[&#34;action_generator_enable_regeneration&#34;] = config[
+            &#34;ActionGenerator&#34;
+        ].getboolean(&#34;ENABLE_REGENERATION&#34;, False)
+        self._config[&#34;action_generator_enable_direct_correction&#34;] = config[
+            &#34;ActionGenerator&#34;
+        ].getboolean(&#34;ENABLE_DIRECT_CORRECTION&#34;, False)
 
-        self._config[&#34;action_generator_continue_on_failure&#34;] = config[&#34;ActionGenerator&#34;].getboolean(&#34;CONTINUE_ON_FAILURE&#34;, True)
-        self._config[&#34;action_generator_quality_threshold&#34;] = config[&#34;ActionGenerator&#34;].getint(&#34;QUALITY_THRESHOLD&#34;, 2)
-        
+        self._config[&#34;action_generator_enable_quality_check_for_persona_adherence&#34;] = (
+            config[&#34;ActionGenerator&#34;].getboolean(
+                &#34;ENABLE_QUALITY_CHECK_FOR_PERSONA_ADHERENCE&#34;, False
+            )
+        )
+        self._config[&#34;action_generator_enable_quality_check_for_selfconsistency&#34;] = (
+            config[&#34;ActionGenerator&#34;].getboolean(
+                &#34;ENABLE_QUALITY_CHECK_FOR_SELFCONSISTENCY&#34;, False
+            )
+        )
+        self._config[&#34;action_generator_enable_quality_check_for_fluency&#34;] = config[
+            &#34;ActionGenerator&#34;
+        ].getboolean(&#34;ENABLE_QUALITY_CHECK_FOR_FLUENCY&#34;, False)
+        self._config[&#34;action_generator_enable_quality_check_for_suitability&#34;] = config[
+            &#34;ActionGenerator&#34;
+        ].getboolean(&#34;ENABLE_QUALITY_CHECK_FOR_SUITABILITY&#34;, False)
+        self._config[&#34;action_generator_enable_quality_check_for_similarity&#34;] = config[
+            &#34;ActionGenerator&#34;
+        ].getboolean(&#34;ENABLE_QUALITY_CHECK_FOR_SIMILARITY&#34;, False)
+
+        self._config[&#34;action_generator_continue_on_failure&#34;] = config[
+            &#34;ActionGenerator&#34;
+        ].getboolean(&#34;CONTINUE_ON_FAILURE&#34;, True)
+        self._config[&#34;action_generator_quality_threshold&#34;] = config[
+            &#34;ActionGenerator&#34;
+        ].getint(&#34;QUALITY_THRESHOLD&#34;, 2)
+
+        # LOGLEVELS
+        default_loglevel = config[&#34;Logging&#34;].get(&#34;LOGLEVEL&#34;, &#34;INFO&#34;).upper()
+        loglevel_console = (
+            config[&#34;Logging&#34;].get(&#34;LOGLEVEL_CONSOLE&#34;, default_loglevel).upper()
+        )
+        loglevel_file = config[&#34;Logging&#34;].get(&#34;LOGLEVEL_FILE&#34;, default_loglevel).upper()
+
+        self._config[ConfigManager.LOGLEVEL_KEY] = default_loglevel
+        self._config[ConfigManager.LOGLEVEL_CONSOLE_KEY] = loglevel_console
+        self._config[ConfigManager.LOGLEVEL_FILE_KEY] = loglevel_file
+        self._config[ConfigManager.LOG_INCLUDE_THREAD_ID_KEY] = config[&#34;Logging&#34;].getboolean(
+            &#34;LOG_INCLUDE_THREAD_ID&#34;, fallback=False
+        )
+
         self._raw_config = config
-    
+
     def update(self, key, value):
         &#34;&#34;&#34;
         Update a configuration value.
-        
+
         Args:
             key (str): The configuration key to update
             value: The new value to set
-            
+
         Returns:
             None
         &#34;&#34;&#34;
+        # make sure the key is always lowercase
+        if isinstance(key, str):
+            key = key.lower()
+
         if key in self._config:
             self._config[key] = value
             logging.info(f&#34;Updated config: {key} = {value}&#34;)
+
+            if key in (
+                ConfigManager.LOGLEVEL_KEY,
+                ConfigManager.LOGLEVEL_CONSOLE_KEY,
+                ConfigManager.LOGLEVEL_FILE_KEY,
+            ):
+                normalized_value = (
+                    value.upper()
+                    if isinstance(value, str)
+                    else logging.getLevelName(value)
+                )
+                self._config[key] = normalized_value
+
+            # Special handling for loglevel - also update the logger immediately
+            if key == ConfigManager.LOGLEVEL_KEY:
+                utils.set_loglevel(value)
+                # synchronize specific targets when the general level changes
+                normalized = (
+                    value.upper()
+                    if isinstance(value, str)
+                    else logging.getLevelName(value)
+                )
+                self._config[ConfigManager.LOGLEVEL_CONSOLE_KEY] = normalized
+                self._config[ConfigManager.LOGLEVEL_FILE_KEY] = normalized
+            elif key == ConfigManager.LOGLEVEL_CONSOLE_KEY:
+                utils.set_console_loglevel(value)
+            elif key == ConfigManager.LOGLEVEL_FILE_KEY:
+                utils.set_file_loglevel(value)
+            elif key == ConfigManager.LOG_INCLUDE_THREAD_ID_KEY:
+                bool_value = (
+                    value.strip().lower() in {&#34;1&#34;, &#34;true&#34;, &#34;yes&#34;, &#34;on&#34;}
+                    if isinstance(value, str)
+                    else bool(value)
+                )
+                self._config[key] = bool_value
+                utils.set_include_thread_info(bool_value)
+            elif key == &#34;max_concurrent_model_calls&#34;:
+                parsed_value = self._parse_concurrency_limit(value, default=None)
+                self._config[key] = parsed_value
         else:
             logging.warning(f&#34;Attempted to update unknown config key: {key}&#34;)
-    
+
     def update_multiple(self, config_dict):
         &#34;&#34;&#34;
         Update multiple configuration values at once.
-        
+
         Args:
             config_dict (dict): Dictionary of key-value pairs to update
-            
+
         Returns:
             None
         &#34;&#34;&#34;
         for key, value in config_dict.items():
             self.update(key, value)
-    
+
     def get(self, key, default=None):
         &#34;&#34;&#34;
         Get a configuration value.
-        
+
         Args:
             key (str): The configuration key to retrieve
             default: The default value to return if key is not found
-            
+
         Returns:
             The configuration value
         &#34;&#34;&#34;
+        # make sure the key is always lowercase
+        if isinstance(key, str):
+            key = key.lower()
+
         return self._config.get(key, default)
-    
+
     def reset(self):
         &#34;&#34;&#34;Reset all configuration values to their original values from the config file.&#34;&#34;&#34;
         self._initialize_from_config()
         logging.info(&#34;All configuration values have been reset to defaults&#34;)
-    
+
     def __getitem__(self, key):
         &#34;&#34;&#34;Allow dictionary-like access to configuration values.&#34;&#34;&#34;
         return self.get(key)
@@ -168,10 +353,10 @@ class ConfigManager:
     def config_defaults(self, **config_mappings):
         &#34;&#34;&#34;
         Returns a decorator that replaces None default values with current config values.
-        
+
         Args:
             **config_mappings: Mapping of parameter names to config keys
-            
+
         Example:
             @config_manager.config_defaults(model=&#34;model&#34;, temp=&#34;temperature&#34;)
             def generate(prompt, model=None, temp=None):
@@ -180,7 +365,7 @@ class ConfigManager:
         &#34;&#34;&#34;
         import functools
         import inspect
-        
+
         def decorator(func):
             @functools.wraps(func)
             def wrapper(*args, **kwargs):
@@ -188,18 +373,22 @@ class ConfigManager:
                 sig = inspect.signature(func)
                 bound_args = sig.bind_partial(*args, **kwargs)
                 bound_args.apply_defaults()
-                
+
                 # For each parameter that maps to a config key
                 for param_name, config_key in config_mappings.items():
                     # If the parameter is None, replace with config value
-                    if param_name in bound_args.arguments and bound_args.arguments[param_name] is None:
+                    if (
+                        param_name in bound_args.arguments
+                        and bound_args.arguments[param_name] is None
+                    ):
                         kwargs[param_name] = self.get(config_key)
-                
+
                 return func(*args, **kwargs)
-            
+
             return wrapper
-        
+
         return decorator
+
 
 # Create global instance of the configuration manager
 config = utils.read_config_file()
@@ -210,20 +399,17 @@ utils.start_logger(config)
 
 config_manager = ConfigManager()
 
-# For backwards compatibility, maintain the default dict
-# but it&#39;s recommended to use config_manager instead
-default = config_manager._config
 
 # Helper function for method signatures
 def get_config(key, override_value=None):
     &#34;&#34;&#34;
     Get a configuration value, with optional override.
     Used in method signatures to get current config values.
-    
+
     Args:
         key (str): The configuration key
         override_value: If provided, this value is used instead of the config value
-        
+
     Returns:
         The configuration value or the override value
     &#34;&#34;&#34;
@@ -233,16 +419,15 @@ def get_config(key, override_value=None):
 
 
 ## LLaMa-Index configs ########################################################
-#from llama_index.embeddings.huggingface import HuggingFaceEmbedding
+# from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 
-if config[&#34;OpenAI&#34;].get(&#34;API_TYPE&#34;) == &#34;azure&#34;:
+if config_manager.get(&#34;api_type&#34;) == &#34;azure&#34;:
     from llama_index.embeddings.azure_openai import AzureOpenAIEmbedding
 else:
     from llama_index.embeddings.openai import OpenAIEmbedding
 
-from llama_index.core import Settings, Document, VectorStoreIndex, SimpleDirectoryReader
+from llama_index.core import Document, Settings, SimpleDirectoryReader, VectorStoreIndex
 from llama_index.readers.web import SimpleWebPageReader
-
 
 # this will be cached locally by llama-index, in a OS-dependend location
 
@@ -250,13 +435,17 @@ from llama_index.readers.web import SimpleWebPageReader
 ##    model_name=&#34;BAAI/bge-small-en-v1.5&#34;
 ##)
 
-if config[&#34;OpenAI&#34;].get(&#34;API_TYPE&#34;) == &#34;azure&#34;:
-    llamaindex_openai_embed_model = AzureOpenAIEmbedding(model=default[&#34;embedding_model&#34;],
-                                                        deployment_name=default[&#34;embedding_model&#34;],
-                                                        api_version=default[&#34;azure_embedding_model_api_version&#34;],
-                                                        embed_batch_size=10)
+if config_manager.get(&#34;api_type&#34;) == &#34;azure&#34;:
+    llamaindex_openai_embed_model = AzureOpenAIEmbedding(
+        model=config_manager.get(&#34;embedding_model&#34;),
+        deployment_name=config_manager.get(&#34;embedding_model&#34;),
+        api_version=config_manager.get(&#34;azure_embedding_model_api_version&#34;),
+        embed_batch_size=10,
+    )
 else:
-    llamaindex_openai_embed_model = OpenAIEmbedding(model=default[&#34;embedding_model&#34;], embed_batch_size=10)
+    llamaindex_openai_embed_model = OpenAIEmbedding(
+        model=config_manager.get(&#34;embedding_model&#34;), embed_batch_size=10
+    )
 Settings.embed_model = llamaindex_openai_embed_model
 
 
@@ -265,8 +454,9 @@ Settings.embed_model = llamaindex_openai_embed_model
 ###########################################################################
 
 # fix an issue in the rich library: we don&#39;t want margins in Jupyter!
-rich.jupyter.JUPYTER_HTML_FORMAT = \
-    utils.inject_html_css_style_prefix(rich.jupyter.JUPYTER_HTML_FORMAT, &#34;margin:0px;&#34;)</code></pre>
+rich.jupyter.JUPYTER_HTML_FORMAT = utils.inject_html_css_style_prefix(
+    rich.jupyter.JUPYTER_HTML_FORMAT, &#34;margin:0px;&#34;
+)</code></pre>
 </details>
 </section>
 <section>
@@ -276,6 +466,10 @@ rich.jupyter.JUPYTER_HTML_FORMAT = \
 <dd>
 <div class="desc"><p>This module provides the main classes and functions for TinyTroupe's
 agents …</p></div>
+</dd>
+<dt><code class="name"><a title="tinytroupe.clients" href="clients/index.html">tinytroupe.clients</a></code></dt>
+<dd>
+<div class="desc"></div>
 </dd>
 <dt><code class="name"><a title="tinytroupe.control" href="control.html">tinytroupe.control</a></code></dt>
 <dd>
@@ -307,14 +501,10 @@ agents interact with each other as well as external entities (e.g., search …</
 <dd>
 <div class="desc"></div>
 </dd>
-<dt><code class="name"><a title="tinytroupe.openai_utils" href="openai_utils.html">tinytroupe.openai_utils</a></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
 <dt><code class="name"><a title="tinytroupe.profiling" href="profiling.html">tinytroupe.profiling</a></code></dt>
 <dd>
-<div class="desc"><p>Provides mechanisms for creating understanding the characteristics of agent populations, such as
-their age distribution, typical interests, and so on …</p></div>
+<div class="desc"><p>Provides mechanisms for understanding characteristics of agent populations: age distribution, interests,
+skills, beliefs, goals, routines, …</p></div>
 </dd>
 <dt><code class="name"><a title="tinytroupe.steering" href="steering/index.html">tinytroupe.steering</a></code></dt>
 <dd>
@@ -323,6 +513,10 @@ their age distribution, typical interests, and so on …</p></div>
 <dt><code class="name"><a title="tinytroupe.tools" href="tools/index.html">tinytroupe.tools</a></code></dt>
 <dd>
 <div class="desc"><p>Tools allow agents to accomplish specialized tasks.</p></div>
+</dd>
+<dt><code class="name"><a title="tinytroupe.ui" href="ui/index.html">tinytroupe.ui</a></code></dt>
+<dd>
+<div class="desc"><p>TinyTroupe UI Module …</p></div>
 </dd>
 <dt><code class="name"><a title="tinytroupe.utils" href="utils/index.html">tinytroupe.utils</a></code></dt>
 <dd>
@@ -362,11 +556,11 @@ Used in method signatures to get current config values.</p>
     &#34;&#34;&#34;
     Get a configuration value, with optional override.
     Used in method signatures to get current config values.
-    
+
     Args:
         key (str): The configuration key
         override_value: If provided, this value is used instead of the config value
-        
+
     Returns:
         The configuration value or the override value
     &#34;&#34;&#34;
@@ -395,111 +589,293 @@ Provides dynamic access to the latest config values.</p></div>
     Manages configuration values with the ability to override defaults.
     Provides dynamic access to the latest config values.
     &#34;&#34;&#34;
+
+    # this is used in more than one place below, so we define it here
+    # to avoid errors in later changes
+    LOGLEVEL_KEY = &#34;loglevel&#34;
+    LOGLEVEL_CONSOLE_KEY = &#34;loglevel_console&#34;
+    LOGLEVEL_FILE_KEY = &#34;loglevel_file&#34;
+    LOG_INCLUDE_THREAD_ID_KEY = &#34;log_include_thread_id&#34;
+
     def __init__(self):
         self._config = {}
         self._initialize_from_config()
-    
+
+    @staticmethod
+    def _parse_concurrency_limit(value, default):
+        &#34;&#34;&#34;Parse the max concurrent model call limit allowing disable tokens.&#34;&#34;&#34;
+        if value is None:
+            return default
+
+        if isinstance(value, (int, float)):
+            candidate = int(value)
+        elif isinstance(value, str):
+            candidate_str = value.strip()
+            if candidate_str == &#34;&#34;:
+                return default
+            upper = candidate_str.upper()
+            if upper in {&#34;NONE&#34;, &#34;OFF&#34;, &#34;DISABLE&#34;, &#34;DISABLED&#34;}:
+                return None
+            try:
+                candidate = int(candidate_str)
+            except ValueError:
+                logging.warning(
+                    &#34;Invalid MAX_CONCURRENT_MODEL_CALLS value &#39;%s&#39;. Using default %s instead.&#34;,
+                    value,
+                    default,
+                )
+                return default
+        else:
+            return default
+
+        if candidate &lt;= 0:
+            return None
+
+        return candidate
+
     def _initialize_from_config(self):
         &#34;&#34;&#34;Initialize default values from config file&#34;&#34;&#34;
         config = utils.read_config_file()
-        
-        self._config[&#34;model&#34;] = config[&#34;OpenAI&#34;].get(&#34;MODEL&#34;, &#34;gpt-4o&#34;)
-        self._config[&#34;embedding_model&#34;] = config[&#34;OpenAI&#34;].get(&#34;EMBEDDING_MODEL&#34;, &#34;text-embedding-3-small&#34;)
-        if config[&#34;OpenAI&#34;].get(&#34;API_TYPE&#34;) == &#34;azure&#34;:
-            self._config[&#34;azure_embedding_model_api_version&#34;] = config[&#34;OpenAI&#34;].get(&#34;AZURE_EMBEDDING_MODEL_API_VERSION&#34;, &#34;2023-05-15&#34;)
-        self._config[&#34;reasoning_model&#34;] = config[&#34;OpenAI&#34;].get(&#34;REASONING_MODEL&#34;, &#34;o3-mini&#34;)
 
-        self._config[&#34;max_tokens&#34;] = int(config[&#34;OpenAI&#34;].get(&#34;MAX_TOKENS&#34;, &#34;1024&#34;))
-        self._config[&#34;temperature&#34;] = float(config[&#34;OpenAI&#34;].get(&#34;TEMPERATURE&#34;, &#34;1.0&#34;))
-        self._config[&#34;top_p&#34;] = int(config[&#34;OpenAI&#34;].get(&#34;TOP_P&#34;, &#34;0&#34;))
-        self._config[&#34;frequency_penalty&#34;] = float(config[&#34;OpenAI&#34;].get(&#34;FREQ_PENALTY&#34;, &#34;0.0&#34;))
-        self._config[&#34;presence_penalty&#34;] = float(
-            config[&#34;OpenAI&#34;].get(&#34;PRESENCE_PENALTY&#34;, &#34;0.0&#34;))
-        self._config[&#34;reasoning_effort&#34;] = config[&#34;OpenAI&#34;].get(&#34;REASONING_EFFORT&#34;, &#34;high&#34;)
+        self._config[&#34;api_type&#34;] = config[&#34;OpenAI&#34;].get(&#34;API_TYPE&#34;, &#34;openai&#34;)
+        self._config[&#34;azure_api_version&#34;] = config[&#34;OpenAI&#34;].get(
+            &#34;AZURE_API_VERSION&#34;, &#34;2024-10-21&#34;
+        )
+        self._config[&#34;base_url&#34;] = config[&#34;OpenAI&#34;].get(
+            &#34;BASE_URL&#34;, None
+        )  # by default, we will not use a custom base URL
+
+        self._config[&#34;model&#34;] = config[&#34;OpenAI&#34;].get(&#34;MODEL&#34;, &#34;gpt-4o&#34;)
+        self._config[&#34;embedding_model&#34;] = config[&#34;OpenAI&#34;].get(
+            &#34;EMBEDDING_MODEL&#34;, &#34;text-embedding-3-small&#34;
+        )
+        if config[&#34;OpenAI&#34;].get(&#34;API_TYPE&#34;) == &#34;azure&#34;:
+            self._config[&#34;azure_embedding_model_api_version&#34;] = config[&#34;OpenAI&#34;].get(
+                &#34;AZURE_EMBEDDING_MODEL_API_VERSION&#34;, &#34;2023-05-15&#34;
+            )
+        self._config[&#34;reasoning_model&#34;] = config[&#34;OpenAI&#34;].get(
+            &#34;REASONING_MODEL&#34;, &#34;o3-mini&#34;
+        )
+
+        self._config[&#34;max_completion_tokens&#34;] = int(
+            config[&#34;OpenAI&#34;].get(&#34;MAX_COMPLETION_TOKENS&#34;, &#34;1024&#34;)
+        )
+        self._config[&#34;temperature&#34;] = config[&#34;OpenAI&#34;].getfloat(&#34;TEMPERATURE&#34;, None)
+        self._config[&#34;top_p&#34;] = config[&#34;OpenAI&#34;].getfloat(&#34;TOP_P&#34;, None)
+        self._config[&#34;frequency_penalty&#34;] = config[&#34;OpenAI&#34;].getfloat(
+            &#34;FREQ_PENALTY&#34;, None
+        )
+        self._config[&#34;presence_penalty&#34;] = config[&#34;OpenAI&#34;].getfloat(
+            &#34;PRESENCE_PENALTY&#34;, None
+        )
+        self._config[&#34;reasoning_effort&#34;] = config[&#34;OpenAI&#34;].get(
+            &#34;REASONING_EFFORT&#34;, &#34;high&#34;
+        )
+
+        self._config[&#34;num_ctx&#34;] = int(config[&#34;OpenAI&#34;].get(&#34;NUM_CTX&#34;, &#34;32000&#34;))
 
         self._config[&#34;timeout&#34;] = float(config[&#34;OpenAI&#34;].get(&#34;TIMEOUT&#34;, &#34;30.0&#34;))
-        self._config[&#34;max_attempts&#34;] = float(config[&#34;OpenAI&#34;].get(&#34;MAX_ATTEMPTS&#34;, &#34;0.0&#34;))
+        self._config[&#34;max_attempts&#34;] = float(
+            config[&#34;OpenAI&#34;].get(&#34;MAX_ATTEMPTS&#34;, &#34;0.0&#34;)
+        )
         self._config[&#34;waiting_time&#34;] = float(config[&#34;OpenAI&#34;].get(&#34;WAITING_TIME&#34;, &#34;1&#34;))
-        self._config[&#34;exponential_backoff_factor&#34;] = float(config[&#34;OpenAI&#34;].get(&#34;EXPONENTIAL_BACKOFF_FACTOR&#34;, &#34;5&#34;))
+        self._config[&#34;exponential_backoff_factor&#34;] = float(
+            config[&#34;OpenAI&#34;].get(&#34;EXPONENTIAL_BACKOFF_FACTOR&#34;, &#34;5&#34;)
+        )
 
-        self._config[&#34;cache_api_calls&#34;] = config[&#34;OpenAI&#34;].getboolean(&#34;CACHE_API_CALLS&#34;, False)
-        self._config[&#34;cache_file_name&#34;] = config[&#34;OpenAI&#34;].get(&#34;CACHE_FILE_NAME&#34;, &#34;openai_api_cache.pickle&#34;)
+        self._config[&#34;max_concurrent_model_calls&#34;] = self._parse_concurrency_limit(
+            config[&#34;OpenAI&#34;].get(&#34;MAX_CONCURRENT_MODEL_CALLS&#34;, None),
+            default=4,
+        )
 
-        self._config[&#34;max_content_display_length&#34;] = config[&#34;OpenAI&#34;].getint(&#34;MAX_CONTENT_DISPLAY_LENGTH&#34;, 1024)
+        self._config[&#34;cache_api_calls&#34;] = config[&#34;OpenAI&#34;].getboolean(
+            &#34;CACHE_API_CALLS&#34;, False
+        )
+        self._config[&#34;cache_file_name&#34;] = config[&#34;OpenAI&#34;].get(
+            &#34;CACHE_FILE_NAME&#34;, &#34;openai_api_cache.pickle&#34;
+        )
 
-        self._config[&#34;parallel_agent_actions&#34;] = config[&#34;Simulation&#34;].getboolean(&#34;PARALLEL_AGENT_ACTIONS&#34;, True)
-        self._config[&#34;parallel_agent_generation&#34;] = config[&#34;Simulation&#34;].getboolean(&#34;PARALLEL_AGENT_GENERATION&#34;, True)
+        self._config[&#34;max_content_display_length&#34;] = config[&#34;OpenAI&#34;].getint(
+            &#34;MAX_CONTENT_DISPLAY_LENGTH&#34;, 1024
+        )
 
-        self._config[&#34;enable_memory_consolidation&#34;] = config[&#34;Cognition&#34;].get(&#34;ENABLE_MEMORY_CONSOLIDATION&#34;, True)
-        self._config[&#34;min_episode_length&#34;] = config[&#34;Cognition&#34;].getint(&#34;MIN_EPISODE_LENGTH&#34;, 30)
-        self._config[&#34;max_episode_length&#34;] = config[&#34;Cognition&#34;].getint(&#34;MAX_EPISODE_LENGTH&#34;, 100)  
-        self._config[&#34;episodic_memory_fixed_prefix_length&#34;] = config[&#34;Cognition&#34;].getint(&#34;EPISODIC_MEMORY_FIXED_PREFIX_LENGTH&#34;, 20)
-        self._config[&#34;episodic_memory_lookback_length&#34;] = config[&#34;Cognition&#34;].getint(&#34;EPISODIC_MEMORY_LOOKBACK_LENGTH&#34;, 20)
+        self._config[&#34;parallel_agent_actions&#34;] = config[&#34;Simulation&#34;].getboolean(
+            &#34;PARALLEL_AGENT_ACTIONS&#34;, True
+        )
+        self._config[&#34;parallel_agent_generation&#34;] = config[&#34;Simulation&#34;].getboolean(
+            &#34;PARALLEL_AGENT_GENERATION&#34;, True
+        )
 
-        self._config[&#34;action_generator_max_attempts&#34;] = config[&#34;ActionGenerator&#34;].getint(&#34;MAX_ATTEMPTS&#34;, 2)
-        self._config[&#34;action_generator_enable_quality_checks&#34;] = config[&#34;ActionGenerator&#34;].getboolean(&#34;ENABLE_QUALITY_CHECKS&#34;, False)
-        self._config[&#34;action_generator_enable_regeneration&#34;] = config[&#34;ActionGenerator&#34;].getboolean(&#34;ENABLE_REGENERATION&#34;, False)
-        self._config[&#34;action_generator_enable_direct_correction&#34;] = config[&#34;ActionGenerator&#34;].getboolean(&#34;ENABLE_DIRECT_CORRECTION&#34;, False)
+        self._config[&#34;enable_memory_consolidation&#34;] = config[&#34;Cognition&#34;].getboolean(
+            &#34;ENABLE_MEMORY_CONSOLIDATION&#34;, True
+        )
+        self._config[&#34;enable_continuous_contextual_semantic_memory_retrieval&#34;] = config[
+            &#34;Cognition&#34;
+        ].getboolean(&#34;ENABLE_CONTINUOUS_CONTEXTUAL_SEMANTIC_MEMORY_RETRIEVAL&#34;, True)
+        self._config[&#34;min_episode_length&#34;] = config[&#34;Cognition&#34;].getint(
+            &#34;MIN_EPISODE_LENGTH&#34;, 30
+        )
+        self._config[&#34;max_episode_length&#34;] = config[&#34;Cognition&#34;].getint(
+            &#34;MAX_EPISODE_LENGTH&#34;, 100
+        )
+        self._config[&#34;episodic_memory_fixed_prefix_length&#34;] = config[
+            &#34;Cognition&#34;
+        ].getint(&#34;EPISODIC_MEMORY_FIXED_PREFIX_LENGTH&#34;, 20)
+        self._config[&#34;episodic_memory_lookback_length&#34;] = config[&#34;Cognition&#34;].getint(
+            &#34;EPISODIC_MEMORY_LOOKBACK_LENGTH&#34;, 20
+        )
 
-        self._config[&#34;action_generator_enable_quality_check_for_persona_adherence&#34;] = config[&#34;ActionGenerator&#34;].getboolean(&#34;ENABLE_QUALITY_CHECK_FOR_PERSONA_ADHERENCE&#34;, False)
-        self._config[&#34;action_generator_enable_quality_check_for_selfconsistency&#34;] = config[&#34;ActionGenerator&#34;].getboolean(&#34;ENABLE_QUALITY_CHECK_FOR_SELFCONSISTENCY&#34;, False)
-        self._config[&#34;action_generator_enable_quality_check_for_fluency&#34;] = config[&#34;ActionGenerator&#34;].getboolean(&#34;ENABLE_QUALITY_CHECK_FOR_FLUENCY&#34;, False)
-        self._config[&#34;action_generator_enable_quality_check_for_suitability&#34;] = config[&#34;ActionGenerator&#34;].getboolean(&#34;ENABLE_QUALITY_CHECK_FOR_SUITABILITY&#34;, False)
-        self._config[&#34;action_generator_enable_quality_check_for_similarity&#34;] = config[&#34;ActionGenerator&#34;].getboolean(&#34;ENABLE_QUALITY_CHECK_FOR_SIMILARITY&#34;, False)
+        self._config[&#34;action_generator_max_attempts&#34;] = config[
+            &#34;ActionGenerator&#34;
+        ].getint(&#34;MAX_ATTEMPTS&#34;, 2)
+        self._config[&#34;action_generator_enable_quality_checks&#34;] = config[
+            &#34;ActionGenerator&#34;
+        ].getboolean(&#34;ENABLE_QUALITY_CHECKS&#34;, False)
+        self._config[&#34;action_generator_enable_regeneration&#34;] = config[
+            &#34;ActionGenerator&#34;
+        ].getboolean(&#34;ENABLE_REGENERATION&#34;, False)
+        self._config[&#34;action_generator_enable_direct_correction&#34;] = config[
+            &#34;ActionGenerator&#34;
+        ].getboolean(&#34;ENABLE_DIRECT_CORRECTION&#34;, False)
 
-        self._config[&#34;action_generator_continue_on_failure&#34;] = config[&#34;ActionGenerator&#34;].getboolean(&#34;CONTINUE_ON_FAILURE&#34;, True)
-        self._config[&#34;action_generator_quality_threshold&#34;] = config[&#34;ActionGenerator&#34;].getint(&#34;QUALITY_THRESHOLD&#34;, 2)
-        
+        self._config[&#34;action_generator_enable_quality_check_for_persona_adherence&#34;] = (
+            config[&#34;ActionGenerator&#34;].getboolean(
+                &#34;ENABLE_QUALITY_CHECK_FOR_PERSONA_ADHERENCE&#34;, False
+            )
+        )
+        self._config[&#34;action_generator_enable_quality_check_for_selfconsistency&#34;] = (
+            config[&#34;ActionGenerator&#34;].getboolean(
+                &#34;ENABLE_QUALITY_CHECK_FOR_SELFCONSISTENCY&#34;, False
+            )
+        )
+        self._config[&#34;action_generator_enable_quality_check_for_fluency&#34;] = config[
+            &#34;ActionGenerator&#34;
+        ].getboolean(&#34;ENABLE_QUALITY_CHECK_FOR_FLUENCY&#34;, False)
+        self._config[&#34;action_generator_enable_quality_check_for_suitability&#34;] = config[
+            &#34;ActionGenerator&#34;
+        ].getboolean(&#34;ENABLE_QUALITY_CHECK_FOR_SUITABILITY&#34;, False)
+        self._config[&#34;action_generator_enable_quality_check_for_similarity&#34;] = config[
+            &#34;ActionGenerator&#34;
+        ].getboolean(&#34;ENABLE_QUALITY_CHECK_FOR_SIMILARITY&#34;, False)
+
+        self._config[&#34;action_generator_continue_on_failure&#34;] = config[
+            &#34;ActionGenerator&#34;
+        ].getboolean(&#34;CONTINUE_ON_FAILURE&#34;, True)
+        self._config[&#34;action_generator_quality_threshold&#34;] = config[
+            &#34;ActionGenerator&#34;
+        ].getint(&#34;QUALITY_THRESHOLD&#34;, 2)
+
+        # LOGLEVELS
+        default_loglevel = config[&#34;Logging&#34;].get(&#34;LOGLEVEL&#34;, &#34;INFO&#34;).upper()
+        loglevel_console = (
+            config[&#34;Logging&#34;].get(&#34;LOGLEVEL_CONSOLE&#34;, default_loglevel).upper()
+        )
+        loglevel_file = config[&#34;Logging&#34;].get(&#34;LOGLEVEL_FILE&#34;, default_loglevel).upper()
+
+        self._config[ConfigManager.LOGLEVEL_KEY] = default_loglevel
+        self._config[ConfigManager.LOGLEVEL_CONSOLE_KEY] = loglevel_console
+        self._config[ConfigManager.LOGLEVEL_FILE_KEY] = loglevel_file
+        self._config[ConfigManager.LOG_INCLUDE_THREAD_ID_KEY] = config[&#34;Logging&#34;].getboolean(
+            &#34;LOG_INCLUDE_THREAD_ID&#34;, fallback=False
+        )
+
         self._raw_config = config
-    
+
     def update(self, key, value):
         &#34;&#34;&#34;
         Update a configuration value.
-        
+
         Args:
             key (str): The configuration key to update
             value: The new value to set
-            
+
         Returns:
             None
         &#34;&#34;&#34;
+        # make sure the key is always lowercase
+        if isinstance(key, str):
+            key = key.lower()
+
         if key in self._config:
             self._config[key] = value
             logging.info(f&#34;Updated config: {key} = {value}&#34;)
+
+            if key in (
+                ConfigManager.LOGLEVEL_KEY,
+                ConfigManager.LOGLEVEL_CONSOLE_KEY,
+                ConfigManager.LOGLEVEL_FILE_KEY,
+            ):
+                normalized_value = (
+                    value.upper()
+                    if isinstance(value, str)
+                    else logging.getLevelName(value)
+                )
+                self._config[key] = normalized_value
+
+            # Special handling for loglevel - also update the logger immediately
+            if key == ConfigManager.LOGLEVEL_KEY:
+                utils.set_loglevel(value)
+                # synchronize specific targets when the general level changes
+                normalized = (
+                    value.upper()
+                    if isinstance(value, str)
+                    else logging.getLevelName(value)
+                )
+                self._config[ConfigManager.LOGLEVEL_CONSOLE_KEY] = normalized
+                self._config[ConfigManager.LOGLEVEL_FILE_KEY] = normalized
+            elif key == ConfigManager.LOGLEVEL_CONSOLE_KEY:
+                utils.set_console_loglevel(value)
+            elif key == ConfigManager.LOGLEVEL_FILE_KEY:
+                utils.set_file_loglevel(value)
+            elif key == ConfigManager.LOG_INCLUDE_THREAD_ID_KEY:
+                bool_value = (
+                    value.strip().lower() in {&#34;1&#34;, &#34;true&#34;, &#34;yes&#34;, &#34;on&#34;}
+                    if isinstance(value, str)
+                    else bool(value)
+                )
+                self._config[key] = bool_value
+                utils.set_include_thread_info(bool_value)
+            elif key == &#34;max_concurrent_model_calls&#34;:
+                parsed_value = self._parse_concurrency_limit(value, default=None)
+                self._config[key] = parsed_value
         else:
             logging.warning(f&#34;Attempted to update unknown config key: {key}&#34;)
-    
+
     def update_multiple(self, config_dict):
         &#34;&#34;&#34;
         Update multiple configuration values at once.
-        
+
         Args:
             config_dict (dict): Dictionary of key-value pairs to update
-            
+
         Returns:
             None
         &#34;&#34;&#34;
         for key, value in config_dict.items():
             self.update(key, value)
-    
+
     def get(self, key, default=None):
         &#34;&#34;&#34;
         Get a configuration value.
-        
+
         Args:
             key (str): The configuration key to retrieve
             default: The default value to return if key is not found
-            
+
         Returns:
             The configuration value
         &#34;&#34;&#34;
+        # make sure the key is always lowercase
+        if isinstance(key, str):
+            key = key.lower()
+
         return self._config.get(key, default)
-    
+
     def reset(self):
         &#34;&#34;&#34;Reset all configuration values to their original values from the config file.&#34;&#34;&#34;
         self._initialize_from_config()
         logging.info(&#34;All configuration values have been reset to defaults&#34;)
-    
+
     def __getitem__(self, key):
         &#34;&#34;&#34;Allow dictionary-like access to configuration values.&#34;&#34;&#34;
         return self.get(key)
@@ -507,10 +883,10 @@ Provides dynamic access to the latest config values.</p></div>
     def config_defaults(self, **config_mappings):
         &#34;&#34;&#34;
         Returns a decorator that replaces None default values with current config values.
-        
+
         Args:
             **config_mappings: Mapping of parameter names to config keys
-            
+
         Example:
             @config_manager.config_defaults(model=&#34;model&#34;, temp=&#34;temperature&#34;)
             def generate(prompt, model=None, temp=None):
@@ -519,7 +895,7 @@ Provides dynamic access to the latest config values.</p></div>
         &#34;&#34;&#34;
         import functools
         import inspect
-        
+
         def decorator(func):
             @functools.wraps(func)
             def wrapper(*args, **kwargs):
@@ -527,19 +903,41 @@ Provides dynamic access to the latest config values.</p></div>
                 sig = inspect.signature(func)
                 bound_args = sig.bind_partial(*args, **kwargs)
                 bound_args.apply_defaults()
-                
+
                 # For each parameter that maps to a config key
                 for param_name, config_key in config_mappings.items():
                     # If the parameter is None, replace with config value
-                    if param_name in bound_args.arguments and bound_args.arguments[param_name] is None:
+                    if (
+                        param_name in bound_args.arguments
+                        and bound_args.arguments[param_name] is None
+                    ):
                         kwargs[param_name] = self.get(config_key)
-                
+
                 return func(*args, **kwargs)
-            
+
             return wrapper
-        
+
         return decorator</code></pre>
 </details>
+<h3>Class variables</h3>
+<dl>
+<dt id="tinytroupe.ConfigManager.LOGLEVEL_CONSOLE_KEY"><code class="name">var <span class="ident">LOGLEVEL_CONSOLE_KEY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.ConfigManager.LOGLEVEL_FILE_KEY"><code class="name">var <span class="ident">LOGLEVEL_FILE_KEY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.ConfigManager.LOGLEVEL_KEY"><code class="name">var <span class="ident">LOGLEVEL_KEY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tinytroupe.ConfigManager.LOG_INCLUDE_THREAD_ID_KEY"><code class="name">var <span class="ident">LOG_INCLUDE_THREAD_ID_KEY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
 <h3>Methods</h3>
 <dl>
 <dt id="tinytroupe.ConfigManager.config_defaults"><code class="name flex">
@@ -564,10 +962,10 @@ def generate(prompt, model=None, temp=None):
 <pre><code class="python">def config_defaults(self, **config_mappings):
     &#34;&#34;&#34;
     Returns a decorator that replaces None default values with current config values.
-    
+
     Args:
         **config_mappings: Mapping of parameter names to config keys
-        
+
     Example:
         @config_manager.config_defaults(model=&#34;model&#34;, temp=&#34;temperature&#34;)
         def generate(prompt, model=None, temp=None):
@@ -576,7 +974,7 @@ def generate(prompt, model=None, temp=None):
     &#34;&#34;&#34;
     import functools
     import inspect
-    
+
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
@@ -584,17 +982,20 @@ def generate(prompt, model=None, temp=None):
             sig = inspect.signature(func)
             bound_args = sig.bind_partial(*args, **kwargs)
             bound_args.apply_defaults()
-            
+
             # For each parameter that maps to a config key
             for param_name, config_key in config_mappings.items():
                 # If the parameter is None, replace with config value
-                if param_name in bound_args.arguments and bound_args.arguments[param_name] is None:
+                if (
+                    param_name in bound_args.arguments
+                    and bound_args.arguments[param_name] is None
+                ):
                     kwargs[param_name] = self.get(config_key)
-            
+
             return func(*args, **kwargs)
-        
+
         return wrapper
-    
+
     return decorator</code></pre>
 </details>
 </dd>
@@ -619,14 +1020,18 @@ def generate(prompt, model=None, temp=None):
 <pre><code class="python">def get(self, key, default=None):
     &#34;&#34;&#34;
     Get a configuration value.
-    
+
     Args:
         key (str): The configuration key to retrieve
         default: The default value to return if key is not found
-        
+
     Returns:
         The configuration value
     &#34;&#34;&#34;
+    # make sure the key is always lowercase
+    if isinstance(key, str):
+        key = key.lower()
+
     return self._config.get(key, default)</code></pre>
 </details>
 </dd>
@@ -666,17 +1071,60 @@ def generate(prompt, model=None, temp=None):
 <pre><code class="python">def update(self, key, value):
     &#34;&#34;&#34;
     Update a configuration value.
-    
+
     Args:
         key (str): The configuration key to update
         value: The new value to set
-        
+
     Returns:
         None
     &#34;&#34;&#34;
+    # make sure the key is always lowercase
+    if isinstance(key, str):
+        key = key.lower()
+
     if key in self._config:
         self._config[key] = value
         logging.info(f&#34;Updated config: {key} = {value}&#34;)
+
+        if key in (
+            ConfigManager.LOGLEVEL_KEY,
+            ConfigManager.LOGLEVEL_CONSOLE_KEY,
+            ConfigManager.LOGLEVEL_FILE_KEY,
+        ):
+            normalized_value = (
+                value.upper()
+                if isinstance(value, str)
+                else logging.getLevelName(value)
+            )
+            self._config[key] = normalized_value
+
+        # Special handling for loglevel - also update the logger immediately
+        if key == ConfigManager.LOGLEVEL_KEY:
+            utils.set_loglevel(value)
+            # synchronize specific targets when the general level changes
+            normalized = (
+                value.upper()
+                if isinstance(value, str)
+                else logging.getLevelName(value)
+            )
+            self._config[ConfigManager.LOGLEVEL_CONSOLE_KEY] = normalized
+            self._config[ConfigManager.LOGLEVEL_FILE_KEY] = normalized
+        elif key == ConfigManager.LOGLEVEL_CONSOLE_KEY:
+            utils.set_console_loglevel(value)
+        elif key == ConfigManager.LOGLEVEL_FILE_KEY:
+            utils.set_file_loglevel(value)
+        elif key == ConfigManager.LOG_INCLUDE_THREAD_ID_KEY:
+            bool_value = (
+                value.strip().lower() in {&#34;1&#34;, &#34;true&#34;, &#34;yes&#34;, &#34;on&#34;}
+                if isinstance(value, str)
+                else bool(value)
+            )
+            self._config[key] = bool_value
+            utils.set_include_thread_info(bool_value)
+        elif key == &#34;max_concurrent_model_calls&#34;:
+            parsed_value = self._parse_concurrency_limit(value, default=None)
+            self._config[key] = parsed_value
     else:
         logging.warning(f&#34;Attempted to update unknown config key: {key}&#34;)</code></pre>
 </details>
@@ -700,10 +1148,10 @@ def generate(prompt, model=None, temp=None):
 <pre><code class="python">def update_multiple(self, config_dict):
     &#34;&#34;&#34;
     Update multiple configuration values at once.
-    
+
     Args:
         config_dict (dict): Dictionary of key-value pairs to update
-        
+
     Returns:
         None
     &#34;&#34;&#34;
@@ -725,6 +1173,7 @@ def generate(prompt, model=None, temp=None):
 <li><h3><a href="#header-submodules">Sub-modules</a></h3>
 <ul>
 <li><code><a title="tinytroupe.agent" href="agent/index.html">tinytroupe.agent</a></code></li>
+<li><code><a title="tinytroupe.clients" href="clients/index.html">tinytroupe.clients</a></code></li>
 <li><code><a title="tinytroupe.control" href="control.html">tinytroupe.control</a></code></li>
 <li><code><a title="tinytroupe.enrichment" href="enrichment/index.html">tinytroupe.enrichment</a></code></li>
 <li><code><a title="tinytroupe.environment" href="environment/index.html">tinytroupe.environment</a></code></li>
@@ -732,10 +1181,10 @@ def generate(prompt, model=None, temp=None):
 <li><code><a title="tinytroupe.experimentation" href="experimentation/index.html">tinytroupe.experimentation</a></code></li>
 <li><code><a title="tinytroupe.extraction" href="extraction/index.html">tinytroupe.extraction</a></code></li>
 <li><code><a title="tinytroupe.factory" href="factory/index.html">tinytroupe.factory</a></code></li>
-<li><code><a title="tinytroupe.openai_utils" href="openai_utils.html">tinytroupe.openai_utils</a></code></li>
 <li><code><a title="tinytroupe.profiling" href="profiling.html">tinytroupe.profiling</a></code></li>
 <li><code><a title="tinytroupe.steering" href="steering/index.html">tinytroupe.steering</a></code></li>
 <li><code><a title="tinytroupe.tools" href="tools/index.html">tinytroupe.tools</a></code></li>
+<li><code><a title="tinytroupe.ui" href="ui/index.html">tinytroupe.ui</a></code></li>
 <li><code><a title="tinytroupe.utils" href="utils/index.html">tinytroupe.utils</a></code></li>
 <li><code><a title="tinytroupe.validation" href="validation/index.html">tinytroupe.validation</a></code></li>
 </ul>
@@ -750,6 +1199,10 @@ def generate(prompt, model=None, temp=None):
 <li>
 <h4><code><a title="tinytroupe.ConfigManager" href="#tinytroupe.ConfigManager">ConfigManager</a></code></h4>
 <ul class="">
+<li><code><a title="tinytroupe.ConfigManager.LOGLEVEL_CONSOLE_KEY" href="#tinytroupe.ConfigManager.LOGLEVEL_CONSOLE_KEY">LOGLEVEL_CONSOLE_KEY</a></code></li>
+<li><code><a title="tinytroupe.ConfigManager.LOGLEVEL_FILE_KEY" href="#tinytroupe.ConfigManager.LOGLEVEL_FILE_KEY">LOGLEVEL_FILE_KEY</a></code></li>
+<li><code><a title="tinytroupe.ConfigManager.LOGLEVEL_KEY" href="#tinytroupe.ConfigManager.LOGLEVEL_KEY">LOGLEVEL_KEY</a></code></li>
+<li><code><a title="tinytroupe.ConfigManager.LOG_INCLUDE_THREAD_ID_KEY" href="#tinytroupe.ConfigManager.LOG_INCLUDE_THREAD_ID_KEY">LOG_INCLUDE_THREAD_ID_KEY</a></code></li>
 <li><code><a title="tinytroupe.ConfigManager.config_defaults" href="#tinytroupe.ConfigManager.config_defaults">config_defaults</a></code></li>
 <li><code><a title="tinytroupe.ConfigManager.get" href="#tinytroupe.ConfigManager.get">get</a></code></li>
 <li><code><a title="tinytroupe.ConfigManager.reset" href="#tinytroupe.ConfigManager.reset">reset</a></code></li>

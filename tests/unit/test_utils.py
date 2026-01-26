@@ -7,11 +7,11 @@ sys.path.insert(0, '..')
 sys.path.insert(0, '../../')
 sys.path.insert(0, '../../tinytroupe/')
 
-
 from tinytroupe.utils import name_or_empty, extract_json, repeat_on_error
 from testing_utils import *
 from tinytroupe.utils.llm import llm
 
+@pytest.mark.core
 def test_extract_json():
     # Test with a simple JSON string
     text = 'Some text before {"key": "value"} some text after'
@@ -39,6 +39,7 @@ def test_extract_json():
     assert result == {}
 
 
+@pytest.mark.core
 def test_name_or_empty():
     class MockEntity:
         def __init__(self, name):
@@ -54,6 +55,7 @@ def test_name_or_empty():
     assert result == ""
 
 
+@pytest.mark.core
 def test_repeat_on_error():
     class DummyException(Exception):
         pass

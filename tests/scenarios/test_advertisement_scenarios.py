@@ -25,6 +25,7 @@ from testing_utils import *
 #@pytest.mark.timeout(300, method="thread")
 class TestAdvertisementScenarios:
 
+    @pytest.mark.core
     def test_ad_evaluation_scenario(self, setup):
         # user search query: "europe travel package"
 
@@ -161,6 +162,7 @@ class TestAdvertisementScenarios:
 
         print("Agents choices:", choices)
 
+    @pytest.mark.core
     def test_ad_creation_scenario(self, setup, focus_group_world):
 
         situation = """

@@ -39,7 +39,7 @@ def load_example_agent_specification(name:str):
     Returns:
         dict: The agent specification.
     &#34;&#34;&#34;
-    return json.load(open(os.path.join(os.path.dirname(__file__), f&#39;./agents/{name}.agent.json&#39;)))
+    return json.load(open(os.path.join(os.path.dirname(__file__), f&#39;./agents/{name}.agent.json&#39;), &#39;r&#39;, encoding=&#39;utf-8&#39;, errors=&#39;replace&#39;))
 
 def load_example_fragment_specification(name:str):
     &#34;&#34;&#34;
@@ -51,7 +51,7 @@ def load_example_fragment_specification(name:str):
     Returns:
         dict: The fragment specification.
     &#34;&#34;&#34;
-    return json.load(open(os.path.join(os.path.dirname(__file__), f&#39;./fragments/{name}.fragment.json&#39;)))
+    return json.load(open(os.path.join(os.path.dirname(__file__), f&#39;./fragments/{name}.fragment.json&#39;), &#39;r&#39;, encoding=&#39;utf-8&#39;, errors=&#39;replace&#39;))
 
 def list_example_agents():
     &#34;&#34;&#34;
@@ -156,7 +156,7 @@ def list_example_fragments():
     Returns:
         dict: The agent specification.
     &#34;&#34;&#34;
-    return json.load(open(os.path.join(os.path.dirname(__file__), f&#39;./agents/{name}.agent.json&#39;)))</code></pre>
+    return json.load(open(os.path.join(os.path.dirname(__file__), f&#39;./agents/{name}.agent.json&#39;), &#39;r&#39;, encoding=&#39;utf-8&#39;, errors=&#39;replace&#39;))</code></pre>
 </details>
 </dd>
 <dt id="tinytroupe.examples.loaders.load_example_fragment_specification"><code class="name flex">
@@ -188,7 +188,7 @@ def list_example_fragments():
     Returns:
         dict: The fragment specification.
     &#34;&#34;&#34;
-    return json.load(open(os.path.join(os.path.dirname(__file__), f&#39;./fragments/{name}.fragment.json&#39;)))</code></pre>
+    return json.load(open(os.path.join(os.path.dirname(__file__), f&#39;./fragments/{name}.fragment.json&#39;), &#39;r&#39;, encoding=&#39;utf-8&#39;, errors=&#39;replace&#39;))</code></pre>
 </details>
 </dd>
 </dl>

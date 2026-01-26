@@ -98,7 +98,7 @@ class JsonSerializableRegistry:
             # Create directories if they do not exist
             import os
             os.makedirs(os.path.dirname(file_path), exist_ok=True)
-            with open(file_path, &#39;w&#39;) as f:
+            with open(file_path, &#39;w&#39;, encoding=&#39;utf-8&#39;, errors=&#39;replace&#39;) as f:
                 json.dump(result, f, indent=4)
         
         return result
@@ -118,7 +118,7 @@ class JsonSerializableRegistry:
             An instance of the class populated with the data from json_dict_or_path.
         &#34;&#34;&#34;
         if isinstance(json_dict_or_path, str):
-            with open(json_dict_or_path, &#39;r&#39;) as f:
+            with open(json_dict_or_path, &#39;r&#39;, encoding=&#39;utf-8&#39;, errors=&#39;replace&#39;) as f:
                 json_dict = json.load(f)
         else:
             json_dict = json_dict_or_path
@@ -556,7 +556,7 @@ Handles unhashable elements by using a list comprehension.</p>
             # Create directories if they do not exist
             import os
             os.makedirs(os.path.dirname(file_path), exist_ok=True)
-            with open(file_path, &#39;w&#39;) as f:
+            with open(file_path, &#39;w&#39;, encoding=&#39;utf-8&#39;, errors=&#39;replace&#39;) as f:
                 json.dump(result, f, indent=4)
         
         return result
@@ -576,7 +576,7 @@ Handles unhashable elements by using a list comprehension.</p>
             An instance of the class populated with the data from json_dict_or_path.
         &#34;&#34;&#34;
         if isinstance(json_dict_or_path, str):
-            with open(json_dict_or_path, &#39;r&#39;) as f:
+            with open(json_dict_or_path, &#39;r&#39;, encoding=&#39;utf-8&#39;, errors=&#39;replace&#39;) as f:
                 json_dict = json.load(f)
         else:
             json_dict = json_dict_or_path
@@ -738,7 +738,7 @@ def from_json(cls, json_dict_or_path, suppress: list = None,
         An instance of the class populated with the data from json_dict_or_path.
     &#34;&#34;&#34;
     if isinstance(json_dict_or_path, str):
-        with open(json_dict_or_path, &#39;r&#39;) as f:
+        with open(json_dict_or_path, &#39;r&#39;, encoding=&#39;utf-8&#39;, errors=&#39;replace&#39;) as f:
             json_dict = json.load(f)
     else:
         json_dict = json_dict_or_path
@@ -870,7 +870,7 @@ def from_json(cls, json_dict_or_path, suppress: list = None,
         # Create directories if they do not exist
         import os
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
-        with open(file_path, &#39;w&#39;) as f:
+        with open(file_path, &#39;w&#39;, encoding=&#39;utf-8&#39;, errors=&#39;replace&#39;) as f:
             json.dump(result, f, indent=4)
     
     return result</code></pre>

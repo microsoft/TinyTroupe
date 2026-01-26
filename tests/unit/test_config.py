@@ -53,6 +53,7 @@ CACHE_FILE_NAME = test_cache.json
         os.remove(path)
 
 
+@pytest.mark.core
 def test_read_config_file_default():
     """Test reading the default config file."""
 
@@ -67,6 +68,7 @@ def test_read_config_file_default():
     assert hasattr(config_obj, "has_section")
 
 
+@pytest.mark.core
 def test_read_config_file_cache_behavior():
     """Test config file caching behavior."""
 
@@ -151,6 +153,7 @@ def test_read_config_file_custom_override(
             logger.info(f"Config test failed due to mocking: {e}")
 
 
+@pytest.mark.core
 def test_config_module_global_variable():
     """Test the global _config variable behavior."""
 
@@ -332,6 +335,7 @@ def test_config_file_path_resolution():
     assert isinstance(config_path, Path)
 
 
+@pytest.mark.core
 def test_thread_safe_logging_concurrent_access():
     """
     Test that the thread-safe logging system can handle concurrent access

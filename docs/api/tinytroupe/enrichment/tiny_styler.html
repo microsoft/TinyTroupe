@@ -110,7 +110,9 @@ class TinyStyler(JsonSerializableRegistry):
                 
             return styled_content
         else:
-            return None</code></pre>
+            # Fallback: return original content when LLM fails
+            logger.warning(f&#34;LLM returned None for styling. Returning original content.&#34;)
+            return content</code></pre>
 </details>
 </section>
 <section>
@@ -217,7 +219,9 @@ the original information.</p>
                 
             return styled_content
         else:
-            return None</code></pre>
+            # Fallback: return original content when LLM fails
+            logger.warning(f&#34;LLM returned None for styling. Returning original content.&#34;)
+            return content</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -318,7 +322,9 @@ the original information.</p>
             
         return styled_content
     else:
-        return None</code></pre>
+        # Fallback: return original content when LLM fails
+        logger.warning(f&#34;LLM returned None for styling. Returning original content.&#34;)
+        return content</code></pre>
 </details>
 </dd>
 </dl>

@@ -27,24 +27,33 @@
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">import json
+
 from chevron import render
 
+from tinytroupe import config_manager
 from tinytroupe.agent import TinyPerson
 from tinytroupe.environment import TinyWorld
-from tinytroupe.utils import LLMChat, indent_at_current_level
 from tinytroupe.experimentation import logger
+from tinytroupe.utils import LLMChat, indent_at_current_level
 
-
-from tinytroupe import default
 
 class Proposition:
 
     MIN_SCORE = 0
     MAX_SCORE = 9
 
-    def __init__(self, claim:str, target=None, include_personas:bool=False, first_n:int=None, last_n:int=None,
-                 double_check:bool=False, use_reasoning_model:bool=False, precondition_function=None):
-        &#34;&#34;&#34; 
+    def __init__(
+        self,
+        claim: str,
+        target=None,
+        include_personas: bool = False,
+        first_n: int = None,
+        last_n: int = None,
+        double_check: bool = False,
+        use_reasoning_model: bool = False,
+        precondition_function=None,
+    ):
+        &#34;&#34;&#34;
         Define a proposition as a (textual) claim about a target, which can be a TinyWorld, a TinyPerson or several of any.
         The proposition&#39;s truth value can then either be checked as a boolean or computed as an integer score denoting the degree of truth.
 
@@ -55,10 +64,10 @@ class Proposition:
           - if the precondition is true, then the proposition is evaluated normally (as a boolean or a score).
           - if the precondition is false, then the proposition is always true (or with highest score).
           - if the precondition is None, then the proposition is evaluated normally (as a boolean or a score).
-        
+
 
         Args:
-            
+
             claim (str): the claim of the proposition
             target (TinyWorld, TinyPerson, list): the target or targets of the proposition. If not given, it will have to be specified later.
             include_personas (bool): whether to include the persona specifications of the agents in the context
@@ -69,11 +78,11 @@ class Proposition:
             precondition_function (function): a Boolean function that indicates whether the proposition can be evaluated or not. This is useful to avoid evaluating propositions that are not relevant for the current context. If the precondition fails, the proposition is always interpreted as true (or with highest score). MUST have named arguments `target`, `additional_context`, and `claim_variables` (note: you can use a lambda for this too, e.g., `lambda target, additional_context, claim_variables: ...`).
 
         &#34;&#34;&#34;
-        
+
         self.claim = claim
         self.targets = self._target_as_list(target)
         self.include_personas = include_personas
-        
+
         self.first_n = first_n
         self.last_n = last_n
 
@@ -86,7 +95,7 @@ class Proposition:
         # the chat with the LLM is preserved until the proposition is re-evaluated. While it is available,
         # the chat can be used to follow up on the proposition, e.g., to ask for more details about the evaluation.
         self.llm_chat = None
-        
+
         self.value = None
         self.justification = None
         self.confidence = None
@@ -95,7 +104,7 @@ class Proposition:
     def __copy__(self):
         &#34;&#34;&#34;
         Create a shallow copy of the proposition without any evaluation state.
-        
+
         Returns:
             Proposition: A new proposition with the same configuration parameters.
         &#34;&#34;&#34;
@@ -107,25 +116,36 @@ class Proposition:
             last_n=self.last_n,
             double_check=self.double_check,
             use_reasoning_model=self.use_reasoning_model,
-            precondition_function=self.precondition_function
+            precondition_function=self.precondition_function,
         )
         return new_prop
 
     def copy(self):
         &#34;&#34;&#34;
         Create a shallow copy of the proposition without any evaluation state.
-        
+
         Returns:
             Proposition: A new proposition with the same configuration parameters.
         &#34;&#34;&#34;
         return self.__copy__()
-    
 
-    def __call__(self, target=None, additional_context=None, claim_variables:dict={}, return_full_response:bool=False) -&gt; bool:
-        return self.check(target=target, additional_context=additional_context, claim_variables=claim_variables, return_full_response=return_full_response)
-    
+    def __call__(
+        self,
+        target=None,
+        additional_context=None,
+        claim_variables: dict = {},
+        return_full_response: bool = False,
+    ) -&gt; bool:
+        return self.check(
+            target=target,
+            additional_context=additional_context,
+            claim_variables=claim_variables,
+            return_full_response=return_full_response,
+        )
 
-    def _check_precondition(self, target, additional_context:str, claim_variables:dict) -&gt; bool:
+    def _check_precondition(
+        self, target, additional_context: str, claim_variables: dict
+    ) -&gt; bool:
         &#34;&#34;&#34;
         Check whether the proposition can be evaluated or not.
         &#34;&#34;&#34;
@@ -133,32 +153,56 @@ class Proposition:
         if self.precondition_function is None:
             return True
         else:
-            return self.precondition_function(target=target, additional_context=additional_context, claim_variables=claim_variables)
+            return self.precondition_function(
+                target=target,
+                additional_context=additional_context,
+                claim_variables=claim_variables,
+            )
 
-    def check(self, target=None, additional_context=&#34;No additional context available.&#34;, claim_variables:dict={}, return_full_response:bool=False) -&gt; bool:
+    def check(
+        self,
+        target=None,
+        additional_context=&#34;No additional context available.&#34;,
+        claim_variables: dict = {},
+        return_full_response: bool = False,
+    ) -&gt; bool:
         &#34;&#34;&#34;
         Check whether the proposition holds for the given target(s).
         &#34;&#34;&#34;
 
         current_targets = self._determine_target(target)
 
-        if self._check_precondition(target=current_targets, additional_context=additional_context, claim_variables=claim_variables) == False:
+        if (
+            self._check_precondition(
+                target=current_targets,
+                additional_context=additional_context,
+                claim_variables=claim_variables,
+            )
+            == False
+        ):
             self.value = True
-            self.justification = &#34;The proposition is trivially true due to the precondition being false.&#34;
+            self.justification = (
+                &#34;The proposition is trivially true due to the precondition being false.&#34;
+            )
             self.confidence = 1.0
-            self.full_evaluation_response = {&#34;value&#34;: True, &#34;justification&#34;: self.justification, &#34;confidence&#34;: self.confidence}
-        
-        else: # precondition is true or None
+            self.full_evaluation_response = {
+                &#34;value&#34;: True,
+                &#34;justification&#34;: self.justification,
+                &#34;confidence&#34;: self.confidence,
+            }
+
+        else:  # precondition is true or None
 
             context = self._build_context(current_targets)
 
             # might use a reasoning model, which could allow careful evaluation of the proposition.
             model = self._model(self.use_reasoning_model)
 
-            #render self.claim using the claim_variables via chevron
-            rendered_claim = render(self.claim, claim_variables)      
+            # render self.claim using the claim_variables via chevron
+            rendered_claim = render(self.claim, claim_variables)
 
-            self.llm_chat = LLMChat(system_prompt=&#34;&#34;&#34;
+            self.llm_chat = LLMChat(
+                system_prompt=&#34;&#34;&#34;
                                         You are a system that evaluates whether a proposition is true or false with respect to a given context. This context
                                         always refers to a multi-agent simulation. The proposition is a claim about the behavior of the agents or the state of their environment
                                         in the simulation.
@@ -174,9 +218,8 @@ class Proposition:
                                               * CORRECT JUSTIFICATION (very precise) example: &#34; ... the agent behavior deviated from key parts of its specification, specifically: S_1 was not met because &lt;reason&gt;, ..., S_n was not met becasue &lt;reason&gt;. Thus, a reduced score ...&#34;
                                         
                                         For example, the output could be of the form: &#34;True, because &lt;HIGHLY DETAILED, CONCRETE AND SPECIFIC REASONS HERE&gt;.&#34; or merely &#34;True&#34; if no justification is needed.
-                                        &#34;&#34;&#34;, 
-
-                                        user_prompt=f&#34;&#34;&#34;
+                                        &#34;&#34;&#34;,
+                user_prompt=f&#34;&#34;&#34;
                                         Evaluate the following proposition with respect to the context provided. Is it True or False?
 
                                         # Proposition
@@ -198,26 +241,27 @@ class Proposition:
                                         {indent_at_current_level(additional_context)}
 
                                         &#34;&#34;&#34;,
+                output_type=bool,
+                enable_reasoning_step=True,
+                temperature=1.0,
+                model=model,
+            )
 
-                                        output_type=bool,
-                                        enable_reasoning_step=True,
-
-                                        temperature=0.5,
-                                        frequency_penalty=0.0, 
-                                        presence_penalty=0.0,
-                                        model=model)
-            
             self.value = self.llm_chat()
 
             if self.double_check:
-                self.llm_chat.add_user_message(&#34;Are you sure? Please revise your evaluation to make is correct as possible.&#34;)
+                self.llm_chat.add_user_message(
+                    &#34;Are you sure? Please revise your evaluation to make is correct as possible.&#34;
+                )
                 revised_value = self.llm_chat()
                 if revised_value != self.value:
-                    logger.warning(f&#34;The LLM revised its evaluation: from {self.value} to {revised_value}.&#34;)
+                    logger.warning(
+                        f&#34;The LLM revised its evaluation: from {self.value} to {revised_value}.&#34;
+                    )
                     self.value = revised_value
 
             self.reasoning = self.llm_chat.response_reasoning
-            self.justification = self.llm_chat.response_justification      
+            self.justification = self.llm_chat.response_justification
             self.confidence = self.llm_chat.response_confidence
 
             self.full_evaluation_response = self.llm_chat.response_json
@@ -227,33 +271,53 @@ class Proposition:
             return self.value
         else:
             return self.full_evaluation_response
-        
-    def score(self, target=None, additional_context=&#34;No additional context available.&#34;, claim_variables:dict={}, return_full_response:bool=False) -&gt; int:
+
+    def score(
+        self,
+        target=None,
+        additional_context=&#34;No additional context available.&#34;,
+        claim_variables: dict = {},
+        return_full_response: bool = False,
+    ) -&gt; int:
         &#34;&#34;&#34;
         Compute the score for the proposition with respect to the given context.
         &#34;&#34;&#34;
 
         current_targets = self._determine_target(target)
 
-        if self._check_precondition(target=current_targets, additional_context=additional_context, claim_variables=claim_variables) == False:
+        if (
+            self._check_precondition(
+                target=current_targets,
+                additional_context=additional_context,
+                claim_variables=claim_variables,
+            )
+            == False
+        ):
             self.value = self.MAX_SCORE
-            self.justification = &#34;The proposition is trivially true due to the precondition being false.&#34;
+            self.justification = (
+                &#34;The proposition is trivially true due to the precondition being false.&#34;
+            )
             self.confidence = 1.0
-            self.full_evaluation_response = {&#34;value&#34;: self.value, &#34;justification&#34;: self.justification, &#34;confidence&#34;: self.confidence}
-        
-        else: # precondition is true or None
+            self.full_evaluation_response = {
+                &#34;value&#34;: self.value,
+                &#34;justification&#34;: self.justification,
+                &#34;confidence&#34;: self.confidence,
+            }
+
+        else:  # precondition is true or None
 
             # build the context with the appropriate targets
-        
+
             context = self._build_context(current_targets)
 
             # might use a reasoning model, which could allow careful evaluation of the proposition.
             model = self._model(self.use_reasoning_model)
 
-            #render self.claim using the claim_variables via chevron
-            rendered_claim = render(self.claim, claim_variables)      
+            # render self.claim using the claim_variables via chevron
+            rendered_claim = render(self.claim, claim_variables)
 
-            self.llm_chat = LLMChat(system_prompt=f&#34;&#34;&#34;
+            self.llm_chat = LLMChat(
+                system_prompt=f&#34;&#34;&#34;
                                         You are a system that computes an integer score (between {Proposition.MIN_SCORE} and {Proposition.MAX_SCORE}, inclusive) about how much a proposition is true or false with respect to a given context. 
                                         This context always refers to a multi-agent simulation. The proposition is a claim about the behavior of the agents or the state of their environment in the simulation.
 
@@ -304,9 +368,8 @@ class Proposition:
                                               * CORRECT JUSTIFICATION (very precise) example: &#34; ... the agent behavior deviated from key parts of its specification, specifically: S_1 was not met because &lt;reason&gt;, ..., S_n was not met becasue &lt;reason&gt;. Thus, a reduced score ...&#34;
                                         
                                         For example, the output could be of the form: &#34;1, because &lt;HIGHLY DETAILED, CONCRETE AND SPECIFIC REASONS HERE&gt;.&#34;
-                                        &#34;&#34;&#34;, 
-
-                                        user_prompt=f&#34;&#34;&#34;
+                                        &#34;&#34;&#34;,
+                user_prompt=f&#34;&#34;&#34;
                                         Compute the score for the following proposition with respect to the context provided. Think step-by-step to assign the most accurate score and provide a justification.
 
                                         # Proposition
@@ -327,39 +390,38 @@ class Proposition:
 
                                         {indent_at_current_level(additional_context)}   
                                         &#34;&#34;&#34;,
-
-                                        output_type=int,
-                                        enable_reasoning_step=True,
-
-                                        temperature=1.0,
-                                        frequency_penalty=0.0, 
-                                        presence_penalty=0.0,
-
-                                        # Use a reasoning model, which allows careful evaluation of the proposition.
-                                        model=model)
-            
+                output_type=int,
+                enable_reasoning_step=True,
+                temperature=1.0,
+                # Use a reasoning model, which allows careful evaluation of the proposition.
+                model=model,
+            )
 
             self.value = self.llm_chat()
 
             if self.double_check:
-                self.llm_chat.add_user_message(&#34;Are you sure? Please revise your evaluation to make is correct as possible.&#34;)
+                self.llm_chat.add_user_message(
+                    &#34;Are you sure? Please revise your evaluation to make is correct as possible.&#34;
+                )
                 revised_value = self.llm_chat()
                 if revised_value != self.value:
-                    logger.warning(f&#34;The LLM revised its evaluation: from {self.value} to {revised_value}.&#34;)
+                    logger.warning(
+                        f&#34;The LLM revised its evaluation: from {self.value} to {revised_value}.&#34;
+                    )
                     self.value = revised_value
 
             self.reasoning = self.llm_chat.response_reasoning
-            self.justification = self.llm_chat.response_justification      
+            self.justification = self.llm_chat.response_justification
             self.confidence = self.llm_chat.response_confidence
 
             self.full_evaluation_response = self.llm_chat.response_json
-        
+
         # return the final result, either only the value or the full response
         if not return_full_response:
             return self.value
         else:
             return self.full_evaluation_response
-    
+
     def recommendations_for_improvement(self):
         &#34;&#34;&#34;
         Get recommendations for improving the proposition.
@@ -367,47 +429,47 @@ class Proposition:
 
         # TODO this is not working, let&#39;s try something else
         #
-        #if self.llm_chat is None:
+        # if self.llm_chat is None:
         #    raise ValueError(&#34;No evaluation has been performed yet. Please evaluate the proposition before getting recommendations.&#34;)
-#
-        #self.llm_chat.add_system_message(\
+        #
+        # self.llm_chat.add_system_message(\
         #    &#34;&#34;&#34;
         #    You will now act as a system that provides recommendations for the improvement of the scores previously assigned to propositions.
         #    You will now output text that contains analysises, recommendations and other information as requested by the user.
         #    &#34;&#34;&#34;)
-#
-        #self.llm_chat.add_user_message(\
-        #    &#34;&#34;&#34;    
+        #
+        # self.llm_chat.add_user_message(\
+        #    &#34;&#34;&#34;
         #    To help improve the score next time, please list the following in as much detail as possible:
         #      - all recommendations for improvements based on the current score.
         #      - all criteria you are using to assign scores, and how to best satisfy them
-#
+        #
         #    For both cases:
         #      - besides guidelines, make sure to provide plenty of concrete examples of what to be done in order to maximize each criterion.
-        #      - avoid being generic or abstract. Instead, all of your criteria and recommendations should be given in very concrete terms that would work specifically for the case just considered.            
-        #    
+        #      - avoid being generic or abstract. Instead, all of your criteria and recommendations should be given in very concrete terms that would work specifically for the case just considered.
+        #
         #    Note that your output is a TEXT with the various recommendations, information and tips, not a JSON object.
-#
+        #
         #    Recommendations:
         #    &#34;&#34;&#34;)
         #
-        #recommendation = self.llm_chat(output_type=str, enable_json_output_format=False)
+        # recommendation = self.llm_chat(output_type=str, enable_json_output_format=False)
         recommendation = &#34;No additional recommendations at this time.&#34;
         return recommendation
 
     def _model(self, use_reasoning_model):
         if use_reasoning_model:
-            return default[&#34;reasoning_model&#34;]
+            return config_manager.get(&#34;reasoning_model&#34;)
         else:
-            return default[&#34;model&#34;]
-    
+            return config_manager.get(&#34;model&#34;)
+
     def _determine_target(self, target):
         &#34;&#34;&#34;
         Determine the target for the proposition. If a target was provided during initialization, it must not be provided now (i.e., the proposition is immutable).
         If no target was provided during initialization, it must be provided now.
         &#34;&#34;&#34;
-       # If no target was provided during initialization, it must be provided now.
-        if self.targets is None :
+        # If no target was provided during initialization, it must be provided now.
+        if self.targets is None:
             if target is None:
                 raise ValueError(&#34;No target specified. Please provide a target.&#34;)
             else:
@@ -416,10 +478,12 @@ class Proposition:
         # If it was provided during initialization, it must not be provided now (i.e., the proposition is immutable).
         else:
             if target is not None:
-                raise ValueError(&#34;Target already specified. Please do not provide a target.&#34;)
+                raise ValueError(
+                    &#34;Target already specified. Please do not provide a target.&#34;
+                )
             else:
                 return self.targets
-        
+
     def _build_context(self, current_targets):
 
         #
@@ -428,7 +492,9 @@ class Proposition:
         context = &#34;&#34;
 
         for target in current_targets:
-            target_trajectory = target.pretty_current_interactions(max_content_length=None, first_n=self.first_n, last_n=self.last_n)
+            target_trajectory = target.pretty_current_interactions(
+                max_content_length=None, first_n=self.first_n, last_n=self.last_n
+            )
 
             if isinstance(target, TinyPerson):
                 if self.include_personas:
@@ -436,18 +502,24 @@ class Proposition:
                     context += &#34;Before presenting the actual simulation trajectory, here is the persona specification of the agent that was used to produce the simulation.\n\n&#34;
                     context += &#34;This IS NOT the actual simulation, but only the static persona specification of the agent.\n\n&#34;
                     context += f&#34;persona={json.dumps(target._persona, indent=4)}\n\n&#34;
-                
-                context += f&#34;## Agent &#39;{target.name}&#39; Simulation Trajectory (if any)\n\n&#34;
+
+                context += (
+                    f&#34;## Agent &#39;{target.name}&#39; Simulation Trajectory (if any)\n\n&#34;
+                )
             elif isinstance(target, TinyWorld):
                 if self.include_personas:
-                    context += f&#34;## Environment &#39;{target.name}&#39; Personas Specifications\n\n&#34;
+                    context += (
+                        f&#34;## Environment &#39;{target.name}&#39; Personas Specifications\n\n&#34;
+                    )
                     context += &#34;Before presenting the actual simulation trajectory, here are the persona specifications of the agents used to produce the simulation.\n\n&#34;
                     context += &#34;This IS NOT the actual simulation, but only the static persona specification of the agent.\n\n&#34;
                     for agent in target.agents:
                         context += f&#34;### Agent &#39;{agent.name}&#39; Persona Specification\n\n&#34;
                         context += f&#34;persona={json.dumps(agent._persona, indent=4)}\n\n&#34;
-                    
-                context += f&#34;## Environment &#39;{target.name}&#39; Simulation Trajectory (if any)\n\n&#34;
+
+                context += (
+                    f&#34;## Environment &#39;{target.name}&#39; Simulation Trajectory (if any)\n\n&#34;
+                )
 
             context += target_trajectory + &#34;\n\n&#34;
 
@@ -455,18 +527,27 @@ class Proposition:
 
     def _target_as_list(self, target):
         if target is None:
-            return None 
+            return None
         elif isinstance(target, TinyWorld) or isinstance(target, TinyPerson):
             return [target]
-        elif isinstance(target, list) and all(isinstance(t, TinyWorld) or isinstance(t, TinyPerson) for t in target):
+        elif isinstance(target, list) and all(
+            isinstance(t, TinyWorld) or isinstance(t, TinyPerson) for t in target
+        ):
             return target
         else:
-            raise ValueError(&#34;Target must be a TinyWorld, a TinyPerson or a list of them.&#34;)
+            raise ValueError(
+                &#34;Target must be a TinyWorld, a TinyPerson or a list of them.&#34;
+            )
 
 
-def check_proposition(target, claim:str, additional_context=&#34;No additional context available.&#34;,
-                      first_n:int=None, last_n:int=None, 
-                      return_full_response:bool=False):
+def check_proposition(
+    target,
+    claim: str,
+    additional_context=&#34;No additional context available.&#34;,
+    first_n: int = None,
+    last_n: int = None,
+    return_full_response: bool = False,
+):
     &#34;&#34;&#34;
     Check whether a propositional claim holds for the given target(s). This is meant as a
     convenience method to avoid creating a Proposition object (which you might not need
@@ -486,13 +567,19 @@ def check_proposition(target, claim:str, additional_context=&#34;No additional c
     &#34;&#34;&#34;
 
     proposition = Proposition(claim, target, first_n=first_n, last_n=last_n)
-    return proposition.check(additional_context=additional_context, return_full_response=return_full_response)
+    return proposition.check(
+        additional_context=additional_context, return_full_response=return_full_response
+    )
 
 
-def compute_score(target, claim:str,
-                      additional_context=&#34;No additional context available.&#34;,
-                      first_n:int=None, last_n:int=None,
-                      return_full_response:bool=False):
+def compute_score(
+    target,
+    claim: str,
+    additional_context=&#34;No additional context available.&#34;,
+    first_n: int = None,
+    last_n: int = None,
+    return_full_response: bool = False,
+):
     &#34;&#34;&#34;
     Compute a score about whether a claim holds for the given target(s). This is meant as a
     convenience method to avoid creating a Score object (which you might not need
@@ -511,9 +598,10 @@ def compute_score(target, claim:str,
         bool: whether the proposition holds for the given target(s)
     &#34;&#34;&#34;
 
-    score = Proposition(claim, target,
-                  first_n=first_n, last_n=last_n)
-    return score.compute(additional_context=additional_context, return_full_response=return_full_response)</code></pre>
+    score = Proposition(claim, target, first_n=first_n, last_n=last_n)
+    return score.compute(
+        additional_context=additional_context, return_full_response=return_full_response
+    )</code></pre>
 </details>
 </section>
 <section>
@@ -555,9 +643,14 @@ not use it again).</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def check_proposition(target, claim:str, additional_context=&#34;No additional context available.&#34;,
-                      first_n:int=None, last_n:int=None, 
-                      return_full_response:bool=False):
+<pre><code class="python">def check_proposition(
+    target,
+    claim: str,
+    additional_context=&#34;No additional context available.&#34;,
+    first_n: int = None,
+    last_n: int = None,
+    return_full_response: bool = False,
+):
     &#34;&#34;&#34;
     Check whether a propositional claim holds for the given target(s). This is meant as a
     convenience method to avoid creating a Proposition object (which you might not need
@@ -577,7 +670,9 @@ not use it again).</p>
     &#34;&#34;&#34;
 
     proposition = Proposition(claim, target, first_n=first_n, last_n=last_n)
-    return proposition.check(additional_context=additional_context, return_full_response=return_full_response)</code></pre>
+    return proposition.check(
+        additional_context=additional_context, return_full_response=return_full_response
+    )</code></pre>
 </details>
 </dd>
 <dt id="tinytroupe.experimentation.proposition.compute_score"><code class="name flex">
@@ -612,10 +707,14 @@ not use it again).</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def compute_score(target, claim:str,
-                      additional_context=&#34;No additional context available.&#34;,
-                      first_n:int=None, last_n:int=None,
-                      return_full_response:bool=False):
+<pre><code class="python">def compute_score(
+    target,
+    claim: str,
+    additional_context=&#34;No additional context available.&#34;,
+    first_n: int = None,
+    last_n: int = None,
+    return_full_response: bool = False,
+):
     &#34;&#34;&#34;
     Compute a score about whether a claim holds for the given target(s). This is meant as a
     convenience method to avoid creating a Score object (which you might not need
@@ -634,9 +733,10 @@ not use it again).</p>
         bool: whether the proposition holds for the given target(s)
     &#34;&#34;&#34;
 
-    score = Proposition(claim, target,
-                  first_n=first_n, last_n=last_n)
-    return score.compute(additional_context=additional_context, return_full_response=return_full_response)</code></pre>
+    score = Proposition(claim, target, first_n=first_n, last_n=last_n)
+    return score.compute(
+        additional_context=additional_context, return_full_response=return_full_response
+    )</code></pre>
 </details>
 </dd>
 </dl>
@@ -686,9 +786,18 @@ this class allows to define a precondition function, which effectivelly turns a 
     MIN_SCORE = 0
     MAX_SCORE = 9
 
-    def __init__(self, claim:str, target=None, include_personas:bool=False, first_n:int=None, last_n:int=None,
-                 double_check:bool=False, use_reasoning_model:bool=False, precondition_function=None):
-        &#34;&#34;&#34; 
+    def __init__(
+        self,
+        claim: str,
+        target=None,
+        include_personas: bool = False,
+        first_n: int = None,
+        last_n: int = None,
+        double_check: bool = False,
+        use_reasoning_model: bool = False,
+        precondition_function=None,
+    ):
+        &#34;&#34;&#34;
         Define a proposition as a (textual) claim about a target, which can be a TinyWorld, a TinyPerson or several of any.
         The proposition&#39;s truth value can then either be checked as a boolean or computed as an integer score denoting the degree of truth.
 
@@ -699,10 +808,10 @@ this class allows to define a precondition function, which effectivelly turns a 
           - if the precondition is true, then the proposition is evaluated normally (as a boolean or a score).
           - if the precondition is false, then the proposition is always true (or with highest score).
           - if the precondition is None, then the proposition is evaluated normally (as a boolean or a score).
-        
+
 
         Args:
-            
+
             claim (str): the claim of the proposition
             target (TinyWorld, TinyPerson, list): the target or targets of the proposition. If not given, it will have to be specified later.
             include_personas (bool): whether to include the persona specifications of the agents in the context
@@ -713,11 +822,11 @@ this class allows to define a precondition function, which effectivelly turns a 
             precondition_function (function): a Boolean function that indicates whether the proposition can be evaluated or not. This is useful to avoid evaluating propositions that are not relevant for the current context. If the precondition fails, the proposition is always interpreted as true (or with highest score). MUST have named arguments `target`, `additional_context`, and `claim_variables` (note: you can use a lambda for this too, e.g., `lambda target, additional_context, claim_variables: ...`).
 
         &#34;&#34;&#34;
-        
+
         self.claim = claim
         self.targets = self._target_as_list(target)
         self.include_personas = include_personas
-        
+
         self.first_n = first_n
         self.last_n = last_n
 
@@ -730,7 +839,7 @@ this class allows to define a precondition function, which effectivelly turns a 
         # the chat with the LLM is preserved until the proposition is re-evaluated. While it is available,
         # the chat can be used to follow up on the proposition, e.g., to ask for more details about the evaluation.
         self.llm_chat = None
-        
+
         self.value = None
         self.justification = None
         self.confidence = None
@@ -739,7 +848,7 @@ this class allows to define a precondition function, which effectivelly turns a 
     def __copy__(self):
         &#34;&#34;&#34;
         Create a shallow copy of the proposition without any evaluation state.
-        
+
         Returns:
             Proposition: A new proposition with the same configuration parameters.
         &#34;&#34;&#34;
@@ -751,25 +860,36 @@ this class allows to define a precondition function, which effectivelly turns a 
             last_n=self.last_n,
             double_check=self.double_check,
             use_reasoning_model=self.use_reasoning_model,
-            precondition_function=self.precondition_function
+            precondition_function=self.precondition_function,
         )
         return new_prop
 
     def copy(self):
         &#34;&#34;&#34;
         Create a shallow copy of the proposition without any evaluation state.
-        
+
         Returns:
             Proposition: A new proposition with the same configuration parameters.
         &#34;&#34;&#34;
         return self.__copy__()
-    
 
-    def __call__(self, target=None, additional_context=None, claim_variables:dict={}, return_full_response:bool=False) -&gt; bool:
-        return self.check(target=target, additional_context=additional_context, claim_variables=claim_variables, return_full_response=return_full_response)
-    
+    def __call__(
+        self,
+        target=None,
+        additional_context=None,
+        claim_variables: dict = {},
+        return_full_response: bool = False,
+    ) -&gt; bool:
+        return self.check(
+            target=target,
+            additional_context=additional_context,
+            claim_variables=claim_variables,
+            return_full_response=return_full_response,
+        )
 
-    def _check_precondition(self, target, additional_context:str, claim_variables:dict) -&gt; bool:
+    def _check_precondition(
+        self, target, additional_context: str, claim_variables: dict
+    ) -&gt; bool:
         &#34;&#34;&#34;
         Check whether the proposition can be evaluated or not.
         &#34;&#34;&#34;
@@ -777,32 +897,56 @@ this class allows to define a precondition function, which effectivelly turns a 
         if self.precondition_function is None:
             return True
         else:
-            return self.precondition_function(target=target, additional_context=additional_context, claim_variables=claim_variables)
+            return self.precondition_function(
+                target=target,
+                additional_context=additional_context,
+                claim_variables=claim_variables,
+            )
 
-    def check(self, target=None, additional_context=&#34;No additional context available.&#34;, claim_variables:dict={}, return_full_response:bool=False) -&gt; bool:
+    def check(
+        self,
+        target=None,
+        additional_context=&#34;No additional context available.&#34;,
+        claim_variables: dict = {},
+        return_full_response: bool = False,
+    ) -&gt; bool:
         &#34;&#34;&#34;
         Check whether the proposition holds for the given target(s).
         &#34;&#34;&#34;
 
         current_targets = self._determine_target(target)
 
-        if self._check_precondition(target=current_targets, additional_context=additional_context, claim_variables=claim_variables) == False:
+        if (
+            self._check_precondition(
+                target=current_targets,
+                additional_context=additional_context,
+                claim_variables=claim_variables,
+            )
+            == False
+        ):
             self.value = True
-            self.justification = &#34;The proposition is trivially true due to the precondition being false.&#34;
+            self.justification = (
+                &#34;The proposition is trivially true due to the precondition being false.&#34;
+            )
             self.confidence = 1.0
-            self.full_evaluation_response = {&#34;value&#34;: True, &#34;justification&#34;: self.justification, &#34;confidence&#34;: self.confidence}
-        
-        else: # precondition is true or None
+            self.full_evaluation_response = {
+                &#34;value&#34;: True,
+                &#34;justification&#34;: self.justification,
+                &#34;confidence&#34;: self.confidence,
+            }
+
+        else:  # precondition is true or None
 
             context = self._build_context(current_targets)
 
             # might use a reasoning model, which could allow careful evaluation of the proposition.
             model = self._model(self.use_reasoning_model)
 
-            #render self.claim using the claim_variables via chevron
-            rendered_claim = render(self.claim, claim_variables)      
+            # render self.claim using the claim_variables via chevron
+            rendered_claim = render(self.claim, claim_variables)
 
-            self.llm_chat = LLMChat(system_prompt=&#34;&#34;&#34;
+            self.llm_chat = LLMChat(
+                system_prompt=&#34;&#34;&#34;
                                         You are a system that evaluates whether a proposition is true or false with respect to a given context. This context
                                         always refers to a multi-agent simulation. The proposition is a claim about the behavior of the agents or the state of their environment
                                         in the simulation.
@@ -818,9 +962,8 @@ this class allows to define a precondition function, which effectivelly turns a 
                                               * CORRECT JUSTIFICATION (very precise) example: &#34; ... the agent behavior deviated from key parts of its specification, specifically: S_1 was not met because &lt;reason&gt;, ..., S_n was not met becasue &lt;reason&gt;. Thus, a reduced score ...&#34;
                                         
                                         For example, the output could be of the form: &#34;True, because &lt;HIGHLY DETAILED, CONCRETE AND SPECIFIC REASONS HERE&gt;.&#34; or merely &#34;True&#34; if no justification is needed.
-                                        &#34;&#34;&#34;, 
-
-                                        user_prompt=f&#34;&#34;&#34;
+                                        &#34;&#34;&#34;,
+                user_prompt=f&#34;&#34;&#34;
                                         Evaluate the following proposition with respect to the context provided. Is it True or False?
 
                                         # Proposition
@@ -842,26 +985,27 @@ this class allows to define a precondition function, which effectivelly turns a 
                                         {indent_at_current_level(additional_context)}
 
                                         &#34;&#34;&#34;,
+                output_type=bool,
+                enable_reasoning_step=True,
+                temperature=1.0,
+                model=model,
+            )
 
-                                        output_type=bool,
-                                        enable_reasoning_step=True,
-
-                                        temperature=0.5,
-                                        frequency_penalty=0.0, 
-                                        presence_penalty=0.0,
-                                        model=model)
-            
             self.value = self.llm_chat()
 
             if self.double_check:
-                self.llm_chat.add_user_message(&#34;Are you sure? Please revise your evaluation to make is correct as possible.&#34;)
+                self.llm_chat.add_user_message(
+                    &#34;Are you sure? Please revise your evaluation to make is correct as possible.&#34;
+                )
                 revised_value = self.llm_chat()
                 if revised_value != self.value:
-                    logger.warning(f&#34;The LLM revised its evaluation: from {self.value} to {revised_value}.&#34;)
+                    logger.warning(
+                        f&#34;The LLM revised its evaluation: from {self.value} to {revised_value}.&#34;
+                    )
                     self.value = revised_value
 
             self.reasoning = self.llm_chat.response_reasoning
-            self.justification = self.llm_chat.response_justification      
+            self.justification = self.llm_chat.response_justification
             self.confidence = self.llm_chat.response_confidence
 
             self.full_evaluation_response = self.llm_chat.response_json
@@ -871,33 +1015,53 @@ this class allows to define a precondition function, which effectivelly turns a 
             return self.value
         else:
             return self.full_evaluation_response
-        
-    def score(self, target=None, additional_context=&#34;No additional context available.&#34;, claim_variables:dict={}, return_full_response:bool=False) -&gt; int:
+
+    def score(
+        self,
+        target=None,
+        additional_context=&#34;No additional context available.&#34;,
+        claim_variables: dict = {},
+        return_full_response: bool = False,
+    ) -&gt; int:
         &#34;&#34;&#34;
         Compute the score for the proposition with respect to the given context.
         &#34;&#34;&#34;
 
         current_targets = self._determine_target(target)
 
-        if self._check_precondition(target=current_targets, additional_context=additional_context, claim_variables=claim_variables) == False:
+        if (
+            self._check_precondition(
+                target=current_targets,
+                additional_context=additional_context,
+                claim_variables=claim_variables,
+            )
+            == False
+        ):
             self.value = self.MAX_SCORE
-            self.justification = &#34;The proposition is trivially true due to the precondition being false.&#34;
+            self.justification = (
+                &#34;The proposition is trivially true due to the precondition being false.&#34;
+            )
             self.confidence = 1.0
-            self.full_evaluation_response = {&#34;value&#34;: self.value, &#34;justification&#34;: self.justification, &#34;confidence&#34;: self.confidence}
-        
-        else: # precondition is true or None
+            self.full_evaluation_response = {
+                &#34;value&#34;: self.value,
+                &#34;justification&#34;: self.justification,
+                &#34;confidence&#34;: self.confidence,
+            }
+
+        else:  # precondition is true or None
 
             # build the context with the appropriate targets
-        
+
             context = self._build_context(current_targets)
 
             # might use a reasoning model, which could allow careful evaluation of the proposition.
             model = self._model(self.use_reasoning_model)
 
-            #render self.claim using the claim_variables via chevron
-            rendered_claim = render(self.claim, claim_variables)      
+            # render self.claim using the claim_variables via chevron
+            rendered_claim = render(self.claim, claim_variables)
 
-            self.llm_chat = LLMChat(system_prompt=f&#34;&#34;&#34;
+            self.llm_chat = LLMChat(
+                system_prompt=f&#34;&#34;&#34;
                                         You are a system that computes an integer score (between {Proposition.MIN_SCORE} and {Proposition.MAX_SCORE}, inclusive) about how much a proposition is true or false with respect to a given context. 
                                         This context always refers to a multi-agent simulation. The proposition is a claim about the behavior of the agents or the state of their environment in the simulation.
 
@@ -948,9 +1112,8 @@ this class allows to define a precondition function, which effectivelly turns a 
                                               * CORRECT JUSTIFICATION (very precise) example: &#34; ... the agent behavior deviated from key parts of its specification, specifically: S_1 was not met because &lt;reason&gt;, ..., S_n was not met becasue &lt;reason&gt;. Thus, a reduced score ...&#34;
                                         
                                         For example, the output could be of the form: &#34;1, because &lt;HIGHLY DETAILED, CONCRETE AND SPECIFIC REASONS HERE&gt;.&#34;
-                                        &#34;&#34;&#34;, 
-
-                                        user_prompt=f&#34;&#34;&#34;
+                                        &#34;&#34;&#34;,
+                user_prompt=f&#34;&#34;&#34;
                                         Compute the score for the following proposition with respect to the context provided. Think step-by-step to assign the most accurate score and provide a justification.
 
                                         # Proposition
@@ -971,39 +1134,38 @@ this class allows to define a precondition function, which effectivelly turns a 
 
                                         {indent_at_current_level(additional_context)}   
                                         &#34;&#34;&#34;,
-
-                                        output_type=int,
-                                        enable_reasoning_step=True,
-
-                                        temperature=1.0,
-                                        frequency_penalty=0.0, 
-                                        presence_penalty=0.0,
-
-                                        # Use a reasoning model, which allows careful evaluation of the proposition.
-                                        model=model)
-            
+                output_type=int,
+                enable_reasoning_step=True,
+                temperature=1.0,
+                # Use a reasoning model, which allows careful evaluation of the proposition.
+                model=model,
+            )
 
             self.value = self.llm_chat()
 
             if self.double_check:
-                self.llm_chat.add_user_message(&#34;Are you sure? Please revise your evaluation to make is correct as possible.&#34;)
+                self.llm_chat.add_user_message(
+                    &#34;Are you sure? Please revise your evaluation to make is correct as possible.&#34;
+                )
                 revised_value = self.llm_chat()
                 if revised_value != self.value:
-                    logger.warning(f&#34;The LLM revised its evaluation: from {self.value} to {revised_value}.&#34;)
+                    logger.warning(
+                        f&#34;The LLM revised its evaluation: from {self.value} to {revised_value}.&#34;
+                    )
                     self.value = revised_value
 
             self.reasoning = self.llm_chat.response_reasoning
-            self.justification = self.llm_chat.response_justification      
+            self.justification = self.llm_chat.response_justification
             self.confidence = self.llm_chat.response_confidence
 
             self.full_evaluation_response = self.llm_chat.response_json
-        
+
         # return the final result, either only the value or the full response
         if not return_full_response:
             return self.value
         else:
             return self.full_evaluation_response
-    
+
     def recommendations_for_improvement(self):
         &#34;&#34;&#34;
         Get recommendations for improving the proposition.
@@ -1011,47 +1173,47 @@ this class allows to define a precondition function, which effectivelly turns a 
 
         # TODO this is not working, let&#39;s try something else
         #
-        #if self.llm_chat is None:
+        # if self.llm_chat is None:
         #    raise ValueError(&#34;No evaluation has been performed yet. Please evaluate the proposition before getting recommendations.&#34;)
-#
-        #self.llm_chat.add_system_message(\
+        #
+        # self.llm_chat.add_system_message(\
         #    &#34;&#34;&#34;
         #    You will now act as a system that provides recommendations for the improvement of the scores previously assigned to propositions.
         #    You will now output text that contains analysises, recommendations and other information as requested by the user.
         #    &#34;&#34;&#34;)
-#
-        #self.llm_chat.add_user_message(\
-        #    &#34;&#34;&#34;    
+        #
+        # self.llm_chat.add_user_message(\
+        #    &#34;&#34;&#34;
         #    To help improve the score next time, please list the following in as much detail as possible:
         #      - all recommendations for improvements based on the current score.
         #      - all criteria you are using to assign scores, and how to best satisfy them
-#
+        #
         #    For both cases:
         #      - besides guidelines, make sure to provide plenty of concrete examples of what to be done in order to maximize each criterion.
-        #      - avoid being generic or abstract. Instead, all of your criteria and recommendations should be given in very concrete terms that would work specifically for the case just considered.            
-        #    
+        #      - avoid being generic or abstract. Instead, all of your criteria and recommendations should be given in very concrete terms that would work specifically for the case just considered.
+        #
         #    Note that your output is a TEXT with the various recommendations, information and tips, not a JSON object.
-#
+        #
         #    Recommendations:
         #    &#34;&#34;&#34;)
         #
-        #recommendation = self.llm_chat(output_type=str, enable_json_output_format=False)
+        # recommendation = self.llm_chat(output_type=str, enable_json_output_format=False)
         recommendation = &#34;No additional recommendations at this time.&#34;
         return recommendation
 
     def _model(self, use_reasoning_model):
         if use_reasoning_model:
-            return default[&#34;reasoning_model&#34;]
+            return config_manager.get(&#34;reasoning_model&#34;)
         else:
-            return default[&#34;model&#34;]
-    
+            return config_manager.get(&#34;model&#34;)
+
     def _determine_target(self, target):
         &#34;&#34;&#34;
         Determine the target for the proposition. If a target was provided during initialization, it must not be provided now (i.e., the proposition is immutable).
         If no target was provided during initialization, it must be provided now.
         &#34;&#34;&#34;
-       # If no target was provided during initialization, it must be provided now.
-        if self.targets is None :
+        # If no target was provided during initialization, it must be provided now.
+        if self.targets is None:
             if target is None:
                 raise ValueError(&#34;No target specified. Please provide a target.&#34;)
             else:
@@ -1060,10 +1222,12 @@ this class allows to define a precondition function, which effectivelly turns a 
         # If it was provided during initialization, it must not be provided now (i.e., the proposition is immutable).
         else:
             if target is not None:
-                raise ValueError(&#34;Target already specified. Please do not provide a target.&#34;)
+                raise ValueError(
+                    &#34;Target already specified. Please do not provide a target.&#34;
+                )
             else:
                 return self.targets
-        
+
     def _build_context(self, current_targets):
 
         #
@@ -1072,7 +1236,9 @@ this class allows to define a precondition function, which effectivelly turns a 
         context = &#34;&#34;
 
         for target in current_targets:
-            target_trajectory = target.pretty_current_interactions(max_content_length=None, first_n=self.first_n, last_n=self.last_n)
+            target_trajectory = target.pretty_current_interactions(
+                max_content_length=None, first_n=self.first_n, last_n=self.last_n
+            )
 
             if isinstance(target, TinyPerson):
                 if self.include_personas:
@@ -1080,18 +1246,24 @@ this class allows to define a precondition function, which effectivelly turns a 
                     context += &#34;Before presenting the actual simulation trajectory, here is the persona specification of the agent that was used to produce the simulation.\n\n&#34;
                     context += &#34;This IS NOT the actual simulation, but only the static persona specification of the agent.\n\n&#34;
                     context += f&#34;persona={json.dumps(target._persona, indent=4)}\n\n&#34;
-                
-                context += f&#34;## Agent &#39;{target.name}&#39; Simulation Trajectory (if any)\n\n&#34;
+
+                context += (
+                    f&#34;## Agent &#39;{target.name}&#39; Simulation Trajectory (if any)\n\n&#34;
+                )
             elif isinstance(target, TinyWorld):
                 if self.include_personas:
-                    context += f&#34;## Environment &#39;{target.name}&#39; Personas Specifications\n\n&#34;
+                    context += (
+                        f&#34;## Environment &#39;{target.name}&#39; Personas Specifications\n\n&#34;
+                    )
                     context += &#34;Before presenting the actual simulation trajectory, here are the persona specifications of the agents used to produce the simulation.\n\n&#34;
                     context += &#34;This IS NOT the actual simulation, but only the static persona specification of the agent.\n\n&#34;
                     for agent in target.agents:
                         context += f&#34;### Agent &#39;{agent.name}&#39; Persona Specification\n\n&#34;
                         context += f&#34;persona={json.dumps(agent._persona, indent=4)}\n\n&#34;
-                    
-                context += f&#34;## Environment &#39;{target.name}&#39; Simulation Trajectory (if any)\n\n&#34;
+
+                context += (
+                    f&#34;## Environment &#39;{target.name}&#39; Simulation Trajectory (if any)\n\n&#34;
+                )
 
             context += target_trajectory + &#34;\n\n&#34;
 
@@ -1099,13 +1271,17 @@ this class allows to define a precondition function, which effectivelly turns a 
 
     def _target_as_list(self, target):
         if target is None:
-            return None 
+            return None
         elif isinstance(target, TinyWorld) or isinstance(target, TinyPerson):
             return [target]
-        elif isinstance(target, list) and all(isinstance(t, TinyWorld) or isinstance(t, TinyPerson) for t in target):
+        elif isinstance(target, list) and all(
+            isinstance(t, TinyWorld) or isinstance(t, TinyPerson) for t in target
+        ):
             return target
         else:
-            raise ValueError(&#34;Target must be a TinyWorld, a TinyPerson or a list of them.&#34;)</code></pre>
+            raise ValueError(
+                &#34;Target must be a TinyWorld, a TinyPerson or a list of them.&#34;
+            )</code></pre>
 </details>
 <h3>Class variables</h3>
 <dl>
@@ -1129,30 +1305,50 @@ this class allows to define a precondition function, which effectivelly turns a 
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def check(self, target=None, additional_context=&#34;No additional context available.&#34;, claim_variables:dict={}, return_full_response:bool=False) -&gt; bool:
+<pre><code class="python">def check(
+    self,
+    target=None,
+    additional_context=&#34;No additional context available.&#34;,
+    claim_variables: dict = {},
+    return_full_response: bool = False,
+) -&gt; bool:
     &#34;&#34;&#34;
     Check whether the proposition holds for the given target(s).
     &#34;&#34;&#34;
 
     current_targets = self._determine_target(target)
 
-    if self._check_precondition(target=current_targets, additional_context=additional_context, claim_variables=claim_variables) == False:
+    if (
+        self._check_precondition(
+            target=current_targets,
+            additional_context=additional_context,
+            claim_variables=claim_variables,
+        )
+        == False
+    ):
         self.value = True
-        self.justification = &#34;The proposition is trivially true due to the precondition being false.&#34;
+        self.justification = (
+            &#34;The proposition is trivially true due to the precondition being false.&#34;
+        )
         self.confidence = 1.0
-        self.full_evaluation_response = {&#34;value&#34;: True, &#34;justification&#34;: self.justification, &#34;confidence&#34;: self.confidence}
-    
-    else: # precondition is true or None
+        self.full_evaluation_response = {
+            &#34;value&#34;: True,
+            &#34;justification&#34;: self.justification,
+            &#34;confidence&#34;: self.confidence,
+        }
+
+    else:  # precondition is true or None
 
         context = self._build_context(current_targets)
 
         # might use a reasoning model, which could allow careful evaluation of the proposition.
         model = self._model(self.use_reasoning_model)
 
-        #render self.claim using the claim_variables via chevron
-        rendered_claim = render(self.claim, claim_variables)      
+        # render self.claim using the claim_variables via chevron
+        rendered_claim = render(self.claim, claim_variables)
 
-        self.llm_chat = LLMChat(system_prompt=&#34;&#34;&#34;
+        self.llm_chat = LLMChat(
+            system_prompt=&#34;&#34;&#34;
                                     You are a system that evaluates whether a proposition is true or false with respect to a given context. This context
                                     always refers to a multi-agent simulation. The proposition is a claim about the behavior of the agents or the state of their environment
                                     in the simulation.
@@ -1168,9 +1364,8 @@ this class allows to define a precondition function, which effectivelly turns a 
                                           * CORRECT JUSTIFICATION (very precise) example: &#34; ... the agent behavior deviated from key parts of its specification, specifically: S_1 was not met because &lt;reason&gt;, ..., S_n was not met becasue &lt;reason&gt;. Thus, a reduced score ...&#34;
                                     
                                     For example, the output could be of the form: &#34;True, because &lt;HIGHLY DETAILED, CONCRETE AND SPECIFIC REASONS HERE&gt;.&#34; or merely &#34;True&#34; if no justification is needed.
-                                    &#34;&#34;&#34;, 
-
-                                    user_prompt=f&#34;&#34;&#34;
+                                    &#34;&#34;&#34;,
+            user_prompt=f&#34;&#34;&#34;
                                     Evaluate the following proposition with respect to the context provided. Is it True or False?
 
                                     # Proposition
@@ -1192,26 +1387,27 @@ this class allows to define a precondition function, which effectivelly turns a 
                                     {indent_at_current_level(additional_context)}
 
                                     &#34;&#34;&#34;,
+            output_type=bool,
+            enable_reasoning_step=True,
+            temperature=1.0,
+            model=model,
+        )
 
-                                    output_type=bool,
-                                    enable_reasoning_step=True,
-
-                                    temperature=0.5,
-                                    frequency_penalty=0.0, 
-                                    presence_penalty=0.0,
-                                    model=model)
-        
         self.value = self.llm_chat()
 
         if self.double_check:
-            self.llm_chat.add_user_message(&#34;Are you sure? Please revise your evaluation to make is correct as possible.&#34;)
+            self.llm_chat.add_user_message(
+                &#34;Are you sure? Please revise your evaluation to make is correct as possible.&#34;
+            )
             revised_value = self.llm_chat()
             if revised_value != self.value:
-                logger.warning(f&#34;The LLM revised its evaluation: from {self.value} to {revised_value}.&#34;)
+                logger.warning(
+                    f&#34;The LLM revised its evaluation: from {self.value} to {revised_value}.&#34;
+                )
                 self.value = revised_value
 
         self.reasoning = self.llm_chat.response_reasoning
-        self.justification = self.llm_chat.response_justification      
+        self.justification = self.llm_chat.response_justification
         self.confidence = self.llm_chat.response_confidence
 
         self.full_evaluation_response = self.llm_chat.response_json
@@ -1240,7 +1436,7 @@ this class allows to define a precondition function, which effectivelly turns a 
 <pre><code class="python">def copy(self):
     &#34;&#34;&#34;
     Create a shallow copy of the proposition without any evaluation state.
-    
+
     Returns:
         Proposition: A new proposition with the same configuration parameters.
     &#34;&#34;&#34;
@@ -1256,40 +1452,40 @@ this class allows to define a precondition function, which effectivelly turns a 
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">    def recommendations_for_improvement(self):
-        &#34;&#34;&#34;
-        Get recommendations for improving the proposition.
-        &#34;&#34;&#34;
+<pre><code class="python">def recommendations_for_improvement(self):
+    &#34;&#34;&#34;
+    Get recommendations for improving the proposition.
+    &#34;&#34;&#34;
 
-        # TODO this is not working, let&#39;s try something else
-        #
-        #if self.llm_chat is None:
-        #    raise ValueError(&#34;No evaluation has been performed yet. Please evaluate the proposition before getting recommendations.&#34;)
-#
-        #self.llm_chat.add_system_message(\
-        #    &#34;&#34;&#34;
-        #    You will now act as a system that provides recommendations for the improvement of the scores previously assigned to propositions.
-        #    You will now output text that contains analysises, recommendations and other information as requested by the user.
-        #    &#34;&#34;&#34;)
-#
-        #self.llm_chat.add_user_message(\
-        #    &#34;&#34;&#34;    
-        #    To help improve the score next time, please list the following in as much detail as possible:
-        #      - all recommendations for improvements based on the current score.
-        #      - all criteria you are using to assign scores, and how to best satisfy them
-#
-        #    For both cases:
-        #      - besides guidelines, make sure to provide plenty of concrete examples of what to be done in order to maximize each criterion.
-        #      - avoid being generic or abstract. Instead, all of your criteria and recommendations should be given in very concrete terms that would work specifically for the case just considered.            
-        #    
-        #    Note that your output is a TEXT with the various recommendations, information and tips, not a JSON object.
-#
-        #    Recommendations:
-        #    &#34;&#34;&#34;)
-        #
-        #recommendation = self.llm_chat(output_type=str, enable_json_output_format=False)
-        recommendation = &#34;No additional recommendations at this time.&#34;
-        return recommendation</code></pre>
+    # TODO this is not working, let&#39;s try something else
+    #
+    # if self.llm_chat is None:
+    #    raise ValueError(&#34;No evaluation has been performed yet. Please evaluate the proposition before getting recommendations.&#34;)
+    #
+    # self.llm_chat.add_system_message(\
+    #    &#34;&#34;&#34;
+    #    You will now act as a system that provides recommendations for the improvement of the scores previously assigned to propositions.
+    #    You will now output text that contains analysises, recommendations and other information as requested by the user.
+    #    &#34;&#34;&#34;)
+    #
+    # self.llm_chat.add_user_message(\
+    #    &#34;&#34;&#34;
+    #    To help improve the score next time, please list the following in as much detail as possible:
+    #      - all recommendations for improvements based on the current score.
+    #      - all criteria you are using to assign scores, and how to best satisfy them
+    #
+    #    For both cases:
+    #      - besides guidelines, make sure to provide plenty of concrete examples of what to be done in order to maximize each criterion.
+    #      - avoid being generic or abstract. Instead, all of your criteria and recommendations should be given in very concrete terms that would work specifically for the case just considered.
+    #
+    #    Note that your output is a TEXT with the various recommendations, information and tips, not a JSON object.
+    #
+    #    Recommendations:
+    #    &#34;&#34;&#34;)
+    #
+    # recommendation = self.llm_chat(output_type=str, enable_json_output_format=False)
+    recommendation = &#34;No additional recommendations at this time.&#34;
+    return recommendation</code></pre>
 </details>
 </dd>
 <dt id="tinytroupe.experimentation.proposition.Proposition.score"><code class="name flex">
@@ -1301,32 +1497,52 @@ this class allows to define a precondition function, which effectivelly turns a 
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def score(self, target=None, additional_context=&#34;No additional context available.&#34;, claim_variables:dict={}, return_full_response:bool=False) -&gt; int:
+<pre><code class="python">def score(
+    self,
+    target=None,
+    additional_context=&#34;No additional context available.&#34;,
+    claim_variables: dict = {},
+    return_full_response: bool = False,
+) -&gt; int:
     &#34;&#34;&#34;
     Compute the score for the proposition with respect to the given context.
     &#34;&#34;&#34;
 
     current_targets = self._determine_target(target)
 
-    if self._check_precondition(target=current_targets, additional_context=additional_context, claim_variables=claim_variables) == False:
+    if (
+        self._check_precondition(
+            target=current_targets,
+            additional_context=additional_context,
+            claim_variables=claim_variables,
+        )
+        == False
+    ):
         self.value = self.MAX_SCORE
-        self.justification = &#34;The proposition is trivially true due to the precondition being false.&#34;
+        self.justification = (
+            &#34;The proposition is trivially true due to the precondition being false.&#34;
+        )
         self.confidence = 1.0
-        self.full_evaluation_response = {&#34;value&#34;: self.value, &#34;justification&#34;: self.justification, &#34;confidence&#34;: self.confidence}
-    
-    else: # precondition is true or None
+        self.full_evaluation_response = {
+            &#34;value&#34;: self.value,
+            &#34;justification&#34;: self.justification,
+            &#34;confidence&#34;: self.confidence,
+        }
+
+    else:  # precondition is true or None
 
         # build the context with the appropriate targets
-    
+
         context = self._build_context(current_targets)
 
         # might use a reasoning model, which could allow careful evaluation of the proposition.
         model = self._model(self.use_reasoning_model)
 
-        #render self.claim using the claim_variables via chevron
-        rendered_claim = render(self.claim, claim_variables)      
+        # render self.claim using the claim_variables via chevron
+        rendered_claim = render(self.claim, claim_variables)
 
-        self.llm_chat = LLMChat(system_prompt=f&#34;&#34;&#34;
+        self.llm_chat = LLMChat(
+            system_prompt=f&#34;&#34;&#34;
                                     You are a system that computes an integer score (between {Proposition.MIN_SCORE} and {Proposition.MAX_SCORE}, inclusive) about how much a proposition is true or false with respect to a given context. 
                                     This context always refers to a multi-agent simulation. The proposition is a claim about the behavior of the agents or the state of their environment in the simulation.
 
@@ -1377,9 +1593,8 @@ this class allows to define a precondition function, which effectivelly turns a 
                                           * CORRECT JUSTIFICATION (very precise) example: &#34; ... the agent behavior deviated from key parts of its specification, specifically: S_1 was not met because &lt;reason&gt;, ..., S_n was not met becasue &lt;reason&gt;. Thus, a reduced score ...&#34;
                                     
                                     For example, the output could be of the form: &#34;1, because &lt;HIGHLY DETAILED, CONCRETE AND SPECIFIC REASONS HERE&gt;.&#34;
-                                    &#34;&#34;&#34;, 
-
-                                    user_prompt=f&#34;&#34;&#34;
+                                    &#34;&#34;&#34;,
+            user_prompt=f&#34;&#34;&#34;
                                     Compute the score for the following proposition with respect to the context provided. Think step-by-step to assign the most accurate score and provide a justification.
 
                                     # Proposition
@@ -1400,33 +1615,32 @@ this class allows to define a precondition function, which effectivelly turns a 
 
                                     {indent_at_current_level(additional_context)}   
                                     &#34;&#34;&#34;,
-
-                                    output_type=int,
-                                    enable_reasoning_step=True,
-
-                                    temperature=1.0,
-                                    frequency_penalty=0.0, 
-                                    presence_penalty=0.0,
-
-                                    # Use a reasoning model, which allows careful evaluation of the proposition.
-                                    model=model)
-        
+            output_type=int,
+            enable_reasoning_step=True,
+            temperature=1.0,
+            # Use a reasoning model, which allows careful evaluation of the proposition.
+            model=model,
+        )
 
         self.value = self.llm_chat()
 
         if self.double_check:
-            self.llm_chat.add_user_message(&#34;Are you sure? Please revise your evaluation to make is correct as possible.&#34;)
+            self.llm_chat.add_user_message(
+                &#34;Are you sure? Please revise your evaluation to make is correct as possible.&#34;
+            )
             revised_value = self.llm_chat()
             if revised_value != self.value:
-                logger.warning(f&#34;The LLM revised its evaluation: from {self.value} to {revised_value}.&#34;)
+                logger.warning(
+                    f&#34;The LLM revised its evaluation: from {self.value} to {revised_value}.&#34;
+                )
                 self.value = revised_value
 
         self.reasoning = self.llm_chat.response_reasoning
-        self.justification = self.llm_chat.response_justification      
+        self.justification = self.llm_chat.response_justification
         self.confidence = self.llm_chat.response_confidence
 
         self.full_evaluation_response = self.llm_chat.response_json
-    
+
     # return the final result, either only the value or the full response
     if not return_full_response:
         return self.value

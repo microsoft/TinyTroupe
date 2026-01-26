@@ -185,7 +185,7 @@ class ActionGenerator(JsonSerializableRegistry):
                 return [
                     action
                     for action in tentative_action_or_actions
-                    if action.get("type") != "DONE"
+                    if action is not None and isinstance(action, dict) and action.get("type") != "DONE"
                 ]
             return tentative_action_or_actions
 

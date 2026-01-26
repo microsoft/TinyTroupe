@@ -23,22 +23,11 @@ import conftest
 ##################################################
 # global constants
 ##################################################
-CACHE_FILE_NAME = "tests_cache.pickle"
 EXPORT_BASE_FOLDER = os.path.join(os.path.dirname(__file__), "outputs/exports")
 TEMP_SIMULATION_CACHE_FILE_NAME = os.path.join(os.path.dirname(__file__), "simulation_test_case.cache.json")
 
-
-##################################################
-# Caching, in order to save on API usage
-##################################################
-if conftest.refresh_cache:
-    # DELETE the cache file tests_cache.pickle
-    os.remove(CACHE_FILE_NAME)
-
-if conftest.use_cache:
-    force_api_cache(True, CACHE_FILE_NAME)
-else:
-    force_api_cache(False, CACHE_FILE_NAME)
+# Note: API caching is now configured in conftest.py via pytest_configure hook
+# to ensure CLI options (--use_cache, --refresh_cache) are parsed before configuration
 
 
 ##################################################

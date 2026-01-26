@@ -1,19 +1,15 @@
 ---
 applyTo: "**"
 ---
-# Guidelines for Code Generation
+# Guidelines for Code Generation in TinyTroupe
 
-This document provides the primary guidelines for generating programs. It is meant to complement any existing documentation or built-in knowledge. This document takes precedence over
+This document provides the primary guidelines for generating programs in the TinyTroupe project. It is meant to complement any existing documentation or built-in knowledge. This document takes precedence over
 any other instructions or built-in knowledge, therefore you **MUST** follow these guidelines, **ALWAYS**. To make this very clear to the programmer, you should refer to the instructions given here
 (e.g.," ... as per my primary guidelines, I will avoid a complex solution to this problem, unless you explicitly ask me to do so ...").
 
 
 ## General Guidelines
 In everything you do, follow these general guidelines:
-  - **Read and enforce the project-specific Copilot instructions**: Always read and apply the project-specific Copilot instructions in the `.github/project-copilot-instructions.md` 
-    file, if they exist, as they contain important information about the project, its goals, conventions and standards. They are meant to be followed closely, unless they 
-    conflict with these general guidelines. If they do conflict, you should follow these general guidelines, or ask the user for clarification.
-    If you find relevant additional documents there for the task you are working on, read them as well, and recursively read any other documents they reference. Only then you can start working on the task.
   - **Read the README.md**: Always read the README.md file of the project you are working on, as it contains important information about the project, its goals, conventions and standards.
     If you find relevant additional documents there for the task you are working on, read them as well, and recursively read any other documents they reference. Only then you can start working on the task.
   - **Read the codebase if necessary**: If your task is likely to be spread across multiple files, or if you are not sure about the conventions and standards of the project, read the codebase to
@@ -25,6 +21,13 @@ In everything you do, follow these general guidelines:
     However, if you believe only a complex solution is possible, you **must** ask the user first about how to 
     proceed, warning of the complexity and if possible providing alternatives for selection together with the trade-offs involved.
   - **Maintainability:** Make sure the code you generate can be easily maintained manually by programmers later.
+
+## Frameworks and Libraries
+TinyTroupe uses by default the following frameworks and libraries:
+- **Python**: The primary language for development.
+- **Pytest**: For testing.
+- **Mustache**: For templating.
+
 
 ## Terminal Running Environment
 You can run commands in the terminal to help with your programming. When running commands in the terminal you **must**:
