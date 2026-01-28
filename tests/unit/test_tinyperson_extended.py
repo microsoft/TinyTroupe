@@ -9,6 +9,7 @@ import os
 import sys
 import tempfile
 import time
+from pathlib import Path
 
 # Insert paths at the beginning of sys.path (position 0)
 sys.path.insert(0, "../../tinytroupe/")
@@ -33,6 +34,9 @@ from tinytroupe.examples import (
 from tinytroupe.extraction import ArtifactExporter
 from tinytroupe.tools import TinyWordProcessor
 
+
+# Get the directory where the current file is located
+current_file_dir = Path(__file__).parent.resolve()
 
 def test_memory_operations(setup):
     """
@@ -1149,7 +1153,7 @@ def test_multi_faculty_integration(setup):
     agent = create_oscar_the_architect()
 
     # Create multiple mental faculties
-    exporter = ArtifactExporter(base_output_folder="./test_exports/")
+    exporter = ArtifactExporter(base_output_folder=str(current_file_dir / "test_exports"))
     enricher = TinyEnricher()
 
     # Add word processor tool
