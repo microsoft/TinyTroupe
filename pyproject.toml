@@ -23,8 +23,9 @@ classifiers = [
 
 dependencies = [
     "pandas", 
-    "pytest", "pytest-cov",
+    "pytest", "pytest-cov", "pytest-timeout", "pytest-html",
     "openai >= 1.65", 
+    "httpx",
     "tiktoken",
     "msal",
     "rich", "requests", "chevron",
@@ -54,4 +55,5 @@ markers = [
   "examples: mark a test as the execution of examples",
   "notebooks: mark a test as a more specific Jupyter notebook execution example",
 ]
-addopts = "--cov=tinytroupe --cov-report=html --cov-report=xml"
+addopts = "--cov=tinytroupe --cov-report=html --cov-report=xml --junit-xml=test-results.xml --html=test-report.html --self-contained-html"
+timeout_exit = 0

@@ -10,6 +10,7 @@ sys.path.insert(0, '../../')
 sys.path.insert(0, '..')
 
 from tinytroupe.clients import client, force_api_cache
+from tinytroupe import control
 from tinytroupe.agent import TinyPerson
 from tinytroupe.environment import TinyWorld, TinySocialNetwork
 from tinytroupe.factory import TinyPersonFactory
@@ -210,8 +211,12 @@ def focus_group_world():
     world = TinyWorld("Focus group", [examples.create_lisa_the_data_scientist(), examples.create_oscar_the_architect(), examples.create_marcos_the_physician()])
     return world
 
-@pytest.fixture(scope="function")
+#
+# This always runs before tests to ensure entities are reset
+#
+@pytest.fixture(scope="function", autouse=True)
 def setup():
+    control.reset()
     TinyPerson.clear_agents()
     TinyWorld.clear_environments()
     TinyFactory.clear_factories()

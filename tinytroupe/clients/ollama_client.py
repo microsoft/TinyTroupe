@@ -62,11 +62,11 @@ class OllamaClient:
         dedent_messages=True,
         model=None,
         temperature=None,
-        max_tokens=None,  # Ollama doesn't use max_tokens
+        max_completion_tokens=None,  # Ollama doesn't use max_completion_tokens
         top_p=None,
         frequency_penalty=None,
         presence_penalty=None,
-        stop=[],
+        stop=None,
         num_ctx=None,
         timeout=None,
         max_attempts=None,
@@ -108,6 +108,13 @@ class OllamaClient:
             },
             "stream": False,
             "n": n,
+        }
+
+        # remove any parameter that is None, so we use the API defaults
+        chat_api_params = {k: v for k, v in chat_api_params.items() if v is not None}
+        # ... within options too
+        chat_api_params["options"] = {
+            k: v for k, v in chat_api_params["options"].items() if v is not None
         }
 
         i = 0

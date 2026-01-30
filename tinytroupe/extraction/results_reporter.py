@@ -1,14 +1,15 @@
-import os
 import json
-from typing import Union, List, Dict, Any
+import os
+from typing import Any, Dict, List, Union
+
 from rich.console import Console
 from rich.markdown import Markdown
 
-from tinytroupe.extraction import logger
+from tinytroupe import config_manager
 from tinytroupe.agent import TinyPerson
 from tinytroupe.environment import TinyWorld
+from tinytroupe.extraction import logger
 from tinytroupe.utils import LLMChat
-from tinytroupe import config_manager
 
 
 class ResultsReporter:
@@ -426,7 +427,6 @@ class ResultsReporter:
             output_type=str,
             enable_json_output_format=False,
             model=config_manager.get("model"),
-            temperature=0.3,
         )
 
         return report_chat()

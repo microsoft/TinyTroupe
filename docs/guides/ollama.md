@@ -8,7 +8,7 @@ TinyTroupe now has experimental Ollama support. Yes, even more experimental than
 ## Usage Instructions
 To get it running, execute the following in your terminal:
 ```shell
-ollama pull Gemma-2-Ataraxy-v2-9B-2:latest 
+ollama pull gemma3:1b
 ollama serve
 ```
 
@@ -16,7 +16,7 @@ Change your config.ini file to reflect
 ```
 [OpenAI]    
 API_TYPE=ollama
-MODEL=Gemma-2-Ataraxy-v2-9B-2:latest #Best on leaderboard today https://eqbench.com/creative_writing.html
+MODEL=gemma3:1b
 MAX_TOKENS=8192 
 ```
 
