@@ -1,11 +1,12 @@
 import json
+
 from chevron import render
 
+from tinytroupe import config_manager
 from tinytroupe.agent import TinyPerson
 from tinytroupe.environment import TinyWorld
-from tinytroupe.utils import LLMChat, indent_at_current_level
 from tinytroupe.experimentation import logger
-from tinytroupe import config_manager
+from tinytroupe.utils import LLMChat, indent_at_current_level
 
 
 class Proposition:
@@ -214,9 +215,7 @@ class Proposition:
                                         """,
                 output_type=bool,
                 enable_reasoning_step=True,
-                temperature=0.5,
-                frequency_penalty=0.0,
-                presence_penalty=0.0,
+                temperature=1.0,
                 model=model,
             )
 
@@ -366,8 +365,6 @@ class Proposition:
                 output_type=int,
                 enable_reasoning_step=True,
                 temperature=1.0,
-                frequency_penalty=0.0,
-                presence_penalty=0.0,
                 # Use a reasoning model, which allows careful evaluation of the proposition.
                 model=model,
             )

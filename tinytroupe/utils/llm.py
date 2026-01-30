@@ -1017,7 +1017,7 @@ def llm(
     The LLM response is coerced to the function's annotated return type, if present.
 
     Usage example:
-        @llm(model="gpt-4-0613", temperature=0.5, max_tokens=100)
+        @llm(model="gpt-4-0613", temperature=0.5, max_completion_tokens=100)
         def joke():
             return "Tell me a joke."
 
@@ -1064,12 +1064,18 @@ def llm(
                 # if len(args) > 0:
                 #    raise ValueError("Positional arguments are not allowed in LLM-based functions whose body does not return a string.")
 
-                user_prompt = f"Execute your computation as best as you can using the following input parameter values.\n\n"
+                user_prompt = f"Execute the above computation as best as you can using the following input parameter values and respecting the output format defined by the computation specification. Produce the requested output even if it is very long.\n"
                 user_prompt += (
                     f" ## Unnamed parameters\n{json.dumps(args, indent=4)}\n\n"
                 )
                 user_prompt += (
                     f" ## Named parameters\n{json.dumps(kwargs, indent=4)}\n\n"
+                )
+
+                user_prompt += (
+                    " ## Output format\n"
+                    "The output must be of type and format defined in the computation specification above.\n"
+                    "Do not confirm anything with the user, as this is an automated request, just produce the requested output type directly as best as you can.\n"
                 )
 
             #
@@ -1135,29 +1141,63 @@ def extract_json(text: str) -> dict:
         )
 
         # remove invalid escape sequences, which show up sometimes
-        filtered_text = re.sub("\\'", "'", filtered_text)  # replace \' with just '
-        filtered_text = re.sub("\\,", ",", filtered_text)
+        # Handle common problematic escape sequences more comprehensively
+        filtered_text = re.sub(
+            r"\\([^\"\\\/bfnrt])", r"\1", filtered_text
+        )  # remove invalid escapes but keep valid JSON escapes
+        filtered_text = re.sub(r"\\'", "'", filtered_text)  # replace \' with just '
+        filtered_text = re.sub(r"\\,", ",", filtered_text)  # replace \, with just ,
 
         # parse the final JSON in a robust manner, to account for potentially messy LLM outputs
         try:
             # First try standard JSON parsing
             # use strict=False to correctly parse new lines, tabs, etc.
             parsed = json.loads(filtered_text, strict=False)
-        except json.JSONDecodeError:
+        except json.JSONDecodeError as e:
+            logger.debug(f"Standard JSON parsing failed: {e}")
             # If JSON parsing fails, try ast.literal_eval which accepts single quotes
             try:
                 parsed = ast.literal_eval(filtered_text)
                 logger.debug(
                     "Used ast.literal_eval as fallback for single-quoted JSON-like text"
                 )
-            except:
-                # If both fail, try converting single quotes to double quotes and parse again
-                # Replace single-quoted keys and values with double quotes, without using look-behind
-                # This will match single-quoted strings that are keys or values in JSON-like structures
-                # It may not be perfect for all edge cases, but works for most LLM outputs
-                converted_text = re.sub(r"'([^']*)'", r'"\1"', filtered_text)
-                parsed = json.loads(converted_text, strict=False)
-                logger.debug("Converted single quotes to double quotes before parsing")
+            except Exception as e2:
+                logger.debug(f"ast.literal_eval failed: {e2}")
+                try:
+                    # If both fail, try converting single quotes to double quotes and parse again
+                    # Replace single-quoted keys and values with double quotes, without using look-behind
+                    # This will match single-quoted strings that are keys or values in JSON-like structures
+                    # It may not be perfect for all edge cases, but works for most LLM outputs
+                    converted_text = re.sub(r"'([^']*)'", r'"\1"', filtered_text)
+                    parsed = json.loads(converted_text, strict=False)
+                    logger.debug(
+                        "Converted single quotes to double quotes before parsing"
+                    )
+                except json.JSONDecodeError as e3:
+                    logger.debug(f"Quote conversion approach failed: {e3}")
+                    # Final fallback: try to fix common JSON issues more aggressively
+                    try:
+                        # Remove all problematic escape sequences more aggressively
+                        fixed_text = filtered_text
+
+                        # Fix unescaped quotes within strings by escaping them
+                        # This is a heuristic approach - look for patterns like ": "text with ' inside"
+                        fixed_text = re.sub(
+                            r'(:\s*")([^"]*)\\"([^"]*)"', r'\1\2\\\\"\3"', fixed_text
+                        )
+
+                        # Remove any remaining invalid escape sequences
+                        fixed_text = re.sub(r'\\(?!["\\/bfnrt])', "", fixed_text)
+
+                        # Try parsing the cleaned text
+                        parsed = json.loads(fixed_text, strict=False)
+                        logger.debug(
+                            "Used aggressive escape sequence cleaning as final fallback"
+                        )
+                    except Exception as e4:
+                        logger.debug(f"All fallback methods failed: {e4}")
+                        # If everything fails, raise the original exception
+                        raise e
 
         # return the parsed JSON object
         return parsed

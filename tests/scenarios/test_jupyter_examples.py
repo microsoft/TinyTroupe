@@ -1,23 +1,33 @@
 import os
-import nbformat
-from nbconvert.preprocessors import ExecutePreprocessor
-import pytest
-
 import sys
-sys.path.insert(0, '../../tinytroupe/') # ensures that the package is imported from the parent directory, not the Python installation
-sys.path.insert(0, '../../') # ensures that the package is imported from the parent directory, not the Python installation
-sys.path.insert(0, '..') # ensures that the package is imported from the parent directory, not the Python installation
 
-import conftest
+import nbformat
+import pytest
+from nbconvert.preprocessors import ExecutePreprocessor
+
+sys.path.insert(
+    0, "../../tinytroupe/"
+)  # ensures that the package is imported from the parent directory, not the Python installation
+sys.path.insert(
+    0, "../../"
+)  # ensures that the package is imported from the parent directory, not the Python installation
+sys.path.insert(
+    0, ".."
+)  # ensures that the package is imported from the parent directory, not the Python installation
+
 import time
 
+import conftest
+
 # Set the folder containing the notebooks
-NOTEBOOK_FOLDER = os.path.join(os.path.dirname(__file__), "../../examples/")  # Update this path
+NOTEBOOK_FOLDER = os.path.join(
+    os.path.dirname(__file__), "../../examples/"
+)  # Update this path
 
 # Set a timeout for long-running notebooks
 TIMEOUT = 6000
 
-KERNEL_NAME = "python3" #"py310"
+KERNEL_NAME = "python3"  # "py310"
 
 
 def get_notebooks(folder):
@@ -25,9 +35,15 @@ def get_notebooks(folder):
     return [
         os.path.join(folder, f)
         for f in os.listdir(folder)
-        if f.endswith(".ipynb") and not ".executed." in f and not ".local." in f and not ".archival." in f and not ".final." in f
+        if f.endswith(".ipynb")
+        and not ".executed." in f
+        and not ".local." in f
+        and not ".archival." in f
+        and not ".final." in f
     ]
 
+
+@pytest.mark.slow
 @pytest.mark.examples
 @pytest.mark.notebooks
 @pytest.mark.parametrize("notebook_path", get_notebooks(NOTEBOOK_FOLDER))
@@ -48,10 +64,12 @@ def test_notebook_execution(notebook_path):
 
         start_time = time.time()
         try:
-            ep.preprocess(notebook, {'metadata': {'path': NOTEBOOK_FOLDER}})
+            ep.preprocess(notebook, {"metadata": {"path": NOTEBOOK_FOLDER}})
             elapsed = time.time() - start_time
-            print(f"✅ Notebook {notebook_path} executed successfully in {elapsed:.2f} seconds. ⏱️")
-            
+            print(
+                f"✅ Notebook {notebook_path} executed successfully in {elapsed:.2f} seconds. ⏱️"
+            )
+
             # save the executed notebook in its original location
             with open(notebook_path, "w", encoding="utf-8") as out_file:
                 nbformat.write(notebook, out_file)
@@ -60,7 +78,6 @@ def test_notebook_execution(notebook_path):
             elapsed = time.time() - start_time
             print(f"❌ Notebook {notebook_path} failed after {elapsed:.2f} seconds. ⚠️")
             pytest.fail(f"Notebook {notebook_path} raised an exception: {e}")
-        
+
         finally:
             print(f"💾 Executed notebook saved as: {notebook_path}")
-

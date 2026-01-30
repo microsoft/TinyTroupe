@@ -1,19 +1,18 @@
+import copy
 import json
-
-from tinytroupe.agent import logger
-from tinytroupe.agent.mental_faculty import TinyMentalFaculty
-from tinytroupe.agent.grounding import BaseSemanticGroundingConnector
-import tinytroupe.utils as utils
-
+from typing import Any, Union
 
 from llama_index.core import Document
-from typing import Any
-import copy
-from typing import Union
+
+import tinytroupe.utils as utils
+from tinytroupe.agent import logger
+from tinytroupe.agent.grounding import BaseSemanticGroundingConnector
+from tinytroupe.agent.mental_faculty import TinyMentalFaculty
 
 #######################################################################################################################
-# Memory mechanisms 
+# Memory mechanisms
 #######################################################################################################################
+
 
 class TinyMemory(TinyMentalFaculty):
     """
@@ -32,13 +31,13 @@ class TinyMemory(TinyMentalFaculty):
         Stores a value in memory.
         """
         raise NotImplementedError("Subclasses must implement this method.")
-    
+
     def store(self, value: dict) -> None:
         """
         Stores a value in memory.
         """
         self._store(self._preprocess_value_for_storage(value))
-    
+
     def store_all(self, values: list) -> None:
         """
         Stores a list of values in memory.
@@ -48,7 +47,13 @@ class TinyMemory(TinyMentalFaculty):
             logger.debug(f"Storing value #{i}: {value}")
             self.store(value)
 
-    def retrieve(self, first_n: int, last_n: int, include_omission_info:bool=True, item_type:str=None) -> list:
+    def retrieve(
+        self,
+        first_n: int,
+        last_n: int,
+        include_omission_info: bool = True,
+        item_type: str = None,
+    ) -> list:
         """
         Retrieves the first n and/or last n values from memory. If n is None, all values are retrieved.
 
@@ -60,11 +65,11 @@ class TinyMemory(TinyMentalFaculty):
 
         Returns:
             list: The retrieved values.
-        
+
         """
         raise NotImplementedError("Subclasses must implement this method.")
 
-    def retrieve_recent(self, item_type:str=None) -> list:
+    def retrieve_recent(self, item_type: str = None) -> list:
         """
         Retrieves the n most recent values from memory.
 
@@ -73,7 +78,7 @@ class TinyMemory(TinyMentalFaculty):
         """
         raise NotImplementedError("Subclasses must implement this method.")
 
-    def retrieve_all(self, item_type:str=None) -> list:
+    def retrieve_all(self, item_type: str = None) -> list:
         """
         Retrieves all values from memory.
 
@@ -82,41 +87,45 @@ class TinyMemory(TinyMentalFaculty):
         """
         raise NotImplementedError("Subclasses must implement this method.")
 
-    def retrieve_relevant(self, relevance_target:str, top_k=20) -> list:
+    def retrieve_relevant(self, relevance_target: str, top_k=20) -> list:
         """
         Retrieves all values from memory that are relevant to a given target.
         """
         raise NotImplementedError("Subclasses must implement this method.")
 
-    def summarize_relevant_via_full_scan(self, relevance_target: str, batch_size: int = 20, item_type: str = None) -> str:
+    def summarize_relevant_via_full_scan(
+        self, relevance_target: str, batch_size: int = 20, item_type: str = None
+    ) -> str:
         """
         Performs a full scan of the memory, extracting and accumulating information relevant to a query.
-        
+
         This function processes all memories (or memories of a specific type if provided),
         extracts information relevant to the query from each memory, and accumulates this
         information into a coherent response.
-    
+
         Args:
             relevance_target (str): The query specifying what information to extract from memories.
 
             item_type (str, optional): If provided, only process memories of this type.
             batch_size (int): The number of memories to process in each extraction step. The larger it is, the faster the scan, but possibly less accurate.
               Also, a too large value may lead to prompt length overflows, though current models can handle quite large prompts.
-    
+
         Returns:
             str: The accumulated information relevant to the query.
         """
-        logger.debug(f"Starting FULL SCAN for relevance target: {relevance_target}, item type: {item_type}")
+        logger.debug(
+            f"Starting FULL SCAN for relevance target: {relevance_target}, item type: {item_type}"
+        )
 
         # Retrieve all memories of the specified type
         memories = self.retrieve_all(item_type=item_type)
-        
+
         # Initialize accumulation
         accumulated_info = ""
 
         # Process memories in batches of qty_of_memories_per_extraction
         for i in range(0, len(memories), batch_size):
-            batch = memories[i:i + batch_size]
+            batch = memories[i : i + batch_size]
             logger.debug(f"Processing memory batch #{i} in full scan")
 
             # Concatenate memory texts for the batch
@@ -138,7 +147,7 @@ class TinyMemory(TinyMentalFaculty):
                  If you read about "assistant" and "user" roles, you can ignore them, as they refer to the agent's internal implementation mechanisms, not to the agent's experience.
                  In any case, anything related to "assistant" is the agent's output, and anything related to "user" is the agent's input. But you never refer to these roles in the report,
                  as they are an internal implementation detail of the agent, not part of the agent's experience.
-                """
+                """,
             )
 
             logger.debug(f"Extracted information from memory batch: {extracted_info}")
@@ -172,20 +181,21 @@ class TinyMemory(TinyMentalFaculty):
                       * Example (first element was found 3 times, the second element only once, so no counter): 
                            "I play with and feed my cat [NOTE: this information appeared 3 times in the memory in different forms]. Cats are proud animals descendant from big feline hunters.". 
                        
-                """
+                """,
             )
             logger.debug(f"Accumulated information so far: {accumulated_info}")
 
-        logger.debug(f"Total accumulated information after full scan: {accumulated_info}")
-        
+        logger.debug(
+            f"Total accumulated information after full scan: {accumulated_info}"
+        )
+
         return accumulated_info
-        
 
     ###################################
     # Auxiliary methods
     ###################################
 
-    def filter_by_item_type(self, memories:list, item_type:str) -> list:
+    def filter_by_item_type(self, memories: list, item_type: str) -> list:
         """
         Filters a list of memories by item type.
 
@@ -198,7 +208,7 @@ class TinyMemory(TinyMentalFaculty):
         """
         return [memory for memory in memories if memory["type"] == item_type]
 
-    def filter_by_item_types(self, memories:list, item_types:list) -> list:
+    def filter_by_item_types(self, memories: list, item_types: list) -> list:
         """
         Filters a list of memories by multiple item types.
 
@@ -217,11 +227,15 @@ class EpisodicMemory(TinyMemory):
     Provides episodic memory capabilities to an agent. Cognitively, episodic memory is the ability to remember specific events,
     or episodes, in the past. This class provides a simple implementation of episodic memory, where the agent can store and retrieve
     messages from memory.
-    
+
     Subclasses of this class can be used to provide different memory implementations.
     """
 
-    MEMORY_BLOCK_OMISSION_INFO = {'role': 'assistant', 'content': "Info: there were other messages here, but they were omitted for brevity.", 'simulation_timestamp': None}
+    MEMORY_BLOCK_OMISSION_INFO = {
+        "role": "assistant",
+        "content": "Internal memory mechanism note: there were other memories here, but they were omitted for brevity.",
+        "simulation_timestamp": None,
+    }
 
     def __init__(
         self, fixed_prefix_length: int = 20, lookback_length: int = 100
@@ -238,10 +252,9 @@ class EpisodicMemory(TinyMemory):
 
         # the definitive memory that records all episodic events
         self.memory = []
-        
+
         # the current episode buffer, which is used to store messages during an episode
         self.episodic_buffer = []
-
 
     def commit_episode(self):
         """
@@ -249,8 +262,8 @@ class EpisodicMemory(TinyMemory):
         """
         self.memory.extend(self.episodic_buffer)
         self.episodic_buffer = []
-    
-    def get_current_episode(self, item_types:list=None) -> list:
+
+    def get_current_episode(self, item_types: list = None) -> list:
         """
         Returns the current episode buffer, which is used to store messages during an episode.
 
@@ -261,7 +274,11 @@ class EpisodicMemory(TinyMemory):
             list: The current episode buffer.
         """
         result = copy.copy(self.episodic_buffer)
-        result = self.filter_by_item_types(result, item_types) if item_types is not None else result
+        result = (
+            self.filter_by_item_types(result, item_types)
+            if item_types is not None
+            else result
+        )
         return result
 
     def count(self) -> int:
@@ -270,9 +287,9 @@ class EpisodicMemory(TinyMemory):
         """
         return len(self._memory_with_current_buffer())
 
-    def clear(self, max_prefix_to_clear:int=None, max_suffix_to_clear:int=None):
+    def clear(self, max_prefix_to_clear: int = None, max_suffix_to_clear: int = None):
         """
-        Clears the memory, generating a permanent "episodic amnesia". 
+        Clears the memory, generating a permanent "episodic amnesia".
         If max_prefix_to_clear is not None, it clears the first n values from memory.
         If max_suffix_to_clear is not None, it clears the last n values from memory. If both are None,
         it clears all values from memory.
@@ -294,14 +311,14 @@ class EpisodicMemory(TinyMemory):
 
         if max_prefix_to_clear is None and max_suffix_to_clear is None:
             self.memory = []
-    
+
     def _memory_with_current_buffer(self) -> list:
         """
         Returns the current memory, including the episodic buffer.
         This is useful for retrieving the most recent memories, including the current episode.
         """
         return self.memory + self.episodic_buffer
-        
+
     ######################################
     # General memory methods
     ######################################
@@ -311,7 +328,13 @@ class EpisodicMemory(TinyMemory):
         """
         self.episodic_buffer.append(value)
 
-    def retrieve(self, first_n: int, last_n: int, include_omission_info:bool=True, item_type:str=None) -> list:
+    def retrieve(
+        self,
+        first_n: int,
+        last_n: int,
+        include_omission_info: bool = True,
+        item_type: str = None,
+    ) -> list:
         """
         Retrieves the first n and/or last n values from memory. If n is None, all values are retrieved.
 
@@ -323,22 +346,38 @@ class EpisodicMemory(TinyMemory):
 
         Returns:
             list: The retrieved values.
-        
+
         """
 
-        omisssion_info = [EpisodicMemory.MEMORY_BLOCK_OMISSION_INFO] if include_omission_info else []
+        omisssion_info = (
+            [EpisodicMemory.MEMORY_BLOCK_OMISSION_INFO] if include_omission_info else []
+        )
 
         # use the other methods in the class to implement
         if first_n is not None and last_n is not None:
-            return self.retrieve_first(first_n, include_omission_info=False, item_type=item_type) + omisssion_info + self.retrieve_last(last_n, include_omission_info=False, item_type=item_type)
+            return (
+                self.retrieve_first(
+                    first_n, include_omission_info=False, item_type=item_type
+                )
+                + omisssion_info
+                + self.retrieve_last(
+                    last_n, include_omission_info=False, item_type=item_type
+                )
+            )
         elif first_n is not None:
-            return self.retrieve_first(first_n, include_omission_info, item_type=item_type)
+            return self.retrieve_first(
+                first_n, include_omission_info, item_type=item_type
+            )
         elif last_n is not None:
-            return self.retrieve_last(last_n, include_omission_info, item_type=item_type)
+            return self.retrieve_last(
+                last_n, include_omission_info, item_type=item_type
+            )
         else:
             return self.retrieve_all(item_type=item_type)
 
-    def retrieve_recent(self, include_omission_info:bool=True, item_type:str=None) -> list:
+    def retrieve_recent(
+        self, include_omission_info: bool = True, item_type: str = None
+    ) -> list:
         """
         Retrieves the n most recent values from memory.
 
@@ -346,17 +385,24 @@ class EpisodicMemory(TinyMemory):
             include_omission_info (bool): Whether to include an information message when some values are omitted.
             item_type (str, optional): If provided, only retrieve memories of this type.
         """
-        omisssion_info = [EpisodicMemory.MEMORY_BLOCK_OMISSION_INFO] if include_omission_info else []
-        
+        omisssion_info = (
+            [EpisodicMemory.MEMORY_BLOCK_OMISSION_INFO] if include_omission_info else []
+        )
+
         # Filter memories if item_type is provided
-        memories = self._memory_with_current_buffer() if item_type is None else self.filter_by_item_type(self._memory_with_current_buffer(), item_type)
+        memories = (
+            self._memory_with_current_buffer()
+            if item_type is None
+            else self.filter_by_item_type(self._memory_with_current_buffer(), item_type)
+        )
 
         # compute fixed prefix
         fixed_prefix = memories[: self.fixed_prefix_length] + omisssion_info
 
         # how many lookback values remain?
         remaining_lookback = min(
-            len(memories) - len(fixed_prefix) + (1 if include_omission_info else 0), self.lookback_length
+            len(memories) - len(fixed_prefix) + (1 if include_omission_info else 0),
+            self.lookback_length,
         )
 
         # compute the remaining lookback values and return the concatenation
@@ -365,23 +411,29 @@ class EpisodicMemory(TinyMemory):
         else:
             return fixed_prefix + memories[-remaining_lookback:]
 
-    def retrieve_all(self, item_type:str=None) -> list:
+    def retrieve_all(self, item_type: str = None) -> list:
         """
         Retrieves all values from memory.
 
         Args:
             item_type (str, optional): If provided, only retrieve memories of this type.
         """
-        memories = self._memory_with_current_buffer() if item_type is None else self.filter_by_item_type(self._memory_with_current_buffer(), item_type)
+        memories = (
+            self._memory_with_current_buffer()
+            if item_type is None
+            else self.filter_by_item_type(self._memory_with_current_buffer(), item_type)
+        )
         return copy.copy(memories)
 
-    def retrieve_relevant(self, relevance_target: str, top_k:int) -> list:
+    def retrieve_relevant(self, relevance_target: str, top_k: int) -> list:
         """
         Retrieves top-k values from memory that are most relevant to a given target.
         """
         raise NotImplementedError("Subclasses must implement this method.")
 
-    def retrieve_first(self, n: int, include_omission_info:bool=True, item_type:str=None) -> list:
+    def retrieve_first(
+        self, n: int, include_omission_info: bool = True, item_type: str = None
+    ) -> list:
         """
         Retrieves the first n values from memory.
 
@@ -390,12 +442,20 @@ class EpisodicMemory(TinyMemory):
             include_omission_info (bool): Whether to include an information message when some values are omitted.
             item_type (str, optional): If provided, only retrieve memories of this type.
         """
-        omisssion_info = [EpisodicMemory.MEMORY_BLOCK_OMISSION_INFO] if include_omission_info else []
-        
-        memories = self._memory_with_current_buffer() if item_type is None else self.filter_by_item_type(self._memory_with_current_buffer(), item_type)
+        omisssion_info = (
+            [EpisodicMemory.MEMORY_BLOCK_OMISSION_INFO] if include_omission_info else []
+        )
+
+        memories = (
+            self._memory_with_current_buffer()
+            if item_type is None
+            else self.filter_by_item_type(self._memory_with_current_buffer(), item_type)
+        )
         return memories[:n] + omisssion_info
-    
-    def retrieve_last(self, n: int=None, include_omission_info:bool=True, item_type:str=None) -> list:
+
+    def retrieve_last(
+        self, n: int = None, include_omission_info: bool = True, item_type: str = None
+    ) -> list:
         """
         Retrieves the last n values from memory.
 
@@ -404,113 +464,151 @@ class EpisodicMemory(TinyMemory):
             include_omission_info (bool): Whether to include an information message when some values are omitted.
             item_type (str, optional): If provided, only retrieve memories of this type.
         """
-        omisssion_info = [EpisodicMemory.MEMORY_BLOCK_OMISSION_INFO] if include_omission_info else []
+        omisssion_info = (
+            [EpisodicMemory.MEMORY_BLOCK_OMISSION_INFO] if include_omission_info else []
+        )
 
-        memories = self._memory_with_current_buffer() if item_type is None else self.filter_by_item_type(self._memory_with_current_buffer(), item_type)
+        memories = (
+            self._memory_with_current_buffer()
+            if item_type is None
+            else self.filter_by_item_type(self._memory_with_current_buffer(), item_type)
+        )
         memories = memories[-n:] if n is not None else memories
-                            
-        return omisssion_info + memories  
+
+        return omisssion_info + memories
 
 
 @utils.post_init
 class SemanticMemory(TinyMemory):
     """
-    In Cognitive Psychology, semantic memory is the memory of meanings, understandings, and other concept-based knowledge unrelated to specific 
+    In Cognitive Psychology, semantic memory is the memory of meanings, understandings, and other concept-based knowledge unrelated to specific
     experiences. It is not ordered temporally, and it is not about remembering specific events or episodes. This class provides a simple implementation
     of semantic memory, where the agent can store and retrieve semantic information.
     """
 
     serializable_attributes = ["memories", "semantic_grounding_connector"]
 
-    def __init__(self, memories: list=None) -> None:
+    def __init__(self, memories: list = None) -> None:
         self.memories = memories
-       
+
         self.semantic_grounding_connector = None
 
         # @post_init ensures that _post_init is called after the __init__ method
 
-    def _post_init(self): 
+    def _post_init(self):
         """
         This will run after __init__, since the class has the @post_init decorator.
         It is convenient to separate some of the initialization processes to make deserialize easier.
         """
 
-        if not hasattr(self, 'memories') or self.memories is None:
+        if not hasattr(self, "memories") or self.memories is None:
             self.memories = []
 
-        if not hasattr(self, 'semantic_grounding_connector') or self.semantic_grounding_connector is None:
-            self.semantic_grounding_connector = BaseSemanticGroundingConnector("Semantic Memory Storage")
-            
+        if (
+            not hasattr(self, "semantic_grounding_connector")
+            or self.semantic_grounding_connector is None
+        ):
+            self.semantic_grounding_connector = BaseSemanticGroundingConnector(
+                "Semantic Memory Storage"
+            )
+
             # TODO remove?
-            #self.semantic_grounding_connector.add_documents(self._build_documents_from(self.memories))
-    
-        
+            # self.semantic_grounding_connector.add_documents(self._build_documents_from(self.memories))
+
     def _preprocess_value_for_storage(self, value: dict) -> Any:
         logger.debug(f"Preprocessing value for storage: {value}")
 
         if isinstance(value, dict):
-            engram = {"role": "assistant",
-                    "content": value['content'],
-                    "type": value.get("type", "information"),  # Default to 'information' if type is not specified
-                    "simulation_timestamp": value.get("simulation_timestamp", None)}
+            engram = {
+                "role": "assistant",
+                "content": value["content"],
+                "type": value.get(
+                    "type", "information"
+                ),  # Default to 'information' if type is not specified
+                "simulation_timestamp": value.get("simulation_timestamp", None),
+            }
 
             # Refine the content of the engram is built based on the type of the value to make it more meaningful.
-            if value['type'] == 'action':
-                engram['content'] = f"# Action performed\n" +\
-                        f"I have performed the following action at date and time {value['simulation_timestamp']}:\n\n"+\
-                        f" {value['content']}"
-            
-            elif value['type'] == 'stimulus':
-                engram['content'] = f"# Stimulus\n" +\
-                        f"I have received the following stimulus at date and time {value['simulation_timestamp']}:\n\n"+\
-                        f" {value['content']}"
-            elif value['type'] == 'feedback':
-                engram['content'] = f"# Feedback\n" +\
-                        f"I have received the following feedback at date and time {value['simulation_timestamp']}:\n\n"+\
-                        f" {value['content']}"
-            elif value['type'] == 'consolidated':
-                engram['content'] = f"# Consolidated Memory\n" +\
-                        f"I have consolidated the following memory at date and time {value['simulation_timestamp']}:\n\n"+\
-                        f" {value['content']}"
-            elif value['type'] == 'reflection':
-                engram['content'] = f"# Reflection\n" +\
-                        f"I have reflected on the following memory at date and time {value['simulation_timestamp']}:\n\n"+\
-                        f" {value['content']}"
+            if value["type"] == "action":
+                engram["content"] = (
+                    f"# Action performed\n"
+                    + f"I have performed the following action at date and time {value['simulation_timestamp']}:\n\n"
+                    + f" {value['content']}"
+                )
+
+            elif value["type"] == "stimulus":
+                engram["content"] = (
+                    f"# Stimulus\n"
+                    + f"I have received the following stimulus at date and time {value['simulation_timestamp']}:\n\n"
+                    + f" {value['content']}"
+                )
+            elif value["type"] == "feedback":
+                engram["content"] = (
+                    f"# Feedback\n"
+                    + f"I have received the following feedback at date and time {value['simulation_timestamp']}:\n\n"
+                    + f" {value['content']}"
+                )
+            elif value["type"] == "consolidated":
+                engram["content"] = (
+                    f"# Consolidated Memory\n"
+                    + f"I have consolidated the following memory at date and time {value['simulation_timestamp']}:\n\n"
+                    + f" {value['content']}"
+                )
+            elif value["type"] == "reflection":
+                engram["content"] = (
+                    f"# Reflection\n"
+                    + f"I have reflected on the following memory at date and time {value['simulation_timestamp']}:\n\n"
+                    + f" {value['content']}"
+                )
             else:
-                engram['content'] = f"# Information\n" +\
-                        f"I have obtained following information at date and time {value['simulation_timestamp']}:\n\n"+\
-                        f" {value['content']}"
+                engram["content"] = (
+                    f"# Information\n"
+                    + f"I have obtained following information at date and time {value['simulation_timestamp']}:\n\n"
+                    + f" {value['content']}"
+                )
 
             # else: # Anything else here?
-            
+
         else:
             # If the value is not a dictionary, we just store it as is, but we still wrap it in an engram
-            engram = {"role": "assistant",
-                    "content": value,
-                    "type": "information",  # Default to 'information' if type is not specified
-                    "simulation_timestamp": None}
+            engram = {
+                "role": "assistant",
+                "content": value,
+                "type": "information",  # Default to 'information' if type is not specified
+                "simulation_timestamp": None,
+            }
 
         logger.debug(f"Engram created for storage: {engram}")
 
         return engram
 
     def _store(self, value: Any) -> None:
-        logger.debug(f"Preparing engram for semantic memory storage, input value: {value}")
+        logger.debug(
+            f"Preparing engram for semantic memory storage, input value: {value}"
+        )
         self.memories.append(value)  # Store the value in the local memory list
 
         # then econduct the value to a Document and store it in the semantic grounding connector
         # This is the actual storage in the semantic memory to allow semantic retrieval
         engram_doc = self._build_document_from(value)
-        logger.debug(f"Storing engram in semantic memory: {engram_doc}")
-        self.semantic_grounding_connector.add_document(engram_doc)
-    
-    def retrieve_relevant(self, relevance_target:str, top_k=20) -> list:
+
+        try:
+            logger.debug(f"Storing engram in semantic memory: {engram_doc}")
+            self.semantic_grounding_connector.add_document(engram_doc)
+        except Exception as e:
+            logger.error(
+                f"Error storing engram in semantic memory: {e}. Ignoring and continuing."
+            )
+
+    def retrieve_relevant(self, relevance_target: str, top_k=20) -> list:
         """
         Retrieves all values from memory that are relevant to a given target.
         """
-        return self.semantic_grounding_connector.retrieve_relevant(relevance_target, top_k)
+        return self.semantic_grounding_connector.retrieve_relevant(
+            relevance_target, top_k
+        )
 
-    def retrieve_all(self, item_type:str=None) -> list:
+    def retrieve_all(self, item_type: str = None) -> list:
         """
         Retrieves all values from memory.
 
@@ -520,7 +618,9 @@ class SemanticMemory(TinyMemory):
 
         memories = []
 
-        logger.debug(f"Retrieving all documents from semantic memory connector, a total of {len(self.semantic_grounding_connector.documents)} documents.")
+        logger.debug(
+            f"Retrieving all documents from semantic memory connector, a total of {len(self.semantic_grounding_connector.documents)} documents."
+        )
         for document in self.semantic_grounding_connector.documents:
             logger.debug(f"Retrieving document from semantic memory: {document}")
             memory_text = document.text
@@ -529,23 +629,25 @@ class SemanticMemory(TinyMemory):
             try:
                 memory = json.loads(memory_text)
                 logger.debug(f"Memory retrieved: {memory}")
-                memories.append(memory)                
+                memories.append(memory)
 
             except json.JSONDecodeError as e:
-                logger.warning(f"Could not decode memory from document text: {memory_text}. Error: {e}")
+                logger.warning(
+                    f"Could not decode memory from document text: {memory_text}. Error: {e}"
+                )
 
         if item_type is not None:
             memories = self.filter_by_item_type(memories, item_type)
-        
+
         return memories
-    
+
     #####################################
     # Auxiliary compatibility methods
     #####################################
 
     def _build_document_from(self, memory) -> Document:
         # TODO: add any metadata as well?
-        
+
         # make sure we are dealing with a dictionary
         if not isinstance(memory, dict):
             memory = {"content": memory, "type": "information"}
@@ -553,7 +655,7 @@ class SemanticMemory(TinyMemory):
         # ensures double quotes are used for JSON serialization, and maybe other formatting details
         memory_txt = json.dumps(memory, ensure_ascii=False)
         logger.debug(f"Building document from memory: {memory_txt}")
-        
+
         return Document(text=memory_txt)
 
     def _build_documents_from(self, memories: list) -> list:
@@ -568,46 +670,152 @@ class MemoryProcessor:
     Base class for memory consolidation and optimization mechanisms.
     """
 
-    def process(self, memories: list, timestamp: str=None, context:Union[str, list, dict] = None, persona:Union[str, dict] = None, sequential: bool = True) -> list:
+    def process(
+        self,
+        memories: list,
+        timestamp: str = None,
+        context: Union[str, list, dict] = None,
+        persona: Union[str, dict] = None,
+        sequential: bool = True,
+    ) -> list:
         """
         Transforms the given memories. Transformation can be anything from consolidation to optimization, depending on the implementation.
-        
+
         Each memory is a dictionary of the form:
         {
-          'role': role, 
-          'content': content, 
-           'type': 'action'/'stimulus'/'feedback', 
+          'role': role,
+          'content': content,
+           'type': 'action'/'stimulus'/'feedback',
            'simulation_timestamp': timestamp
          }
 
         Args:
             memories (list): The list of memories to consolidate.
             sequential (bool): Whether the provided memories are to be interpreted sequentially (e.g., episodes in sequence) or not (e.g., abstract facts).
-        
+
         Returns:
             list: A list with the consolidated memories, following the same format as the input memories, but different in content.
         """
         raise NotImplementedError("Subclasses must implement this method.")
+
+    @staticmethod
+    def count_memory_content_words(memories) -> int:
+        """
+        Computes the total number of words in the content field of a memory or list of memories.
+
+        Args:
+            memories: A single memory dictionary or list of memory dictionaries.
+                     Each memory should have a 'content' field.
+
+        Returns:
+            int: Total number of words across all content fields.
+        """
+        if isinstance(memories, dict):
+            memories = [memories]
+
+        total_words = 0
+        for memory in memories:
+            if isinstance(memory, dict) and "content" in memory:
+                content = memory["content"]
+                if isinstance(content, str):
+                    total_words += len(content.split())
+
+        return total_words
+
 
 class EpisodicConsolidator(MemoryProcessor):
     """
     Consolidates episodic memories into a more abstract representation, such as a summary or an abstract fact.
     """
 
-    def process(self, memories: list, timestamp: str=None, context:Union[str, list, dict] = None, persona:Union[str, dict] = None, sequential: bool = True) -> list:
-        logger.debug(f"STARTING MEMORY CONSOLIDATION: {len(memories)} memories to consolidate")
+    def process(
+        self,
+        memories: list,
+        timestamp: str = None,
+        context: Union[str, list, dict] = None,
+        persona: Union[str, dict] = None,
+        sequential: bool = True,
+    ) -> list:
+        logger.debug(
+            f"STARTING MEMORY CONSOLIDATION: {len(memories)} memories to consolidate"
+        )
 
-        enriched_context = f"CURRENT COGNITIVE CONTEXT OF THE AGENT: {context}" if context else "No specific context provided for consolidation."
+        enriched_context = (
+            f"CURRENT COGNITIVE CONTEXT OF THE AGENT: {context}"
+            if context
+            else "No specific context provided for consolidation."
+        )
 
-        result = self._consolidate(memories, timestamp, enriched_context, persona)
-        logger.debug(f"Consolidated {len(memories)} memories into: {result}")
-        
-        return result
+        # we'll limit the length of memories to process at once, to avoid overflowing the input of embedding models, which
+        # are much more limited than the LLM's.
+        max_word_count = 1000
+        total_word_count = self.count_memory_content_words(memories)
+
+        if total_word_count <= max_word_count:
+            # Process all memories at once if under the limit
+            result = self._consolidate(memories, timestamp, enriched_context, persona)
+            logger.debug(f"Consolidated {len(memories)} memories into: {result}")
+            return result
+        else:
+            # Break memories into batches and consolidate each batch
+            logger.debug(
+                f"Total word count {total_word_count} exceeds {max_word_count}, breaking into batches"
+            )
+
+            consolidated_results = []
+            batch_memories = []
+            current_batch_word_count = 0
+
+            for memory in memories:
+                memory_word_count = self.count_memory_content_words([memory])
+
+                # If adding this memory would exceed the limit, process the current batch
+                if (
+                    current_batch_word_count + memory_word_count > max_word_count
+                    and batch_memories
+                ):
+                    batch_result = self._consolidate(
+                        batch_memories, timestamp, enriched_context, persona
+                    )
+                    if (
+                        isinstance(batch_result, dict)
+                        and "consolidation" in batch_result
+                    ):
+                        consolidated_results.extend(batch_result["consolidation"])
+                    logger.debug(
+                        f"Consolidated batch of {len(batch_memories)} memories"
+                    )
+
+                    # Start new batch with current memory
+                    batch_memories = [memory]
+                    current_batch_word_count = memory_word_count
+                else:
+                    # Add memory to current batch
+                    batch_memories.append(memory)
+                    current_batch_word_count += memory_word_count
+
+            # Process the final batch if it has memories
+            if batch_memories:
+                batch_result = self._consolidate(
+                    batch_memories, timestamp, enriched_context, persona
+                )
+                if isinstance(batch_result, dict) and "consolidation" in batch_result:
+                    consolidated_results.extend(batch_result["consolidation"])
+                logger.debug(
+                    f"Consolidated final batch of {len(batch_memories)} memories"
+                )
+
+            logger.debug(
+                f"Consolidated {len(memories)} memories into {len(consolidated_results)} consolidated memories across multiple batches"
+            )
+            return {"consolidation": consolidated_results}
 
     @utils.llm(enable_json_output_format=True, enable_justification_step=False)
-    def _consolidate(self, memories: list, timestamp: str, context:str, persona:str) -> dict:
+    def _consolidate(
+        self, memories: list, timestamp: str, context: str, persona: str
+    ) -> dict:
         """
-        Given a list of input episodic memories, this method consolidates them into more organized structured representations, which however preserve all information and important details. 
+        Given a list of input episodic memories, this method consolidates them into more organized structured representations, which however preserve all information and important details.
 
         For this process, you assume:
           - This consolidation is being carried out by an agent, so the memories are from the agent's perspective. "Actions" refer to behaviors produced by the agent,
@@ -622,37 +830,37 @@ class EpisodicConsolidator(MemoryProcessor):
           - If the memory contians a `content` field, that's where the relevant information is found. Otherwise, consider the whole memory as relevant information.
 
         The consolidation process follows these rules:
-          - Each consolidated memory groups together all similar entries: so actions are grouped together, stimuli go together, facts are grouped together, impressions are grouped together, 
-            learned processes are grouped together, and ad-hoc elements go together too. Noise, minor details and irrelevant elements are discarded. 
+          - Each consolidated memory groups together all similar entries: so actions are grouped together, stimuli go together, facts are grouped together, impressions are grouped together,
+            learned processes are grouped together, and ad-hoc elements go together too. Noise, minor details and irrelevant elements are discarded.
             In all, you will produce at most the following consolidated entries (you can avoid some if appropriate, but not add more):
               * Actions: all actions are grouped together, giving an account of what the agent has done.
               * Stimuli: all stimuli are grouped together, giving an account of what the agent has perceived.
               * Facts: facts are extracted from the actions and stimuli, and then grouped together in a single entry, consolidating learning of objective facts.
               * Impressions: impressions, feelings, or other subjective experiences are also extracted,  and then grouped together in a single entry, consolidating subjective experiences.
-              * Procedural: learned processes (e.g., how to do certain things) are also extracted, formatted in an algorithmic way (i.e., pseudo-code that is self-explanatory), and then grouped together in a 
+              * Procedural: learned processes (e.g., how to do certain things) are also extracted, formatted in an algorithmic way (i.e., pseudo-code that is self-explanatory), and then grouped together in a
                 single entry, consolidating learned processes.
               * Ad-Hoc: important elements that do not correspond to these options are also grouped together in an ad-hoc single entry, consolidating other types of information.
           - Each consolidated memory is a comprehensive report of the relevant information from the input memories, preserving all details. The consolidation merely reorganizes the information,
             but does not remove any relevant information. The consolidated memories are not summaries, but rather a more organized and structured representation of the information in the input memories.
-          
+
 
         Each input memory is a dictionary of the form:
             ```
             {
-            "role": role, 
-            "content": content, 
-            "type": "action"/"stimulus"/"feedback"/"reflection", 
+            "role": role,
+            "content": content,
+            "type": "action"/"stimulus"/"feedback"/"reflection",
             "simulation_timestamp": timestamp
             }
-            ``` 
+            ```
 
         Each consolidated output memory is a dictionary of the form:
             ```
             {
-            "content": content, 
-            "type": "consolidated", 
+            "content": content,
+            "type": "consolidated",
             "simulation_timestamp": timestamp of the consolidation
-            }  
+            }
             ```
 
 
@@ -661,13 +869,13 @@ class EpisodicConsolidator(MemoryProcessor):
             {"consolidation":
                 [
                     {
-                        "content": content_1, 
-                        "type": "consolidated", 
+                        "content": content_1,
+                        "type": "consolidated",
                         "simulation_timestamp": timestamp of the consolidation
                     },
                     {
-                        "content": content_2, 
-                        "type": "consolidated", 
+                        "content": content_2,
+                        "type": "consolidated",
                         "simulation_timestamp": timestamp of the consolidation
                     },
                     ...
@@ -709,15 +917,24 @@ class EpisodicConsolidator(MemoryProcessor):
             dict: A dictionary with a single key "consolidation", whose value is a list of consolidated memories, each represented as a dictionary with the structure described above.
         """
         # llm annotation will handle the implementation
-        
-# TODO work in progress below         
+
+
+# TODO work in progress below
+
 
 class ReflectionConsolidator(MemoryProcessor):
     """
     Memory reflection mechanism.
     """
 
-    def process(self, memories: list, timestamp: str=None, context:Union[str, list, dict] = None, persona:Union[str, dict] = None, sequential: bool = True) -> list:
+    def process(
+        self,
+        memories: list,
+        timestamp: str = None,
+        context: Union[str, list, dict] = None,
+        persona: Union[str, dict] = None,
+        sequential: bool = True,
+    ) -> list:
         return self._reflect(memories, timestamp)
 
     def _reflect(self, memories: list, timestamp: str) -> list:
@@ -731,7 +948,8 @@ class ReflectionConsolidator(MemoryProcessor):
           - No episodic memory is generated, all memories are consolidated as more abstract semantic memories.
           - In general, the reflection process aims to reduce the number of memories while preserving the most relevant information and removing redundant or less relevant information.
         """
-        pass # TODO
+        pass  # TODO
+
     def _reflect(self, memories: list, timestamp: str) -> list:
         """
         Given a list of input episodic memories, this method reflects on them and produces a more abstract representation, such as a summary or an abstract fact.
@@ -743,5 +961,4 @@ class ReflectionConsolidator(MemoryProcessor):
           - No episodic memory is generated, all memories are consolidated as more abstract semantic memories.
           - In general, the reflection process aims to reduce the number of memories while preserving the most relevant information and removing redundant or less relevant information.
         """
-        pass # TODO
-
+        pass  # TODO

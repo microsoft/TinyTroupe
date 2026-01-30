@@ -257,7 +257,7 @@ class BaseSemanticGroundingConnector(GroundingConnector):
                     store_nodes_override=True  # This ensures nodes (with text) are stored
                 )
             else:
-                self.index.refresh(self.documents)
+                self.index.refresh_ref_docs(self.documents)
     
     @staticmethod
     def _set_internal_id_to_documents(documents:list, external_attribute_name:str ="file_name") -> None:
