@@ -58,7 +58,6 @@ class TinyMentalFaculty(JsonSerializableRegistry):
             requires_faculties (list): A list of mental faculties that this faculty requires to function properly.
         &#34;&#34;&#34;
         self.name = name
-
         if requires_faculties is None:
             self.requires_faculties = []
         else:
@@ -66,24 +65,20 @@ class TinyMentalFaculty(JsonSerializableRegistry):
 
     def __str__(self) -&gt; str:
         return f&#34;Mental Faculty: {self.name}&#34;
-
     def __eq__(self, other):
         if isinstance(other, TinyMentalFaculty):
             return self.name == other.name
         return False
-
     def process_action(self, agent, action: dict) -&gt; bool:
         &#34;&#34;&#34;
         Processes an action related to this faculty.
 
         Args:
             action (dict): The action to process.
-
         Returns:
             bool: True if the action was successfully processed, False otherwise.
         &#34;&#34;&#34;
         raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)
-
     def actions_definitions_prompt(self) -&gt; str:
         &#34;&#34;&#34;
         Returns the prompt for defining a actions related to this faculty.
@@ -132,7 +127,6 @@ class CustomMentalFaculty(TinyMentalFaculty):
             self.actions_configs = {}
         else:
             self.actions_configs = actions_configs
-
         # [&lt;constraint1&gt;, &lt;constraint2&gt;, ...]
         if constraints is None:
             self.constraints = {}
@@ -179,14 +173,12 @@ class CustomMentalFaculty(TinyMentalFaculty):
         prompt = &#34;&#34;
         for action_name, action_config in self.actions_configs.items():
             prompt += f&#34;  - {action_name.upper()}: {action_config[&#39;description&#39;]}\n&#34;
-
         return prompt
 
     def actions_constraints_prompt(self) -&gt; str:
         prompt = &#34;&#34;
         for constraint in self.constraints:
             prompt += f&#34;  - {constraint}\n&#34;
-
         return prompt
 
 
@@ -328,7 +320,6 @@ class RecallFaculty(TinyMentalFaculty):
 
         return textwrap.dedent(prompt)
 
-
 class FilesAndWebGroundingFaculty(TinyMentalFaculty):
     &#34;&#34;&#34;
     Allows the agent to access local files and web pages to ground its knowledge.
@@ -454,7 +445,6 @@ class TinyToolUse(TinyMentalFaculty):
         prompt = &#34;&#34;
         for tool in self.tools:
             prompt += tool.actions_constraints_prompt()
-
         return prompt</code></pre>
 </details>
 </section>
@@ -530,7 +520,6 @@ Format is [<constraint1>, <constraint2>, &hellip;]</dd>
             self.actions_configs = {}
         else:
             self.actions_configs = actions_configs
-
         # [&lt;constraint1&gt;, &lt;constraint2&gt;, ...]
         if constraints is None:
             self.constraints = {}
@@ -577,14 +566,12 @@ Format is [<constraint1>, <constraint2>, &hellip;]</dd>
         prompt = &#34;&#34;
         for action_name, action_config in self.actions_configs.items():
             prompt += f&#34;  - {action_name.upper()}: {action_config[&#39;description&#39;]}\n&#34;
-
         return prompt
 
     def actions_constraints_prompt(self) -&gt; str:
         prompt = &#34;&#34;
         for constraint in self.constraints:
             prompt += f&#34;  - {constraint}\n&#34;
-
         return prompt</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -1001,7 +988,6 @@ Format is [<constraint1>, <constraint2>, &hellip;]</dd>
             requires_faculties (list): A list of mental faculties that this faculty requires to function properly.
         &#34;&#34;&#34;
         self.name = name
-
         if requires_faculties is None:
             self.requires_faculties = []
         else:
@@ -1009,24 +995,20 @@ Format is [<constraint1>, <constraint2>, &hellip;]</dd>
 
     def __str__(self) -&gt; str:
         return f&#34;Mental Faculty: {self.name}&#34;
-
     def __eq__(self, other):
         if isinstance(other, TinyMentalFaculty):
             return self.name == other.name
         return False
-
     def process_action(self, agent, action: dict) -&gt; bool:
         &#34;&#34;&#34;
         Processes an action related to this faculty.
 
         Args:
             action (dict): The action to process.
-
         Returns:
             bool: True if the action was successfully processed, False otherwise.
         &#34;&#34;&#34;
         raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)
-
     def actions_definitions_prompt(self) -&gt; str:
         &#34;&#34;&#34;
         Returns the prompt for defining a actions related to this faculty.
@@ -1110,7 +1092,6 @@ Format is [<constraint1>, <constraint2>, &hellip;]</dd>
 
     Args:
         action (dict): The action to process.
-
     Returns:
         bool: True if the action was successfully processed, False otherwise.
     &#34;&#34;&#34;
@@ -1178,7 +1159,6 @@ humans and primates have as we know.</p>
         prompt = &#34;&#34;
         for tool in self.tools:
             prompt += tool.actions_constraints_prompt()
-
         return prompt</code></pre>
 </details>
 <h3>Ancestors</h3>

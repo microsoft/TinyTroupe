@@ -78,18 +78,15 @@ class Action(BaseModel):
     content: str
     target: str
 
-
 class CognitiveState(BaseModel):
     goals: str
     context: list[str]
     attention: str
     emotions: str
 
-
 class CognitiveActionModel(BaseModel):
     action: Action
     cognitive_state: CognitiveState
-
 
 class CognitiveActionModelWithReasoning(BaseModel):
     reasoning: str
@@ -235,7 +232,6 @@ Format is [<constraint1>, <constraint2>, &hellip;]</dd>
             self.actions_configs = {}
         else:
             self.actions_configs = actions_configs
-
         # [&lt;constraint1&gt;, &lt;constraint2&gt;, ...]
         if constraints is None:
             self.constraints = {}
@@ -282,14 +278,12 @@ Format is [<constraint1>, <constraint2>, &hellip;]</dd>
         prompt = &#34;&#34;
         for action_name, action_config in self.actions_configs.items():
             prompt += f&#34;  - {action_name.upper()}: {action_config[&#39;description&#39;]}\n&#34;
-
         return prompt
 
     def actions_constraints_prompt(self) -&gt; str:
         prompt = &#34;&#34;
         for constraint in self.constraints:
             prompt += f&#34;  - {constraint}\n&#34;
-
         return prompt</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -501,7 +495,6 @@ Format is [<constraint1>, <constraint2>, &hellip;]</dd>
           - Each consolidated memory is a comprehensive report of the relevant information from the input memories, preserving all details. The consolidation merely reorganizes the information,
             but does not remove any relevant information. The consolidated memories are not summaries, but rather a more organized and structured representation of the information in the input memories.
 
-
         Each input memory is a dictionary of the form:
             ```
             {
@@ -700,14 +693,12 @@ messages from memory.</p>
 
         if max_prefix_to_clear is None and max_suffix_to_clear is None:
             self.memory = []
-
     def _memory_with_current_buffer(self) -&gt; list:
         &#34;&#34;&#34;
         Returns the current memory, including the episodic buffer.
         This is useful for retrieving the most recent memories, including the current episode.
         &#34;&#34;&#34;
         return self.memory + self.episodic_buffer
-
     ######################################
     # General memory methods
     ######################################
@@ -1718,7 +1709,6 @@ class SemanticMemory(TinyMemory):
 
     def _build_document_from(self, memory) -&gt; Document:
         # TODO: add any metadata as well?
-
         # make sure we are dealing with a dictionary
         if not isinstance(memory, dict):
             memory = {&#34;content&#34;: memory, &#34;type&#34;: &#34;information&#34;}
@@ -1726,7 +1716,6 @@ class SemanticMemory(TinyMemory):
         # ensures double quotes are used for JSON serialization, and maybe other formatting details
         memory_txt = json.dumps(memory, ensure_ascii=False)
         logger.debug(f&#34;Building document from memory: {memory_txt}&#34;)
-
         return Document(text=memory_txt)
 
     def _build_documents_from(self, memories: list) -&gt; list:
@@ -1849,7 +1838,6 @@ class TinyPerson(JsonSerializableRegistry):
 
         if episodic_memory is not None:
             self.episodic_memory = episodic_memory
-
         if semantic_memory is not None:
             self.semantic_memory = semantic_memory
 
@@ -1882,7 +1870,6 @@ class TinyPerson(JsonSerializableRegistry):
         ############################################################
 
         self.current_messages = []
-
         # the current environment in which the agent is acting
         self.environment = None
 
@@ -2199,7 +2186,6 @@ class TinyPerson(JsonSerializableRegistry):
             else:
                 return None  # If the path is invalid, return None
         return value
-
     @transactional()
     def import_fragment(self, path):
         &#34;&#34;&#34;
@@ -2236,7 +2222,6 @@ class TinyPerson(JsonSerializableRegistry):
 
         # must reset prompt after adding to configuration
         self.reset_prompt()
-
     @transactional()
     def define(self, key, value, merge=False, overwrite_scalars=True):
         &#34;&#34;&#34;
@@ -2353,7 +2338,6 @@ class TinyPerson(JsonSerializableRegistry):
         &#34;&#34;&#34;
         for faculty in mental_faculties:
             self.add_mental_faculty(faculty)
-
         return self
 
     def add_mental_faculty(self, faculty):
@@ -2821,7 +2805,6 @@ class TinyPerson(JsonSerializableRegistry):
         logger.info(f&#34;Reading document from web URL: {web_url}&#34;)
 
         self.semantic_memory.add_web_url(web_url)
-
     @transactional()
     def move_to(self, location, context=[]):
         &#34;&#34;&#34;
@@ -3188,7 +3171,6 @@ class TinyPerson(JsonSerializableRegistry):
                 )
                 source = content[&#34;stimuli&#34;][0].get(&#34;source&#34;, None)
                 target = self.name
-
             elif kind == &#34;action&#34;:
                 rendering = self._pretty_action(
                     role=role,
@@ -3650,7 +3632,6 @@ class TinyPerson(JsonSerializableRegistry):
         if suppress_memory:
             suppress_attributes.append(&#34;episodic_memory&#34;)
             suppress_attributes.append(&#34;semantic_memory&#34;)
-
         # should we suppress the mental state?
         if suppress_mental_state:
             suppress_attributes.append(&#34;_mental_state&#34;)
@@ -3810,7 +3791,6 @@ class TinyPerson(JsonSerializableRegistry):
             return TinyPerson.all_agents[name]
         else:
             return None
-
     @staticmethod
     def all_agents_names():
         &#34;&#34;&#34;
@@ -4140,7 +4120,6 @@ def load_specification(
     if suppress_memory:
         suppress_attributes.append(&#34;episodic_memory&#34;)
         suppress_attributes.append(&#34;semantic_memory&#34;)
-
     # should we suppress the mental state?
     if suppress_mental_state:
         suppress_attributes.append(&#34;_mental_state&#34;)
@@ -4346,7 +4325,6 @@ def accessible_agents(self):
     &#34;&#34;&#34;
     for faculty in mental_faculties:
         self.add_mental_faculty(faculty)
-
     return self</code></pre>
 </details>
 </dd>
@@ -5936,7 +5914,6 @@ humans and primates have as we know.</p>
         prompt = &#34;&#34;
         for tool in self.tools:
             prompt += tool.actions_constraints_prompt()
-
         return prompt</code></pre>
 </details>
 <h3>Ancestors</h3>

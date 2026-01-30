@@ -80,7 +80,6 @@ class ResultsReporter:
             include_agent_summaries: Whether to include agent mini-bios in the report.
             consolidate_responses: Whether to consolidate all responses into a single report.
             requirements: Formatting or content requirements for the report.
-
         Returns:
             str: The generated Markdown report.
         &#34;&#34;&#34;
@@ -133,7 +132,6 @@ class ResultsReporter:
             last_n: Number of last interactions to include.
             max_content_length: Maximum content length for interactions.
             requirements: Formatting or content requirements for the report.
-
         Returns:
             str: The generated Markdown report.
         &#34;&#34;&#34;
@@ -175,7 +173,6 @@ class ResultsReporter:
             data: Raw text, dictionary, or list of dictionaries to format.
             report_title: Title for the generated report.
             requirements: Formatting or content requirements for the report. If None, uses simple formatting.
-
         Returns:
             str: The generated Markdown report.
         &#34;&#34;&#34;
@@ -246,7 +243,6 @@ class ResultsReporter:
         &#34;&#34;&#34;Interview a single agent about the reporting task.&#34;&#34;&#34;
         if self.verbose:
             logger.debug(f&#34;Interviewing agent {agent.name} about: {reporting_task}&#34;)
-
         # Following TinyTroupe patterns - directly interact with the agent
         prompt = f&#34;&#34;&#34;
         I need you to provide a comprehensive report based on your experiences and observations.
@@ -321,7 +317,6 @@ class ResultsReporter:
             if include_summaries:
                 agent_info[&#34;bio&#34;] = data[&#34;agent&#34;].minibio(extended=False)
             agents_data.append(agent_info)
-
         # Generate report using LLM
         return self._generate_report_with_llm(
             title=title,
@@ -381,7 +376,6 @@ class ResultsReporter:
             ## Requirements
             {requirements}
             &#34;&#34;&#34;
-
         elif report_type == &#34;interactions&#34;:
             system_prompt += &#34; You specialize in analyzing and presenting agent interaction histories.&#34;
             user_prompt = f&#34;&#34;&#34;
@@ -411,7 +405,6 @@ class ResultsReporter:
             ## Requirements
             {requirements}
             &#34;&#34;&#34;
-
         elif report_type == &#34;custom_data&#34;:
             # Handle arbitrary data without assuming any structure
             if isinstance(data, str):
@@ -419,7 +412,6 @@ class ResultsReporter:
             else:
                 # For any other type, convert to JSON for a clean representation
                 data_representation = json.dumps(data, indent=2)
-
             user_prompt = f&#34;&#34;&#34;
             ## Task
             Create a well-structured Markdown report based on the provided data such that it fulfills the 
@@ -532,7 +524,6 @@ class ResultsReporter:
             include_agent_summaries: Whether to include agent mini-bios in the report.
             consolidate_responses: Whether to consolidate all responses into a single report.
             requirements: Formatting or content requirements for the report.
-
         Returns:
             str: The generated Markdown report.
         &#34;&#34;&#34;
@@ -585,7 +576,6 @@ class ResultsReporter:
             last_n: Number of last interactions to include.
             max_content_length: Maximum content length for interactions.
             requirements: Formatting or content requirements for the report.
-
         Returns:
             str: The generated Markdown report.
         &#34;&#34;&#34;
@@ -627,7 +617,6 @@ class ResultsReporter:
             data: Raw text, dictionary, or list of dictionaries to format.
             report_title: Title for the generated report.
             requirements: Formatting or content requirements for the report. If None, uses simple formatting.
-
         Returns:
             str: The generated Markdown report.
         &#34;&#34;&#34;
@@ -698,7 +687,6 @@ class ResultsReporter:
         &#34;&#34;&#34;Interview a single agent about the reporting task.&#34;&#34;&#34;
         if self.verbose:
             logger.debug(f&#34;Interviewing agent {agent.name} about: {reporting_task}&#34;)
-
         # Following TinyTroupe patterns - directly interact with the agent
         prompt = f&#34;&#34;&#34;
         I need you to provide a comprehensive report based on your experiences and observations.
@@ -773,7 +761,6 @@ class ResultsReporter:
             if include_summaries:
                 agent_info[&#34;bio&#34;] = data[&#34;agent&#34;].minibio(extended=False)
             agents_data.append(agent_info)
-
         # Generate report using LLM
         return self._generate_report_with_llm(
             title=title,
@@ -833,7 +820,6 @@ class ResultsReporter:
             ## Requirements
             {requirements}
             &#34;&#34;&#34;
-
         elif report_type == &#34;interactions&#34;:
             system_prompt += &#34; You specialize in analyzing and presenting agent interaction histories.&#34;
             user_prompt = f&#34;&#34;&#34;
@@ -863,7 +849,6 @@ class ResultsReporter:
             ## Requirements
             {requirements}
             &#34;&#34;&#34;
-
         elif report_type == &#34;custom_data&#34;:
             # Handle arbitrary data without assuming any structure
             if isinstance(data, str):
@@ -871,7 +856,6 @@ class ResultsReporter:
             else:
                 # For any other type, convert to JSON for a clean representation
                 data_representation = json.dumps(data, indent=2)
-
             user_prompt = f&#34;&#34;&#34;
             ## Task
             Create a well-structured Markdown report based on the provided data such that it fulfills the 
@@ -936,7 +920,6 @@ class ResultsReporter:
 <pre><code class="python">def display_report(self, report: str = None):
     &#34;&#34;&#34;
     Display a report on the console with rich formatting.
-
     Args:
         report: The report to display. If None, uses the last generated report.
     &#34;&#34;&#34;
@@ -999,7 +982,6 @@ class ResultsReporter:
         include_agent_summaries: Whether to include agent mini-bios in the report.
         consolidate_responses: Whether to consolidate all responses into a single report.
         requirements: Formatting or content requirements for the report.
-
     Returns:
         str: The generated Markdown report.
     &#34;&#34;&#34;
@@ -1068,7 +1050,6 @@ class ResultsReporter:
         data: Raw text, dictionary, or list of dictionaries to format.
         report_title: Title for the generated report.
         requirements: Formatting or content requirements for the report. If None, uses simple formatting.
-
     Returns:
         str: The generated Markdown report.
     &#34;&#34;&#34;
@@ -1134,7 +1115,6 @@ class ResultsReporter:
         last_n: Number of last interactions to include.
         max_content_length: Maximum content length for interactions.
         requirements: Formatting or content requirements for the report.
-
     Returns:
         str: The generated Markdown report.
     &#34;&#34;&#34;

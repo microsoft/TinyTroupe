@@ -79,7 +79,6 @@ def test_mental_faculties(setup):
     Test adding, using, and interacting with mental faculties.
     """
     agent = create_oscar_the_architect()
-
     # Test custom mental faculty
     custom_faculty = CustomMentalFaculty(
         name="TestFaculty",
@@ -112,7 +111,6 @@ def test_mental_faculties(setup):
     # We can't directly test _generate_action_definitions_prompt as it doesn't exist
     # Instead, we'll test that faculties are properly integrated
     assert len(agent._mental_faculties) > 0, "Mental faculties should be properly added"
-
     # Test that the faculty has the expected properties
     assert custom_faculty.name == "TestFaculty"
     assert "TEST_ACTION" in custom_faculty.actions_configs
@@ -369,7 +367,6 @@ def test_memory_retrieval_strategies(setup):
     Test different memory retrieval patterns and strategies.
     """
     agent = create_marcos_the_physician()
-
     # Store some test memories
     test_memories = [
         {"type": "experience", "content": "Treated a patient with flu symptoms"},
@@ -464,12 +461,10 @@ def test_serialization_edge_cases(setup):
     Test complex serialization scenarios with memory and mental faculties.
     """
     agent = create_oscar_the_architect()
-
     # Add some complexity to the agent
     agent.define("projects", ["Skyscraper", "Mall", "Hospital"])
     agent.internalize_goal("Create sustainable architecture")
     agent.listen_and_act("Think about your latest project")
-
     # Test complete state encoding
     complete_state = agent.encode_complete_state()
     assert "name" in complete_state, "Complete state should include name"
@@ -510,7 +505,6 @@ def test_communication_and_display(setup):
     Test communication buffering and display functionality.
     """
     agent = create_lisa_the_data_scientist()
-
     # Test communication display functionality
     test_communication = {
         "from": agent.name,
@@ -666,7 +660,6 @@ def test_error_handling_robustness(setup):
     Test error handling in various failure scenarios and edge cases.
     """
     agent = create_oscar_the_architect()
-
     # Test handling of invalid memory operations
     try:
         # Try to store invalid memory item
@@ -684,7 +677,6 @@ def test_error_handling_robustness(setup):
         assert False, "Should raise exception for invalid relationship format"
     except Exception:
         pass  # Expected behavior
-
     # Test handling of invalid action types
     try:
         invalid_actions = agent.pop_actions_and_get_contents_for("INVALID_ACTION_TYPE")
@@ -703,7 +695,6 @@ def test_error_handling_robustness(setup):
     except Exception as e:
         # Should not crash with fatal error
         assert not isinstance(e, SystemExit), "Should not cause system exit"
-
     # Test handling of very long inputs (within reason)
     try:
         long_input = "Tell me about architecture. " * 100
@@ -712,7 +703,6 @@ def test_error_handling_robustness(setup):
     except Exception as e:
         # May hit limits, but should not crash fatally
         logger.warning(f"Long input test encountered: {e}")
-
     # Test memory retrieval with invalid parameters
     try:
         memories = agent.retrieve_memories(first_n=-1, last_n=-1)
@@ -866,13 +856,11 @@ def test_performance_and_limits(setup):
             results.append("success")
         except Exception as e:
             results.append(f"error: {e}")
-
     threads = [threading.Thread(target=concurrent_action) for _ in range(3)]
     for thread in threads:
         thread.start()
     for thread in threads:
         thread.join()
-
     # Should handle concurrent access gracefully (may serialize internally)
     assert len(results) == 3, "Should handle concurrent operations"
 
@@ -1030,25 +1018,21 @@ def test_integration_scenarios(setup):
         logger.warning(f"Post-collaboration test encountered: {e}")
         # Test should not fail if there are system-level issues after complex collaboration
 
-
 def test_advanced_memory_retrieval(setup):
     """
     Test advanced memory retrieval strategies like full scan summarization.
     """
     agent = create_oscar_the_architect()
-
     # Add diverse memories for testing
     agent.listen("We're discussing architecture trends")
     agent.think("Modern architecture is evolving rapidly")
     agent.listen("The client wants a sustainable building")
     agent.think("Sustainability is important in modern design")
     agent.listen("Budget constraints are always challenging")
-
     # Test full scan memory summarization
     summary = agent.summarize_relevant_memories_via_full_scan(
         relevance_target="architecture and sustainability"
     )
-
     assert isinstance(summary, str), "Summary should be a string"
     # Be more lenient about empty summaries as LLM calls might not work in test environment
     if len(summary) > 0:
@@ -1242,7 +1226,6 @@ def test_agent_error_handling_robustness(setup):
     except Exception as e:
         # Error handling is acceptable for invalid parameters
         pass
-
     # Test handling of invalid definitions
     try:
         agent.define("", "")  # Empty key
@@ -1250,7 +1233,6 @@ def test_agent_error_handling_robustness(setup):
     except Exception:
         # Should handle invalid inputs gracefully
         pass
-
     # Test handling of circular relationships
     try:
         agent.related_to(agent, "self-reference")  # Self-relationship
@@ -1265,7 +1247,6 @@ def test_agent_performance_and_limits(setup):
     Test agent performance with large datasets and stress scenarios.
     """
     agent = create_oscar_the_architect()
-
     # Test with many memories
     for i in range(100):
         if i % 10 == 0:

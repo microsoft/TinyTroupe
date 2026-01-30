@@ -59,13 +59,11 @@ class TinyMemory(TinyMentalFaculty):
         Stores a value in memory.
         &#34;&#34;&#34;
         raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)
-
     def store(self, value: dict) -&gt; None:
         &#34;&#34;&#34;
         Stores a value in memory.
         &#34;&#34;&#34;
         self._store(self._preprocess_value_for_storage(value))
-
     def store_all(self, values: list) -&gt; None:
         &#34;&#34;&#34;
         Stores a list of values in memory.
@@ -339,14 +337,12 @@ class EpisodicMemory(TinyMemory):
 
         if max_prefix_to_clear is None and max_suffix_to_clear is None:
             self.memory = []
-
     def _memory_with_current_buffer(self) -&gt; list:
         &#34;&#34;&#34;
         Returns the current memory, including the episodic buffer.
         This is useful for retrieving the most recent memories, including the current episode.
         &#34;&#34;&#34;
         return self.memory + self.episodic_buffer
-
     ######################################
     # General memory methods
     ######################################
@@ -675,7 +671,6 @@ class SemanticMemory(TinyMemory):
 
     def _build_document_from(self, memory) -&gt; Document:
         # TODO: add any metadata as well?
-
         # make sure we are dealing with a dictionary
         if not isinstance(memory, dict):
             memory = {&#34;content&#34;: memory, &#34;type&#34;: &#34;information&#34;}
@@ -683,7 +678,6 @@ class SemanticMemory(TinyMemory):
         # ensures double quotes are used for JSON serialization, and maybe other formatting details
         memory_txt = json.dumps(memory, ensure_ascii=False)
         logger.debug(f&#34;Building document from memory: {memory_txt}&#34;)
-
         return Document(text=memory_txt)
 
     def _build_documents_from(self, memories: list) -&gt; list:
@@ -720,7 +714,6 @@ class MemoryProcessor:
         Args:
             memories (list): The list of memories to consolidate.
             sequential (bool): Whether the provided memories are to be interpreted sequentially (e.g., episodes in sequence) or not (e.g., abstract facts).
-
         Returns:
             list: A list with the consolidated memories, following the same format as the input memories, but different in content.
         &#34;&#34;&#34;
@@ -870,7 +863,6 @@ class EpisodicConsolidator(MemoryProcessor):
               * Ad-Hoc: important elements that do not correspond to these options are also grouped together in an ad-hoc single entry, consolidating other types of information.
           - Each consolidated memory is a comprehensive report of the relevant information from the input memories, preserving all details. The consolidation merely reorganizes the information,
             but does not remove any relevant information. The consolidated memories are not summaries, but rather a more organized and structured representation of the information in the input memories.
-
 
         Each input memory is a dictionary of the form:
             ```
@@ -1130,7 +1122,6 @@ class ReflectionConsolidator(MemoryProcessor):
           - Each consolidated memory is a comprehensive report of the relevant information from the input memories, preserving all details. The consolidation merely reorganizes the information,
             but does not remove any relevant information. The consolidated memories are not summaries, but rather a more organized and structured representation of the information in the input memories.
 
-
         Each input memory is a dictionary of the form:
             ```
             {
@@ -1329,14 +1320,12 @@ messages from memory.</p>
 
         if max_prefix_to_clear is None and max_suffix_to_clear is None:
             self.memory = []
-
     def _memory_with_current_buffer(self) -&gt; list:
         &#34;&#34;&#34;
         Returns the current memory, including the episodic buffer.
         This is useful for retrieving the most recent memories, including the current episode.
         &#34;&#34;&#34;
         return self.memory + self.episodic_buffer
-
     ######################################
     # General memory methods
     ######################################
@@ -1971,7 +1960,6 @@ def count_memory_content_words(memories) -&gt; int:
     Args:
         memories (list): The list of memories to consolidate.
         sequential (bool): Whether the provided memories are to be interpreted sequentially (e.g., episodes in sequence) or not (e.g., abstract facts).
-
     Returns:
         list: A list with the consolidated memories, following the same format as the input memories, but different in content.
     &#34;&#34;&#34;
@@ -2225,7 +2213,6 @@ class SemanticMemory(TinyMemory):
 
     def _build_document_from(self, memory) -&gt; Document:
         # TODO: add any metadata as well?
-
         # make sure we are dealing with a dictionary
         if not isinstance(memory, dict):
             memory = {&#34;content&#34;: memory, &#34;type&#34;: &#34;information&#34;}
@@ -2233,7 +2220,6 @@ class SemanticMemory(TinyMemory):
         # ensures double quotes are used for JSON serialization, and maybe other formatting details
         memory_txt = json.dumps(memory, ensure_ascii=False)
         logger.debug(f&#34;Building document from memory: {memory_txt}&#34;)
-
         return Document(text=memory_txt)
 
     def _build_documents_from(self, memories: list) -&gt; list:
@@ -2309,13 +2295,11 @@ class SemanticMemory(TinyMemory):
         Stores a value in memory.
         &#34;&#34;&#34;
         raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)
-
     def store(self, value: dict) -&gt; None:
         &#34;&#34;&#34;
         Stores a value in memory.
         &#34;&#34;&#34;
         self._store(self._preprocess_value_for_storage(value))
-
     def store_all(self, values: list) -&gt; None:
         &#34;&#34;&#34;
         Stores a list of values in memory.
@@ -2624,7 +2608,6 @@ class SemanticMemory(TinyMemory):
 
     Returns:
         list: The retrieved values.
-
     &#34;&#34;&#34;
     raise NotImplementedError(&#34;Subclasses must implement this method.&#34;)</code></pre>
 </details>

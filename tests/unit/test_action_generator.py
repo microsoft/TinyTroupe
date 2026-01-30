@@ -25,7 +25,6 @@ from tinytroupe.examples import (
 # TEST FIXTURES AND HELPERS
 # ====================================================================
 
-
 @pytest.fixture(autouse=True)
 def cleanup_agents():
     """Clean up agents before and after each test to avoid name conflicts."""
@@ -34,7 +33,6 @@ def cleanup_agents():
     yield
     # Clean up after test
     TinyPerson.all_agents.clear()
-
 
 def create_unique_oscar(suffix=""):
     """Create Oscar with a unique name to avoid conflicts."""
@@ -46,7 +44,6 @@ def create_unique_oscar(suffix=""):
         TinyPerson.all_agents[oscar.name] = oscar
     return oscar
 
-
 def create_unique_lisa(suffix=""):
     """Create Lisa with a unique name to avoid conflicts."""
     lisa = create_lisa_the_data_scientist()
@@ -56,7 +53,6 @@ def create_unique_lisa(suffix=""):
         TinyPerson.all_agents.pop("Lisa Carter", None)
         TinyPerson.all_agents[lisa.name] = lisa
     return lisa
-
 
 def safe_get_action_content(actions, index=-2):
     """Safely get action content, handling different action structures."""
@@ -245,7 +241,6 @@ class BadActionInjector:
         """Apply the patch to the generator."""
         self.generator._generate_tentative_action = self.create_patched_method()
         return self
-
     def get_stats(self):
         """Get statistics about the injection."""
         return {
@@ -259,7 +254,6 @@ class BadActionInjector:
     def inject_bad_actions(cls, generator, bad_action_builder):
         """
         Elegant class method for injecting bad actions.
-
         Usage:
             injector = BadActionInjector.inject_bad_actions(generator, lambda i: i.persona_violation("Oscar", "a chef who hates buildings"))
             # Run your test
@@ -275,7 +269,6 @@ def inject_bad_actions(generator, bad_action_builder):
     """
     Backward-compatible function for injecting bad actions.
     Now delegates to the more elegant class method.
-
     Usage:
         injector = inject_bad_actions(generator, lambda i: i.persona_violation("Oscar", "a chef who hates buildings"))
         # Run your test
@@ -377,7 +370,6 @@ def test_action_generator_quality_checks(setup):
 
 def test_action_generator_regeneration(setup):
     """Test ActionGenerator regeneration capabilities with real API."""
-
     generator = ActionGenerator(
         max_attempts=3,
         enable_regeneration=True,
@@ -452,7 +444,6 @@ def test_action_generator_error_handling():
 
 def test_action_generator_different_configurations(setup):
     """Test ActionGenerator with various configuration combinations using real API."""
-
     configs = [
         {"enable_quality_checks": False},
         {"enable_regeneration": False, "enable_quality_checks": True},

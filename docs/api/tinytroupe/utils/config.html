@@ -138,7 +138,6 @@ def read_config_file(use_cache=True, verbose=True) -&gt; configparser.ConfigPars
     if use_cache and _config is not None:
         # if we have a cached config and accept that, return it
         return _config
-
     else:
         config = configparser.ConfigParser()
 
@@ -507,7 +506,6 @@ def set_include_thread_info(include_thread_info: bool):
     if use_cache and _config is not None:
         # if we have a cached config and accept that, return it
         return _config
-
     else:
         config = configparser.ConfigParser()
 

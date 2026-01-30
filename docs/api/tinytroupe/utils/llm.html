@@ -113,7 +113,6 @@ def compose_initial_LLM_messages_with_templates(
 # Data structures to enforce output format during LLM API call.
 #
 
-
 class LLMScalarWithJustificationResponse(BaseModel):
     &#34;&#34;&#34;
     Represents a typed response from an LLM (Language Learning Model) including justification.
@@ -137,7 +136,6 @@ class LLMScalarWithJustificationAndReasoningResponse(BaseModel):
         value (str, int, float, bool): The value of the response.
         confidence (float): The confidence level of the response.
     &#34;&#34;&#34;
-
     reasoning: str
 
     # we need to repeat these fields here, instead of inheriting from LLMScalarWithJustificationResponse,
@@ -150,7 +148,6 @@ class LLMScalarWithJustificationAndReasoningResponse(BaseModel):
 ###########################################################################
 # Model calling helpers
 ###########################################################################
-
 
 class LLMChat:
     &#34;&#34;&#34;
@@ -244,7 +241,6 @@ class LLMChat:
             template_name: Name of the template file
             base_module_folder: Optional subfolder path within the library
             rendering_configs: Configuration variables for template rendering
-
         Returns:
             Rendered template content
         &#34;&#34;&#34;
@@ -276,7 +272,6 @@ class LLMChat:
             template_name: Optional template file name to use for the message
             base_module_folder: Optional subfolder for template location
             rendering_configs: Configuration variables for template rendering
-
         Returns:
             self for method chaining
         &#34;&#34;&#34;
@@ -310,7 +305,6 @@ class LLMChat:
             template_name: Optional template file name to use for the message
             base_module_folder: Optional subfolder for template location
             rendering_configs: Configuration variables for template rendering
-
         Returns:
             self for method chaining
         &#34;&#34;&#34;
@@ -344,7 +338,6 @@ class LLMChat:
             template_name: Optional template file name to use for the message
             base_module_folder: Optional subfolder for template location
             rendering_configs: Configuration variables for template rendering
-
         Returns:
             self for method chaining
         &#34;&#34;&#34;
@@ -754,7 +747,6 @@ class LLMChat:
             List of all messages in the conversation
         &#34;&#34;&#34;
         return self.messages
-
     # Keep all the existing coercion methods
     def _coerce_to_bool(self, llm_output):
         &#34;&#34;&#34;
@@ -823,7 +815,6 @@ class LLMChat:
         # if the LLM output is already an integer, we return it
         if isinstance(llm_output, int):
             return llm_output
-
         # if it&#39;s a float that represents a whole number, convert it
         if isinstance(llm_output, float):
             if llm_output.is_integer():
@@ -876,7 +867,6 @@ class LLMChat:
         # if the LLM output is already a float, we return it
         if isinstance(llm_output, float):
             return llm_output
-
         # if it&#39;s an integer, convert to float
         if isinstance(llm_output, int):
             return float(llm_output)
@@ -1080,7 +1070,6 @@ def llm(
             #
             if isinstance(result, str):
                 user_prompt = &#34;EXECUTE THE INSTRUCTIONS BELOW:\n\n &#34; + result
-
             else:
                 # if there&#39;s a parameter named &#34;self&#34; in the function signature, remove it from args
                 if &#34;self&#34; in sig.parameters:
@@ -1270,7 +1259,6 @@ def repeat_on_error(retries: int, exceptions: list):
         retries (int): The number of retries to attempt.
         exceptions (list): The list of exception classes to catch.
     &#34;&#34;&#34;
-
     def decorator(func):
         def wrapper(*args, **kwargs):
             for i in range(retries):
@@ -1296,7 +1284,6 @@ def try_function(func, postcond_func=None, retries=5, exceptions=[Exception]):
         logger.debug(f&#34;Trying function {func.__name__}...&#34;)
         result = func()
         logger.debug(f&#34;Result of function {func.__name__}: {result}&#34;)
-
         if postcond_func is not None:
             if not postcond_func(result):
                 # must raise an exception if the postcondition is not met.
@@ -1811,7 +1798,6 @@ Usage example with post-processing:
             #
             if isinstance(result, str):
                 user_prompt = &#34;EXECUTE THE INSTRUCTIONS BELOW:\n\n &#34; + result
-
             else:
                 # if there&#39;s a parameter named &#34;self&#34; in the function signature, remove it from args
                 if &#34;self&#34; in sig.parameters:
@@ -1891,7 +1877,6 @@ exception is raised. If no exception occurs, the function returns normally.</p>
         retries (int): The number of retries to attempt.
         exceptions (list): The list of exception classes to catch.
     &#34;&#34;&#34;
-
     def decorator(func):
         def wrapper(*args, **kwargs):
             for i in range(retries):
@@ -1999,14 +1984,12 @@ exception is raised. If no exception occurs, the function returns normally.</p>
         logger.debug(f&#34;Trying function {func.__name__}...&#34;)
         result = func()
         logger.debug(f&#34;Result of function {func.__name__}: {result}&#34;)
-
         if postcond_func is not None:
             if not postcond_func(result):
                 # must raise an exception if the postcondition is not met.
                 raise ValueError(f&#34;Postcondition not met for function {func.__name__}!&#34;)
 
         return result
-
     return aux_apply_func()</code></pre>
 </details>
 </dd>
@@ -2144,7 +2127,6 @@ but rather the use of an additional reasoning step in the regular text completio
             template_name: Name of the template file
             base_module_folder: Optional subfolder path within the library
             rendering_configs: Configuration variables for template rendering
-
         Returns:
             Rendered template content
         &#34;&#34;&#34;
@@ -2176,7 +2158,6 @@ but rather the use of an additional reasoning step in the regular text completio
             template_name: Optional template file name to use for the message
             base_module_folder: Optional subfolder for template location
             rendering_configs: Configuration variables for template rendering
-
         Returns:
             self for method chaining
         &#34;&#34;&#34;
@@ -2210,7 +2191,6 @@ but rather the use of an additional reasoning step in the regular text completio
             template_name: Optional template file name to use for the message
             base_module_folder: Optional subfolder for template location
             rendering_configs: Configuration variables for template rendering
-
         Returns:
             self for method chaining
         &#34;&#34;&#34;
@@ -2244,7 +2224,6 @@ but rather the use of an additional reasoning step in the regular text completio
             template_name: Optional template file name to use for the message
             base_module_folder: Optional subfolder for template location
             rendering_configs: Configuration variables for template rendering
-
         Returns:
             self for method chaining
         &#34;&#34;&#34;
@@ -2654,7 +2633,6 @@ but rather the use of an additional reasoning step in the regular text completio
             List of all messages in the conversation
         &#34;&#34;&#34;
         return self.messages
-
     # Keep all the existing coercion methods
     def _coerce_to_bool(self, llm_output):
         &#34;&#34;&#34;
@@ -2723,7 +2701,6 @@ but rather the use of an additional reasoning step in the regular text completio
         # if the LLM output is already an integer, we return it
         if isinstance(llm_output, int):
             return llm_output
-
         # if it&#39;s a float that represents a whole number, convert it
         if isinstance(llm_output, float):
             if llm_output.is_integer():
@@ -2776,7 +2753,6 @@ but rather the use of an additional reasoning step in the regular text completio
         # if the LLM output is already a float, we return it
         if isinstance(llm_output, float):
             return llm_output
-
         # if it&#39;s an integer, convert to float
         if isinstance(llm_output, int):
             return float(llm_output)
@@ -2963,7 +2939,6 @@ but rather the use of an additional reasoning step in the regular text completio
         template_name: Optional template file name to use for the message
         base_module_folder: Optional subfolder for template location
         rendering_configs: Configuration variables for template rendering
-
     Returns:
         self for method chaining
     &#34;&#34;&#34;
@@ -3020,7 +2995,6 @@ but rather the use of an additional reasoning step in the regular text completio
         template_name: Optional template file name to use for the message
         base_module_folder: Optional subfolder for template location
         rendering_configs: Configuration variables for template rendering
-
     Returns:
         self for method chaining
     &#34;&#34;&#34;
@@ -3077,7 +3051,6 @@ but rather the use of an additional reasoning step in the regular text completio
         template_name: Optional template file name to use for the message
         base_module_folder: Optional subfolder for template location
         rendering_configs: Configuration variables for template rendering
-
     Returns:
         self for method chaining
     &#34;&#34;&#34;
@@ -3514,7 +3487,6 @@ If set to None, removes all output formatting and coercion.</dd>
 <pre><code class="python">def get_conversation_history(self):
     &#34;&#34;&#34;
     Get the full conversation history.
-
     Returns:
         List of all messages in the conversation
     &#34;&#34;&#34;
@@ -3535,7 +3507,6 @@ If set to None, removes all output formatting and coercion.</dd>
 <pre><code class="python">def reset_conversation(self):
     &#34;&#34;&#34;
     Reset the conversation state but keep the initial configuration.
-
     Returns:
         self for method chaining
     &#34;&#34;&#34;
@@ -3609,7 +3580,6 @@ validated to form a valid model.</p>
         value (str, int, float, bool): The value of the response.
         confidence (float): The confidence level of the response.
     &#34;&#34;&#34;
-
     reasoning: str
 
     # we need to repeat these fields here, instead of inheriting from LLMScalarWithJustificationResponse,

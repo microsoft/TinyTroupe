@@ -269,7 +269,6 @@ class TinyPersonFactory(TinyFactory):
 
         # are we going to use a pre-computed sample of characteristics too?
         if self.population_size is not None:
-
             with concurrent_agent_generataion_lock:
                 if self.remaining_characteristics_sample is None:
                     # if the sample does not exist, we generate it here once.
@@ -420,12 +419,10 @@ class TinyPersonFactory(TinyFactory):
                 agent_spec = aux_generate(attempt=attempt)
             except Exception as e:
                 logger.error(f&#34;Error while generating agent specification: {e}&#34;)
-
         # create the fresh agent
         if agent_spec is not None:
             # the agent is created here. This is why the present method cannot be cached. Instead, an auxiliary method is used
             # for the actual model call, so that it gets cached properly without skipping the agent creation.
-
             # protect parallel agent generation
             with concurrent_agent_generataion_lock:
                 person = TinyPerson(agent_spec[&#34;name&#34;])
@@ -738,7 +735,6 @@ class TinyPersonFactory(TinyFactory):
 
                 # generate a name that&#39;s appropriate for this specific sample&#39;s characteristics
                 try:
-
                     # A dummy name to start with, in case the name generation fails.
                     sample[&#34;name&#34;] = f&#34;Agent_{utils.fresh_id(&#39;agents_names&#39;)}&#34;
 
@@ -992,7 +988,6 @@ class TinyPersonFactory(TinyFactory):
                ]
            }
            ```
-
         Note in the example:
            - Age is given as a numeric range.
            - All other values are descriptive strings, human-friendly, no strange symbols or codes.
@@ -1083,7 +1078,6 @@ class TinyPersonFactory(TinyFactory):
                     },
                     &#34;quantity&#34;: quantity_1
                 },
-
                 {
                     &#34;id&#34;: 2,
                     &#34;subpopulation_description&#34;: &#34;Some other description here...&#34;,
@@ -1162,7 +1156,6 @@ class TinyPersonFactory(TinyFactory):
 
         ## Example
         Given the following INPUT sampling dimensions:
-
         ```json
         {
             &#34;sampling_space_description&#34;: &#34;Young Western people of different liberal or intellectual professions.&#34;
@@ -1342,7 +1335,6 @@ class TinyPersonFactory(TinyFactory):
         If necessary, you can generate a longer name to ensure it is new. You can also try tweaking the spelling or
         adding more surnames, so that the name is unique. However, the name **must** sound realistic and not be too far-fetched,
         not sound as if it was made up.
-
         The final result is only the name, nothing else:
 
            &#34;Some name here&#34;  ---&gt; correct as it is just a name, nothing else
@@ -1856,7 +1848,6 @@ specified, then population_size must also be specified.</dd>
 
         # are we going to use a pre-computed sample of characteristics too?
         if self.population_size is not None:
-
             with concurrent_agent_generataion_lock:
                 if self.remaining_characteristics_sample is None:
                     # if the sample does not exist, we generate it here once.
@@ -2007,12 +1998,10 @@ specified, then population_size must also be specified.</dd>
                 agent_spec = aux_generate(attempt=attempt)
             except Exception as e:
                 logger.error(f&#34;Error while generating agent specification: {e}&#34;)
-
         # create the fresh agent
         if agent_spec is not None:
             # the agent is created here. This is why the present method cannot be cached. Instead, an auxiliary method is used
             # for the actual model call, so that it gets cached properly without skipping the agent creation.
-
             # protect parallel agent generation
             with concurrent_agent_generataion_lock:
                 person = TinyPerson(agent_spec[&#34;name&#34;])
@@ -2325,7 +2314,6 @@ specified, then population_size must also be specified.</dd>
 
                 # generate a name that&#39;s appropriate for this specific sample&#39;s characteristics
                 try:
-
                     # A dummy name to start with, in case the name generation fails.
                     sample[&#34;name&#34;] = f&#34;Agent_{utils.fresh_id(&#39;agents_names&#39;)}&#34;
 
@@ -2579,7 +2567,6 @@ specified, then population_size must also be specified.</dd>
                ]
            }
            ```
-
         Note in the example:
            - Age is given as a numeric range.
            - All other values are descriptive strings, human-friendly, no strange symbols or codes.
@@ -2670,7 +2657,6 @@ specified, then population_size must also be specified.</dd>
                     },
                     &#34;quantity&#34;: quantity_1
                 },
-
                 {
                     &#34;id&#34;: 2,
                     &#34;subpopulation_description&#34;: &#34;Some other description here...&#34;,
@@ -2749,7 +2735,6 @@ specified, then population_size must also be specified.</dd>
 
         ## Example
         Given the following INPUT sampling dimensions:
-
         ```json
         {
             &#34;sampling_space_description&#34;: &#34;Young Western people of different liberal or intellectual professions.&#34;
@@ -2929,7 +2914,6 @@ specified, then population_size must also be specified.</dd>
         If necessary, you can generate a longer name to ensure it is new. You can also try tweaking the spelling or
         adding more surnames, so that the name is unique. However, the name **must** sound realistic and not be too far-fetched,
         not sound as if it was made up.
-
         The final result is only the name, nothing else:
 
            &#34;Some name here&#34;  ---&gt; correct as it is just a name, nothing else
@@ -3548,7 +3532,6 @@ def generate_people(
 
     # are we going to use a pre-computed sample of characteristics too?
     if self.population_size is not None:
-
         with concurrent_agent_generataion_lock:
             if self.remaining_characteristics_sample is None:
                 # if the sample does not exist, we generate it here once.
@@ -3699,12 +3682,10 @@ def generate_people(
             agent_spec = aux_generate(attempt=attempt)
         except Exception as e:
             logger.error(f&#34;Error while generating agent specification: {e}&#34;)
-
     # create the fresh agent
     if agent_spec is not None:
         # the agent is created here. This is why the present method cannot be cached. Instead, an auxiliary method is used
         # for the actual model call, so that it gets cached properly without skipping the agent creation.
-
         # protect parallel agent generation
         with concurrent_agent_generataion_lock:
             person = TinyPerson(agent_spec[&#34;name&#34;])

@@ -48,7 +48,6 @@ from tinytroupe.utils import JsonSerializableRegistry, name_or_empty, repeat_on_
 # to protect from race conditions when running agents in parallel
 concurrent_agent_action_lock = threading.Lock()
 
-
 #######################################################################################################################
 # TinyPerson itself
 #######################################################################################################################
@@ -124,7 +123,6 @@ class TinyPerson(JsonSerializableRegistry):
 
         if episodic_memory is not None:
             self.episodic_memory = episodic_memory
-
         if semantic_memory is not None:
             self.semantic_memory = semantic_memory
 
@@ -157,7 +155,6 @@ class TinyPerson(JsonSerializableRegistry):
         ############################################################
 
         self.current_messages = []
-
         # the current environment in which the agent is acting
         self.environment = None
 
@@ -474,7 +471,6 @@ class TinyPerson(JsonSerializableRegistry):
             else:
                 return None  # If the path is invalid, return None
         return value
-
     @transactional()
     def import_fragment(self, path):
         &#34;&#34;&#34;
@@ -511,7 +507,6 @@ class TinyPerson(JsonSerializableRegistry):
 
         # must reset prompt after adding to configuration
         self.reset_prompt()
-
     @transactional()
     def define(self, key, value, merge=False, overwrite_scalars=True):
         &#34;&#34;&#34;
@@ -628,7 +623,6 @@ class TinyPerson(JsonSerializableRegistry):
         &#34;&#34;&#34;
         for faculty in mental_faculties:
             self.add_mental_faculty(faculty)
-
         return self
 
     def add_mental_faculty(self, faculty):
@@ -1096,7 +1090,6 @@ class TinyPerson(JsonSerializableRegistry):
         logger.info(f&#34;Reading document from web URL: {web_url}&#34;)
 
         self.semantic_memory.add_web_url(web_url)
-
     @transactional()
     def move_to(self, location, context=[]):
         &#34;&#34;&#34;
@@ -1463,7 +1456,6 @@ class TinyPerson(JsonSerializableRegistry):
                 )
                 source = content[&#34;stimuli&#34;][0].get(&#34;source&#34;, None)
                 target = self.name
-
             elif kind == &#34;action&#34;:
                 rendering = self._pretty_action(
                     role=role,
@@ -1925,7 +1917,6 @@ class TinyPerson(JsonSerializableRegistry):
         if suppress_memory:
             suppress_attributes.append(&#34;episodic_memory&#34;)
             suppress_attributes.append(&#34;semantic_memory&#34;)
-
         # should we suppress the mental state?
         if suppress_mental_state:
             suppress_attributes.append(&#34;_mental_state&#34;)
@@ -2085,7 +2076,6 @@ class TinyPerson(JsonSerializableRegistry):
             return TinyPerson.all_agents[name]
         else:
             return None
-
     @staticmethod
     def all_agents_names():
         &#34;&#34;&#34;
@@ -2261,7 +2251,6 @@ class TinyPerson(JsonSerializableRegistry):
 
         if episodic_memory is not None:
             self.episodic_memory = episodic_memory
-
         if semantic_memory is not None:
             self.semantic_memory = semantic_memory
 
@@ -2294,7 +2283,6 @@ class TinyPerson(JsonSerializableRegistry):
         ############################################################
 
         self.current_messages = []
-
         # the current environment in which the agent is acting
         self.environment = None
 
@@ -2611,7 +2599,6 @@ class TinyPerson(JsonSerializableRegistry):
             else:
                 return None  # If the path is invalid, return None
         return value
-
     @transactional()
     def import_fragment(self, path):
         &#34;&#34;&#34;
@@ -2648,7 +2635,6 @@ class TinyPerson(JsonSerializableRegistry):
 
         # must reset prompt after adding to configuration
         self.reset_prompt()
-
     @transactional()
     def define(self, key, value, merge=False, overwrite_scalars=True):
         &#34;&#34;&#34;
@@ -2765,7 +2751,6 @@ class TinyPerson(JsonSerializableRegistry):
         &#34;&#34;&#34;
         for faculty in mental_faculties:
             self.add_mental_faculty(faculty)
-
         return self
 
     def add_mental_faculty(self, faculty):
@@ -3233,7 +3218,6 @@ class TinyPerson(JsonSerializableRegistry):
         logger.info(f&#34;Reading document from web URL: {web_url}&#34;)
 
         self.semantic_memory.add_web_url(web_url)
-
     @transactional()
     def move_to(self, location, context=[]):
         &#34;&#34;&#34;
@@ -3600,7 +3584,6 @@ class TinyPerson(JsonSerializableRegistry):
                 )
                 source = content[&#34;stimuli&#34;][0].get(&#34;source&#34;, None)
                 target = self.name
-
             elif kind == &#34;action&#34;:
                 rendering = self._pretty_action(
                     role=role,
@@ -4062,7 +4045,6 @@ class TinyPerson(JsonSerializableRegistry):
         if suppress_memory:
             suppress_attributes.append(&#34;episodic_memory&#34;)
             suppress_attributes.append(&#34;semantic_memory&#34;)
-
         # should we suppress the mental state?
         if suppress_mental_state:
             suppress_attributes.append(&#34;_mental_state&#34;)
@@ -4222,7 +4204,6 @@ class TinyPerson(JsonSerializableRegistry):
             return TinyPerson.all_agents[name]
         else:
             return None
-
     @staticmethod
     def all_agents_names():
         &#34;&#34;&#34;
@@ -4552,7 +4533,6 @@ def load_specification(
     if suppress_memory:
         suppress_attributes.append(&#34;episodic_memory&#34;)
         suppress_attributes.append(&#34;semantic_memory&#34;)
-
     # should we suppress the mental state?
     if suppress_mental_state:
         suppress_attributes.append(&#34;_mental_state&#34;)
@@ -4758,7 +4738,6 @@ def accessible_agents(self):
     &#34;&#34;&#34;
     for faculty in mental_faculties:
         self.add_mental_faculty(faculty)
-
     return self</code></pre>
 </details>
 </dd>

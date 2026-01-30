@@ -18,7 +18,6 @@ monitor_thread = None
 
 _DELAY = 0  # seconds
 
-
 @pytest.fixture(autouse=True)
 def pause_between_tests():
     """Fixture to add a delay between tests to reduce resource contention."""

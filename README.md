@@ -101,6 +101,7 @@ Let's begin with a simple customer interview scenario, where a business consulta
 </p>
 
 The conversation can go on for a few steps to dig deeper and deeper until the consultant is satisfied with the information gathered; for instance, a concrete project idea:
+The conversation can go on for a few steps to dig deeper and deeper until the consultant is satisfied with the information gathered; for instance, a concrete project idea:
 <p align="center">
   <img src="./docs/example_screenshot_customer-interview-2.png" alt="An example.">
 </p>
@@ -523,6 +524,7 @@ Oscar --> Lisa: [CONVERSATION]
            > exotic places, playing the guitar, and reading science fiction books. How about you?
 ```
 
+`TinyWorld` enforces very little constraints on the possible interactions. Subclasses, however, are supposed to provide more structured environments. 
 `TinyWorld` enforces very little constraints on the possible interactions. Subclasses, however, are supposed to provide more structured environments. 
 
 ### Interactive Agent Exploration

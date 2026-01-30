@@ -139,22 +139,18 @@ def test_apply_style_with_different_styles():
     for style, result in results.items():
         logger.debug(f"{style} styling result: {result}")
 
-
 def test_context_cache_usage():
     """Test that context cache is properly used when enabled."""
     # Create styler with context caching enabled
     styler = TinyStyler(use_past_results_in_context=True)
-
     # First styling
     first_content = "The team completed the project ahead of schedule."
     first_style = "formal"
     first_result = styler.apply_style(content=first_content, style=first_style)
-
     # Second styling - should have context from first
     second_content = "We saved 15% on the project budget."
     second_style = "casual"
     second_result = styler.apply_style(content=second_content, style=second_style)
-
     # Verify context cache has been populated
     assert len(styler.context_cache) == 2, "Context cache should contain 2 entries"
     assert styler.context_cache[0]["original"] == first_content

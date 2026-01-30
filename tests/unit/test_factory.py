@@ -41,7 +41,6 @@ def test_generate_person(setup):
 
 def test_generate_person_with_different_temperatures(setup):
     """Test person generation with different temperature settings.
-
     Note: This test only runs for models that contain 'gpt-4' in their name,
     as other models (like gpt-5-mini) don't support custom temperatures.
     """
@@ -243,7 +242,6 @@ def test_create_factory_from_demography_file(setup):
         for person in people:
             assert person.name is not None
             # Should have reasonable characteristics based on Brazilian demographics
-
     finally:
         os.unlink(temp_file_path)
 
@@ -501,7 +499,6 @@ def test_factory_complex_market_research_scenario(setup):
         assert person.name is not None
         bio = person.minibio()
         assert len(bio) > 30  # Should have substantial biography
-
     # Names should be unique across all segments
     all_names = [p.name for p in singles + families + couples]
     assert len(set(all_names)) == len(all_names)
@@ -709,12 +706,10 @@ def test_large_scale_generation_performance_and_consistency(setup):
     ages = []
     names = []
     bios = []
-
     for person in people:
         assert person is not None
         assert person.name is not None
         assert len(person.name.strip()) > 0
-
         # Check age attribute exists and is reasonable
         age = person.get("age")
         if age is not None:

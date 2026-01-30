@@ -1087,7 +1087,6 @@ this class allows to define a precondition function, which effectivelly turns a 
         # the chat with the LLM is preserved until the proposition is re-evaluated. While it is available,
         # the chat can be used to follow up on the proposition, e.g., to ask for more details about the evaluation.
         self.llm_chat = None
-
         self.value = None
         self.justification = None
         self.confidence = None
@@ -1096,7 +1095,6 @@ this class allows to define a precondition function, which effectivelly turns a 
     def __copy__(self):
         &#34;&#34;&#34;
         Create a shallow copy of the proposition without any evaluation state.
-
         Returns:
             Proposition: A new proposition with the same configuration parameters.
         &#34;&#34;&#34;
@@ -1115,7 +1113,6 @@ this class allows to define a precondition function, which effectivelly turns a 
     def copy(self):
         &#34;&#34;&#34;
         Create a shallow copy of the proposition without any evaluation state.
-
         Returns:
             Proposition: A new proposition with the same configuration parameters.
         &#34;&#34;&#34;
@@ -1413,7 +1410,6 @@ this class allows to define a precondition function, which effectivelly turns a 
             return self.value
         else:
             return self.full_evaluation_response
-
     def recommendations_for_improvement(self):
         &#34;&#34;&#34;
         Get recommendations for improving the proposition.
@@ -1684,7 +1680,6 @@ this class allows to define a precondition function, which effectivelly turns a 
 <pre><code class="python">def copy(self):
     &#34;&#34;&#34;
     Create a shallow copy of the proposition without any evaluation state.
-
     Returns:
         Proposition: A new proposition with the same configuration parameters.
     &#34;&#34;&#34;
