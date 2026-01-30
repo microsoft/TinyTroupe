@@ -186,6 +186,7 @@ class TestEpisodicMemory:
         assert memory.fixed_prefix_length == 10
         assert memory.lookback_length == 50
 
+    @pytest.mark.core
     def test_store_and_commit_episode(self, setup):
         """Test storing values and committing episodes"""
         memory = EpisodicMemory()
@@ -225,6 +226,7 @@ class TestEpisodicMemory:
         assert len(episode_filtered) == 2
         assert all(item["type"] in ["action", "stimulus"] for item in episode_filtered)
 
+    @pytest.mark.core
     def test_count(self, setup):
         """Test counting memory items"""
         memory = EpisodicMemory()
@@ -295,6 +297,7 @@ class TestEpisodicMemory:
         assert last_3[0]["content"] == "test7"
         assert last_3[2]["content"] == "test9"
 
+    @pytest.mark.core
     def test_retrieve_all(self, setup):
         """Test retrieving all memories"""
         memory = EpisodicMemory()
@@ -369,6 +372,7 @@ class TestEpisodicMemory:
 class TestSemanticMemory:
     """Test cases for SemanticMemory class"""
 
+    @pytest.mark.core
     def test_init(self, setup):
         """Test initialization"""
         # Default initialization
@@ -385,6 +389,7 @@ class TestSemanticMemory:
         memory = SemanticMemory(memories=existing_memories)
         assert memory.memories == existing_memories
 
+    @pytest.mark.core
     def test_preprocess_value_for_storage(self, setup):
         """Test preprocessing values before storage"""
         memory = SemanticMemory()
@@ -581,6 +586,7 @@ class TestSemanticMemory:
             for result in search_results
         )
 
+    @pytest.mark.core
     def test_retrieve_relevant(self, setup):
         """Test retrieving relevant memories"""
         memory = SemanticMemory()
@@ -602,6 +608,7 @@ class TestSemanticMemory:
         # Verify the results
         assert results == expected_results
 
+    @pytest.mark.core
     def test_retrieve_all(self, setup):
         """Test retrieving all memories from semantic storage"""
         memory = SemanticMemory()

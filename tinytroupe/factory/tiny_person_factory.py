@@ -562,6 +562,7 @@ class TinyPersonFactory(TinyFactory):
         return people
 
     # TODO still make this one available?
+    @transactional()
     def _generate_people_sequentially(
         self,
         number_of_people: int = None,
@@ -602,7 +603,7 @@ class TinyPersonFactory(TinyFactory):
 
         All intermediary results are stored for later inspection.
 
-        For example, given some n > 3 and a description like
+       For example, given some n > 3 and a description like
            "Young Western people of different liberal professions."
 
         The final samples could be something like:
@@ -617,137 +618,148 @@ class TinyPersonFactory(TinyFactory):
 
         """
 
-        # a technicality - we need to use an auxiliary method to be able to use the transactional decorator effectively.
-        return self._initialize_sampling_plan_transaction(
-            n=self.population_size,
-            description=self.sampling_space_description,
-            context=self.context_text,
-        )
+        # Only compute if not already initialized
+        if self.remaining_characteristics_sample is None:
+            # a technicality - we need to use an auxiliary method to be able to use the transactional decorator effectively.
+            result = self._initialize_sampling_plan_transaction(
+                n=self.population_size,
+                description=self.sampling_space_description,
+                context=self.context_text,
+            )
+            # Assign the returned values to instance variables
+            # Use deepcopy for remaining_characteristics_sample since it will be mutated during generation
+            self.sampling_dimensions = result["sampling_dimensions"]
+            self.sampling_plan = result["sampling_plan"]
+            self.remaining_characteristics_sample = copy.deepcopy(result["remaining_characteristics_sample"])
 
+    @transactional()
     def _initialize_sampling_plan_transaction(self, n, description, context):
         """
         Auxiliary method to initialize the sampling plan. This is needed in order to be able to use the transactional decorator,
         due too a technicality - the method parameters must be such that when they change the transaction is nullified.
+        
+        Returns a dictionary with the computed sampling_dimensions, sampling_plan, and remaining_characteristics_sample.
         """
-        if self.remaining_characteristics_sample is None:
-            # sampling dimensions
-            self.sampling_dimensions = utils.try_function(
-                lambda: self._compute_sampling_dimensions(
-                    sampling_space_description=description
+        # sampling dimensions
+        sampling_dimensions = utils.try_function(
+            lambda: self._compute_sampling_dimensions(
+                sampling_space_description=description
+            ),
+            # check that the result is a dict
+            postcond_func=lambda result: isinstance(result, dict),
+            retries=15,
+        )
+        logger.info("Sampling dimensions computed successfully.")
+        logger.debug(
+            f"Sampling dimensions: {json.dumps(sampling_dimensions, indent=4)}"
+        )
+
+        # sampling plan
+        sampling_plan_result = utils.try_function(
+            lambda: self._compute_sample_plan(
+                N=n,
+                sampling_dimensions=sampling_dimensions,
+                enforce_usage_of_all_dimensions=self.enforce_usage_of_all_dimensions,
+            ),
+            # checks that the plan is a list, not an empty dictionary, a number or a string
+            postcond_func=lambda result: isinstance(result["sample_plan"], list)
+            and len(result) > 0,
+            retries=15,
+        )
+        sampling_plan = sampling_plan_result[
+            "sample_plan"
+        ]  # to make it easier for the LLM to generate the JSON, we root the list into this key.
+
+        # if the sampling plan is a dict, let' s enclose it in a list
+        if isinstance(sampling_plan, dict):
+            sampling_plan = [sampling_plan]
+            logger.warning(
+                "The sampling plan was a dictionary, enclosing it in a list to ensure it is processed correctly."
+            )
+
+        logger.info("Sampling plan computed successfully.")
+        logger.debug(f"Sampling plan: {json.dumps(sampling_plan, indent=4)}")
+
+        # Flatten the sampling plan in concrete individual samples.
+        # Use deepcopy because we'll be modifying the samples later, and we want to keep the original sampling plan intact
+        # for correct caching
+        remaining_characteristics_sample = copy.deepcopy(
+            utils.try_function(
+                lambda: self._flatten_sampling_plan(
+                    sampling_plan=sampling_plan
                 ),
-                # check that the result is a dict
-                postcond_func=lambda result: isinstance(result, dict),
                 retries=15,
             )
-            logger.info("Sampling dimensions computed successfully.")
+        )
+
+        # instead of failing, we warn if the number of samples is not equal to n, as LLMs can be bad at summing up the quantities in the sampling plan.
+        # This is not a problem, as the sampling space is still valid and can be used, though it may not be as rich as expected.
+        if len(remaining_characteristics_sample) != n:
+            logger.warning(
+                f"Expected {n} samples, but got {len(remaining_characteristics_sample)} samples. The LLM may have failed to sum up the quantities in the sampling plan correctly."
+            )
+
+        logger.info(
+            f"Sample plan has been flattened, contains {len(remaining_characteristics_sample)} total samples."
+        )
+        logger.debug(
+            f"Remaining characteristics sample: {json.dumps(remaining_characteristics_sample, indent=4)}"
+        )
+
+        # generate names for each sample individually, considering all their characteristics
+        all_used_names = TinyPersonFactory._all_used_and_precomputed_names()
+
+        for i, sample in enumerate(remaining_characteristics_sample):
             logger.debug(
-                f"Sampling dimensions: {json.dumps(self.sampling_dimensions, indent=4)}"
+                f"Generating name for sample {i+1}/{len(remaining_characteristics_sample)}"
             )
 
-            # sampling plan
-            self.sampling_plan = utils.try_function(
-                lambda: self._compute_sample_plan(
-                    N=n,
-                    sampling_dimensions=self.sampling_dimensions,
-                    enforce_usage_of_all_dimensions=self.enforce_usage_of_all_dimensions,
-                ),
-                # checks that the plan is a list, not an empty dictionary, a number or a string
-                postcond_func=lambda result: isinstance(result["sample_plan"], list)
-                and len(result) > 0,
-                retries=15,
-            )
-            self.sampling_plan = self.sampling_plan[
-                "sample_plan"
-            ]  # to make it easier for the LLM to generate the JSON, we root the list into this key.
+            # randomize the all_used_names to make the context less predictable for the LLM, thereby introducing some additional randomness.
+            # Note that we use a fixed random seed to ensure that the sampling plan is reproducible and cache can be kept.
+            TinyFactory.randomizer.shuffle(all_used_names)
 
-            # if the sampling plan is a dict, let' s enclose it in a list
-            if isinstance(self.sampling_plan, dict):
-                self.sampling_plan = [self.sampling_plan]
-                logger.warning(
-                    "The sampling plan was a dictionary, enclosing it in a list to ensure it is processed correctly."
-                )
+            # generate a name that's appropriate for this specific sample's characteristics
+            try:
 
-            logger.info("Sampling plan computed successfully.")
-            logger.debug(f"Sampling plan: {json.dumps(self.sampling_plan, indent=4)}")
+                # A dummy name to start with, in case the name generation fails.
+                sample["name"] = f"Agent_{utils.fresh_id('agents_names')}"
 
-            # Flatten the sampling plan in concrete individual samples.
-            # Use deepcopy because we'll be modifying the samples later, and we want to keep the original sampling plan intact
-            # for correct caching
-            self.remaining_characteristics_sample = copy.deepcopy(
-                utils.try_function(
-                    lambda: self._flatten_sampling_plan(
-                        sampling_plan=self.sampling_plan
+                name = utils.try_function(
+                    lambda: self._generate_name_for_sample(
+                        sample_characteristics=sample,
+                        already_generated_names=all_used_names,
                     ),
+                    # ensure the name is not in already used names
+                    postcond_func=lambda result: result not in all_used_names,
                     retries=15,
                 )
-            )
 
-            # instead of failing, we warn if the number of samples is not equal to n, as LLMs can be bad at summing up the quantities in the sampling plan.
-            # This is not a problem, as the sampling space is still valid and can be used, though it may not be as rich as expected.
-            if len(self.remaining_characteristics_sample) != n:
-                logger.warning(
-                    f"Expected {n} samples, but got {len(self.remaining_characteristics_sample)} samples. The LLM may have failed to sum up the quantities in the sampling plan correctly."
-                )
+                sample["name"] = name
+                all_used_names.append(name)
 
-            logger.info(
-                f"Sample plan has been flattened, contains {len(self.remaining_characteristics_sample)} total samples."
-            )
-            logger.debug(
-                f"Remaining characteristics sample: {json.dumps(self.remaining_characteristics_sample, indent=4)}"
-            )
+            except Exception as e:
+                logger.error(f"Error generating name for sample {i}: {e}")
+                # fallback: use a simple default name with index
+                fallback_name = f"Person_{i}_{sample.get('gender', 'unknown')}"
+                sample["name"] = fallback_name
+                all_used_names.append(fallback_name)
 
-            # generate names for each sample individually, considering all their characteristics
-            all_used_names = TinyPersonFactory._all_used_and_precomputed_names()
+        logger.info("Names generated for all samples in the sampling plan.")
 
-            for i, sample in enumerate(self.remaining_characteristics_sample):
-                logger.debug(
-                    f"Generating name for sample {i+1}/{len(self.remaining_characteristics_sample)}"
-                )
-
-                # randomize the all_used_names to make the context less predictable for the LLM, thereby introducing some additional randomness.
-                # Note that we use a fixed random seed to ensure that the sampling plan is reproducible and cache can be kept.
-                TinyFactory.randomizer.shuffle(all_used_names)
-
-                # generate a name that's appropriate for this specific sample's characteristics
-                try:
-
-                    # A dummy name to start with, in case the name generation fails.
-                    sample["name"] = f"Agent_{utils.fresh_id('agents_names')}"
-
-                    name = utils.try_function(
-                        lambda: self._generate_name_for_sample(
-                            sample_characteristics=sample,
-                            already_generated_names=all_used_names,
-                        ),
-                        # ensure the name is not in already used names
-                        postcond_func=lambda result: result not in all_used_names,
-                        retries=15,
-                    )
-
-                    sample["name"] = name
-                    all_used_names.append(name)
-
-                except Exception as e:
-                    logger.error(f"Error generating name for sample {i}: {e}")
-                    # fallback: use a simple default name with index
-                    fallback_name = f"Person_{i}_{sample.get('gender', 'unknown')}"
-                    sample["name"] = fallback_name
-                    all_used_names.append(fallback_name)
-
-            logger.info("Names generated for all samples in the sampling plan.")
-
-            # update the global list of unique names
-            new_names = [
-                sample["name"] for sample in self.remaining_characteristics_sample
-            ]
-            TinyPersonFactory.all_unique_names = list(
-                set(TinyPersonFactory.all_unique_names + new_names)
-            )
-
-        else:
-            raise ValueError(
-                "Sampling plan already initialized. Cannot reinitialize it."
-            )
+        # update the global list of unique names
+        new_names = [
+            sample["name"] for sample in remaining_characteristics_sample
+        ]
+        TinyPersonFactory.all_unique_names = list(
+            set(TinyPersonFactory.all_unique_names + new_names)
+        )
+        
+        # Return the computed values so they can be cached and restored properly
+        return {
+            "sampling_dimensions": sampling_dimensions,
+            "sampling_plan": sampling_plan,
+            "remaining_characteristics_sample": remaining_characteristics_sample
+        }
 
     @classmethod
     def _all_used_and_precomputed_names(cls) -> list:

@@ -295,13 +295,13 @@ class InPlaceExperimentRunner:
 
     def _load_config(self, config_file_path: str):
         import json
-        with open(config_file_path, &#39;r&#39;) as file:
+        with open(config_file_path, &#39;r&#39;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as file:
             config = json.load(file)
         return config
     
     def _save_config(self):
         import json
-        with open(self.config_file_path, &#39;w&#39;) as file:
+        with open(self.config_file_path, &#39;w&#39;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as file:
             json.dump(self.experiment_config, file, indent=4)</code></pre>
 </details>
 </section>
@@ -589,13 +589,13 @@ class InPlaceExperimentRunner:
 
     def _load_config(self, config_file_path: str):
         import json
-        with open(config_file_path, &#39;r&#39;) as file:
+        with open(config_file_path, &#39;r&#39;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as file:
             config = json.load(file)
         return config
     
     def _save_config(self):
         import json
-        with open(self.config_file_path, &#39;w&#39;) as file:
+        with open(self.config_file_path, &#39;w&#39;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as file:
             json.dump(self.experiment_config, file, indent=4)</code></pre>
 </details>
 <h3>Methods</h3>

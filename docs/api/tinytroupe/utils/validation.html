@@ -30,6 +30,7 @@
 import sys
 import unicodedata
 
+from pydantic import ValidationError, BaseModel
 from tinytroupe.utils import logger
 
 ################################################################################
@@ -74,7 +75,24 @@ def sanitize_dict(value: dict) -&gt; dict:
             value[k] = sanitize_raw_string(v)
 
     # ensure that the dictionary is not too deeply nested
-    return value</code></pre>
+    return value
+
+def to_pydantic_or_sanitized_dict(value: dict, model: BaseModel=None) -&gt; dict:
+    &#34;&#34;&#34;
+    Converts the specified model response dictionary to a Pydantic model instance, or sanitizes it if the model is not valid.
+    It is assumed that the dict contains the `content` key.
+    &#34;&#34;&#34;
+
+    if model is not None and (isinstance(model, type) and issubclass(model, BaseModel)):
+        # If a model is provided, try to validate the value against the model
+        try:
+            res = model.model_validate(sanitize_dict(json.loads(value[&#39;content&#39;])))
+            return res
+        except ValidationError as e:
+            logger.warning(f&#34;Validation error: {e}&#34;)
+            return sanitize_dict(value)
+    else:
+        return sanitize_dict(value)  # If no model, just sanitize the dict</code></pre>
 </details>
 </section>
 <section>
@@ -160,6 +178,34 @@ def sanitize_dict(value: dict) -&gt; dict:
     return value[:sys.maxsize]</code></pre>
 </details>
 </dd>
+<dt id="tinytroupe.utils.validation.to_pydantic_or_sanitized_dict"><code class="name flex">
+<span>def <span class="ident">to_pydantic_or_sanitized_dict</span></span>(<span>value: dict, model: pydantic.main.BaseModel = None) ‑> dict</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Converts the specified model response dictionary to a Pydantic model instance, or sanitizes it if the model is not valid.
+It is assumed that the dict contains the <code>content</code> key.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_pydantic_or_sanitized_dict(value: dict, model: BaseModel=None) -&gt; dict:
+    &#34;&#34;&#34;
+    Converts the specified model response dictionary to a Pydantic model instance, or sanitizes it if the model is not valid.
+    It is assumed that the dict contains the `content` key.
+    &#34;&#34;&#34;
+
+    if model is not None and (isinstance(model, type) and issubclass(model, BaseModel)):
+        # If a model is provided, try to validate the value against the model
+        try:
+            res = model.model_validate(sanitize_dict(json.loads(value[&#39;content&#39;])))
+            return res
+        except ValidationError as e:
+            logger.warning(f&#34;Validation error: {e}&#34;)
+            return sanitize_dict(value)
+    else:
+        return sanitize_dict(value)  # If no model, just sanitize the dict</code></pre>
+</details>
+</dd>
 </dl>
 </section>
 <section>
@@ -181,6 +227,7 @@ def sanitize_dict(value: dict) -&gt; dict:
 <li><code><a title="tinytroupe.utils.validation.check_valid_fields" href="#tinytroupe.utils.validation.check_valid_fields">check_valid_fields</a></code></li>
 <li><code><a title="tinytroupe.utils.validation.sanitize_dict" href="#tinytroupe.utils.validation.sanitize_dict">sanitize_dict</a></code></li>
 <li><code><a title="tinytroupe.utils.validation.sanitize_raw_string" href="#tinytroupe.utils.validation.sanitize_raw_string">sanitize_raw_string</a></code></li>
+<li><code><a title="tinytroupe.utils.validation.to_pydantic_or_sanitized_dict" href="#tinytroupe.utils.validation.to_pydantic_or_sanitized_dict">to_pydantic_or_sanitized_dict</a></code></li>
 </ul>
 </li>
 </ul>

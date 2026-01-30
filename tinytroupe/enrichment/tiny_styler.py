@@ -82,4 +82,6 @@ class TinyStyler(JsonSerializableRegistry):
                 
             return styled_content
         else:
-            return None
+            # Fallback: return original content when LLM fails
+            logger.warning(f"LLM returned None for styling. Returning original content.")
+            return content

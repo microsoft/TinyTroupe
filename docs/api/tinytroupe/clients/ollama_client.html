@@ -1,0 +1,815 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>tinytroupe.clients.ollama_client API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>tinytroupe.clients.ollama_client</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import logging
+import os
+import pickle
+import time
+
+import requests
+
+from tinytroupe import config_manager, utils
+
+logger = logging.getLogger(&#34;tinytroupe&#34;)
+
+
+class OllamaClient:
+    &#34;&#34;&#34;
+    A client for interacting with the Ollama API using direct HTTP requests.
+    &#34;&#34;&#34;
+
+    @config_manager.config_defaults(
+        cache_api_calls=&#34;cache_api_calls&#34;, cache_file_name=&#34;cache_file_name&#34;
+    )
+    def __init__(self, cache_api_calls=None, cache_file_name=None) -&gt; None:
+        logger.debug(&#34;Initializing OllamaClient&#34;)
+        self.base_url = config_manager.get(&#34;base_url&#34;, &#34;http://localhost:11434/v1&#34;)
+        logger.debug(f&#34;base_url set to {self.base_url}&#34;)
+
+        # Set up caching
+        self.cache_api_calls = cache_api_calls
+        self.cache_file_name = cache_file_name
+        if self.cache_api_calls:
+            self.api_cache = self._load_cache()
+
+    def set_api_cache(self, cache_api_calls, cache_file_name=None):
+        &#34;&#34;&#34;
+        Enables or disables the caching of API calls.
+
+        Args:
+        cache_file_name (str): The name of the file to use for caching API calls.
+        &#34;&#34;&#34;
+        self.cache_api_calls = cache_api_calls
+        self.cache_file_name = cache_file_name
+        if self.cache_api_calls:
+            # load the cache, if any
+            self.api_cache = self._load_cache()
+
+    @config_manager.config_defaults(
+        model=&#34;model&#34;,
+        temperature=&#34;temperature&#34;,
+        top_p=&#34;top_p&#34;,
+        frequency_penalty=&#34;frequency_penalty&#34;,
+        presence_penalty=&#34;presence_penalty&#34;,
+        num_ctx=&#34;num_ctx&#34;,
+        timeout=&#34;timeout&#34;,
+        max_attempts=&#34;max_attempts&#34;,
+        waiting_time=&#34;waiting_time&#34;,
+        exponential_backoff_factor=&#34;exponential_backoff_factor&#34;,
+        response_format=None,
+        echo=None,
+    )
+    def send_message(
+        self,
+        current_messages,
+        dedent_messages=True,
+        model=None,
+        temperature=None,
+        max_completion_tokens=None,  # Ollama doesn&#39;t use max_completion_tokens
+        top_p=None,
+        frequency_penalty=None,
+        presence_penalty=None,
+        stop=None,
+        num_ctx=None,
+        timeout=None,
+        max_attempts=None,
+        waiting_time=None,
+        exponential_backoff_factor=None,
+        n=1,
+        response_format=None,
+        enable_pydantic_model_return=False,
+        echo=False,
+    ):
+        &#34;&#34;&#34;
+        Sends a message to the Ollama API and returns the response.
+        &#34;&#34;&#34;
+
+        from tinytroupe.clients import (  # avoid circular import
+            InvalidRequestError,
+            NonTerminalError,
+        )
+
+        def aux_exponential_backoff():
+            nonlocal waiting_time
+            logger.info(
+                f&#34;Request failed. Waiting {waiting_time} seconds between requests...&#34;
+            )
+            time.sleep(waiting_time)
+            waiting_time = waiting_time * exponential_backoff_factor
+
+        # Prepare the API parameters
+        chat_api_params = {
+            &#34;model&#34;: model,
+            &#34;messages&#34;: current_messages,
+            &#34;options&#34;: {
+                &#34;temperature&#34;: temperature,
+                &#34;top_p&#34;: top_p,
+                &#34;frequency_penalty&#34;: frequency_penalty,
+                &#34;presence_penalty&#34;: presence_penalty,
+                &#34;stop&#34;: stop,
+                &#34;num_ctx&#34;: num_ctx,  # special Ollama parameter for the input size
+            },
+            &#34;stream&#34;: False,
+            &#34;n&#34;: n,
+        }
+
+        # remove any parameter that is None, so we use the API defaults
+        chat_api_params = {k: v for k, v in chat_api_params.items() if v is not None}
+        # ... within options too
+        chat_api_params[&#34;options&#34;] = {
+            k: v for k, v in chat_api_params[&#34;options&#34;].items() if v is not None
+        }
+
+        i = 0
+        while i &lt; max_attempts:
+            try:
+                i += 1
+
+                start_time = time.monotonic()
+                logger.debug(f&#34;Sending request to Ollama API. Attempt {i}&#34;)
+
+                # Check cache first
+                cache_key = str((model, chat_api_params))
+                if self.cache_api_calls and (cache_key in self.api_cache):
+                    response = self.api_cache[cache_key]
+                else:
+                    logger.info(
+                        f&#34;Waiting {waiting_time} seconds before next API request...&#34;
+                    )
+                    time.sleep(waiting_time)
+
+                    # Make the API call
+                    response = self._make_request(
+                        &#34;chat/completions&#34;,
+                        method=&#34;POST&#34;,
+                        json=chat_api_params,
+                        timeout=timeout,
+                    )
+
+                    # Cache the response if caching is enabled
+                    if self.cache_api_calls:
+                        self.api_cache[cache_key] = response
+                        self._save_cache()
+
+                end_time = time.monotonic()
+                logger.debug(
+                    f&#34;Got response in {end_time - start_time:.2f} seconds after {i} attempts&#34;
+                )
+
+                # Extract and return the relevant part of the response
+                return utils.sanitize_dict(self._extract_response(response))
+
+            except requests.exceptions.RequestException as e:
+                logger.error(f&#34;[{i}] Request error: {e}&#34;)
+                if &#34;Invalid request&#34; in str(e):
+                    raise InvalidRequestError(str(e))
+                aux_exponential_backoff()
+
+            except Exception as e:
+                logger.error(f&#34;[{i}] Error: {e}&#34;)
+                aux_exponential_backoff()
+
+        logger.error(f&#34;Failed to get response after {max_attempts} attempts&#34;)
+        return None
+
+    def _make_request(self, endpoint, method=&#34;POST&#34;, **kwargs):
+        &#34;&#34;&#34;
+        Makes a request to the Ollama API.
+        &#34;&#34;&#34;
+        url = f&#34;{self.base_url}/{endpoint}&#34;
+        logger.debug(f&#34;Making {method} request to {url}&#34;)
+        logger.debug(f&#34;Request parameters: {kwargs}&#34;)
+
+        response = requests.request(method, url, **kwargs)
+        response.raise_for_status()
+
+        return response.json()
+
+    def _extract_response(self, response):
+        &#34;&#34;&#34;
+        Extracts the relevant information from the API response.
+        &#34;&#34;&#34;
+        logger.debug(f&#34;Extracting from response: {response}&#34;)
+        try:
+            return {
+                &#34;role&#34;: response[&#34;choices&#34;][0][&#34;message&#34;][&#34;role&#34;],
+                &#34;content&#34;: response[&#34;choices&#34;][0][&#34;message&#34;][&#34;content&#34;],
+            }
+        except (KeyError, IndexError) as e:
+            logger.error(f&#34;Error extracting response: {e}&#34;)
+            logger.error(f&#34;Response structure: {response}&#34;)
+            raise ValueError(&#34;Invalid response format from Ollama&#34;)
+
+    def _save_cache(self):
+        &#34;&#34;&#34;
+        Saves the API cache to disk using pickle.
+        &#34;&#34;&#34;
+        with open(self.cache_file_name, &#34;wb&#34;) as f:
+            pickle.dump(self.api_cache, f)
+
+    def _load_cache(self):
+        &#34;&#34;&#34;
+        Loads the API cache from disk.
+        &#34;&#34;&#34;
+        if os.path.exists(self.cache_file_name):
+            with open(self.cache_file_name, &#34;rb&#34;) as f:
+                return pickle.load(f)
+        return {}
+
+    def get_models(self):
+        &#34;&#34;&#34;
+        Gets the list of available models from Ollama.
+        &#34;&#34;&#34;
+        try:
+            response = self._make_request(&#34;models&#34;, method=&#34;GET&#34;)
+            return response.get(&#34;models&#34;, [])
+        except Exception as e:
+            logger.error(f&#34;Error getting models: {e}&#34;)
+            return []
+
+    def _count_tokens(self, messages: list, model: str):
+        &#34;&#34;&#34;
+        Count the number of tokens in a list of messages using Ollama&#39;s API.
+
+        Args:
+            messages (list): A list of dictionaries representing the conversation history.
+            model (str): The name of the model to use for encoding the string.
+
+        Returns:
+            int or None: The number of tokens in the messages, or None if an error occurs.
+        &#34;&#34;&#34;
+        try:
+            # Combine all message content into a single string
+            combined_text = &#34;&#34;
+            for message in messages:
+                # Add role/name if present
+                if &#34;name&#34; in message:
+                    combined_text += f&#34;{message[&#39;name&#39;]}: &#34;
+                if &#34;role&#34; in message:
+                    combined_text += f&#34;{message[&#39;role&#39;]}: &#34;
+                # Add message content
+                if &#34;content&#34; in message:
+                    combined_text += f&#34;{message[&#39;content&#39;]}\n&#34;
+
+            # Prepare the request payload
+            payload = {
+                &#34;model&#34;: model,
+                &#34;input&#34;: combined_text,
+                &#34;options&#34;: {
+                    &#34;temperature&#34;: 0  # Set to 0 since we only care about token count
+                },
+            }
+
+            # Make the request to Ollama&#39;s API
+            temp_url = self.base_url.replace(
+                &#34;/v1&#34;, &#34;&#34;
+            )  # Not sure what happened in their API, complete hack
+            response = requests.post(f&#34;{temp_url}/api/embed&#34;, json=payload)
+            response.raise_for_status()
+
+            # Extract token count from response
+            data = response.json()
+            token_count = data.get(&#34;prompt_eval_count&#34;, 0)
+
+            return token_count
+
+        except requests.exceptions.RequestException as e:
+            logger.error(f&#34;Error making request to Ollama API: {e}&#34;)
+            return None
+        except Exception as e:
+            logger.error(f&#34;Error counting tokens: {e}&#34;)
+            return None</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="tinytroupe.clients.ollama_client.OllamaClient"><code class="flex name class">
+<span>class <span class="ident">OllamaClient</span></span>
+<span>(</span><span>cache_api_calls=None, cache_file_name=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A client for interacting with the Ollama API using direct HTTP requests.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class OllamaClient:
+    &#34;&#34;&#34;
+    A client for interacting with the Ollama API using direct HTTP requests.
+    &#34;&#34;&#34;
+
+    @config_manager.config_defaults(
+        cache_api_calls=&#34;cache_api_calls&#34;, cache_file_name=&#34;cache_file_name&#34;
+    )
+    def __init__(self, cache_api_calls=None, cache_file_name=None) -&gt; None:
+        logger.debug(&#34;Initializing OllamaClient&#34;)
+        self.base_url = config_manager.get(&#34;base_url&#34;, &#34;http://localhost:11434/v1&#34;)
+        logger.debug(f&#34;base_url set to {self.base_url}&#34;)
+
+        # Set up caching
+        self.cache_api_calls = cache_api_calls
+        self.cache_file_name = cache_file_name
+        if self.cache_api_calls:
+            self.api_cache = self._load_cache()
+
+    def set_api_cache(self, cache_api_calls, cache_file_name=None):
+        &#34;&#34;&#34;
+        Enables or disables the caching of API calls.
+
+        Args:
+        cache_file_name (str): The name of the file to use for caching API calls.
+        &#34;&#34;&#34;
+        self.cache_api_calls = cache_api_calls
+        self.cache_file_name = cache_file_name
+        if self.cache_api_calls:
+            # load the cache, if any
+            self.api_cache = self._load_cache()
+
+    @config_manager.config_defaults(
+        model=&#34;model&#34;,
+        temperature=&#34;temperature&#34;,
+        top_p=&#34;top_p&#34;,
+        frequency_penalty=&#34;frequency_penalty&#34;,
+        presence_penalty=&#34;presence_penalty&#34;,
+        num_ctx=&#34;num_ctx&#34;,
+        timeout=&#34;timeout&#34;,
+        max_attempts=&#34;max_attempts&#34;,
+        waiting_time=&#34;waiting_time&#34;,
+        exponential_backoff_factor=&#34;exponential_backoff_factor&#34;,
+        response_format=None,
+        echo=None,
+    )
+    def send_message(
+        self,
+        current_messages,
+        dedent_messages=True,
+        model=None,
+        temperature=None,
+        max_completion_tokens=None,  # Ollama doesn&#39;t use max_completion_tokens
+        top_p=None,
+        frequency_penalty=None,
+        presence_penalty=None,
+        stop=None,
+        num_ctx=None,
+        timeout=None,
+        max_attempts=None,
+        waiting_time=None,
+        exponential_backoff_factor=None,
+        n=1,
+        response_format=None,
+        enable_pydantic_model_return=False,
+        echo=False,
+    ):
+        &#34;&#34;&#34;
+        Sends a message to the Ollama API and returns the response.
+        &#34;&#34;&#34;
+
+        from tinytroupe.clients import (  # avoid circular import
+            InvalidRequestError,
+            NonTerminalError,
+        )
+
+        def aux_exponential_backoff():
+            nonlocal waiting_time
+            logger.info(
+                f&#34;Request failed. Waiting {waiting_time} seconds between requests...&#34;
+            )
+            time.sleep(waiting_time)
+            waiting_time = waiting_time * exponential_backoff_factor
+
+        # Prepare the API parameters
+        chat_api_params = {
+            &#34;model&#34;: model,
+            &#34;messages&#34;: current_messages,
+            &#34;options&#34;: {
+                &#34;temperature&#34;: temperature,
+                &#34;top_p&#34;: top_p,
+                &#34;frequency_penalty&#34;: frequency_penalty,
+                &#34;presence_penalty&#34;: presence_penalty,
+                &#34;stop&#34;: stop,
+                &#34;num_ctx&#34;: num_ctx,  # special Ollama parameter for the input size
+            },
+            &#34;stream&#34;: False,
+            &#34;n&#34;: n,
+        }
+
+        # remove any parameter that is None, so we use the API defaults
+        chat_api_params = {k: v for k, v in chat_api_params.items() if v is not None}
+        # ... within options too
+        chat_api_params[&#34;options&#34;] = {
+            k: v for k, v in chat_api_params[&#34;options&#34;].items() if v is not None
+        }
+
+        i = 0
+        while i &lt; max_attempts:
+            try:
+                i += 1
+
+                start_time = time.monotonic()
+                logger.debug(f&#34;Sending request to Ollama API. Attempt {i}&#34;)
+
+                # Check cache first
+                cache_key = str((model, chat_api_params))
+                if self.cache_api_calls and (cache_key in self.api_cache):
+                    response = self.api_cache[cache_key]
+                else:
+                    logger.info(
+                        f&#34;Waiting {waiting_time} seconds before next API request...&#34;
+                    )
+                    time.sleep(waiting_time)
+
+                    # Make the API call
+                    response = self._make_request(
+                        &#34;chat/completions&#34;,
+                        method=&#34;POST&#34;,
+                        json=chat_api_params,
+                        timeout=timeout,
+                    )
+
+                    # Cache the response if caching is enabled
+                    if self.cache_api_calls:
+                        self.api_cache[cache_key] = response
+                        self._save_cache()
+
+                end_time = time.monotonic()
+                logger.debug(
+                    f&#34;Got response in {end_time - start_time:.2f} seconds after {i} attempts&#34;
+                )
+
+                # Extract and return the relevant part of the response
+                return utils.sanitize_dict(self._extract_response(response))
+
+            except requests.exceptions.RequestException as e:
+                logger.error(f&#34;[{i}] Request error: {e}&#34;)
+                if &#34;Invalid request&#34; in str(e):
+                    raise InvalidRequestError(str(e))
+                aux_exponential_backoff()
+
+            except Exception as e:
+                logger.error(f&#34;[{i}] Error: {e}&#34;)
+                aux_exponential_backoff()
+
+        logger.error(f&#34;Failed to get response after {max_attempts} attempts&#34;)
+        return None
+
+    def _make_request(self, endpoint, method=&#34;POST&#34;, **kwargs):
+        &#34;&#34;&#34;
+        Makes a request to the Ollama API.
+        &#34;&#34;&#34;
+        url = f&#34;{self.base_url}/{endpoint}&#34;
+        logger.debug(f&#34;Making {method} request to {url}&#34;)
+        logger.debug(f&#34;Request parameters: {kwargs}&#34;)
+
+        response = requests.request(method, url, **kwargs)
+        response.raise_for_status()
+
+        return response.json()
+
+    def _extract_response(self, response):
+        &#34;&#34;&#34;
+        Extracts the relevant information from the API response.
+        &#34;&#34;&#34;
+        logger.debug(f&#34;Extracting from response: {response}&#34;)
+        try:
+            return {
+                &#34;role&#34;: response[&#34;choices&#34;][0][&#34;message&#34;][&#34;role&#34;],
+                &#34;content&#34;: response[&#34;choices&#34;][0][&#34;message&#34;][&#34;content&#34;],
+            }
+        except (KeyError, IndexError) as e:
+            logger.error(f&#34;Error extracting response: {e}&#34;)
+            logger.error(f&#34;Response structure: {response}&#34;)
+            raise ValueError(&#34;Invalid response format from Ollama&#34;)
+
+    def _save_cache(self):
+        &#34;&#34;&#34;
+        Saves the API cache to disk using pickle.
+        &#34;&#34;&#34;
+        with open(self.cache_file_name, &#34;wb&#34;) as f:
+            pickle.dump(self.api_cache, f)
+
+    def _load_cache(self):
+        &#34;&#34;&#34;
+        Loads the API cache from disk.
+        &#34;&#34;&#34;
+        if os.path.exists(self.cache_file_name):
+            with open(self.cache_file_name, &#34;rb&#34;) as f:
+                return pickle.load(f)
+        return {}
+
+    def get_models(self):
+        &#34;&#34;&#34;
+        Gets the list of available models from Ollama.
+        &#34;&#34;&#34;
+        try:
+            response = self._make_request(&#34;models&#34;, method=&#34;GET&#34;)
+            return response.get(&#34;models&#34;, [])
+        except Exception as e:
+            logger.error(f&#34;Error getting models: {e}&#34;)
+            return []
+
+    def _count_tokens(self, messages: list, model: str):
+        &#34;&#34;&#34;
+        Count the number of tokens in a list of messages using Ollama&#39;s API.
+
+        Args:
+            messages (list): A list of dictionaries representing the conversation history.
+            model (str): The name of the model to use for encoding the string.
+
+        Returns:
+            int or None: The number of tokens in the messages, or None if an error occurs.
+        &#34;&#34;&#34;
+        try:
+            # Combine all message content into a single string
+            combined_text = &#34;&#34;
+            for message in messages:
+                # Add role/name if present
+                if &#34;name&#34; in message:
+                    combined_text += f&#34;{message[&#39;name&#39;]}: &#34;
+                if &#34;role&#34; in message:
+                    combined_text += f&#34;{message[&#39;role&#39;]}: &#34;
+                # Add message content
+                if &#34;content&#34; in message:
+                    combined_text += f&#34;{message[&#39;content&#39;]}\n&#34;
+
+            # Prepare the request payload
+            payload = {
+                &#34;model&#34;: model,
+                &#34;input&#34;: combined_text,
+                &#34;options&#34;: {
+                    &#34;temperature&#34;: 0  # Set to 0 since we only care about token count
+                },
+            }
+
+            # Make the request to Ollama&#39;s API
+            temp_url = self.base_url.replace(
+                &#34;/v1&#34;, &#34;&#34;
+            )  # Not sure what happened in their API, complete hack
+            response = requests.post(f&#34;{temp_url}/api/embed&#34;, json=payload)
+            response.raise_for_status()
+
+            # Extract token count from response
+            data = response.json()
+            token_count = data.get(&#34;prompt_eval_count&#34;, 0)
+
+            return token_count
+
+        except requests.exceptions.RequestException as e:
+            logger.error(f&#34;Error making request to Ollama API: {e}&#34;)
+            return None
+        except Exception as e:
+            logger.error(f&#34;Error counting tokens: {e}&#34;)
+            return None</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="tinytroupe.clients.ollama_client.OllamaClient.get_models"><code class="name flex">
+<span>def <span class="ident">get_models</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Gets the list of available models from Ollama.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_models(self):
+    &#34;&#34;&#34;
+    Gets the list of available models from Ollama.
+    &#34;&#34;&#34;
+    try:
+        response = self._make_request(&#34;models&#34;, method=&#34;GET&#34;)
+        return response.get(&#34;models&#34;, [])
+    except Exception as e:
+        logger.error(f&#34;Error getting models: {e}&#34;)
+        return []</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.clients.ollama_client.OllamaClient.send_message"><code class="name flex">
+<span>def <span class="ident">send_message</span></span>(<span>self, current_messages, dedent_messages=True, model=None, temperature=None, max_completion_tokens=None, top_p=None, frequency_penalty=None, presence_penalty=None, stop=None, num_ctx=None, timeout=None, max_attempts=None, waiting_time=None, exponential_backoff_factor=None, n=1, response_format=None, enable_pydantic_model_return=False, echo=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sends a message to the Ollama API and returns the response.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@config_manager.config_defaults(
+    model=&#34;model&#34;,
+    temperature=&#34;temperature&#34;,
+    top_p=&#34;top_p&#34;,
+    frequency_penalty=&#34;frequency_penalty&#34;,
+    presence_penalty=&#34;presence_penalty&#34;,
+    num_ctx=&#34;num_ctx&#34;,
+    timeout=&#34;timeout&#34;,
+    max_attempts=&#34;max_attempts&#34;,
+    waiting_time=&#34;waiting_time&#34;,
+    exponential_backoff_factor=&#34;exponential_backoff_factor&#34;,
+    response_format=None,
+    echo=None,
+)
+def send_message(
+    self,
+    current_messages,
+    dedent_messages=True,
+    model=None,
+    temperature=None,
+    max_completion_tokens=None,  # Ollama doesn&#39;t use max_completion_tokens
+    top_p=None,
+    frequency_penalty=None,
+    presence_penalty=None,
+    stop=None,
+    num_ctx=None,
+    timeout=None,
+    max_attempts=None,
+    waiting_time=None,
+    exponential_backoff_factor=None,
+    n=1,
+    response_format=None,
+    enable_pydantic_model_return=False,
+    echo=False,
+):
+    &#34;&#34;&#34;
+    Sends a message to the Ollama API and returns the response.
+    &#34;&#34;&#34;
+
+    from tinytroupe.clients import (  # avoid circular import
+        InvalidRequestError,
+        NonTerminalError,
+    )
+
+    def aux_exponential_backoff():
+        nonlocal waiting_time
+        logger.info(
+            f&#34;Request failed. Waiting {waiting_time} seconds between requests...&#34;
+        )
+        time.sleep(waiting_time)
+        waiting_time = waiting_time * exponential_backoff_factor
+
+    # Prepare the API parameters
+    chat_api_params = {
+        &#34;model&#34;: model,
+        &#34;messages&#34;: current_messages,
+        &#34;options&#34;: {
+            &#34;temperature&#34;: temperature,
+            &#34;top_p&#34;: top_p,
+            &#34;frequency_penalty&#34;: frequency_penalty,
+            &#34;presence_penalty&#34;: presence_penalty,
+            &#34;stop&#34;: stop,
+            &#34;num_ctx&#34;: num_ctx,  # special Ollama parameter for the input size
+        },
+        &#34;stream&#34;: False,
+        &#34;n&#34;: n,
+    }
+
+    # remove any parameter that is None, so we use the API defaults
+    chat_api_params = {k: v for k, v in chat_api_params.items() if v is not None}
+    # ... within options too
+    chat_api_params[&#34;options&#34;] = {
+        k: v for k, v in chat_api_params[&#34;options&#34;].items() if v is not None
+    }
+
+    i = 0
+    while i &lt; max_attempts:
+        try:
+            i += 1
+
+            start_time = time.monotonic()
+            logger.debug(f&#34;Sending request to Ollama API. Attempt {i}&#34;)
+
+            # Check cache first
+            cache_key = str((model, chat_api_params))
+            if self.cache_api_calls and (cache_key in self.api_cache):
+                response = self.api_cache[cache_key]
+            else:
+                logger.info(
+                    f&#34;Waiting {waiting_time} seconds before next API request...&#34;
+                )
+                time.sleep(waiting_time)
+
+                # Make the API call
+                response = self._make_request(
+                    &#34;chat/completions&#34;,
+                    method=&#34;POST&#34;,
+                    json=chat_api_params,
+                    timeout=timeout,
+                )
+
+                # Cache the response if caching is enabled
+                if self.cache_api_calls:
+                    self.api_cache[cache_key] = response
+                    self._save_cache()
+
+            end_time = time.monotonic()
+            logger.debug(
+                f&#34;Got response in {end_time - start_time:.2f} seconds after {i} attempts&#34;
+            )
+
+            # Extract and return the relevant part of the response
+            return utils.sanitize_dict(self._extract_response(response))
+
+        except requests.exceptions.RequestException as e:
+            logger.error(f&#34;[{i}] Request error: {e}&#34;)
+            if &#34;Invalid request&#34; in str(e):
+                raise InvalidRequestError(str(e))
+            aux_exponential_backoff()
+
+        except Exception as e:
+            logger.error(f&#34;[{i}] Error: {e}&#34;)
+            aux_exponential_backoff()
+
+    logger.error(f&#34;Failed to get response after {max_attempts} attempts&#34;)
+    return None</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.clients.ollama_client.OllamaClient.set_api_cache"><code class="name flex">
+<span>def <span class="ident">set_api_cache</span></span>(<span>self, cache_api_calls, cache_file_name=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enables or disables the caching of API calls.</p>
+<p>Args:
+cache_file_name (str): The name of the file to use for caching API calls.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_api_cache(self, cache_api_calls, cache_file_name=None):
+    &#34;&#34;&#34;
+    Enables or disables the caching of API calls.
+
+    Args:
+    cache_file_name (str): The name of the file to use for caching API calls.
+    &#34;&#34;&#34;
+    self.cache_api_calls = cache_api_calls
+    self.cache_file_name = cache_file_name
+    if self.cache_api_calls:
+        # load the cache, if any
+        self.api_cache = self._load_cache()</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="tinytroupe.clients" href="index.html">tinytroupe.clients</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="tinytroupe.clients.ollama_client.OllamaClient" href="#tinytroupe.clients.ollama_client.OllamaClient">OllamaClient</a></code></h4>
+<ul class="">
+<li><code><a title="tinytroupe.clients.ollama_client.OllamaClient.get_models" href="#tinytroupe.clients.ollama_client.OllamaClient.get_models">get_models</a></code></li>
+<li><code><a title="tinytroupe.clients.ollama_client.OllamaClient.send_message" href="#tinytroupe.clients.ollama_client.OllamaClient.send_message">send_message</a></code></li>
+<li><code><a title="tinytroupe.clients.ollama_client.OllamaClient.set_api_cache" href="#tinytroupe.clients.ollama_client.OllamaClient.set_api_cache">set_api_cache</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,202 @@
+{
+    "experiments": {
+        "Control": {
+            "results": {
+                "Hard Persona Adherence": [
+                    7,
+                    9,
+                    9,
+                    9
+                ],
+                "Self-consistency": [
+                    9,
+                    9,
+                    8,
+                    7
+                ],
+                "Fluency": [
+                    8,
+                    8,
+                    8,
+                    9
+                ],
+                "ideas_qty": [
+                    4
+                ],
+                "Task Completion": [
+                    7
+                ],
+                "Divergence": [
+                    1
+                ]
+            },
+            "statistical_test_results_vs_others": {
+                "Treatment": {
+                    "Divergence": {
+                        "test_type": "Welch t-test (unequal variance)",
+                        "control_mean": 1.0,
+                        "treatment_mean": 8.0,
+                        "mean_difference": 7.0,
+                        "percent_change": 700.0,
+                        "t_statistic": NaN,
+                        "p_value": NaN,
+                        "confidence_interval": [
+                            NaN,
+                            NaN
+                        ],
+                        "confidence_level": 0.95,
+                        "significant": false,
+                        "degrees_of_freedom": Infinity,
+                        "control_sample_size": 1,
+                        "treatment_sample_size": 1,
+                        "control_std": NaN,
+                        "treatment_std": NaN,
+                        "effect_size": 0
+                    },
+                    "Hard Persona Adherence": {
+                        "test_type": "Welch t-test (unequal variance)",
+                        "control_mean": 8.5,
+                        "treatment_mean": 8.25,
+                        "mean_difference": -0.25,
+                        "percent_change": -2.941176470588235,
+                        "t_statistic": 0.2773500981126146,
+                        "p_value": 0.7921483627559389,
+                        "confidence_interval": [
+                            -2.5371738027659094,
+                            2.0371738027659094
+                        ],
+                        "confidence_level": 0.95,
+                        "significant": false,
+                        "degrees_of_freedom": 5.226804123711339,
+                        "control_sample_size": 4,
+                        "treatment_sample_size": 4,
+                        "control_std": 1.0,
+                        "treatment_std": 1.5,
+                        "effect_size": -0.19611613513818404
+                    },
+                    "Task Completion": {
+                        "test_type": "Welch t-test (unequal variance)",
+                        "control_mean": 7.0,
+                        "treatment_mean": 9.0,
+                        "mean_difference": 2.0,
+                        "percent_change": 28.57142857142857,
+                        "t_statistic": NaN,
+                        "p_value": NaN,
+                        "confidence_interval": [
+                            NaN,
+                            NaN
+                        ],
+                        "confidence_level": 0.95,
+                        "significant": false,
+                        "degrees_of_freedom": Infinity,
+                        "control_sample_size": 1,
+                        "treatment_sample_size": 1,
+                        "control_std": NaN,
+                        "treatment_std": NaN,
+                        "effect_size": 0
+                    },
+                    "ideas_qty": {
+                        "test_type": "Welch t-test (unequal variance)",
+                        "control_mean": 4.0,
+                        "treatment_mean": 9.0,
+                        "mean_difference": 5.0,
+                        "percent_change": 125.0,
+                        "t_statistic": NaN,
+                        "p_value": NaN,
+                        "confidence_interval": [
+                            NaN,
+                            NaN
+                        ],
+                        "confidence_level": 0.95,
+                        "significant": false,
+                        "degrees_of_freedom": Infinity,
+                        "control_sample_size": 1,
+                        "treatment_sample_size": 1,
+                        "control_std": NaN,
+                        "treatment_std": NaN,
+                        "effect_size": 0
+                    },
+                    "Fluency": {
+                        "test_type": "Welch t-test (unequal variance)",
+                        "control_mean": 8.25,
+                        "treatment_mean": 6.5,
+                        "mean_difference": -1.75,
+                        "percent_change": -21.21212121212121,
+                        "t_statistic": 1.4388962906378164,
+                        "p_value": 0.23871377198029162,
+                        "confidence_interval": [
+                            -5.449197859868531,
+                            1.949197859868531
+                        ],
+                        "confidence_level": 0.95,
+                        "significant": false,
+                        "degrees_of_freedom": 3.2641916684653576,
+                        "control_sample_size": 4,
+                        "treatment_sample_size": 4,
+                        "control_std": 0.5,
+                        "treatment_std": 2.3804761428476167,
+                        "effect_size": -1.0174533245341693
+                    },
+                    "Self-consistency": {
+                        "test_type": "Welch t-test (unequal variance)",
+                        "control_mean": 8.25,
+                        "treatment_mean": 9.0,
+                        "mean_difference": 0.75,
+                        "percent_change": 9.090909090909092,
+                        "t_statistic": -1.5666989036012806,
+                        "p_value": 0.21516994256954994,
+                        "confidence_interval": [
+                            -0.7734801808290781,
+                            2.273480180829078
+                        ],
+                        "confidence_level": 0.95,
+                        "significant": false,
+                        "degrees_of_freedom": 3.0,
+                        "control_sample_size": 4,
+                        "treatment_sample_size": 4,
+                        "control_std": 0.9574271077563381,
+                        "treatment_std": 0.0,
+                        "effect_size": 1.1078234188139946
+                    }
+                }
+            }
+        },
+        "Treatment": {
+            "results": {
+                "Hard Persona Adherence": [
+                    6,
+                    9,
+                    9,
+                    9
+                ],
+                "Self-consistency": [
+                    9,
+                    9,
+                    9,
+                    9
+                ],
+                "Fluency": [
+                    8,
+                    8,
+                    3,
+                    7
+                ],
+                "ideas_qty": [
+                    9
+                ],
+                "Task Completion": [
+                    9
+                ],
+                "Divergence": [
+                    8
+                ]
+            }
+        }
+    },
+    "active_experiment": null,
+    "finished_all_experiments": true,
+    "finished_experiments": [
+        "Control",
+        "Treatment"
+    ]
+}

@@ -9,7 +9,6 @@ sys.path.insert(0, '..')
 sys.path.insert(0, '../../')
 sys.path.insert(0, '../../tinytroupe/')
 
-
 import tinytroupe
 from tinytroupe.agent import TinyPerson, TinyToolUse
 from tinytroupe.environment import TinyWorld, TinySocialNetwork
@@ -30,6 +29,7 @@ from testing_utils import *
 #@pytest.mark.timeout(300)
 class TestBasicScenarios:
 
+    @pytest.mark.core
     def test_basic_scenario_1(self):
         control.reset()
 
@@ -57,6 +57,7 @@ class TestBasicScenarios:
 
         control.end()
 
+    @pytest.mark.core
     def test_tool_usage_1(self):
 
         data_export_folder = f"{EXPORT_BASE_FOLDER}/test_tool_usage_1"

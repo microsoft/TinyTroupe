@@ -24,6 +24,7 @@ from tinytroupe.examples import (
 from tinytroupe.extraction.results_extractor import ResultsExtractor
 
 
+@pytest.mark.core
 def test_results_extractor_initialization():
     """Test ResultsExtractor initialization with default and custom parameters."""
 
@@ -53,6 +54,7 @@ def test_results_extractor_initialization():
     assert custom_extractor.default_verbose == True
 
 
+@pytest.mark.core
 def test_results_extractor_cache_initialization():
     """Test that ResultsExtractor properly initializes caches."""
 
@@ -65,6 +67,7 @@ def test_results_extractor_cache_initialization():
     assert len(extractor.world_extraction) == 0
 
 
+@pytest.mark.core
 def test_results_extractor_extract_from_agent(setup):
     """Test extracting results from a single agent using real API."""
 
@@ -180,6 +183,7 @@ def test_results_extractor_extract_from_multiple_agents(setup):
         assert agent.name in extractor.agent_extraction
 
 
+@pytest.mark.core
 def test_results_extractor_extract_from_world(setup):
     """Test extracting results from a TinyWorld environment using real API."""
 
@@ -284,6 +288,7 @@ def test_results_extractor_default_value_handling():
     assert verbose == False
 
 
+@pytest.mark.core
 def test_results_extractor_with_fields_and_hints(setup):
     """Test extractor with specific fields and hints using real API."""
 

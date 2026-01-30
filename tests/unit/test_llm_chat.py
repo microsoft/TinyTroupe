@@ -25,6 +25,7 @@ class TestLLMChat:
 
     # ==== BASIC INITIALIZATION AND CONFIGURATION TESTS ====
 
+    @pytest.mark.core
     def test_initialization(self):
         """Test that LLMChat can be initialized with system and user prompts."""
         chat = LLMChat(
@@ -80,6 +81,7 @@ class TestLLMChat:
 
     # ==== BASIC FUNCTIONALITY TESTS ====
 
+    @pytest.mark.core
     def test_simple_call(self):
         """Test that LLMChat can make a simple API call and get a response."""
         chat = LLMChat(
@@ -172,6 +174,7 @@ class TestLLMChat:
 
     # ==== OUTPUT TYPE TESTS ====
 
+    @pytest.mark.core
     def test_bool_output(self):
         """Test that LLMChat can return boolean output."""
         chat = LLMChat(
@@ -273,6 +276,7 @@ class TestLLMChat:
 
     # ==== COERCION METHOD TESTS ====
 
+    @pytest.mark.core
     def test_coerce_to_bool_valid_inputs(self):
         """Test boolean coercion with valid inputs."""
         chat = LLMChat(system_prompt="Test", user_prompt="Test")
@@ -316,6 +320,7 @@ class TestLLMChat:
         with pytest.raises(ValueError, match="Cannot convert"):
             chat._coerce_to_bool("")
 
+    @pytest.mark.core
     def test_coerce_to_integer_valid_inputs(self):
         """Test integer coercion with valid inputs."""
         chat = LLMChat(system_prompt="Test", user_prompt="Test")
@@ -341,6 +346,7 @@ class TestLLMChat:
         with pytest.raises(ValueError, match="Cannot convert"):
             chat._coerce_to_integer("")
 
+    @pytest.mark.core
     def test_coerce_to_float_valid_inputs(self):
         """Test float coercion with valid inputs."""
         chat = LLMChat(system_prompt="Test", user_prompt="Test")
@@ -387,6 +393,7 @@ class TestLLMChat:
         with pytest.raises(ValueError, match="Cannot find any of"):
             chat._coerce_to_enumerable("", options)
 
+    @pytest.mark.core
     def test_coerce_to_dict_or_list_valid_inputs(self):
         """Test dict/list coercion with valid inputs."""
         chat = LLMChat(system_prompt="Test", user_prompt="Test")

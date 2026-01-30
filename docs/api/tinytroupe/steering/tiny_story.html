@@ -28,20 +28,28 @@
 </summary>
 <pre><code class="python">from typing import List
 
-from tinytroupe.extraction import logger
-from tinytroupe.agent import TinyPerson
-from tinytroupe.environment import TinyWorld
 import tinytroupe.utils as utils
-from tinytroupe import openai_utils
+from tinytroupe.agent import TinyPerson
+from tinytroupe.clients import client
+from tinytroupe.environment import TinyWorld
+from tinytroupe.extraction import logger
+
 
 class TinyStory:
     &#34;&#34;&#34;
     Every simulation tells a story. This class provides helper mechanisms to help with crafting appropriate stories in TinyTroupe.
     &#34;&#34;&#34;
 
-
-    def __init__(self, environment:TinyWorld=None, agent:TinyPerson=None, purpose:str=&#34;Be a realistic simulation.&#34;, context:str=&#34;&#34;,
-                 first_n=10, last_n=20, include_omission_info:bool=True) -&gt; None:
+    def __init__(
+        self,
+        environment: TinyWorld = None,
+        agent: TinyPerson = None,
+        purpose: str = &#34;Be a realistic simulation.&#34;,
+        context: str = &#34;&#34;,
+        first_n=10,
+        last_n=20,
+        include_omission_info: bool = True,
+    ) -&gt; None:
         &#34;&#34;&#34;
         Initialize the story. The story can be about an environment or an agent. It also has a purpose, which
         is used to guide the story generation. Stories are aware that they are related to simulations, so one can
@@ -56,13 +64,15 @@ class TinyStory:
             last_n (int, optional): The number of last interactions to include in the story. Defaults to 20.
             include_omission_info (bool, optional): Whether to include information about omitted interactions. Defaults to True.
         &#34;&#34;&#34;
-        
+
         # exactly one of these must be provided
         if environment and agent:
-            raise Exception(&#34;Either &#39;environment&#39; or &#39;agent&#39; should be provided, not both&#34;)
+            raise Exception(
+                &#34;Either &#39;environment&#39; or &#39;agent&#39; should be provided, not both&#34;
+            )
         if not (environment or agent):
             raise Exception(&#34;At least one of the parameters should be provided&#34;)
-        
+
         self.environment = environment
         self.agent = agent
 
@@ -73,28 +83,36 @@ class TinyStory:
         self.first_n = first_n
         self.last_n = last_n
         self.include_omission_info = include_omission_info
-    
-    def start_story(self, requirements=&#34;Start some interesting story about the agents.&#34;, number_of_words:int=100, include_plot_twist:bool=False) -&gt; str:
+
+    def start_story(
+        self,
+        requirements=&#34;Start some interesting story about the agents.&#34;,
+        number_of_words: int = 100,
+        include_plot_twist: bool = False,
+    ) -&gt; str:
         &#34;&#34;&#34;
         Start a new story.
         &#34;&#34;&#34;
-        
-        rendering_configs = {
-                             &#34;purpose&#34;: self.purpose,
-                             &#34;requirements&#34;: requirements,
-                             &#34;current_simulation_trace&#34;: self._current_story(),
-                             &#34;number_of_words&#34;: number_of_words,
-                             &#34;include_plot_twist&#34;: include_plot_twist
-                            }
 
-        messages = utils.compose_initial_LLM_messages_with_templates(&#34;story.start.system.mustache&#34;, &#34;story.start.user.mustache&#34;, 
-                                                                     base_module_folder=&#34;steering&#34;,
-                                                                     rendering_configs=rendering_configs)
-        next_message = openai_utils.client().send_message(messages, temperature=1.5)
+        rendering_configs = {
+            &#34;purpose&#34;: self.purpose,
+            &#34;requirements&#34;: requirements,
+            &#34;current_simulation_trace&#34;: self._current_story(),
+            &#34;number_of_words&#34;: number_of_words,
+            &#34;include_plot_twist&#34;: include_plot_twist,
+        }
+
+        messages = utils.compose_initial_LLM_messages_with_templates(
+            &#34;story.start.system.mustache&#34;,
+            &#34;story.start.user.mustache&#34;,
+            base_module_folder=&#34;steering&#34;,
+            rendering_configs=rendering_configs,
+        )
+        next_message = client().send_message(messages)
 
         start = next_message[&#34;content&#34;]
 
-        self.current_story += utils.dedent(\
+        self.current_story += utils.dedent(
             f&#34;&#34;&#34;
 
             ## The story begins
@@ -102,31 +120,39 @@ class TinyStory:
             {start}
 
             &#34;&#34;&#34;
-            )
+        )
 
         return start
-    
-    def continue_story(self, requirements=&#34;Continue the story in an interesting way.&#34;, number_of_words:int=100, include_plot_twist:bool=False) -&gt; str:
+
+    def continue_story(
+        self,
+        requirements=&#34;Continue the story in an interesting way.&#34;,
+        number_of_words: int = 100,
+        include_plot_twist: bool = False,
+    ) -&gt; str:
         &#34;&#34;&#34;
         Propose a continuation of the story.
         &#34;&#34;&#34;
-        
-        rendering_configs = {
-                             &#34;purpose&#34;: self.purpose,
-                             &#34;requirements&#34;: requirements,
-                             &#34;current_simulation_trace&#34;: self._current_story(),
-                             &#34;number_of_words&#34;: number_of_words,
-                             &#34;include_plot_twist&#34;: include_plot_twist
-                            }
 
-        messages = utils.compose_initial_LLM_messages_with_templates(&#34;story.continuation.system.mustache&#34;, &#34;story.continuation.user.mustache&#34;, 
-                                                                     base_module_folder=&#34;steering&#34;,
-                                                                     rendering_configs=rendering_configs)
-        next_message = openai_utils.client().send_message(messages)#, temperature=1.5)
+        rendering_configs = {
+            &#34;purpose&#34;: self.purpose,
+            &#34;requirements&#34;: requirements,
+            &#34;current_simulation_trace&#34;: self._current_story(),
+            &#34;number_of_words&#34;: number_of_words,
+            &#34;include_plot_twist&#34;: include_plot_twist,
+        }
+
+        messages = utils.compose_initial_LLM_messages_with_templates(
+            &#34;story.continuation.system.mustache&#34;,
+            &#34;story.continuation.user.mustache&#34;,
+            base_module_folder=&#34;steering&#34;,
+            rendering_configs=rendering_configs,
+        )
+        next_message = client().send_message(messages)
 
         continuation = next_message[&#34;content&#34;]
 
-        self.current_story += utils.dedent(\
+        self.current_story += utils.dedent(
             f&#34;&#34;&#34;
 
             ## The story continues
@@ -134,7 +160,7 @@ class TinyStory:
             {continuation}
 
             &#34;&#34;&#34;
-            )
+        )
 
         return continuation
 
@@ -143,14 +169,22 @@ class TinyStory:
         Get the current story.
         &#34;&#34;&#34;
         interaction_history = &#34;&#34;
-        
+
         if self.agent is not None:
-            interaction_history += self.agent.pretty_current_interactions(first_n=self.first_n, last_n=self.last_n, include_omission_info=self.include_omission_info)
+            interaction_history += self.agent.pretty_current_interactions(
+                first_n=self.first_n,
+                last_n=self.last_n,
+                include_omission_info=self.include_omission_info,
+            )
         elif self.environment is not None:
-            interaction_history += self.environment.pretty_current_interactions(first_n=self.first_n, last_n=self.last_n, include_omission_info=self.include_omission_info)
+            interaction_history += self.environment.pretty_current_interactions(
+                first_n=self.first_n,
+                last_n=self.last_n,
+                include_omission_info=self.include_omission_info,
+            )
 
         tmp_current_story = self.current_story
-        tmp_current_story += utils.dedent(\
+        tmp_current_story += utils.dedent(
             f&#34;&#34;&#34;
 
             ## New simulation interactions to consider
@@ -158,11 +192,9 @@ class TinyStory:
             {interaction_history}
 
             &#34;&#34;&#34;
-            )
-            
-        return tmp_current_story
-            
-        </code></pre>
+        )
+
+        return tmp_current_story</code></pre>
 </details>
 </section>
 <section>
@@ -209,9 +241,16 @@ specify simulation-related purposes.</p>
     Every simulation tells a story. This class provides helper mechanisms to help with crafting appropriate stories in TinyTroupe.
     &#34;&#34;&#34;
 
-
-    def __init__(self, environment:TinyWorld=None, agent:TinyPerson=None, purpose:str=&#34;Be a realistic simulation.&#34;, context:str=&#34;&#34;,
-                 first_n=10, last_n=20, include_omission_info:bool=True) -&gt; None:
+    def __init__(
+        self,
+        environment: TinyWorld = None,
+        agent: TinyPerson = None,
+        purpose: str = &#34;Be a realistic simulation.&#34;,
+        context: str = &#34;&#34;,
+        first_n=10,
+        last_n=20,
+        include_omission_info: bool = True,
+    ) -&gt; None:
         &#34;&#34;&#34;
         Initialize the story. The story can be about an environment or an agent. It also has a purpose, which
         is used to guide the story generation. Stories are aware that they are related to simulations, so one can
@@ -226,13 +265,15 @@ specify simulation-related purposes.</p>
             last_n (int, optional): The number of last interactions to include in the story. Defaults to 20.
             include_omission_info (bool, optional): Whether to include information about omitted interactions. Defaults to True.
         &#34;&#34;&#34;
-        
+
         # exactly one of these must be provided
         if environment and agent:
-            raise Exception(&#34;Either &#39;environment&#39; or &#39;agent&#39; should be provided, not both&#34;)
+            raise Exception(
+                &#34;Either &#39;environment&#39; or &#39;agent&#39; should be provided, not both&#34;
+            )
         if not (environment or agent):
             raise Exception(&#34;At least one of the parameters should be provided&#34;)
-        
+
         self.environment = environment
         self.agent = agent
 
@@ -243,28 +284,36 @@ specify simulation-related purposes.</p>
         self.first_n = first_n
         self.last_n = last_n
         self.include_omission_info = include_omission_info
-    
-    def start_story(self, requirements=&#34;Start some interesting story about the agents.&#34;, number_of_words:int=100, include_plot_twist:bool=False) -&gt; str:
+
+    def start_story(
+        self,
+        requirements=&#34;Start some interesting story about the agents.&#34;,
+        number_of_words: int = 100,
+        include_plot_twist: bool = False,
+    ) -&gt; str:
         &#34;&#34;&#34;
         Start a new story.
         &#34;&#34;&#34;
-        
-        rendering_configs = {
-                             &#34;purpose&#34;: self.purpose,
-                             &#34;requirements&#34;: requirements,
-                             &#34;current_simulation_trace&#34;: self._current_story(),
-                             &#34;number_of_words&#34;: number_of_words,
-                             &#34;include_plot_twist&#34;: include_plot_twist
-                            }
 
-        messages = utils.compose_initial_LLM_messages_with_templates(&#34;story.start.system.mustache&#34;, &#34;story.start.user.mustache&#34;, 
-                                                                     base_module_folder=&#34;steering&#34;,
-                                                                     rendering_configs=rendering_configs)
-        next_message = openai_utils.client().send_message(messages, temperature=1.5)
+        rendering_configs = {
+            &#34;purpose&#34;: self.purpose,
+            &#34;requirements&#34;: requirements,
+            &#34;current_simulation_trace&#34;: self._current_story(),
+            &#34;number_of_words&#34;: number_of_words,
+            &#34;include_plot_twist&#34;: include_plot_twist,
+        }
+
+        messages = utils.compose_initial_LLM_messages_with_templates(
+            &#34;story.start.system.mustache&#34;,
+            &#34;story.start.user.mustache&#34;,
+            base_module_folder=&#34;steering&#34;,
+            rendering_configs=rendering_configs,
+        )
+        next_message = client().send_message(messages)
 
         start = next_message[&#34;content&#34;]
 
-        self.current_story += utils.dedent(\
+        self.current_story += utils.dedent(
             f&#34;&#34;&#34;
 
             ## The story begins
@@ -272,31 +321,39 @@ specify simulation-related purposes.</p>
             {start}
 
             &#34;&#34;&#34;
-            )
+        )
 
         return start
-    
-    def continue_story(self, requirements=&#34;Continue the story in an interesting way.&#34;, number_of_words:int=100, include_plot_twist:bool=False) -&gt; str:
+
+    def continue_story(
+        self,
+        requirements=&#34;Continue the story in an interesting way.&#34;,
+        number_of_words: int = 100,
+        include_plot_twist: bool = False,
+    ) -&gt; str:
         &#34;&#34;&#34;
         Propose a continuation of the story.
         &#34;&#34;&#34;
-        
-        rendering_configs = {
-                             &#34;purpose&#34;: self.purpose,
-                             &#34;requirements&#34;: requirements,
-                             &#34;current_simulation_trace&#34;: self._current_story(),
-                             &#34;number_of_words&#34;: number_of_words,
-                             &#34;include_plot_twist&#34;: include_plot_twist
-                            }
 
-        messages = utils.compose_initial_LLM_messages_with_templates(&#34;story.continuation.system.mustache&#34;, &#34;story.continuation.user.mustache&#34;, 
-                                                                     base_module_folder=&#34;steering&#34;,
-                                                                     rendering_configs=rendering_configs)
-        next_message = openai_utils.client().send_message(messages)#, temperature=1.5)
+        rendering_configs = {
+            &#34;purpose&#34;: self.purpose,
+            &#34;requirements&#34;: requirements,
+            &#34;current_simulation_trace&#34;: self._current_story(),
+            &#34;number_of_words&#34;: number_of_words,
+            &#34;include_plot_twist&#34;: include_plot_twist,
+        }
+
+        messages = utils.compose_initial_LLM_messages_with_templates(
+            &#34;story.continuation.system.mustache&#34;,
+            &#34;story.continuation.user.mustache&#34;,
+            base_module_folder=&#34;steering&#34;,
+            rendering_configs=rendering_configs,
+        )
+        next_message = client().send_message(messages)
 
         continuation = next_message[&#34;content&#34;]
 
-        self.current_story += utils.dedent(\
+        self.current_story += utils.dedent(
             f&#34;&#34;&#34;
 
             ## The story continues
@@ -304,7 +361,7 @@ specify simulation-related purposes.</p>
             {continuation}
 
             &#34;&#34;&#34;
-            )
+        )
 
         return continuation
 
@@ -313,14 +370,22 @@ specify simulation-related purposes.</p>
         Get the current story.
         &#34;&#34;&#34;
         interaction_history = &#34;&#34;
-        
+
         if self.agent is not None:
-            interaction_history += self.agent.pretty_current_interactions(first_n=self.first_n, last_n=self.last_n, include_omission_info=self.include_omission_info)
+            interaction_history += self.agent.pretty_current_interactions(
+                first_n=self.first_n,
+                last_n=self.last_n,
+                include_omission_info=self.include_omission_info,
+            )
         elif self.environment is not None:
-            interaction_history += self.environment.pretty_current_interactions(first_n=self.first_n, last_n=self.last_n, include_omission_info=self.include_omission_info)
+            interaction_history += self.environment.pretty_current_interactions(
+                first_n=self.first_n,
+                last_n=self.last_n,
+                include_omission_info=self.include_omission_info,
+            )
 
         tmp_current_story = self.current_story
-        tmp_current_story += utils.dedent(\
+        tmp_current_story += utils.dedent(
             f&#34;&#34;&#34;
 
             ## New simulation interactions to consider
@@ -328,8 +393,8 @@ specify simulation-related purposes.</p>
             {interaction_history}
 
             &#34;&#34;&#34;
-            )
-            
+        )
+
         return tmp_current_story</code></pre>
 </details>
 <h3>Methods</h3>
@@ -343,27 +408,35 @@ specify simulation-related purposes.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def continue_story(self, requirements=&#34;Continue the story in an interesting way.&#34;, number_of_words:int=100, include_plot_twist:bool=False) -&gt; str:
+<pre><code class="python">def continue_story(
+    self,
+    requirements=&#34;Continue the story in an interesting way.&#34;,
+    number_of_words: int = 100,
+    include_plot_twist: bool = False,
+) -&gt; str:
     &#34;&#34;&#34;
     Propose a continuation of the story.
     &#34;&#34;&#34;
-    
-    rendering_configs = {
-                         &#34;purpose&#34;: self.purpose,
-                         &#34;requirements&#34;: requirements,
-                         &#34;current_simulation_trace&#34;: self._current_story(),
-                         &#34;number_of_words&#34;: number_of_words,
-                         &#34;include_plot_twist&#34;: include_plot_twist
-                        }
 
-    messages = utils.compose_initial_LLM_messages_with_templates(&#34;story.continuation.system.mustache&#34;, &#34;story.continuation.user.mustache&#34;, 
-                                                                 base_module_folder=&#34;steering&#34;,
-                                                                 rendering_configs=rendering_configs)
-    next_message = openai_utils.client().send_message(messages)#, temperature=1.5)
+    rendering_configs = {
+        &#34;purpose&#34;: self.purpose,
+        &#34;requirements&#34;: requirements,
+        &#34;current_simulation_trace&#34;: self._current_story(),
+        &#34;number_of_words&#34;: number_of_words,
+        &#34;include_plot_twist&#34;: include_plot_twist,
+    }
+
+    messages = utils.compose_initial_LLM_messages_with_templates(
+        &#34;story.continuation.system.mustache&#34;,
+        &#34;story.continuation.user.mustache&#34;,
+        base_module_folder=&#34;steering&#34;,
+        rendering_configs=rendering_configs,
+    )
+    next_message = client().send_message(messages)
 
     continuation = next_message[&#34;content&#34;]
 
-    self.current_story += utils.dedent(\
+    self.current_story += utils.dedent(
         f&#34;&#34;&#34;
 
         ## The story continues
@@ -371,7 +444,7 @@ specify simulation-related purposes.</p>
         {continuation}
 
         &#34;&#34;&#34;
-        )
+    )
 
     return continuation</code></pre>
 </details>
@@ -385,27 +458,35 @@ specify simulation-related purposes.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def start_story(self, requirements=&#34;Start some interesting story about the agents.&#34;, number_of_words:int=100, include_plot_twist:bool=False) -&gt; str:
+<pre><code class="python">def start_story(
+    self,
+    requirements=&#34;Start some interesting story about the agents.&#34;,
+    number_of_words: int = 100,
+    include_plot_twist: bool = False,
+) -&gt; str:
     &#34;&#34;&#34;
     Start a new story.
     &#34;&#34;&#34;
-    
-    rendering_configs = {
-                         &#34;purpose&#34;: self.purpose,
-                         &#34;requirements&#34;: requirements,
-                         &#34;current_simulation_trace&#34;: self._current_story(),
-                         &#34;number_of_words&#34;: number_of_words,
-                         &#34;include_plot_twist&#34;: include_plot_twist
-                        }
 
-    messages = utils.compose_initial_LLM_messages_with_templates(&#34;story.start.system.mustache&#34;, &#34;story.start.user.mustache&#34;, 
-                                                                 base_module_folder=&#34;steering&#34;,
-                                                                 rendering_configs=rendering_configs)
-    next_message = openai_utils.client().send_message(messages, temperature=1.5)
+    rendering_configs = {
+        &#34;purpose&#34;: self.purpose,
+        &#34;requirements&#34;: requirements,
+        &#34;current_simulation_trace&#34;: self._current_story(),
+        &#34;number_of_words&#34;: number_of_words,
+        &#34;include_plot_twist&#34;: include_plot_twist,
+    }
+
+    messages = utils.compose_initial_LLM_messages_with_templates(
+        &#34;story.start.system.mustache&#34;,
+        &#34;story.start.user.mustache&#34;,
+        base_module_folder=&#34;steering&#34;,
+        rendering_configs=rendering_configs,
+    )
+    next_message = client().send_message(messages)
 
     start = next_message[&#34;content&#34;]
 
-    self.current_story += utils.dedent(\
+    self.current_story += utils.dedent(
         f&#34;&#34;&#34;
 
         ## The story begins
@@ -413,7 +494,7 @@ specify simulation-related purposes.</p>
         {start}
 
         &#34;&#34;&#34;
-        )
+    )
 
     return start</code></pre>
 </details>
