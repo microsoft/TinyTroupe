@@ -145,7 +145,7 @@ class BaseSemanticGroundingConnector(GroundingConnector):
                 for filename in os.listdir(temp_dir):
                     filepath = os.path.join(temp_dir, filename)
                     if os.path.isfile(filepath):
-                        with open(filepath, &#39;r&#39;) as f:
+                        with open(filepath, &#39;r&#39;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as f:
                             persisted_data[filename] = f.read()
                 
                 return persisted_data
@@ -165,7 +165,7 @@ class BaseSemanticGroundingConnector(GroundingConnector):
                 # Write all the persisted files to the temporary directory
                 for filename, content in index_data.items():
                     filepath = os.path.join(temp_dir, filename)
-                    with open(filepath, &#39;w&#39;) as f:
+                    with open(filepath, &#39;w&#39;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as f:
                         f.write(content)
                 
                 # Load the index from the temporary directory
@@ -285,7 +285,7 @@ class BaseSemanticGroundingConnector(GroundingConnector):
                     store_nodes_override=True  # This ensures nodes (with text) are stored
                 )
             else:
-                self.index.refresh(self.documents)
+                self.index.refresh_ref_docs(self.documents)
     
     @staticmethod
     def _set_internal_id_to_documents(documents:list, external_attribute_name:str =&#34;file_name&#34;) -&gt; None:
@@ -528,7 +528,7 @@ class BaseSemanticGroundingConnector(GroundingConnector):
                 for filename in os.listdir(temp_dir):
                     filepath = os.path.join(temp_dir, filename)
                     if os.path.isfile(filepath):
-                        with open(filepath, &#39;r&#39;) as f:
+                        with open(filepath, &#39;r&#39;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as f:
                             persisted_data[filename] = f.read()
                 
                 return persisted_data
@@ -548,7 +548,7 @@ class BaseSemanticGroundingConnector(GroundingConnector):
                 # Write all the persisted files to the temporary directory
                 for filename, content in index_data.items():
                     filepath = os.path.join(temp_dir, filename)
-                    with open(filepath, &#39;w&#39;) as f:
+                    with open(filepath, &#39;w&#39;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as f:
                         f.write(content)
                 
                 # Load the index from the temporary directory
@@ -668,7 +668,7 @@ class BaseSemanticGroundingConnector(GroundingConnector):
                     store_nodes_override=True  # This ensures nodes (with text) are stored
                 )
             else:
-                self.index.refresh(self.documents)
+                self.index.refresh_ref_docs(self.documents)
     
     @staticmethod
     def _set_internal_id_to_documents(documents:list, external_attribute_name:str =&#34;file_name&#34;) -&gt; None:
@@ -784,7 +784,7 @@ class BaseSemanticGroundingConnector(GroundingConnector):
                 store_nodes_override=True  # This ensures nodes (with text) are stored
             )
         else:
-            self.index.refresh(self.documents)</code></pre>
+            self.index.refresh_ref_docs(self.documents)</code></pre>
 </details>
 </dd>
 <dt id="tinytroupe.agent.grounding.BaseSemanticGroundingConnector.list_sources"><code class="name flex">

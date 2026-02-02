@@ -27,12 +27,16 @@
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">import hashlib
+import os
+import sys
 from typing import Union
-AgentOrWorld = Union[&#34;TinyPerson&#34;, &#34;TinyWorld&#34;]
+
 
 ################################################################################
 # Other
 ################################################################################
+AgentOrWorld = Union[&#34;TinyPerson&#34;, &#34;TinyWorld&#34;]
+
 def first_non_none(*args):
     &#34;&#34;&#34;
     Returns the first non-None argument from the provided arguments.

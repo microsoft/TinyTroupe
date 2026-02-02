@@ -1,0 +1,937 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>tinytroupe.ui API documentation</title>
+<meta name="description" content="TinyTroupe UI Module …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>tinytroupe.ui</code></h1>
+</header>
+<section id="section-intro">
+<p>TinyTroupe UI Module</p>
+<p>This module provides user interface components and widgets for TinyTroupe,
+enabling interactive experiences with TinyTroupe agents and environments.</p>
+<p>The module is organized into different sub-modules based on the UI framework:</p>
+<ul>
+<li>jupyter_widgets: Interactive widgets for Jupyter notebooks</li>
+<li>web: Web-based interfaces (future)</li>
+<li>cli: Command-line interfaces (future)</li>
+</ul>
+<p>Example usage:
+from tinytroupe.ui.jupyter_widgets import AgentChatJupyterWidget</p>
+<pre><code># Create a chat interface with your agents
+chat = AgentChatJupyterWidget(agents)
+chat.display()
+</code></pre>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+TinyTroupe UI Module
+
+This module provides user interface components and widgets for TinyTroupe,
+enabling interactive experiences with TinyTroupe agents and environments.
+
+The module is organized into different sub-modules based on the UI framework:
+
+- jupyter_widgets: Interactive widgets for Jupyter notebooks
+- web: Web-based interfaces (future)
+- cli: Command-line interfaces (future)
+
+Example usage:
+    from tinytroupe.ui.jupyter_widgets import AgentChatJupyterWidget
+    
+    # Create a chat interface with your agents
+    chat = AgentChatJupyterWidget(agents)
+    chat.display()
+&#34;&#34;&#34;
+
+from .jupyter_widgets import AgentChatJupyterWidget
+
+__all__ = [&#39;AgentChatJupyterWidget&#39;]</code></pre>
+</details>
+</section>
+<section>
+<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+<dl>
+<dt><code class="name"><a title="tinytroupe.ui.jupyter_widgets" href="jupyter_widgets.html">tinytroupe.ui.jupyter_widgets</a></code></dt>
+<dd>
+<div class="desc"><p>TinyTroupe Jupyter Widgets …</p></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="tinytroupe.ui.AgentChatJupyterWidget"><code class="flex name class">
+<span>class <span class="ident">AgentChatJupyterWidget</span></span>
+<span>(</span><span>agents_list)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>An interactive chat widget for conversing with TinyTroupe agents in Jupyter notebooks.</p>
+<p>This widget provides a user-friendly interface for chatting with one or more TinyTroupe
+agents. It features an animated loading indicator, message history, and responsive design.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Agent selection dropdown</li>
+<li>Real-time message input and display</li>
+<li>Single Enter key press to send messages (fixed double-press issue)</li>
+<li>Animated loading indicators while agents process messages</li>
+<li>Message history with timestamps</li>
+<li>Error handling and user feedback</li>
+<li>Responsive design with proper styling</li>
+<li>Throttling to prevent accidental double-sending</li>
+<li>Communication display control (checkbox to show/hide agent output in notebook)</li>
+</ul>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>agents</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Dictionary mapping agent names to agent objects</dd>
+<dt><strong><code>conversation_history</code></strong> :&ensp;<code>list</code></dt>
+<dd>List of conversation entries</dd>
+<dt><strong><code>loading_animation_active</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether loading animation is currently active</dd>
+<dt><strong><code>loading_frames</code></strong> :&ensp;<code>list</code></dt>
+<dd>Animation frames for the loading spinner</dd>
+<dt><strong><code>current_loading_frame</code></strong> :&ensp;<code>int</code></dt>
+<dd>Current frame index for animation</dd>
+</dl>
+<p>Initialize the chat widget with a list of agents.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>agents_list</code></strong> :&ensp;<code>list</code></dt>
+<dd>List of TinyTroupe agent objects to make available for chat</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AgentChatJupyterWidget:
+    &#34;&#34;&#34;
+    An interactive chat widget for conversing with TinyTroupe agents in Jupyter notebooks.
+    
+    This widget provides a user-friendly interface for chatting with one or more TinyTroupe
+    agents. It features an animated loading indicator, message history, and responsive design.
+    
+    Features:
+        - Agent selection dropdown
+        - Real-time message input and display
+        - Single Enter key press to send messages (fixed double-press issue)
+        - Animated loading indicators while agents process messages
+        - Message history with timestamps
+        - Error handling and user feedback
+        - Responsive design with proper styling
+        - Throttling to prevent accidental double-sending
+        - Communication display control (checkbox to show/hide agent output in notebook)
+    
+    Attributes:
+        agents (dict): Dictionary mapping agent names to agent objects
+        conversation_history (list): List of conversation entries
+        loading_animation_active (bool): Whether loading animation is currently active
+        loading_frames (list): Animation frames for the loading spinner
+        current_loading_frame (int): Current frame index for animation
+    &#34;&#34;&#34;
+    
+    def __init__(self, agents_list):
+        &#34;&#34;&#34;
+        Initialize the chat widget with a list of agents.
+        
+        Args:
+            agents_list (list): List of TinyTroupe agent objects to make available for chat
+        &#34;&#34;&#34;
+        self.agents = {agent.name: agent for agent in agents_list}
+        self.conversation_history = []
+        self.loading_animation_active = False
+        self.loading_frames = [&#39;⠋&#39;, &#39;⠙&#39;, &#39;⠹&#39;, &#39;⠸&#39;, &#39;⠼&#39;, &#39;⠴&#39;, &#39;⠦&#39;, &#39;⠧&#39;, &#39;⠇&#39;, &#39;⠏&#39;]
+        self.current_loading_frame = 0
+        self._processing = False  # To prevent multiple simultaneous sends
+        self._last_message = &#34;&#34;  # Track last message to detect user input vs programmatic changes
+        self.setup_widgets()
+    
+    def setup_widgets(self):
+        &#34;&#34;&#34;
+        Set up the UI widgets and their event handlers.
+        
+        Creates the agent dropdown, message input, buttons, and conversation display.
+        Also wires up event handlers for user interactions.
+        &#34;&#34;&#34;
+        # Agent selector
+        self.agent_dropdown = widgets.Dropdown(
+            options=list(self.agents.keys()),
+            description=&#39;Chat with:&#39;,
+            style={&#39;description_width&#39;: &#39;initial&#39;}
+        )
+        
+        # Message input
+        self.message_input = widgets.Text(
+            placeholder=&#39;Type your message and press Enter...&#39;,
+            layout=widgets.Layout(width=&#39;70%&#39;),
+            continuous_update=False
+        )
+        
+        # Track the last message to detect actual user input vs programmatic changes
+        self._last_message = &#34;&#34;
+        
+        # Send button
+        self.send_button = widgets.Button(
+            description=&#39;Send&#39;,
+            button_style=&#39;primary&#39;,
+            layout=widgets.Layout(width=&#39;80px&#39;)
+        )
+        
+        # Clear button
+        self.clear_button = widgets.Button(
+            description=&#39;Clear&#39;,
+            button_style=&#39;warning&#39;,
+            layout=widgets.Layout(width=&#39;80px&#39;)
+        )
+        
+        # Communication display checkbox
+        self.communication_display_checkbox = widgets.Checkbox(
+            value=False,
+            description=&#39;Show agent communication in notebook output&#39;,
+            style={&#39;description_width&#39;: &#39;initial&#39;},
+            layout=widgets.Layout(width=&#39;auto&#39;)
+        )
+        
+        # Conversation display
+        self.conversation_display = widgets.HTML(
+            value=&#34;&lt;div style=&#39;border: 1px solid #ccc; padding: 10px; height: 400px; overflow-y: scroll; background-color: #f9f9f9;&#39;&gt;&lt;p&gt;&lt;em&gt;Start a conversation by selecting an agent and typing a message...&lt;/em&gt;&lt;/p&gt;&lt;/div&gt;&#34;
+        )
+        
+        # Wire up events
+        self.send_button.on_click(self._handle_send_click)
+        self.clear_button.on_click(self.clear_conversation)
+        
+        # Use observe method to detect Enter key presses through value changes
+        # This is the modern recommended approach for ipywidgets
+        self.message_input.observe(self._handle_input_change, names=&#39;value&#39;)
+        
+        # Layout
+        input_row = widgets.HBox([
+            self.agent_dropdown,
+            self.message_input,
+            self.send_button,
+            self.clear_button
+        ])
+        
+        self.widget = widgets.VBox([
+            widgets.HTML(&#34;&lt;h3&gt;💬 Agent Chat Interface&lt;/h3&gt;&#34;),
+            input_row,
+            self.communication_display_checkbox,
+            self.conversation_display
+        ])
+    
+    def _handle_send_click(self, b):
+        &#34;&#34;&#34;Handle send button clicks.&#34;&#34;&#34;
+        if not self._processing:
+            self.send_message()
+    
+    def _handle_input_change(self, change):
+        &#34;&#34;&#34;
+        Handle input changes using the observe method.
+        
+        This method detects when the user has entered text and committed it
+        (typically by pressing Enter). We use the observe pattern to monitor
+        value changes rather than the deprecated on_submit method.
+        
+        Args:
+            change (dict): The change event containing &#39;old&#39; and &#39;new&#39; values
+        &#34;&#34;&#34;
+        new_value = change[&#39;new&#39;].strip()
+        old_value = change[&#39;old&#39;].strip()
+        
+        # Only process if:
+        # 1. We&#39;re not already processing a message
+        # 2. There&#39;s actual text in the new value
+        # 3. The value actually changed (user input, not programmatic change)
+        # 4. This isn&#39;t the programmatic clearing we do after sending
+        if (not self._processing and 
+            new_value and 
+            new_value != old_value and 
+            new_value != self._last_message):
+            
+            self._last_message = new_value
+            self.send_message()
+    
+    def send_message(self):
+        &#34;&#34;&#34;
+        Send a message to the selected agent and handle the response.
+        
+        This method:
+        1. Validates input
+        2. Displays user message immediately
+        3. Shows animated loading indicator
+        4. Processes agent response in the background
+        5. Updates the conversation display
+        &#34;&#34;&#34;
+        print(&#34;Sending message...&#34;)  # Debug print to track message sending
+        # Prevent double-sending with processing flag
+        if self._processing:
+            return
+        
+        self._processing = True
+        
+        agent_name = self.agent_dropdown.value
+        message = self.message_input.value.strip()
+        
+        if not message or not agent_name:
+            self._processing = False
+            return
+
+        
+        agent = self.agents[agent_name]
+        timestamp = datetime.datetime.now().strftime(&#34;%H:%M:%S&#34;)
+        
+        # Clear input immediately and add user message to history first
+        self.message_input.value = &#39;&#39;
+        self._last_message = &#34;&#34;  # Reset tracking variable
+        
+        # Add user message to history and display immediately
+        self.conversation_history.append({
+            &#39;timestamp&#39;: timestamp,
+            &#39;sender&#39;: &#39;You&#39;,
+            &#39;message&#39;: message,
+            &#39;type&#39;: &#39;user&#39;
+        })
+        
+        # Update display to show user message immediately
+        self.update_conversation_display()
+        
+        # Add animated loading indicator while processing
+        loading_entry = {
+            &#39;timestamp&#39;: timestamp,
+            &#39;sender&#39;: agent_name,
+            &#39;message&#39;: &#39;🤔 Processing...&#39;,
+            &#39;type&#39;: &#39;loading&#39;
+        }
+        self.conversation_history.append(loading_entry)
+        
+        # Start animated loading indicator
+        self.start_loading_animation(loading_entry)
+        
+        # Process agent response in background thread
+        def process_response():
+            try:
+                # Use the proper TinyTroupe interaction method
+                # Get the communication display setting from the checkbox
+                communication_display = self.communication_display_checkbox.value
+                actions = agent.listen_and_act(message, return_actions=True, communication_display=communication_display)
+                
+                # Extract agent responses from the actions
+                agent_responses = []
+                
+                if actions:
+                    for action_item in actions:
+                        if isinstance(action_item, dict) and &#39;action&#39; in action_item:
+                            action = action_item[&#39;action&#39;]
+                            action_type = action.get(&#39;type&#39;, &#39;&#39;)
+                            action_content = action.get(&#39;content&#39;, &#39;&#39;)
+                            
+                            # Collect TALK and THINK actions as responses
+                            if action_type == &#39;TALK&#39; and action_content:
+                                agent_responses.append(f&#34;🗣️ {action_content}&#34;)
+                            elif action_type == &#39;THINK&#39; and action_content:
+                                agent_responses.append(f&#34;💭 {action_content}&#34;)
+                
+                # Combine all responses or provide fallback
+                if agent_responses:
+                    agent_response = &#39;\n\n&#39;.join(agent_responses)
+                else:
+                    agent_response = f&#34;I heard your message: &#39;{message}&#39;, but I don&#39;t have much to say about it right now.&#34;
+                
+                # Stop loading animation and remove loading indicator
+                self.stop_loading_animation()
+                self.conversation_history.pop()  # Remove the loading message
+                
+                # Add agent response to history
+                self.conversation_history.append({
+                    &#39;timestamp&#39;: datetime.datetime.now().strftime(&#34;%H:%M:%S&#34;),
+                    &#39;sender&#39;: agent_name,
+                    &#39;message&#39;: agent_response,
+                    &#39;type&#39;: &#39;agent&#39;
+                })
+                
+            except Exception as e:
+                # Handle errors gracefully
+                error_msg = f&#34;Error communicating with agent: {str(e)}&#34;
+                if hasattr(e, &#39;__class__&#39;):
+                    error_msg += f&#34; (Type: {e.__class__.__name__})&#34;
+                
+                # Stop loading animation and remove loading indicator
+                self.stop_loading_animation()
+                self.conversation_history.pop()  # Remove the loading message
+                
+                self.conversation_history.append({
+                    &#39;timestamp&#39;: datetime.datetime.now().strftime(&#34;%H:%M:%S&#34;),
+                    &#39;sender&#39;: &#39;System&#39;,
+                    &#39;message&#39;: error_msg,
+                    &#39;type&#39;: &#39;error&#39;
+                })
+            
+            finally:
+                # Update display with final result and reset processing flag
+                self.update_conversation_display()
+                self._processing = False
+        
+        # Start processing in background thread
+        threading.Thread(target=process_response, daemon=True).start()
+    
+    def clear_conversation(self, b=None):
+        &#34;&#34;&#34;
+        Clear the conversation history and reset the display.
+        
+        Args:
+            b: Button object (when called from button click, None when called directly)
+        &#34;&#34;&#34;
+        if not self._processing:
+            self.conversation_history = []
+            self.update_conversation_display()
+    
+    def update_conversation_display(self):
+        &#34;&#34;&#34;
+        Update the HTML display of the conversation history.
+        
+        This method renders all conversation entries with appropriate styling
+        based on their type (user, agent, loading, error).
+        &#34;&#34;&#34;
+        if not self.conversation_history:
+            html_content = &#34;&lt;div style=&#39;border: 1px solid #ccc; padding: 10px; height: 400px; overflow-y: scroll; background-color: #f9f9f9;&#39;&gt;&lt;p&gt;&lt;em&gt;Start a conversation...&lt;/em&gt;&lt;/p&gt;&lt;/div&gt;&#34;
+        else:
+            messages_html = []
+            for entry in self.conversation_history:
+                if entry[&#39;type&#39;] == &#39;user&#39;:
+                    messages_html.append(f&#34;&#34;&#34;
+                    &lt;div style=&#39;margin: 5px 0; padding: 8px; background-color: #e3f2fd; border-radius: 10px; text-align: right;&#39;&gt;
+                        &lt;strong&gt;You ({entry[&#39;timestamp&#39;]}):&lt;/strong&gt; {entry[&#39;message&#39;]}
+                    &lt;/div&gt;
+                    &#34;&#34;&#34;)
+                elif entry[&#39;type&#39;] == &#39;agent&#39;:
+                    messages_html.append(f&#34;&#34;&#34;
+                    &lt;div style=&#39;margin: 5px 0; padding: 8px; background-color: #f1f8e9; border-radius: 10px;&#39;&gt;
+                        &lt;strong&gt;{entry[&#39;sender&#39;]} ({entry[&#39;timestamp&#39;]}):&lt;/strong&gt;&lt;br&gt;
+                        &lt;div style=&#39;white-space: pre-wrap; margin-top: 5px;&#39;&gt;{entry[&#39;message&#39;]}&lt;/div&gt;
+                    &lt;/div&gt;
+                    &#34;&#34;&#34;)
+                elif entry[&#39;type&#39;] == &#39;loading&#39;:
+                    messages_html.append(f&#34;&#34;&#34;
+                    &lt;div style=&#39;margin: 5px 0; padding: 8px; background-color: #fff3cd; border-radius: 10px;&#39;&gt;
+                        &lt;strong&gt;{entry[&#39;sender&#39;]} ({entry[&#39;timestamp&#39;]}):&lt;/strong&gt; &lt;em&gt;{entry[&#39;message&#39;]}&lt;/em&gt;
+                    &lt;/div&gt;
+                    &#34;&#34;&#34;)
+                else:  # error
+                    messages_html.append(f&#34;&#34;&#34;
+                    &lt;div style=&#39;margin: 5px 0; padding: 8px; background-color: #ffebee; border-radius: 10px;&#39;&gt;
+                        &lt;strong&gt;{entry[&#39;sender&#39;]} ({entry[&#39;timestamp&#39;]}):&lt;/strong&gt; &lt;em&gt;{entry[&#39;message&#39;]}&lt;/em&gt;
+                    &lt;/div&gt;
+                    &#34;&#34;&#34;)
+            
+            html_content = f&#34;&#34;&#34;
+            &lt;div style=&#39;border: 1px solid #ccc; padding: 10px; height: 400px; overflow-y: scroll; background-color: #f9f9f9;&#39;&gt;
+                {&#39;&#39;.join(messages_html)}
+            &lt;/div&gt;
+            &#34;&#34;&#34;
+        
+        self.conversation_display.value = html_content
+    
+    def start_loading_animation(self, loading_entry):
+        &#34;&#34;&#34;
+        Start the animated loading indicator.
+        
+        This method creates a smooth spinning animation that updates the loading
+        message with different spinner frames at regular intervals.
+        
+        Args:
+            loading_entry (dict): The conversation entry containing the loading message
+        &#34;&#34;&#34;
+        self.loading_animation_active = True
+        self.current_loading_frame = 0
+        
+        def animate():
+            if self.loading_animation_active:
+                # Update the loading message with current animation frame
+                spinner = self.loading_frames[self.current_loading_frame % len(self.loading_frames)]
+                loading_entry[&#39;message&#39;] = f&#39;{spinner} Processing...&#39;
+                self.update_conversation_display()
+                self.current_loading_frame += 1
+                
+                # Schedule next frame after 200ms
+                threading.Timer(0.2, animate).start()
+        
+        animate()
+    
+    def stop_loading_animation(self):
+        &#34;&#34;&#34;
+        Stop the loading animation.
+        
+        This method sets the animation flag to False, causing the animation
+        loop to stop at the next iteration.
+        &#34;&#34;&#34;
+        self.loading_animation_active = False
+    
+    def display(self):
+        &#34;&#34;&#34;
+        Display the chat widget in the notebook.
+        
+        This method should be called to render the widget in a Jupyter notebook cell.
+        &#34;&#34;&#34;
+        display(self.widget)</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="tinytroupe.ui.AgentChatJupyterWidget.clear_conversation"><code class="name flex">
+<span>def <span class="ident">clear_conversation</span></span>(<span>self, b=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Clear the conversation history and reset the display.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>b</code></strong></dt>
+<dd>Button object (when called from button click, None when called directly)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def clear_conversation(self, b=None):
+    &#34;&#34;&#34;
+    Clear the conversation history and reset the display.
+    
+    Args:
+        b: Button object (when called from button click, None when called directly)
+    &#34;&#34;&#34;
+    if not self._processing:
+        self.conversation_history = []
+        self.update_conversation_display()</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.ui.AgentChatJupyterWidget.display"><code class="name flex">
+<span>def <span class="ident">display</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Display the chat widget in the notebook.</p>
+<p>This method should be called to render the widget in a Jupyter notebook cell.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def display(self):
+    &#34;&#34;&#34;
+    Display the chat widget in the notebook.
+    
+    This method should be called to render the widget in a Jupyter notebook cell.
+    &#34;&#34;&#34;
+    display(self.widget)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.ui.AgentChatJupyterWidget.send_message"><code class="name flex">
+<span>def <span class="ident">send_message</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Send a message to the selected agent and handle the response.</p>
+<p>This method:
+1. Validates input
+2. Displays user message immediately
+3. Shows animated loading indicator
+4. Processes agent response in the background
+5. Updates the conversation display</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def send_message(self):
+    &#34;&#34;&#34;
+    Send a message to the selected agent and handle the response.
+    
+    This method:
+    1. Validates input
+    2. Displays user message immediately
+    3. Shows animated loading indicator
+    4. Processes agent response in the background
+    5. Updates the conversation display
+    &#34;&#34;&#34;
+    print(&#34;Sending message...&#34;)  # Debug print to track message sending
+    # Prevent double-sending with processing flag
+    if self._processing:
+        return
+    
+    self._processing = True
+    
+    agent_name = self.agent_dropdown.value
+    message = self.message_input.value.strip()
+    
+    if not message or not agent_name:
+        self._processing = False
+        return
+
+    
+    agent = self.agents[agent_name]
+    timestamp = datetime.datetime.now().strftime(&#34;%H:%M:%S&#34;)
+    
+    # Clear input immediately and add user message to history first
+    self.message_input.value = &#39;&#39;
+    self._last_message = &#34;&#34;  # Reset tracking variable
+    
+    # Add user message to history and display immediately
+    self.conversation_history.append({
+        &#39;timestamp&#39;: timestamp,
+        &#39;sender&#39;: &#39;You&#39;,
+        &#39;message&#39;: message,
+        &#39;type&#39;: &#39;user&#39;
+    })
+    
+    # Update display to show user message immediately
+    self.update_conversation_display()
+    
+    # Add animated loading indicator while processing
+    loading_entry = {
+        &#39;timestamp&#39;: timestamp,
+        &#39;sender&#39;: agent_name,
+        &#39;message&#39;: &#39;🤔 Processing...&#39;,
+        &#39;type&#39;: &#39;loading&#39;
+    }
+    self.conversation_history.append(loading_entry)
+    
+    # Start animated loading indicator
+    self.start_loading_animation(loading_entry)
+    
+    # Process agent response in background thread
+    def process_response():
+        try:
+            # Use the proper TinyTroupe interaction method
+            # Get the communication display setting from the checkbox
+            communication_display = self.communication_display_checkbox.value
+            actions = agent.listen_and_act(message, return_actions=True, communication_display=communication_display)
+            
+            # Extract agent responses from the actions
+            agent_responses = []
+            
+            if actions:
+                for action_item in actions:
+                    if isinstance(action_item, dict) and &#39;action&#39; in action_item:
+                        action = action_item[&#39;action&#39;]
+                        action_type = action.get(&#39;type&#39;, &#39;&#39;)
+                        action_content = action.get(&#39;content&#39;, &#39;&#39;)
+                        
+                        # Collect TALK and THINK actions as responses
+                        if action_type == &#39;TALK&#39; and action_content:
+                            agent_responses.append(f&#34;🗣️ {action_content}&#34;)
+                        elif action_type == &#39;THINK&#39; and action_content:
+                            agent_responses.append(f&#34;💭 {action_content}&#34;)
+            
+            # Combine all responses or provide fallback
+            if agent_responses:
+                agent_response = &#39;\n\n&#39;.join(agent_responses)
+            else:
+                agent_response = f&#34;I heard your message: &#39;{message}&#39;, but I don&#39;t have much to say about it right now.&#34;
+            
+            # Stop loading animation and remove loading indicator
+            self.stop_loading_animation()
+            self.conversation_history.pop()  # Remove the loading message
+            
+            # Add agent response to history
+            self.conversation_history.append({
+                &#39;timestamp&#39;: datetime.datetime.now().strftime(&#34;%H:%M:%S&#34;),
+                &#39;sender&#39;: agent_name,
+                &#39;message&#39;: agent_response,
+                &#39;type&#39;: &#39;agent&#39;
+            })
+            
+        except Exception as e:
+            # Handle errors gracefully
+            error_msg = f&#34;Error communicating with agent: {str(e)}&#34;
+            if hasattr(e, &#39;__class__&#39;):
+                error_msg += f&#34; (Type: {e.__class__.__name__})&#34;
+            
+            # Stop loading animation and remove loading indicator
+            self.stop_loading_animation()
+            self.conversation_history.pop()  # Remove the loading message
+            
+            self.conversation_history.append({
+                &#39;timestamp&#39;: datetime.datetime.now().strftime(&#34;%H:%M:%S&#34;),
+                &#39;sender&#39;: &#39;System&#39;,
+                &#39;message&#39;: error_msg,
+                &#39;type&#39;: &#39;error&#39;
+            })
+        
+        finally:
+            # Update display with final result and reset processing flag
+            self.update_conversation_display()
+            self._processing = False
+    
+    # Start processing in background thread
+    threading.Thread(target=process_response, daemon=True).start()</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.ui.AgentChatJupyterWidget.setup_widgets"><code class="name flex">
+<span>def <span class="ident">setup_widgets</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set up the UI widgets and their event handlers.</p>
+<p>Creates the agent dropdown, message input, buttons, and conversation display.
+Also wires up event handlers for user interactions.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setup_widgets(self):
+    &#34;&#34;&#34;
+    Set up the UI widgets and their event handlers.
+    
+    Creates the agent dropdown, message input, buttons, and conversation display.
+    Also wires up event handlers for user interactions.
+    &#34;&#34;&#34;
+    # Agent selector
+    self.agent_dropdown = widgets.Dropdown(
+        options=list(self.agents.keys()),
+        description=&#39;Chat with:&#39;,
+        style={&#39;description_width&#39;: &#39;initial&#39;}
+    )
+    
+    # Message input
+    self.message_input = widgets.Text(
+        placeholder=&#39;Type your message and press Enter...&#39;,
+        layout=widgets.Layout(width=&#39;70%&#39;),
+        continuous_update=False
+    )
+    
+    # Track the last message to detect actual user input vs programmatic changes
+    self._last_message = &#34;&#34;
+    
+    # Send button
+    self.send_button = widgets.Button(
+        description=&#39;Send&#39;,
+        button_style=&#39;primary&#39;,
+        layout=widgets.Layout(width=&#39;80px&#39;)
+    )
+    
+    # Clear button
+    self.clear_button = widgets.Button(
+        description=&#39;Clear&#39;,
+        button_style=&#39;warning&#39;,
+        layout=widgets.Layout(width=&#39;80px&#39;)
+    )
+    
+    # Communication display checkbox
+    self.communication_display_checkbox = widgets.Checkbox(
+        value=False,
+        description=&#39;Show agent communication in notebook output&#39;,
+        style={&#39;description_width&#39;: &#39;initial&#39;},
+        layout=widgets.Layout(width=&#39;auto&#39;)
+    )
+    
+    # Conversation display
+    self.conversation_display = widgets.HTML(
+        value=&#34;&lt;div style=&#39;border: 1px solid #ccc; padding: 10px; height: 400px; overflow-y: scroll; background-color: #f9f9f9;&#39;&gt;&lt;p&gt;&lt;em&gt;Start a conversation by selecting an agent and typing a message...&lt;/em&gt;&lt;/p&gt;&lt;/div&gt;&#34;
+    )
+    
+    # Wire up events
+    self.send_button.on_click(self._handle_send_click)
+    self.clear_button.on_click(self.clear_conversation)
+    
+    # Use observe method to detect Enter key presses through value changes
+    # This is the modern recommended approach for ipywidgets
+    self.message_input.observe(self._handle_input_change, names=&#39;value&#39;)
+    
+    # Layout
+    input_row = widgets.HBox([
+        self.agent_dropdown,
+        self.message_input,
+        self.send_button,
+        self.clear_button
+    ])
+    
+    self.widget = widgets.VBox([
+        widgets.HTML(&#34;&lt;h3&gt;💬 Agent Chat Interface&lt;/h3&gt;&#34;),
+        input_row,
+        self.communication_display_checkbox,
+        self.conversation_display
+    ])</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.ui.AgentChatJupyterWidget.start_loading_animation"><code class="name flex">
+<span>def <span class="ident">start_loading_animation</span></span>(<span>self, loading_entry)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Start the animated loading indicator.</p>
+<p>This method creates a smooth spinning animation that updates the loading
+message with different spinner frames at regular intervals.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>loading_entry</code></strong> :&ensp;<code>dict</code></dt>
+<dd>The conversation entry containing the loading message</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def start_loading_animation(self, loading_entry):
+    &#34;&#34;&#34;
+    Start the animated loading indicator.
+    
+    This method creates a smooth spinning animation that updates the loading
+    message with different spinner frames at regular intervals.
+    
+    Args:
+        loading_entry (dict): The conversation entry containing the loading message
+    &#34;&#34;&#34;
+    self.loading_animation_active = True
+    self.current_loading_frame = 0
+    
+    def animate():
+        if self.loading_animation_active:
+            # Update the loading message with current animation frame
+            spinner = self.loading_frames[self.current_loading_frame % len(self.loading_frames)]
+            loading_entry[&#39;message&#39;] = f&#39;{spinner} Processing...&#39;
+            self.update_conversation_display()
+            self.current_loading_frame += 1
+            
+            # Schedule next frame after 200ms
+            threading.Timer(0.2, animate).start()
+    
+    animate()</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.ui.AgentChatJupyterWidget.stop_loading_animation"><code class="name flex">
+<span>def <span class="ident">stop_loading_animation</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Stop the loading animation.</p>
+<p>This method sets the animation flag to False, causing the animation
+loop to stop at the next iteration.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def stop_loading_animation(self):
+    &#34;&#34;&#34;
+    Stop the loading animation.
+    
+    This method sets the animation flag to False, causing the animation
+    loop to stop at the next iteration.
+    &#34;&#34;&#34;
+    self.loading_animation_active = False</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.ui.AgentChatJupyterWidget.update_conversation_display"><code class="name flex">
+<span>def <span class="ident">update_conversation_display</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Update the HTML display of the conversation history.</p>
+<p>This method renders all conversation entries with appropriate styling
+based on their type (user, agent, loading, error).</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def update_conversation_display(self):
+    &#34;&#34;&#34;
+    Update the HTML display of the conversation history.
+    
+    This method renders all conversation entries with appropriate styling
+    based on their type (user, agent, loading, error).
+    &#34;&#34;&#34;
+    if not self.conversation_history:
+        html_content = &#34;&lt;div style=&#39;border: 1px solid #ccc; padding: 10px; height: 400px; overflow-y: scroll; background-color: #f9f9f9;&#39;&gt;&lt;p&gt;&lt;em&gt;Start a conversation...&lt;/em&gt;&lt;/p&gt;&lt;/div&gt;&#34;
+    else:
+        messages_html = []
+        for entry in self.conversation_history:
+            if entry[&#39;type&#39;] == &#39;user&#39;:
+                messages_html.append(f&#34;&#34;&#34;
+                &lt;div style=&#39;margin: 5px 0; padding: 8px; background-color: #e3f2fd; border-radius: 10px; text-align: right;&#39;&gt;
+                    &lt;strong&gt;You ({entry[&#39;timestamp&#39;]}):&lt;/strong&gt; {entry[&#39;message&#39;]}
+                &lt;/div&gt;
+                &#34;&#34;&#34;)
+            elif entry[&#39;type&#39;] == &#39;agent&#39;:
+                messages_html.append(f&#34;&#34;&#34;
+                &lt;div style=&#39;margin: 5px 0; padding: 8px; background-color: #f1f8e9; border-radius: 10px;&#39;&gt;
+                    &lt;strong&gt;{entry[&#39;sender&#39;]} ({entry[&#39;timestamp&#39;]}):&lt;/strong&gt;&lt;br&gt;
+                    &lt;div style=&#39;white-space: pre-wrap; margin-top: 5px;&#39;&gt;{entry[&#39;message&#39;]}&lt;/div&gt;
+                &lt;/div&gt;
+                &#34;&#34;&#34;)
+            elif entry[&#39;type&#39;] == &#39;loading&#39;:
+                messages_html.append(f&#34;&#34;&#34;
+                &lt;div style=&#39;margin: 5px 0; padding: 8px; background-color: #fff3cd; border-radius: 10px;&#39;&gt;
+                    &lt;strong&gt;{entry[&#39;sender&#39;]} ({entry[&#39;timestamp&#39;]}):&lt;/strong&gt; &lt;em&gt;{entry[&#39;message&#39;]}&lt;/em&gt;
+                &lt;/div&gt;
+                &#34;&#34;&#34;)
+            else:  # error
+                messages_html.append(f&#34;&#34;&#34;
+                &lt;div style=&#39;margin: 5px 0; padding: 8px; background-color: #ffebee; border-radius: 10px;&#39;&gt;
+                    &lt;strong&gt;{entry[&#39;sender&#39;]} ({entry[&#39;timestamp&#39;]}):&lt;/strong&gt; &lt;em&gt;{entry[&#39;message&#39;]}&lt;/em&gt;
+                &lt;/div&gt;
+                &#34;&#34;&#34;)
+        
+        html_content = f&#34;&#34;&#34;
+        &lt;div style=&#39;border: 1px solid #ccc; padding: 10px; height: 400px; overflow-y: scroll; background-color: #f9f9f9;&#39;&gt;
+            {&#39;&#39;.join(messages_html)}
+        &lt;/div&gt;
+        &#34;&#34;&#34;
+    
+    self.conversation_display.value = html_content</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="tinytroupe" href="../index.html">tinytroupe</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<ul>
+<li><code><a title="tinytroupe.ui.jupyter_widgets" href="jupyter_widgets.html">tinytroupe.ui.jupyter_widgets</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="tinytroupe.ui.AgentChatJupyterWidget" href="#tinytroupe.ui.AgentChatJupyterWidget">AgentChatJupyterWidget</a></code></h4>
+<ul class="">
+<li><code><a title="tinytroupe.ui.AgentChatJupyterWidget.clear_conversation" href="#tinytroupe.ui.AgentChatJupyterWidget.clear_conversation">clear_conversation</a></code></li>
+<li><code><a title="tinytroupe.ui.AgentChatJupyterWidget.display" href="#tinytroupe.ui.AgentChatJupyterWidget.display">display</a></code></li>
+<li><code><a title="tinytroupe.ui.AgentChatJupyterWidget.send_message" href="#tinytroupe.ui.AgentChatJupyterWidget.send_message">send_message</a></code></li>
+<li><code><a title="tinytroupe.ui.AgentChatJupyterWidget.setup_widgets" href="#tinytroupe.ui.AgentChatJupyterWidget.setup_widgets">setup_widgets</a></code></li>
+<li><code><a title="tinytroupe.ui.AgentChatJupyterWidget.start_loading_animation" href="#tinytroupe.ui.AgentChatJupyterWidget.start_loading_animation">start_loading_animation</a></code></li>
+<li><code><a title="tinytroupe.ui.AgentChatJupyterWidget.stop_loading_animation" href="#tinytroupe.ui.AgentChatJupyterWidget.stop_loading_animation">stop_loading_animation</a></code></li>
+<li><code><a title="tinytroupe.ui.AgentChatJupyterWidget.update_conversation_display" href="#tinytroupe.ui.AgentChatJupyterWidget.update_conversation_display">update_conversation_display</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

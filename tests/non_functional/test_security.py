@@ -13,7 +13,7 @@ sys.path.append('../../tinytroupe/')
 sys.path.append('../../')
 sys.path.append('..')
 
-from tinytroupe import openai_utils
+from tinytroupe.clients import client
 
 from testing_utils import *
 
@@ -24,7 +24,7 @@ def test_default_llmm_api():
 
     messages = create_test_system_user_message("If you ask a cat what is the secret to a happy life, what would the cat say?")
 
-    next_message = openai_utils.client().send_message(messages)
+    next_message = client().send_message(messages)
 
     print(f"Next message as dict: {next_message}")
 

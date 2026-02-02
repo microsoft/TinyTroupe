@@ -37,8 +37,6 @@ agents interact with each other as well as external entities (e.g., search engin
 import logging
 logger = logging.getLogger(&#34;tinytroupe&#34;)
 
-from tinytroupe import default
-
 ###########################################################################
 # Exposed API
 ###########################################################################
@@ -301,11 +299,15 @@ are in any relation. Relations are undirected, so the order of the agents does n
 <li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.decode_complete_state" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.decode_complete_state">decode_complete_state</a></code></li>
 <li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.encode_complete_state" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.encode_complete_state">encode_complete_state</a></code></li>
 <li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.get_agent_by_name" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.get_agent_by_name">get_agent_by_name</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.get_cost_stats" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.get_cost_stats">get_cost_stats</a></code></li>
 <li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.get_environment_by_name" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.get_environment_by_name">get_environment_by_name</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.get_global_cost_stats" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.get_global_cost_stats">get_global_cost_stats</a></code></li>
 <li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.make_everyone_accessible" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.make_everyone_accessible">make_everyone_accessible</a></code></li>
 <li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.pop_and_display_latest_communications" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.pop_and_display_latest_communications">pop_and_display_latest_communications</a></code></li>
 <li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.pp_current_interactions" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.pp_current_interactions">pp_current_interactions</a></code></li>
 <li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.pretty_current_interactions" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.pretty_current_interactions">pretty_current_interactions</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.pretty_print_cost_stats" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.pretty_print_cost_stats">pretty_print_cost_stats</a></code></li>
+<li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.pretty_print_global_cost_stats" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.pretty_print_global_cost_stats">pretty_print_global_cost_stats</a></code></li>
 <li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.remove_agent" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.remove_agent">remove_agent</a></code></li>
 <li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.remove_all_agents" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.remove_all_agents">remove_all_agents</a></code></li>
 <li><code><a title="tinytroupe.environment.tiny_world.TinyWorld.run_days" href="tiny_world.html#tinytroupe.environment.tiny_world.TinyWorld.run_days">run_days</a></code></li>
@@ -327,7 +329,7 @@ are in any relation. Relations are undirected, so the order of the agents does n
 </dd>
 <dt id="tinytroupe.environment.TinyWorld"><code class="flex name class">
 <span>class <span class="ident">TinyWorld</span></span>
-<span>(</span><span>name: str = None, agents=[], initial_datetime=datetime.datetime(2025, 7, 16, 0, 9, 43, 295337), interventions=[], broadcast_if_no_target=True, max_additional_targets_to_display=3)</span>
+<span>(</span><span>name: str = None, agents=[], initial_datetime=datetime.datetime(2026, 1, 14, 15, 46, 23, 967551), interventions=[], broadcast_if_no_target=True, max_additional_targets_to_display=3)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Base class for environments.</p>
@@ -359,27 +361,31 @@ all additional targets are displayed.</dd>
     &#34;&#34;&#34;
 
     # A dict of all environments created so far.
-    all_environments = {} # name -&gt; environment
+    all_environments = {}  # name -&gt; environment
 
-    # Whether to display environments communications or not, for all environments. 
+    # Whether to display environments communications or not, for all environments.
     communication_display = True
 
-    def __init__(self, name: str=None, agents=[], 
-                 initial_datetime=datetime.now(),
-                 interventions=[],
-                 broadcast_if_no_target=True,
-                 max_additional_targets_to_display=3):
+    def __init__(
+        self,
+        name: str = None,
+        agents=[],
+        initial_datetime=datetime.now(),
+        interventions=[],
+        broadcast_if_no_target=True,
+        max_additional_targets_to_display=3,
+    ):
         &#34;&#34;&#34;
         Initializes an environment.
 
         Args:
             name (str): The name of the environment.
             agents (list): A list of agents to add to the environment.
-            initial_datetifme (datetime): The initial datetime of the environment, or None (i.e., explicit time is optional). 
+            initial_datetifme (datetime): The initial datetime of the environment, or None (i.e., explicit time is optional).
                 Defaults to the current datetime in the real world.
             interventions (list): A list of interventions to apply in the environment at each simulation step.
             broadcast_if_no_target (bool): If True, broadcast actions if the target of an action is not found.
-            max_additional_targets_to_display (int): The maximum number of additional targets to display in a communication. If None, 
+            max_additional_targets_to_display (int): The maximum number of additional targets to display in a communication. If None,
                 all additional targets are displayed.
         &#34;&#34;&#34;
 
@@ -387,13 +393,15 @@ all additional targets are displayed.</dd>
             self.name = name
         else:
             self.name = f&#34;TinyWorld {utils.fresh_id(self.__class__.__name__)}&#34;
-            
+
         self.current_datetime = initial_datetime
         self.broadcast_if_no_target = broadcast_if_no_target
-        self.simulation_id = None # will be reset later if the agent is used within a specific simulation scope
-        
+        self.simulation_id = None  # will be reset later if the agent is used within a specific simulation scope
+
         self.agents = []
-        self.name_to_agent = {} # {agent_name: agent, agent_name_2: agent_2, ...}
+        self.name_to_agent = {}  # {agent_name: agent, agent_name_2: agent_2, ...}
+
+        self._interventions = interventions
 
         self._interventions = interventions
 
@@ -407,33 +415,37 @@ all additional targets are displayed.</dd>
 
         self.console = Console()
 
+        # Track simulation steps for cost statistics
+        self._simulation_steps = 0
+
         # add the environment to the list of all environments
         TinyWorld.add_environment(self)
-        
+
         self.add_agents(agents)
-        
+
     #######################################################################
     # Simulation control methods
     #######################################################################
     @transactional()
-    def _step(self, 
-              timedelta_per_step=None, 
-              randomize_agents_order=True,
-              parallelize=True): # TODO have a configuration for parallelism?
+    def _step(
+        self, timedelta_per_step=None, randomize_agents_order=True, parallelize=True
+    ):  # TODO have a configuration for parallelism?
         &#34;&#34;&#34;
         Performs a single step in the environment. This default implementation
         simply calls makes all agents in the environment act and properly
-        handle the resulting actions. Subclasses might override this method to implement 
+        handle the resulting actions. Subclasses might override this method to implement
         different policies.
         &#34;&#34;&#34;
-        
         # Increase current datetime if timedelta is given. This must happen before
         # any other simulation updates, to make sure that the agents are acting
         # in the correct time, particularly if only one step is being run.
         self._advance_datetime(timedelta_per_step)
 
-        # Apply interventions. 
-        # 
+        # Track simulation steps for cost statistics
+        self._simulation_steps += 1
+
+        # Apply interventions.
+        #
         # Why not in parallel? Owing to the very general nature of their potential effects,
         # interventions are never parallelized, since that could introduce unforeseen race conditions.
         for intervention in self._interventions:
@@ -442,23 +454,29 @@ all additional targets are displayed.</dd>
                 if TinyWorld.communication_display:
                     self._display_intervention_communication(intervention)
                 intervention.apply_effect()
-                
-                logger.debug(f&#34;[{self.name}] Intervention &#39;{intervention.name}&#39; was applied.&#34;)
+
+                logger.debug(
+                    f&#34;[{self.name}] Intervention &#39;{intervention.name}&#39; was applied.&#34;
+                )
 
         # Agents can act in parallel or sequentially
         if parallelize:
-            agents_actions = self._step_in_parallel(timedelta_per_step=timedelta_per_step)
+            agents_actions = self._step_in_parallel(
+                timedelta_per_step=timedelta_per_step
+            )
         else:
-            agents_actions = self._step_sequentially(timedelta_per_step=timedelta_per_step, 
-                                                 randomize_agents_order=randomize_agents_order)
-        
+            agents_actions = self._step_sequentially(
+                timedelta_per_step=timedelta_per_step,
+                randomize_agents_order=randomize_agents_order,
+            )
+
         return agents_actions
-        
+
     def _step_sequentially(self, timedelta_per_step=None, randomize_agents_order=True):
         &#34;&#34;&#34;
-        The sequential version of the _step method to request agents to act. 
+        The sequential version of the _step method to request agents to act.
         &#34;&#34;&#34;
-        
+
         # agents can act in a random order
         reordered_agents = copy.copy(self.agents)
         if randomize_agents_order:
@@ -472,7 +490,38 @@ all additional targets are displayed.</dd>
             agents_actions[agent.name] = actions
 
             self._handle_actions(agent, agent.pop_latest_actions())
-        
+
+        return agents_actions
+
+    def _step_in_parallel(self, timedelta_per_step=None):
+        &#34;&#34;&#34;
+        A parallelized version of the _step method to request agents to act.
+        &#34;&#34;&#34;
+
+        logger.debug(f&#34;[{self.name}] All agents will START acting in parallel.&#34;)
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            futures = {
+                executor.submit(agent.act, return_actions=True): agent
+                for agent in self.agents
+            }
+            agents_actions = {}
+
+            # Wait for all futures to complete
+            concurrent.futures.wait(futures.keys())
+
+            for future in futures:
+                agent = futures[future]
+                try:
+                    actions = future.result()
+                    agents_actions[agent.name] = actions
+                    self._handle_actions(agent, agent.pop_latest_actions())
+                except Exception as exc:
+                    logger.error(
+                        f&#34;[{self.name}] Agent {name_or_empty(agent)} generated an exception: {exc}&#34;
+                    )
+
+        logger.debug(f&#34;[{self.name}] All agents have FINISHED acting in parallel.&#34;)
+
         return agents_actions
 
     def _step_in_parallel(self, timedelta_per_step=None):
@@ -510,11 +559,20 @@ all additional targets are displayed.</dd>
         if timedelta is not None:
             self.current_datetime += timedelta
         else:
-            logger.info(f&#34;[{self.name}] No timedelta provided, so the datetime was not advanced.&#34;)
+            logger.info(
+                f&#34;[{self.name}] No timedelta provided, so the datetime was not advanced.&#34;
+            )
 
     @transactional()
     @config_manager.config_defaults(parallelize=&#34;parallel_agent_actions&#34;)
-    def run(self, steps: int, timedelta_per_step=None, return_actions=False, randomize_agents_order=True, parallelize=None):
+    def run(
+        self,
+        steps: int,
+        timedelta_per_step=None,
+        return_actions=False,
+        randomize_agents_order=True,
+        parallelize=None,
+    ):
         &#34;&#34;&#34;
         Runs the environment for a given number of steps.
 
@@ -524,24 +582,32 @@ all additional targets are displayed.</dd>
             return_actions (bool, optional): If True, returns the actions taken by the agents. Defaults to False.
             randomize_agents_order (bool, optional): If True, randomizes the order in which agents act. Defaults to True.
             parallelize (bool, optional): If True, agents act in parallel. Defaults to True.
-        
         Returns:
             list: A list of actions taken by the agents over time, if return_actions is True. The list has this format:
                   [{agent_name: [action_1, action_2, ...]}, {agent_name_2: [action_1, action_2, ...]}, ...]
         &#34;&#34;&#34;
         agents_actions_over_time = []
         for i in range(steps):
-            logger.info(f&#34;[{self.name}] Running world simulation step {i+1} of {steps}.&#34;)
+            logger.info(
+                f&#34;[{self.name}] Running world simulation step {i+1} of {steps}.&#34;
+            )
 
             if TinyWorld.communication_display:
-                self._display_step_communication(cur_step=i+1, total_steps=steps, timedelta_per_step=timedelta_per_step)
+                self._display_step_communication(
+                    cur_step=i + 1,
+                    total_steps=steps,
+                    timedelta_per_step=timedelta_per_step,
+                )
 
-            agents_actions = self._step(timedelta_per_step=timedelta_per_step, randomize_agents_order=randomize_agents_order, parallelize=parallelize)
+            agents_actions = self._step(
+                timedelta_per_step=timedelta_per_step,
+                randomize_agents_order=randomize_agents_order,
+                parallelize=parallelize,
+            )
             agents_actions_over_time.append(agents_actions)
-        
+
         if return_actions:
             return agents_actions_over_time
-    
     @transactional()
     def skip(self, steps: int, timedelta_per_step=None):
         &#34;&#34;&#34;
@@ -562,8 +628,13 @@ all additional targets are displayed.</dd>
         Args:
             minutes (int): The number of minutes to run the environment for.
         &#34;&#34;&#34;
-        self.run(steps=minutes, timedelta_per_step=timedelta(minutes=1), randomize_agents_order=randomize_agents_order, parallelize=parallelize)
-    
+        self.run(
+            steps=minutes,
+            timedelta_per_step=timedelta(minutes=1),
+            randomize_agents_order=randomize_agents_order,
+            parallelize=parallelize,
+        )
+
     def skip_minutes(self, minutes: int):
         &#34;&#34;&#34;
         Skips a given number of minutes in the environment.
@@ -572,7 +643,6 @@ all additional targets are displayed.</dd>
             minutes (int): The number of minutes to skip.
         &#34;&#34;&#34;
         self.skip(steps=minutes, timedelta_per_step=timedelta(minutes=1))
-    
     @config_manager.config_defaults(parallelize=&#34;parallel_agent_actions&#34;)
     def run_hours(self, hours: int, randomize_agents_order=True, parallelize=None):
         &#34;&#34;&#34;
@@ -581,8 +651,13 @@ all additional targets are displayed.</dd>
         Args:
             hours (int): The number of hours to run the environment for.
         &#34;&#34;&#34;
-        self.run(steps=hours, timedelta_per_step=timedelta(hours=1), randomize_agents_order=randomize_agents_order, parallelize=parallelize)
-    
+        self.run(
+            steps=hours,
+            timedelta_per_step=timedelta(hours=1),
+            randomize_agents_order=randomize_agents_order,
+            parallelize=parallelize,
+        )
+
     def skip_hours(self, hours: int):
         &#34;&#34;&#34;
         Skips a given number of hours in the environment.
@@ -591,7 +666,6 @@ all additional targets are displayed.</dd>
             hours (int): The number of hours to skip.
         &#34;&#34;&#34;
         self.skip(steps=hours, timedelta_per_step=timedelta(hours=1))
-    
     @config_manager.config_defaults(parallelize=&#34;parallel_agent_actions&#34;)
     def run_days(self, days: int, randomize_agents_order=True, parallelize=None):
         &#34;&#34;&#34;
@@ -600,8 +674,13 @@ all additional targets are displayed.</dd>
         Args:
             days (int): The number of days to run the environment for.
         &#34;&#34;&#34;
-        self.run(steps=days, timedelta_per_step=timedelta(days=1), randomize_agents_order=randomize_agents_order, parallelize=parallelize)
-    
+        self.run(
+            steps=days,
+            timedelta_per_step=timedelta(days=1),
+            randomize_agents_order=randomize_agents_order,
+            parallelize=parallelize,
+        )
+
     def skip_days(self, days: int):
         &#34;&#34;&#34;
         Skips a given number of days in the environment.
@@ -610,7 +689,6 @@ all additional targets are displayed.</dd>
             days (int): The number of days to skip.
         &#34;&#34;&#34;
         self.skip(steps=days, timedelta_per_step=timedelta(days=1))
-    
     @config_manager.config_defaults(parallelize=&#34;parallel_agent_actions&#34;)
     def run_weeks(self, weeks: int, randomize_agents_order=True, parallelize=None):
         &#34;&#34;&#34;
@@ -620,8 +698,13 @@ all additional targets are displayed.</dd>
             weeks (int): The number of weeks to run the environment for.
             randomize_agents_order (bool, optional): If True, randomizes the order in which agents act. Defaults to True.
         &#34;&#34;&#34;
-        self.run(steps=weeks, timedelta_per_step=timedelta(weeks=1), randomize_agents_order=randomize_agents_order, parallelize=parallelize)
-    
+        self.run(
+            steps=weeks,
+            timedelta_per_step=timedelta(weeks=1),
+            randomize_agents_order=randomize_agents_order,
+            parallelize=parallelize,
+        )
+
     def skip_weeks(self, weeks: int):
         &#34;&#34;&#34;
         Skips a given number of weeks in the environment.
@@ -630,7 +713,6 @@ all additional targets are displayed.</dd>
             weeks (int): The number of weeks to skip.
         &#34;&#34;&#34;
         self.skip(steps=weeks, timedelta_per_step=timedelta(weeks=1))
-    
     @config_manager.config_defaults(parallelize=&#34;parallel_agent_actions&#34;)
     def run_months(self, months: int, randomize_agents_order=True, parallelize=None):
         &#34;&#34;&#34;
@@ -640,8 +722,13 @@ all additional targets are displayed.</dd>
             months (int): The number of months to run the environment for.
             randomize_agents_order (bool, optional): If True, randomizes the order in which agents act. Defaults to True.
         &#34;&#34;&#34;
-        self.run(steps=months, timedelta_per_step=timedelta(weeks=4), randomize_agents_order=randomize_agents_order, parallelize=parallelize)
-    
+        self.run(
+            steps=months,
+            timedelta_per_step=timedelta(weeks=4),
+            randomize_agents_order=randomize_agents_order,
+            parallelize=parallelize,
+        )
+
     def skip_months(self, months: int):
         &#34;&#34;&#34;
         Skips a given number of months in the environment.
@@ -650,7 +737,6 @@ all additional targets are displayed.</dd>
             months (int): The number of months to skip.
         &#34;&#34;&#34;
         self.skip(steps=months, timedelta_per_step=timedelta(weeks=4))
-    
     @config_manager.config_defaults(parallelize=&#34;parallel_agent_actions&#34;)
     def run_years(self, years: int, randomize_agents_order=True, parallelize=None):
         &#34;&#34;&#34;
@@ -660,8 +746,13 @@ all additional targets are displayed.</dd>
             years (int): The number of years to run the environment for.
             randomize_agents_order (bool, optional): If True, randomizes the order in which agents act. Defaults to True.
         &#34;&#34;&#34;
-        self.run(steps=years, timedelta_per_step=timedelta(days=365), randomize_agents_order=randomize_agents_order, parallelize=parallelize)
-    
+        self.run(
+            steps=years,
+            timedelta_per_step=timedelta(days=365),
+            randomize_agents_order=randomize_agents_order,
+            parallelize=parallelize,
+        )
+
     def skip_years(self, years: int):
         &#34;&#34;&#34;
         Skips a given number of years in the environment.
@@ -683,8 +774,8 @@ all additional targets are displayed.</dd>
         &#34;&#34;&#34;
         for agent in agents:
             self.add_agent(agent)
-        
-        return self # for chaining
+
+        return self  # for chaining
 
     def add_agent(self, agent: TinyPerson):
         &#34;&#34;&#34;
@@ -692,7 +783,7 @@ all additional targets are displayed.</dd>
 
         Args:
             agent (TinyPerson): The agent to add to the environment.
-        
+
         Raises:
             ValueError: If the agent name is not unique within the environment.
         &#34;&#34;&#34;
@@ -700,19 +791,21 @@ all additional targets are displayed.</dd>
         # check if the agent is not already in the environment
         if agent not in self.agents:
             logger.debug(f&#34;Adding agent {agent.name} to the environment.&#34;)
-            
-            # Agent names must be unique in the environment. 
+
+            # Agent names must be unique in the environment.
             # Check if the agent name is already there.
             if agent.name not in self.name_to_agent:
                 agent.environment = self
                 self.agents.append(agent)
                 self.name_to_agent[agent.name] = agent
             else:
-                raise ValueError(f&#34;Agent names must be unique, but &#39;{agent.name}&#39; is already in the environment.&#34;)
+                raise ValueError(
+                    f&#34;Agent names must be unique, but &#39;{agent.name}&#39; is already in the environment.&#34;
+                )
         else:
             logger.warn(f&#34;Agent {agent.name} is already in the environment.&#34;)
-        
-        return self # for chaining
+
+        return self  # for chaining
 
     def remove_agent(self, agent: TinyPerson):
         &#34;&#34;&#34;
@@ -725,8 +818,8 @@ all additional targets are displayed.</dd>
         self.agents.remove(agent)
         del self.name_to_agent[agent.name]
 
-        return self # for chaining
-    
+        return self  # for chaining
+
     def remove_all_agents(self):
         &#34;&#34;&#34;
         Removes all agents from the environment.
@@ -735,11 +828,11 @@ all additional targets are displayed.</dd>
         self.agents = []
         self.name_to_agent = {}
 
-        return self # for chaining
+        return self  # for chaining
 
     def get_agent_by_name(self, name: str) -&gt; TinyPerson:
         &#34;&#34;&#34;
-        Returns the agent with the specified name. If no agent with that name exists in the environment, 
+        Returns the agent with the specified name. If no agent with that name exists in the environment,
         returns None.
 
         Args:
@@ -752,7 +845,6 @@ all additional targets are displayed.</dd>
             return self.name_to_agent[name]
         else:
             return None
-    
     #######################################################################
     # Intervention management methods
     #######################################################################
@@ -774,21 +866,23 @@ all additional targets are displayed.</dd>
     #######################################################################
     @transactional()
     def _handle_actions(self, source: TinyPerson, actions: list):
-        &#34;&#34;&#34; 
+        &#34;&#34;&#34;
         Handles the actions issued by the agents.
 
         Args:
             source (TinyPerson): The agent that issued the actions.
             actions (list): A list of actions issued by the agents. Each action is actually a
               JSON specification.
-            
+
         &#34;&#34;&#34;
         for action in actions:
-            action_type = action[&#34;type&#34;] # this is the only required field
+            action_type = action[&#34;type&#34;]  # this is the only required field
             content = action[&#34;content&#34;] if &#34;content&#34; in action else None
             target = action[&#34;target&#34;] if &#34;target&#34; in action else None
 
-            logger.debug(f&#34;[{self.name}] Handling action {action_type} from agent {name_or_empty(source)}. Content: {content}, target: {target}.&#34;)
+            logger.debug(
+                f&#34;[{self.name}] Handling action {action_type} from agent {name_or_empty(source)}. Content: {content}, target: {target}.&#34;
+            )
 
             # only some actions require the enviroment to intervene
             if action_type == &#34;REACH_OUT&#34;:
@@ -815,11 +909,19 @@ all additional targets are displayed.</dd>
             source_agent.make_agent_accessible(target_agent)
             target_agent.make_agent_accessible(source_agent)
 
-            source_agent.socialize(f&#34;{name_or_empty(target_agent)} was successfully reached out, and is now available for interaction.&#34;, source=self)
-            target_agent.socialize(f&#34;{name_or_empty(source_agent)} reached out to you, and is now available for interaction.&#34;, source=self)
-        
+            source_agent.socialize(
+                f&#34;{name_or_empty(target_agent)} was successfully reached out, and is now available for interaction.&#34;,
+                source=self,
+            )
+            target_agent.socialize(
+                f&#34;{name_or_empty(source_agent)} reached out to you, and is now available for interaction.&#34;,
+                source=self,
+            )
+
         else:
-            logger.debug(f&#34;[{self.name}] REACH_OUT action failed: target agent &#39;{target}&#39; not found.&#34;)
+            logger.debug(
+                f&#34;[{self.name}] REACH_OUT action failed: target agent &#39;{target}&#39; not found.&#34;
+            )
 
     @transactional()
     def _handle_talk(self, source_agent: TinyPerson, content: str, target: str):
@@ -833,7 +935,9 @@ all additional targets are displayed.</dd>
         &#34;&#34;&#34;
         target_agent = self.get_agent_by_name(target)
 
-        logger.debug(f&#34;[{self.name}] Delivering message from {name_or_empty(source_agent)} to {name_or_empty(target_agent)}.&#34;)
+        logger.debug(
+            f&#34;[{self.name}] Delivering message from {name_or_empty(source_agent)} to {name_or_empty(target_agent)}.&#34;
+        )
 
         if target_agent is not None:
             target_agent.listen(content, source=source_agent)
@@ -844,7 +948,7 @@ all additional targets are displayed.</dd>
     # Interaction methods
     #######################################################################
     @transactional()
-    def broadcast(self, speech: str, source: AgentOrWorld=None):
+    def broadcast(self, speech: str, source: AgentOrWorld = None):
         &#34;&#34;&#34;
         Delivers a speech to all agents in the environment.
 
@@ -858,9 +962,9 @@ all additional targets are displayed.</dd>
             # do not deliver the message to the source
             if agent != source:
                 agent.listen(speech, source=source)
-    
+
     @transactional()
-    def broadcast_thought(self, thought: str, source: AgentOrWorld=None):
+    def broadcast_thought(self, thought: str, source: AgentOrWorld = None):
         &#34;&#34;&#34;
         Broadcasts a thought to all agents in the environment.
 
@@ -871,7 +975,6 @@ all additional targets are displayed.</dd>
 
         for agent in self.agents:
             agent.think(thought)
-    
     @transactional()
     def broadcast_internal_goal(self, internal_goal: str):
         &#34;&#34;&#34;
@@ -884,9 +987,9 @@ all additional targets are displayed.</dd>
 
         for agent in self.agents:
             agent.internalize_goal(internal_goal)
-    
+
     @transactional()
-    def broadcast_context_change(self, context:list):
+    def broadcast_context_change(self, context: list):
         &#34;&#34;&#34;
         Broadcasts a context change to all agents in the environment.
 
@@ -906,28 +1009,49 @@ all additional targets are displayed.</dd>
             for agent_2 in self.agents:
                 if agent_1 != agent_2:
                     agent_1.make_agent_accessible(agent_2)
-            
 
     ###########################################################
     # Formatting conveniences
     ###########################################################
 
     # TODO better names for these &#34;display&#34; methods
-    def _display_step_communication(self, cur_step, total_steps, timedelta_per_step=None):
+    def _display_step_communication(
+        self, cur_step, total_steps, timedelta_per_step=None
+    ):
         &#34;&#34;&#34;
         Displays the current communication and stores it in a buffer for later use.
         &#34;&#34;&#34;
-        rendering = self._pretty_step(cur_step=cur_step, total_steps=total_steps, timedelta_per_step=timedelta_per_step) 
+        rendering = self._pretty_step(
+            cur_step=cur_step,
+            total_steps=total_steps,
+            timedelta_per_step=timedelta_per_step,
+        )
 
-        self._push_and_display_latest_communication({&#34;kind&#34;: &#39;step&#39;, &#34;rendering&#34;: rendering, &#34;content&#34;: None, &#34;source&#34;:  None, &#34;target&#34;: None})
-    
+        self._push_and_display_latest_communication(
+            {
+                &#34;kind&#34;: &#34;step&#34;,
+                &#34;rendering&#34;: rendering,
+                &#34;content&#34;: None,
+                &#34;source&#34;: None,
+                &#34;target&#34;: None,
+            }
+        )
+
     def _display_intervention_communication(self, intervention):
         &#34;&#34;&#34;
         Displays the current intervention communication and stores it in a buffer for later use.
         &#34;&#34;&#34;
         rendering = self._pretty_intervention(intervention)
-        self._push_and_display_latest_communication({&#34;kind&#34;: &#39;intervention&#39;, &#34;rendering&#34;: rendering, &#34;content&#34;: None, &#34;source&#34;:  None, &#34;target&#34;: None})
-    
+        self._push_and_display_latest_communication(
+            {
+                &#34;kind&#34;: &#34;intervention&#34;,
+                &#34;rendering&#34;: rendering,
+                &#34;content&#34;: None,
+                &#34;source&#34;: None,
+                &#34;target&#34;: None,
+            }
+        )
+
     def _push_and_display_latest_communication(self, communication):
         &#34;&#34;&#34;
         Pushes the latest communications to the agent&#39;s buffer.
@@ -941,31 +1065,30 @@ all additional targets are displayed.</dd>
             last_kind = last_communication[&#34;kind&#34;]
             last_target = last_communication[&#34;target&#34;]
             last_source = last_communication[&#34;source&#34;]
-            if last_kind == &#39;action&#39;:  
+            if last_kind == &#34;action&#34;:
                 last_content = last_communication[&#34;content&#34;][&#34;action&#34;][&#34;content&#34;]
                 last_type = last_communication[&#34;content&#34;][&#34;action&#34;][&#34;type&#34;]
-            elif last_kind == &#39;stimulus&#39;:
+            elif last_kind == &#34;stimulus&#34;:
                 last_content = last_communication[&#34;content&#34;][&#34;stimulus&#34;][&#34;content&#34;]
                 last_type = last_communication[&#34;content&#34;][&#34;stimulus&#34;][&#34;type&#34;]
-            elif last_kind == &#39;stimuli&#39;:
+            elif last_kind == &#34;stimuli&#34;:
                 last_stimulus = last_communication[&#34;content&#34;][&#34;stimuli&#34;][0]
                 last_content = last_stimulus[&#34;content&#34;]
                 last_type = last_stimulus[&#34;type&#34;]
             else:
                 last_content = None
                 last_type = None
-        
             # get values from current communication
             current_kind = communication[&#34;kind&#34;]
             current_target = communication[&#34;target&#34;]
             current_source = communication[&#34;source&#34;]
-            if current_kind == &#39;action&#39;:
+            if current_kind == &#34;action&#34;:
                 current_content = communication[&#34;content&#34;][&#34;action&#34;][&#34;content&#34;]
                 current_type = communication[&#34;content&#34;][&#34;action&#34;][&#34;type&#34;]
-            elif current_kind == &#39;stimulus&#39;:
+            elif current_kind == &#34;stimulus&#34;:
                 current_content = communication[&#34;content&#34;][&#34;stimulus&#34;][&#34;content&#34;]
                 current_type = communication[&#34;content&#34;][&#34;stimulus&#34;][&#34;type&#34;]
-            elif current_kind == &#39;stimuli&#39;:
+            elif current_kind == &#34;stimuli&#34;:
                 current_stimulus = communication[&#34;content&#34;][&#34;stimuli&#34;][0]
                 current_content = current_stimulus[&#34;content&#34;]
                 current_type = current_stimulus[&#34;type&#34;]
@@ -974,35 +1097,48 @@ all additional targets are displayed.</dd>
                 current_type = None
 
             # if we are repeating the last communication, let&#39;s simplify the rendering
-            if (last_source == current_source) and (last_type == current_type) and (last_kind == current_kind) and \
-               (last_content is not None) and (last_content == current_content) and \
-               (current_target is not None):
-               
+            if (
+                (last_source == current_source)
+                and (last_type == current_type)
+                and (last_kind == current_kind)
+                and (last_content is not None)
+                and (last_content == current_content)
+                and (current_target is not None)
+            ):
+
                 self._target_display_communications_buffer.append(current_target)
 
                 rich_style = utils.RichTextStyle.get_style_for(last_kind, last_type)
-                
+
                 # print the additional target a limited number of times if a max is set, or
                 # always if no max is set.
-                if (self._max_additional_targets_to_display is None) or\
-                   len(self._target_display_communications_buffer) &lt; self._max_additional_targets_to_display:
-                    communication[&#34;rendering&#34;] = &#34; &#34; * len(last_source) + f&#34;[{rich_style}]       + --&gt; [underline]{current_target}[/][/]&#34;
+                if (self._max_additional_targets_to_display is None) or len(
+                    self._target_display_communications_buffer
+                ) &lt; self._max_additional_targets_to_display:
+                    communication[&#34;rendering&#34;] = (
+                        &#34; &#34; * len(last_source)
+                        + f&#34;[{rich_style}]       + --&gt; [underline]{current_target}[/][/]&#34;
+                    )
 
-                elif len(self._target_display_communications_buffer) == self._max_additional_targets_to_display:
-                    communication[&#34;rendering&#34;] = &#34; &#34; * len(last_source) + f&#34;[{rich_style}]       + --&gt; ...others...[/]&#34;
-                
-                else: # don&#39;t display anything anymore
+                elif (
+                    len(self._target_display_communications_buffer)
+                    == self._max_additional_targets_to_display
+                ):
+                    communication[&#34;rendering&#34;] = (
+                        &#34; &#34; * len(last_source)
+                        + f&#34;[{rich_style}]       + --&gt; ...others...[/]&#34;
+                    )
+
+                else:  # don&#39;t display anything anymore
                     communication[&#34;rendering&#34;] = None
-            
+
             else:
                 # no repetition, so just display the communication and reset the targets buffer
-                self._target_display_communications_buffer = [] # resets
-        
+                self._target_display_communications_buffer = []  # resets
+
         else:
             # no repetition, so just display the communication and reset the targets buffer
-            self._target_display_communications_buffer = [] # resets
-
-
+            self._target_display_communications_buffer = []  # resets
 
         self._displayed_communications_buffer.append(communication)
         self._display(communication)
@@ -1017,20 +1153,20 @@ all additional targets are displayed.</dd>
         for communication in communications:
             self._display(communication)
 
-        return communications    
+        return communications
 
-    def _display(self, communication:dict):
+    def _display(self, communication: dict):
         # unpack the rendering to find more info
         content = communication[&#34;rendering&#34;]
         kind = communication[&#34;kind&#34;]
-        
+
         if content is not None:
             # render as appropriate
-            if kind == &#39;step&#39;:
+            if kind == &#34;step&#34;:
                 self.console.rule(content)
             else:
                 self.console.print(content)
-    
+
     def clear_communications_buffer(self):
         &#34;&#34;&#34;
         Cleans the communications buffer.
@@ -1055,10 +1191,12 @@ all additional targets are displayed.</dd>
             initial_indent=indent,
             subsequent_indent=indent,
         )
-        
+
         rich_style = utils.RichTextStyle.get_style_for(&#34;intervention&#34;)
-        rendering = f&#34;[{rich_style}] :zap: [bold] &lt;&lt;{intervention.name}&gt;&gt; Triggered, effects are being applied...[/] \n&#34; + \
-                    f&#34;[italic]{justification}[/][/]&#34;
+        rendering = (
+            f&#34;[{rich_style}] :zap: [bold] &lt;&lt;{intervention.name}&gt;&gt; Triggered, effects are being applied...[/] \n&#34;
+            + f&#34;[italic]{justification}[/][/]&#34;
+        )
         # TODO add details about why the intervention was applied
 
         return rendering
@@ -1067,23 +1205,48 @@ all additional targets are displayed.</dd>
         &#34;&#34;&#34;
         Pretty prints the current messages from agents in this environment.
         &#34;&#34;&#34;
-        print(self.pretty_current_interactions(simplified=simplified, skip_system=skip_system))
+        print(
+            self.pretty_current_interactions(
+                simplified=simplified, skip_system=skip_system
+            )
+        )
 
-    def pretty_current_interactions(self, simplified=True, skip_system=True, max_content_length=default[&#34;max_content_display_length&#34;], first_n=None, last_n=None, include_omission_info:bool=True):
-      &#34;&#34;&#34;
-      Returns a pretty, readable, string with the current messages of agents in this environment.
-      &#34;&#34;&#34;
-      agent_contents = []
+    @config_manager.config_defaults(max_content_length=&#34;max_content_display_length&#34;)
+    def pretty_current_interactions(
+        self,
+        simplified=True,
+        skip_system=True,
+        max_content_length=None,
+        first_n=None,
+        last_n=None,
+        include_omission_info: bool = True,
+    ):
+        &#34;&#34;&#34;
+        Returns a pretty, readable, string with the current messages of agents in this environment.
+        &#34;&#34;&#34;
+        agent_contents = []
 
-      for agent in self.agents:
-          agent_content = f&#34;#### Interactions from the point of view of {agent.name} agent:\n&#34;
-          agent_content += f&#34;**BEGIN AGENT {agent.name} HISTORY.**\n &#34;
-          agent_content += agent.pretty_current_interactions(simplified=simplified, skip_system=skip_system, max_content_length=max_content_length, first_n=first_n, last_n=last_n, include_omission_info=include_omission_info) + &#34;\n&#34;
-          agent_content += f&#34;**FINISHED AGENT {agent.name} HISTORY.**\n\n&#34;
-          agent_contents.append(agent_content)      
-          
-      return &#34;\n&#34;.join(agent_contents)
-    
+        for agent in self.agents:
+            agent_content = (
+                f&#34;#### Interactions from the point of view of {agent.name} agent:\n&#34;
+            )
+            agent_content += f&#34;**BEGIN AGENT {agent.name} HISTORY.**\n &#34;
+            agent_content += (
+                agent.pretty_current_interactions(
+                    simplified=simplified,
+                    skip_system=skip_system,
+                    max_content_length=max_content_length,
+                    first_n=first_n,
+                    last_n=last_n,
+                    include_omission_info=include_omission_info,
+                )
+                + &#34;\n&#34;
+            )
+            agent_content += f&#34;**FINISHED AGENT {agent.name} HISTORY.**\n\n&#34;
+            agent_contents.append(agent_content)
+
+        return &#34;\n&#34;.join(agent_contents)
+
     #######################################################################
     # IO
     #######################################################################
@@ -1098,11 +1261,11 @@ all additional targets are displayed.</dd>
         to_copy = copy.copy(self.__dict__)
 
         # remove the logger and other fields
-        del to_copy[&#39;console&#39;]
-        del to_copy[&#39;agents&#39;]
-        del to_copy[&#39;name_to_agent&#39;]
-        del to_copy[&#39;current_datetime&#39;]
-        del to_copy[&#39;_interventions&#39;] # TODO: encode interventions
+        del to_copy[&#34;console&#34;]
+        del to_copy[&#34;agents&#34;]
+        del to_copy[&#34;name_to_agent&#34;]
+        del to_copy[&#34;current_datetime&#34;]
+        del to_copy[&#34;_interventions&#34;]  # TODO: encode interventions
 
         state = copy.deepcopy(to_copy)
 
@@ -1113,8 +1276,8 @@ all additional targets are displayed.</dd>
         state[&#34;current_datetime&#34;] = self.current_datetime.isoformat()
 
         return state
-    
-    def decode_complete_state(self, state:dict):
+
+    def decode_complete_state(self, state: dict):
         &#34;&#34;&#34;
         Decodes the complete state of the environment from a dictionary.
 
@@ -1135,14 +1298,18 @@ all additional targets are displayed.</dd>
                 try:
                     agent = TinyPerson.get_agent_by_name(agent_state[&#34;name&#34;])
                 except Exception as e:
-                    raise ValueError(f&#34;Could not find agent {agent_state[&#39;name&#39;]} for environment {self.name}.&#34;) from e
-                
+                    raise ValueError(
+                        f&#34;Could not find agent {agent_state[&#39;name&#39;]} for environment {self.name}.&#34;
+                    ) from e
+
                 agent.decode_complete_state(agent_state)
                 self.add_agent(agent)
-                
+
             except Exception as e:
-                raise ValueError(f&#34;Could not decode agent {agent_state[&#39;name&#39;]} for environment {self.name}.&#34;) from e
-        
+                raise ValueError(
+                    f&#34;Could not decode agent {agent_state[&#39;name&#39;]} for environment {self.name}.&#34;
+                ) from e
+
         # remove the agent states to update the rest of the environment
         del state[&#34;agents&#34;]
 
@@ -1161,10 +1328,11 @@ all additional targets are displayed.</dd>
         so if an environment with the same name already exists, an error is raised.
         &#34;&#34;&#34;
         if environment.name in TinyWorld.all_environments:
-            raise ValueError(f&#34;Environment names must be unique, but &#39;{environment.name}&#39; is already defined.&#34;)
+            raise ValueError(
+                f&#34;Environment names must be unique, but &#39;{environment.name}&#39; is already defined.&#34;
+            )
         else:
             TinyWorld.all_environments[environment.name] = environment
-        
 
     @staticmethod
     def set_simulation_for_free_environments(simulation):
@@ -1175,11 +1343,11 @@ all additional targets are displayed.</dd>
         for environment in TinyWorld.all_environments.values():
             if environment.simulation_id is None:
                 simulation.add_environment(environment)
-    
+
     @staticmethod
     def get_environment_by_name(name: str):
         &#34;&#34;&#34;
-        Returns the environment with the specified name. If no environment with that name exists, 
+        Returns the environment with the specified name. If no environment with that name exists,
         returns None.
 
         Args:
@@ -1192,13 +1360,210 @@ all additional targets are displayed.</dd>
             return TinyWorld.all_environments[name]
         else:
             return None
-    
+
     @staticmethod
     def clear_environments():
         &#34;&#34;&#34;
         Clears the list of all environments.
         &#34;&#34;&#34;
-        TinyWorld.all_environments = {}</code></pre>
+        TinyWorld.all_environments = {}
+
+    #######################################################################
+    # Cost statistics methods
+    #######################################################################
+
+    def get_cost_stats(self):
+        &#34;&#34;&#34;
+        Gets derivative cost statistics for this world based on the current OpenAI client stats.
+
+        Returns:
+            dict: A dictionary containing:
+                - base_stats: Raw stats from the OpenAI client
+                - per_agent: Average resources per agent
+                - per_step: Average resources per simulation step
+                - per_agent_per_step: Average resources per agent per step
+        &#34;&#34;&#34;
+        from tinytroupe.clients import client
+
+        base_stats = client().get_cost_stats()
+        num_agents = len(self.agents)
+        num_steps = self._simulation_steps
+
+        result = {
+            &#34;base_stats&#34;: base_stats,
+            &#34;num_agents&#34;: num_agents,
+            &#34;num_steps&#34;: num_steps,
+        }
+
+        # Per-agent statistics
+        if num_agents &gt; 0:
+            result[&#34;per_agent&#34;] = {
+                &#34;input_tokens&#34;: base_stats[&#34;input_tokens&#34;] / num_agents,
+                &#34;output_tokens&#34;: base_stats[&#34;output_tokens&#34;] / num_agents,
+                &#34;total_tokens&#34;: base_stats[&#34;total_tokens&#34;] / num_agents,
+                &#34;model_calls&#34;: base_stats[&#34;model_calls&#34;] / num_agents,
+                &#34;cached_calls&#34;: base_stats[&#34;cached_calls&#34;] / num_agents,
+            }
+        else:
+            result[&#34;per_agent&#34;] = None
+
+        # Per-step statistics
+        if num_steps &gt; 0:
+            result[&#34;per_step&#34;] = {
+                &#34;input_tokens&#34;: base_stats[&#34;input_tokens&#34;] / num_steps,
+                &#34;output_tokens&#34;: base_stats[&#34;output_tokens&#34;] / num_steps,
+                &#34;total_tokens&#34;: base_stats[&#34;total_tokens&#34;] / num_steps,
+                &#34;model_calls&#34;: base_stats[&#34;model_calls&#34;] / num_steps,
+                &#34;cached_calls&#34;: base_stats[&#34;cached_calls&#34;] / num_steps,
+            }
+        else:
+            result[&#34;per_step&#34;] = None
+
+        # Per-agent-per-step statistics
+        if num_agents &gt; 0 and num_steps &gt; 0:
+            agent_steps = num_agents * num_steps
+            result[&#34;per_agent_per_step&#34;] = {
+                &#34;input_tokens&#34;: base_stats[&#34;input_tokens&#34;] / agent_steps,
+                &#34;output_tokens&#34;: base_stats[&#34;output_tokens&#34;] / agent_steps,
+                &#34;total_tokens&#34;: base_stats[&#34;total_tokens&#34;] / agent_steps,
+                &#34;model_calls&#34;: base_stats[&#34;model_calls&#34;] / agent_steps,
+                &#34;cached_calls&#34;: base_stats[&#34;cached_calls&#34;] / agent_steps,
+            }
+        else:
+            result[&#34;per_agent_per_step&#34;] = None
+
+        return result
+
+    def pretty_print_cost_stats(self):
+        &#34;&#34;&#34;
+        Pretty prints the derivative cost statistics for this world.
+        &#34;&#34;&#34;
+        stats = self.get_cost_stats()
+
+        print(&#34;\n&#34; + &#34;=&#34; * 70)
+        print(f&#34;COST STATISTICS FOR WORLD: {self.name}&#34;)
+        print(&#34;=&#34; * 70)
+
+        print(f&#34;\nSimulation Context:&#34;)
+        print(f&#34;  Agents:           {stats[&#39;num_agents&#39;]}&#34;)
+        print(f&#34;  Steps completed:  {stats[&#39;num_steps&#39;]}&#34;)
+
+        base = stats[&#34;base_stats&#34;]
+        print(f&#34;\nTotal Resources Used (from client):&#34;)
+        print(f&#34;  Input tokens:     {base[&#39;input_tokens&#39;]:,}&#34;)
+        print(f&#34;  Output tokens:    {base[&#39;output_tokens&#39;]:,}&#34;)
+        print(f&#34;  Total tokens:     {base[&#39;total_tokens&#39;]:,}&#34;)
+        print(f&#34;  Model calls:      {base[&#39;model_calls&#39;]:,}&#34;)
+        print(f&#34;  Cached calls:     {base[&#39;cached_calls&#39;]:,}&#34;)
+
+        if stats[&#34;per_agent&#34;] is not None:
+            pa = stats[&#34;per_agent&#34;]
+            print(f&#34;\nAverage Per Agent:&#34;)
+            print(f&#34;  Input tokens:     {pa[&#39;input_tokens&#39;]:,.1f}&#34;)
+            print(f&#34;  Output tokens:    {pa[&#39;output_tokens&#39;]:,.1f}&#34;)
+            print(f&#34;  Total tokens:     {pa[&#39;total_tokens&#39;]:,.1f}&#34;)
+            print(f&#34;  Model calls:      {pa[&#39;model_calls&#39;]:,.1f}&#34;)
+            print(f&#34;  Cached calls:     {pa[&#39;cached_calls&#39;]:,.1f}&#34;)
+
+        if stats[&#34;per_step&#34;] is not None:
+            ps = stats[&#34;per_step&#34;]
+            print(f&#34;\nAverage Per Simulation Step:&#34;)
+            print(f&#34;  Input tokens:     {ps[&#39;input_tokens&#39;]:,.1f}&#34;)
+            print(f&#34;  Output tokens:    {ps[&#39;output_tokens&#39;]:,.1f}&#34;)
+            print(f&#34;  Total tokens:     {ps[&#39;total_tokens&#39;]:,.1f}&#34;)
+            print(f&#34;  Model calls:      {ps[&#39;model_calls&#39;]:,.1f}&#34;)
+            print(f&#34;  Cached calls:     {ps[&#39;cached_calls&#39;]:,.1f}&#34;)
+
+        if stats[&#34;per_agent_per_step&#34;] is not None:
+            paps = stats[&#34;per_agent_per_step&#34;]
+            print(f&#34;\nAverage Per Agent Per Step:&#34;)
+            print(f&#34;  Input tokens:     {paps[&#39;input_tokens&#39;]:,.1f}&#34;)
+            print(f&#34;  Output tokens:    {paps[&#39;output_tokens&#39;]:,.1f}&#34;)
+            print(f&#34;  Total tokens:     {paps[&#39;total_tokens&#39;]:,.1f}&#34;)
+            print(f&#34;  Model calls:      {paps[&#39;model_calls&#39;]:,.2f}&#34;)
+            print(f&#34;  Cached calls:     {paps[&#39;cached_calls&#39;]:,.2f}&#34;)
+
+        print(&#34;=&#34; * 70 + &#34;\n&#34;)
+
+    @staticmethod
+    def get_global_cost_stats():
+        &#34;&#34;&#34;
+        Gets global cost statistics across all environments.
+
+        Returns:
+            dict: A dictionary containing:
+                - base_stats: Raw stats from the OpenAI client
+                - total_agents: Total number of agents across all environments
+                - total_steps: Total simulation steps across all environments
+                - total_environments: Number of environments
+                - per_environment: Average resources per environment
+        &#34;&#34;&#34;
+        from tinytroupe.clients import client
+
+        base_stats = client().get_cost_stats()
+        total_agents = sum(
+            len(env.agents) for env in TinyWorld.all_environments.values()
+        )
+        total_steps = sum(
+            env._simulation_steps for env in TinyWorld.all_environments.values()
+        )
+        num_environments = len(TinyWorld.all_environments)
+
+        result = {
+            &#34;base_stats&#34;: base_stats,
+            &#34;total_agents&#34;: total_agents,
+            &#34;total_steps&#34;: total_steps,
+            &#34;total_environments&#34;: num_environments,
+        }
+
+        # Per-environment statistics
+        if num_environments &gt; 0:
+            result[&#34;per_environment&#34;] = {
+                &#34;input_tokens&#34;: base_stats[&#34;input_tokens&#34;] / num_environments,
+                &#34;output_tokens&#34;: base_stats[&#34;output_tokens&#34;] / num_environments,
+                &#34;total_tokens&#34;: base_stats[&#34;total_tokens&#34;] / num_environments,
+                &#34;model_calls&#34;: base_stats[&#34;model_calls&#34;] / num_environments,
+                &#34;cached_calls&#34;: base_stats[&#34;cached_calls&#34;] / num_environments,
+            }
+        else:
+            result[&#34;per_environment&#34;] = None
+
+        return result
+
+    @staticmethod
+    def pretty_print_global_cost_stats():
+        &#34;&#34;&#34;
+        Pretty prints global cost statistics across all environments.
+        &#34;&#34;&#34;
+        stats = TinyWorld.get_global_cost_stats()
+
+        print(&#34;\n&#34; + &#34;=&#34; * 70)
+        print(&#34;GLOBAL COST STATISTICS (ALL ENVIRONMENTS)&#34;)
+        print(&#34;=&#34; * 70)
+
+        print(f&#34;\nGlobal Context:&#34;)
+        print(f&#34;  Environments:     {stats[&#39;total_environments&#39;]}&#34;)
+        print(f&#34;  Total agents:     {stats[&#39;total_agents&#39;]}&#34;)
+        print(f&#34;  Total steps:      {stats[&#39;total_steps&#39;]}&#34;)
+
+        base = stats[&#34;base_stats&#34;]
+        print(f&#34;\nTotal Resources Used:&#34;)
+        print(f&#34;  Input tokens:     {base[&#39;input_tokens&#39;]:,}&#34;)
+        print(f&#34;  Output tokens:    {base[&#39;output_tokens&#39;]:,}&#34;)
+        print(f&#34;  Total tokens:     {base[&#39;total_tokens&#39;]:,}&#34;)
+        print(f&#34;  Model calls:      {base[&#39;model_calls&#39;]:,}&#34;)
+        print(f&#34;  Cached calls:     {base[&#39;cached_calls&#39;]:,}&#34;)
+
+        if stats[&#34;per_environment&#34;] is not None:
+            pe = stats[&#34;per_environment&#34;]
+            print(f&#34;\nAverage Per Environment:&#34;)
+            print(f&#34;  Input tokens:     {pe[&#39;input_tokens&#39;]:,.1f}&#34;)
+            print(f&#34;  Output tokens:    {pe[&#39;output_tokens&#39;]:,.1f}&#34;)
+            print(f&#34;  Total tokens:     {pe[&#39;total_tokens&#39;]:,.1f}&#34;)
+            print(f&#34;  Model calls:      {pe[&#39;model_calls&#39;]:,.1f}&#34;)
+            print(f&#34;  Cached calls:     {pe[&#39;cached_calls&#39;]:,.1f}&#34;)
+
+        print(&#34;=&#34; * 70 + &#34;\n&#34;)</code></pre>
 </details>
 <h3>Subclasses</h3>
 <ul class="hlist">
@@ -1234,7 +1599,9 @@ def add_environment(environment):
     so if an environment with the same name already exists, an error is raised.
     &#34;&#34;&#34;
     if environment.name in TinyWorld.all_environments:
-        raise ValueError(f&#34;Environment names must be unique, but &#39;{environment.name}&#39; is already defined.&#34;)
+        raise ValueError(
+            f&#34;Environment names must be unique, but &#39;{environment.name}&#39; is already defined.&#34;
+        )
     else:
         TinyWorld.all_environments[environment.name] = environment</code></pre>
 </details>
@@ -1279,7 +1646,7 @@ returns None.</p>
 <pre><code class="python">@staticmethod
 def get_environment_by_name(name: str):
     &#34;&#34;&#34;
-    Returns the environment with the specified name. If no environment with that name exists, 
+    Returns the environment with the specified name. If no environment with that name exists,
     returns None.
 
     Args:
@@ -1292,6 +1659,116 @@ def get_environment_by_name(name: str):
         return TinyWorld.all_environments[name]
     else:
         return None</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.get_global_cost_stats"><code class="name flex">
+<span>def <span class="ident">get_global_cost_stats</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Gets global cost statistics across all environments.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>A dictionary containing:
+- base_stats: Raw stats from the OpenAI client
+- total_agents: Total number of agents across all environments
+- total_steps: Total simulation steps across all environments
+- total_environments: Number of environments
+- per_environment: Average resources per environment</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def get_global_cost_stats():
+    &#34;&#34;&#34;
+    Gets global cost statistics across all environments.
+
+    Returns:
+        dict: A dictionary containing:
+            - base_stats: Raw stats from the OpenAI client
+            - total_agents: Total number of agents across all environments
+            - total_steps: Total simulation steps across all environments
+            - total_environments: Number of environments
+            - per_environment: Average resources per environment
+    &#34;&#34;&#34;
+    from tinytroupe.clients import client
+
+    base_stats = client().get_cost_stats()
+    total_agents = sum(
+        len(env.agents) for env in TinyWorld.all_environments.values()
+    )
+    total_steps = sum(
+        env._simulation_steps for env in TinyWorld.all_environments.values()
+    )
+    num_environments = len(TinyWorld.all_environments)
+
+    result = {
+        &#34;base_stats&#34;: base_stats,
+        &#34;total_agents&#34;: total_agents,
+        &#34;total_steps&#34;: total_steps,
+        &#34;total_environments&#34;: num_environments,
+    }
+
+    # Per-environment statistics
+    if num_environments &gt; 0:
+        result[&#34;per_environment&#34;] = {
+            &#34;input_tokens&#34;: base_stats[&#34;input_tokens&#34;] / num_environments,
+            &#34;output_tokens&#34;: base_stats[&#34;output_tokens&#34;] / num_environments,
+            &#34;total_tokens&#34;: base_stats[&#34;total_tokens&#34;] / num_environments,
+            &#34;model_calls&#34;: base_stats[&#34;model_calls&#34;] / num_environments,
+            &#34;cached_calls&#34;: base_stats[&#34;cached_calls&#34;] / num_environments,
+        }
+    else:
+        result[&#34;per_environment&#34;] = None
+
+    return result</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.pretty_print_global_cost_stats"><code class="name flex">
+<span>def <span class="ident">pretty_print_global_cost_stats</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Pretty prints global cost statistics across all environments.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def pretty_print_global_cost_stats():
+    &#34;&#34;&#34;
+    Pretty prints global cost statistics across all environments.
+    &#34;&#34;&#34;
+    stats = TinyWorld.get_global_cost_stats()
+
+    print(&#34;\n&#34; + &#34;=&#34; * 70)
+    print(&#34;GLOBAL COST STATISTICS (ALL ENVIRONMENTS)&#34;)
+    print(&#34;=&#34; * 70)
+
+    print(f&#34;\nGlobal Context:&#34;)
+    print(f&#34;  Environments:     {stats[&#39;total_environments&#39;]}&#34;)
+    print(f&#34;  Total agents:     {stats[&#39;total_agents&#39;]}&#34;)
+    print(f&#34;  Total steps:      {stats[&#39;total_steps&#39;]}&#34;)
+
+    base = stats[&#34;base_stats&#34;]
+    print(f&#34;\nTotal Resources Used:&#34;)
+    print(f&#34;  Input tokens:     {base[&#39;input_tokens&#39;]:,}&#34;)
+    print(f&#34;  Output tokens:    {base[&#39;output_tokens&#39;]:,}&#34;)
+    print(f&#34;  Total tokens:     {base[&#39;total_tokens&#39;]:,}&#34;)
+    print(f&#34;  Model calls:      {base[&#39;model_calls&#39;]:,}&#34;)
+    print(f&#34;  Cached calls:     {base[&#39;cached_calls&#39;]:,}&#34;)
+
+    if stats[&#34;per_environment&#34;] is not None:
+        pe = stats[&#34;per_environment&#34;]
+        print(f&#34;\nAverage Per Environment:&#34;)
+        print(f&#34;  Input tokens:     {pe[&#39;input_tokens&#39;]:,.1f}&#34;)
+        print(f&#34;  Output tokens:    {pe[&#39;output_tokens&#39;]:,.1f}&#34;)
+        print(f&#34;  Total tokens:     {pe[&#39;total_tokens&#39;]:,.1f}&#34;)
+        print(f&#34;  Model calls:      {pe[&#39;model_calls&#39;]:,.1f}&#34;)
+        print(f&#34;  Cached calls:     {pe[&#39;cached_calls&#39;]:,.1f}&#34;)
+
+    print(&#34;=&#34; * 70 + &#34;\n&#34;)</code></pre>
 </details>
 </dd>
 <dt id="tinytroupe.environment.TinyWorld.set_simulation_for_free_environments"><code class="name flex">
@@ -1343,7 +1820,7 @@ def set_simulation_for_free_environments(simulation):
 
     Args:
         agent (TinyPerson): The agent to add to the environment.
-    
+
     Raises:
         ValueError: If the agent name is not unique within the environment.
     &#34;&#34;&#34;
@@ -1351,19 +1828,21 @@ def set_simulation_for_free_environments(simulation):
     # check if the agent is not already in the environment
     if agent not in self.agents:
         logger.debug(f&#34;Adding agent {agent.name} to the environment.&#34;)
-        
-        # Agent names must be unique in the environment. 
+
+        # Agent names must be unique in the environment.
         # Check if the agent name is already there.
         if agent.name not in self.name_to_agent:
             agent.environment = self
             self.agents.append(agent)
             self.name_to_agent[agent.name] = agent
         else:
-            raise ValueError(f&#34;Agent names must be unique, but &#39;{agent.name}&#39; is already in the environment.&#34;)
+            raise ValueError(
+                f&#34;Agent names must be unique, but &#39;{agent.name}&#39; is already in the environment.&#34;
+            )
     else:
         logger.warn(f&#34;Agent {agent.name} is already in the environment.&#34;)
-    
-    return self # for chaining</code></pre>
+
+    return self  # for chaining</code></pre>
 </details>
 </dd>
 <dt id="tinytroupe.environment.TinyWorld.add_agents"><code class="name flex">
@@ -1389,8 +1868,32 @@ def set_simulation_for_free_environments(simulation):
     &#34;&#34;&#34;
     for agent in agents:
         self.add_agent(agent)
-    
-    return self # for chaining</code></pre>
+
+    return self  # for chaining</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.add_intervention"><code class="name flex">
+<span>def <span class="ident">add_intervention</span></span>(<span>self, intervention)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds an intervention to the environment.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>intervention</code></strong></dt>
+<dd>The intervention to add to the environment.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_intervention(self, intervention):
+    &#34;&#34;&#34;
+    Adds an intervention to the environment.
+
+    Args:
+        intervention: The intervention to add to the environment.
+    &#34;&#34;&#34;
+    self._interventions.append(intervention)</code></pre>
 </details>
 </dd>
 <dt id="tinytroupe.environment.TinyWorld.add_intervention"><code class="name flex">
@@ -1548,7 +2051,7 @@ def set_simulation_for_free_environments(simulation):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def decode_complete_state(self, state:dict):
+<pre><code class="python">def decode_complete_state(self, state: dict):
     &#34;&#34;&#34;
     Decodes the complete state of the environment from a dictionary.
 
@@ -1569,14 +2072,18 @@ def set_simulation_for_free_environments(simulation):
             try:
                 agent = TinyPerson.get_agent_by_name(agent_state[&#34;name&#34;])
             except Exception as e:
-                raise ValueError(f&#34;Could not find agent {agent_state[&#39;name&#39;]} for environment {self.name}.&#34;) from e
-            
+                raise ValueError(
+                    f&#34;Could not find agent {agent_state[&#39;name&#39;]} for environment {self.name}.&#34;
+                ) from e
+
             agent.decode_complete_state(agent_state)
             self.add_agent(agent)
-            
+
         except Exception as e:
-            raise ValueError(f&#34;Could not decode agent {agent_state[&#39;name&#39;]} for environment {self.name}.&#34;) from e
-    
+            raise ValueError(
+                f&#34;Could not decode agent {agent_state[&#39;name&#39;]} for environment {self.name}.&#34;
+            ) from e
+
     # remove the agent states to update the rest of the environment
     del state[&#34;agents&#34;]
 
@@ -1613,11 +2120,11 @@ def set_simulation_for_free_environments(simulation):
     to_copy = copy.copy(self.__dict__)
 
     # remove the logger and other fields
-    del to_copy[&#39;console&#39;]
-    del to_copy[&#39;agents&#39;]
-    del to_copy[&#39;name_to_agent&#39;]
-    del to_copy[&#39;current_datetime&#39;]
-    del to_copy[&#39;_interventions&#39;] # TODO: encode interventions
+    del to_copy[&#34;console&#34;]
+    del to_copy[&#34;agents&#34;]
+    del to_copy[&#34;name_to_agent&#34;]
+    del to_copy[&#34;current_datetime&#34;]
+    del to_copy[&#34;_interventions&#34;]  # TODO: encode interventions
 
     state = copy.deepcopy(to_copy)
 
@@ -1652,7 +2159,7 @@ returns None.</p>
 </summary>
 <pre><code class="python">def get_agent_by_name(self, name: str) -&gt; TinyPerson:
     &#34;&#34;&#34;
-    Returns the agent with the specified name. If no agent with that name exists in the environment, 
+    Returns the agent with the specified name. If no agent with that name exists in the environment,
     returns None.
 
     Args:
@@ -1665,6 +2172,87 @@ returns None.</p>
         return self.name_to_agent[name]
     else:
         return None</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.get_cost_stats"><code class="name flex">
+<span>def <span class="ident">get_cost_stats</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Gets derivative cost statistics for this world based on the current OpenAI client stats.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>A dictionary containing:
+- base_stats: Raw stats from the OpenAI client
+- per_agent: Average resources per agent
+- per_step: Average resources per simulation step
+- per_agent_per_step: Average resources per agent per step</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_cost_stats(self):
+    &#34;&#34;&#34;
+    Gets derivative cost statistics for this world based on the current OpenAI client stats.
+
+    Returns:
+        dict: A dictionary containing:
+            - base_stats: Raw stats from the OpenAI client
+            - per_agent: Average resources per agent
+            - per_step: Average resources per simulation step
+            - per_agent_per_step: Average resources per agent per step
+    &#34;&#34;&#34;
+    from tinytroupe.clients import client
+
+    base_stats = client().get_cost_stats()
+    num_agents = len(self.agents)
+    num_steps = self._simulation_steps
+
+    result = {
+        &#34;base_stats&#34;: base_stats,
+        &#34;num_agents&#34;: num_agents,
+        &#34;num_steps&#34;: num_steps,
+    }
+
+    # Per-agent statistics
+    if num_agents &gt; 0:
+        result[&#34;per_agent&#34;] = {
+            &#34;input_tokens&#34;: base_stats[&#34;input_tokens&#34;] / num_agents,
+            &#34;output_tokens&#34;: base_stats[&#34;output_tokens&#34;] / num_agents,
+            &#34;total_tokens&#34;: base_stats[&#34;total_tokens&#34;] / num_agents,
+            &#34;model_calls&#34;: base_stats[&#34;model_calls&#34;] / num_agents,
+            &#34;cached_calls&#34;: base_stats[&#34;cached_calls&#34;] / num_agents,
+        }
+    else:
+        result[&#34;per_agent&#34;] = None
+
+    # Per-step statistics
+    if num_steps &gt; 0:
+        result[&#34;per_step&#34;] = {
+            &#34;input_tokens&#34;: base_stats[&#34;input_tokens&#34;] / num_steps,
+            &#34;output_tokens&#34;: base_stats[&#34;output_tokens&#34;] / num_steps,
+            &#34;total_tokens&#34;: base_stats[&#34;total_tokens&#34;] / num_steps,
+            &#34;model_calls&#34;: base_stats[&#34;model_calls&#34;] / num_steps,
+            &#34;cached_calls&#34;: base_stats[&#34;cached_calls&#34;] / num_steps,
+        }
+    else:
+        result[&#34;per_step&#34;] = None
+
+    # Per-agent-per-step statistics
+    if num_agents &gt; 0 and num_steps &gt; 0:
+        agent_steps = num_agents * num_steps
+        result[&#34;per_agent_per_step&#34;] = {
+            &#34;input_tokens&#34;: base_stats[&#34;input_tokens&#34;] / agent_steps,
+            &#34;output_tokens&#34;: base_stats[&#34;output_tokens&#34;] / agent_steps,
+            &#34;total_tokens&#34;: base_stats[&#34;total_tokens&#34;] / agent_steps,
+            &#34;model_calls&#34;: base_stats[&#34;model_calls&#34;] / agent_steps,
+            &#34;cached_calls&#34;: base_stats[&#34;cached_calls&#34;] / agent_steps,
+        }
+    else:
+        result[&#34;per_agent_per_step&#34;] = None
+
+    return result</code></pre>
 </details>
 </dd>
 <dt id="tinytroupe.environment.TinyWorld.make_everyone_accessible"><code class="name flex">
@@ -1705,7 +2293,7 @@ returns None.</p>
     for communication in communications:
         self._display(communication)
 
-    return communications    </code></pre>
+    return communications</code></pre>
 </details>
 </dd>
 <dt id="tinytroupe.environment.TinyWorld.pp_current_interactions"><code class="name flex">
@@ -1721,11 +2309,15 @@ returns None.</p>
     &#34;&#34;&#34;
     Pretty prints the current messages from agents in this environment.
     &#34;&#34;&#34;
-    print(self.pretty_current_interactions(simplified=simplified, skip_system=skip_system))</code></pre>
+    print(
+        self.pretty_current_interactions(
+            simplified=simplified, skip_system=skip_system
+        )
+    )</code></pre>
 </details>
 </dd>
 <dt id="tinytroupe.environment.TinyWorld.pretty_current_interactions"><code class="name flex">
-<span>def <span class="ident">pretty_current_interactions</span></span>(<span>self, simplified=True, skip_system=True, max_content_length=4000, first_n=None, last_n=None, include_omission_info: bool = True)</span>
+<span>def <span class="ident">pretty_current_interactions</span></span>(<span>self, simplified=True, skip_system=True, max_content_length=None, first_n=None, last_n=None, include_omission_info: bool = True)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns a pretty, readable, string with the current messages of agents in this environment.</p></div>
@@ -1733,20 +2325,102 @@ returns None.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def pretty_current_interactions(self, simplified=True, skip_system=True, max_content_length=default[&#34;max_content_display_length&#34;], first_n=None, last_n=None, include_omission_info:bool=True):
-  &#34;&#34;&#34;
-  Returns a pretty, readable, string with the current messages of agents in this environment.
-  &#34;&#34;&#34;
-  agent_contents = []
+<pre><code class="python">@config_manager.config_defaults(max_content_length=&#34;max_content_display_length&#34;)
+def pretty_current_interactions(
+    self,
+    simplified=True,
+    skip_system=True,
+    max_content_length=None,
+    first_n=None,
+    last_n=None,
+    include_omission_info: bool = True,
+):
+    &#34;&#34;&#34;
+    Returns a pretty, readable, string with the current messages of agents in this environment.
+    &#34;&#34;&#34;
+    agent_contents = []
 
-  for agent in self.agents:
-      agent_content = f&#34;#### Interactions from the point of view of {agent.name} agent:\n&#34;
-      agent_content += f&#34;**BEGIN AGENT {agent.name} HISTORY.**\n &#34;
-      agent_content += agent.pretty_current_interactions(simplified=simplified, skip_system=skip_system, max_content_length=max_content_length, first_n=first_n, last_n=last_n, include_omission_info=include_omission_info) + &#34;\n&#34;
-      agent_content += f&#34;**FINISHED AGENT {agent.name} HISTORY.**\n\n&#34;
-      agent_contents.append(agent_content)      
-      
-  return &#34;\n&#34;.join(agent_contents)</code></pre>
+    for agent in self.agents:
+        agent_content = (
+            f&#34;#### Interactions from the point of view of {agent.name} agent:\n&#34;
+        )
+        agent_content += f&#34;**BEGIN AGENT {agent.name} HISTORY.**\n &#34;
+        agent_content += (
+            agent.pretty_current_interactions(
+                simplified=simplified,
+                skip_system=skip_system,
+                max_content_length=max_content_length,
+                first_n=first_n,
+                last_n=last_n,
+                include_omission_info=include_omission_info,
+            )
+            + &#34;\n&#34;
+        )
+        agent_content += f&#34;**FINISHED AGENT {agent.name} HISTORY.**\n\n&#34;
+        agent_contents.append(agent_content)
+
+    return &#34;\n&#34;.join(agent_contents)</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.environment.TinyWorld.pretty_print_cost_stats"><code class="name flex">
+<span>def <span class="ident">pretty_print_cost_stats</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Pretty prints the derivative cost statistics for this world.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pretty_print_cost_stats(self):
+    &#34;&#34;&#34;
+    Pretty prints the derivative cost statistics for this world.
+    &#34;&#34;&#34;
+    stats = self.get_cost_stats()
+
+    print(&#34;\n&#34; + &#34;=&#34; * 70)
+    print(f&#34;COST STATISTICS FOR WORLD: {self.name}&#34;)
+    print(&#34;=&#34; * 70)
+
+    print(f&#34;\nSimulation Context:&#34;)
+    print(f&#34;  Agents:           {stats[&#39;num_agents&#39;]}&#34;)
+    print(f&#34;  Steps completed:  {stats[&#39;num_steps&#39;]}&#34;)
+
+    base = stats[&#34;base_stats&#34;]
+    print(f&#34;\nTotal Resources Used (from client):&#34;)
+    print(f&#34;  Input tokens:     {base[&#39;input_tokens&#39;]:,}&#34;)
+    print(f&#34;  Output tokens:    {base[&#39;output_tokens&#39;]:,}&#34;)
+    print(f&#34;  Total tokens:     {base[&#39;total_tokens&#39;]:,}&#34;)
+    print(f&#34;  Model calls:      {base[&#39;model_calls&#39;]:,}&#34;)
+    print(f&#34;  Cached calls:     {base[&#39;cached_calls&#39;]:,}&#34;)
+
+    if stats[&#34;per_agent&#34;] is not None:
+        pa = stats[&#34;per_agent&#34;]
+        print(f&#34;\nAverage Per Agent:&#34;)
+        print(f&#34;  Input tokens:     {pa[&#39;input_tokens&#39;]:,.1f}&#34;)
+        print(f&#34;  Output tokens:    {pa[&#39;output_tokens&#39;]:,.1f}&#34;)
+        print(f&#34;  Total tokens:     {pa[&#39;total_tokens&#39;]:,.1f}&#34;)
+        print(f&#34;  Model calls:      {pa[&#39;model_calls&#39;]:,.1f}&#34;)
+        print(f&#34;  Cached calls:     {pa[&#39;cached_calls&#39;]:,.1f}&#34;)
+
+    if stats[&#34;per_step&#34;] is not None:
+        ps = stats[&#34;per_step&#34;]
+        print(f&#34;\nAverage Per Simulation Step:&#34;)
+        print(f&#34;  Input tokens:     {ps[&#39;input_tokens&#39;]:,.1f}&#34;)
+        print(f&#34;  Output tokens:    {ps[&#39;output_tokens&#39;]:,.1f}&#34;)
+        print(f&#34;  Total tokens:     {ps[&#39;total_tokens&#39;]:,.1f}&#34;)
+        print(f&#34;  Model calls:      {ps[&#39;model_calls&#39;]:,.1f}&#34;)
+        print(f&#34;  Cached calls:     {ps[&#39;cached_calls&#39;]:,.1f}&#34;)
+
+    if stats[&#34;per_agent_per_step&#34;] is not None:
+        paps = stats[&#34;per_agent_per_step&#34;]
+        print(f&#34;\nAverage Per Agent Per Step:&#34;)
+        print(f&#34;  Input tokens:     {paps[&#39;input_tokens&#39;]:,.1f}&#34;)
+        print(f&#34;  Output tokens:    {paps[&#39;output_tokens&#39;]:,.1f}&#34;)
+        print(f&#34;  Total tokens:     {paps[&#39;total_tokens&#39;]:,.1f}&#34;)
+        print(f&#34;  Model calls:      {paps[&#39;model_calls&#39;]:,.2f}&#34;)
+        print(f&#34;  Cached calls:     {paps[&#39;cached_calls&#39;]:,.2f}&#34;)
+
+    print(&#34;=&#34; * 70 + &#34;\n&#34;)</code></pre>
 </details>
 </dd>
 <dt id="tinytroupe.environment.TinyWorld.remove_agent"><code class="name flex">
@@ -1774,7 +2448,7 @@ returns None.</p>
     self.agents.remove(agent)
     del self.name_to_agent[agent.name]
 
-    return self # for chaining</code></pre>
+    return self  # for chaining</code></pre>
 </details>
 </dd>
 <dt id="tinytroupe.environment.TinyWorld.remove_all_agents"><code class="name flex">
@@ -1794,7 +2468,7 @@ returns None.</p>
     self.agents = []
     self.name_to_agent = {}
 
-    return self # for chaining</code></pre>
+    return self  # for chaining</code></pre>
 </details>
 </dd>
 <dt id="tinytroupe.environment.TinyWorld.run"><code class="name flex">
@@ -1843,7 +2517,12 @@ def run_days(self, days: int, randomize_agents_order=True, parallelize=None):
     Args:
         days (int): The number of days to run the environment for.
     &#34;&#34;&#34;
-    self.run(steps=days, timedelta_per_step=timedelta(days=1), randomize_agents_order=randomize_agents_order, parallelize=parallelize)</code></pre>
+    self.run(
+        steps=days,
+        timedelta_per_step=timedelta(days=1),
+        randomize_agents_order=randomize_agents_order,
+        parallelize=parallelize,
+    )</code></pre>
 </details>
 </dd>
 <dt id="tinytroupe.environment.TinyWorld.run_hours"><code class="name flex">
@@ -1868,7 +2547,12 @@ def run_hours(self, hours: int, randomize_agents_order=True, parallelize=None):
     Args:
         hours (int): The number of hours to run the environment for.
     &#34;&#34;&#34;
-    self.run(steps=hours, timedelta_per_step=timedelta(hours=1), randomize_agents_order=randomize_agents_order, parallelize=parallelize)</code></pre>
+    self.run(
+        steps=hours,
+        timedelta_per_step=timedelta(hours=1),
+        randomize_agents_order=randomize_agents_order,
+        parallelize=parallelize,
+    )</code></pre>
 </details>
 </dd>
 <dt id="tinytroupe.environment.TinyWorld.run_minutes"><code class="name flex">
@@ -1893,7 +2577,12 @@ def run_minutes(self, minutes: int, randomize_agents_order=True, parallelize=Non
     Args:
         minutes (int): The number of minutes to run the environment for.
     &#34;&#34;&#34;
-    self.run(steps=minutes, timedelta_per_step=timedelta(minutes=1), randomize_agents_order=randomize_agents_order, parallelize=parallelize)</code></pre>
+    self.run(
+        steps=minutes,
+        timedelta_per_step=timedelta(minutes=1),
+        randomize_agents_order=randomize_agents_order,
+        parallelize=parallelize,
+    )</code></pre>
 </details>
 </dd>
 <dt id="tinytroupe.environment.TinyWorld.run_months"><code class="name flex">
@@ -1921,7 +2610,12 @@ def run_months(self, months: int, randomize_agents_order=True, parallelize=None)
         months (int): The number of months to run the environment for.
         randomize_agents_order (bool, optional): If True, randomizes the order in which agents act. Defaults to True.
     &#34;&#34;&#34;
-    self.run(steps=months, timedelta_per_step=timedelta(weeks=4), randomize_agents_order=randomize_agents_order, parallelize=parallelize)</code></pre>
+    self.run(
+        steps=months,
+        timedelta_per_step=timedelta(weeks=4),
+        randomize_agents_order=randomize_agents_order,
+        parallelize=parallelize,
+    )</code></pre>
 </details>
 </dd>
 <dt id="tinytroupe.environment.TinyWorld.run_weeks"><code class="name flex">
@@ -1949,7 +2643,12 @@ def run_weeks(self, weeks: int, randomize_agents_order=True, parallelize=None):
         weeks (int): The number of weeks to run the environment for.
         randomize_agents_order (bool, optional): If True, randomizes the order in which agents act. Defaults to True.
     &#34;&#34;&#34;
-    self.run(steps=weeks, timedelta_per_step=timedelta(weeks=1), randomize_agents_order=randomize_agents_order, parallelize=parallelize)</code></pre>
+    self.run(
+        steps=weeks,
+        timedelta_per_step=timedelta(weeks=1),
+        randomize_agents_order=randomize_agents_order,
+        parallelize=parallelize,
+    )</code></pre>
 </details>
 </dd>
 <dt id="tinytroupe.environment.TinyWorld.run_years"><code class="name flex">
@@ -1977,7 +2676,12 @@ def run_years(self, years: int, randomize_agents_order=True, parallelize=None):
         years (int): The number of years to run the environment for.
         randomize_agents_order (bool, optional): If True, randomizes the order in which agents act. Defaults to True.
     &#34;&#34;&#34;
-    self.run(steps=years, timedelta_per_step=timedelta(days=365), randomize_agents_order=randomize_agents_order, parallelize=parallelize)</code></pre>
+    self.run(
+        steps=years,
+        timedelta_per_step=timedelta(days=365),
+        randomize_agents_order=randomize_agents_order,
+        parallelize=parallelize,
+    )</code></pre>
 </details>
 </dd>
 <dt id="tinytroupe.environment.TinyWorld.skip"><code class="name flex">
@@ -2197,11 +2901,15 @@ def run_years(self, years: int, randomize_agents_order=True, parallelize=None):
 <li><code><a title="tinytroupe.environment.TinyWorld.decode_complete_state" href="#tinytroupe.environment.TinyWorld.decode_complete_state">decode_complete_state</a></code></li>
 <li><code><a title="tinytroupe.environment.TinyWorld.encode_complete_state" href="#tinytroupe.environment.TinyWorld.encode_complete_state">encode_complete_state</a></code></li>
 <li><code><a title="tinytroupe.environment.TinyWorld.get_agent_by_name" href="#tinytroupe.environment.TinyWorld.get_agent_by_name">get_agent_by_name</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.get_cost_stats" href="#tinytroupe.environment.TinyWorld.get_cost_stats">get_cost_stats</a></code></li>
 <li><code><a title="tinytroupe.environment.TinyWorld.get_environment_by_name" href="#tinytroupe.environment.TinyWorld.get_environment_by_name">get_environment_by_name</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.get_global_cost_stats" href="#tinytroupe.environment.TinyWorld.get_global_cost_stats">get_global_cost_stats</a></code></li>
 <li><code><a title="tinytroupe.environment.TinyWorld.make_everyone_accessible" href="#tinytroupe.environment.TinyWorld.make_everyone_accessible">make_everyone_accessible</a></code></li>
 <li><code><a title="tinytroupe.environment.TinyWorld.pop_and_display_latest_communications" href="#tinytroupe.environment.TinyWorld.pop_and_display_latest_communications">pop_and_display_latest_communications</a></code></li>
 <li><code><a title="tinytroupe.environment.TinyWorld.pp_current_interactions" href="#tinytroupe.environment.TinyWorld.pp_current_interactions">pp_current_interactions</a></code></li>
 <li><code><a title="tinytroupe.environment.TinyWorld.pretty_current_interactions" href="#tinytroupe.environment.TinyWorld.pretty_current_interactions">pretty_current_interactions</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.pretty_print_cost_stats" href="#tinytroupe.environment.TinyWorld.pretty_print_cost_stats">pretty_print_cost_stats</a></code></li>
+<li><code><a title="tinytroupe.environment.TinyWorld.pretty_print_global_cost_stats" href="#tinytroupe.environment.TinyWorld.pretty_print_global_cost_stats">pretty_print_global_cost_stats</a></code></li>
 <li><code><a title="tinytroupe.environment.TinyWorld.remove_agent" href="#tinytroupe.environment.TinyWorld.remove_agent">remove_agent</a></code></li>
 <li><code><a title="tinytroupe.environment.TinyWorld.remove_all_agents" href="#tinytroupe.environment.TinyWorld.remove_all_agents">remove_all_agents</a></code></li>
 <li><code><a title="tinytroupe.environment.TinyWorld.run" href="#tinytroupe.environment.TinyWorld.run">run</a></code></li>

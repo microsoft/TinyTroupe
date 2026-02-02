@@ -1,25 +1,25 @@
-from tinytroupe.agent import logger, default, Self, AgentOrWorld, CognitiveActionModel
-from tinytroupe.agent.memory import EpisodicMemory, SemanticMemory, EpisodicConsolidator
-import tinytroupe.openai_utils as openai_utils
-from tinytroupe.utils import JsonSerializableRegistry, repeat_on_error, name_or_empty
-import tinytroupe.utils as utils
-from tinytroupe.control import transactional, current_simulation
-from tinytroupe import config_manager
-
-import os
-import json
 import copy
+import json
+import os
 import textwrap  # to dedent strings
-import chevron  # to parse Mustache templates
-from typing import Any
-from rich import print
 import threading
-from tinytroupe.utils import LLMChat  # Import LLMChat from the appropriate module
+from typing import Any
 
+import chevron  # to parse Mustache templates
+from rich import print
+
+import tinytroupe.utils as utils
 import tinytroupe.utils.llm
+from tinytroupe import config_manager
+from tinytroupe.agent import AgentOrWorld, CognitiveActionModel, Self, logger
+from tinytroupe.agent.memory import EpisodicConsolidator, EpisodicMemory, SemanticMemory
+from tinytroupe.control import current_simulation, transactional
+from tinytroupe.utils import LLMChat  # Import LLMChat from the appropriate module
+from tinytroupe.utils import JsonSerializableRegistry, name_or_empty, repeat_on_error
 
 # to protect from race conditions when running agents in parallel
 concurrent_agent_action_lock = threading.Lock()
+
 
 #######################################################################################################################
 # TinyPerson itself
@@ -36,28 +36,46 @@ class TinyPerson(JsonSerializableRegistry):
     # Set this to None to disable the check.
     MAX_ACTION_SIMILARITY = 0.85
 
-    MIN_EPISODE_LENGTH = config_manager.get("min_episode_length", 15)  # The minimum number of messages in an episode before it is considered valid.
-    MAX_EPISODE_LENGTH = config_manager.get("max_episode_length", 50)  # The maximum number of messages in an episode before it is considered valid.
+    MIN_EPISODE_LENGTH = config_manager.get(
+        "min_episode_length", 10
+    )  # The minimum number of messages in an episode before it is considered valid.
+    MAX_EPISODE_LENGTH = config_manager.get(
+        "max_episode_length", 15
+    )  # The maximum number of messages in an episode before it is considered valid.
 
     PP_TEXT_WIDTH = 100
 
-    serializable_attributes = ["_persona", "_mental_state", "_mental_faculties", "_current_episode_event_count", "episodic_memory", "semantic_memory"]
-    serializable_attributes_renaming = {"_mental_faculties": "mental_faculties", "_persona": "persona", "_mental_state": "mental_state", "_current_episode_event_count": "current_episode_event_count"}
+    serializable_attributes = [
+        "_persona",
+        "_mental_state",
+        "_mental_faculties",
+        "_current_episode_event_count",
+        "episodic_memory",
+        "semantic_memory",
+    ]
+    serializable_attributes_renaming = {
+        "_mental_faculties": "mental_faculties",
+        "_persona": "persona",
+        "_mental_state": "mental_state",
+        "_current_episode_event_count": "current_episode_event_count",
+    }
 
     # A dict of all agents instantiated so far.
     all_agents = {}  # name -> agent
-   
+
     # Whether to display the communication or not. True is for interactive applications, when we want to see simulation
     # outputs as they are produced.
-    communication_display:bool=True
-    
+    communication_display: bool = True
 
-    def __init__(self, name:str=None, 
-                 action_generator=None,
-                 episodic_memory=None,
-                 semantic_memory=None,
-                 mental_faculties:list=None,
-                 enable_basic_action_repetition_prevention:bool=True):
+    def __init__(
+        self,
+        name: str = None,
+        action_generator=None,
+        episodic_memory=None,
+        semantic_memory=None,
+        mental_faculties: list = None,
+        enable_basic_action_repetition_prevention: bool = True,
+    ):
         """
         Creates a TinyPerson.
 
@@ -70,7 +88,7 @@ class TinyPerson(JsonSerializableRegistry):
             enable_basic_action_repetition_prevention (bool, optional): Whether to enable basic action repetition prevention. Defaults to True.
         """
 
-        # NOTE: default values will be given in the _post_init method, as that's shared by 
+        # NOTE: default values will be given in the _post_init method, as that's shared by
         #       direct initialization as well as via deserialization.
 
         if action_generator is not None:
@@ -78,38 +96,40 @@ class TinyPerson(JsonSerializableRegistry):
 
         if episodic_memory is not None:
             self.episodic_memory = episodic_memory
-        
+
         if semantic_memory is not None:
             self.semantic_memory = semantic_memory
 
         # Mental faculties
         if mental_faculties is not None:
             self._mental_faculties = mental_faculties
-        
+
         if enable_basic_action_repetition_prevention:
-            self.enable_basic_action_repetition_prevention = enable_basic_action_repetition_prevention
-        
+            self.enable_basic_action_repetition_prevention = (
+                enable_basic_action_repetition_prevention
+            )
+
         assert name is not None, "A TinyPerson must have a name."
         self.name = name
 
         # @post_init makes sure that _post_init is called after __init__
 
-    
     def _post_init(self, **kwargs):
         """
         This will run after __init__, since the class has the @post_init decorator.
         It is convenient to separate some of the initialization processes to make deserialize easier.
         """
 
-        from tinytroupe.agent.action_generator import ActionGenerator # import here to avoid circular import issues
-
+        from tinytroupe.agent.action_generator import (
+            ActionGenerator,
+        )  # import here to avoid circular import issues
 
         ############################################################
         # Default values
         ############################################################
 
         self.current_messages = []
-        
+
         # the current environment in which the agent is acting
         self.environment = None
 
@@ -125,56 +145,82 @@ class TinyPerson(JsonSerializableRegistry):
         # saving these communications to another output form later (e.g., caching)
         self._displayed_communications_buffer = []
 
-        if not hasattr(self, '_current_episode_event_count'):
+        if not hasattr(self, "_current_episode_event_count"):
             self._current_episode_event_count = 0  # the number of events in the current episode, used to limit the episode length
 
-        if not hasattr(self, 'action_generator'):
+        if not hasattr(self, "action_generator"):
             # This default value MUST NOT be in the method signature, otherwise it will be shared across all instances.
-            self.action_generator = ActionGenerator(max_attempts=config_manager.get("action_generator_max_attempts"),
-                                                    enable_quality_checks=config_manager.get("action_generator_enable_quality_checks"),
-                                                    enable_regeneration=config_manager.get("action_generator_enable_regeneration"),
-                                                    enable_direct_correction=config_manager.get("action_generator_enable_direct_correction"),
-                                                    enable_quality_check_for_persona_adherence=config_manager.get("action_generator_enable_quality_check_for_persona_adherence"),
-                                                    enable_quality_check_for_selfconsistency=config_manager.get("action_generator_enable_quality_check_for_selfconsistency"),
-                                                    enable_quality_check_for_fluency=config_manager.get("action_generator_enable_quality_check_for_fluency"),
-                                                    enable_quality_check_for_suitability=config_manager.get("action_generator_enable_quality_check_for_suitability"),
-                                                    enable_quality_check_for_similarity=config_manager.get("action_generator_enable_quality_check_for_similarity"),
-                                                    continue_on_failure=config_manager.get("action_generator_continue_on_failure"),
-                                                    quality_threshold=config_manager.get("action_generator_quality_threshold"))
+            self.action_generator = ActionGenerator(
+                max_attempts=config_manager.get("action_generator_max_attempts"),
+                enable_quality_checks=config_manager.get(
+                    "action_generator_enable_quality_checks"
+                ),
+                enable_regeneration=config_manager.get(
+                    "action_generator_enable_regeneration"
+                ),
+                enable_direct_correction=config_manager.get(
+                    "action_generator_enable_direct_correction"
+                ),
+                enable_quality_check_for_persona_adherence=config_manager.get(
+                    "action_generator_enable_quality_check_for_persona_adherence"
+                ),
+                enable_quality_check_for_selfconsistency=config_manager.get(
+                    "action_generator_enable_quality_check_for_selfconsistency"
+                ),
+                enable_quality_check_for_fluency=config_manager.get(
+                    "action_generator_enable_quality_check_for_fluency"
+                ),
+                enable_quality_check_for_suitability=config_manager.get(
+                    "action_generator_enable_quality_check_for_suitability"
+                ),
+                enable_quality_check_for_similarity=config_manager.get(
+                    "action_generator_enable_quality_check_for_similarity"
+                ),
+                continue_on_failure=config_manager.get(
+                    "action_generator_continue_on_failure"
+                ),
+                quality_threshold=config_manager.get(
+                    "action_generator_quality_threshold"
+                ),
+            )
 
-        if not hasattr(self, 'episodic_memory'):
+        if not hasattr(self, "episodic_memory"):
             # This default value MUST NOT be in the method signature, otherwise it will be shared across all instances.
-            self.episodic_memory = EpisodicMemory(fixed_prefix_length= config_manager.get("episodic_memory_fixed_prefix_length"),
-                                                   lookback_length=config_manager.get("episodic_memory_lookback_length"))
-        
-        if not hasattr(self, 'semantic_memory'):
+            self.episodic_memory = EpisodicMemory(
+                fixed_prefix_length=config_manager.get(
+                    "episodic_memory_fixed_prefix_length"
+                ),
+                lookback_length=config_manager.get("episodic_memory_lookback_length"),
+            )
+
+        if not hasattr(self, "semantic_memory"):
             # This default value MUST NOT be in the method signature, otherwise it will be shared across all instances.
             self.semantic_memory = SemanticMemory()
-        
+
         # _mental_faculties
-        if not hasattr(self, '_mental_faculties'):
+        if not hasattr(self, "_mental_faculties"):
             # This default value MUST NOT be in the method signature, otherwise it will be shared across all instances.
             self._mental_faculties = []
-        
+
         # basic action repetition prevention
-        if not hasattr(self, 'enable_basic_action_repetition_prevention'):
+        if not hasattr(self, "enable_basic_action_repetition_prevention"):
             self.enable_basic_action_repetition_prevention = True
 
         # create the persona configuration dictionary
-        if not hasattr(self, '_persona'):          
+        if not hasattr(self, "_persona"):
             self._persona = {
                 "name": self.name,
                 "age": None,
                 "nationality": None,
                 "country_of_residence": None,
-                "occupation": None
+                "occupation": None,
             }
-        
-        if not hasattr(self, 'name'): 
+
+        if not hasattr(self, "name"):
             self.name = self._persona["name"]
 
         # create the mental state dictionary
-        if not hasattr(self, '_mental_state'):
+        if not hasattr(self, "_mental_state"):
             self._mental_state = {
                 "datetime": None,
                 "location": None,
@@ -182,24 +228,23 @@ class TinyPerson(JsonSerializableRegistry):
                 "goals": [],
                 "attention": None,
                 "emotions": "Feeling nothing in particular, just calm.",
-                "memory_context": None,
-                "accessible_agents": []  # [{"agent": agent_1, "relation": "My friend"}, {"agent": agent_2, "relation": "My colleague"}, ...]
+                "working_semantic_memory": None,
+                "accessible_agents": [],  # [{"agent": agent_1, "relation": "My friend"}, {"agent": agent_2, "relation": "My colleague"}, ...]
             }
-        
-        if not hasattr(self, '_extended_agent_summary'):
+
+        if not hasattr(self, "_extended_agent_summary"):
             self._extended_agent_summary = None
-        
-        if not hasattr(self, 'actions_count'):
+
+        if not hasattr(self, "actions_count"):
             self.actions_count = 0
-        
-        if not hasattr(self, 'stimuli_count'):
+
+        if not hasattr(self, "stimuli_count"):
             self.stimuli_count = 0
 
         self._prompt_template_path = os.path.join(
-            os.path.dirname(__file__), "prompts/tiny_person.mustache"
+            os.path.dirname(__file__), "prompts/tiny_person.v2.mustache"
         )
         self._init_system_message = None  # initialized later
-
 
         ############################################################
         # Special mechanisms used during deserialization
@@ -208,20 +253,20 @@ class TinyPerson(JsonSerializableRegistry):
         # rename agent to some specific name?
         if kwargs.get("new_agent_name") is not None:
             self._rename(kwargs.get("new_agent_name"))
-        
+
         # If auto-rename, use the given name plus some new number ...
         if kwargs.get("auto_rename") is True:
-            new_name = self.name # start with the current name
+            new_name = self.name  # start with the current name
             rename_succeeded = False
             while not rename_succeeded:
                 try:
                     self._rename(new_name)
                     TinyPerson.add_agent(self)
-                    rename_succeeded = True                
+                    rename_succeeded = True
                 except ValueError:
                     new_id = utils.fresh_id(self.__class__.__name__)
                     new_name = f"{self.name}_{new_id}"
-        
+
         # ... otherwise, just register the agent
         else:
             # register the agent in the global list of agents
@@ -236,19 +281,20 @@ class TinyPerson(JsonSerializableRegistry):
             current_simulation().add_agent(self)
         else:
             self.simulation_id = None
-    
-    def _rename(self, new_name:str):    
+
+    def _rename(self, new_name: str):
         self.name = new_name
         self._persona["name"] = self.name
 
-
     def generate_agent_system_prompt(self):
-        with open(self._prompt_template_path, "r", encoding="utf-8", errors="replace") as f:
+        with open(
+            self._prompt_template_path, "r", encoding="utf-8", errors="replace"
+        ) as f:
             agent_prompt_template = f.read()
 
         # let's operate on top of a copy of the configuration, because we'll need to add more variables, etc.
-        template_variables = self._persona.copy()    
-        template_variables["persona"] = json.dumps(self._persona.copy(), indent=4)    
+        template_variables = self._persona.copy()
+        template_variables["persona"] = json.dumps(self._persona.copy(), indent=4)
 
         # add mental state to the template variables
         template_variables["mental_state"] = json.dumps(self._mental_state, indent=4)
@@ -259,41 +305,99 @@ class TinyPerson(JsonSerializableRegistry):
         for faculty in self._mental_faculties:
             actions_definitions_prompt += f"{faculty.actions_definitions_prompt()}\n"
             actions_constraints_prompt += f"{faculty.actions_constraints_prompt()}\n"
-        
-        # Make the additional prompt pieces available to the template. 
+
+        # Make the additional prompt pieces available to the template.
         # Identation here is to align with the text structure in the template.
-        template_variables['actions_definitions_prompt'] = textwrap.indent(actions_definitions_prompt.strip(), "  ")
-        template_variables['actions_constraints_prompt'] = textwrap.indent(actions_constraints_prompt.strip(), "  ")
+        template_variables["actions_definitions_prompt"] = textwrap.indent(
+            actions_definitions_prompt.strip(), "  "
+        )
+        template_variables["actions_constraints_prompt"] = textwrap.indent(
+            actions_constraints_prompt.strip(), "  "
+        )
 
         # RAI prompt components, if requested
-        template_variables = utils.add_rai_template_variables_if_enabled(template_variables)
+        template_variables = utils.add_rai_template_variables_if_enabled(
+            template_variables
+        )
+
+        # include recent episodic memory as part of the system prompt
+        try:
+            working_episodic_memory_text = (
+                self._render_recent_episodic_memories_for_prompt()
+            )
+        except Exception:
+            working_episodic_memory_text = "(No recent episodic memories available)"
+        template_variables["working_episodic_memory"] = textwrap.indent(
+            working_episodic_memory_text.strip(), "  "
+        )
 
         return chevron.render(agent_prompt_template, template_variables)
 
-    def reset_prompt(self):
+    def _render_recent_episodic_memories_for_prompt(self) -> str:
+        """
+        Builds a concise text block describing recent episodic events (oldest to newest),
+        suitable to be embedded inside the system prompt.
+        """
+        max_len = config_manager.get("max_content_display_length")
+        episodes = self.retrieve_recent_memories(max_content_length=max_len)
+        if not episodes:
+            return "(No recent episodic memories available)"
 
+        lines = []
+        for msg in episodes:
+            try:
+                role = msg.get("role")
+                timestamp = msg.get("simulation_timestamp", None)
+                timestamp_str = f" [@{timestamp}]" if timestamp else ""
+                if role == "user":
+                    for s in msg.get("content", {}).get("stimuli", []):
+                        src = s.get("source") or "ENV"
+                        typ = s.get("type", "?")
+                        cnt = utils.break_text_at_length(
+                            s.get("content", ""), max_length=max_len
+                        )
+                        lines.append(
+                            f"- [STIMULUS:{typ}] from {src}{timestamp_str}: {cnt}"
+                        )
+                elif role == "assistant":
+                    action = msg.get("content", {}).get("action", {}) or {}
+                    typ = action.get("type", "?")
+                    tgt = action.get("target") or ""
+                    cnt = utils.break_text_at_length(
+                        action.get("content", "") or "", max_length=max_len
+                    )
+                    target_str = f" to {tgt}" if tgt else ""
+                    lines.append(f"- [ACTION:{typ}]{target_str}{timestamp_str}: {cnt}")
+                # system messages are ignored in the episodic memory prompt
+            except Exception:
+                continue
+
+        return "\n".join(lines) if lines else "(No recent episodic memories available)"
+
+    def reset_prompt(self):
         # render the template with the current configuration
         self._init_system_message = self.generate_agent_system_prompt()
 
         # - reset system message
         # - make it clear that the provided events are past events and have already had their effects
         self.current_messages = [
-            {"role": "system", "content": self._init_system_message},
-            {"role": "system", "content": "The next messages refer to past interactions you had recently and are meant to help you contextualize your next actions. "\
-                                        + "They are the most recent episodic memories you have, including stimuli and actions. "\
-                                        + "Their effects already took place and led to your present cognitive state (described above), so you can use them in conjunction "\
-                                        + "with your cognitive state to inform your next actions and perceptions. Please consider them and then proceed with your next actions right after. "}
+            {"role": "system", "content": self._init_system_message}
         ]
 
-        # sets up the actual interaction messages to use for prompting
-        self.current_messages += self.retrieve_recent_memories()
+        # NOTE: Episodic memories are now part of the system message (see template's 'Episodic Memory' section).
 
+        self.current_messages.append(
+            {
+                "role": "user",
+                "content": "You can now produce your next sequence of actions for this turn, in order, and finish with DONE.",
+            }
+        )
 
     #########################################################################
     # Persona definitions
     #########################################################################
-    
-    # 
+
+    #
     # Conveniences to access the persona configuration via dictionary-like syntax using
     # the [] operator. e.g., agent["nationality"] = "American"
     #
@@ -304,7 +408,7 @@ class TinyPerson(JsonSerializableRegistry):
         self.define(key, value)
 
     #
-    # Conveniences to import persona definitions via the '+' operator, 
+    # Conveniences to import persona definitions via the '+' operator,
     #  e.g., agent + {"nationality": "American", ...}
     #
     #  e.g., agent + "path/to/fragment.json"
@@ -320,7 +424,9 @@ class TinyPerson(JsonSerializableRegistry):
         elif isinstance(other, str):
             self.import_fragment(other)
         else:
-            raise TypeError("Unsupported operand type for +. Must be a dict or a string path to fragment.")
+            raise TypeError(
+                "Unsupported operand type for +. Must be a dict or a string path to fragment."
+            )
         return self
 
     #
@@ -340,7 +446,7 @@ class TinyPerson(JsonSerializableRegistry):
             else:
                 return None  # If the path is invalid, return None
         return value
-    
+
     @transactional()
     def import_fragment(self, path):
         """
@@ -350,11 +456,16 @@ class TinyPerson(JsonSerializableRegistry):
             fragment = json.load(f)
 
         # check the type is "Fragment" and that there's also a "persona" key
-        if fragment.get("type", None) == "Fragment" and fragment.get("persona", None) is not None:
+        if (
+            fragment.get("type", None) == "Fragment"
+            and fragment.get("persona", None) is not None
+        ):
             self.include_persona_definitions(fragment["persona"])
         else:
-            raise ValueError("The imported JSON file must be a valid fragment of a persona configuration.")
-        
+            raise ValueError(
+                "The imported JSON file must be a valid fragment of a persona configuration."
+            )
+
         # must reset prompt after adding to configuration
         self.reset_prompt()
 
@@ -372,13 +483,12 @@ class TinyPerson(JsonSerializableRegistry):
 
         # must reset prompt after adding to configuration
         self.reset_prompt()
-        
-    
+
     @transactional()
     def define(self, key, value, merge=False, overwrite_scalars=True):
         """
         Define a value to the TinyPerson's persona configuration. Value can either be a scalar or a dictionary.
-        If the value is a dictionary or list, you can choose to merge it with the existing value or replace it. 
+        If the value is a dictionary or list, you can choose to merge it with the existing value or replace it.
         If the value is a scalar, you can choose to overwrite the existing value or not.
 
         Args:
@@ -402,15 +512,15 @@ class TinyPerson(JsonSerializableRegistry):
         # if the value is a scalar, we can choose to overwrite it or not
         elif overwrite_scalars or (key not in self._persona):
             self._persona[key] = value
-        
-        else:
-            raise ValueError(f"The key '{key}' already exists in the persona configuration and overwrite_scalars is set to False.")
 
-            
+        else:
+            raise ValueError(
+                f"The key '{key}' already exists in the persona configuration and overwrite_scalars is set to False."
+            )
+
         # must reset prompt after adding to configuration
         self.reset_prompt()
 
-    
     @transactional()
     def define_relationships(self, relationships, replace=True):
         """
@@ -421,21 +531,25 @@ class TinyPerson(JsonSerializableRegistry):
               or a single dict mapping one agent name to its relationship description.
             replace (bool, optional): Whether to replace the current relationships or just add to them. Defaults to True.
         """
-        
+
         if (replace == True) and (isinstance(relationships, list)):
-            self._persona['relationships'] = relationships
+            self._persona["relationships"] = relationships
 
         elif replace == False:
-            current_relationships = self._persona['relationships']
+            current_relationships = self._persona["relationships"]
             if isinstance(relationships, list):
                 for r in relationships:
                     current_relationships.append(r)
-                
-            elif isinstance(relationships, dict) and len(relationships) == 2: #{"Name": ..., "Description": ...}
+
+            elif (
+                isinstance(relationships, dict) and len(relationships) == 2
+            ):  # {"Name": ..., "Description": ...}
                 current_relationships.append(relationships)
 
             else:
-                raise Exception("Only one key-value pair is allowed in the relationships dict.")
+                raise Exception(
+                    "Only one key-value pair is allowed in the relationships dict."
+                )
 
         else:
             raise Exception("Invalid arguments for define_relationships.")
@@ -449,10 +563,10 @@ class TinyPerson(JsonSerializableRegistry):
         """
         Clears the TinyPerson's relationships.
         """
-        self._persona['relationships'] = []  
+        self._persona["relationships"] = []
 
-        return self      
-    
+        return self
+
     @transactional()
     def related_to(self, other_agent, description, symmetric_description=None):
         """
@@ -461,27 +575,32 @@ class TinyPerson(JsonSerializableRegistry):
         Args:
             other_agent (TinyPerson): The other agent.
             description (str): The description of the relationship.
-            symmetric (bool): Whether the relationship is symmetric or not. That is, 
+            symmetric (bool): Whether the relationship is symmetric or not. That is,
               if the relationship is defined for both agents.
-        
+
         Returns:
             TinyPerson: The agent itself, to facilitate chaining.
         """
-        self.define_relationships([{"Name": other_agent.name, "Description": description}], replace=False)
+        self.define_relationships(
+            [{"Name": other_agent.name, "Description": description}], replace=False
+        )
         if symmetric_description is not None:
-            other_agent.define_relationships([{"Name": self.name, "Description": symmetric_description}], replace=False)
-        
+            other_agent.define_relationships(
+                [{"Name": self.name, "Description": symmetric_description}],
+                replace=False,
+            )
+
         return self
-    
+
     ############################################################################
-    
+
     def add_mental_faculties(self, mental_faculties):
         """
         Adds a list of mental faculties to the agent.
         """
         for faculty in mental_faculties:
             self.add_mental_faculty(faculty)
-        
+
         return self
 
     def add_mental_faculty(self, faculty):
@@ -492,8 +611,10 @@ class TinyPerson(JsonSerializableRegistry):
         if faculty not in self._mental_faculties:
             self._mental_faculties.append(faculty)
         else:
-            raise Exception(f"The mental faculty {faculty} is already present in the agent.")
-        
+            raise Exception(
+                f"The mental faculty {faculty} is already present in the agent."
+            )
+
         return self
 
     @transactional()
@@ -504,7 +625,7 @@ class TinyPerson(JsonSerializableRegistry):
         n=None,
         return_actions=False,
         max_content_length=None,
-        communication_display:bool=None
+        communication_display: bool = None,
     ):
         """
         Acts in the environment and updates its internal cognitive state.
@@ -528,40 +649,27 @@ class TinyPerson(JsonSerializableRegistry):
 
         # A separate function to run before each action, which is not meant to be repeated in case of errors.
         def aux_pre_act():
-            # TODO maybe we don't need this at all anymore?
-            #
-            # A quick thought before the action. This seems to help with better model responses, perhaps because
-            # it interleaves user with assistant messages.
-            pass # self.think("I will now think, reflect and act a bit, and then issue DONE.")        
+            pass
 
-        # Aux function to perform exactly one action.
-        # Occasionally, the model will return JSON missing important keys, so we just ask it to try again
-        # Sometimes `content` contains EpisodicMemory's MEMORY_BLOCK_OMISSION_INFO message, which raises a TypeError on line 443
-        @repeat_on_error(retries=5, exceptions=[KeyError, TypeError])
-        def aux_act_once():
-            # ensure we have the latest prompt (initial system message + selected messages from memory)
-            self.reset_prompt()
-            
-            action, role, content, all_negative_feedbacks = self.action_generator.generate_next_action(self, self.current_messages)
-            logger.debug(f"{self.name}'s action: {action}")
-
-            # check the next action similarity, and if it is too similar, put a system warning instruction in memory too
+        # Helper to persist a single action and its side-effects
+        def _commit_action(action, role, content):
+            # check similarity quickly and replace by DONE if excessively repetitive
             next_action_similarity = utils.next_action_jaccard_similarity(self, action)
-
-            # we have a redundant repetition check here, because this an be computed quickly and is often very useful.
-            if self.enable_basic_action_repetition_prevention and \
-               (TinyPerson.MAX_ACTION_SIMILARITY is not None) and (next_action_similarity > TinyPerson.MAX_ACTION_SIMILARITY):
-                
-                logger.warning(f"[{self.name}] Action similarity is too high ({next_action_similarity}), replacing it with DONE.")
-
-                # replace the action with a DONE
+            if (
+                self.enable_basic_action_repetition_prevention
+                and (TinyPerson.MAX_ACTION_SIMILARITY is not None)
+                and (next_action_similarity > TinyPerson.MAX_ACTION_SIMILARITY)
+            ):
+                logger.warning(
+                    f"[{self.name}] Action similarity is too high ({next_action_similarity}), replacing it with DONE."
+                )
                 action = {"type": "DONE", "content": "", "target": ""}
-                content["action"] = action	
-                content["cognitive_state"] = {}
 
-                self.store_in_memory({'role': 'system', 
-                                    'content': \
-                                        f"""
+                # Store a system feedback about the replacement
+                self.store_in_memory(
+                    {
+                        "role": "system",
+                        "content": f"""
                                         # EXCESSIVE ACTION SIMILARITY WARNING
 
                                         You were about to generate a repetitive action (jaccard similarity = {next_action_similarity}).
@@ -575,100 +683,144 @@ class TinyPerson(JsonSerializableRegistry):
 
                                         
                                         """,
-                                    'type': 'feedback',
-                                    'simulation_timestamp': self.iso_datetime()})
+                        "type": "feedback",
+                        "simulation_timestamp": self.iso_datetime(),
+                    }
+                )
 
-            # All checks done, we can commit the action to memory.
-            self.store_in_memory({'role': role, 'content': content, 
-                                    'type': 'action', 
-                                    'simulation_timestamp': self.iso_datetime()})
-                
+            # Build a minimal content record for memory (single action)
+            content_for_memory = {"action": action}
+            if isinstance(content, dict) and "cognitive_state" in content:
+                content_for_memory["cognitive_state"] = content["cognitive_state"]
+
+            # Commit to episodic memory
+            self.store_in_memory(
+                {
+                    "role": role,
+                    "content": content_for_memory,
+                    "type": "action",
+                    "simulation_timestamp": self.iso_datetime(),
+                }
+            )
+
+            # buffer action for environment consumption
             self._actions_buffer.append(action)
-            
-            if "cognitive_state" in content:
+
+            # Update mental state
+            if isinstance(content, dict) and "cognitive_state" in content:
                 cognitive_state = content["cognitive_state"]
                 logger.debug(f"[{self.name}] Cognitive state: {cognitive_state}")
-                
-                self._update_cognitive_state(goals=cognitive_state.get("goals", None),
-                                             context=cognitive_state.get("context", None),
-                                             attention=cognitive_state.get("emotions", None),
-                                             emotions=cognitive_state.get("emotions", None))
-            
-            contents.append(content)          
-            if utils.first_non_none(communication_display, TinyPerson.communication_display):
-                self._display_communication(role=role, content=content, kind='action', simplified=True, max_content_length=max_content_length)
-            
-            #
-            # Some actions induce an immediate stimulus or other side-effects. We need to process them here, by means of the mental faculties.
-            #
+                self._update_cognitive_state(
+                    goals=cognitive_state.get("goals", None),
+                    context=cognitive_state.get("context", None),
+                    attention=cognitive_state.get("emotions", None),
+                    emotions=cognitive_state.get("emotions", None),
+                )
+
+            # Display
+            contents.append(
+                {
+                    "action": action,
+                    "cognitive_state": content_for_memory.get("cognitive_state", {}),
+                }
+            )
+            if utils.first_non_none(
+                communication_display, TinyPerson.communication_display
+            ):
+                self._display_communication(
+                    role=role,
+                    content={
+                        "action": action,
+                        "cognitive_state": content_for_memory.get(
+                            "cognitive_state", {}
+                        ),
+                    },
+                    kind="action",
+                    simplified=True,
+                    max_content_length=max_content_length,
+                )
+
+            # Side-effects via mental faculties
             for faculty in self._mental_faculties:
                 faculty.process_action(self, action)
-            
-            #
-            # turns all_negative_feedbacks list into a system message
-            #
-            # TODO improve this?
-            #
-            ##if len(all_negative_feedbacks) > 0:
-            ##    feedback = """
-            ##    # QUALITY FEEDBACK
-            ##
-            ##    Up to the present moment, we monitored actions and tentative aborted actions (i.e., that were not actually executed), 
-            ##    and some of them were not of good quality.
-            ##    Some of those were replaced by regenerated actions of better quality. In the process of doing so, some
-            ##    important quality feedback was produced, which is now given below.
-            ##    
-            ##    To improve your performance, and prevent future similar quality issues, you **MUST** take into account the following feedback
-            ##    whenever computing your future actions. Note that the feedback might also include the actual action or tentative action
-            ##    that was of low quality, so that you can understand what was wrong with it and avoid similar mistakes in the future.
-            ##
-            ##    """
-            ##    for i, feedback_item in enumerate(all_negative_feedbacks):
-            ##        feedback += f"{feedback_item}\n\n"
-            ##        feedback += f"\n\n *** \n\n"
-            ##
-            ##    self.store_in_memory({'role': 'system', 'content': feedback, 
-            ##                          'type': 'feedback',
-            ##                          'simulation_timestamp': self.iso_datetime()})
-            ##
 
-            
+            # count
+            self.actions_count += 1
 
-            # count the actions as this can be useful for taking decisions later
-            self.actions_count += 1             
-            
+        @repeat_on_error(retries=5, exceptions=[KeyError, TypeError])
+        def aux_act_once_sequence():
+            # ensure we have the latest prompt
+            self.reset_prompt()
 
-        #
-        # How to proceed with a sequence of actions.
-        #
+            # Provide latest perceived stimuli explicitly in a user JSON message
+            def _latest_stimuli_payload():
+                try:
+                    # Walk recent episodic memory from newest to oldest to find the last stimulus block
+                    recent = self.episodic_memory.retrieve_recent()
+                    for msg in reversed(recent):
+                        if msg.get("role") == "user" and msg.get("type") == "stimulus":
+                            # Content already has {"stimuli": [...]} as stored by _observe
+                            return msg.get("content")
+                except Exception:
+                    return None
+                return None
 
-        ##### Option 1: run N actions ######
-        if n is not None:
-            for i in range(n):
-                aux_pre_act()
-                aux_act_once()
+            stimuli_payload = _latest_stimuli_payload()
+            if stimuli_payload:
+                self.current_messages.append(
+                    {
+                        "role": "user",
+                        "content": stimuli_payload,  # dict will be JSON-serialized by the generator
+                    }
+                )
 
-        ##### Option 2: run until DONE ######
-        elif until_done:
-            while (len(contents) == 0) or (
-                not contents[-1]["action"]["type"] == "DONE"
-            ):
+            actions_or_action, role, content, all_negative_feedbacks = (
+                self.action_generator.generate_next_actions(self, self.current_messages)
+            )
 
+            # Normalize to list
+            actions = (
+                actions_or_action
+                if isinstance(actions_or_action, list)
+                else [actions_or_action]
+            )
 
-                # check if the agent is acting without ever stopping
-                if len(contents) > TinyPerson.MAX_ACTIONS_BEFORE_DONE:
-                    logger.warning(f"[{self.name}] Agent {self.name} is acting without ever stopping. This may be a bug. Let's stop it here anyway.")
+            # Enforce a reasonable cap per turn
+            if len(actions) > 0 and len(actions) > TinyPerson.MAX_ACTIONS_BEFORE_DONE:
+                actions = actions[: TinyPerson.MAX_ACTIONS_BEFORE_DONE]
+                if actions[-1] is not None and isinstance(actions[-1], dict) and actions[-1].get("type") != "DONE":
+                    actions[-1] = {"type": "DONE", "content": "", "target": ""}
+
+            # Commit each action in order
+            for action in actions:
+                # Skip None or non-dict actions
+                if action is None or not isinstance(action, dict):
+                    logger.warning(f"[{self.name}] Skipping invalid action: {action}")
+                    continue
+                _commit_action(action, role, content)
+                if action.get("type") == "DONE":
                     break
-                if len(contents) > 4: # just some minimum number of actions to check for repetition, could be anything >= 3
-                    # if the last three actions were the same, then we are probably in a loop
-                    if contents[-1]['action'] == contents[-2]['action'] == contents[-3]['action']:
-                        logger.warning(f"[{self.name}] Agent {self.name} is acting in a loop. This may be a bug. Let's stop it here anyway.")
-                        break
 
+        # Option 1: run N actions (may span multiple turns if model emits only one)
+        if n is not None:
+            remaining = n
+            while remaining > 0:
                 aux_pre_act()
-                aux_act_once()
+                # run one inference producing a sequence, but stop after committing the requested number
+                before = self.actions_count
+                aux_act_once_sequence()
+                produced = self.actions_count - before
+                remaining -= produced
+                if remaining <= 0:
+                    break
+                # If the last committed action was DONE, the turn ended; next loop will start a new turn
 
-        # The end of a sequence of actions is always considered to mark the end of an episode.
+        # Option 2: run until DONE for this turn
+        elif until_done:
+            aux_pre_act()
+            aux_act_once_sequence()
+
+        # End of turn => consolidate episode memories
         self.consolidate_episode_memories()
 
         if return_actions:
@@ -681,7 +833,7 @@ class TinyPerson(JsonSerializableRegistry):
         speech,
         source: AgentOrWorld = None,
         max_content_length=None,
-        communication_display:bool=None
+        communication_display: bool = None,
     ):
         """
         Listens to another agent (artificial or human) and updates its internal cognitive state.
@@ -691,7 +843,7 @@ class TinyPerson(JsonSerializableRegistry):
             source (AgentOrWorld, optional): The source of the speech. Defaults to None.
             max_content_length (int, optional): The maximum length of the content to display. Defaults to None, which uses the global configuration value.
             communication_display (bool): Whether to display the communication or not, will override the global setting if provided. Defaults to None.
-        
+
         """
 
         return self._observe(
@@ -701,7 +853,7 @@ class TinyPerson(JsonSerializableRegistry):
                 "source": name_or_empty(source),
             },
             max_content_length=max_content_length,
-            communication_display=communication_display
+            communication_display=communication_display,
         )
 
     @config_manager.config_defaults(max_content_length="max_content_display_length")
@@ -766,9 +918,7 @@ class TinyPerson(JsonSerializableRegistry):
         )
 
     @config_manager.config_defaults(max_content_length="max_content_display_length")
-    def internalize_goal(
-        self, goal, max_content_length=None
-    ):
+    def internalize_goal(self, goal, max_content_length=None):
         """
         Internalizes a goal and updates its internal cognitive state.
         """
@@ -783,7 +933,9 @@ class TinyPerson(JsonSerializableRegistry):
 
     @transactional()
     @config_manager.config_defaults(max_content_length="max_content_display_length")
-    def _observe(self, stimulus, max_content_length=None, communication_display:bool=None):
+    def _observe(
+        self, stimulus, max_content_length=None, communication_display: bool = None
+    ):
         """
         Observes a stimulus and updates its internal cognitive state.
 
@@ -801,19 +953,26 @@ class TinyPerson(JsonSerializableRegistry):
         # whatever comes from the outside will be interpreted as coming from 'user', simply because
         # this is the counterpart of 'assistant'
 
-        self.store_in_memory({'role': 'user', 'content': content, 
-                              'type': 'stimulus',
-                              'simulation_timestamp': self.iso_datetime()})
+        self.store_in_memory(
+            {
+                "role": "user",
+                "content": content,
+                "type": "stimulus",
+                "simulation_timestamp": self.iso_datetime(),
+            }
+        )
 
-        if utils.first_non_none(communication_display, TinyPerson.communication_display):
+        if utils.first_non_none(
+            communication_display, TinyPerson.communication_display
+        ):
             self._display_communication(
                 role="user",
                 content=content,
                 kind="stimuli",
                 simplified=True,
-max_content_length=max_content_length,
+                max_content_length=max_content_length,
             )
-        
+
         # count the stimuli as this can be useful for taking decisions later
         self.stimuli_count += 1
 
@@ -825,15 +984,21 @@ max_content_length=max_content_length,
         speech,
         return_actions=False,
         max_content_length=None,
-        communication_display:bool=None
+        communication_display: bool = None,
     ):
         """
         Convenience method that combines the `listen` and `act` methods.
         """
 
-        self.listen(speech, max_content_length=max_content_length, communication_display=communication_display)
+        self.listen(
+            speech,
+            max_content_length=max_content_length,
+            communication_display=communication_display,
+        )
         return self.act(
-            return_actions=return_actions, max_content_length=max_content_length, communication_display=communication_display
+            return_actions=return_actions,
+            max_content_length=max_content_length,
+            communication_display=communication_display,
         )
 
     @transactional()
@@ -866,40 +1031,44 @@ max_content_length=max_content_length,
         """
 
         self.think(thought, max_content_length=max_content_length)
-        return self.act(return_actions=return_actions, max_content_length=max_content_length)
+        return self.act(
+            return_actions=return_actions, max_content_length=max_content_length
+        )
 
-    def read_documents_from_folder(self, documents_path:str):
+    def read_documents_from_folder(self, documents_path: str):
         """
         Reads documents from a directory and loads them into the semantic memory.
         """
-        logger.info(f"Setting documents path to {documents_path} and loading documents.")
+        logger.info(
+            f"Setting documents path to {documents_path} and loading documents."
+        )
 
         self.semantic_memory.add_documents_path(documents_path)
-    
-    def read_document_from_file(self, file_path:str):
+
+    def read_document_from_file(self, file_path: str):
         """
         Reads a document from a file and loads it into the semantic memory.
         """
         logger.info(f"Reading document from file: {file_path}")
 
         self.semantic_memory.add_document_path(file_path)
-    
-    def read_documents_from_web(self, web_urls:list):
+
+    def read_documents_from_web(self, web_urls: list):
         """
         Reads documents from web URLs and loads them into the semantic memory.
         """
         logger.info(f"Reading documents from the following web URLs: {web_urls}")
 
         self.semantic_memory.add_web_urls(web_urls)
-    
-    def read_document_from_web(self, web_url:str):
+
+    def read_document_from_web(self, web_url: str):
         """
         Reads a document from a web URL and loads it into the semantic memory.
         """
         logger.info(f"Reading document from web URL: {web_url}")
 
         self.semantic_memory.add_web_url(web_url)
-    
+
     @transactional()
     def move_to(self, location, context=[]):
         """
@@ -915,9 +1084,7 @@ max_content_length=max_content_length,
         """
         Changes the context and updates its internal cognitive state.
         """
-        self._mental_state["context"] = {
-            "description": item for item in context
-        }
+        self._mental_state["context"] = {"description": item for item in context}
 
         self._update_cognitive_state(context=context)
 
@@ -939,8 +1106,13 @@ max_content_length=max_content_length,
             logger.warning(
                 f"[{self.name}] Agent {agent.name} is already accessible to {self.name}."
             )
+
     @transactional()
-    def make_agents_accessible(self, agents: list, relation_description: str = "An agent I can currently interact with."):
+    def make_agents_accessible(
+        self,
+        agents: list,
+        relation_description: str = "An agent I can currently interact with.",
+    ):
         """
         Makes a list of agents accessible to this agent.
         """
@@ -986,8 +1158,13 @@ max_content_length=max_content_length,
         """
 
         # Update current datetime. The passage of time is controlled by the environment, if any.
-        if self.environment is not None and self.environment.current_datetime is not None:
-            self._mental_state["datetime"] = utils.pretty_datetime(self.environment.current_datetime)
+        if (
+            self.environment is not None
+            and self.environment.current_datetime is not None
+        ):
+            self._mental_state["datetime"] = utils.pretty_datetime(
+                self.environment.current_datetime
+            )
 
         # update current goals
         if goals is not None:
@@ -1004,14 +1181,15 @@ max_content_length=max_content_length,
         # update current emotions
         if emotions is not None:
             self._mental_state["emotions"] = emotions
-        
+
         # update relevant memories for the current situation. These are memories that come to mind "spontaneously" when the agent is in a given context,
         # so avoiding the need to actively trying to remember them.
-        current_memory_context = self.retrieve_relevant_memories_for_current_context()
-        self._mental_state["memory_context"] = current_memory_context
+        current_working_semantic_memory = (
+            self.retrieve_relevant_memories_for_current_context()
+        )
+        self._mental_state["working_semantic_memory"] = current_working_semantic_memory
 
         self.reset_prompt()
-        
 
     ###########################################################
     # Memory management
@@ -1020,79 +1198,111 @@ max_content_length=max_content_length,
     def store_in_memory(self, value: Any) -> None:
         """
         Stores a value in episodic memory and manages episode length.
-        
+
         Args:
             value: The memory item to store (e.g., action, stimulus, thought)
-            
+
         Returns:
             None
         """
         self.episodic_memory.store(value)
-        
+
         self._current_episode_event_count += 1
-        logger.debug(f"[{self.name}] Current episode event count: {self._current_episode_event_count}.")
+        logger.debug(
+            f"[{self.name}] Current episode event count: {self._current_episode_event_count}."
+        )
 
         if self._current_episode_event_count >= self.MAX_EPISODE_LENGTH:
             # commit the current episode to memory, if it is long enough
-            logger.warning(f"[{self.name}] Episode length exceeded {self.MAX_EPISODE_LENGTH} events. Committing episode to memory. Please check whether this was expected or not.")
+            logger.warning(
+                f"[{self.name}] Episode length exceeded {self.MAX_EPISODE_LENGTH} events. Committing episode to memory. Please check whether this was expected or not."
+            )
             self.consolidate_episode_memories()
-    
+
     def consolidate_episode_memories(self) -> bool:
         """
         Applies all memory consolidation or transformation processes appropriate to the conclusion of one simulation episode.
-        
+
         Returns:
             bool: True if memories were successfully consolidated, False otherwise.
         """
         # a minimum length of the episode is required to consolidate it, to avoid excessive fragments in the semantic memory
         if self._current_episode_event_count > self.MIN_EPISODE_LENGTH:
-            logger.debug(f"[{self.name}] ***** Consolidating current episode memories into semantic memory *****")
-        
+            logger.debug(
+                f"[{self.name}] ***** Consolidating current episode memories into semantic memory *****"
+            )
+
             # Consolidate latest episodic memories into semantic memory
             if config_manager.get("enable_memory_consolidation"):
-                
-                
-                    episodic_consolidator = EpisodicConsolidator()
-                    episode = self.episodic_memory.get_current_episode(item_types=["action", "stimulus"],)
-                    logger.debug(f"[{self.name}] Current episode: {episode}")
-                    consolidated_memories = episodic_consolidator.process(episode, timestamp=self._mental_state["datetime"], context=self._mental_state, persona=self.minibio()).get("consolidation", None)
-                    if consolidated_memories is not None:
-                        logger.info(f"[{self.name}] Consolidating current {len(episode)} episodic events as consolidated semantic memories.")
-                        logger.debug(f"[{self.name}] Consolidated memories: {consolidated_memories}")
-                        self.semantic_memory.store_all(consolidated_memories)
-                    else:
-                        logger.warning(f"[{self.name}] No memories to consolidate from the current episode.")
+
+                episodic_consolidator = EpisodicConsolidator()
+                episode = self.episodic_memory.get_current_episode(
+                    item_types=["action", "stimulus"],
+                )
+                logger.debug(f"[{self.name}] Current episode: {episode}")
+                consolidated_memories = episodic_consolidator.process(
+                    episode,
+                    timestamp=self._mental_state["datetime"],
+                    context=self._mental_state,
+                    persona=self.minibio(),
+                ).get("consolidation", None)
+                if consolidated_memories is not None:
+                    logger.info(
+                        f"[{self.name}] Consolidating current {len(episode)} episodic events as consolidated semantic memories."
+                    )
+                    logger.debug(
+                        f"[{self.name}] Consolidated memories: {consolidated_memories}"
+                    )
+                    self.semantic_memory.store_all(consolidated_memories)
+                else:
+                    logger.warning(
+                        f"[{self.name}] No memories to consolidate from the current episode."
+                    )
 
             else:
-                logger.warning(f"[{self.name}] Memory consolidation is disabled. Not consolidating current episode memories into semantic memory.")
+                logger.warning(
+                    f"[{self.name}] Memory consolidation is disabled. Not consolidating current episode memories into semantic memory."
+                )
 
             # commit the current episode to episodic memory
             self.episodic_memory.commit_episode()
             self._current_episode_event_count = 0
-            logger.debug(f"[{self.name}] Current episode event count reset to 0 after consolidation.")
+            logger.debug(
+                f"[{self.name}] Current episode event count reset to 0 after consolidation."
+            )
 
             # TODO reflections, optimizations, etc.
 
     def optimize_memory(self):
-        pass #TODO
+        pass  # TODO
 
     def clear_episodic_memory(self, max_prefix_to_clear=None, max_suffix_to_clear=None):
         """
         Clears the episodic memory, causing a permanent "episodic amnesia". Note that this does not
-        change other memories, such as semantic memory.  
+        change other memories, such as semantic memory.
         """
-        self.episodic_memory.clear(max_prefix_to_clear=max_prefix_to_clear, max_suffix_to_clear=max_suffix_to_clear)
+        self.episodic_memory.clear(
+            max_prefix_to_clear=max_prefix_to_clear,
+            max_suffix_to_clear=max_suffix_to_clear,
+        )
 
-    def retrieve_memories(self, first_n: int, last_n: int, include_omission_info:bool=True, max_content_length:int=None) -> list:
-        episodes = self.episodic_memory.retrieve(first_n=first_n, last_n=last_n, include_omission_info=include_omission_info)
+    def retrieve_memories(
+        self,
+        first_n: int,
+        last_n: int,
+        include_omission_info: bool = True,
+        max_content_length: int = None,
+    ) -> list:
+        episodes = self.episodic_memory.retrieve(
+            first_n=first_n, last_n=last_n, include_omission_info=include_omission_info
+        )
 
         if max_content_length is not None:
             episodes = utils.truncate_actions_or_stimuli(episodes, max_content_length)
 
         return episodes
 
-
-    def retrieve_recent_memories(self, max_content_length:int=None) -> list:
+    def retrieve_recent_memories(self, max_content_length: int = None) -> list:
         episodes = self.episodic_memory.retrieve_recent()
 
         if max_content_length is not None:
@@ -1100,7 +1310,7 @@ max_content_length=max_content_length,
 
         return episodes
 
-    def retrieve_relevant_memories(self, relevance_target:str, top_k=20) -> list:
+    def retrieve_relevant_memories(self, relevance_target: str, top_k=20) -> list:
         relevant = self.semantic_memory.retrieve_relevant(relevance_target, top_k=top_k)
 
         return relevant
@@ -1108,50 +1318,68 @@ max_content_length=max_content_length,
     def retrieve_relevant_memories_for_current_context(self, top_k=7) -> list:
         """
         Retrieves memories relevant to the current context by combining current state with recent memories.
-        
+
         Args:
             top_k (int): Number of top relevant memories to retrieve. Defaults to 7.
-            
+
         Returns:
             list: List of relevant memories for the current context.
         """
+        # Check if continuous contextual semantic memory retrieval is enabled
+        if not config_manager.get(
+            "enable_continuous_contextual_semantic_memory_retrieval"
+        ):
+            return []
+
         # Extract current mental state components
         context = self._mental_state.get("context", "")
         goals = self._mental_state.get("goals", "")
         attention = self._mental_state.get("attention", "")
         emotions = self._mental_state.get("emotions", "")
-        
+
         # Retrieve recent memories efficiently
-        recent_memories_list = self.retrieve_memories(first_n=10, last_n=20, max_content_length=500)
-        recent_memories = "\n".join([f"  - {m.get('content', '')}" for m in recent_memories_list])
+        recent_memories_list = self.retrieve_memories(
+            first_n=10, last_n=20, max_content_length=500
+        )
+        recent_memories = "\n".join(
+            [f"  - {m.get('content', '')}" for m in recent_memories_list]
+        )
 
         # Build contextual target for memory retrieval using textwrap.dedent for cleaner formatting
-        target = textwrap.dedent(f"""
+        target = textwrap.dedent(
+            f"""
         Current Context: {context}
         Current Goals: {goals}
         Current Attention: {attention}
         Current Emotions: {emotions}
         Selected Episodic Memories (from oldest to newest):
         {recent_memories}
-        """).strip()
+        """
+        ).strip()
 
-        logger.debug(f"[{self.name}] Retrieving relevant memories for contextual target: {target}")
+        logger.debug(
+            f"[{self.name}] Retrieving relevant memories for contextual target: {target}"
+        )
 
         return self.retrieve_relevant_memories(target, top_k=top_k)
 
-    def summarize_relevant_memories_via_full_scan(self, relevance_target:str, item_type: str = None) -> str:
+    def summarize_relevant_memories_via_full_scan(
+        self, relevance_target: str, item_type: str = None
+    ) -> str:
         """
         Summarizes relevant memories for a given target by scanning the entire semantic memory.
-        
+
         Args:
             relevance_target (str): The target to retrieve relevant memories for.
             item_type (str, optional): The type of items to summarize. Defaults to None.
             max_summary_length (int, optional): The maximum length of the summary. Defaults to 1000.
-        
+
         Returns:
             str: The summary of relevant memories.
         """
-        return self.semantic_memory.summarize_relevant_via_full_scan(relevance_target, item_type=item_type)
+        return self.semantic_memory.summarize_relevant_via_full_scan(
+            relevance_target, item_type=item_type
+        )
 
     ###########################################################
     # Inspection conveniences
@@ -1163,38 +1391,35 @@ max_content_length=max_content_length,
 
         Args:
             ignore_done (bool): Whether to ignore the "DONE" action or not. Defaults to True.
-            
+
         Returns:
             dict or None: The last remembered action, or None if no suitable action found.
         """
-        action = None 
-        
-        memory_items_list = self.episodic_memory.retrieve_last(include_omission_info=False, item_type="action")
+        action = None
+
+        memory_items_list = self.episodic_memory.retrieve_last(
+            include_omission_info=False, item_type="action"
+        )
 
         if len(memory_items_list) > 0:
             # iterate from last to first while the action type is not "DONE"
             for candidate_item in memory_items_list[::-1]:
                 action_content = candidate_item.get("content", {}).get("action", {})
                 action_type = action_content.get("type", "")
-                
+
                 if not ignore_done or action_type != "DONE":
                     action = action_content
                     break
 
         return action
 
-
     ###########################################################
-    # Communication display and action execution 
+    # Communication display and action execution
     ###########################################################
 
+    @config_manager.config_defaults(max_content_length="max_content_display_length")
     def _display_communication(
-        self,
-        role,
-        content,
-        kind,
-        simplified=True,
-        max_content_length=default["max_content_display_length"],
+        self, role, content, kind, simplified=True, max_content_length=None
     ):
         """
         Displays the current communication and stores it in a buffer for later use.
@@ -1210,7 +1435,7 @@ max_content_length=max_content_length,
                 )
                 source = content["stimuli"][0].get("source", None)
                 target = self.name
-                
+
             elif kind == "action":
                 rendering = self._pretty_action(
                     role=role,
@@ -1229,9 +1454,25 @@ max_content_length=max_content_length,
             # the communication is displayed in the correct order, since environments control the flow of their underlying
             # agents.
             if self.environment is None:
-                self._push_and_display_latest_communication({"kind": kind, "rendering":rendering, "content": content, "source":source, "target": target})
+                self._push_and_display_latest_communication(
+                    {
+                        "kind": kind,
+                        "rendering": rendering,
+                        "content": content,
+                        "source": source,
+                        "target": target,
+                    }
+                )
             else:
-                self.environment._push_and_display_latest_communication({"kind": kind, "rendering":rendering, "content": content, "source":source, "target": target})
+                self.environment._push_and_display_latest_communication(
+                    {
+                        "kind": kind,
+                        "rendering": rendering,
+                        "content": content,
+                        "source": source,
+                        "target": target,
+                    }
+                )
 
     def _push_and_display_latest_communication(self, communication):
         """
@@ -1315,18 +1556,22 @@ max_content_length=max_content_length,
             str: The mini-biography.
         """
 
-        # if occupation is a dict and has a "title" key, use that as the occupation 
-        if isinstance(self._persona['occupation'], dict) and 'title' in self._persona['occupation']:
-            occupation = self._persona['occupation']['title']
+        # if occupation is a dict and has a "title" key, use that as the occupation
+        if (
+            isinstance(self._persona["occupation"], dict)
+            and "title" in self._persona["occupation"]
+        ):
+            occupation = self._persona["occupation"]["title"]
         else:
-            occupation = self._persona['occupation']
+            occupation = self._persona["occupation"]
 
-        base_biography = f"{self.name} is a {self._persona['age']} year old {occupation}, {self._persona['nationality']}, currently living in {self._persona['residence']}."
+        residence = self.get("residence") or "an unspecified location"
+        base_biography = f"{self.name} is a {self._persona['age']} year old {occupation}, {self._persona['nationality']}, currently living in {residence}."
 
         if self._extended_agent_summary is None and extended:
             logger.debug(f"Generating extended agent summary for {self.name}.")
             self._extended_agent_summary = LLMChat(
-                                                system_prompt=f"""
+                system_prompt=f"""
                                                 You are given a short biography of an agent, as well as a detailed specification of his or her other characteristics
                                                 You must then produce a short paragraph (3 or 4 sentences) that **complements** the short biography, adding details about
                                                 personality, interests, opinions, skills, etc. Do not repeat the information already given in the short biography.
@@ -1334,13 +1579,13 @@ max_content_length=max_content_length,
                                                 must be grounded on the specification, **do not** create anything new.
 
                                                 {"Additional constraints: "+ requirements if requirements is not None else ""}
-                                                """, 
-
-                                                user_prompt=f"""
+                                                """,
+                user_prompt=f"""
                                                 **Short biography:** {base_biography}
 
                                                 **Detailed specification:** {self._persona}
-                                                """).call()
+                                                """,
+            ).call()
 
         if extended:
             biography = f"{base_biography} {self._extended_agent_summary}"
@@ -1349,14 +1594,15 @@ max_content_length=max_content_length,
 
         return biography
 
+    @config_manager.config_defaults(max_content_length="max_content_display_length")
     def pp_current_interactions(
         self,
         simplified=True,
         skip_system=True,
-        max_content_length=default["max_content_display_length"],
-        first_n=None, 
-        last_n=None, 
-        include_omission_info:bool=True
+        max_content_length=None,
+        first_n=None,
+        last_n=None,
+        include_omission_info: bool = True,
     ):
         """
         Pretty prints the current messages.
@@ -1368,17 +1614,18 @@ max_content_length=max_content_length,
                 max_content_length=max_content_length,
                 first_n=first_n,
                 last_n=last_n,
-                include_omission_info=include_omission_info
+                include_omission_info=include_omission_info,
             )
         )
 
+    @config_manager.config_defaults(max_content_length="max_content_display_length")
     def pp_last_interactions(
         self,
         n=3,
         simplified=True,
         skip_system=True,
-        max_content_length=default["max_content_display_length"],
-        include_omission_info:bool=True
+        max_content_length=None,
+        include_omission_info: bool = True,
     ):
         """
         Pretty prints the last n messages. Useful to examine the conclusion of an experiment.
@@ -1390,71 +1637,93 @@ max_content_length=max_content_length,
                 max_content_length=max_content_length,
                 first_n=None,
                 last_n=n,
-                include_omission_info=include_omission_info
+                include_omission_info=include_omission_info,
             )
         )
 
-    def pretty_current_interactions(self, simplified=True, skip_system=True, max_content_length=default["max_content_display_length"], first_n=None, last_n=None, include_omission_info:bool=True):
-      """
-      Returns a pretty, readable, string with the current messages.
-      """
-      lines = [f"**** BEGIN SIMULATION TRAJECTORY FOR {self.name} ****"]
-      last_step = 0
-      for i, message in enumerate(self.episodic_memory.retrieve(first_n=first_n, last_n=last_n, include_omission_info=include_omission_info)):
-        try:
-            if not (skip_system and message['role'] == 'system'):
-                msg_simplified_type = ""
-                msg_simplified_content = ""
-                msg_simplified_actor = ""
+    @config_manager.config_defaults(max_content_length="max_content_display_length")
+    def pretty_current_interactions(
+        self,
+        simplified=True,
+        skip_system=True,
+        max_content_length=None,
+        first_n=None,
+        last_n=None,
+        include_omission_info: bool = True,
+    ):
+        """
+        Returns a pretty, readable, string with the current messages.
+        """
+        lines = [f"**** BEGIN SIMULATION TRAJECTORY FOR {self.name} ****"]
+        last_step = 0
+        for i, message in enumerate(
+            self.episodic_memory.retrieve(
+                first_n=first_n,
+                last_n=last_n,
+                include_omission_info=include_omission_info,
+            )
+        ):
+            try:
+                if not (skip_system and message["role"] == "system"):
+                    msg_simplified_type = ""
+                    msg_simplified_content = ""
+                    msg_simplified_actor = ""
 
-                last_step = i
-                lines.append(f"Agent simulation trajectory event #{i}:")
-                lines.append(self._pretty_timestamp(message['role'], message['simulation_timestamp']))
-
-                if message["role"] == "system":
-                    msg_simplified_actor = "SYSTEM"
-                    msg_simplified_type = message["role"]
-                    msg_simplified_content = message["content"]
-
+                    last_step = i
+                    lines.append(f"Agent simulation trajectory event #{i}:")
                     lines.append(
-                        f"[dim] {msg_simplified_type}: {msg_simplified_content}[/]"
-                    )
-
-                elif message["role"] == "user":
-                    lines.append(
-                        self._pretty_stimuli(
-                            role=message["role"],
-                            content=message["content"],
-                            simplified=simplified,
-                            max_content_length=max_content_length,
+                        self._pretty_timestamp(
+                            message["role"], message["simulation_timestamp"]
                         )
                     )
 
-                elif message["role"] == "assistant":
-                    lines.append(
-                        self._pretty_action(
-                            role=message["role"],
-                            content=message["content"],
-                            simplified=simplified,
-                            max_content_length=max_content_length,
+                    if message["role"] == "system":
+                        msg_simplified_actor = "SYSTEM"
+                        msg_simplified_type = message["role"]
+                        msg_simplified_content = message["content"]
+
+                        lines.append(
+                            f"[dim] {msg_simplified_type}: {msg_simplified_content}[/]"
                         )
-                    )
-                else:
-                    lines.append(f"{message['role']}: {message['content']}")
-        except:
-            # print(f"ERROR: {message}")
-            continue
 
-      lines.append(f"The last agent simulation trajectory event number was {last_step}, thus the current number of the NEXT POTENTIAL TRAJECTORY EVENT is {last_step + 1}.")
-      lines.append(f"**** END SIMULATION TRAJECTORY FOR {self.name} ****\n\n")
-      return "\n".join(lines)
+                    elif message["role"] == "user":
+                        lines.append(
+                            self._pretty_stimuli(
+                                role=message["role"],
+                                content=message["content"],
+                                simplified=simplified,
+                                max_content_length=max_content_length,
+                            )
+                        )
 
+                    elif message["role"] == "assistant":
+                        lines.append(
+                            self._pretty_action(
+                                role=message["role"],
+                                content=message["content"],
+                                simplified=simplified,
+                                max_content_length=max_content_length,
+                            )
+                        )
+                    else:
+                        lines.append(f"{message['role']}: {message['content']}")
+            except:
+                # print(f"ERROR: {message}")
+                continue
+
+        lines.append(
+            f"The last agent simulation trajectory event number was {last_step}, thus the current number of the NEXT POTENTIAL TRAJECTORY EVENT is {last_step + 1}."
+        )
+        lines.append(f"**** END SIMULATION TRAJECTORY FOR {self.name} ****\n\n")
+        return "\n".join(lines)
+
+    @config_manager.config_defaults(max_content_length="max_content_display_length")
     def _pretty_stimuli(
         self,
         role,
         content,
         simplified=True,
-        max_content_length=default["max_content_display_length"],
+        max_content_length=None,
     ) -> list:
         """
         Pretty prints stimuli.
@@ -1487,7 +1756,9 @@ max_content_length=max_content_length,
                 # Using rich for formatting. Let's make things as readable as possible!
                 #
 
-                rich_style = utils.RichTextStyle.get_style_for("stimulus", msg_simplified_type)
+                rich_style = utils.RichTextStyle.get_style_for(
+                    "stimulus", msg_simplified_type
+                )
                 lines.append(
                     f"[{rich_style}][underline]{msg_simplified_actor}[/] --> [{rich_style}][underline]{self.name}[/]: [{msg_simplified_type}] \n{msg_simplified_content}[/]"
                 )
@@ -1496,12 +1767,13 @@ max_content_length=max_content_length,
 
         return "\n".join(lines)
 
+    @config_manager.config_defaults(max_content_length="max_content_display_length")
     def _pretty_action(
         self,
         role,
         content,
         simplified=True,
-        max_content_length=default["max_content_display_length"],
+        max_content_length=None,
     ) -> str:
         """
         Pretty prints an action.
@@ -1524,12 +1796,14 @@ max_content_length=max_content_length,
             #
             # Using rich for formatting. Let's make things as readable as possible!
             #
-            rich_style = utils.RichTextStyle.get_style_for("action", msg_simplified_type)
+            rich_style = utils.RichTextStyle.get_style_for(
+                "action", msg_simplified_type
+            )
             return f"[{rich_style}][underline]{msg_simplified_actor}[/] acts: [{msg_simplified_type}] \n{msg_simplified_content}[/]"
-        
+
         else:
             return f"{role}: {content}"
-    
+
     def _pretty_timestamp(
         self,
         role,
@@ -1547,7 +1821,10 @@ max_content_length=max_content_length,
         Returns:
             datetime: The current datetime of the environment in ISO forat.
         """
-        if self.environment is not None and self.environment.current_datetime is not None:
+        if (
+            self.environment is not None
+            and self.environment.current_datetime is not None
+        ):
             return self.environment.current_datetime.isoformat()
         else:
             return None
@@ -1556,11 +1833,17 @@ max_content_length=max_content_length,
     # IO
     ###########################################################
 
-    def save_specification(self, path, include_mental_faculties=True, include_memory=False, include_mental_state=False):
+    def save_specification(
+        self,
+        path,
+        include_mental_faculties=True,
+        include_memory=False,
+        include_mental_state=False,
+    ):
         """
         Saves the current configuration to a JSON file.
         """
-        
+
         suppress_attributes = []
 
         # should we include the mental faculties?
@@ -1575,15 +1858,22 @@ max_content_length=max_content_length,
         # should we include the mental state?
         if not include_mental_state:
             suppress_attributes.append("_mental_state")
-        
 
-        self.to_json(suppress=suppress_attributes, file_path=path,
-                     serialization_type_field_name="type")
+        self.to_json(
+            suppress=suppress_attributes,
+            file_path=path,
+            serialization_type_field_name="type",
+        )
 
-    
     @staticmethod
-    def load_specification(path_or_dict, suppress_mental_faculties=False, suppress_memory=False, suppress_mental_state=False, 
-                           auto_rename_agent=False, new_agent_name=None):
+    def load_specification(
+        path_or_dict,
+        suppress_mental_faculties=False,
+        suppress_memory=False,
+        suppress_mental_state=False,
+        auto_rename_agent=False,
+        new_agent_name=None,
+    ):
         """
         Loads a JSON agent specification.
 
@@ -1607,19 +1897,32 @@ max_content_length=max_content_length,
         if suppress_memory:
             suppress_attributes.append("episodic_memory")
             suppress_attributes.append("semantic_memory")
-        
+
         # should we suppress the mental state?
         if suppress_mental_state:
             suppress_attributes.append("_mental_state")
 
-        return TinyPerson.from_json(json_dict_or_path=path_or_dict, suppress=suppress_attributes, 
-                                    serialization_type_field_name="type",
-                                    post_init_params={"auto_rename_agent": auto_rename_agent, "new_agent_name": new_agent_name})
+        return TinyPerson.from_json(
+            json_dict_or_path=path_or_dict,
+            suppress=suppress_attributes,
+            serialization_type_field_name="type",
+            post_init_params={
+                "auto_rename_agent": auto_rename_agent,
+                "new_agent_name": new_agent_name,
+            },
+        )
+
     @staticmethod
-    def load_specifications_from_folder(folder_path:str, file_suffix=".agent.json", suppress_mental_faculties=False, 
-                                        suppress_memory=False, suppress_mental_state=False, auto_rename_agent=False, 
-                                        new_agent_name=None) -> list:
-        """	
+    def load_specifications_from_folder(
+        folder_path: str,
+        file_suffix=".agent.json",
+        suppress_mental_faculties=False,
+        suppress_memory=False,
+        suppress_mental_state=False,
+        auto_rename_agent=False,
+        new_agent_name=None,
+    ) -> list:
+        """
         Loads all JSON agent specifications from a folder.
 
         Args:
@@ -1636,14 +1939,17 @@ max_content_length=max_content_length,
         for file in os.listdir(folder_path):
             if file.endswith(file_suffix):
                 file_path = os.path.join(folder_path, file)
-                agent = TinyPerson.load_specification(file_path, suppress_mental_faculties=suppress_mental_faculties,
-                                                      suppress_memory=suppress_memory, suppress_mental_state=suppress_mental_state,
-                                                      auto_rename_agent=auto_rename_agent, new_agent_name=new_agent_name)
+                agent = TinyPerson.load_specification(
+                    file_path,
+                    suppress_mental_faculties=suppress_mental_faculties,
+                    suppress_memory=suppress_memory,
+                    suppress_mental_state=suppress_mental_state,
+                    auto_rename_agent=auto_rename_agent,
+                    new_agent_name=new_agent_name,
+                )
                 agents.append(agent)
 
         return agents
-        
-
 
     def encode_complete_state(self) -> dict:
         """
@@ -1657,10 +1963,14 @@ max_content_length=max_content_length,
         del to_copy["_mental_faculties"]
         del to_copy["action_generator"]
 
-        to_copy["_accessible_agents"] = [agent.name for agent in self._accessible_agents]
-        to_copy['episodic_memory'] = self.episodic_memory.to_json()
-        to_copy['semantic_memory'] = self.semantic_memory.to_json()
-        to_copy["_mental_faculties"] = [faculty.to_json() for faculty in self._mental_faculties]
+        to_copy["_accessible_agents"] = [
+            agent.name for agent in self._accessible_agents
+        ]
+        to_copy["episodic_memory"] = self.episodic_memory.to_json()
+        to_copy["semantic_memory"] = self.semantic_memory.to_json()
+        to_copy["_mental_faculties"] = [
+            faculty.to_json() for faculty in self._mental_faculties
+        ]
 
         state = copy.deepcopy(to_copy)
 
@@ -1672,43 +1982,43 @@ max_content_length=max_content_length,
         and produces a new TinyPerson instance.
         """
         state = copy.deepcopy(state)
-        
-        self._accessible_agents = [TinyPerson.get_agent_by_name(name) for name in state["_accessible_agents"]]
-        self.episodic_memory = EpisodicMemory.from_json(state['episodic_memory'])
-        self.semantic_memory = SemanticMemory.from_json(state['semantic_memory'])
-        
+
+        self._accessible_agents = [
+            TinyPerson.get_agent_by_name(name) for name in state["_accessible_agents"]
+        ]
+        self.episodic_memory = EpisodicMemory.from_json(state["episodic_memory"])
+        self.semantic_memory = SemanticMemory.from_json(state["semantic_memory"])
+
         for i, faculty in enumerate(self._mental_faculties):
-            faculty = faculty.from_json(state['_mental_faculties'][i])
+            faculty = faculty.from_json(state["_mental_faculties"][i])
 
         # delete fields already present in the state
         del state["_accessible_agents"]
-        del state['episodic_memory']
-        del state['semantic_memory']
-        del state['_mental_faculties']
+        del state["episodic_memory"]
+        del state["semantic_memory"]
+        del state["_mental_faculties"]
 
         # restore other fields
         self.__dict__.update(state)
 
-
         return self
-    
-    def create_new_agent_from_current_spec(self, new_name:str) -> Self:
+
+    def create_new_agent_from_current_spec(self, new_name: str) -> Self:
         """
-        Creates a new agent from the current agent's specification. 
+        Creates a new agent from the current agent's specification.
 
         Args:
-            new_name (str): The name of the new agent. Agent names must be unique in the simulation, 
+            new_name (str): The name of the new agent. Agent names must be unique in the simulation,
               this is why we need to provide a new name.
         """
         new_agent = TinyPerson(name=new_name, spec_path=None)
-        
+
         new_persona = copy.deepcopy(self._persona)
-        new_persona['name'] = new_name
+        new_persona["name"] = new_name
 
         new_agent._persona = new_persona
 
         return new_agent
-        
 
     @staticmethod
     def add_agent(agent):
@@ -1747,7 +2057,7 @@ max_content_length=max_content_length,
             return TinyPerson.all_agents[name]
         else:
             return None
-    
+
     @staticmethod
     def all_agents_names():
         """
@@ -1761,3 +2071,72 @@ max_content_length=max_content_length,
         Clears the global list of agents.
         """
         TinyPerson.all_agents = {}
+
+    #######################################################################
+    # Cost statistics methods
+    #######################################################################
+
+    @staticmethod
+    def get_global_cost_stats():
+        """
+        Gets global cost statistics for all agents based on the current OpenAI client stats.
+
+        Returns:
+            dict: A dictionary containing:
+                - base_stats: Raw stats from the OpenAI client
+                - total_agents: Total number of agents
+                - per_agent: Average resources per agent
+        """
+        from tinytroupe.clients import client
+
+        base_stats = client().get_cost_stats()
+        num_agents = len(TinyPerson.all_agents)
+
+        result = {"base_stats": base_stats, "total_agents": num_agents}
+
+        # Per-agent statistics
+        if num_agents > 0:
+            result["per_agent"] = {
+                "input_tokens": base_stats["input_tokens"] / num_agents,
+                "output_tokens": base_stats["output_tokens"] / num_agents,
+                "total_tokens": base_stats["total_tokens"] / num_agents,
+                "model_calls": base_stats["model_calls"] / num_agents,
+                "cached_calls": base_stats["cached_calls"] / num_agents,
+            }
+        else:
+            result["per_agent"] = None
+
+        return result
+
+    @staticmethod
+    def pretty_print_global_cost_stats():
+        """
+        Pretty prints global cost statistics for all agents.
+        """
+        stats = TinyPerson.get_global_cost_stats()
+
+        print("\n" + "=" * 70)
+        print("GLOBAL COST STATISTICS (ALL AGENTS)")
+        print("=" * 70)
+
+        print(f"\nGlobal Context:")
+        print(f"  Total agents:     {stats['total_agents']}")
+
+        base = stats["base_stats"]
+        print(f"\nTotal Resources Used:")
+        print(f"  Input tokens:     {base['input_tokens']:,}")
+        print(f"  Output tokens:    {base['output_tokens']:,}")
+        print(f"  Total tokens:     {base['total_tokens']:,}")
+        print(f"  Model calls:      {base['model_calls']:,}")
+        print(f"  Cached calls:     {base['cached_calls']:,}")
+
+        if stats["per_agent"] is not None:
+            pa = stats["per_agent"]
+            print(f"\nAverage Per Agent:")
+            print(f"  Input tokens:     {pa['input_tokens']:,.1f}")
+            print(f"  Output tokens:    {pa['output_tokens']:,.1f}")
+            print(f"  Total tokens:     {pa['total_tokens']:,.1f}")
+            print(f"  Model calls:      {pa['model_calls']:,.1f}")
+            print(f"  Cached calls:     {pa['cached_calls']:,.1f}")
+
+        print("=" * 70 + "\n")
