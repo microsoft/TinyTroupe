@@ -230,6 +230,13 @@ If you want to modify TinyTroupe itself, you can install it in editable mode (i.
     ```bash
     pip install -e .
     ```
+  
+    or
+
+    Install the library using poetry
+    ```bash
+    poetry install
+    ```
 
 ## Principles 
 Recently, we have seen LLMs used to simulate people (such as [this](https://github.com/joonspk-research/generative_agents)), but largely in a “game-like” setting for contemplative or entertainment purposes. There are also libraries for building multiagent systems for problem-solving and assistive AI, like [Autogen](https://microsoft.github.io/autogen/) and [Crew AI](https://docs.crewai.com/). What if we combine these ideas and simulate people to support productivity tasks? TinyTroupe is our attempt. To do so, it follows these principles:
