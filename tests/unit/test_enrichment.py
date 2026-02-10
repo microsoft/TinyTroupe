@@ -14,6 +14,7 @@ from testing_utils import *
 
 from tinytroupe.enrichment import TinyEnricher
 
+@pytest.mark.core
 def test_enrich_content():
 
     content_to_enrich = textwrap.dedent(\

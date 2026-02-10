@@ -361,7 +361,7 @@ class Simulation:
         Loads the cache file from the given path.
         &#34;&#34;&#34;
         try:
-            self.cached_trace = json.load(open(cache_path, &#34;r&#34;))
+            self.cached_trace = json.load(open(cache_path, &#34;r&#34;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;))
         except FileNotFoundError:
             logger.info(f&#34;Cache file not found on path: {cache_path}.&#34;)
             self.cached_trace = []
@@ -594,7 +594,7 @@ class Transaction:
                 self.simulation.cache_hits += 1
 
                 # Restore the full state and return the cached output
-                logger.info(f&#34;Skipping execution of {self.function_name} with args {self.args} and kwargs {self.kwargs} because it is already cached.&#34;)
+                logger.debug(f&#34;Skipping execution of {self.function_name} with args {self.args} and kwargs {self.kwargs} because it is already cached.&#34;)
 
                 # SEQUENTIAL
                 if not self.simulation.is_under_parallel_transactions():
@@ -1411,7 +1411,7 @@ reset() # initialize the control state</code></pre>
         Loads the cache file from the given path.
         &#34;&#34;&#34;
         try:
-            self.cached_trace = json.load(open(cache_path, &#34;r&#34;))
+            self.cached_trace = json.load(open(cache_path, &#34;r&#34;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;))
         except FileNotFoundError:
             logger.info(f&#34;Cache file not found on path: {cache_path}.&#34;)
             self.cached_trace = []
@@ -1953,7 +1953,7 @@ defaults to the default cache path defined in the class.</dd>
                 self.simulation.cache_hits += 1
 
                 # Restore the full state and return the cached output
-                logger.info(f&#34;Skipping execution of {self.function_name} with args {self.args} and kwargs {self.kwargs} because it is already cached.&#34;)
+                logger.debug(f&#34;Skipping execution of {self.function_name} with args {self.args} and kwargs {self.kwargs} because it is already cached.&#34;)
 
                 # SEQUENTIAL
                 if not self.simulation.is_under_parallel_transactions():
@@ -2151,7 +2151,7 @@ defaults to the default cache path defined in the class.</dd>
             self.simulation.cache_hits += 1
 
             # Restore the full state and return the cached output
-            logger.info(f&#34;Skipping execution of {self.function_name} with args {self.args} and kwargs {self.kwargs} because it is already cached.&#34;)
+            logger.debug(f&#34;Skipping execution of {self.function_name} with args {self.args} and kwargs {self.kwargs} because it is already cached.&#34;)
 
             # SEQUENTIAL
             if not self.simulation.is_under_parallel_transactions():

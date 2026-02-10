@@ -292,8 +292,11 @@ class OpenAIClient:
                                     else None
                                 )
                                 if existing is None:
-                                    self.api_cache[cache_key] = response
-                                    self._save_cache()
+                                    # Convert to cacheable format before storing
+                                    cacheable_response = self._to_cacheable_format(response)
+                                    if cacheable_response is not None:
+                                        self.api_cache[cache_key] = cacheable_response
+                                        self._save_cache()
                                 else:
                                     response = existing
 
@@ -372,6 +375,14 @@ class OpenAIClient:
 
             chat_api_params["reasoning_effort"] = config_manager.get("reasoning_effort")
 
+        # gpt-5 only supports temperature=1.0 (default), so remove temperature param if not default
+        if "gpt-5" in model and "temperature" in chat_api_params:
+            if chat_api_params["temperature"] != 1.0:
+                logger.warning(
+                    f"gpt-5 only supports temperature=1.0, removing custom temperature={chat_api_params['temperature']}"
+                )
+                del chat_api_params["temperature"]
+
         # To make the log cleaner, we remove the messages from the logged parameters
         logged_params = {k: v for k, v in chat_api_params.items() if k != "messages"}
 
@@ -409,6 +420,43 @@ class OpenAIClient:
         """
         return response.choices[0].message.to_dict()
 
+    def _to_cacheable_format(self, response):
+        """
+        Converts an API response to a dictionary format that can be pickled.
+        This is necessary because some response types (like ParsedChatCompletion
+        with generic types) cannot be pickled directly.
+        """
+        try:
+            # Try model_dump() first (Pydantic v2)
+            if hasattr(response, "model_dump"):
+                return response.model_dump()
+            # Fall back to dict() for older Pydantic models
+            elif hasattr(response, "dict"):
+                return response.dict()
+            # If it's already a dict, return as-is
+            elif isinstance(response, dict):
+                return response
+            else:
+                # Last resort: try to convert to dict
+                return dict(response)
+        except Exception as e:
+            logger.warning(f"Could not convert response to cacheable format: {e}")
+            # Return None to indicate caching should be skipped
+            return None
+
+    def _from_cached_format(self, cached_dict):
+        """
+        Reconstructs a ChatCompletion object from a cached dictionary.
+        We use the base ChatCompletion class (not ParsedChatCompletion) to avoid
+        issues with generic type parameters that can't be pickled.
+        """
+        from openai.types.chat import ChatCompletion
+        try:
+            return ChatCompletion.model_validate(cached_dict)
+        except Exception as e:
+            logger.warning(f"Could not reconstruct response from cache: {e}")
+            return None
+
     def _get_cached_response(self, cache_key):
         if not self.cache_api_calls:
             return None
@@ -418,7 +466,11 @@ class OpenAIClient:
             return None
 
         with self._cache_lock:
-            return cache_store.get(cache_key)
+            cached_dict = cache_store.get(cache_key)
+            if cached_dict is None:
+                return None
+            # Reconstruct the ChatCompletion object from the cached dict
+            return self._from_cached_format(cached_dict)
 
     @contextmanager
     def _concurrency_slot(self):
@@ -511,23 +563,21 @@ class OpenAIClient:
         are not JSON serializable.
         """
         # use pickle to save the cache
-        pickle.dump(
-            self.api_cache,
-            open(self.cache_file_name, "wb", encoding="utf-8", errors="replace"),
-        )
+        with open(self.cache_file_name, "wb") as f:
+            pickle.dump(self.api_cache, f)
 
     def _load_cache(self):
         """
         Loads the API cache from disk.
         """
-        # unpickle
-        return (
-            pickle.load(
-                open(self.cache_file_name, "rb", encoding="utf-8", errors="replace")
-            )
-            if os.path.exists(self.cache_file_name)
-            else {}
-        )
+        if os.path.exists(self.cache_file_name):
+            try:
+                with open(self.cache_file_name, "rb") as f:
+                    return pickle.load(f)
+            except (EOFError, pickle.UnpicklingError) as e:
+                logger.warning(f"Cache file exists but could not be loaded: {e}. Starting with empty cache.")
+                return {}
+        return {}
 
     @config_manager.config_defaults(model="embedding_model")
     def get_embedding(self, text, model=None):
@@ -573,13 +623,13 @@ class OpenAIClient:
                 self._model_calls += 1
 
             # Extract token usage from response if available
-            if hasattr(response, "usage"):
+            if hasattr(response, "usage") and response.usage is not None:
                 usage = response.usage
-                if hasattr(usage, "prompt_tokens"):
+                if hasattr(usage, "prompt_tokens") and usage.prompt_tokens is not None:
                     self._input_tokens += usage.prompt_tokens
-                if hasattr(usage, "completion_tokens"):
+                if hasattr(usage, "completion_tokens") and usage.completion_tokens is not None:
                     self._output_tokens += usage.completion_tokens
-                if hasattr(usage, "total_tokens"):
+                if hasattr(usage, "total_tokens") and usage.total_tokens is not None:
                     self._total_tokens += usage.total_tokens
 
                 # Log the latest values in debug mode

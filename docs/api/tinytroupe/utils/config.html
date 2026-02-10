@@ -26,26 +26,123 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">import logging
+<pre><code class="python">import configparser
+import logging
+import sys
+import threading
+from datetime import datetime
 from pathlib import Path
-import configparser
 
 ################################################################################
 # Config and startup utilities
 ################################################################################
 _config = None
+_log_file_path = None
+_console_handler = None
+_file_handler = None
+_root_level = None
+_console_level = None
+_file_level = None
+_include_thread_info = False
+_logging_lock = threading.RLock()
+
+_LOG_FORMAT_WITH_THREAD = (
+    &#34;%(asctime)s - %(threadName)s(%(thread)d) - %(name)s - %(levelname)s - %(message)s&#34;
+)
+_LOG_FORMAT_NO_THREAD = &#34;%(asctime)s - %(name)s - %(levelname)s - %(message)s&#34;
+
+
+def _current_formatter():
+    fmt = _LOG_FORMAT_WITH_THREAD if _include_thread_info else _LOG_FORMAT_NO_THREAD
+    return logging.Formatter(fmt)
+
+
+def _apply_formatter(handler):
+    if handler is not None:
+        handler.setFormatter(_current_formatter())
+
+
+def _refresh_handler_formatters_locked():
+    if _console_handler is not None:
+        _console_handler.setFormatter(_current_formatter())
+    if _file_handler is not None:
+        _file_handler.setFormatter(_current_formatter())
+
+_DISABLED_LEVEL_TOKENS = {&#34;NONE&#34;, &#34;OFF&#34;}
+
+
+def _coerce_level(level):
+    &#34;&#34;&#34;Convert a log level (string/int) into a numeric level understood by logging.&#34;&#34;&#34;
+    if isinstance(level, int):
+        return level
+
+    if isinstance(level, str):
+        candidate = level.strip().upper()
+        if candidate in _DISABLED_LEVEL_TOKENS or candidate == &#34;&#34;:
+            return None
+        attr = getattr(logging, candidate, None)
+        if isinstance(attr, int):
+            return attr
+        try:
+            return int(candidate)
+        except ValueError:
+            pass
+
+    return logging.INFO
+
+
+def _effective_root_level():
+    levels = [
+        level
+        for level in (_root_level, _console_level, _file_level)
+        if isinstance(level, int)
+    ]
+    return min(levels) if levels else logging.INFO
+
+
+def _ensure_log_file_path():
+    global _log_file_path
+    if _log_file_path is None:
+        timestamp = datetime.now().strftime(&#34;%Y%m%d_%H%M%S&#34;)
+        _log_file_path = Path.cwd() / f&#34;tinytroupe.{timestamp}.log&#34;
+    return _log_file_path
+
+
+def _create_file_handler():
+    handler = ThreadSafeFileHandler(_ensure_log_file_path(), encoding=&#34;utf-8&#34;)
+    _apply_formatter(handler)
+    return handler
+
+
+def _apply_logging_levels():
+    root_logger = logging.getLogger()
+    root_logger.setLevel(_effective_root_level())
+
+    if _console_handler is not None:
+        _console_handler.setLevel(
+            _console_level if isinstance(_console_level, int) else logging.INFO
+        )
+
+    if _file_handler is not None:
+        _file_handler.setLevel(
+            _file_level if isinstance(_file_level, int) else logging.INFO
+        )
+
+    project_logger = logging.getLogger(&#34;tinytroupe&#34;)
+    project_logger.setLevel(_effective_root_level())
+    project_logger.propagate = True
+
 
 def read_config_file(use_cache=True, verbose=True) -&gt; configparser.ConfigParser:
     global _config
     if use_cache and _config is not None:
         # if we have a cached config and accept that, return it
         return _config
-    
     else:
         config = configparser.ConfigParser()
 
         # Read the default values in the module directory.
-        config_file_path = Path(__file__).parent.absolute() / &#39;../config.ini&#39;
+        config_file_path = Path(__file__).parent.absolute() / &#34;../config.ini&#34;
         print(f&#34;Looking for default config on: {config_file_path}&#34;) if verbose else None
         if config_file_path.exists():
             config.read(config_file_path)
@@ -53,20 +150,33 @@ def read_config_file(use_cache=True, verbose=True) -&gt; configparser.ConfigPars
         else:
             raise ValueError(f&#34;Failed to find default config on: {config_file_path}&#34;)
 
-        # Now, let&#39;s override any specific default value, if there&#39;s a custom .ini config. 
+        # Now, let&#39;s override any specific default value, if there&#39;s a custom .ini config.
         # Try the directory of the current main program
         config_file_path = Path.cwd() / &#34;config.ini&#34;
         if config_file_path.exists():
             print(f&#34;Found custom config on: {config_file_path}&#34;) if verbose else None
-            config.read(config_file_path) # this only overrides the values that are present in the custom config
+            config.read(
+                config_file_path
+            )  # this only overrides the values that are present in the custom config
             _config = config
             return config
         else:
             if verbose:
-                print(f&#34;Failed to find custom config on: {config_file_path}&#34;) if verbose else None
-                print(&#34;Will use only default values. IF THINGS FAIL, TRY CUSTOMIZING MODEL, API TYPE, etc.&#34;) if verbose else None
-        
+                (
+                    print(f&#34;Failed to find custom config on: {config_file_path}&#34;)
+                    if verbose
+                    else None
+                )
+                (
+                    print(
+                        &#34;Will use only default values. IF THINGS FAIL, TRY CUSTOMIZING MODEL, API TYPE, etc.&#34;
+                    )
+                    if verbose
+                    else None
+                )
+
         return config
+
 
 def pretty_print_config(config):
     print()
@@ -79,40 +189,228 @@ def pretty_print_config(config):
             print(f&#34;{key} = {value}&#34;)
         print()
 
+
 def pretty_print_datetime():
-    from datetime import datetime
-    from datetime import timezone
+    from datetime import datetime, timezone
+
     now = datetime.now()
     now_utc = now.astimezone(timezone.utc)
     print(f&#34;Current date and time (local): {now.strftime(&#39;%Y-%m-%d %H:%M:%S&#39;)}&#34;)
     print(f&#34;Current date and time (UTC):   {now_utc.strftime(&#39;%Y-%m-%d %H:%M:%S&#39;)}&#34;)
 
+
 def pretty_print_tinytroupe_version():
     try:
         import importlib.metadata
+
         version = importlib.metadata.version(&#34;tinytroupe&#34;)
     except Exception:
-         version = &#34;unknown&#34;
+        version = &#34;unknown&#34;
     print(f&#34;TinyTroupe version: {version}&#34;)
 
+
+class ThreadSafeFileHandler(logging.FileHandler):
+    &#34;&#34;&#34;
+    A thread-safe file handler that uses a lock to prevent reentrant calls
+    when multiple threads are logging simultaneously.
+    &#34;&#34;&#34;
+
+    def __init__(self, filename, mode=&#34;a&#34;, encoding=None, delay=False):
+        super().__init__(filename, mode, encoding, delay)
+        self._lock = threading.Lock()
+
+    def emit(self, record):
+        &#34;&#34;&#34;
+        Thread-safe emit method that prevents reentrant calls to the file buffer.
+        &#34;&#34;&#34;
+        with self._lock:
+            try:
+                super().emit(record)
+            except Exception:
+                # If we can&#39;t log to file, continue to avoid breaking the application
+                # This is better than crashing on logging issues.
+                # But print to stderr so we know something went wrong.
+                print(
+                    &#34;Logging to file failed. Continuing without file logging.&#34;,
+                    file=sys.stderr,
+                )
+
+
 def start_logger(config: configparser.ConfigParser):
-    # create logger
-    logger = logging.getLogger(&#34;tinytroupe&#34;)
-    log_level = config[&#39;Logging&#39;].get(&#39;LOGLEVEL&#39;, &#39;INFO&#39;).upper()
-    logger.setLevel(level=log_level)
+    global _log_file_path, _console_handler, _file_handler, _console_level, _file_level, _include_thread_info
 
-    # create console handler and set level to debug
-    ch = logging.StreamHandler()
-    ch.setLevel(log_level)
+    # Collect changes under lock, but avoid calling logging APIs while holding it.
+    with _logging_lock:
+        default_level = config[&#34;Logging&#34;].get(&#34;LOGLEVEL&#34;, &#34;INFO&#34;)
+        _root_level = _coerce_level(default_level)
 
-    # create formatter
-    formatter = logging.Formatter(&#39;%(asctime)s - %(name)s - %(levelname)s - %(message)s&#39;)
+        _include_thread_info = config[&#34;Logging&#34;].getboolean(
+            &#34;LOG_INCLUDE_THREAD_ID&#34;, fallback=False
+        )
 
-    # add formatter to ch
-    ch.setFormatter(formatter)
+        _console_level = _coerce_level(
+            config[&#34;Logging&#34;].get(&#34;LOGLEVEL_CONSOLE&#34;, default_level)
+        )
+        _file_level = _coerce_level(
+            config[&#34;Logging&#34;].get(&#34;LOGLEVEL_FILE&#34;, default_level)
+        )
 
-    # add ch to logger
-    logger.addHandler(ch)</code></pre>
+        # Cache old handlers to remove outside lock
+        old_console = _console_handler
+        old_file = _file_handler
+
+        new_console = None
+        if _console_level is not None:
+            new_console = logging.StreamHandler(stream=sys.stdout)
+            _apply_formatter(new_console)
+
+        new_file = _create_file_handler() if _file_level is not None else None
+
+        # Assign new handlers (still under lock but have not touched root logger yet)
+        _console_handler = new_console
+        _file_handler = new_file
+
+    _refresh_handler_formatters_locked()
+
+    # From here on, no module lock held; operate on logging (avoids lock inversion risks).
+    root_logger = logging.getLogger()
+
+    if old_console is not None:
+        root_logger.removeHandler(old_console)
+        try:
+            old_console.close()
+        except Exception:
+            pass
+
+    if old_file is not None:
+        root_logger.removeHandler(old_file)
+        try:
+            old_file.close()
+        except Exception:
+            pass
+
+    if _console_handler is not None:
+        root_logger.addHandler(_console_handler)
+    if _file_handler is not None:
+        root_logger.addHandler(_file_handler)
+
+    project_logger = logging.getLogger(&#34;tinytroupe&#34;)
+    for handler in project_logger.handlers[:]:
+        project_logger.removeHandler(handler)
+    project_logger.propagate = True
+
+    _apply_logging_levels()
+
+    # Log AFTER initialization &amp; lock release to avoid nested lock acquisition chains.
+    project_logger.debug(&#34;TinyTroupe logging initialized&#34;)
+
+
+def set_loglevel(log_level):
+    &#34;&#34;&#34;
+    Sets both log levels (console and file) to the same value.
+    Args:
+        log_level (str | int): Desired logging level.
+    &#34;&#34;&#34;
+    level = _coerce_level(log_level)
+    global _root_level
+    with _logging_lock:
+        _root_level = level
+
+    set_console_loglevel(log_level)
+    set_file_loglevel(log_level)
+
+
+def set_console_loglevel(log_level):
+    &#34;&#34;&#34;Update the console logging level without affecting the file level.&#34;&#34;&#34;
+    global _console_level, _console_handler
+    level = _coerce_level(log_level)
+    with _logging_lock:
+        old_handler = _console_handler
+        if level is None:
+            _console_level = None
+            _console_handler = None
+            new_handler = None
+        else:
+            _console_level = level
+            if _console_handler is None:
+                handler = logging.StreamHandler(stream=sys.stdout)
+                _apply_formatter(handler)
+                _console_handler = handler
+            new_handler = _console_handler
+
+    root_logger = logging.getLogger()
+    if (
+        old_handler is not None
+        and old_handler is not new_handler
+        and old_handler in root_logger.handlers
+    ):
+        root_logger.removeHandler(old_handler)
+        try:
+            old_handler.close()
+        except Exception:
+            pass
+
+    if new_handler is not None:
+        if new_handler not in root_logger.handlers:
+            root_logger.addHandler(new_handler)
+        if isinstance(level, int):
+            new_handler.setLevel(level)
+
+    _apply_logging_levels()
+
+
+def set_file_loglevel(log_level):
+    &#34;&#34;&#34;Update the file logging level without affecting the console level.&#34;&#34;&#34;
+    global _file_level, _file_handler
+    level = _coerce_level(log_level)
+    with _logging_lock:
+        old_handler = _file_handler
+        if level is None:
+            _file_level = None
+            _file_handler = None
+            new_handler = None
+        else:
+            _file_level = level
+            if _file_handler is None:
+                _file_handler = _create_file_handler()
+            new_handler = _file_handler
+
+    root_logger = logging.getLogger()
+    if (
+        old_handler is not None
+        and old_handler is not new_handler
+        and old_handler in root_logger.handlers
+    ):
+        root_logger.removeHandler(old_handler)
+        try:
+            old_handler.close()
+        except Exception:
+            pass
+
+    if new_handler is None:
+        # File logging disabled; nothing else to attach.
+        _apply_logging_levels()
+        return
+
+    if new_handler not in root_logger.handlers:
+        root_logger.addHandler(new_handler)
+    if isinstance(level, int):
+        new_handler.setLevel(level)
+
+    _apply_logging_levels()
+
+
+def get_log_file_path():
+    &#34;&#34;&#34;Return the path of the TinyTroupe log file, if initialized.&#34;&#34;&#34;
+    return _log_file_path
+
+
+def set_include_thread_info(include_thread_info: bool):
+    &#34;&#34;&#34;Enable or disable thread identifiers in log output.&#34;&#34;&#34;
+    global _include_thread_info
+    with _logging_lock:
+        _include_thread_info = bool(include_thread_info)
+        _refresh_handler_formatters_locked()</code></pre>
 </details>
 </section>
 <section>
@@ -122,6 +420,20 @@ def start_logger(config: configparser.ConfigParser):
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
+<dt id="tinytroupe.utils.config.get_log_file_path"><code class="name flex">
+<span>def <span class="ident">get_log_file_path</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return the path of the TinyTroupe log file, if initialized.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_log_file_path():
+    &#34;&#34;&#34;Return the path of the TinyTroupe log file, if initialized.&#34;&#34;&#34;
+    return _log_file_path</code></pre>
+</details>
+</dd>
 <dt id="tinytroupe.utils.config.pretty_print_config"><code class="name flex">
 <span>def <span class="ident">pretty_print_config</span></span>(<span>config)</span>
 </code></dt>
@@ -153,8 +465,8 @@ def start_logger(config: configparser.ConfigParser):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def pretty_print_datetime():
-    from datetime import datetime
-    from datetime import timezone
+    from datetime import datetime, timezone
+
     now = datetime.now()
     now_utc = now.astimezone(timezone.utc)
     print(f&#34;Current date and time (local): {now.strftime(&#39;%Y-%m-%d %H:%M:%S&#39;)}&#34;)
@@ -173,9 +485,10 @@ def start_logger(config: configparser.ConfigParser):
 <pre><code class="python">def pretty_print_tinytroupe_version():
     try:
         import importlib.metadata
+
         version = importlib.metadata.version(&#34;tinytroupe&#34;)
     except Exception:
-         version = &#34;unknown&#34;
+        version = &#34;unknown&#34;
     print(f&#34;TinyTroupe version: {version}&#34;)</code></pre>
 </details>
 </dd>
@@ -193,12 +506,11 @@ def start_logger(config: configparser.ConfigParser):
     if use_cache and _config is not None:
         # if we have a cached config and accept that, return it
         return _config
-    
     else:
         config = configparser.ConfigParser()
 
         # Read the default values in the module directory.
-        config_file_path = Path(__file__).parent.absolute() / &#39;../config.ini&#39;
+        config_file_path = Path(__file__).parent.absolute() / &#34;../config.ini&#34;
         print(f&#34;Looking for default config on: {config_file_path}&#34;) if verbose else None
         if config_file_path.exists():
             config.read(config_file_path)
@@ -206,20 +518,173 @@ def start_logger(config: configparser.ConfigParser):
         else:
             raise ValueError(f&#34;Failed to find default config on: {config_file_path}&#34;)
 
-        # Now, let&#39;s override any specific default value, if there&#39;s a custom .ini config. 
+        # Now, let&#39;s override any specific default value, if there&#39;s a custom .ini config.
         # Try the directory of the current main program
         config_file_path = Path.cwd() / &#34;config.ini&#34;
         if config_file_path.exists():
             print(f&#34;Found custom config on: {config_file_path}&#34;) if verbose else None
-            config.read(config_file_path) # this only overrides the values that are present in the custom config
+            config.read(
+                config_file_path
+            )  # this only overrides the values that are present in the custom config
             _config = config
             return config
         else:
             if verbose:
-                print(f&#34;Failed to find custom config on: {config_file_path}&#34;) if verbose else None
-                print(&#34;Will use only default values. IF THINGS FAIL, TRY CUSTOMIZING MODEL, API TYPE, etc.&#34;) if verbose else None
-        
+                (
+                    print(f&#34;Failed to find custom config on: {config_file_path}&#34;)
+                    if verbose
+                    else None
+                )
+                (
+                    print(
+                        &#34;Will use only default values. IF THINGS FAIL, TRY CUSTOMIZING MODEL, API TYPE, etc.&#34;
+                    )
+                    if verbose
+                    else None
+                )
+
         return config</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.utils.config.set_console_loglevel"><code class="name flex">
+<span>def <span class="ident">set_console_loglevel</span></span>(<span>log_level)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Update the console logging level without affecting the file level.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_console_loglevel(log_level):
+    &#34;&#34;&#34;Update the console logging level without affecting the file level.&#34;&#34;&#34;
+    global _console_level, _console_handler
+    level = _coerce_level(log_level)
+    with _logging_lock:
+        old_handler = _console_handler
+        if level is None:
+            _console_level = None
+            _console_handler = None
+            new_handler = None
+        else:
+            _console_level = level
+            if _console_handler is None:
+                handler = logging.StreamHandler(stream=sys.stdout)
+                _apply_formatter(handler)
+                _console_handler = handler
+            new_handler = _console_handler
+
+    root_logger = logging.getLogger()
+    if (
+        old_handler is not None
+        and old_handler is not new_handler
+        and old_handler in root_logger.handlers
+    ):
+        root_logger.removeHandler(old_handler)
+        try:
+            old_handler.close()
+        except Exception:
+            pass
+
+    if new_handler is not None:
+        if new_handler not in root_logger.handlers:
+            root_logger.addHandler(new_handler)
+        if isinstance(level, int):
+            new_handler.setLevel(level)
+
+    _apply_logging_levels()</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.utils.config.set_file_loglevel"><code class="name flex">
+<span>def <span class="ident">set_file_loglevel</span></span>(<span>log_level)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Update the file logging level without affecting the console level.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_file_loglevel(log_level):
+    &#34;&#34;&#34;Update the file logging level without affecting the console level.&#34;&#34;&#34;
+    global _file_level, _file_handler
+    level = _coerce_level(log_level)
+    with _logging_lock:
+        old_handler = _file_handler
+        if level is None:
+            _file_level = None
+            _file_handler = None
+            new_handler = None
+        else:
+            _file_level = level
+            if _file_handler is None:
+                _file_handler = _create_file_handler()
+            new_handler = _file_handler
+
+    root_logger = logging.getLogger()
+    if (
+        old_handler is not None
+        and old_handler is not new_handler
+        and old_handler in root_logger.handlers
+    ):
+        root_logger.removeHandler(old_handler)
+        try:
+            old_handler.close()
+        except Exception:
+            pass
+
+    if new_handler is None:
+        # File logging disabled; nothing else to attach.
+        _apply_logging_levels()
+        return
+
+    if new_handler not in root_logger.handlers:
+        root_logger.addHandler(new_handler)
+    if isinstance(level, int):
+        new_handler.setLevel(level)
+
+    _apply_logging_levels()</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.utils.config.set_include_thread_info"><code class="name flex">
+<span>def <span class="ident">set_include_thread_info</span></span>(<span>include_thread_info: bool)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enable or disable thread identifiers in log output.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_include_thread_info(include_thread_info: bool):
+    &#34;&#34;&#34;Enable or disable thread identifiers in log output.&#34;&#34;&#34;
+    global _include_thread_info
+    with _logging_lock:
+        _include_thread_info = bool(include_thread_info)
+        _refresh_handler_formatters_locked()</code></pre>
+</details>
+</dd>
+<dt id="tinytroupe.utils.config.set_loglevel"><code class="name flex">
+<span>def <span class="ident">set_loglevel</span></span>(<span>log_level)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets both log levels (console and file) to the same value.</p>
+<h2 id="args">Args</h2>
+<p>log_level (str | int): Desired logging level.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_loglevel(log_level):
+    &#34;&#34;&#34;
+    Sets both log levels (console and file) to the same value.
+    Args:
+        log_level (str | int): Desired logging level.
+    &#34;&#34;&#34;
+    level = _coerce_level(log_level)
+    global _root_level
+    with _logging_lock:
+        _root_level = level
+
+    set_console_loglevel(log_level)
+    set_file_loglevel(log_level)</code></pre>
 </details>
 </dd>
 <dt id="tinytroupe.utils.config.start_logger"><code class="name flex">
@@ -232,28 +697,155 @@ def start_logger(config: configparser.ConfigParser):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def start_logger(config: configparser.ConfigParser):
-    # create logger
-    logger = logging.getLogger(&#34;tinytroupe&#34;)
-    log_level = config[&#39;Logging&#39;].get(&#39;LOGLEVEL&#39;, &#39;INFO&#39;).upper()
-    logger.setLevel(level=log_level)
+    global _log_file_path, _console_handler, _file_handler, _console_level, _file_level, _include_thread_info
 
-    # create console handler and set level to debug
-    ch = logging.StreamHandler()
-    ch.setLevel(log_level)
+    # Collect changes under lock, but avoid calling logging APIs while holding it.
+    with _logging_lock:
+        default_level = config[&#34;Logging&#34;].get(&#34;LOGLEVEL&#34;, &#34;INFO&#34;)
+        _root_level = _coerce_level(default_level)
 
-    # create formatter
-    formatter = logging.Formatter(&#39;%(asctime)s - %(name)s - %(levelname)s - %(message)s&#39;)
+        _include_thread_info = config[&#34;Logging&#34;].getboolean(
+            &#34;LOG_INCLUDE_THREAD_ID&#34;, fallback=False
+        )
 
-    # add formatter to ch
-    ch.setFormatter(formatter)
+        _console_level = _coerce_level(
+            config[&#34;Logging&#34;].get(&#34;LOGLEVEL_CONSOLE&#34;, default_level)
+        )
+        _file_level = _coerce_level(
+            config[&#34;Logging&#34;].get(&#34;LOGLEVEL_FILE&#34;, default_level)
+        )
 
-    # add ch to logger
-    logger.addHandler(ch)</code></pre>
+        # Cache old handlers to remove outside lock
+        old_console = _console_handler
+        old_file = _file_handler
+
+        new_console = None
+        if _console_level is not None:
+            new_console = logging.StreamHandler(stream=sys.stdout)
+            _apply_formatter(new_console)
+
+        new_file = _create_file_handler() if _file_level is not None else None
+
+        # Assign new handlers (still under lock but have not touched root logger yet)
+        _console_handler = new_console
+        _file_handler = new_file
+
+    _refresh_handler_formatters_locked()
+
+    # From here on, no module lock held; operate on logging (avoids lock inversion risks).
+    root_logger = logging.getLogger()
+
+    if old_console is not None:
+        root_logger.removeHandler(old_console)
+        try:
+            old_console.close()
+        except Exception:
+            pass
+
+    if old_file is not None:
+        root_logger.removeHandler(old_file)
+        try:
+            old_file.close()
+        except Exception:
+            pass
+
+    if _console_handler is not None:
+        root_logger.addHandler(_console_handler)
+    if _file_handler is not None:
+        root_logger.addHandler(_file_handler)
+
+    project_logger = logging.getLogger(&#34;tinytroupe&#34;)
+    for handler in project_logger.handlers[:]:
+        project_logger.removeHandler(handler)
+    project_logger.propagate = True
+
+    _apply_logging_levels()
+
+    # Log AFTER initialization &amp; lock release to avoid nested lock acquisition chains.
+    project_logger.debug(&#34;TinyTroupe logging initialized&#34;)</code></pre>
 </details>
 </dd>
 </dl>
 </section>
 <section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="tinytroupe.utils.config.ThreadSafeFileHandler"><code class="flex name class">
+<span>class <span class="ident">ThreadSafeFileHandler</span></span>
+<span>(</span><span>filename, mode='a', encoding=None, delay=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A thread-safe file handler that uses a lock to prevent reentrant calls
+when multiple threads are logging simultaneously.</p>
+<p>Open the specified file and use it as the stream for logging.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ThreadSafeFileHandler(logging.FileHandler):
+    &#34;&#34;&#34;
+    A thread-safe file handler that uses a lock to prevent reentrant calls
+    when multiple threads are logging simultaneously.
+    &#34;&#34;&#34;
+
+    def __init__(self, filename, mode=&#34;a&#34;, encoding=None, delay=False):
+        super().__init__(filename, mode, encoding, delay)
+        self._lock = threading.Lock()
+
+    def emit(self, record):
+        &#34;&#34;&#34;
+        Thread-safe emit method that prevents reentrant calls to the file buffer.
+        &#34;&#34;&#34;
+        with self._lock:
+            try:
+                super().emit(record)
+            except Exception:
+                # If we can&#39;t log to file, continue to avoid breaking the application
+                # This is better than crashing on logging issues.
+                # But print to stderr so we know something went wrong.
+                print(
+                    &#34;Logging to file failed. Continuing without file logging.&#34;,
+                    file=sys.stderr,
+                )</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>logging.FileHandler</li>
+<li>logging.StreamHandler</li>
+<li>logging.Handler</li>
+<li>logging.Filterer</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="tinytroupe.utils.config.ThreadSafeFileHandler.emit"><code class="name flex">
+<span>def <span class="ident">emit</span></span>(<span>self, record)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Thread-safe emit method that prevents reentrant calls to the file buffer.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def emit(self, record):
+    &#34;&#34;&#34;
+    Thread-safe emit method that prevents reentrant calls to the file buffer.
+    &#34;&#34;&#34;
+    with self._lock:
+        try:
+            super().emit(record)
+        except Exception:
+            # If we can&#39;t log to file, continue to avoid breaking the application
+            # This is better than crashing on logging issues.
+            # But print to stderr so we know something went wrong.
+            print(
+                &#34;Logging to file failed. Continuing without file logging.&#34;,
+                file=sys.stderr,
+            )</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
 </section>
 </article>
 <nav id="sidebar">
@@ -269,11 +861,26 @@ def start_logger(config: configparser.ConfigParser):
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
+<li><code><a title="tinytroupe.utils.config.get_log_file_path" href="#tinytroupe.utils.config.get_log_file_path">get_log_file_path</a></code></li>
 <li><code><a title="tinytroupe.utils.config.pretty_print_config" href="#tinytroupe.utils.config.pretty_print_config">pretty_print_config</a></code></li>
 <li><code><a title="tinytroupe.utils.config.pretty_print_datetime" href="#tinytroupe.utils.config.pretty_print_datetime">pretty_print_datetime</a></code></li>
 <li><code><a title="tinytroupe.utils.config.pretty_print_tinytroupe_version" href="#tinytroupe.utils.config.pretty_print_tinytroupe_version">pretty_print_tinytroupe_version</a></code></li>
 <li><code><a title="tinytroupe.utils.config.read_config_file" href="#tinytroupe.utils.config.read_config_file">read_config_file</a></code></li>
+<li><code><a title="tinytroupe.utils.config.set_console_loglevel" href="#tinytroupe.utils.config.set_console_loglevel">set_console_loglevel</a></code></li>
+<li><code><a title="tinytroupe.utils.config.set_file_loglevel" href="#tinytroupe.utils.config.set_file_loglevel">set_file_loglevel</a></code></li>
+<li><code><a title="tinytroupe.utils.config.set_include_thread_info" href="#tinytroupe.utils.config.set_include_thread_info">set_include_thread_info</a></code></li>
+<li><code><a title="tinytroupe.utils.config.set_loglevel" href="#tinytroupe.utils.config.set_loglevel">set_loglevel</a></code></li>
 <li><code><a title="tinytroupe.utils.config.start_logger" href="#tinytroupe.utils.config.start_logger">start_logger</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="tinytroupe.utils.config.ThreadSafeFileHandler" href="#tinytroupe.utils.config.ThreadSafeFileHandler">ThreadSafeFileHandler</a></code></h4>
+<ul class="">
+<li><code><a title="tinytroupe.utils.config.ThreadSafeFileHandler.emit" href="#tinytroupe.utils.config.ThreadSafeFileHandler.emit">emit</a></code></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

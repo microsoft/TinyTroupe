@@ -46,9 +46,16 @@ We are releasing *TinyTroupe* at a relatively early stage, with considerable wor
 
 
 ## LATEST NEWS
-**[???] Release 0.6.0:**
-  - Adds experimental/limited Ollama support. See [Ollama Support](./docs/guides/ollama.md) for details.
-  - 
+**[2026-02-01] Release 0.6.0 with new features and model updates:**
+  - Default model is now `gpt-5-mini`. **Important:** The GPT-5 model series uses different parameters than the former GPT-4* series, so you may need to adjust your `config.ini` settings accordingly. Legacy models (`gpt-4.1-mini`, `gpt-4o-mini`) are still supported.
+  - Introduces `SimulationExperimentEmpiricalValidator` to compare simulation results against real-world empirical data using statistical tests (t-test, KS-test). This is essential for validating that simulations match actual human behavior.
+  - Introduces `AgentChatJupyterWidget` for interactive conversations with agents directly in Jupyter notebooks.
+  - New cost tracking utilities at client, environment, and agent levels to monitor API expenses.
+  - Adds experimental/limited Ollama support for local models. See [Ollama Support](./docs/guides/ollama.md) for details.
+  - New example notebooks demonstrating empirical validation against real survey data.
+  
+  **Note: GPT-5 model parameters differ from GPT-4*, so please retest your important scenarios and adjust configurations accordingly.**
+
 **[2025-07-31] Release 0.5.2:**  Mostly just changes the default model, which is now set to GPT-4.1-mini. It seems to bring considerable quality improvements. 
    **Note that GPT-4.1-mini can have significant differences in behavior w.r.t. to the previous default of GPT-4o-mini, so please make sure you retest your important scenarios using GPT-4.1-mini and adjust accordingly.**
 
@@ -81,7 +88,11 @@ We are releasing *TinyTroupe* at a relatively early stage, with considerable wor
 To get a sense of what TinyTroupe can do, here are some examples of its use. These examples are available in the [examples/](./examples/) folder, and you can either inspect the pre-compiled Jupyter notebooks or run them yourself locally. Notice the interactive nature of TinyTroupe experiments -- just like you use Jupyter notebooks to interact with data, you can use TinyTroupe to interact with simulated people and environments, for the purpose of gaining insights.
 
 >[!NOTE]
-> Currently, simulation outputs are better visualized against dark backgrounds, so we recommend using a dark theme in your Jupyter notebook client.
+> ♻️ Examples might be updated over time, so the screenshots below might not exactly match what you see when you run them locally. However, the overall structure and content should be similar.
+
+>[!NOTE]
+> ⬛ Currently, simulation outputs are better visualized against dark backgrounds, so we recommend using a dark theme in your Jupyter notebook client.
+
 
 ### 🧪**Example 1** *(from [Interview with Customer.ipynb](./examples/Interview%20with%20Customer.ipynb))*
 Let's begin with a simple customer interview scenario, where a business consultant approaches a banker:
@@ -89,6 +100,7 @@ Let's begin with a simple customer interview scenario, where a business consulta
   <img src="./docs/example_screenshot_customer-interview-1.png" alt="An example.">
 </p>
 
+The conversation can go on for a few steps to dig deeper and deeper until the consultant is satisfied with the information gathered; for instance, a concrete project idea:
 The conversation can go on for a few steps to dig deeper and deeper until the consultant is satisfied with the information gathered; for instance, a concrete project idea:
 <p align="center">
   <img src="./docs/example_screenshot_customer-interview-2.png" alt="An example.">
@@ -109,7 +121,7 @@ Now, instead of having to carefully read what the agents said, we can extract th
   <img src="./docs/example_screenshot_tv-ad-2.png" alt="An example.">
 </p>
 
-### 🧪 **EXAMPLES 3** *(from [Product Brainstorming.ipynb](./examples/Product%20Brainstorming.ipynb))*
+### 🧪 **EXAMPLE 3** *(from [Product Brainstorming.ipynb](./examples/Product%20Brainstorming.ipynb))*
 And here's a focus group starting to brainstorm about new AI features for Microsoft Word. Instead of interacting with each agent individually, we manipulate the environment to make them interact with each other:
 
 <p align="center">
@@ -122,6 +134,34 @@ After running a simulation, we can extract the results in a machine-readable man
   <img src="./docs/example_screenshot_brainstorming-2.png" alt="An example.">
 </p>
 
+
+### 🧪 **EXAMPLE 4** *(from [Bottled Gazpacho Market Research 5 (with behavior correction).ipynb](<./examples/Bottled%20Gazpacho%20Market%20Research%205%20(with%20behavior%20correction).ipynb>))*
+One of the most important aspects of simulation is **validating** results against real-world data. In this example, we simulate a market research survey about bottled Gazpacho (a cold Spanish soup) and then compare the simulation results against an actual survey conducted with real people:
+
+<p align="center">
+  <img src="./docs/example_screenshot_gazpacho-1.png" alt="Gazpacho market research response example.">
+</p>
+
+We use statistical tests (t-test, KS-test) to compare the distribution of responses between simulated agents and real respondents:
+
+<p align="center">
+  <img src="./docs/example_screenshot_gazpacho-2.png" alt="Gazpacho validation statistical comparison.">
+</p>
+
+
+### 🧪 **EXAMPLE 5** *(from [AI-enabled Children Story Telling Market Research 2.ipynb](<./examples/AI-enabled%20Children%20Story%20Telling%20Market%20Research%202.ipynb>))*
+Another empirical validation example, this time for a more complex ranking task. We simulate parents evaluating different AI-enabled story-telling device options for their children, and then compare the simulation results against real survey data:
+
+<p align="center">
+  <img src="./docs/example_screenshot_storytelling-1.png" alt="AI story-telling market research response example.">
+</p>
+
+Using Borda count and first-choice share analysis, we can compare how well the simulated preferences match the real ones:
+
+<p align="center">
+  <img src="./docs/example_screenshot_storytelling-2.png" alt="AI story-telling validation comparison charts.">
+</p>
+
 You can find other examples in the [examples/](./examples/) folder.
 
 
@@ -132,7 +172,7 @@ To run the library, you need:
   - Access to Azure OpenAI Service or Open AI GPT-4 APIs. You can get access to the Azure OpenAI Service [here](https://azure.microsoft.com/en-us/products/ai-services/openai-service), and to the OpenAI API [here](https://platform.openai.com/). 
       * For Azure OpenAI Service, you will need to set the `AZURE_OPENAI_KEY` and `AZURE_OPENAI_ENDPOINT` environment variables to your API key and endpoint, respectively.
       * For OpenAI, you will need to set the `OPENAI_API_KEY` environment variable to your API key.
-  - By default, TinyTroupe `config.ini` is set to use OpenAI API with `gpt-4.1-mini` as the main model. You can customize these values by including your own `config.ini` file in the same folder as the program or notebook you are running. An example of a `config.ini` file is provided in the [examples/](./examples/) folder.
+  - By default, TinyTroupe `config.ini` is set to use OpenAI API with `gpt-5-mini` as the main model. The previous default (`gpt-4.1-mini`) is now considered legacy but is still expected to work. You can customize these values by including your own `config.ini` file in the same folder as the program or notebook you are running. An example of a `config.ini` file is provided in the [examples/](./examples/) folder.
 
 >[!IMPORTANT]
 > **Content Filters**: To ensure no harmful content is generated during simulations, it is strongly recommended to use content filters whenever available at the API level. In particular, **if using Azure OpenAI, there's extensive support for content moderation, and we urge you to use it.** For details about how to do so, please consult [the corresponding Azure OpenAI documentation](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/content-filter). If content filters are in place, and an API call is rejected by them, the library will raise an exception, as it will be unable to proceed with the simulation at that point.
@@ -398,31 +438,41 @@ This can then be imported into an agent like this:
 lisa.import_fragment("./examples/fragments/travel_enthusiast.agent.fragment.json")
 ```
 
+### TinyPersonFactory
 
-
-#### TinyPersonFactory
-
-`TinyTroupe` also provides a clever way to obtain new agents, using LLMs to generate their specification for you, through the `TinyPersonFactory` class.
+`TinyPersonFactory` provides a powerful way to generate agents using LLMs, which is especially useful for creating diverse populations for market research or other simulation scenarios.
 
 ```python
 from tinytroupe.factory import TinyPersonFactory
 
+# Simple factory with a context
 factory = TinyPersonFactory(context="A hospital in São Paulo.")
 person = factory.generate_person("Create a Brazilian person that is a doctor, likes pets and nature and loves heavy metal.")
 ```
 
-You can also create factories from demographic data:
+For market research and larger studies, you can create factories from demographic specifications:
 
 ```python
-# Create a factory from demographic specifications
+# Create a factory from demographic data (JSON file or description)
 factory = TinyPersonFactory.create_factory_from_demography(
-    demography_description_or_file_path="path/to/demography.json",
+    demography_description_or_file_path="./information/populations/usa.json",
     population_size=50,
-    context="Urban professionals in technology sector"
+    context="Market research for a new product"
 )
 
-# Generate multiple people at once
-people = factory.generate_people(number_of_people=10, parallelize=True)
+# Generate a population (parallelize=True by default for faster generation)
+people = factory.generate_people(number_of_people=50, parallelize=True, verbose=True)
+```
+
+The `parallelize` parameter defaults to `True`, which significantly speeds up population generation by creating agents concurrently via parallel API calls.
+
+The factory automatically creates a sampling plan to ensure diverse representation. You can inspect this:
+
+```python
+# View the sampling dimensions and plan
+print(factory.sampling_dimensions)  # dimensions used for diversity
+print(factory.sampling_plan)        # how agents will be distributed
+print(factory.generated_minibios)   # quick summary of generated agents
 ```
 
 ### TinyWorld
@@ -475,19 +525,114 @@ Oscar --> Lisa: [CONVERSATION]
 ```
 
 `TinyWorld` enforces very little constraints on the possible interactions. Subclasses, however, are supposed to provide more structured environments. 
+`TinyWorld` enforces very little constraints on the possible interactions. Subclasses, however, are supposed to provide more structured environments. 
 
-### Utilities
+### Interactive Agent Exploration
 
-TinyTroupe provides a number of utilities and conveniences to help you create simulations and derive value from them. These include:
-  
-  - `TinyPersonFactory`: helps you generate new `TinyPerson`s using LLMs.
-  - `TinyTool`: simulated tools that can be used by `TinyPerson`s.
-  - `TinyStory`: helps you create and manage the story told through simulations.
-  - `TinyPersonValidator`: helps you validate the behavior of your `TinyPerson`s.
-  - `ResultsExtractor` and `ResultsReducer`: extract and reduce the results of interactions between agents.
-  - ... and more ...
-  
-In general, elements that represent simulated entities or complementary mechanisms are prefixed with `Tiny`, while those that are more infrastructural are not. This is to emphasize the simulated nature of the elements that are part of the simulation itself.
+TinyTroupe provides a Jupyter widget for interactive conversations with agents, which is useful for exploring agent behavior and debugging:
+
+```python
+from tinytroupe.ui import AgentChatJupyterWidget
+
+chat_interface = AgentChatJupyterWidget(people)  # pass a list of agents
+chat_interface.display()
+```
+
+This displays a chat interface with a dropdown to select agents and send messages interactively.
+
+### Population Profiling
+
+When generating populations of agents using `TinyPersonFactory`, you can analyze the distribution of characteristics using the `Profiler`:
+
+```python
+from tinytroupe.profiling import Profiler
+
+profiler = Profiler()
+profiler.profile(people)  # displays demographic and trait distributions
+```
+
+This helps validate that your generated population has the diversity and characteristics you intended.
+
+### Cost Tracking
+
+Simulations can incur significant API costs. TinyTroupe provides cost tracking at multiple levels:
+
+```python
+from tinytroupe.clients import client
+
+# API client-level stats
+client().pretty_print_cost_stats()
+
+# Environment-level stats
+world.pretty_print_cost_stats()
+TinyWorld.pretty_print_global_cost_stats()
+
+# Agent-level stats
+TinyPerson.pretty_print_global_cost_stats()
+```
+
+### Action Quality Control
+
+Agents can be configured to check and improve the quality of their actions. This is useful for ensuring responses adhere to persona specifications and expected formats:
+
+```python
+# Configure per-agent quality control
+person.action_generator.enable_quality_checks = True
+person.action_generator.quality_threshold = 5  # 1-10 scale
+person.action_generator.max_attempts = 5
+person.action_generator.enable_regeneration = True
+```
+
+You can also enable this globally via `config.ini` or `config_manager`:
+
+```python
+from tinytroupe import config_manager
+
+config_manager.update("action_generator_enable_quality_checks", True)
+config_manager.update("action_generator_quality_threshold", 6)
+```
+
+### Empirical Validation
+
+One of the most important aspects of simulation is **validating** results against real-world data. TinyTroupe provides the `SimulationExperimentEmpiricalValidator` class and the `validate_simulation_experiment_empirically` function to compare simulation outputs against empirical control data using statistical tests.
+
+```python
+from tinytroupe.validation import SimulationExperimentEmpiricalValidator, validate_simulation_experiment_empirically
+
+# Load empirical control data from a CSV file
+control_data = SimulationExperimentEmpiricalValidator.read_empirical_data_from_csv(
+    file_path="path/to/real_survey_data.csv",
+    experimental_data_type="single_value_per_agent",  # or "ordinal_ranking_per_agent"
+    agent_id_column="Responder #",
+    value_column="Vote",
+    agent_comments_column="Explanation",
+    dataset_name="Real Survey"
+)
+
+# Create treatment data from simulation results (assuming df contains simulation results)
+treatment_data = SimulationExperimentEmpiricalValidator.read_empirical_data_from_dataframe(
+    df=simulation_results_df,
+    experimental_data_type="single_value_per_agent",
+    agent_id_column="name",
+    value_column="Vote",
+    dataset_name="Simulation Results"
+)
+
+# Run statistical validation (t-test by default, or ks_test)
+result = validate_simulation_experiment_empirically(
+    control_data=control_data,
+    treatment_data=treatment_data,
+    validation_types=["statistical"],
+    statistical_test_type="t_test",  # or "ks_test"
+    output_format="values"
+)
+
+# Access results
+print(result.overall_score)
+print(result.statistical_results)
+```
+
+This allows you to quantitatively assess how well your simulation matches real-world behavior, which is essential for building confidence in simulation-based insights.
 
 ### Caching
 Calling LLM APIs can be expensive, thus caching strategies are important to help reduce that cost.
@@ -509,7 +654,7 @@ provides useful simulation management methods:
 
 #### Caching LLM API Calls
 
-This is enabled preferably in the `config.ini` file by setting `CACHE_API_CALLS=True`, and alternatively via the `openai_utils.force_api_cache()` method.
+This is enabled preferably in the `config.ini` file by setting `CACHE_API_CALLS=True`.
 
 LLM API caching, when enabled, works at a lower and simpler level than simulation state caching. Here, what happens is very straightforward: every LLM call is kept in a map from the input to the generated output; when a new call comes and is identical to a previous one, the cached value is returned.
 
@@ -525,7 +670,7 @@ Key configuration sections include:
 - **[Logging]**: Log level configuration
 
 Models used by default:
-- `MODEL=gpt-4o-mini`: Main text generation model for agent responses
+- `MODEL=gpt-5-mini`: Main text generation model for agent responses (previous default `gpt-4.1-mini` is now legacy but still supported)
 - `EMBEDDING_MODEL=text-embedding-3-small`: For text similarity tasks
 - `REASONING_MODEL=o3-mini`: Used for detailed analyses and reasoning tasks (even more experimental -- not really recommended yet)
 
@@ -551,6 +696,20 @@ This approach allows you to:
 - **Implement conditional configurations** based on runtime conditions
 
 The programmatic overrides take precedence over the values in the `config.ini` file, allowing you to fine-tune behavior for specific use cases or experiments.
+
+### Other Utilities
+
+TinyTroupe provides additional utilities and conveniences not covered in detail above:
+  
+  - `TinyTool`: simulated tools that can be used by `TinyPerson`s.
+  - `TinyStory`: helps you create and manage narratives told through simulations.
+  - `TinyPersonValidator`: helps you validate the behavior of your `TinyPerson`s.
+  - `ResultsExtractor` and `ResultsReducer`: extract and reduce the results of interactions between agents.
+  - `ArtifactExporter`: export simulation artifacts (documents, data) to files.
+  - Mental faculties (`TinyToolUse`, `FilesAndWebGroundingFaculty`): extend agent capabilities with tool use and grounding.
+  - ... and more ...
+  
+In general, elements that represent simulated entities or complementary mechanisms are prefixed with `Tiny`, while those that are more infrastructural are not. This emphasizes the simulated nature of the elements that are part of the simulation itself.
 
 ## Contributing
 
@@ -590,7 +749,6 @@ If you would like to make a contribution, please try to follow these general gui
 TinyTroupe started as an internal Microsoft hackathon project, and expanded over time. The TinyTroupe core team currently consists of:
   - Paulo Salem (TinyTroupe's creator and current lead)
   - Christopher Olsen (Engineering/Science)
-  - Paulo Freire (Engineering/Science)
   - Yi Ding (Product Management)
   - Prerit Saxena (Engineering/Science)
   
@@ -601,9 +759,11 @@ Other special contributions were made by:
   - Nilo Garcia Silveira: initial agent validation ideas and related implementation; general initial feedback and insights; name suggestions.
   - Olnei Fonseca: initial agent validation ideas; general initial feedback and insights; naming suggestions.
   - Robert Sim: synthetic data generation scenarios expertise and implementation.
+  - Paulo Freire: synthetic data generation example expertise and implementation.
   - Carlos Costa: synthetic data generation scenarios expertise and implementation.
   - Bryant Key: advertising scenario domain expertise and insights.
   - Barbara da Silva: implementation related to agent memory management.
+  
   
  ... are you missing here? Please remind us!
 

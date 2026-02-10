@@ -26,29 +26,34 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">import os
-import json
+<pre><code class="python">import json
+import os
+from typing import List, Union
+
 import chevron
 import pandas as pd
-from typing import Union, List
 
-from tinytroupe.extraction import logger
-from tinytroupe.agent import TinyPerson
-from tinytroupe.environment import TinyWorld
-
-from tinytroupe import openai_utils
 import tinytroupe.utils as utils
+from tinytroupe.agent import TinyPerson
+from tinytroupe.clients import client
+from tinytroupe.environment import TinyWorld
+from tinytroupe.extraction import logger
 
 
 class ResultsExtractor:
 
-    def __init__(self, 
-                 extraction_prompt_template_path:str = os.path.join(os.path.dirname(__file__), &#39;./prompts/interaction_results_extractor.mustache&#39;),
-                 extraction_objective:str = &#34;The main points present in the agents&#39; interactions history.&#34;,
-                 situation:str = &#34;&#34;,
-                 fields:List[str] = None,
-                 fields_hints:dict = None,
-                 verbose:bool = False):
+    def __init__(
+        self,
+        extraction_prompt_template_path: str = os.path.join(
+            os.path.dirname(__file__),
+            &#34;./prompts/interaction_results_extractor.mustache&#34;,
+        ),
+        extraction_objective: str = &#34;The main points present in the agents&#39; interactions history.&#34;,
+        situation: str = &#34;&#34;,
+        fields: List[str] = None,
+        fields_hints: dict = None,
+        verbose: bool = False,
+    ):
         &#34;&#34;&#34;
         Initializes the ResultsExtractor with default parameters.
 
@@ -73,13 +78,15 @@ class ResultsExtractor:
         self.agent_extraction = {}
         self.world_extraction = {}
 
-    def extract_results_from_agents(self,
-                                    agents:List[TinyPerson],
-                                    extraction_objective:str=None,
-                                    situation:str =None,
-                                    fields:list=None,
-                                    fields_hints:dict=None,
-                                    verbose:bool=None):
+    def extract_results_from_agents(
+        self,
+        agents: List[TinyPerson],
+        extraction_objective: str = None,
+        situation: str = None,
+        fields: list = None,
+        fields_hints: dict = None,
+        verbose: bool = None,
+    ):
         &#34;&#34;&#34;
         Extracts results from a list of TinyPerson instances.
 
@@ -87,27 +94,31 @@ class ResultsExtractor:
             agents (List[TinyPerson]): The list of TinyPerson instances to extract results from.
             extraction_objective (str): The extraction objective.
             situation (str): The situation to consider.
-            fields (list, optional): The fields to extract. If None, the extractor will decide what names to use. 
+            fields (list, optional): The fields to extract. If None, the extractor will decide what names to use.
                 Defaults to None.
             fields_hints (dict, optional): Hints for the fields to extract. Maps field names to strings with the hints. Defaults to None.
             verbose (bool, optional): Whether to print debug messages. Defaults to False.
 
-        
+
         &#34;&#34;&#34;
         results = []
         for agent in agents:
-            result = self.extract_results_from_agent(agent, extraction_objective, situation, fields, fields_hints, verbose)
+            result = self.extract_results_from_agent(
+                agent, extraction_objective, situation, fields, fields_hints, verbose
+            )
             results.append(result)
-        
+
         return results
-        
-    def extract_results_from_agent(self, 
-                        tinyperson:TinyPerson, 
-                        extraction_objective:str=&#34;The main points present in the agent&#39;s interactions history.&#34;, 
-                        situation:str = &#34;&#34;, 
-                        fields:list=None,
-                        fields_hints:dict=None,
-                        verbose:bool=None):
+
+    def extract_results_from_agent(
+        self,
+        tinyperson: TinyPerson,
+        extraction_objective: str = &#34;The main points present in the agent&#39;s interactions history.&#34;,
+        situation: str = &#34;&#34;,
+        fields: list = None,
+        fields_hints: dict = None,
+        verbose: bool = None,
+    ):
         &#34;&#34;&#34;
         Extracts results from a TinyPerson instance.
 
@@ -115,14 +126,16 @@ class ResultsExtractor:
             tinyperson (TinyPerson): The TinyPerson instance to extract results from.
             extraction_objective (str): The extraction objective.
             situation (str): The situation to consider.
-            fields (list, optional): The fields to extract. If None, the extractor will decide what names to use. 
+            fields (list, optional): The fields to extract. If None, the extractor will decide what names to use.
                 Defaults to None.
             fields_hints (dict, optional): Hints for the fields to extract. Maps field names to strings with the hints. Defaults to None.
             verbose (bool, optional): Whether to print debug messages. Defaults to False.
         &#34;&#34;&#34;
 
-        extraction_objective, situation, fields, fields_hints, verbose = self._get_default_values_if_necessary(
-            extraction_objective, situation, fields, fields_hints, verbose
+        extraction_objective, situation, fields, fields_hints, verbose = (
+            self._get_default_values_if_necessary(
+                extraction_objective, situation, fields, fields_hints, verbose
+            )
         )
 
         messages = []
@@ -130,20 +143,30 @@ class ResultsExtractor:
         rendering_configs = {}
         if fields is not None:
             rendering_configs[&#34;fields&#34;] = &#34;, &#34;.join(fields)
-        
+
         if fields_hints is not None:
             rendering_configs[&#34;fields_hints&#34;] = list(fields_hints.items())
-        
-        messages.append({&#34;role&#34;: &#34;system&#34;, 
-                         &#34;content&#34;: chevron.render(
-                             open(self._extraction_prompt_template_path).read(), 
-                             rendering_configs)})
 
+        messages.append(
+            {
+                &#34;role&#34;: &#34;system&#34;,
+                &#34;content&#34;: chevron.render(
+                    open(
+                        self._extraction_prompt_template_path,
+                        &#34;r&#34;,
+                        encoding=&#34;utf-8&#34;,
+                        errors=&#34;replace&#34;,
+                    ).read(),
+                    rendering_configs,
+                ),
+            }
+        )
 
-        interaction_history = tinyperson.pretty_current_interactions(max_content_length=None)
+        interaction_history = tinyperson.pretty_current_interactions(
+            max_content_length=None
+        )
 
-        extraction_request_prompt = \
-f&#34;&#34;&#34;
+        extraction_request_prompt = f&#34;&#34;&#34;
 ## Extraction objective
 
 {extraction_objective}
@@ -161,8 +184,10 @@ performed.
 &#34;&#34;&#34;
         messages.append({&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: extraction_request_prompt})
 
-        next_message = openai_utils.client().send_message(messages, temperature=0.0, frequency_penalty=0.0, presence_penalty=0.0)
-        
+        next_message = client().send_message(
+            messages, frequency_penalty=0.0, presence_penalty=0.0
+        )
+
         debug_msg = f&#34;Extraction raw result message: {next_message}&#34;
         logger.debug(debug_msg)
         if verbose:
@@ -172,20 +197,20 @@ performed.
             result = utils.extract_json(next_message[&#34;content&#34;])
         else:
             result = None
-        
         # cache the result
         self.agent_extraction[tinyperson.name] = result
 
         return result
-    
 
-    def extract_results_from_world(self, 
-                                   tinyworld:TinyWorld, 
-                                   extraction_objective:str=&#34;The main points that can be derived from the agents conversations and actions.&#34;, 
-                                   situation:str=&#34;&#34;, 
-                                   fields:list=None,
-                                   fields_hints:dict=None,
-                                   verbose:bool=None):
+    def extract_results_from_world(
+        self,
+        tinyworld: TinyWorld,
+        extraction_objective: str = &#34;The main points that can be derived from the agents conversations and actions.&#34;,
+        situation: str = &#34;&#34;,
+        fields: list = None,
+        fields_hints: dict = None,
+        verbose: bool = None,
+    ):
         &#34;&#34;&#34;
         Extracts results from a TinyWorld instance.
 
@@ -193,13 +218,15 @@ performed.
             tinyworld (TinyWorld): The TinyWorld instance to extract results from.
             extraction_objective (str): The extraction objective.
             situation (str): The situation to consider.
-            fields (list, optional): The fields to extract. If None, the extractor will decide what names to use. 
+            fields (list, optional): The fields to extract. If None, the extractor will decide what names to use.
                 Defaults to None.
             verbose (bool, optional): Whether to print debug messages. Defaults to False.
         &#34;&#34;&#34;
 
-        extraction_objective, situation, fields, fields_hints, verbose = self._get_default_values_if_necessary(
-            extraction_objective, situation, fields, fields_hints, verbose
+        extraction_objective, situation, fields, fields_hints, verbose = (
+            self._get_default_values_if_necessary(
+                extraction_objective, situation, fields, fields_hints, verbose
+            )
         )
 
         messages = []
@@ -207,20 +234,31 @@ performed.
         rendering_configs = {}
         if fields is not None:
             rendering_configs[&#34;fields&#34;] = &#34;, &#34;.join(fields)
-        
+
         if fields_hints is not None:
             rendering_configs[&#34;fields_hints&#34;] = list(fields_hints.items())
-        
-        messages.append({&#34;role&#34;: &#34;system&#34;, 
-                         &#34;content&#34;: chevron.render(
-                             open(self._extraction_prompt_template_path).read(), 
-                             rendering_configs)})
+
+        messages.append(
+            {
+                &#34;role&#34;: &#34;system&#34;,
+                &#34;content&#34;: chevron.render(
+                    open(
+                        self._extraction_prompt_template_path,
+                        &#34;r&#34;,
+                        encoding=&#34;utf-8&#34;,
+                        errors=&#34;replace&#34;,
+                    ).read(),
+                    rendering_configs,
+                ),
+            }
+        )
 
         # TODO: either summarize first or break up into multiple tasks
-        interaction_history = tinyworld.pretty_current_interactions(max_content_length=None)
+        interaction_history = tinyworld.pretty_current_interactions(
+            max_content_length=None
+        )
 
-        extraction_request_prompt = \
-f&#34;&#34;&#34;
+        extraction_request_prompt = f&#34;&#34;&#34;
 ## Extraction objective
 
 {extraction_objective}
@@ -238,8 +276,8 @@ Each interaction history includes stimuli the corresponding agent received as we
 &#34;&#34;&#34;
         messages.append({&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: extraction_request_prompt})
 
-        next_message = openai_utils.client().send_message(messages, temperature=0.0)
-        
+        next_message = client().send_message(messages, temperature=1.0)
+
         debug_msg = f&#34;Extraction raw result message: {next_message}&#34;
         logger.debug(debug_msg)
         if verbose:
@@ -249,13 +287,12 @@ Each interaction history includes stimuli the corresponding agent received as we
             result = utils.extract_json(next_message[&#34;content&#34;])
         else:
             result = None
-        
         # cache the result
         self.world_extraction[tinyworld.name] = result
 
         return result
-    
-    def save_as_json(self, filename:str, verbose:bool=False):
+
+    def save_as_json(self, filename: str, verbose: bool = False):
         &#34;&#34;&#34;
         Saves the last extraction results as JSON.
 
@@ -263,20 +300,28 @@ Each interaction history includes stimuli the corresponding agent received as we
             filename (str): The filename to save the JSON to.
             verbose (bool, optional): Whether to print debug messages. Defaults to False.
         &#34;&#34;&#34;
-        with open(filename, &#39;w&#39;) as f:
-            json.dump({&#34;agent_extractions&#34;: self.agent_extraction, 
-                       &#34;world_extraction&#34;: self.world_extraction}, f, indent=4)
-        
+        with open(filename, &#34;w&#34;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as f:
+            json.dump(
+                {
+                    &#34;agent_extractions&#34;: self.agent_extraction,
+                    &#34;world_extraction&#34;: self.world_extraction,
+                },
+                f,
+                indent=4,
+            )
+
         if verbose:
             print(f&#34;Saved extraction results to {filename}&#34;)
-    
-    def _get_default_values_if_necessary(self,
-                            extraction_objective:str,
-                            situation:str,
-                            fields:List[str],
-                            fields_hints:dict,
-                            verbose:bool):
-        
+
+    def _get_default_values_if_necessary(
+        self,
+        extraction_objective: str,
+        situation: str,
+        fields: List[str],
+        fields_hints: dict,
+        verbose: bool,
+    ):
+
         if extraction_objective is None:
             extraction_objective = self.default_extraction_objective
 
@@ -331,13 +376,18 @@ Each interaction history includes stimuli the corresponding agent received as we
 </summary>
 <pre><code class="python">class ResultsExtractor:
 
-    def __init__(self, 
-                 extraction_prompt_template_path:str = os.path.join(os.path.dirname(__file__), &#39;./prompts/interaction_results_extractor.mustache&#39;),
-                 extraction_objective:str = &#34;The main points present in the agents&#39; interactions history.&#34;,
-                 situation:str = &#34;&#34;,
-                 fields:List[str] = None,
-                 fields_hints:dict = None,
-                 verbose:bool = False):
+    def __init__(
+        self,
+        extraction_prompt_template_path: str = os.path.join(
+            os.path.dirname(__file__),
+            &#34;./prompts/interaction_results_extractor.mustache&#34;,
+        ),
+        extraction_objective: str = &#34;The main points present in the agents&#39; interactions history.&#34;,
+        situation: str = &#34;&#34;,
+        fields: List[str] = None,
+        fields_hints: dict = None,
+        verbose: bool = False,
+    ):
         &#34;&#34;&#34;
         Initializes the ResultsExtractor with default parameters.
 
@@ -362,13 +412,15 @@ Each interaction history includes stimuli the corresponding agent received as we
         self.agent_extraction = {}
         self.world_extraction = {}
 
-    def extract_results_from_agents(self,
-                                    agents:List[TinyPerson],
-                                    extraction_objective:str=None,
-                                    situation:str =None,
-                                    fields:list=None,
-                                    fields_hints:dict=None,
-                                    verbose:bool=None):
+    def extract_results_from_agents(
+        self,
+        agents: List[TinyPerson],
+        extraction_objective: str = None,
+        situation: str = None,
+        fields: list = None,
+        fields_hints: dict = None,
+        verbose: bool = None,
+    ):
         &#34;&#34;&#34;
         Extracts results from a list of TinyPerson instances.
 
@@ -376,27 +428,31 @@ Each interaction history includes stimuli the corresponding agent received as we
             agents (List[TinyPerson]): The list of TinyPerson instances to extract results from.
             extraction_objective (str): The extraction objective.
             situation (str): The situation to consider.
-            fields (list, optional): The fields to extract. If None, the extractor will decide what names to use. 
+            fields (list, optional): The fields to extract. If None, the extractor will decide what names to use.
                 Defaults to None.
             fields_hints (dict, optional): Hints for the fields to extract. Maps field names to strings with the hints. Defaults to None.
             verbose (bool, optional): Whether to print debug messages. Defaults to False.
 
-        
+
         &#34;&#34;&#34;
         results = []
         for agent in agents:
-            result = self.extract_results_from_agent(agent, extraction_objective, situation, fields, fields_hints, verbose)
+            result = self.extract_results_from_agent(
+                agent, extraction_objective, situation, fields, fields_hints, verbose
+            )
             results.append(result)
-        
+
         return results
-        
-    def extract_results_from_agent(self, 
-                        tinyperson:TinyPerson, 
-                        extraction_objective:str=&#34;The main points present in the agent&#39;s interactions history.&#34;, 
-                        situation:str = &#34;&#34;, 
-                        fields:list=None,
-                        fields_hints:dict=None,
-                        verbose:bool=None):
+
+    def extract_results_from_agent(
+        self,
+        tinyperson: TinyPerson,
+        extraction_objective: str = &#34;The main points present in the agent&#39;s interactions history.&#34;,
+        situation: str = &#34;&#34;,
+        fields: list = None,
+        fields_hints: dict = None,
+        verbose: bool = None,
+    ):
         &#34;&#34;&#34;
         Extracts results from a TinyPerson instance.
 
@@ -404,14 +460,16 @@ Each interaction history includes stimuli the corresponding agent received as we
             tinyperson (TinyPerson): The TinyPerson instance to extract results from.
             extraction_objective (str): The extraction objective.
             situation (str): The situation to consider.
-            fields (list, optional): The fields to extract. If None, the extractor will decide what names to use. 
+            fields (list, optional): The fields to extract. If None, the extractor will decide what names to use.
                 Defaults to None.
             fields_hints (dict, optional): Hints for the fields to extract. Maps field names to strings with the hints. Defaults to None.
             verbose (bool, optional): Whether to print debug messages. Defaults to False.
         &#34;&#34;&#34;
 
-        extraction_objective, situation, fields, fields_hints, verbose = self._get_default_values_if_necessary(
-            extraction_objective, situation, fields, fields_hints, verbose
+        extraction_objective, situation, fields, fields_hints, verbose = (
+            self._get_default_values_if_necessary(
+                extraction_objective, situation, fields, fields_hints, verbose
+            )
         )
 
         messages = []
@@ -419,20 +477,30 @@ Each interaction history includes stimuli the corresponding agent received as we
         rendering_configs = {}
         if fields is not None:
             rendering_configs[&#34;fields&#34;] = &#34;, &#34;.join(fields)
-        
+
         if fields_hints is not None:
             rendering_configs[&#34;fields_hints&#34;] = list(fields_hints.items())
-        
-        messages.append({&#34;role&#34;: &#34;system&#34;, 
-                         &#34;content&#34;: chevron.render(
-                             open(self._extraction_prompt_template_path).read(), 
-                             rendering_configs)})
 
+        messages.append(
+            {
+                &#34;role&#34;: &#34;system&#34;,
+                &#34;content&#34;: chevron.render(
+                    open(
+                        self._extraction_prompt_template_path,
+                        &#34;r&#34;,
+                        encoding=&#34;utf-8&#34;,
+                        errors=&#34;replace&#34;,
+                    ).read(),
+                    rendering_configs,
+                ),
+            }
+        )
 
-        interaction_history = tinyperson.pretty_current_interactions(max_content_length=None)
+        interaction_history = tinyperson.pretty_current_interactions(
+            max_content_length=None
+        )
 
-        extraction_request_prompt = \
-f&#34;&#34;&#34;
+        extraction_request_prompt = f&#34;&#34;&#34;
 ## Extraction objective
 
 {extraction_objective}
@@ -450,8 +518,10 @@ performed.
 &#34;&#34;&#34;
         messages.append({&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: extraction_request_prompt})
 
-        next_message = openai_utils.client().send_message(messages, temperature=0.0, frequency_penalty=0.0, presence_penalty=0.0)
-        
+        next_message = client().send_message(
+            messages, frequency_penalty=0.0, presence_penalty=0.0
+        )
+
         debug_msg = f&#34;Extraction raw result message: {next_message}&#34;
         logger.debug(debug_msg)
         if verbose:
@@ -461,20 +531,20 @@ performed.
             result = utils.extract_json(next_message[&#34;content&#34;])
         else:
             result = None
-        
         # cache the result
         self.agent_extraction[tinyperson.name] = result
 
         return result
-    
 
-    def extract_results_from_world(self, 
-                                   tinyworld:TinyWorld, 
-                                   extraction_objective:str=&#34;The main points that can be derived from the agents conversations and actions.&#34;, 
-                                   situation:str=&#34;&#34;, 
-                                   fields:list=None,
-                                   fields_hints:dict=None,
-                                   verbose:bool=None):
+    def extract_results_from_world(
+        self,
+        tinyworld: TinyWorld,
+        extraction_objective: str = &#34;The main points that can be derived from the agents conversations and actions.&#34;,
+        situation: str = &#34;&#34;,
+        fields: list = None,
+        fields_hints: dict = None,
+        verbose: bool = None,
+    ):
         &#34;&#34;&#34;
         Extracts results from a TinyWorld instance.
 
@@ -482,13 +552,15 @@ performed.
             tinyworld (TinyWorld): The TinyWorld instance to extract results from.
             extraction_objective (str): The extraction objective.
             situation (str): The situation to consider.
-            fields (list, optional): The fields to extract. If None, the extractor will decide what names to use. 
+            fields (list, optional): The fields to extract. If None, the extractor will decide what names to use.
                 Defaults to None.
             verbose (bool, optional): Whether to print debug messages. Defaults to False.
         &#34;&#34;&#34;
 
-        extraction_objective, situation, fields, fields_hints, verbose = self._get_default_values_if_necessary(
-            extraction_objective, situation, fields, fields_hints, verbose
+        extraction_objective, situation, fields, fields_hints, verbose = (
+            self._get_default_values_if_necessary(
+                extraction_objective, situation, fields, fields_hints, verbose
+            )
         )
 
         messages = []
@@ -496,20 +568,31 @@ performed.
         rendering_configs = {}
         if fields is not None:
             rendering_configs[&#34;fields&#34;] = &#34;, &#34;.join(fields)
-        
+
         if fields_hints is not None:
             rendering_configs[&#34;fields_hints&#34;] = list(fields_hints.items())
-        
-        messages.append({&#34;role&#34;: &#34;system&#34;, 
-                         &#34;content&#34;: chevron.render(
-                             open(self._extraction_prompt_template_path).read(), 
-                             rendering_configs)})
+
+        messages.append(
+            {
+                &#34;role&#34;: &#34;system&#34;,
+                &#34;content&#34;: chevron.render(
+                    open(
+                        self._extraction_prompt_template_path,
+                        &#34;r&#34;,
+                        encoding=&#34;utf-8&#34;,
+                        errors=&#34;replace&#34;,
+                    ).read(),
+                    rendering_configs,
+                ),
+            }
+        )
 
         # TODO: either summarize first or break up into multiple tasks
-        interaction_history = tinyworld.pretty_current_interactions(max_content_length=None)
+        interaction_history = tinyworld.pretty_current_interactions(
+            max_content_length=None
+        )
 
-        extraction_request_prompt = \
-f&#34;&#34;&#34;
+        extraction_request_prompt = f&#34;&#34;&#34;
 ## Extraction objective
 
 {extraction_objective}
@@ -527,8 +610,8 @@ Each interaction history includes stimuli the corresponding agent received as we
 &#34;&#34;&#34;
         messages.append({&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: extraction_request_prompt})
 
-        next_message = openai_utils.client().send_message(messages, temperature=0.0)
-        
+        next_message = client().send_message(messages, temperature=1.0)
+
         debug_msg = f&#34;Extraction raw result message: {next_message}&#34;
         logger.debug(debug_msg)
         if verbose:
@@ -538,13 +621,12 @@ Each interaction history includes stimuli the corresponding agent received as we
             result = utils.extract_json(next_message[&#34;content&#34;])
         else:
             result = None
-        
         # cache the result
         self.world_extraction[tinyworld.name] = result
 
         return result
-    
-    def save_as_json(self, filename:str, verbose:bool=False):
+
+    def save_as_json(self, filename: str, verbose: bool = False):
         &#34;&#34;&#34;
         Saves the last extraction results as JSON.
 
@@ -552,20 +634,28 @@ Each interaction history includes stimuli the corresponding agent received as we
             filename (str): The filename to save the JSON to.
             verbose (bool, optional): Whether to print debug messages. Defaults to False.
         &#34;&#34;&#34;
-        with open(filename, &#39;w&#39;) as f:
-            json.dump({&#34;agent_extractions&#34;: self.agent_extraction, 
-                       &#34;world_extraction&#34;: self.world_extraction}, f, indent=4)
-        
+        with open(filename, &#34;w&#34;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as f:
+            json.dump(
+                {
+                    &#34;agent_extractions&#34;: self.agent_extraction,
+                    &#34;world_extraction&#34;: self.world_extraction,
+                },
+                f,
+                indent=4,
+            )
+
         if verbose:
             print(f&#34;Saved extraction results to {filename}&#34;)
-    
-    def _get_default_values_if_necessary(self,
-                            extraction_objective:str,
-                            situation:str,
-                            fields:List[str],
-                            fields_hints:dict,
-                            verbose:bool):
-        
+
+    def _get_default_values_if_necessary(
+        self,
+        extraction_objective: str,
+        situation: str,
+        fields: List[str],
+        fields_hints: dict,
+        verbose: bool,
+    ):
+
         if extraction_objective is None:
             extraction_objective = self.default_extraction_objective
 
@@ -610,13 +700,15 @@ Defaults to None.</dd>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">    def extract_results_from_agent(self, 
-                        tinyperson:TinyPerson, 
-                        extraction_objective:str=&#34;The main points present in the agent&#39;s interactions history.&#34;, 
-                        situation:str = &#34;&#34;, 
-                        fields:list=None,
-                        fields_hints:dict=None,
-                        verbose:bool=None):
+<pre><code class="python">    def extract_results_from_agent(
+        self,
+        tinyperson: TinyPerson,
+        extraction_objective: str = &#34;The main points present in the agent&#39;s interactions history.&#34;,
+        situation: str = &#34;&#34;,
+        fields: list = None,
+        fields_hints: dict = None,
+        verbose: bool = None,
+    ):
         &#34;&#34;&#34;
         Extracts results from a TinyPerson instance.
 
@@ -624,14 +716,16 @@ Defaults to None.</dd>
             tinyperson (TinyPerson): The TinyPerson instance to extract results from.
             extraction_objective (str): The extraction objective.
             situation (str): The situation to consider.
-            fields (list, optional): The fields to extract. If None, the extractor will decide what names to use. 
+            fields (list, optional): The fields to extract. If None, the extractor will decide what names to use.
                 Defaults to None.
             fields_hints (dict, optional): Hints for the fields to extract. Maps field names to strings with the hints. Defaults to None.
             verbose (bool, optional): Whether to print debug messages. Defaults to False.
         &#34;&#34;&#34;
 
-        extraction_objective, situation, fields, fields_hints, verbose = self._get_default_values_if_necessary(
-            extraction_objective, situation, fields, fields_hints, verbose
+        extraction_objective, situation, fields, fields_hints, verbose = (
+            self._get_default_values_if_necessary(
+                extraction_objective, situation, fields, fields_hints, verbose
+            )
         )
 
         messages = []
@@ -639,20 +733,30 @@ Defaults to None.</dd>
         rendering_configs = {}
         if fields is not None:
             rendering_configs[&#34;fields&#34;] = &#34;, &#34;.join(fields)
-        
+
         if fields_hints is not None:
             rendering_configs[&#34;fields_hints&#34;] = list(fields_hints.items())
-        
-        messages.append({&#34;role&#34;: &#34;system&#34;, 
-                         &#34;content&#34;: chevron.render(
-                             open(self._extraction_prompt_template_path).read(), 
-                             rendering_configs)})
 
+        messages.append(
+            {
+                &#34;role&#34;: &#34;system&#34;,
+                &#34;content&#34;: chevron.render(
+                    open(
+                        self._extraction_prompt_template_path,
+                        &#34;r&#34;,
+                        encoding=&#34;utf-8&#34;,
+                        errors=&#34;replace&#34;,
+                    ).read(),
+                    rendering_configs,
+                ),
+            }
+        )
 
-        interaction_history = tinyperson.pretty_current_interactions(max_content_length=None)
+        interaction_history = tinyperson.pretty_current_interactions(
+            max_content_length=None
+        )
 
-        extraction_request_prompt = \
-f&#34;&#34;&#34;
+        extraction_request_prompt = f&#34;&#34;&#34;
 ## Extraction objective
 
 {extraction_objective}
@@ -670,8 +774,10 @@ performed.
 &#34;&#34;&#34;
         messages.append({&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: extraction_request_prompt})
 
-        next_message = openai_utils.client().send_message(messages, temperature=0.0, frequency_penalty=0.0, presence_penalty=0.0)
-        
+        next_message = client().send_message(
+            messages, frequency_penalty=0.0, presence_penalty=0.0
+        )
+
         debug_msg = f&#34;Extraction raw result message: {next_message}&#34;
         logger.debug(debug_msg)
         if verbose:
@@ -681,7 +787,6 @@ performed.
             result = utils.extract_json(next_message[&#34;content&#34;])
         else:
             result = None
-        
         # cache the result
         self.agent_extraction[tinyperson.name] = result
 
@@ -713,13 +818,15 @@ Defaults to None.</dd>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def extract_results_from_agents(self,
-                                agents:List[TinyPerson],
-                                extraction_objective:str=None,
-                                situation:str =None,
-                                fields:list=None,
-                                fields_hints:dict=None,
-                                verbose:bool=None):
+<pre><code class="python">def extract_results_from_agents(
+    self,
+    agents: List[TinyPerson],
+    extraction_objective: str = None,
+    situation: str = None,
+    fields: list = None,
+    fields_hints: dict = None,
+    verbose: bool = None,
+):
     &#34;&#34;&#34;
     Extracts results from a list of TinyPerson instances.
 
@@ -727,18 +834,20 @@ Defaults to None.</dd>
         agents (List[TinyPerson]): The list of TinyPerson instances to extract results from.
         extraction_objective (str): The extraction objective.
         situation (str): The situation to consider.
-        fields (list, optional): The fields to extract. If None, the extractor will decide what names to use. 
+        fields (list, optional): The fields to extract. If None, the extractor will decide what names to use.
             Defaults to None.
         fields_hints (dict, optional): Hints for the fields to extract. Maps field names to strings with the hints. Defaults to None.
         verbose (bool, optional): Whether to print debug messages. Defaults to False.
 
-    
+
     &#34;&#34;&#34;
     results = []
     for agent in agents:
-        result = self.extract_results_from_agent(agent, extraction_objective, situation, fields, fields_hints, verbose)
+        result = self.extract_results_from_agent(
+            agent, extraction_objective, situation, fields, fields_hints, verbose
+        )
         results.append(result)
-    
+
     return results</code></pre>
 </details>
 </dd>
@@ -765,13 +874,15 @@ Defaults to None.</dd>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">    def extract_results_from_world(self, 
-                                   tinyworld:TinyWorld, 
-                                   extraction_objective:str=&#34;The main points that can be derived from the agents conversations and actions.&#34;, 
-                                   situation:str=&#34;&#34;, 
-                                   fields:list=None,
-                                   fields_hints:dict=None,
-                                   verbose:bool=None):
+<pre><code class="python">    def extract_results_from_world(
+        self,
+        tinyworld: TinyWorld,
+        extraction_objective: str = &#34;The main points that can be derived from the agents conversations and actions.&#34;,
+        situation: str = &#34;&#34;,
+        fields: list = None,
+        fields_hints: dict = None,
+        verbose: bool = None,
+    ):
         &#34;&#34;&#34;
         Extracts results from a TinyWorld instance.
 
@@ -779,13 +890,15 @@ Defaults to None.</dd>
             tinyworld (TinyWorld): The TinyWorld instance to extract results from.
             extraction_objective (str): The extraction objective.
             situation (str): The situation to consider.
-            fields (list, optional): The fields to extract. If None, the extractor will decide what names to use. 
+            fields (list, optional): The fields to extract. If None, the extractor will decide what names to use.
                 Defaults to None.
             verbose (bool, optional): Whether to print debug messages. Defaults to False.
         &#34;&#34;&#34;
 
-        extraction_objective, situation, fields, fields_hints, verbose = self._get_default_values_if_necessary(
-            extraction_objective, situation, fields, fields_hints, verbose
+        extraction_objective, situation, fields, fields_hints, verbose = (
+            self._get_default_values_if_necessary(
+                extraction_objective, situation, fields, fields_hints, verbose
+            )
         )
 
         messages = []
@@ -793,20 +906,31 @@ Defaults to None.</dd>
         rendering_configs = {}
         if fields is not None:
             rendering_configs[&#34;fields&#34;] = &#34;, &#34;.join(fields)
-        
+
         if fields_hints is not None:
             rendering_configs[&#34;fields_hints&#34;] = list(fields_hints.items())
-        
-        messages.append({&#34;role&#34;: &#34;system&#34;, 
-                         &#34;content&#34;: chevron.render(
-                             open(self._extraction_prompt_template_path).read(), 
-                             rendering_configs)})
+
+        messages.append(
+            {
+                &#34;role&#34;: &#34;system&#34;,
+                &#34;content&#34;: chevron.render(
+                    open(
+                        self._extraction_prompt_template_path,
+                        &#34;r&#34;,
+                        encoding=&#34;utf-8&#34;,
+                        errors=&#34;replace&#34;,
+                    ).read(),
+                    rendering_configs,
+                ),
+            }
+        )
 
         # TODO: either summarize first or break up into multiple tasks
-        interaction_history = tinyworld.pretty_current_interactions(max_content_length=None)
+        interaction_history = tinyworld.pretty_current_interactions(
+            max_content_length=None
+        )
 
-        extraction_request_prompt = \
-f&#34;&#34;&#34;
+        extraction_request_prompt = f&#34;&#34;&#34;
 ## Extraction objective
 
 {extraction_objective}
@@ -824,8 +948,8 @@ Each interaction history includes stimuli the corresponding agent received as we
 &#34;&#34;&#34;
         messages.append({&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: extraction_request_prompt})
 
-        next_message = openai_utils.client().send_message(messages, temperature=0.0)
-        
+        next_message = client().send_message(messages, temperature=1.0)
+
         debug_msg = f&#34;Extraction raw result message: {next_message}&#34;
         logger.debug(debug_msg)
         if verbose:
@@ -835,7 +959,6 @@ Each interaction history includes stimuli the corresponding agent received as we
             result = utils.extract_json(next_message[&#34;content&#34;])
         else:
             result = None
-        
         # cache the result
         self.world_extraction[tinyworld.name] = result
 
@@ -858,7 +981,7 @@ Each interaction history includes stimuli the corresponding agent received as we
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def save_as_json(self, filename:str, verbose:bool=False):
+<pre><code class="python">def save_as_json(self, filename: str, verbose: bool = False):
     &#34;&#34;&#34;
     Saves the last extraction results as JSON.
 
@@ -866,10 +989,16 @@ Each interaction history includes stimuli the corresponding agent received as we
         filename (str): The filename to save the JSON to.
         verbose (bool, optional): Whether to print debug messages. Defaults to False.
     &#34;&#34;&#34;
-    with open(filename, &#39;w&#39;) as f:
-        json.dump({&#34;agent_extractions&#34;: self.agent_extraction, 
-                   &#34;world_extraction&#34;: self.world_extraction}, f, indent=4)
-    
+    with open(filename, &#34;w&#34;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as f:
+        json.dump(
+            {
+                &#34;agent_extractions&#34;: self.agent_extraction,
+                &#34;world_extraction&#34;: self.world_extraction,
+            },
+            f,
+            indent=4,
+        )
+
     if verbose:
         print(f&#34;Saved extraction results to {filename}&#34;)</code></pre>
 </details>

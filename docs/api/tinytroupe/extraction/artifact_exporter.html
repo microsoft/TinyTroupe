@@ -96,7 +96,7 @@ class ArtifactExporter(JsonSerializableRegistry):
         Exports the specified artifact data to a text file.
         &#34;&#34;&#34;
 
-        with open(artifact_file_path, &#39;w&#39;, encoding=&#34;utf-8&#34;) as f:
+        with open(artifact_file_path, &#39;w&#39;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as f:
             if isinstance(artifact_data, dict):
                 content = artifact_data[&#39;content&#39;]
             else:
@@ -109,7 +109,7 @@ class ArtifactExporter(JsonSerializableRegistry):
         Exports the specified artifact data to a JSON file.
         &#34;&#34;&#34;
 
-        with open(artifact_file_path, &#39;w&#39;, encoding=&#34;utf-8&#34;) as f:
+        with open(artifact_file_path, &#39;w&#39;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as f:
             if isinstance(artifact_data, dict):
                 json.dump(artifact_data, f, indent=4)                
             else:
@@ -140,7 +140,7 @@ class ArtifactExporter(JsonSerializableRegistry):
 
         ## write this intermediary HTML to file
         #html_file_path = artifact_file_path.replace(&#34;.docx&#34;, &#34;.html&#34;)
-        #with open(html_file_path, &#39;w&#39;, encoding=&#34;utf-8&#34;) as f:
+        #with open(html_file_path, &#39;w&#39;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as f:
         #    f.write(html_content)
 
         # then, convert to DOCX
@@ -266,7 +266,7 @@ in order to create synthetic data files from simulations.</p></div>
         Exports the specified artifact data to a text file.
         &#34;&#34;&#34;
 
-        with open(artifact_file_path, &#39;w&#39;, encoding=&#34;utf-8&#34;) as f:
+        with open(artifact_file_path, &#39;w&#39;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as f:
             if isinstance(artifact_data, dict):
                 content = artifact_data[&#39;content&#39;]
             else:
@@ -279,7 +279,7 @@ in order to create synthetic data files from simulations.</p></div>
         Exports the specified artifact data to a JSON file.
         &#34;&#34;&#34;
 
-        with open(artifact_file_path, &#39;w&#39;, encoding=&#34;utf-8&#34;) as f:
+        with open(artifact_file_path, &#39;w&#39;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as f:
             if isinstance(artifact_data, dict):
                 json.dump(artifact_data, f, indent=4)                
             else:
@@ -310,7 +310,7 @@ in order to create synthetic data files from simulations.</p></div>
 
         ## write this intermediary HTML to file
         #html_file_path = artifact_file_path.replace(&#34;.docx&#34;, &#34;.html&#34;)
-        #with open(html_file_path, &#39;w&#39;, encoding=&#34;utf-8&#34;) as f:
+        #with open(html_file_path, &#39;w&#39;, encoding=&#34;utf-8&#34;, errors=&#34;replace&#34;) as f:
         #    f.write(html_content)
 
         # then, convert to DOCX

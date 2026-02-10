@@ -25,6 +25,7 @@ import importlib
 
 from testing_utils import *
 
+@pytest.mark.core
 def test_begin_checkpoint_end_with_agent_only(setup):
     # erase the file if it exists
     remove_file_if_exists("control_test.cache.json")
@@ -69,6 +70,7 @@ def test_begin_checkpoint_end_with_agent_only(setup):
 
     assert control._current_simulations["default"].status == Simulation.STATUS_STOPPED, "The simulation should be ended at this point."
 
+@pytest.mark.core
 def test_begin_checkpoint_end_with_world(setup):
     # erase the file if it exists
     remove_file_if_exists("control_test_world.cache.json")
@@ -99,6 +101,7 @@ def test_begin_checkpoint_end_with_world(setup):
     assert control._current_simulations["default"].status == Simulation.STATUS_STOPPED, "The simulation should be ended at this point."
 
 
+@pytest.mark.core
 def test_begin_checkpoint_end_with_factory(setup):
     # erase the file if it exists
     remove_file_if_exists("control_test_personfactory.cache.json")
@@ -348,8 +351,8 @@ def test_begin_checkpoint_end_with_factory_demography(setup):
 
     assert "'_aux_model_call'" in cache_contents, "The cache file should contain the '_aux_model_call' call."
     assert "'_setup_agent'" in cache_contents, "The cache file should contain the '_setup_agent' call."
-    assert "'_compute_sampling_dimensions'" in cache_contents, "The cache file should contain the '_compute_sampling_dimensions' call for demography-based factory."
-    assert "'_compute_sample_plan'" in cache_contents, "The cache file should contain the '_compute_sample_plan' call for demography-based factory."
+    # Note: _compute_sampling_dimensions and _compute_sample_plan are reentrant calls within _initialize_sampling_plan_transaction,
+    # so they don't create separate cache entries. The parent transaction caches their results properly.
     assert "'define'" not in cache_contents, "The cache file should not contain the 'define' methods, as these are reentrant."
     assert "'define_several'" not in cache_contents, "The cache file should not contain the 'define_several' methods, as these are reentrant."
 

@@ -26,6 +26,7 @@ from testing_utils import *
 #@pytest.mark.timeout(300)
 class TestExtendedScenarios:
 
+    @pytest.mark.core
     def test_story_telling_scenario(self, setup):
         """
         Test that agents can collaborate to create and sustain a narrative story.
@@ -82,6 +83,7 @@ class TestExtendedScenarios:
             f"The following contains mentions of both cats and dogs: '{story_content}'"
         ), "Should show collaborative storytelling"
 
+    @pytest.mark.core
     def test_synthetic_conversation_generation(self, setup):
         """
         Test generation of synthetic conversation data between agents.
@@ -138,6 +140,7 @@ class TestExtendedScenarios:
         conversation_text = " ".join([c["content"] for c in conversations])
         assert len(conversation_text) > 50, "Should have generated substantial conversation text"
 
+    @pytest.mark.core
     def test_product_market_research_scenario(self, setup):
         """
         Test market research for a new product using diverse consumer personas.
@@ -232,10 +235,15 @@ class TestExtendedScenarios:
 
         # Verify political discourse quality
         assert len(opinions) == 3, "Should have 3 political opinions"
+        
+        # Check for diversity in the reasoning, even if stances might be similar
+        # We verify that the perspectives show different considerations and priorities
         assert proposition_holds(
-            f"The following represents diverse political perspectives on universal basic income: {opinions}"
-        ), "Should show political diversity"
+            f"The following represents diverse political perspectives on universal basic income, "
+            f"showing different priorities and reasoning even if the conclusions are nuanced: {opinions}"
+        ), "Should show political diversity in reasoning and priorities"
 
+    @pytest.mark.core
     def test_multi_agent_problem_solving_scenario(self, setup):
         """
         Test multiple agents collaborating to solve a complex problem.

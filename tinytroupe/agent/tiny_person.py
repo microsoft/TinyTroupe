@@ -788,11 +788,15 @@ class TinyPerson(JsonSerializableRegistry):
             # Enforce a reasonable cap per turn
             if len(actions) > 0 and len(actions) > TinyPerson.MAX_ACTIONS_BEFORE_DONE:
                 actions = actions[: TinyPerson.MAX_ACTIONS_BEFORE_DONE]
-                if actions[-1].get("type") != "DONE":
+                if actions[-1] is not None and isinstance(actions[-1], dict) and actions[-1].get("type") != "DONE":
                     actions[-1] = {"type": "DONE", "content": "", "target": ""}
 
             # Commit each action in order
             for action in actions:
+                # Skip None or non-dict actions
+                if action is None or not isinstance(action, dict):
+                    logger.warning(f"[{self.name}] Skipping invalid action: {action}")
+                    continue
                 _commit_action(action, role, content)
                 if action.get("type") == "DONE":
                     break
