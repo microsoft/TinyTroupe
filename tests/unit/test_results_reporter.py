@@ -73,7 +73,7 @@ def test_report_from_interactions(setup):
     # Create some interactions
     oscar.listen("Tell me about your latest architectural project.")
     oscar.act()
-    oscar.see("A beautiful modern building with glass facades.")
+    oscar.see(description="A beautiful modern building with glass facades.")
     oscar.act()
     
     lisa.listen("What insights have you discovered from the data?")

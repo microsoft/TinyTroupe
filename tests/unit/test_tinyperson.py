@@ -91,7 +91,7 @@ def test_socialize(setup):
 def test_see(setup):
     # Test that seeing a visual stimulus works as expected
     for agent in [create_oscar_the_architect(), create_lisa_the_data_scientist()]:
-        agent.see("A beautiful sunset over the ocean.")
+        agent.see(description="A beautiful sunset over the ocean.")
         actions = agent.act(return_actions=True)
         assert len(actions) >= 1, f"{agent.name} should have at least one action to perform."
         assert contains_action_type(actions, "THINK"), f"{agent.name} should have at least one THINK action to perform, since they saw something interesting."

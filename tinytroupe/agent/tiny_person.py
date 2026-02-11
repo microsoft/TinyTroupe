@@ -1,4 +1,5 @@
 import copy
+import hashlib
 import json
 import os
 import textwrap  # to dedent strings
@@ -43,6 +44,13 @@ class TinyPerson(JsonSerializableRegistry):
         "max_episode_length", 15
     )  # The maximum number of messages in an episode before it is considered valid.
 
+    # Maximum number of recent image-bearing stimuli to re-inject as user
+    # messages each turn, enabling agents to re-examine previously seen images.
+    # The most recent stimuli are kept (recency bias — Murdock, 1962).
+    MAX_IMAGE_STIMULI_TO_RECALL = config_manager.get(
+        "max_image_stimuli_to_recall", 3
+    )
+
     PP_TEXT_WIDTH = 100
 
     serializable_attributes = [
@@ -52,6 +60,8 @@ class TinyPerson(JsonSerializableRegistry):
         "_current_episode_event_count",
         "episodic_memory",
         "semantic_memory",
+        "_image_registry",
+        "_image_id_counter",
     ]
     serializable_attributes_renaming = {
         "_mental_faculties": "mental_faculties",
@@ -241,6 +251,18 @@ class TinyPerson(JsonSerializableRegistry):
         if not hasattr(self, "stimuli_count"):
             self.stimuli_count = 0
 
+        # Image registry for the vision modality: maps image IDs (e.g. "img_1") to
+        # their original references (file paths or URLs).  Persisted across serialization.
+        if not hasattr(self, "_image_registry"):
+            self._image_registry: dict[str, str] = {}
+        if not hasattr(self, "_image_id_counter"):
+            self._image_id_counter: int = 0
+
+        # Class-level cache for LLM-generated image descriptions, keyed by content hash.
+        # Shared across all agents to avoid redundant vision API calls for the same image.
+        if not hasattr(TinyPerson, "_image_description_cache"):
+            TinyPerson._image_description_cache: dict[str, str] = {}
+
         self._prompt_template_path = os.path.join(
             os.path.dirname(__file__), "prompts/tiny_person.v2.mustache"
         )
@@ -356,8 +378,11 @@ class TinyPerson(JsonSerializableRegistry):
                         cnt = utils.break_text_at_length(
                             s.get("content", ""), max_length=max_len
                         )
+                        # Note image IDs without re-injecting actual image data
+                        image_ids = s.get("images")
+                        img_note = f" [images: {', '.join(image_ids)}]" if image_ids else ""
                         lines.append(
-                            f"- [STIMULUS:{typ}] from {src}{timestamp_str}: {cnt}"
+                            f"- [STIMULUS:{typ}] from {src}{timestamp_str}: {cnt}{img_note}"
                         )
                 elif role == "assistant":
                     action = msg.get("content", {}).get("action", {}) or {}
@@ -752,25 +777,83 @@ class TinyPerson(JsonSerializableRegistry):
             # ensure we have the latest prompt
             self.reset_prompt()
 
-            # Provide latest perceived stimuli explicitly in a user JSON message
-            def _latest_stimuli_payload():
-                try:
-                    # Walk recent episodic memory from newest to oldest to find the last stimulus block
-                    recent = self.episodic_memory.retrieve_recent()
-                    for msg in reversed(recent):
-                        if msg.get("role") == "user" and msg.get("type") == "stimulus":
-                            # Content already has {"stimuli": [...]} as stored by _observe
-                            return msg.get("content")
-                except Exception:
-                    return None
-                return None
+            # ----------------------------------------------------------------
+            # Build the list of stimulus payloads to send as user messages.
+            #
+            # Cognitive motivation (recency bias — Murdock, 1962):
+            #   The most recent image-bearing stimuli are re-injected so that
+            #   the agent can re-examine previously seen images even after
+            #   intervening non-visual stimuli.  Only the *most recent*
+            #   ``MAX_IMAGE_STIMULI_TO_RECALL`` image-bearing stimuli are
+            #   kept, reflecting the primacy of recent experience in
+            #   short-term visual memory.
+            #
+            # The returned list is in chronological order so that the LLM
+            # sees older context first and the newest stimulus last.
+            # ----------------------------------------------------------------
+            def _stimuli_payloads_for_current_turn():
+                """Return a chronologically ordered list of stimulus payloads.
 
-            stimuli_payload = _latest_stimuli_payload()
-            if stimuli_payload:
+                The list always ends with the latest stimulus (of any type).
+                Before it, up to ``MAX_IMAGE_STIMULI_TO_RECALL`` recent
+                image-bearing stimuli are included (unless the latest is
+                already one of them — no duplicates).
+                """
+                try:
+                    recent = self.episodic_memory.retrieve_recent()
+                except Exception:
+                    return []
+
+                if not recent:
+                    return []
+
+                # --- locate the latest stimulus ---
+                latest_payload = None
+                latest_idx = None
+                for i, msg in enumerate(reversed(recent)):
+                    if msg.get("role") == "user" and msg.get("type") == "stimulus":
+                        latest_payload = msg.get("content")
+                        latest_idx = len(recent) - 1 - i
+                        break
+
+                if latest_payload is None:
+                    return []
+
+                # --- collect image-bearing stimuli (chronological order) ---
+                max_recall = TinyPerson.MAX_IMAGE_STIMULI_TO_RECALL
+                image_payloads = []   # list of (idx, payload)
+                for idx, msg in enumerate(recent):
+                    if msg.get("role") != "user" or msg.get("type") != "stimulus":
+                        continue
+                    content = msg.get("content")
+                    if not isinstance(content, dict):
+                        continue
+                    # Check if any stimulus in this message carries images
+                    for stim in content.get("stimuli", []):
+                        if stim.get("images"):
+                            image_payloads.append((idx, content))
+                            break
+
+                # Keep only the most recent N (recency bias)
+                if len(image_payloads) > max_recall:
+                    image_payloads = image_payloads[-max_recall:]
+
+                # --- merge into chronological list, avoiding duplicates ---
+                payloads = []
+                seen_indices = set()
+                for idx, payload in image_payloads:
+                    if idx != latest_idx and idx not in seen_indices:
+                        payloads.append(payload)
+                        seen_indices.add(idx)
+                # Latest always comes last
+                payloads.append(latest_payload)
+                return payloads
+
+            for payload in _stimuli_payloads_for_current_turn():
                 self.current_messages.append(
                     {
                         "role": "user",
-                        "content": stimuli_payload,  # dict will be JSON-serialized by the generator
+                        "content": payload,  # dict will be JSON-serialized by the generator
                     }
                 )
 
@@ -882,25 +965,186 @@ class TinyPerson(JsonSerializableRegistry):
     @config_manager.config_defaults(max_content_length="max_content_display_length")
     def see(
         self,
-        visual_description,
+        images=None,
+        description: str = None,
         source: AgentOrWorld = None,
         max_content_length=None,
     ):
         """
-        Perceives a visual stimulus through a description and updates its internal cognitive state.
+        Perceives a visual stimulus — optionally including actual images — and updates
+        the agent's internal cognitive state.
+
+        This is the sole entry point for visual stimuli.  When ``images`` are provided,
+        the agent will:
+
+        1. Register each image in its internal ``_image_registry`` (assigning short IDs
+           such as ``img_1``, ``img_2``, …).
+        2. Generate a text description of the images via the vision model (cached by
+           content hash to avoid redundant API calls).
+        3. Combine the user-supplied ``description`` and the LLM-generated description
+           into the stimulus ``content``.
+        4. Include ``image_description`` and ``image_refs`` (mapping IDs to file
+           paths / URLs) in the stimulus dict so that they are persisted in
+           episodic memory and available for later consolidation into semantic
+           memory.
+
+        When no ``images`` are provided the method behaves exactly like the previous
+        text-only ``see()``.
 
         Args:
-            visual_description (str): The description of the visual stimulus.
-            source (AgentOrWorld, optional): The source of the visual stimulus. Defaults to None.
+            images: ``None``, a single image reference (file path / URL / data URI),
+                or a list of image references.
+            description (str, optional): A textual description of what the agent is looking at.
+            source (AgentOrWorld, optional): The source of the visual stimulus.
+            max_content_length (int, optional): Maximum content length for display.
+
+        Returns:
+            TinyPerson: ``self``, to allow method chaining.
         """
+        from tinytroupe.utils.media import normalize_image_refs
+
+        image_refs = normalize_image_refs(images)
+
+        # ----- text-only path (backward-compatible) -----
+        if not image_refs:
+            return self._observe(
+                stimulus={
+                    "type": "VISUAL",
+                    "content": description or "",
+                    "source": name_or_empty(source),
+                },
+                max_content_length=max_content_length,
+            )
+
+        # ----- vision path -----
+        image_ids = self._register_images(image_refs)
+        llm_description = self._describe_images(image_refs, user_context=description)
+
+        # Combine user description + LLM description
+        parts = []
+        if description:
+            parts.append(description)
+        if llm_description:
+            parts.append(llm_description)
+        content = "\n\n".join(parts) if parts else ""
+
+        # NOTE: image descriptions are NOT stored eagerly in semantic memory.
+        # Instead, they are carried inside the stimulus dict and extracted during
+        # consolidation (see ``_extract_and_store_image_descriptions_from_episode``).
+        # This keeps the semantic-memory formation path uniform across all
+        # stimulus types — consistent with the consolidation pattern used by
+        # every other memory kind.
+
+        # Include image IDs in the stimulus so prompts can reference them
+        ids_note = ", ".join(f"[{iid}]" for iid in image_ids)
+        content_with_ids = f"{content}\n\nImage reference IDs: {ids_note}" if content else f"Image reference IDs: {ids_note}"
+
+        # Build a mapping from short IDs to actual file paths / URLs so that
+        # image references are fully preserved in episodic memory and can be
+        # used for later re-examination or consolidation.
+        image_refs_map = {iid: ref for iid, ref in zip(image_ids, image_refs)}
+
         return self._observe(
             stimulus={
                 "type": "VISUAL",
-                "content": visual_description,
+                "content": content_with_ids,
                 "source": name_or_empty(source),
+                "images": image_ids,
+                "image_description": llm_description or "",
+                "image_refs": image_refs_map,
             },
             max_content_length=max_content_length,
         )
+
+    # ------------------------------------------------------------------
+    # Image registry helpers
+    # ------------------------------------------------------------------
+
+    def _register_images(self, image_refs: list[str]) -> list[str]:
+        """
+        Assign short IDs to a list of image references and store them in the
+        agent's ``_image_registry``.
+
+        Args:
+            image_refs: A list of image file paths, URLs, or data URIs.
+
+        Returns:
+            A list of the assigned image IDs (e.g. ``["img_1", "img_2"]``).
+        """
+        ids: list[str] = []
+        for ref in image_refs:
+            self._image_id_counter += 1
+            img_id = f"img_{self._image_id_counter}"
+            self._image_registry[img_id] = ref
+            ids.append(img_id)
+        return ids
+
+    def _describe_images(
+        self,
+        image_refs: list[str],
+        user_context: str = None,
+    ) -> str:
+        """
+        Generate a concise text description of one or more images using the vision
+        model.  Results are cached by image content hash to avoid redundant API calls.
+
+        Args:
+            image_refs: A list of image file paths, URLs, or data URIs.
+            user_context: Optional user-supplied context to help the model.
+
+        Returns:
+            A string containing the LLM-generated description.
+        """
+        from tinytroupe.utils.media import build_multimodal_content_array, hash_image
+        from tinytroupe.clients import client
+
+        # Build a combined cache key from all image hashes
+        hashes = sorted(hash_image(ref) for ref in image_refs)
+        cache_key = hashlib.sha256("|".join(hashes).encode()).hexdigest()
+
+        if cache_key in TinyPerson._image_description_cache:
+            logger.debug(f"[{self.name}] Image description cache hit for {cache_key[:12]}…")
+            return TinyPerson._image_description_cache[cache_key]
+
+        # Build the vision prompt
+        prompt_text = (
+            "Describe the image(s) below concisely and factually in a few sentences. "
+            "Focus on the most salient visual content."
+        )
+        if user_context:
+            prompt_text += f"\n\nAdditional context from the viewer: {user_context}"
+
+        vision_detail = config_manager.get("vision_detail", "auto")
+        content_array = build_multimodal_content_array(
+            text=prompt_text,
+            image_refs=image_refs,
+            detail=vision_detail,
+        )
+
+        vision_model = config_manager.get_with_fallback("vision_model", "model")
+
+        messages = [
+            {"role": "user", "content": content_array},
+        ]
+
+        logger.debug(f"[{self.name}] Requesting image description via model {vision_model}")
+        response = client().send_message(
+            messages,
+            model=vision_model,
+            dedent_messages=False,  # content is a list, not a string
+        )
+
+        description_text = ""
+        if response and isinstance(response, dict):
+            description_text = response.get("content", "")
+        elif response and isinstance(response, str):
+            description_text = response
+
+        # Cache the result
+        TinyPerson._image_description_cache[cache_key] = description_text
+        logger.debug(f"[{self.name}] Cached image description ({cache_key[:12]}…): {description_text[:100]}…")
+
+        return description_text
 
     @config_manager.config_defaults(max_content_length="max_content_display_length")
     def think(self, thought, max_content_length=None):
@@ -1005,7 +1249,8 @@ class TinyPerson(JsonSerializableRegistry):
     @config_manager.config_defaults(max_content_length="max_content_display_length")
     def see_and_act(
         self,
-        visual_description,
+        images=None,
+        description=None,
         return_actions=False,
         max_content_length=None,
     ):
@@ -1013,7 +1258,7 @@ class TinyPerson(JsonSerializableRegistry):
         Convenience method that combines the `see` and `act` methods.
         """
 
-        self.see(visual_description, max_content_length=max_content_length)
+        self.see(images=images, description=description, max_content_length=max_content_length)
         return self.act(
             return_actions=return_actions, max_content_length=max_content_length
         )
@@ -1235,6 +1480,16 @@ class TinyPerson(JsonSerializableRegistry):
             # Consolidate latest episodic memories into semantic memory
             if config_manager.get("enable_memory_consolidation"):
 
+                # Extract and store any image descriptions found in the episode
+                # as ``image_description`` engrams in semantic memory. This is
+                # the deferred counterpart of what used to be an eager store in
+                # see(); doing it here keeps the semantic-memory formation path
+                # uniform across all stimulus types.
+                episode_for_images = self.episodic_memory.get_current_episode(
+                    item_types=["stimulus"],
+                )
+                self._extract_and_store_image_descriptions_from_episode(episode_for_images)
+
                 episodic_consolidator = EpisodicConsolidator()
                 episode = self.episodic_memory.get_current_episode(
                     item_types=["action", "stimulus"],
@@ -1272,6 +1527,49 @@ class TinyPerson(JsonSerializableRegistry):
             )
 
             # TODO reflections, optimizations, etc.
+
+    def _extract_and_store_image_descriptions_from_episode(self, episode: list) -> None:
+        """
+        Scan an episode for stimulus messages that carry an ``image_description``
+        field and store each as an ``image_description`` engram in semantic memory.
+
+        This is the deferred path for image semantic memory formation: ``see()``
+        attaches the LLM-generated description to the stimulus dict, and this
+        method harvests those descriptions during consolidation so that the
+        semantic-memory formation pipeline remains uniform across all stimulus
+        types (cf. levels-of-processing framework — Craik & Lockhart, 1972).
+
+        If ``image_refs`` are present they are included in the engram content so
+        that the original file paths / URLs remain discoverable.
+
+        Args:
+            episode: A list of episodic memory items (as returned by
+                ``episodic_memory.get_current_episode``).
+        """
+        for mem in episode:
+            content = mem.get("content")
+            if not isinstance(content, dict):
+                continue
+            for stim in content.get("stimuli", []):
+                desc = stim.get("image_description")
+                if not desc:
+                    continue
+
+                # Build a combined content string that includes the image refs
+                refs = stim.get("image_refs", {})
+                if refs:
+                    refs_note = ", ".join(
+                        f"{iid}: {path}" for iid, path in refs.items()
+                    )
+                    combined = f"{desc}\n\nImage sources: {refs_note}"
+                else:
+                    combined = desc
+
+                self.semantic_memory.store({
+                    "content": combined,
+                    "type": "image_description",
+                    "simulation_timestamp": mem.get("simulation_timestamp", self.iso_datetime()),
+                })
 
     def optimize_memory(self):
         pass  # TODO
@@ -1744,6 +2042,12 @@ class TinyPerson(JsonSerializableRegistry):
                     stimus["content"], max_length=max_content_length
                 )
 
+                # Append image ID note if present
+                image_ids = stimus.get("images")
+                if image_ids:
+                    ids_str = ", ".join(image_ids)
+                    msg_simplified_content += f"\n[+ {len(image_ids)} image(s): {ids_str}]"
+
                 indent = " " * len(msg_simplified_actor) + "      > "
                 msg_simplified_content = textwrap.fill(
                     msg_simplified_content,
@@ -1784,6 +2088,12 @@ class TinyPerson(JsonSerializableRegistry):
             msg_simplified_content = utils.break_text_at_length(
                 content["action"].get("content", ""), max_length=max_content_length
             )
+
+            # Append image ID note for SHOW actions
+            action_images = content["action"].get("images")
+            if action_images:
+                ids_str = ", ".join(action_images)
+                msg_simplified_content += f"\n[images: {ids_str}]"
 
             indent = " " * len(msg_simplified_actor) + "      > "
             msg_simplified_content = textwrap.fill(

@@ -212,9 +212,10 @@ class OpenAIClient:
         self._setup_from_config()
 
         # dedent the messages (field 'content' only) if needed (using textwrap)
+        # Skip messages whose content is a list (multimodal content arrays).
         if dedent_messages:
             for message in current_messages:
-                if "content" in message:
+                if "content" in message and isinstance(message["content"], str):
                     message["content"] = utils.dedent(message["content"])
 
         # We need to adapt the parameters to the API type, so we create a dictionary with them first
@@ -547,7 +548,16 @@ class OpenAIClient:
             for message in messages:
                 num_tokens += tokens_per_message
                 for key, value in message.items():
-                    num_tokens += len(encoding.encode(value))
+                    if isinstance(value, list):
+                        # Multimodal content array: count only text parts
+                        for part in value:
+                            if isinstance(part, dict) and part.get("type") == "text":
+                                num_tokens += len(encoding.encode(part.get("text", "")))
+                            # Image parts contribute tokens too, but their exact count
+                            # depends on resolution and detail; we skip them here to avoid
+                            # over-counting.  OpenAI server-side billing is authoritative.
+                    elif isinstance(value, str):
+                        num_tokens += len(encoding.encode(value))
                     if key == "name":
                         num_tokens += tokens_per_name
             num_tokens += 3  # every reply is primed with <|start|>assistant<|message|>

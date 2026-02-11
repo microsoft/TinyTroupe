@@ -99,6 +99,13 @@ class ConfigManager:
             "REASONING_MODEL", "o3-mini"
         )
 
+        # Vision model: used for image understanding. Falls back to MODEL if not set.
+        _vision_model_raw = config["OpenAI"].get("VISION_MODEL", None)
+        self._config["vision_model"] = _vision_model_raw if _vision_model_raw else None
+
+        # Vision detail level: auto, low, or high (controls token cost for images)
+        self._config["vision_detail"] = config["OpenAI"].get("VISION_DETAIL", "auto")
+
         self._config["max_completion_tokens"] = int(
             config["OpenAI"].get("MAX_COMPLETION_TOKENS", "1024")
         )
@@ -312,6 +319,23 @@ class ConfigManager:
             key = key.lower()
 
         return self._config.get(key, default)
+
+    def get_with_fallback(self, key, fallback_key, default=None):
+        """
+        Get a configuration value, falling back to another key if the primary key is absent or None.
+
+        Args:
+            key (str): The primary configuration key to try first.
+            fallback_key (str): The fallback configuration key if the primary is not set.
+            default: The default value if neither key is found.
+
+        Returns:
+            The configuration value.
+        """
+        value = self.get(key)
+        if value is not None:
+            return value
+        return self.get(fallback_key, default)
 
     def reset(self):
         """Reset all configuration values to their original values from the config file."""

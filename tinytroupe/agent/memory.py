@@ -398,6 +398,12 @@ class EpisodicMemory(TinyMemory):
 
         # compute fixed prefix
         fixed_prefix = memories[: self.fixed_prefix_length] + omisssion_info
+        # TODO: to be more psychologically plausible, instead of a fixed prefix, we should carefully 
+        #       select which episodic memories from the agent history are recalled. The older the 
+        #       episodes, the less of the memories; the more recent the episodes, the more of the 
+        #       memories; but also, some episodes might be more relevant to be recalled than others, 
+        #       even if they are old. So we should consider relevance and recency to determine which 
+        #       memories to recall.
 
         # how many lookback values remain?
         remaining_lookback = min(
@@ -558,6 +564,12 @@ class SemanticMemory(TinyMemory):
                 engram["content"] = (
                     f"# Reflection\n"
                     + f"I have reflected on the following memory at date and time {value['simulation_timestamp']}:\n\n"
+                    + f" {value['content']}"
+                )
+            elif value["type"] == "image_description":
+                engram["content"] = (
+                    f"# Image Description\n"
+                    + f"I have seen the following image(s) at date and time {value['simulation_timestamp']}:\n\n"
                     + f" {value['content']}"
                 )
             else:
@@ -740,6 +752,10 @@ class EpisodicConsolidator(MemoryProcessor):
             f"STARTING MEMORY CONSOLIDATION: {len(memories)} memories to consolidate"
         )
 
+        # Strip image references from memories before consolidation — image IDs
+        # are session-local and carry no meaning for the consolidation LLM.
+        memories = self._strip_image_references(memories)
+
         enriched_context = (
             f"CURRENT COGNITIVE CONTEXT OF THE AGENT: {context}"
             if context
@@ -809,6 +825,33 @@ class EpisodicConsolidator(MemoryProcessor):
                 f"Consolidated {len(memories)} memories into {len(consolidated_results)} consolidated memories across multiple batches"
             )
             return {"consolidation": consolidated_results}
+
+    @staticmethod
+    def _strip_image_references(memories: list) -> list:
+        """
+        Return a deep-enough copy of *memories* with any ``images``,
+        ``image_description``, and ``image_refs`` keys removed from
+        stimulus/action content dicts.  These are session-local references
+        (or already harvested during consolidation) that would only add noise
+        to the consolidation prompt.
+        """
+        import copy
+        cleaned = []
+        for mem in memories:
+            mem = copy.deepcopy(mem)
+            content = mem.get("content")
+            if isinstance(content, dict):
+                # Strip from stimuli list
+                for s in content.get("stimuli", []):
+                    s.pop("images", None)
+                    s.pop("image_description", None)
+                    s.pop("image_refs", None)
+                # Strip from action dict
+                action = content.get("action")
+                if isinstance(action, dict):
+                    action.pop("images", None)
+            cleaned.append(mem)
+        return cleaned
 
     @utils.llm(enable_json_output_format=True, enable_justification_step=False)
     def _consolidate(

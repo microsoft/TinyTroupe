@@ -178,7 +178,7 @@ def test_action_generation_and_flow(setup):
     ), f"{agent.name} should talk when asked to tell something"
 
     actions_think = agent.see_and_act(
-        "A complex architectural blueprint", return_actions=True
+        description="A complex architectural blueprint", return_actions=True
     )
     assert contains_action_type(
         actions_think, "THINK"

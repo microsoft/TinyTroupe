@@ -24,7 +24,7 @@ logger = logging.getLogger("tinytroupe")
 ###########################################################################
 # Types and constants
 ###########################################################################
-from typing import Any, List, TypeVar, Union
+from typing import Any, List, Optional, TypeVar, Union
 
 Self = TypeVar("Self", bound="TinyPerson")
 AgentOrWorld = Union[Self, Any]
@@ -37,6 +37,7 @@ class Action(BaseModel):
     type: str
     content: str
     target: str
+    images: Optional[List[str]] = None  # image IDs for SHOW actions (e.g., ["img_1", "img_2"])
 
 
 class CognitiveState(BaseModel):

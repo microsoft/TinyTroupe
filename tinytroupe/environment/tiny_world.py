@@ -533,6 +533,8 @@ class TinyWorld:
                 self._handle_reach_out(source, content, target)
             elif action_type == "TALK":
                 self._handle_talk(source, content, target)
+            elif action_type == "SHOW":
+                self._handle_show(source, action, target)
 
     @transactional()
     def _handle_reach_out(self, source_agent: TinyPerson, content: str, target: str):
@@ -587,6 +589,46 @@ class TinyWorld:
             target_agent.listen(content, source=source_agent)
         elif self.broadcast_if_no_target:
             self.broadcast(content, source=source_agent)
+
+    @transactional()
+    def _handle_show(self, source_agent: TinyPerson, action: dict, target: str):
+        """
+        Handles the SHOW action by forwarding images from the source agent to the target.
+
+        The source agent's image registry is consulted to resolve image IDs to actual
+        file paths / URLs, which are then delivered to the target agent via ``see()``.
+
+        Args:
+            source_agent (TinyPerson): The agent that issued the SHOW action.
+            action (dict): The full action dict, including the optional ``images`` list of image IDs.
+            target (str): The target agent's name.
+        """
+        target_agent = self.get_agent_by_name(target)
+        image_ids = action.get("images") or []
+        content = action.get("content", "")
+
+        # Resolve image IDs to actual paths via the source agent's registry
+        resolved_images = []
+        for img_id in image_ids:
+            path = source_agent._image_registry.get(img_id)
+            if path is not None:
+                resolved_images.append(path)
+            else:
+                logger.warning(
+                    f"[{self.name}] SHOW action: image ID '{img_id}' not found in {source_agent.name}'s registry."
+                )
+
+        logger.debug(
+            f"[{self.name}] Delivering SHOW from {name_or_empty(source_agent)} to {name_or_empty(target_agent)}: "
+            f"{len(resolved_images)} image(s)."
+        )
+
+        if target_agent is not None:
+            target_agent.see(images=resolved_images, description=content, source=source_agent)
+        elif self.broadcast_if_no_target:
+            for agent in self.agents:
+                if agent != source_agent:
+                    agent.see(images=resolved_images, description=content, source=source_agent)
 
     #######################################################################
     # Interaction methods
