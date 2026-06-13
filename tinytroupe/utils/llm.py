@@ -956,7 +956,7 @@ class LLMChat:
     def _request_list_of_dict_llm_message(self):
         return {
             "role": "user",
-            "content": "The `value` field you generate **must** be a list of dictionaries, specified as a JSON structure embedded in a string. For example, `[\{...\}, \{...\}, ...]`. This is critical for later processing.",
+            "content": "The `value` field you generate **must** be a list of dictionaries, specified as a JSON structure embedded in a string. For example, `[\\{...\\}, \\{...\\}, ...]`. This is critical for later processing.",
         }
 
     def _coerce_to_list(self, llm_output: str):
