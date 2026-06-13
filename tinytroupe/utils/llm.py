@@ -1132,13 +1132,20 @@ def extract_json(text: str) -> dict:
 
         filtered_text = ""
 
-        # remove any text before the first opening curly or square braces, using regex. Leave the braces.
-        filtered_text = re.sub(r"^.*?({|\[)", r"\1", text, flags=re.DOTALL)
+        # Strategy 1: Try to extract JSON from markdown code blocks first
+        json_block_match = re.search(r'```(?:json)?\s*(\{.*?\}|\[.*?\])\s*```', text, re.DOTALL)
+        if json_block_match:
+            filtered_text = json_block_match.group(1)
+            logger.debug("Extracted JSON from markdown code block")
+        else:
+            # Strategy 2: Fallback to original extraction method
+            # remove any text before the first opening curly or square braces, using regex. Leave the braces.
+            filtered_text = re.sub(r"^.*?({|\[)", r"\1", text, flags=re.DOTALL)
 
-        # remove any trailing text after the LAST closing curly or square braces, using regex. Leave the braces.
-        filtered_text = re.sub(
-            r"(}|\])(?!.*(\]|\})).*$", r"\1", filtered_text, flags=re.DOTALL
-        )
+            # remove any trailing text after the LAST closing curly or square braces, using regex. Leave the braces.
+            filtered_text = re.sub(
+                r"(}|\])(?!.*(\]|\})).*$", r"\1", filtered_text, flags=re.DOTALL
+            )
 
         # remove invalid escape sequences, which show up sometimes
         # Handle common problematic escape sequences more comprehensively
