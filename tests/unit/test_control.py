@@ -43,15 +43,14 @@ def test_begin_checkpoint_end_with_agent_only(setup):
 
     exporter = ArtifactExporter(base_output_folder="./synthetic_data_exports_3/")
     enricher = TinyEnricher()
-    tooluse_faculty = TinyToolUse(tools=[TinyWordProcessor(exporter=exporter, enricher=enricher)])
 
     agent_1 = create_oscar_the_architect()
-    agent_1.add_mental_faculties([tooluse_faculty])
+    agent_1.add_mental_faculties([TinyToolUse(tools=[TinyWordProcessor(owner=agent_1, exporter=exporter, enricher=enricher)])])
     agent_1.define("age", 19)
     agent_1.define("nationality", "Brazilian")
 
     agent_2 = create_lisa_the_data_scientist()
-    agent_2.add_mental_faculties([tooluse_faculty])
+    agent_2.add_mental_faculties([TinyToolUse(tools=[TinyWordProcessor(owner=agent_2, exporter=exporter, enricher=enricher)])])
     agent_2.define("age", 80)
     agent_2.define("nationality", "Argentinian")
 

@@ -15,9 +15,11 @@ from testing_utils import *
 
 class MockTool(TinyTool):
     """A mock tool implementation for testing."""
-    
+
+    action_namespace = "MOCK"
+
     def __init__(self, name="MockTool", description="A test tool", **kwargs):
-        super().__init__(name, description, **kwargs)
+        super().__init__(name=name, description=description, **kwargs)
         self.actions_processed = []
     
     def _process_action(self, agent, action: dict) -> bool:
@@ -220,7 +222,7 @@ def test_tiny_tool_abstract_methods(setup):
     class IncompleteTool(TinyTool):
         pass
     
-    incomplete_tool = IncompleteTool("incomplete", "missing methods")
+    incomplete_tool = IncompleteTool(name="incomplete", description="missing methods")
     agent = create_oscar_the_architect()
     
     # Should raise NotImplementedError for unimplemented methods

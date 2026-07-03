@@ -1175,6 +1175,54 @@ class TinyPerson(JsonSerializableRegistry):
             max_content_length=max_content_length,
         )
 
+    @config_manager.config_defaults(max_content_length="max_content_display_length")
+    def notify(self, notification: str, tinytool: str = None, source: AgentOrWorld = None,
+               max_content_length=None, communication_display: bool = None):
+        """
+        Receives a NOTIFICATION stimulus: an unsolicited (push) alert produced by a tool, such
+        as "you have a new email from Oscar about the design review".
+
+        Args:
+            notification (str): The human-readable notification text.
+            tinytool (str, optional): The ``tinytool:`` URI of the tool that produced the
+                notification (e.g. the recipient's email client).
+            source (AgentOrWorld, optional): The originator of the notification (e.g. the world).
+        """
+        return self._observe(
+            stimulus={
+                "type": "NOTIFICATION",
+                "content": notification,
+                "tinytool": tinytool,
+                "source": name_or_empty(source),
+            },
+            max_content_length=max_content_length,
+            communication_display=communication_display,
+        )
+
+    @config_manager.config_defaults(max_content_length="max_content_display_length")
+    def receive_inspection(self, inspection, tinytool: str = None, source: AgentOrWorld = None,
+                           max_content_length=None, communication_display: bool = None):
+        """
+        Receives an INSPECTION stimulus: the result of the agent *deliberately* looking at a
+        tool (a solicited/pull perception), e.g. the inbox preview returned by a CHECK_INBOX
+        action, or a calendar view returned by CHECK_CALENDAR.
+
+        Args:
+            inspection: The inspection payload (text, or a structure such as an inbox preview).
+            tinytool (str, optional): The ``tinytool:`` URI of the inspected tool.
+            source (AgentOrWorld, optional): The originator of the inspection result.
+        """
+        return self._observe(
+            stimulus={
+                "type": "INSPECTION",
+                "content": inspection,
+                "tinytool": tinytool,
+                "source": name_or_empty(source),
+            },
+            max_content_length=max_content_length,
+            communication_display=communication_display,
+        )
+
     @transactional()
     @config_manager.config_defaults(max_content_length="max_content_display_length")
     def _observe(

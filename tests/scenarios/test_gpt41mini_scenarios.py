@@ -393,17 +393,13 @@ class TestGPT41MiniScenarios:
         # Setup exporter and enricher for the word processor
         exporter = ArtifactExporter(base_output_folder=get_relative_to_test_path(f"{EXPORT_BASE_FOLDER}/gpt41mini/"))
         enricher = TinyEnricher()
-        word_processor = TinyWordProcessor(exporter=exporter, enricher=enricher)
         
-        # Create tool-using faculty
-        tooluse = TinyToolUse(tools=[word_processor])
-        
-        # Create agents with tool capability
+        # Create agents with tool capability (each owns its own word processor)
         lisa = create_lisa_the_data_scientist()
-        lisa.add_mental_faculties([tooluse])
-        
+        lisa.add_mental_faculties([TinyToolUse(tools=[TinyWordProcessor(owner=lisa, exporter=exporter, enricher=enricher)])])
+
         oscar = create_oscar_the_architect()  
-        oscar.add_mental_faculties([tooluse])
+        oscar.add_mental_faculties([TinyToolUse(tools=[TinyWordProcessor(owner=oscar, exporter=exporter, enricher=enricher)])])
         
         # Create collaborative world
         world = TinyWorld("Report Writing Team", [lisa, oscar])

@@ -64,11 +64,9 @@ class TestBasicScenarios:
 
         exporter = ArtifactExporter(base_output_folder=data_export_folder)
         enricher = TinyEnricher()
-        tooluse_faculty = TinyToolUse(tools=[TinyWordProcessor(exporter=exporter, enricher=enricher)])
 
         lisa = create_lisa_the_data_scientist()
-
-        lisa.add_mental_faculties([tooluse_faculty])
+        lisa.add_mental_faculties([TinyToolUse(tools=[TinyWordProcessor(owner=lisa, exporter=exporter, enricher=enricher)])])
 
         actions = lisa.listen_and_act(
             """
@@ -79,7 +77,7 @@ class TestBasicScenarios:
             return_actions=True,
         )
 
-        assert contains_action_type(actions, "WRITE_DOCUMENT"), "There should be a WRITE_DOCUMENT action in the actions list."
+        assert contains_action_type(actions, "TINYWORDPROCESSOR::WRITE_DOCUMENT"), "There should be a TINYWORDPROCESSOR::WRITE_DOCUMENT action in the actions list."
 
         # check that the document was written to a file
         assert os.path.exists(f"{data_export_folder}/Document/Resume.Lisa Carter.docx"), "The document should have been written to a file."

@@ -399,6 +399,14 @@ class TinyToolUse(TinyMentalFaculty):
     """
     Allows the agent to use tools to accomplish tasks. Tool usage is one of the most important cognitive skills
     humans and primates have as we know.
+
+    Action routing
+    --------------
+    Tool actions are *namespaced* (``TOOLNAMESPACE::VERB``). When an action is processed, it is
+    routed to the agent's own tool whose :attr:`~tinytroupe.tools.tiny_tool.TinyTool.action_namespace`
+    matches the action's namespace. Because dispatch is scoped to *this* agent's own tools, an
+    agent can only ever act through its own instances. Un-namespaced actions (e.g. ``TALK``) are
+    not tool actions and are ignored here.
     """
 
     def __init__(self, tools: list) -> None:
@@ -407,11 +415,40 @@ class TinyToolUse(TinyMentalFaculty):
         self.tools = tools
 
     def process_action(self, agent, action: dict) -> bool:
-        for tool in self.tools:
-            if tool.process_action(agent, action):
-                return True
+        from tinytroupe.tools.tiny_tool import parse_action_namespace
 
-        return False
+        namespace, _verb = parse_action_namespace(action.get("type"))
+
+        # Un-namespaced actions are not tool actions; nothing to do here.
+        if namespace is None:
+            return False
+
+        # Find the agent's own tool(s) responsible for this namespace.
+        matching = [tool for tool in self.tools if tool.handles_action(action)]
+
+        if not matching:
+            # The action looks like a tool action but no owned tool handles it. Surface a
+            # feedback line so the action-generation loop can react, instead of failing silently.
+            logger.warning(
+                f"[{agent.name}] No owned tool handles namespaced action '{action.get('type')}'. "
+                f"Available tool namespaces: {[t.action_namespace for t in self.tools]}."
+            )
+            return False
+
+        if len(matching) > 1:
+            # Disambiguate by an explicit tool id when more than one instance of the same kind
+            # is present (e.g. a personal vs. a work calendar).
+            requested_id = action.get("tool_id")
+            disambiguated = [t for t in matching if t.id == requested_id]
+            if disambiguated:
+                matching = disambiguated
+            else:
+                logger.warning(
+                    f"[{agent.name}] Multiple tools handle '{action.get('type')}' and no valid "
+                    f"'tool_id' was provided; using the first ({matching[0].id})."
+                )
+
+        return matching[0].process_action(agent, action)
 
     def actions_definitions_prompt(self) -> str:
         # each tool should provide its own actions definitions prompt

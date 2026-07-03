@@ -89,6 +89,10 @@ class TinyWorld:
         # Track simulation steps for cost statistics
         self._simulation_steps = 0
 
+        # Shared backend services (mail server, calendar service, contacts directory, ...).
+        # Keyed by service class name; flushed once per step for async (next-step) delivery.
+        self._services = {}
+
         # add the environment to the list of all environments
         TinyWorld.add_environment(self)
 
@@ -115,6 +119,11 @@ class TinyWorld:
 
         # Track simulation steps for cost statistics
         self._simulation_steps += 1
+
+        # Flush shared services so that asynchronous communications enqueued in the previous
+        # step (emails, calendar invites, ...) are delivered now, before the agents act. This
+        # realizes next-step delivery, allowing the simulation of communication delays.
+        self._flush_services()
 
         # Apply interventions.
         #
@@ -419,6 +428,52 @@ class TinyWorld:
     #######################################################################
     # Agent management methods
     #######################################################################
+    #######################################################################
+    # Shared services
+    #######################################################################
+    def register_service(self, service):
+        """
+        Registers a shared backend service (mail server, calendar service, contacts directory)
+        in this world. At most one service per class is kept.
+
+        Args:
+            service (TinyService): The service to register.
+
+        Returns:
+            TinyWorld: self, for chaining.
+        """
+        self._services[service.__class__.__name__] = service
+        return self  # for chaining
+
+    def get_service(self, service_cls_or_name, required: bool = True):
+        """
+        Returns a registered service by its class or class name.
+
+        Args:
+            service_cls_or_name: The service class (e.g. ``EmailService``) or its name.
+            required (bool): If True, raise when the service is not registered; otherwise
+                return ``None``.
+
+        Returns:
+            TinyService | None: The registered service, or ``None`` when not required.
+        """
+        key = service_cls_or_name if isinstance(service_cls_or_name, str) else service_cls_or_name.__name__
+        service = self._services.get(key)
+        if service is None and required:
+            raise ValueError(
+                f"No service '{key}' is registered in world '{self.name}'. "
+                f"Register it with world.register_service(...)."
+            )
+        return service
+
+    def _flush_services(self):
+        """Flushes all registered services so pending async deliveries reach their recipients."""
+        for service in self._services.values():
+            try:
+                service.flush(self)
+            except Exception as exc:
+                logger.error(f"[{self.name}] Service '{service.name}' failed to flush: {exc}")
+
     def add_agents(self, agents: list):
         """
         Adds a list of agents to the environment.

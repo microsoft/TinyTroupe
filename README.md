@@ -217,6 +217,11 @@ TinyTroupe is developed primarily with OpenAI models and compatible endpoints in
 
 See [Ollama Support](./docs/guides/ollama.md) for details on how to use Ollama with TinyTroupe.
 
+### Office Tools
+Agents can use simulated office tools to take concrete actions beyond talking — writing documents,
+sending email, and scheduling meetings — through a per-agent *client* plus shared *service*
+architecture. See [Office Tools](./docs/guides/office_tools.md) for details and conventions.
+
 
 ## Installation
 

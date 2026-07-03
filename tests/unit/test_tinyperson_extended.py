@@ -98,7 +98,7 @@ def test_mental_faculties(setup):
     exporter = ArtifactExporter(base_output_folder=data_export_folder)
     enricher = TinyEnricher()
     tool_faculty = TinyToolUse(
-        tools=[TinyWordProcessor(exporter=exporter, enricher=enricher)]
+        tools=[TinyWordProcessor(owner=agent, exporter=exporter, enricher=enricher)]
     )
 
     # Test adding multiple mental faculties
@@ -1142,7 +1142,7 @@ def test_multi_faculty_integration(setup):
 
     # Add word processor tool
     word_processor_faculty = TinyToolUse(
-        tools=[TinyWordProcessor(exporter=exporter, enricher=enricher)]
+        tools=[TinyWordProcessor(owner=agent, exporter=exporter, enricher=enricher)]
     )
 
     # Add custom faculty for specialized tasks
