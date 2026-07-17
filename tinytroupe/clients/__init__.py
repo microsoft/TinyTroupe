@@ -3,6 +3,7 @@ import logging
 from tinytroupe import config_manager, utils
 
 from .azure_client import AzureClient
+from .litellm_client import LiteLLMClient
 from .ollama_client import OllamaClient
 from .openai_client import LLMCacheBase, OpenAIClient
 
@@ -118,3 +119,4 @@ def force_api_cache(cache_api_calls, cache_file_name=None):
 register_client("openai", OpenAIClient())
 register_client("azure", AzureClient())
 register_client("ollama", OllamaClient())
+register_client("litellm", LiteLLMClient())
