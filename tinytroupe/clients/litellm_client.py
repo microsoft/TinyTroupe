@@ -7,6 +7,17 @@ from tinytroupe.clients.openai_client import LLMCacheBase
 logger = logging.getLogger("tinytroupe")
 
 
+def _import_litellm():
+    try:
+        import litellm
+        return litellm
+    except ImportError:
+        raise ImportError(
+            "litellm is required for the LiteLLM client. "
+            "Install it with: pip install 'tinytroupe[litellm]'"
+        )
+
+
 class LiteLLMClient(LLMCacheBase):
     """
     A client for interacting with LLM providers through LiteLLM,
@@ -58,19 +69,22 @@ class LiteLLMClient(LLMCacheBase):
         Sends a message via LiteLLM and returns the response.
         Follows the same interface as OpenAIClient.send_message.
         """
-        import litellm
+        litellm = _import_litellm()
 
         from tinytroupe.clients import InvalidRequestError, NonTerminalError
 
         def aux_exponential_backoff():
             nonlocal waiting_time
-            if waiting_time <= 0:
+            if waiting_time is None or waiting_time <= 0:
                 waiting_time = 2
             logger.info(
                 f"Request failed. Waiting {waiting_time} seconds between requests..."
             )
             time.sleep(waiting_time)
-            waiting_time = waiting_time * exponential_backoff_factor
+            waiting_time = waiting_time * (exponential_backoff_factor or 5)
+
+        if max_attempts is None:
+            max_attempts = 2
 
         if dedent_messages:
             for message in current_messages:
@@ -106,11 +120,11 @@ class LiteLLMClient(LLMCacheBase):
                 logger.debug(f"Sending request via LiteLLM. Attempt {i}")
 
                 cache_key = str((model, chat_api_params))
-                if self.cache_api_calls and (cache_key in self.api_cache):
+                if self.cache_api_calls and hasattr(self, 'api_cache') and (cache_key in self.api_cache):
                     response = self.api_cache[cache_key]
                     raw_message = self._extract_response(response)
                 else:
-                    if waiting_time > 0:
+                    if waiting_time is not None and waiting_time > 0:
                         logger.info(
                             f"Waiting {waiting_time} seconds before next API request..."
                         )
@@ -120,6 +134,8 @@ class LiteLLMClient(LLMCacheBase):
                     response_dict = response.model_dump()
 
                     if self.cache_api_calls:
+                        if not hasattr(self, 'api_cache'):
+                            self.api_cache = {}
                         self.api_cache[cache_key] = response_dict
                         self._save_cache()
 
@@ -129,6 +145,11 @@ class LiteLLMClient(LLMCacheBase):
                 logger.debug(
                     f"Got response in {end_time - start_time:.2f} seconds after {i} attempts."
                 )
+
+                if raw_message is None or raw_message.get("content") is None:
+                    logger.warning("LiteLLM returned empty response content")
+                    aux_exponential_backoff()
+                    continue
 
                 return utils.sanitize_dict(raw_message)
 
@@ -144,6 +165,10 @@ class LiteLLMClient(LLMCacheBase):
                 logger.error(f"[{i}] Authentication error, won't retry: {e}")
                 return None
 
+            except litellm.NotFoundError as e:
+                logger.error(f"[{i}] Model not found, won't retry: {e}")
+                return None
+
             except litellm.RateLimitError:
                 logger.warning(
                     f"[{i}] Rate limit error, waiting a bit and trying again."
@@ -152,13 +177,26 @@ class LiteLLMClient(LLMCacheBase):
 
             except litellm.Timeout as e:
                 logger.error(f"[{i}] Timeout error: {e}")
+                aux_exponential_backoff()
+
+            except litellm.APIConnectionError as e:
+                logger.error(f"[{i}] API connection error: {e}")
+                aux_exponential_backoff()
+
+            except litellm.InternalServerError as e:
+                logger.error(f"[{i}] Provider internal server error: {e}")
+                aux_exponential_backoff()
+
+            except litellm.ServiceUnavailableError as e:
+                logger.error(f"[{i}] Service unavailable: {e}")
+                aux_exponential_backoff()
 
             except NonTerminalError as e:
                 logger.error(f"[{i}] Non-terminal error: {e}")
                 aux_exponential_backoff()
 
             except Exception as e:
-                logger.error(f"[{i}] {type(e).__name__} Error: {e}")
+                logger.error(f"[{i}] Unexpected {type(e).__name__}: {e}")
                 aux_exponential_backoff()
 
         logger.error(f"Failed to get response after {max_attempts} attempts.")
@@ -169,21 +207,27 @@ class LiteLLMClient(LLMCacheBase):
         Extracts the relevant information from the API response dict.
         """
         try:
+            choice = response["choices"][0]
+            message = choice.get("message", {})
             return {
-                "role": response["choices"][0]["message"]["role"],
-                "content": response["choices"][0]["message"]["content"],
+                "role": message.get("role", "assistant"),
+                "content": message.get("content"),
             }
-        except (KeyError, IndexError) as e:
+        except (KeyError, IndexError, TypeError) as e:
             logger.error(f"Error extracting response: {e}")
-            raise ValueError("Invalid response format from LiteLLM")
+            logger.error(f"Response structure: {response}")
+            return None
 
     def _count_tokens(self, messages: list, model: str):
         """
         Count tokens using LiteLLM's token counter.
         """
         try:
-            import litellm
+            litellm = _import_litellm()
             return litellm.token_counter(model=model, messages=messages)
+        except ImportError:
+            logger.debug("litellm not installed, skipping token count")
+            return None
         except Exception as e:
             logger.error(f"Error counting tokens: {e}")
             return None
