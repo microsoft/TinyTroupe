@@ -408,6 +408,11 @@ class TestLLMChat:
         result = chat._coerce_to_dict_or_list(json_array)
         assert result == [{"name": "John"}, {"name": "Jane"}]
 
+        # Valid empty JSON object with whitespace
+        empty_json_object = "  { }\n"
+        result = chat._coerce_to_dict_or_list(empty_json_object)
+        assert result == {}
+
         # Already a dict
         dict_input = {"key": "value"}
         result = chat._coerce_to_dict_or_list(dict_input)
@@ -427,6 +432,15 @@ class TestLLMChat:
 
         with pytest.raises(ValueError, match="Cannot convert"):
             chat._coerce_to_dict_or_list("42")  # valid JSON but not dict/list
+
+        for malformed_json in (
+            "[{[}]",
+            "{not json}",
+            'prefix {"name": } suffix',
+            "malformed {[}] followed by {}",
+        ):
+            with pytest.raises(ValueError, match="Cannot convert"):
+                chat._coerce_to_dict_or_list(malformed_json)
 
     def test_coerce_to_list_valid_inputs(self):
         """Test list coercion with valid inputs."""
