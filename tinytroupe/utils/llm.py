@@ -933,7 +933,7 @@ class LLMChat:
             # extract_json returns {} on failure, but we need dict or list
             if result == {} and not (
                 isinstance(llm_output, str)
-                and ("{}" in llm_output or "{" in llm_output and "}" in llm_output)
+                and re.fullmatch(r"\s*\{\s*\}\s*", llm_output)
             ):
                 raise ValueError(
                     "Cannot convert the LLM output to a dict or list value."
