@@ -428,6 +428,17 @@ class TestLLMChat:
         with pytest.raises(ValueError, match="Cannot convert"):
             chat._coerce_to_dict_or_list("42")  # valid JSON but not dict/list
 
+        for malformed in ("[{[}]", '{"name": }', "prefix {invalid} suffix"):
+            with pytest.raises(ValueError, match="Cannot convert"):
+                chat._coerce_to_dict_or_list(malformed)
+
+    def test_coerce_to_dict_or_list_accepts_empty_object(self):
+        """A valid empty JSON object must remain distinct from parse failure."""
+        chat = LLMChat(system_prompt="Test", user_prompt="Test")
+
+        assert chat._coerce_to_dict_or_list("{}") == {}
+        assert chat._coerce_to_dict_or_list("Here is the result:\n```json\n{ }\n```") == {}
+
     def test_coerce_to_list_valid_inputs(self):
         """Test list coercion with valid inputs."""
         chat = LLMChat(system_prompt="Test", user_prompt="Test")
