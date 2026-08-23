@@ -930,11 +930,10 @@ class LLMChat:
 
         try:
             result = utils.extract_json(llm_output)
-            # extract_json returns {} on failure, but we need dict or list
-            if result == {} and not (
-                isinstance(llm_output, str)
-                and ("{}" in llm_output or "{" in llm_output and "}" in llm_output)
-            ):
+            # extract_json returns {} both for a valid empty object and on parse
+            # failure. Only accept the former when the extracted payload itself
+            # is a valid empty JSON object; merely containing braces is not enough.
+            if result == {} and not self._contains_empty_json_object(llm_output):
                 raise ValueError(
                     "Cannot convert the LLM output to a dict or list value."
                 )
@@ -946,6 +945,20 @@ class LLMChat:
             return result
         except Exception:
             raise ValueError("Cannot convert the LLM output to a dict or list value.")
+
+    @staticmethod
+    def _contains_empty_json_object(llm_output: str) -> bool:
+        if not isinstance(llm_output, str):
+            return False
+
+        candidate = re.sub(r"^.*?({|\[)", r"\1", llm_output, flags=re.DOTALL)
+        candidate = re.sub(
+            r"(}|\])(?!.*(\]|})).*$", r"\1", candidate, flags=re.DOTALL
+        )
+        try:
+            return json.loads(candidate, strict=False) == {}
+        except (json.JSONDecodeError, TypeError):
+            return False
 
     def _request_dict_llm_message(self):
         return {
