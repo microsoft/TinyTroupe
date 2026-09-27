@@ -377,9 +377,9 @@ class ConfigManager:
                         param_name in bound_args.arguments
                         and bound_args.arguments[param_name] is None
                     ):
-                        kwargs[param_name] = self.get(config_key)
+                        bound_args.arguments[param_name] = self.get(config_key)
 
-                return func(*args, **kwargs)
+                return func(*bound_args.args, **bound_args.kwargs)
 
             return wrapper
 
