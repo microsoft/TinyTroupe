@@ -1,4 +1,5 @@
 import pytest
+import os
 
 import sys
 # Insert paths at the beginning of sys.path (position 0)
@@ -8,9 +9,25 @@ sys.path.insert(0, '../../tinytroupe/')
 
 from testing_utils import *
 
+from tinytroupe import config_manager
 from tinytroupe.experimentation import ABRandomizer
 from tinytroupe.experimentation import Proposition, check_proposition
 from tinytroupe.examples import create_oscar_the_architect, create_oscar_the_architect_2, create_lisa_the_data_scientist, create_lisa_the_data_scientist_2
+
+
+def _missing_live_llm_backend():
+    api_type = (config_manager.get("api_type") or "").lower()
+    if api_type == "openai":
+        return not os.environ.get("OPENAI_API_KEY")
+    if api_type == "azure":
+        return not os.environ.get("AZURE_OPENAI_API_KEY")
+    return False
+
+
+requires_live_llm = pytest.mark.skipif(
+    _missing_live_llm_backend(),
+    reason="Live proposition test requires credentials, or use TINYTROUPE_CONFIG=tests/config_ollama.ini",
+)
 
 
 def test_randomize():
@@ -64,6 +81,7 @@ def test_passtrough_name():
 
     assert real_name == "option3"
 
+@requires_live_llm
 def test_proposition_with_tinyperson(setup):
     oscar = create_oscar_the_architect()
     oscar.listen_and_act("Tell me a bit about your travel preferences.")
@@ -74,6 +92,7 @@ def test_proposition_with_tinyperson(setup):
     false_proposition = Proposition(claim="Oscar writes a novel about how cats are better than dogs.")
     assert false_proposition.check(target=oscar) == False
 
+@requires_live_llm
 def test_proposition_with_tinyperson_at_multiple_points(setup):
     oscar = create_oscar_the_architect()
     oscar.listen_and_act("Tell me a bit about your travel preferences.")
@@ -92,6 +111,7 @@ def test_proposition_with_tinyperson_at_multiple_points(setup):
     assert proposition.check() == False # the _same_ proposition is no longer true, because Oscar changed subjects
 
 
+@requires_live_llm
 def test_proposition_with_tinyworld(setup, focus_group_world):
     world = focus_group_world
     world.broadcast("Discuss the comparative advantages of dogs and cats.")
@@ -103,6 +123,7 @@ def test_proposition_with_tinyworld(setup, focus_group_world):
     false_proposition = Proposition(target=world, claim="There's a discussion about whether porto wine vs french wine.")
     assert false_proposition.check() == False
 
+@requires_live_llm
 def test_proposition_with_multiple_targets(setup):
     oscar = create_oscar_the_architect()
     lisa = create_lisa_the_data_scientist()
@@ -118,6 +139,7 @@ def test_proposition_with_multiple_targets(setup):
     false_proposition = Proposition(target=targets, claim="Oscar writes a novel about how cats are better than dogs.")
     assert false_proposition.check() == False
 
+@requires_live_llm
 def test_proposition_class_method(setup):
     oscar = create_oscar_the_architect()
     oscar.listen_and_act("Tell me a bit about your travel preferences.")
@@ -128,4 +150,3 @@ def test_proposition_class_method(setup):
 
     assert check_proposition(target=oscar, claim="Oscar writes a novel about how cats are better than dogs.") == False
     assert check_proposition(oscar, "Oscar writes a novel about how cats are better than dogs.") == False
-

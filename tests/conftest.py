@@ -1,3 +1,4 @@
+import os
 import threading
 import time
 
@@ -17,6 +18,41 @@ monitor_stop_event = None
 monitor_thread = None
 
 _DELAY = 0  # seconds
+
+_ollama_procs = []
+
+
+def pytest_sessionstart(session):
+    """When using Ollama config, TinyTroupe spins up its own Ollama instances."""
+    if os.environ.get("TINYTROUPE_CONFIG"):
+        from tinytroupe import config_manager
+
+        if config_manager.get("api_type") == "ollama":
+            try:
+                from tinytroupe.ollama_runner import start_instances
+
+                global _ollama_procs
+                _ollama_procs = start_instances(ports=[11444, 11445], wait=True)
+                print("\n****** TinyTroupe: started Ollama on 11444, 11445 ******\n")
+            except FileNotFoundError as e:
+                pytest.exit(
+                    f"Ollama config active but ollama not found: {e}. Install from https://ollama.com",
+                    returncode=2,
+                )
+            except Exception as e:
+                pytest.exit(f"Failed to start Ollama: {e}", returncode=2)
+
+
+def pytest_sessionfinish(session, exitstatus):
+    """Stop TinyTroupe's Ollama instances."""
+    global _ollama_procs
+    if _ollama_procs:
+        from tinytroupe.ollama_runner import stop_instances
+
+        stop_instances(_ollama_procs)
+        _ollama_procs = []
+        print("\n****** TinyTroupe: stopped Ollama instances ******\n")
+
 
 @pytest.fixture(autouse=True)
 def pause_between_tests():

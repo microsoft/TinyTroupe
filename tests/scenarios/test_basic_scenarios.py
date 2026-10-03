@@ -1,3 +1,4 @@
+import os
 import pytest
 import logging
 
@@ -47,13 +48,14 @@ class TestBasicScenarios:
         assert control._current_simulations["default"].execution_trace is not None, "There should be an execution trace at this point."
 
         control.checkpoint()
-        # TODO check file creation
+        sim = control._current_simulations["default"]
+        assert os.path.exists(sim.cache_path), f"Cache file should exist after checkpoint: {sim.cache_path}"
 
         agent.listen_and_act("How are you doing??")
         agent.define("occupation", "Engineer")
 
         control.checkpoint()
-        # TODO check file creation
+        assert os.path.exists(sim.cache_path), f"Cache file should exist after second checkpoint: {sim.cache_path}"
 
         control.end()
 

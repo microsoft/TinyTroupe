@@ -1,5 +1,6 @@
 import logging
 import os
+import threading
 import time
 
 import requests
@@ -13,6 +14,8 @@ logger = logging.getLogger("tinytroupe")
 class OllamaClient(LLMCacheBase):
     """
     A client for interacting with the Ollama API using direct HTTP requests.
+    Supports a pool of base URLs (OLLAMA_BASE_URLS) for round-robin when
+    multiple Ollama instances run on different ports.
     """
 
     @config_manager.config_defaults(
@@ -20,8 +23,20 @@ class OllamaClient(LLMCacheBase):
     )
     def __init__(self, cache_api_calls=None, cache_file_name=None) -> None:
         logger.debug("Initializing OllamaClient")
-        self.base_url = config_manager.get("base_url", "http://localhost:11434/v1")
-        logger.debug(f"base_url set to {self.base_url}")
+        urls = config_manager.get("ollama_base_urls", ["http://localhost:11434/v1"])
+        if isinstance(urls, str):
+            urls = [u.strip() for u in urls.split(",") if u.strip()] or [
+                "http://localhost:11434/v1"
+            ]
+        self._base_urls = urls if urls else ["http://localhost:11434/v1"]
+        self._round_robin_index = 0
+        self._round_robin_lock = threading.Lock()
+        # Backward compat: single URL for code that reads base_url
+        self.base_url = self._base_urls[0]
+        logger.debug(
+            f"Ollama base URLs: {len(self._base_urls)} host(s) "
+            f"{'[pool]' if len(self._base_urls) > 1 else '[single]'}"
+        )
 
         # Set up caching via the base class method
         self.set_api_cache(cache_api_calls, cache_file_name)
@@ -94,6 +109,15 @@ class OllamaClient(LLMCacheBase):
             "n": n,
         }
 
+        # Ollama v1/chat/completions supports response_format (JSON mode) - same as OpenAI
+        # Constrains output to valid JSON, fixing models that return XML/markdown/plain text
+        if response_format is not None:
+            chat_api_params["response_format"] = (
+                {"type": "json_object"}
+                if not isinstance(response_format, dict)
+                else response_format
+            )
+
         # remove any parameter that is None, so we use the API defaults
         chat_api_params = {k: v for k, v in chat_api_params.items() if v is not None}
         # ... within options too
@@ -153,18 +177,34 @@ class OllamaClient(LLMCacheBase):
         logger.error(f"Failed to get response after {max_attempts} attempts")
         return None
 
+    def _get_base_url(self) -> str:
+        """Return next base URL (round-robin) when pool has multiple hosts."""
+        if len(self._base_urls) <= 1:
+            return self._base_urls[0]
+        with self._round_robin_lock:
+            url = self._base_urls[self._round_robin_index % len(self._base_urls)]
+            self._round_robin_index += 1
+        return url
+
     def _make_request(self, endpoint, method="POST", **kwargs):
         """
-        Makes a request to the Ollama API.
+        Makes a request to the Ollama API. On connection failure, tries each
+        URL in the pool so the client works whether Ollama is on 11434, 11444, etc.
         """
-        url = f"{self.base_url}/{endpoint}"
-        logger.debug(f"Making {method} request to {url}")
-        logger.debug(f"Request parameters: {kwargs}")
-
-        response = requests.request(method, url, **kwargs)
-        response.raise_for_status()
-
-        return response.json()
+        last_error = None
+        for base in self._base_urls:
+            url = f"{base}/{endpoint}"
+            logger.debug(f"Making {method} request to {url}")
+            try:
+                response = requests.request(method, url, **kwargs)
+                response.raise_for_status()
+                return response.json()
+            except (requests.exceptions.ConnectionError, requests.exceptions.ConnectTimeout) as e:
+                last_error = e
+                logger.debug(f"Connection to {url} failed: {e}, trying next URL")
+                continue
+        if last_error:
+            raise last_error
 
     def _extract_response(self, response):
         """
@@ -226,7 +266,7 @@ class OllamaClient(LLMCacheBase):
             }
 
             # Make the request to Ollama's API
-            temp_url = self.base_url.replace(
+            temp_url = self._get_base_url().replace(
                 "/v1", ""
             )  # Not sure what happened in their API, complete hack
             response = requests.post(f"{temp_url}/api/embed", json=payload)

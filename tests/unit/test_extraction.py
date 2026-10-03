@@ -2,6 +2,8 @@ import json
 import logging
 import os
 import random
+import zipfile
+from xml.etree import ElementTree
 
 import pytest
 
@@ -16,8 +18,24 @@ sys.path.insert(0, "../../tinytroupe/")
 
 from testing_utils import *
 
+from tinytroupe import config_manager
 from tinytroupe import utils
 from tinytroupe.extraction import ArtifactExporter, Normalizer
+
+
+def _missing_live_llm_backend():
+    api_type = (config_manager.get("api_type") or "").lower()
+    if api_type == "openai":
+        return not os.environ.get("OPENAI_API_KEY")
+    if api_type == "azure":
+        return not os.environ.get("AZURE_OPENAI_API_KEY")
+    return False
+
+
+requires_live_llm = pytest.mark.skipif(
+    _missing_live_llm_backend(),
+    reason="Live normalizer test requires credentials, or use TINYTROUPE_CONFIG=tests/config_ollama.ini",
+)
 
 
 @pytest.fixture
@@ -101,12 +119,17 @@ def test_export_docx(exporter):
     ), "The docx file should have been exported."
 
     # does it contain the data?
-    from docx import Document
+    docx_path = f"{EXPORT_BASE_FOLDER}/Document/test_artifact.docx"
+    with zipfile.ZipFile(docx_path) as docx_zip:
+        document_xml = docx_zip.read("word/document.xml")
 
-    doc = Document(f"{EXPORT_BASE_FOLDER}/Document/test_artifact.docx")
-    exported_data = ""
-    for para in doc.paragraphs:
-        exported_data += para.text
+    root = ElementTree.fromstring(document_xml)
+    exported_data = "".join(
+        node.text or ""
+        for node in root.iter(
+            "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}t"
+        )
+    )
 
     assert (
         "This is a sample markdown text" in exported_data
@@ -117,6 +140,7 @@ def test_export_docx(exporter):
 
 
 @pytest.mark.core
+@requires_live_llm
 def test_normalizer():
     # Define the concepts to be normalized
     concepts = [

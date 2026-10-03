@@ -95,9 +95,6 @@ class BaseSemanticGroundingConnector(GroundingConnector):
                 store_nodes_override=True
             )
 
-        # TODO remove?
-        #self.add_documents(self.documents)        
-
     @staticmethod
     def _serialize_index(index):
         """Helper function to serialize index with proper storage context"""
@@ -163,16 +160,16 @@ class BaseSemanticGroundingConnector(GroundingConnector):
         else:
             nodes = []
 
-        retrieved = []
+        retrieved_data = []
         for node in nodes:
-            content = "SOURCE: " + node.metadata.get('file_name', '(unknown)')
-            content += "\n" + "SIMILARITY SCORE:" + str(node.score)
-            content += "\n" + "RELEVANT CONTENT:" + node.text
-            retrieved.append(content)
-
-            logger.debug(f"Content retrieved: {content[:200]}")
-
-        return retrieved
+            retrieved_data.append({
+                'text': node.text,
+                'metadata': node.metadata, # This should include 'memory_id'
+                'score': node.score,
+                'source': node.metadata.get('file_name', '(unknown)') # Keep original source if available
+            })
+            logger.debug(f"Content retrieved: {node.text[:200]} with metadata {node.metadata}")
+        return retrieved_data
     
     def retrieve_by_name(self, name:str) -> list:
         """

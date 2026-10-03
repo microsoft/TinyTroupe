@@ -8,7 +8,7 @@ include-package-data = true
 
 [project]
 name = "tinytroupe"
-version = "0.7.0"
+version = "0.8.0"
 authors = [
   { name="Paulo Salem", email="paulo.salem@microsoft.com" }
 ]
@@ -32,11 +32,16 @@ dependencies = [
     "llama-index", "llama-index-embeddings-huggingface", "llama-index-readers-web", "llama-index-embeddings-azure-openai",
     "pypandoc", "python-docx", "markdown",
     "jupyter",
+    "fastapi",
+    "uvicorn",
     "matplotlib",
     "seaborn",
     "pydantic>=2.5.0",
     "textdistance",
-    "scipy"
+    "scipy",
+    "nbformat",
+    "nbconvert",
+    "ipython"
 ]
 
 [project.urls]

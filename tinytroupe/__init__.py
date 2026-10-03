@@ -87,6 +87,25 @@ class ConfigManager:
             "BASE_URL", None
         )  # by default, we will not use a custom base URL
 
+        # Ollama: OLLAMA_BASE_URL env overrides config; else use OLLAMA_BASE_URLS or OLLAMA_BASE_URL
+        _env_url = os.environ.get("OLLAMA_BASE_URL", "").strip()
+        if _env_url:
+            self._config["ollama_base_urls"] = [_env_url]
+        else:
+            _urls_raw = config["OpenAI"].get("OLLAMA_BASE_URLS", "").strip()
+            if _urls_raw:
+                self._config["ollama_base_urls"] = [
+                    u.strip() for u in _urls_raw.split(",") if u.strip()
+                ]
+            else:
+                _single = (
+                    config["OpenAI"].get("OLLAMA_BASE_URL", None)
+                    or config["OpenAI"].get("BASE_URL", None)
+                )
+                self._config["ollama_base_urls"] = (
+                    [_single] if _single else ["http://localhost:11434/v1"]
+                )
+
         self._config["model"] = config["OpenAI"].get("MODEL", "gpt-4o")
         self._config["embedding_model"] = config["OpenAI"].get(
             "EMBEDDING_MODEL", "text-embedding-3-small"
@@ -227,6 +246,21 @@ class ConfigManager:
         self._config[ConfigManager.LOG_INCLUDE_THREAD_ID_KEY] = config["Logging"].getboolean(
             "LOG_INCLUDE_THREAD_ID", fallback=False
         )
+
+        # Telemetry
+        self._config["llm_telemetry_enabled"] = config["Logging"].getboolean("LLM_TELEMETRY_ENABLED", False)
+        self._config["llm_telemetry_path"] = config["Logging"].get("LLM_TELEMETRY_PATH", "logs/llm_telemetry.jsonl")
+
+        # Moderation
+        if isinstance(config, configparser.ConfigParser) and config.has_section("Moderation"):
+            moderation_section = config["Moderation"]
+        else:
+            moderation_section = {}
+
+        self._config["moderation_enabled"] = getattr(moderation_section, "getboolean", lambda *_, **__: False)("ENABLE_MODERATION", False)
+        self._config["moderation_action"] = getattr(moderation_section, "get", lambda *_, **__: "warn")("MODERATION_ACTION", "warn")
+        self._config["moderation_model"] = getattr(moderation_section, "get", lambda *_, **__: "omni-moderation-latest")("MODERATION_MODEL", "omni-moderation-latest")
+        self._config["moderation_block_message"] = getattr(moderation_section, "get", lambda *_, **__: "[BLOCKED BY MODERATION]")("MODERATION_BLOCK_MESSAGE", "[BLOCKED BY MODERATION]")
 
         self._raw_config = config
 
@@ -396,6 +430,20 @@ utils.start_logger(config)
 config_manager = ConfigManager()
 
 
+class _DefaultConfigProxy:
+    """Dict-like proxy for config_manager.get(); used in default arguments."""
+
+    def __getitem__(self, key):
+        return config_manager.get(key)
+
+
+default = _DefaultConfigProxy()
+
+# Backward compatibility: openai_utils was refactored into clients
+from tinytroupe import clients
+openai_utils = clients
+
+
 # Helper function for method signatures
 def get_config(key, override_value=None):
     """
@@ -417,28 +465,33 @@ def get_config(key, override_value=None):
 ## LLaMa-Index configs ########################################################
 # from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 
-if config_manager.get("api_type") == "azure":
-    from llama_index.embeddings.azure_openai import AzureOpenAIEmbedding
-else:
-    from llama_index.embeddings.openai import OpenAIEmbedding
-
 from llama_index.core import Document, Settings, SimpleDirectoryReader, VectorStoreIndex
 from llama_index.readers.web import SimpleWebPageReader
 
-# this will be cached locally by llama-index, in a OS-dependend location
+# Embeddings: use Ollama when api_type=ollama (no OpenAI key needed)
+_api_type = config_manager.get("api_type")
+if _api_type == "azure":
+    from llama_index.embeddings.azure_openai import AzureOpenAIEmbedding
 
-##Settings.embed_model = HuggingFaceEmbedding(
-##    model_name="BAAI/bge-small-en-v1.5"
-##)
-
-if config_manager.get("api_type") == "azure":
     llamaindex_openai_embed_model = AzureOpenAIEmbedding(
         model=config_manager.get("embedding_model"),
         deployment_name=config_manager.get("embedding_model"),
         api_version=config_manager.get("azure_embedding_model_api_version"),
         embed_batch_size=10,
     )
+elif _api_type == "ollama":
+    from tinytroupe.embeddings import OllamaEmbedding
+
+    _ollama_urls = config_manager.get("ollama_base_urls", ["http://127.0.0.1:11444/v1"])
+    _ollama_base = _ollama_urls[0] if _ollama_urls else "http://127.0.0.1:11444/v1"
+    llamaindex_openai_embed_model = OllamaEmbedding(
+        base_url=_ollama_base,
+        model_name=config_manager.get("embedding_model", "nomic-embed-text"),
+        embed_batch_size=10,
+    )
 else:
+    from llama_index.embeddings.openai import OpenAIEmbedding
+
     llamaindex_openai_embed_model = OpenAIEmbedding(
         model=config_manager.get("embedding_model"), embed_batch_size=10
     )

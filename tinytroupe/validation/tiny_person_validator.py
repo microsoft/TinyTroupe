@@ -65,11 +65,6 @@ class TinyPersonValidator:
 
         if include_agent_spec:
             user_prompt += f"\n\n{json.dumps(person._persona, indent=4)}"
-        
-        # TODO this was confusing the expect
-        #else:
-        #    user_prompt += f"\n\nMini-biography of the person being interviewed: {person.minibio()}"
-
 
         logger = logging.getLogger("tinytroupe")
 

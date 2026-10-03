@@ -13,6 +13,7 @@ from tinytroupe.agent import TinyPerson, TinyToolUse
 from tinytroupe.environment import TinyWorld
 from tinytroupe.control import Simulation
 import tinytroupe.control as control
+from tinytroupe import config_manager
 from tinytroupe.factory import TinyPersonFactory
 from tinytroupe.enrichment import TinyEnricher
 from tinytroupe.extraction import ArtifactExporter
@@ -25,7 +26,22 @@ import importlib
 
 from testing_utils import *
 
+def _missing_live_llm_backend():
+    api_type = (config_manager.get("api_type") or "").lower()
+    if api_type == "openai":
+        return not os.environ.get("OPENAI_API_KEY")
+    if api_type == "azure":
+        return not os.environ.get("AZURE_OPENAI_API_KEY")
+    return False
+
+
+requires_live_llm = pytest.mark.skipif(
+    _missing_live_llm_backend(),
+    reason="Live LLM checkpoint test requires credentials, or use TINYTROUPE_CONFIG=tests/config_ollama.ini",
+)
+
 @pytest.mark.core
+@requires_live_llm
 def test_begin_checkpoint_end_with_agent_only(setup):
     # erase the file if it exists
     remove_file_if_exists("control_test.cache.json")
@@ -71,6 +87,7 @@ def test_begin_checkpoint_end_with_agent_only(setup):
     assert control._current_simulations["default"].status == Simulation.STATUS_STOPPED, "The simulation should be ended at this point."
 
 @pytest.mark.core
+@requires_live_llm
 def test_begin_checkpoint_end_with_world(setup):
     # erase the file if it exists
     remove_file_if_exists("control_test_world.cache.json")
@@ -102,6 +119,7 @@ def test_begin_checkpoint_end_with_world(setup):
 
 
 @pytest.mark.core
+@requires_live_llm
 def test_begin_checkpoint_end_with_factory(setup):
     # erase the file if it exists
     remove_file_if_exists("control_test_personfactory.cache.json")
@@ -178,84 +196,154 @@ def test_begin_checkpoint_end_with_factory(setup):
     assert "'define_several'" not in cache_contents, "The cache file should not contain the 'define_several' methods, as these are reentrant."
 
 
-def test_begin_checkpoint_end_with_factory_multiple_people(setup):
-    # erase the file if it exists
-    remove_file_if_exists("control_test_personfactory_multiple.cache.json")
 
+# Test-specific TinyPerson subclass with simple transactional methods
+class CacheTestPerson(TinyPerson):
+    def __init__(self, name="CacheTestAgent", **kwargs):
+        super().__init__(name=name, **kwargs)
+        self._value = 0
+        self.call_count = 0
+
+    @control.transactional
+    def simple_method(self, arg1, kwarg1="default"):
+        self.call_count += 1
+        # self._value += arg1 if isinstance(arg1, int) else len(str(arg1)) # Remove state change for this test method
+        # Ensure the return value is pickleable and comparable
+        return {"processed_arg1": arg1, "processed_kwarg1": kwarg1} # Removed current_value from output
+
+    @control.transactional
+    def method_with_dict_arg(self, data_dict: dict):
+        self.call_count += 1
+        # Return a sorted tuple of items to ensure consistent output for comparison
+        return tuple(sorted(data_dict.items()))
+
+    @control.transactional
+    def method_with_list_arg(self, data_list: list):
+        self.call_count += 1
+        return len(data_list) # Simple return
+
+    @control.transactional
+    def method_with_custom_obj_arg(self, custom_obj: 'SimpleCustomObject'):
+        self.call_count += 1
+        return custom_obj.x + custom_obj.y
+
+class SimpleCustomObject:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __str__(self):
+        return f"SimpleCustomObject(x={self.x}, y={self.y})"
+
+    def __repr__(self):
+        return f"SimpleCustomObject(x={self.x}, y={self.y})"
+
+    def __eq__(self, other):
+        if not isinstance(other, SimpleCustomObject):
+            return NotImplemented
+        return self.x == other.x and self.y == other.y
+
+def test_cache_key_generation_and_hits(setup, caplog):
     control.reset()
+    cache_file = "test_cache_key_gen.cache.json"
+    remove_file_if_exists(cache_file)
 
-    def aux_simulation_to_repeat(iteration, verbose=False):
-        control.reset()
-    
-        assert control._current_simulations["default"] is None, "There should be no simulation running at this point."
+    control.begin(cache_path=cache_file, id="cache_test_sim") # Use a specific sim ID
+    sim_instance = control.current_simulation()
+    assert sim_instance is not None
 
-        control.begin("control_test_personfactory_multiple.cache.json")
-        assert control._current_simulations["default"].status == Simulation.STATUS_STARTED, "The simulation should be started at this point."    
-        
-        factory = TinyPersonFactory("We are interested in experts in the production of the traditional Gazpacho soup.")
+    # Instantiate a Simulation directly to test its _function_call_hash method
+    # This avoids complexities of the transactional decorator and TinyPerson state changes.
+    sim_for_hash_test = Simulation(id="hash_test_sim")
 
-        assert control._current_simulations["default"].cached_trace is not None, "There should be a cached trace at this point."
-        assert control._current_simulations["default"].execution_trace is not None, "There should be an execution trace at this point."
+    # Test 1: Simple primitives
+    key1 = sim_for_hash_test._function_call_hash("method_name", 1, "hello", kwarg1="val1")
+    key2 = sim_for_hash_test._function_call_hash("method_name", 1, "hello", kwarg1="val1")
+    key3 = sim_for_hash_test._function_call_hash("method_name", 2, "hello", kwarg1="val1") # Different arg
+    key4 = sim_for_hash_test._function_call_hash("method_name", 1, "world", kwarg1="val1") # Different arg
+    key5 = sim_for_hash_test._function_call_hash("method_name", 1, "hello", kwarg1="val2") # Different kwarg
+    key6 = sim_for_hash_test._function_call_hash("method_name_diff", 1, "hello", kwarg1="val1") # Different method name
 
-        agents = factory.generate_people(number_of_people=3, agent_particularities="Brazilian tourists who learned about Gazpaccho in a trip to Spain.")
+    assert key1 == key2
+    assert key1 != key3
+    assert key1 != key4
+    assert key1 != key5
+    assert key1 != key6
 
-        assert control._current_simulations["default"].cached_trace is not None, "There should be a cached trace at this point."
-        assert control._current_simulations["default"].execution_trace is not None, "There should be an execution trace at this point."
+    # Test 2: Dictionaries - key order in kwargs, and dicts as args
+    # For kwargs, sorted_kwargs in _function_call_hash should handle order.
+    key_dict_kw1 = sim_for_hash_test._function_call_hash("method_dict_kw", kwarg_dict={"a": 1, "b": 2})
+    key_dict_kw2 = sim_for_hash_test._function_call_hash("method_dict_kw", kwarg_dict={"b": 2, "a": 1})
+    assert key_dict_kw1 == key_dict_kw2
 
-        control.checkpoint()
+    # For dicts as positional args, pickle itself is generally consistent for same-content dicts.
+    dict_arg1 = {"x": 10, "y": 20}
+    dict_arg2 = {"y": 20, "x": 10}
+    key_dict_arg1 = sim_for_hash_test._function_call_hash("method_dict_arg", dict_arg1)
+    key_dict_arg2 = sim_for_hash_test._function_call_hash("method_dict_arg", dict_arg2)
+    assert key_dict_arg1 == key_dict_arg2
 
-        # check if the file was created
-        assert os.path.exists("control_test_personfactory_multiple.cache.json"), "The checkpoint file should have been created."
+    key_dict_arg3 = sim_for_hash_test._function_call_hash("method_dict_arg", {"x": 10, "y": 30}) # Different content
+    assert key_dict_arg1 != key_dict_arg3
 
-        control.end()
-        assert control._current_simulations["default"].status == Simulation.STATUS_STOPPED, "The simulation should be ended at this point."
+    # Test 3: Lists and Tuples - order matters
+    key_list1 = sim_for_hash_test._function_call_hash("method_list", [1, 2, 3])
+    key_list2 = sim_for_hash_test._function_call_hash("method_list", [1, 2, 3])
+    key_list3 = sim_for_hash_test._function_call_hash("method_list", [3, 2, 1]) # Different order
+    assert key_list1 == key_list2
+    assert key_list1 != key_list3
 
-        if verbose:
-            logger.debug(f"###################################################################################### Sim Iteration:{iteration}")
-            for i, agent in enumerate(agents):
-                logger.debug(f"###################################################################################### Agent {i+1} persona configs:{agent._persona}")
+    key_tuple1 = sim_for_hash_test._function_call_hash("method_tuple", (1, 2, 3))
+    key_tuple2 = sim_for_hash_test._function_call_hash("method_tuple", (1, 2, 3))
+    key_tuple3 = sim_for_hash_test._function_call_hash("method_tuple", (3, 2, 1))
+    assert key_tuple1 == key_tuple2
+    assert key_tuple1 != key_tuple3
 
-        return agents
+    # Test 4: Custom objects
+    custom_obj1 = SimpleCustomObject(x=1, y="a")
+    custom_obj2 = SimpleCustomObject(x=1, y="a") # Identical content
+    custom_obj3 = SimpleCustomObject(x=2, y="b") # Different content
 
-    assert control.cache_misses() == 0, "There should be no cache misses in this test."
-    assert control.cache_hits() == 0, "There should be no cache hits here"
+    key_custom1 = sim_for_hash_test._function_call_hash("method_custom", custom_obj1)
+    key_custom2 = sim_for_hash_test._function_call_hash("method_custom", custom_obj2)
+    key_custom3 = sim_for_hash_test._function_call_hash("method_custom", custom_obj3)
+    assert key_custom1 == key_custom2
+    assert key_custom1 != key_custom3
 
-    # FIRST simulation ########################################################
-    agents_1 = aux_simulation_to_repeat(1, verbose=True)
-    assert len(agents_1) == 3, "Should have generated 3 agents"
-    ages_1 = [agent.get("age") for agent in agents_1]
-    nationalities_1 = [agent.get("nationality") for agent in agents_1]
-    minibios_1 = [agent.minibio() for agent in agents_1]
-    print("minibios_1 =", minibios_1)
+    # Test 5: Nested structures
+    nested1 = {"list": [1, SimpleCustomObject(10,20)], "val": "test"}
+    nested2 = {"list": [1, SimpleCustomObject(10,20)], "val": "test"}
+    nested3 = {"list": [1, SimpleCustomObject(10,30)], "val": "test"} # Inner obj different
 
-    # SECOND simulation ########################################################
-    logger.debug(">>>>>>>>>>>>>>>>>>>>>>>>>> Second simulation...")
-    agents_2 = aux_simulation_to_repeat(2, verbose=True)
-    assert len(agents_2) == 3, "Should have generated 3 agents"
-    ages_2 = [agent.get("age") for agent in agents_2]
-    nationalities_2 = [agent.get("nationality") for agent in agents_2]
-    minibios_2 = [agent.minibio() for agent in agents_2]
-    print("minibios_2 =", minibios_2)
+    key_nested1 = sim_for_hash_test._function_call_hash("method_nested", nested_data=nested1)
+    key_nested2 = sim_for_hash_test._function_call_hash("method_nested", nested_data=nested2)
+    key_nested3 = sim_for_hash_test._function_call_hash("method_nested", nested_data=nested3)
+    assert key_nested1 == key_nested2
+    assert key_nested1 != key_nested3
 
-    assert control.cache_misses() == 0, "There should be no cache misses in this test."
-    assert control.cache_hits() > 0, "There should be cache hits here."
+    # Test 6: Callable objects are canonicalized on the primary path
+    callable_1 = lambda x: x
+    callable_2 = lambda y: y * 2
 
-    assert sorted(ages_1) == sorted(ages_2), "The ages should be the same in both simulations."
-    assert sorted(nationalities_1) == sorted(nationalities_2), "The nationalities should be the same in both simulations."
-    assert sorted(minibios_1) == sorted(minibios_2), "The minibios should be the same in both simulations."
+    caplog.clear()
+    with caplog.at_level(logging.DEBUG):
+        key_callable_1 = sim_for_hash_test._function_call_hash("method_lambda", callable_1, kwarg1="test_callable")
+        key_callable_1_repeat = sim_for_hash_test._function_call_hash("method_lambda", callable_1, kwarg1="test_callable")
+        key_callable_2 = sim_for_hash_test._function_call_hash("method_lambda", callable_2, kwarg1="test_callable")
 
-    #
-    # let's also check the contents of the cache file, as raw text, not dict
-    #
-    with open("control_test_personfactory_multiple.cache.json", "r") as f:
-        cache_contents = f.read()
+        error_records = [rec for rec in caplog.records if rec.levelname == 'ERROR']
+        warning_records = [rec for rec in caplog.records if rec.levelname == 'WARNING']
 
-    assert "'_aux_model_call'" in cache_contents, "The cache file should contain the '_aux_model_call' call."
-    assert "'_setup_agent'" in cache_contents, "The cache file should contain the '_setup_agent' call."
-    assert "'define'" not in cache_contents, "The cache file should not contain the 'define' methods, as these are reentrant."
-    assert "'define_several'" not in cache_contents, "The cache file should not contain the 'define_several' methods, as these are reentrant."
+        assert key_callable_1 == key_callable_1_repeat
+        assert key_callable_1 != key_callable_2
+        assert len(key_callable_1) == 64
+        assert not error_records
+        assert not warning_records
 
-
+    # No need for control.begin/end or cache file for direct hash testing.
+    # control.end()
+    # remove_file_if_exists(cache_file) # No cache file used
+@requires_live_llm
 def test_begin_checkpoint_end_with_factory_demography(setup):
     # erase the file if it exists
     remove_file_if_exists("control_test_personfactory_demography.cache.json")
@@ -355,5 +443,3 @@ def test_begin_checkpoint_end_with_factory_demography(setup):
     # so they don't create separate cache entries. The parent transaction caches their results properly.
     assert "'define'" not in cache_contents, "The cache file should not contain the 'define' methods, as these are reentrant."
     assert "'define_several'" not in cache_contents, "The cache file should not contain the 'define_several' methods, as these are reentrant."
-
-

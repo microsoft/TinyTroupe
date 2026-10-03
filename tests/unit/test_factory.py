@@ -13,13 +13,30 @@ sys.path.insert(0, "../../tinytroupe/")
 from testing_utils import *
 
 import tinytroupe.control as control
+from tinytroupe import config_manager
 from tinytroupe.agent import TinyPerson
 from tinytroupe.control import Simulation
 from tinytroupe.examples import create_oscar_the_architect
 from tinytroupe.factory import TinyPersonFactory
 
 
+def _missing_live_llm_backend():
+    api_type = (config_manager.get("api_type") or "").lower()
+    if api_type == "openai":
+        return not os.environ.get("OPENAI_API_KEY")
+    if api_type == "azure":
+        return not os.environ.get("AZURE_OPENAI_API_KEY")
+    return False
+
+
+requires_live_llm = pytest.mark.skipif(
+    _missing_live_llm_backend(),
+    reason="Live factory generation test requires credentials, or use TINYTROUPE_CONFIG=tests/config_ollama.ini",
+)
+
+
 @pytest.mark.core
+@requires_live_llm
 def test_generate_person(setup):
     """Test basic single person generation with simple context."""
     bank_spec = """
@@ -39,20 +56,11 @@ def test_generate_person(setup):
     ), f"Proposition is false according to the LLM."
 
 
+@requires_live_llm
 def test_generate_person_with_different_temperatures(setup):
     """Test person generation with different temperature settings.
-    Note: This test only runs for models that contain 'gpt-4' in their name,
-    as other models (like gpt-5-mini) don't support custom temperatures.
+    Runs for any configured model; some backends may ignore temperature.
     """
-    import tinytroupe
-
-    # Get current model name and skip if not a gpt-4 model
-    model_name = tinytroupe.config_manager.get("model").lower()
-    if "gpt-4" not in model_name:
-        pytest.skip(
-            f"Model '{tinytroupe.config_manager.get('model')}' does not support custom temperatures - test only runs for gpt-4 models"
-        )
-
     context = "A technology startup focused on AI innovations."
 
     # Test with low temperature
@@ -71,6 +79,7 @@ def test_generate_person_with_different_temperatures(setup):
 
 
 @pytest.mark.core
+@requires_live_llm
 def test_generate_person_with_post_processing(setup):
     """Test person generation with post-processing function."""
     context = "A consulting firm."
@@ -89,6 +98,7 @@ def test_generate_person_with_post_processing(setup):
     assert consultant.get("certification") == "PMP"
 
 
+@requires_live_llm
 def test_generate_people(setup):
     """Test basic multiple people generation."""
     general_context = "We are performing some market research, and in that examining the whole of the American population."
@@ -124,6 +134,7 @@ def test_generate_people(setup):
         assert person.name is not None
 
 
+@requires_live_llm
 def test_generate_people_2(setup):
     """Test generating people equal to population size."""
     general_context = "We are performing some market research, and in that examining the whole of the American population."
@@ -157,6 +168,7 @@ def test_generate_people_2(setup):
         assert person.name is not None
 
 
+@requires_live_llm
 def test_generate_people_with_different_particularities(setup):
     """Test generating people with different agent particularities."""
     context = "A diverse urban community."
@@ -192,6 +204,7 @@ def test_generate_people_with_different_particularities(setup):
 
 
 @pytest.mark.core
+@requires_live_llm
 def test_generate_people_with_post_processing(setup):
     """Test generating multiple people with post-processing function."""
     context = "A research institution."
@@ -214,6 +227,7 @@ def test_generate_people_with_post_processing(setup):
         assert researcher.get("security_clearance") == "Level 2"
 
 
+@requires_live_llm
 def test_create_factory_from_demography_file(setup):
     """Test creating factory from demographic JSON file."""
     # Create a temporary demographic file
@@ -247,6 +261,7 @@ def test_create_factory_from_demography_file(setup):
 
 
 @pytest.mark.core
+@requires_live_llm
 def test_create_factory_from_demography_dict(setup):
     """Test creating factory from demographic dictionary."""
     demography_data = {
@@ -270,6 +285,7 @@ def test_create_factory_from_demography_dict(setup):
         assert person.name is not None
 
 
+@requires_live_llm
 def test_multiple_factories_sequentially(setup):
     """Test creating and using multiple factories one after another."""
     # First factory for investment firm
@@ -307,6 +323,7 @@ def test_multiple_factories_sequentially(setup):
     assert len(set(names)) == len(names)  # All names should be unique
 
 
+@requires_live_llm
 def test_multiple_factories_same_context_different_particularities(setup):
     """Test multiple factories with same context but different agent particularities."""
     context = "A large university with diverse academic departments."
@@ -353,6 +370,7 @@ def test_multiple_factories_same_context_different_particularities(setup):
         )
 
 
+@requires_live_llm
 def test_factory_with_sampling_plan_initialization(setup):
     """Test factory that uses sampling plan initialization."""
     sampling_space_description = """
@@ -387,6 +405,7 @@ def test_factory_with_sampling_plan_initialization(setup):
     assert len(more_people) == 3
 
 
+@requires_live_llm
 def test_factory_population_size_constraints(setup):
     """Test population size constraints and error handling."""
     factory = TinyPersonFactory(
@@ -408,6 +427,7 @@ def test_factory_population_size_constraints(setup):
     assert len(res) == 0
 
 
+@requires_live_llm
 def test_factory_name_uniqueness_across_factories(setup):
     """Test that names remain unique across multiple factory instances."""
     context1 = "Technology startup in Silicon Valley."
@@ -533,6 +553,7 @@ def test_factory_error_handling(setup):
         factory.generate_people(5)
 
 
+@requires_live_llm
 def test_factory_complex_market_research_scenario(setup):
     """Test complex scenario similar to travel market research notebook."""
     # Create multiple factories for different market segments
@@ -581,6 +602,7 @@ def test_factory_complex_market_research_scenario(setup):
 
 
 @pytest.mark.slow
+@requires_live_llm
 def test_large_scale_generation_multiple_industries(setup):
     """Test generating large numbers of people (100 per factory) across multiple industry factories."""
     # Create factories for different industries
@@ -660,6 +682,7 @@ def test_large_scale_generation_multiple_industries(setup):
     ), f"Total people generated {total_generated} outside expected range of 360-440"
 
 
+@requires_live_llm
 def test_large_scale_generation_geographic_regions(setup):
     """Test generating large numbers of people across different geographic regions."""
     # Create factories for different geographic regions
@@ -759,6 +782,7 @@ def test_large_scale_generation_geographic_regions(setup):
     ), "Names should be unique across all geographic regions"
 
 @pytest.mark.slow
+@requires_live_llm
 def test_large_scale_generation_performance_and_consistency(setup):
     """Test performance and consistency of large-scale generation across multiple runs."""
     # Create a factory with a well-defined sampling space

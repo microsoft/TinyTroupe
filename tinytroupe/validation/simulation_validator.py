@@ -19,7 +19,6 @@ import pandas as pd
 from tinytroupe.experimentation.statistical_tests import StatisticalTester
 from tinytroupe.utils.semantics import compute_semantic_proximity
 
-# TODO Work-in-Progress below
 
 class SimulationExperimentDataset(BaseModel):
     """

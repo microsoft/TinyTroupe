@@ -18,6 +18,13 @@ Tests that exercise LLM functionality use **real LLM API calls** rather than moc
 
 Use `--use_cache` for fast, reproducible runs; use `--refresh_cache` when validating against fresh model responses.
 
+### Ollama (scenario tests)
+For scenario tests with Ollama, use `TINYTROUPE_CONFIG=tests/config_ollama.ini`. The config uses `gemma3:4b` (4B params); `gemma3:1b` is too small and may return blank responses. Pull the model first:
+```bash
+ollama pull gemma3:4b
+TINYTROUPE_CONFIG=tests/config_ollama.ini pytest tests/scenarios/ -v
+```
+
 ## Pytest Markers
 
 | Marker | Purpose | Command Example |

@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 from unittest.mock import MagicMock, Mock, patch
 
 import pytest
@@ -14,6 +15,7 @@ sys.path.insert(0, "..")
 
 from testing_utils import *
 
+from tinytroupe import config_manager
 from tinytroupe.agent import TinyPerson
 from tinytroupe.agent.action_generator import ActionGenerator
 from tinytroupe.examples import (
@@ -24,6 +26,20 @@ from tinytroupe.examples import (
 # ====================================================================
 # TEST FIXTURES AND HELPERS
 # ====================================================================
+
+def _missing_live_llm_backend():
+    api_type = (config_manager.get("api_type") or "").lower()
+    if api_type == "openai":
+        return not os.environ.get("OPENAI_API_KEY")
+    if api_type == "azure":
+        return not os.environ.get("AZURE_OPENAI_API_KEY")
+    return False
+
+
+requires_live_llm = pytest.mark.skipif(
+    _missing_live_llm_backend(),
+    reason="Live LLM test requires credentials, or use TINYTROUPE_CONFIG=tests/config_ollama.ini",
+)
 
 @pytest.fixture(autouse=True)
 def cleanup_agents():
@@ -297,6 +313,7 @@ def test_action_generator_initialization():
 
 
 @pytest.mark.core
+@requires_live_llm
 def test_action_generator_with_agent(setup):
     """Test ActionGenerator integration with TinyPerson agents using real API."""
 
@@ -330,6 +347,7 @@ def test_action_generator_with_agent(setup):
 
 
 @pytest.mark.core
+@requires_live_llm
 def test_action_generator_quality_checks(setup):
     """Test ActionGenerator quality checking mechanisms with real API."""
 
@@ -368,6 +386,7 @@ def test_action_generator_quality_checks(setup):
     logger.info(f"Quality check test statistics: {stats}")
 
 
+@requires_live_llm
 def test_action_generator_regeneration(setup):
     """Test ActionGenerator regeneration capabilities with real API."""
     generator = ActionGenerator(
@@ -425,6 +444,7 @@ def test_action_generator_serialization():
     assert new_generator.quality_threshold == generator.quality_threshold
 
 
+@requires_live_llm
 def test_action_generator_error_handling():
     """Test ActionGenerator error handling and edge cases."""
 
@@ -442,6 +462,7 @@ def test_action_generator_error_handling():
     assert len(actions) >= 1, "Should handle long input gracefully"
 
 
+@requires_live_llm
 def test_action_generator_different_configurations(setup):
     """Test ActionGenerator with various configuration combinations using real API."""
     configs = [
@@ -475,6 +496,7 @@ def test_action_generator_different_configurations(setup):
         logger.info(f"Statistics for config {config}: {stats}")
 
 
+@requires_live_llm
 def test_action_generator_persona_adherence_correction(setup):
     """Test that the action generator corrects actions that don't adhere to persona by injecting bad actions."""
 
@@ -581,6 +603,7 @@ def test_action_generator_persona_adherence_correction(setup):
     assert regeneration_triggered, "Should trigger regeneration for persona violations"
 
 
+@requires_live_llm
 def test_action_generator_self_consistency_correction(setup):
     """Test that the action generator corrects actions that are self-inconsistent by injecting bad actions."""
 
@@ -685,6 +708,7 @@ def test_action_generator_self_consistency_correction(setup):
     logger.info(f"Self-consistency test statistics: {stats}")
 
 
+@requires_live_llm
 def test_action_generator_direct_correction_mechanism(setup):
     """Test the direct correction mechanism (not regeneration)."""
 
@@ -765,6 +789,7 @@ def _create_comprehensive_generator(*, max_action_similarity=0.6):
     )
 
 
+@requires_live_llm
 def test_comprehensive_stress_1_persona_violation(setup):
     """Subtest 1: Test persona violation correction."""
     logger.info("=== Subtest 1: Persona Violation ===")
@@ -798,6 +823,7 @@ def test_comprehensive_stress_1_persona_violation(setup):
     return persona_correction_triggered
 
 
+@requires_live_llm
 def test_comprehensive_stress_2_self_consistency_violation(setup):
     """Subtest 2: Test self-consistency violation correction."""
     logger.info("=== Subtest 2: Self-Consistency Violation ===")
@@ -833,6 +859,7 @@ def test_comprehensive_stress_2_self_consistency_violation(setup):
     return consistency_correction_triggered
 
 
+@requires_live_llm
 def test_comprehensive_stress_3_fluency_violation(setup):
     """Subtest 3: Test fluency violation correction."""
     logger.info("=== Subtest 3: Fluency Violation ===")
@@ -865,6 +892,7 @@ def test_comprehensive_stress_3_fluency_violation(setup):
     return fluency_correction_triggered
 
 
+@requires_live_llm
 def test_comprehensive_stress_4_similarity_violation(setup):
     """Subtest 4: Test similarity violation correction."""
     logger.info("=== Subtest 4: Similarity Violation ===")
@@ -901,6 +929,7 @@ def test_comprehensive_stress_4_similarity_violation(setup):
     return similarity_correction_triggered
 
 
+@requires_live_llm
 def test_comprehensive_stress_5_multi_violation(setup):
     """Subtest 5: Test multiple violations in one action."""
     logger.info("=== Subtest 5: Multiple Violations ===")
@@ -939,6 +968,7 @@ def test_comprehensive_stress_5_multi_violation(setup):
     return multi_correction_triggered
 
 
+@requires_live_llm
 def test_action_generator_comprehensive_correction_stress_test(setup):
     """Comprehensive test covering all correction mechanisms with different violation types.
     
@@ -975,6 +1005,7 @@ def test_action_generator_comprehensive_correction_stress_test(setup):
     assert total_corrections >= 3, f"At least 3 out of 5 correction tests should succeed, got {total_corrections}"
 
 
+@requires_live_llm
 def test_action_generator_correction_mechanisms_comparison(setup):
     """Test and compare regeneration vs direct correction mechanisms using controlled bad action injection."""
 

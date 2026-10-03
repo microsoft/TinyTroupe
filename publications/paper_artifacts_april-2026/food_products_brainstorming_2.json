@@ -1,0 +1,212 @@
+{
+    "experiments": {
+        "Control": {},
+        "Treatment": {
+            "results": {
+                "ideas": [
+                    {
+                        "name": "PantryPilot",
+                        "description": "A consumer + small-business inventory and calendar-aware meal planning system combining simple shelf/cabinet sensors, barcode/QR scanning and a privacy-first app to plan batch-cooking, multi-day menus and precise shopping/portion lists.",
+                        "problem": "Reduces food waste and weekday cooking friction by tracking on-hand ingredients and recommending when and what to cook given limited time and storage.",
+                        "target_audience": "Busy home cooks, small households, apartment residents, and employers/developers running employee-wellbeing or sustainability programs.",
+                        "competition_analysis": "Differs from generic grocery apps or inventory trackers by tightly integrating simple physical sensing (shelf presence sensors + quick-scan flows), calendar-aware scheduling (auto-slotting batch-cook windows) and privacy-first defaults; it targets low-friction, out-of-box use rather than heavyweight smart-fridge ecosystems or purely manual apps."
+                    },
+                    {
+                        "name": "StackFresh",
+                        "description": "A modular, stackable in-cabinet preservation system: removable inserts (vacuum dry-canisters, humidity-controlled veg drawer, chilling tray, induction prep plate, compost module) that lock together and communicate to extend freshness and enable small-scale micro-prep.",
+                        "problem": "Addresses limited fridge/pantry space and the need for multi-function preservation and micro-prep in compact kitchens.",
+                        "target_audience": "Apartment dwellers, developers specifying kitchen modules, and consumers seeking fridge/pantry upgrades; also building amenity buyers.",
+                        "competition_analysis": "Unlike single-purpose preservation devices (vacuum sealers, crisper drawers), StackFresh is a unified modular bus with interoperable functional inserts and a companion app \u2014 prioritizing small-footprint customization and cabinetry integration rather than a single fixed appliance."
+                    },
+                    {
+                        "name": "NeuroFuel Concierge",
+                        "description": "A subscription meal-and-nutrition service tailored to neurologists, busy clinicians and patients: evidence-based, fast-to-prepare meals, texture-modified therapeutic lines (IDDSI-compliant), on-call packs and tele-nutrition support with shift-aligned logistics.",
+                        "problem": "Solves clinicians' and patients' need for safe, palatable, nutritionally-optimized meals that fit unpredictable schedules and dysphagia/therapeutic constraints.",
+                        "target_audience": "Neurologists, stroke/rehab clinics, caregivers, and patients requiring texture-modified diets.",
+                        "competition_analysis": "Differs from mainstream meal-kit and medical-nutrition providers by combining clinician-curated menus, clinic-facing workflows (Clinic Suite), explicit texture-modified production and EHR-aware referral/pilot-first integrations; it emphasizes clinical safety, prescription-aligned offerings and tele-nutrition rather than generic consumer meal subscriptions."
+                    },
+                    {
+                        "name": "FlavorForge",
+                        "description": "A compact countertop device + app that produces single-serving concentrated edible flavor elements (dissolvable tiles/strips/micro-sauces) from sealed cartridges so simple staples can be transformed into diverse, flavorful meals instantly.",
+                        "problem": "Makes quick, bland staples (rice, steamed veg, proteins) more appealing without buying many ingredients or doing complex prep \u2014 saving time and reducing ingredient waste.",
+                        "target_audience": "Time-pressed home cooks, office pantries, small households and users seeking low-odor, low-cleanup flavoring solutions.",
+                        "competition_analysis": "Unlike bottled sauces or meal-kits, FlavorForge dispenses single-serve, precisely portioned concentrated flavor elements from sealed cartridges and supports dietary lines (low-sodium, vegan, allergy-free); it focuses on on-demand, low-waste flavoring rather than full meal preparation."
+                    },
+                    {
+                        "name": "PalatePrint",
+                        "description": "A clinician-focused 3D food fabrication system that creates texture-modified, nutritionally-tailored, visually appealing single-serve meals on demand using sealed nutrient cartridges and IDDSI-calibrated deposition.",
+                        "problem": "Enables safe, dignified feeding for dysphagia patients while preserving nutritional goals and meal appeal in clinical and home rehab settings.",
+                        "target_audience": "Hospitals, rehab clinics, dietitians, neurologists, and families/caregivers of patients needing texture-modified diets.",
+                        "competition_analysis": "Stands apart from generic food printers by being explicitly designed for clinical IDDSI compliance, sealed therapeutic cartridges, clinician portals and rigorous safety/pilot workflows; it prioritizes medical validation and traceability rather than novelty culinary printing."
+                    },
+                    {
+                        "name": "PlateLens",
+                        "description": "A handheld near-infrared/visible-light spectrometer + ML app that provides quick, on-the-spot estimates of a plated meal's macronutrients, sodium range and simple micronutrient signals with confidence intervals.",
+                        "problem": "Helps people make immediate nutrition judgments about single servings and supports anonymous aggregate insights for workplace cafeterias to improve offerings and reduce unhealthy choices.",
+                        "target_audience": "Health-conscious consumers, nutrition-aware workers, workplace cafeterias, and wellness program managers.",
+                        "competition_analysis": "Differs from calorie-counting apps and smartphone-only photo estimators by combining a small portable spectrometer sensor with image features and on-device ML for faster, more direct nutrient estimation; it prioritizes single-serve checks and privacy-first local inference rather than cloud-based logging."
+                    },
+                    {
+                        "name": "HarvestHall",
+                        "description": "A building-level food amenity: a climate-controlled communal pantry + shared prep kitchen + logistics hub that supports coordinated bulk purchasing, secure storage lockers, shared cooking/packaging stations and a resident app for scheduling and food swaps.",
+                        "problem": "Solves limited in-unit storage, high per-unit cost of small purchases, and the inefficiency of individual bulk buying for apartment residents.",
+                        "target_audience": "Multi-unit residential buildings, property developers, residents seeking shared amenities and sustainability-minded communities.",
+                        "competition_analysis": "Unlike neighborhood co-ops or ad-hoc shared kitchens, HarvestHall is specifiable to developers with instrumented lockers, booking/fairness engines, and integrated bulk-order logistics \u2014 combining hardware, SaaS ops and community features tailored for building-scale deployment."
+                    },
+                    {
+                        "name": "BiteBridge",
+                        "description": "An integrated mealtime system (sensorized plateware, adaptive utensils, smart cup and companion app) that guides bite size and pacing, logs intake and supports caregivers/clinicians managing dysphagia and therapeutic diets while also encouraging mindful eating for busy professionals.",
+                        "problem": "Provides objective intake data and real-time pacing guidance to reduce aspiration risk, improve intake, and encourage healthier, paced eating.",
+                        "target_audience": "Clinics treating dysphagia, caregivers, rehabilitation units, and mindful-eating consumers or workplace wellbeing programs.",
+                        "competition_analysis": "More clinically focused than general smart-utensil concepts: BiteBridge combines plate load sensing, utensil IMUs and caregiver dashboards with explicit incident flags and clinical pilot designs \u2014 emphasizing safety, dignity and validated metrics rather than consumer gamified utensils."
+                    },
+                    {
+                        "name": "PrepSync",
+                        "description": "A dishwasher-safe multi-zone smart prep-mat plus app that makes rapid mise en place repeatable and shareable: weight-sensing zones, NFC tag slots, timed parallel-prep workflows and an anonymous workplace ingredient-exchange feed.",
+                        "problem": "Reduces prep time and cognitive load for multi-component meals and enables coworkers to swap or claim surplus prepped items to minimize waste.",
+                        "target_audience": "Home cooks who value mise en place, office kitchens and shared kitchens wanting to reduce waste and coordinate prep.",
+                        "competition_analysis": "Unlike kitchen scales or recipe apps, PrepSync embeds multi-zone sensing and coordinated guided prep flows to enable parallel, time-boxed preparation with workplace exchange features \u2014 focusing on coordinated prep rather than inventory or full automation."
+                    },
+                    {
+                        "name": "LeftoverLab",
+                        "description": "A compact countertop appliance + app that recomposes disparate leftovers into cohesive, freshly-textured meals in 6\u201312 minutes using gentle steam, targeted crisping, rapid reheating zones and scent/flavor infusion pods guided by a recomposition engine.",
+                        "problem": "Makes leftovers satisfying and convenient, reducing food waste and the temptation to opt for less-healthy convenience meals.",
+                        "target_audience": "Busy singles/couples, office kitchens, and workplace remix kiosks that want to convert cafeteria surplus into appealing meals.",
+                        "competition_analysis": "Differs from standard microwaves or rethermalizers by combining multi-zone thermal control, targeted texture restoration and a recipe engine that optimizes flavor pairing from arbitrary inputs, focusing on recomposition rather than reheating alone."
+                    },
+                    {
+                        "name": "CrispClip",
+                        "description": "A reusable standardized container-lid and docking ecosystem that turns ordinary meal containers into steam-controlled, crispable reheating vessels with adjustable vents and removable crisping inserts for microwave/air-oven use.",
+                        "problem": "Solves poor reheating results (soggy textures) and reduces disposable crisping trays or single-use packaging in shared kitchens.",
+                        "target_audience": "Office workers using shared microwaves/combination ovens, takeout consumers, and anyone wanting better reheated textures with minimal cleanup.",
+                        "competition_analysis": "Unlike disposable crisping solutions and single-use trays, CrispClip is a reusable, universal adapter family with safety-minded materials and an app/db of recommended cycles \u2014 a low-tech, low-cost intervention bridging container formats and diverse heating equipment."
+                    },
+                    {
+                        "name": "Revivr",
+                        "description": "A reusable, refillable culinary-capsule ecosystem plus workplace refill-and-sanitization kiosks: chef-formulated refill capsules (hydration gels, umami concentrates, brightening emulsions, crisping toppers) that attach to containers and are returned to kiosks for bulk refilling and sanitization.",
+                        "problem": "Revives taste, moisture and aroma of leftovers quickly while dramatically reducing single-use sachet waste.",
+                        "target_audience": "Busy home cooks, office kitchens, corporate sustainability programs, and catering/foodservice operations.",
+                        "competition_analysis": "Differs from disposable sauce sachets or single-use flavor packets by combining durable refillable cartridges, centralized kiosk sanitization/refill services and chef-formulated concentrated lines \u2014 aiming for operational scale and lower single-use waste footprint."
+                    },
+                    {
+                        "name": "RouteChef",
+                        "description": "A passive thermal-cooking ecosystem using insulated vessels and pre-heated phase-change heat cartridges (PCHCs) engineered to finish meals safely and predictably during transit or between calendar slots.",
+                        "problem": "Allows chef-prepared or home-prepped meals to reach safe temperatures and preferred textures without on-site reheating, enabling consumption between meetings or during commute gaps.",
+                        "target_audience": "Commuters, busy professionals, meal-delivery services, and workplaces seeking to offer hot or freshly-finished meals without on-site appliances.",
+                        "competition_analysis": "Unlike insulated lunchboxes or hot-holding delivery containers, RouteChef is engineered with calibrated phase-change cartridges and recipe engineering for controlled thermal curves and optional workplace recharge kiosks, enabling predictable safe finish rather than simple thermal retention."
+                    },
+                    {
+                        "name": "CompostLoop",
+                        "description": "A dual consumer + enterprise system combining a compact countertop digester (odor-controlled, low-energy accelerated aerobic processing) with a workplace smart-compost fleet/collection service and privacy-first analytics showing avoided waste and CO2e savings.",
+                        "problem": "Closes the loop on food scraps for busy cooks and workplaces by removing disposal friction and providing measurable sustainability outcomes.",
+                        "target_audience": "Environmentally-minded households, employers with sustainability goals, and building operators.",
+                        "competition_analysis": "Differs from municipal composting or purely home composters by offering an appliance optimized for indoor countertop use, integrated workplace collection and fleet management plus aggregated, anonymized sustainability metrics for employers \u2014 focusing on convenience, odor control and program measurability."
+                    },
+                    {
+                        "name": "Cookpool",
+                        "description": "A social-scheduling platform plus lightweight kitchen kit that coordinates pooled batch-cooking across households or coworkers: calendar-first scheduling, ingredient pooling/automated apportioning, simple food-safety checklists and employer modules for sponsored community cook events.",
+                        "problem": "Reduces individual cooking burden and time spent preparing meals by letting small groups share cooking effort and outputs.",
+                        "target_audience": "Neighborhood pods, co-living residents, coworkers, and employers running community-cook or benefit programs.",
+                        "competition_analysis": "Unlike meal-share forums or meal-train apps, Cookpool emphasizes calendar-synced scheduling, automated ingredient apportionment and workplace integrations for corporate-sponsored events \u2014 treating cooking time as a schedulable, shareable resource rather than a purely transactional food swap."
+                    },
+                    {
+                        "name": "PlateSense",
+                        "description": "A privacy-first smart plate/placemat system and app that analyzes in real time (per-zone weight, color imaging, thermal cue) to estimate portions and nutrition and provide immediate micro-interventions to improve a quick meal's balance and satiety.",
+                        "problem": "Helps users make rapid improvements to hurried weekday meals (e.g., add protein, fiber) and encourages taking mindful breaks to reduce skipped meals.",
+                        "target_audience": "Busy professionals, workplace wellbeing programs and cafeteria operators seeking non-invasive nudges to healthier eating.",
+                        "competition_analysis": "Differs from diet-tracking wearables and photo-based calorie apps by using per-zone load sensing and on-device inference for immediate, plate-level micro-advice \u2014 focused on pragmatic micro-interventions in short time windows and preserving local privacy."
+                    },
+                    {
+                        "name": "FacadeFarm / GreenSill",
+                        "description": "Building-integrated micro-farm modules (balcony/fa\u00e7ade cassettes or window-sill trays) that let residents grow herbs, salad greens and small vegetables year-round using shallow hydroponic/soil-hybrid trays and low-power automation.",
+                        "problem": "Provides on-demand fresh produce in small urban units, improves biophilia and reduces short-supply friction for garnishes and greens.",
+                        "target_audience": "Apartment residents, developers offering amenity packages and city dwellers wanting ultra-local produce.",
+                        "competition_analysis": "Unlike consumer grow boxes, these are specifiable building amenities designed to integrate with architecture (standard cassette sizes), optionally shared maintenance services and developer-installed infrastructure \u2014 combining design-for-integration with resident convenience."
+                    },
+                    {
+                        "name": "AeroDock",
+                        "description": "A developer-integrated last-mile delivery port for fresh-food logistics: sheltered landing pad plus temperature-controlled lockers and mechanical transfer systems to hand parcels into building lockers or micro-pantries safely.",
+                        "problem": "Addresses perishable delivery challenges (temperature control, timely handoff, theft) in dense residential buildings and enables faster same-day fresh deliveries.",
+                        "target_audience": "New developments, large residential buildings, last-mile logistics operators and e-grocery services.",
+                        "competition_analysis": "Different from standard parcel lockers by being engineered for active environmental transfer (chilled pass-through, transfer arms or drones) and perishable handling; it's a building-level infrastructure product rather than a consumer locker service."
+                    },
+                    {
+                        "name": "TasteGym",
+                        "description": "A clinician-grade sensory rehabilitation platform: modular scent/taste training kits (sealed vials and graded taste strips), an app with evidence-based exercises and a professional dashboard for guided olfactory/taste rehab.",
+                        "problem": "Helps patients recover appetite and flavor perception after neurological injury, improving nutritional intake and engagement with meals.",
+                        "target_audience": "Neurology clinics, speech-language pathologists, rehab centers and patients undergoing sensory re-training.",
+                        "competition_analysis": "Unlike generic smell-training kits, TasteGym is clinician-oriented with graded concentrations, sealed modules, tele-supervision features and repeatable protocols designed for measurable rehab outcomes rather than consumer wellbeing."
+                    },
+                    {
+                        "name": "NeuroSprout Station",
+                        "description": "A compact countertop microfarm that grows nutrient-dense microgreens and herbs on a 7\u201314 day cycle using sealed seed cartridges, automated lighting and watering, intended for clinician/home use and therapeutic patient engagement.",
+                        "problem": "Provides on-demand fresh, nutrient-dense garnishes and a therapeutic, patient-engaging activity without supply-chain friction.",
+                        "target_audience": "Clinics, especially neurology and rehab units, busy clinicians and small households.",
+                        "competition_analysis": "Distinguishes itself from home grow boxes by providing sealed cartridges, clinic-grade hygiene controls, traceability and dual-use clinic/home workflows oriented around patient engagement and safety standards."
+                    },
+                    {
+                        "name": "FloorFeast",
+                        "description": "A standardized shared micro-kitchen per residential floor: bookable slots, chilled lockers for ingredient storage, ingredient-exchange pantry and optionally professional-grade appliances and on-demand local cooks.",
+                        "problem": "Gives residents access to better kitchen facilities without in-unit upgrades, enables shared cooking and micro-catering and reduces per-unit appliance redundancy.",
+                        "target_audience": "Multi-unit buildings, property developers and residents seeking community cooking resources.",
+                        "competition_analysis": "Unlike ad-hoc community kitchens, FloorFeast is a developer-spec amenity with booking/locker systems, standardized hygiene and optional on-demand culinary services \u2014 designed to be a recurring, monetizable building amenity."
+                    },
+                    {
+                        "name": "KitchenFoundry",
+                        "description": "A developer-spec incubator/comissary suite inside buildings: licensed shared-kitchen bays, cold/dry storage lockers, packaging stations and a SaaS operations layer for bookings, certifications and last-mile logistics to enable resident food entrepreneurs.",
+                        "problem": "Enables residents to start small food businesses without external commissary rental and provides localized fresh options for residents.",
+                        "target_audience": "Aspiring resident food entrepreneurs, developers, and building operators supporting local micro-enterprises.",
+                        "competition_analysis": "Unlike standalone commissaries, KitchenFoundry is integrated into building infrastructure with MEP hook-ups and building-focused SaaS ops, lowering startup friction for micro-producers inside residential developments."
+                    },
+                    {
+                        "name": "MealMind VR",
+                        "description": "A VR training and rehearsal platform that simulates cooking, feeding and mealtime scenarios for patients, caregivers and clinicians with optional low-cost instrumented utensils and clinician dashboards for training and tele-supervision.",
+                        "problem": "Provides safe, repeatable practice for feeding/cooking tasks and caregiver training without risk to patients and with objective performance data.",
+                        "target_audience": "Rehab clinics, caregivers, training programs and clinicians needing scalable rehearsal tools.",
+                        "competition_analysis": "Different from consumer cooking VR by focusing on graded rehab scenarios, simple instrumented proxies (load tray, IMU utensils) and clinician tele-supervision rather than entertainment or recipe learning."
+                    },
+                    {
+                        "name": "AbleKitchen Station",
+                        "description": "A modular, safety-first adaptive kitchen workstation plus tele-rehab platform enabling people with motor/cognitive impairments to cook independently with guarded induction, knife guides, slide-and-lock prep boards and adaptive utensils.",
+                        "problem": "Improves autonomy and nutrition for users with motor/cognitive impairments while producing measurable rehab signals for clinicians.",
+                        "target_audience": "Rehab clinics, assisted-living sites, families of people with disabilities and occupational therapists.",
+                        "competition_analysis": "Unlike off-the-shelf ergonomic tools, AbleKitchen combines physical safety features, assisted workflows and clinician telemetry designed for validated rehab use and clinic pilots rather than general accessibility kitchenware."
+                    },
+                    {
+                        "name": "PacePlate",
+                        "description": "A smart tableware system (plate + sensorized utensils + optional wearable/neck patch) measuring bite/chew/swallow timing and providing gentle biofeedback to promote paced, safer eating and stream objective metrics to clinicians.",
+                        "problem": "Helps pace eating to reduce aspiration risk, improve mindful eating and support dysphagia therapy with objective metrics.",
+                        "target_audience": "Clinics treating swallowing disorders, caregivers, and workers seeking mindful-eating aids.",
+                        "competition_analysis": "More clinically-oriented than consumer pacing gadgets: PacePlate integrates swallow detection (optional throat sensor), utensil and plate fusion and clinician-facing pacing programs rather than purely consumer biofeedback wearables."
+                    },
+                    {
+                        "name": "PantryPort",
+                        "description": "A modular bank of secure, climate-zoned pantry and refrigerated lockers integrated into the building core offering resident-accessible storage for bulk groceries, meal-kit drop-offs and short-term cold storage.",
+                        "problem": "Relieves in-unit storage pressure and simplifies receipt of grocery deliveries and bulk buying for residents.",
+                        "target_audience": "Apartment buildings, residents, developers and delivery/logistics providers.",
+                        "competition_analysis": "Unlike ordinary parcel lockers, PantryPort includes climate zones (chilled/frozen) and is positioned as a micro-fulfilment hub for residents rather than general parcel pickup, integrating with building services and subscriptions."
+                    },
+                    {
+                        "name": "SolarLarder",
+                        "description": "A fa\u00e7ade- or balcony-integrated cassette system that passively solar-dries fruit, herbs and vegetables into shelf-stable goods and provides secure ventilated storage for the dried products.",
+                        "problem": "Enables low-energy, building-integrated drying and storage of produce to reduce perishables waste and extend seasonal yields.",
+                        "target_audience": "Developers, urban gardeners, residents interested in low-energy food preservation and building sustainability programs.",
+                        "competition_analysis": "Unlike backyard food-drying or electric dehydrators, SolarLarder is designed as an architectural amenity with passive airflow design and building integration, prioritizing developer-spec reproducibility and passive energy use."
+                    },
+                    {
+                        "name": "AromaBridge",
+                        "description": "A compact scent-and-oral-sensory stimulation system delivering calibrated aroma microbursts and safe mouth-surface flavor enhancers timed before/during eating to boost appetite, prime swallowing reflexes and make fast meals more satisfying.",
+                        "problem": "Improves appetite and swallow timing for patients with poor intake and makes reheated or quick meals more appealing so busy people are likelier to take proper breaks.",
+                        "target_audience": "Clinics (neurology/rehab), SLP-guided therapy programs, caregivers and busy professionals seeking appetite/meal enjoyment support.",
+                        "competition_analysis": "Unlike consumer aroma diffusers, AromaBridge is clinically calibrated, includes mild trigeminal-safe formulations and is paired with protocols for therapeutic use and SLP integration rather than ambient scenting."
+                    }
+                ]
+            }
+        }
+    },
+    "active_experiment": "Treatment",
+    "finished_all_experiments": false,
+    "finished_experiments": [
+        "Treatment"
+    ]
+}
