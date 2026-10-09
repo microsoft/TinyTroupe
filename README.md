@@ -736,6 +736,22 @@ This approach allows you to:
 
 The programmatic overrides take precedence over the values in the `config.ini` file, allowing you to fine-tune behavior for specific use cases or experiments.
 
+#### Per-person action temperature
+
+Set `temperature` when creating a `TinyPerson` to give its generated actions a different sampling temperature from the global `TEMPERATURE` setting:
+
+```python
+from tinytroupe.agent import TinyPerson
+
+careful = TinyPerson("Careful", temperature=0.2)
+exploratory = TinyPerson("Exploratory", temperature=1.2)
+default = TinyPerson("Default")  # Uses the global temperature setting
+```
+
+The override is saved with the person's specification. It applies to action generation, including the optional reasoning step; other model calls retain their own settings. Choose a model that supports custom temperatures: the default `gpt-5-mini` does not, so its client ignores non-default temperature values.
+
+For a person created by `TinyPersonFactory.generate_person()`, set `person.temperature` on the returned person. The factory's own `temperature` argument controls generation of the person's specification, not their later actions.
+
 ### Other Utilities
 
 TinyTroupe provides additional utilities and conveniences not covered in detail above:

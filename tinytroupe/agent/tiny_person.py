@@ -55,6 +55,7 @@ class TinyPerson(JsonSerializableRegistry):
 
     serializable_attributes = [
         "_persona",
+        "temperature",
         "_mental_state",
         "_mental_faculties",
         "_current_episode_event_count",
@@ -85,6 +86,7 @@ class TinyPerson(JsonSerializableRegistry):
         semantic_memory=None,
         mental_faculties: list = None,
         enable_basic_action_repetition_prevention: bool = True,
+        temperature: float | None = None,
     ):
         """
         Creates a TinyPerson.
@@ -96,6 +98,7 @@ class TinyPerson(JsonSerializableRegistry):
             semantic_memory (SemanticMemory, optional): The memory implementation to use. Defaults to SemanticMemory().
             mental_faculties (list, optional): A list of mental faculties to add to the agent. Defaults to None.
             enable_basic_action_repetition_prevention (bool, optional): Whether to enable basic action repetition prevention. Defaults to True.
+            temperature (float, optional): Sampling temperature for this person's actions. None uses the global setting.
         """
 
         # NOTE: default values will be given in the _post_init method, as that's shared by
@@ -119,6 +122,8 @@ class TinyPerson(JsonSerializableRegistry):
                 enable_basic_action_repetition_prevention
             )
 
+        self.temperature = temperature
+
         assert name is not None, "A TinyPerson must have a name."
         self.name = name
 
@@ -139,6 +144,9 @@ class TinyPerson(JsonSerializableRegistry):
         ############################################################
 
         self.current_messages = []
+
+        if not hasattr(self, "temperature"):
+            self.temperature = None
 
         # the current environment in which the agent is acting
         self.environment = None
