@@ -8,6 +8,10 @@
 *LLM-powered multiagent persona simulation for imagination enhancement and business insights.*
 
 <p align="center">
+  <b>English</b> · <a href="https://github.com/microsoft/TinyTroupe/blob/main/README.zh.md">简体中文</a>
+</p>
+
+<p align="center">
   <img src="./docs/tinytroupe_stage.png" alt="A tiny office with tiny people doing some tiny jobs.">
 </p>
 
