@@ -746,6 +746,7 @@ TinyTroupe provides additional utilities and conveniences not covered in detail 
   - `ResultsExtractor` and `ResultsReducer`: extract and reduce the results of interactions between agents.
   - `ArtifactExporter`: export simulation artifacts (documents, data) to files.
   - Mental faculties (`TinyToolUse`, `FilesAndWebGroundingFaculty`): extend agent capabilities with tool use and grounding.
+  - [`TinyWebSearch`](./docs/guides/web-search.md): explicitly give a persona free web search and source-page excerpts through Parallel Search MCP.
   - ... and more ...
   
 In general, elements that represent simulated entities or complementary mechanisms are prefixed with `Tiny`, while those that are more infrastructural are not. This emphasizes the simulated nature of the elements that are part of the simulation itself.
