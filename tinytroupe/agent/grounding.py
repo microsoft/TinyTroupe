@@ -4,7 +4,7 @@ import tinytroupe.utils as utils
 from tinytroupe.agent import logger
 from llama_index.core import  VectorStoreIndex, SimpleDirectoryReader, Document, StorageContext, load_index_from_storage
 from llama_index.core.vector_stores import SimpleVectorStore
-from llama_index.readers.web import SimpleWebPageReader
+from tinytroupe.utils.web import fetch_web_page
 import tempfile
 import os
 
@@ -373,6 +373,7 @@ class LocalFilesGroundingConnector(BaseSemanticGroundingConnector):
 
 @utils.post_init
 class WebPagesGroundingConnector(BaseSemanticGroundingConnector):
+    """Ground agents in webpages permitted by the application's WebGrounding policy."""
 
     serializable_attributes = ["web_urls"]
 
@@ -397,13 +398,17 @@ class WebPagesGroundingConnector(BaseSemanticGroundingConnector):
         Adds the data retrieved from the specified URLs to grounding.
         """
         filtered_web_urls = [url for url in web_urls if url not in self.loaded_web_urls]
-        for url in filtered_web_urls:
-            self._mark_web_url_as_loaded(url)
-
         if len(filtered_web_urls) > 0:
-            new_documents = SimpleWebPageReader(html_to_text=True).load_data(filtered_web_urls)
+            import html2text
+
+            new_documents = [
+                Document(text=html2text.html2text(fetch_web_page(url)), id_=url, metadata={"url": url})
+                for url in filtered_web_urls
+            ]
             BaseSemanticGroundingConnector._set_internal_id_to_documents(new_documents, "url")
             self.add_documents(new_documents)
+            for url in filtered_web_urls:
+                self._mark_web_url_as_loaded(url)
     
     def add_web_url(self, web_url:str) -> None:
         """
@@ -419,4 +424,3 @@ class WebPagesGroundingConnector(BaseSemanticGroundingConnector):
         
         if web_url not in self.web_urls:
             self.web_urls.append(web_url)
-

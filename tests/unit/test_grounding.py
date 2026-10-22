@@ -102,27 +102,12 @@ def test_local_files_grounding_connector_empty_folder():
         shutil.rmtree(empty_dir)
 
 def test_web_pages_grounding_connector():
-    """Test WebPagesGroundingConnector basic functionality."""
-    
-    # Test with sample URLs (Note: This might need mocking in a real test environment)
-    urls = ["https://example.com", "https://httpbin.org/html"]
-    
-    try:
-        connector = WebPagesGroundingConnector(
-            name="web_connector",
-            urls=urls
-        )
-        
-        # Test initialization
-        assert connector.name == "web_connector"
-        assert connector.urls == urls
-        
-        # Note: Actual web fetching might fail in test environment
-        # In a production test, you would mock the web requests
-        
-    except Exception as e:
-        # Web connections might fail in test environment - that's ok
-        logger.warning(f"Web connector test failed (expected in test env): {e}")
+    """An empty web connector initializes without network or model calls."""
+    connector = WebPagesGroundingConnector(name="web_connector")
+    assert connector.name == "web_connector"
+    assert connector.web_urls == []
+    assert connector.loaded_web_urls == []
+    assert connector.documents == []
 
 def test_base_semantic_grounding_connector():
     """Test BaseSemanticGroundingConnector functionality."""
