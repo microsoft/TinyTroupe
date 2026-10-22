@@ -131,7 +131,9 @@ def fetch_web_page(url: str) -> str:
         try:
             connection.sock = _connect(addresses)
             if parsed.scheme == "https":
-                connection.sock = ssl.create_default_context().wrap_socket(
+                context = ssl.create_default_context()
+                context.minimum_version = ssl.TLSVersion.TLSv1_2
+                connection.sock = context.wrap_socket(
                     connection.sock, server_hostname=host
                 )
             path = parsed.path or "/"

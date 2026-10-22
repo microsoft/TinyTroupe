@@ -764,7 +764,8 @@ even when private-network access is enabled.
 
 The policy applies to constructor, explicit-add, and deserialization-triggered
 webpage fetches. It checks DNS results at every redirect and connects directly
-to a checked address, preserving HTTPS certificate verification. Environment
+to a checked address, requiring TLS 1.2 or newer for HTTPS and preserving
+certificate and hostname verification. Environment
 HTTP proxies are not used. Requests have a 30-second socket timeout, at most
 five redirects, and a 10 MiB response limit. Denied destinations raise
 `PermissionError`; failed fetches are not marked as loaded.

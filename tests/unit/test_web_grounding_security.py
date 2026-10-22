@@ -18,6 +18,9 @@ from tinytroupe.utils.json import JsonSerializableRegistry
 
 pytestmark = pytest.mark.core
 
+# Mock DNS response only; the test server binds exclusively to loopback.
+_UNSPECIFIED_IPV4 = "0.0.0.0"  # nosec B104
+
 
 @pytest.fixture(autouse=True)
 def secure_config(monkeypatch):
@@ -119,7 +122,9 @@ def test_malformed_or_unsupported_urls(url, network):
 
 
 @pytest.mark.parametrize("ip", [
-    "127.0.0.1", "0.0.0.0", "10.1.2.3", "172.16.1.1", "192.168.1.1",
+    "127.0.0.1",
+    _UNSPECIFIED_IPV4,
+    "10.1.2.3", "172.16.1.1", "192.168.1.1",
     "169.254.169.254", "168.63.129.16", "100.100.100.200", "192.0.2.1", "224.0.0.1",
     "::1", "::", "fc00::1", "fd00:ec2::254", "fe80::1", "ff02::1", "2001:db8::1",
     "::ffff:127.0.0.1", "::ffff:10.0.0.1", "64:ff9b::a00:1", "2002:a00:1::1",
@@ -179,14 +184,27 @@ def test_private_permission_does_not_enable_loopback_or_metadata(network):
 
 def test_https_preserves_certificate_verification_and_hostname(network, monkeypatch):
     config_manager.update("web_grounding_allowed_hosts", "example.com")
-    context = Mock()
+    context = ssl.create_default_context()
+    wrap_socket = Mock()
+    monkeypatch.setattr(context, "wrap_socket", wrap_socket)
     create_context = Mock(return_value=context)
     monkeypatch.setattr(web.ssl, "create_default_context", create_context)
     assert web.fetch_web_page("https://example.com") == "<p>Hello</p>"
     create_context.assert_called_once_with()
-    context.wrap_socket.assert_called_once_with(
+    assert context.minimum_version == ssl.TLSVersion.TLSv1_2
+    assert context.verify_mode == ssl.CERT_REQUIRED
+    assert context.check_hostname is True
+    wrap_socket.assert_called_once_with(
         network[1].return_value, server_hostname="example.com"
     )
+
+
+def test_https_explicitly_sets_minimum_tls_version(network, monkeypatch):
+    config_manager.update("web_grounding_allowed_hosts", "example.com")
+    context = Mock()
+    monkeypatch.setattr(web.ssl, "create_default_context", Mock(return_value=context))
+    web.fetch_web_page("https://example.com")
+    assert context.minimum_version == ssl.TLSVersion.TLSv1_2
 
 
 def test_tls_failure_is_not_suppressed(network, monkeypatch):
