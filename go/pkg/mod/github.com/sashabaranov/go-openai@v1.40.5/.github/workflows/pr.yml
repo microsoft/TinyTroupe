@@ -1,0 +1,29 @@
+name: Sanity check
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  prcheck:
+    name: Sanity check
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.24'
+    - name: Run vet
+      run: |
+        go vet .
+    - name: Run golangci-lint
+      uses: golangci/golangci-lint-action@v7
+      with:
+        version: v2.1.5
+    - name: Run tests
+      run: go test -race -covermode=atomic -coverprofile=coverage.out -v ./...
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v5
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
