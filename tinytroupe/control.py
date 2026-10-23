@@ -342,18 +342,27 @@ class Simulation:
         Saves the cache file to the given path. Always overwrites.
         """
         logger.debug(f"Now saving cache file to {cache_path}.")
+        temp_path = None
         try:
-            # Create a temporary file
-            with tempfile.NamedTemporaryFile('w', delete=False) as temp:
+            # Keep the temporary file on the destination filesystem for atomic replacement.
+            cache_directory = os.path.dirname(os.path.abspath(cache_path))
+            with tempfile.NamedTemporaryFile('w', encoding="utf-8", dir=cache_directory, delete=False) as temp:
+                temp_path = temp.name
                 json.dump(self.cached_trace, temp, indent=4)
 
             # Replace the original file with the temporary file
-            os.replace(temp.name, cache_path)
+            os.replace(temp_path, cache_path)
         except Exception as e:
             traceback_string = ''.join(traceback.format_tb(e.__traceback__))
             logger.error(f"An error occurred while saving the cache file: {e}\nTraceback:\n{traceback_string}")
-
-        self.has_unsaved_cache_changes = False
+        else:
+            self.has_unsaved_cache_changes = False
+        finally:
+            if temp_path is not None and os.path.exists(temp_path):
+                try:
+                    os.remove(temp_path)
+                except OSError as e:
+                    logger.warning(f"Could not remove temporary cache file {temp_path}: {e}")
 
     
 
