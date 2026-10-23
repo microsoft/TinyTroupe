@@ -39,6 +39,9 @@ dependencies = [
     "scipy"
 ]
 
+[project.optional-dependencies]
+web-search = ["mcp>=1.26,<2"]
+
 [project.urls]
 "Homepage" = "https://github.com/microsoft/tinytroupe"
 

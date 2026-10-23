@@ -11,5 +11,6 @@ logger = logging.getLogger("tinytroupe")
 from tinytroupe.tools.tiny_tool import TinyTool
 from tinytroupe.tools.tiny_word_processor import TinyWordProcessor
 from tinytroupe.tools.tiny_calendar import TinyCalendar
+from tinytroupe.tools.tiny_web_search import TinyWebSearch
 
-__all__ = ["TinyTool", "TinyWordProcessor", "TinyCalendar"]
+__all__ = ["TinyTool", "TinyWordProcessor", "TinyCalendar", "TinyWebSearch"]
