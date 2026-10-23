@@ -100,6 +100,35 @@ class LLMScalarWithJustificationResponse(BaseModel):
     confidence: float
 
 
+# Type-specific scalar schemas are intentionally separate from the generic
+# ``Union[str, int, float, bool]`` schema above. When an API supports structured
+# parsing, these models let the provider validate the requested ``value`` type
+# before TinyTroupe receives the response. Without them, a malformed response can
+# still be schema-valid by putting explanatory text in ``value`` when an integer,
+# boolean, or float was requested. We keep the generic scalar schemas for
+# backwards compatibility and for scalar output types that do not have a more
+# precise schema here.
+class LLMStringWithJustificationResponse(BaseModel):
+    justification: str
+    value: str
+    confidence: float
+
+class LLMIntegerWithJustificationResponse(BaseModel):
+    justification: str
+    value: int
+    confidence: float
+
+class LLMFloatWithJustificationResponse(BaseModel):
+    justification: str
+    value: float
+    confidence: float
+
+class LLMBoolWithJustificationResponse(BaseModel):
+    justification: str
+    value: bool
+    confidence: float
+
+
 class LLMScalarWithJustificationAndReasoningResponse(BaseModel):
     """
     Represents a typed response from an LLM (Language Learning Model) including justification and reasoning.
@@ -117,6 +146,58 @@ class LLMScalarWithJustificationAndReasoningResponse(BaseModel):
     justification: str
     value: Union[str, int, float, bool]
     confidence: float
+
+class LLMStringWithJustificationAndReasoningResponse(BaseModel):
+    reasoning: str
+    justification: str
+    value: str
+    confidence: float
+
+class LLMIntegerWithJustificationAndReasoningResponse(BaseModel):
+    reasoning: str
+    justification: str
+    value: int
+    confidence: float
+
+class LLMFloatWithJustificationAndReasoningResponse(BaseModel):
+    reasoning: str
+    justification: str
+    value: float
+    confidence: float
+
+class LLMBoolWithJustificationAndReasoningResponse(BaseModel):
+    reasoning: str
+    justification: str
+    value: bool
+    confidence: float
+
+def _scalar_response_model(output_type, include_reasoning: bool):
+    """
+    Return a Pydantic response model whose ``value`` field matches ``output_type``.
+    Falls back to the generic scalar model for output types that do not have a
+    dedicated structured schema.
+
+    This preserves the invariant that API-level structured-output validation and
+    TinyTroupe's local coercion are asking for the same scalar type.
+    """
+    if include_reasoning:
+        response_models = {
+            bool: LLMBoolWithJustificationAndReasoningResponse,
+            int: LLMIntegerWithJustificationAndReasoningResponse,
+            float: LLMFloatWithJustificationAndReasoningResponse,
+            str: LLMStringWithJustificationAndReasoningResponse,
+        }
+        return response_models.get(
+            output_type, LLMScalarWithJustificationAndReasoningResponse
+        )
+
+    response_models = {
+        bool: LLMBoolWithJustificationResponse,
+        int: LLMIntegerWithJustificationResponse,
+        float: LLMFloatWithJustificationResponse,
+        str: LLMStringWithJustificationResponse,
+    }
+    return response_models.get(output_type, LLMScalarWithJustificationResponse)
 
 
 ###########################################################################
@@ -438,7 +519,9 @@ class LLMChat:
                             ):
                                 # Default structured output
                                 self.model_params["response_format"] = (
-                                    LLMScalarWithJustificationResponse
+                                    _scalar_response_model(
+                                        current_output_type, include_reasoning=False
+                                    )
                                 )
 
                                 typing_instruction = {
@@ -451,7 +534,9 @@ class LLMChat:
                             else:
                                 # Override the response format to also use a reasoning step
                                 self.model_params["response_format"] = (
-                                    LLMScalarWithJustificationAndReasoningResponse
+                                    _scalar_response_model(
+                                        current_output_type, include_reasoning=True
+                                    )
                                 )
 
                                 typing_instruction = {
@@ -652,6 +737,15 @@ class LLMChat:
                             raise ValueError(
                                 f"Unsupported output type: {current_output_type}"
                             )
+
+                        # Keep the structured response consistent with the coerced value.
+                        # This matters for callers that request the full response and then
+                        # read response_json["value"] instead of the direct return value.
+                        if (
+                            isinstance(self.response_json, dict)
+                            and "value" in self.response_json
+                        ):
+                            self.response_json["value"] = self.response_value
 
                     else:
                         logger.error(f"Model output is None: {self.response_raw}")

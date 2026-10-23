@@ -706,6 +706,7 @@ Key configuration sections include:
 - **[Simulation]**: Parallel execution and safety settings  
 - **[Cognition]**: Memory management settings
 - **[ActionGenerator]**: Action quality control and correction mechanisms
+- **[WebGrounding]**: Webpage destination allowlist and SSRF safeguards
 - **[Logging]**: Log level configuration
 
 Models used by default:
@@ -714,6 +715,99 @@ Models used by default:
 - `REASONING_MODEL=o3-mini`: Used for detailed analyses and reasoning tasks (even more experimental -- not really recommended yet)
 
 We provide an example of a `config.ini` file, [./examples/config.ini](./examples/config.ini), which you can use as a template for your own, or just modify to run the examples.
+
+#### Webpage grounding security
+
+Webpage grounding uses a **default-deny allowlist** to reduce server-side request
+forgery (SSRF, CWE-918) risk. The shipped [`tinytroupe/config.ini`](./tinytroupe/config.ini)
+contains these defaults:
+
+```ini
+[WebGrounding]
+ENFORCE_SECURITY=True
+ALLOWED_HOSTS=microsoft.com,www.microsoft.com,google.com,www.google.com,wikipedia.org,www.wikipedia.org,en.wikipedia.org,python.org,www.python.org,docs.python.org
+ALLOW_LOCALHOST=False
+ALLOW_PRIVATE_NETWORKS=False
+```
+
+All other hosts are denied. Allowlist entries do not bypass network-address
+checks or imply that fetched content is trustworthy.
+
+| Setting | Behavior |
+|---------|----------|
+| `ENFORCE_SECURITY` | Enables hostname and resolved-address restrictions. Defaults to `True`. |
+| `ALLOWED_HOSTS` | Comma-separated exact hostnames or IP addresses. Defaults to the starter list above; an empty value denies all destinations. |
+| `ALLOW_LOCALHOST` | Permits allowlisted destinations to resolve to IPv4/IPv6 loopback addresses. Defaults to `False`. |
+| `ALLOW_PRIVATE_NETWORKS` | Permits allowlisted destinations to resolve to RFC 1918 private IPv4 or IPv6 unique-local addresses. Defaults to `False`. |
+
+**Customizing the allowlist.** Defaults are read from the package's
+`tinytroupe/config.ini`, then overridden by a `config.ini` in the current working
+directory. An override replaces the entire `ALLOWED_HOSTS` value; it does not
+append to the starter list. For example, this local configuration allows only
+Python's documentation host, while retaining the default security restrictions:
+
+```ini
+[WebGrounding]
+ALLOWED_HOSTS=docs.python.org
+```
+
+`ALLOWED_HOSTS` is a comma-separated list of exact hostnames or IP addresses, not
+URLs or wildcard patterns. Subdomains and redirect destinations must be listed
+separately. An empty `ALLOWED_HOSTS` denies all destinations. Allowlisting a
+hostname does not permit it to resolve to prohibited addresses. Loopback
+addresses require `ALLOW_LOCALHOST=True`; private-network addresses require
+`ALLOW_PRIVATE_NETWORKS=True`.
+These exceptions still require an allowlist entry. Other non-public addresses,
+including link-local destinations, remain blocked while enforcement is enabled.
+Known cloud platform endpoints `168.63.129.16` and `fd00:ec2::254` are also blocked,
+even when private-network access is enabled.
+
+The policy applies to constructor, explicit-add, and deserialization-triggered
+webpage fetches. It checks DNS results at every redirect and connects directly
+to a checked address, requiring TLS 1.2 or newer for HTTPS and preserving
+certificate and hostname verification. Environment
+HTTP proxies are not used. Requests have a 30-second socket timeout, at most
+five redirects, and a 10 MiB response limit. Denied destinations raise
+`PermissionError`; failed fetches are not marked as loaded.
+
+For trusted environments only, `ENFORCE_SECURITY=False` disables the hostname and
+network-address restrictions and logs a warning. **This reintroduces SSRF risk,
+including access to internal services.** Only HTTP/HTTPS URLs without embedded
+credentials are supported in either mode. These settings affect webpage
+grounding, not OpenAI, Azure OpenAI, or Ollama connections.
+
+Policy is application configuration, not part of serialized agent data. Only
+trusted application code should change it. Programmatic equivalents are
+`web_grounding_enforce_security`, `web_grounding_allowed_hosts` (a comma-separated
+string), `web_grounding_allow_localhost`, and
+`web_grounding_allow_private_networks`. Web-grounding examples using hosts outside
+the starter list require an explicit allowlist before they can fetch content.
+
+Set these values **before constructing a connector or loading an agent that
+contains web URLs**, since those operations can immediately fetch pages. For
+example, to add `learn.microsoft.com` without removing the current allowlist:
+
+```python
+from tinytroupe import config_manager
+from tinytroupe.agent.grounding import WebPagesGroundingConnector
+
+allowed_hosts = config_manager.get("web_grounding_allowed_hosts")
+config_manager.update(
+    "web_grounding_allowed_hosts", f"{allowed_hosts},learn.microsoft.com"
+)
+connector = WebPagesGroundingConnector(
+    web_urls=["https://learn.microsoft.com/en-us/"]
+)
+```
+
+**Troubleshooting.** A `PermissionError` mentioning `ALLOWED_HOSTS` means the
+requested host, or a redirect destination, is not listed. Approve only the exact
+hosts you intend to fetch. A `PermissionError` mentioning a prohibited address
+means DNS resolved the host to a blocked destination; adding it to the allowlist
+does not override that restriction. For intentional local development, allowlist
+the local hostname or IP and enable `ALLOW_LOCALHOST=True` rather than disabling
+all enforcement. Invalid URLs/configuration, HTTP errors, timeouts, and response
+or redirect limits also raise errors rather than silently omitting content.
 
 #### Programmatic Configuration Override
 
@@ -840,5 +934,3 @@ trademarks or logos is subject to and must follow
 [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
 Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
 Any use of third-party trademarks or logos are subject to those third-party's policies.
-
-

@@ -214,6 +214,19 @@ class ConfigManager:
             "ActionGenerator"
         ].getint("QUALITY_THRESHOLD", 2)
 
+        self._config["web_grounding_enforce_security"] = config.getboolean(
+            "WebGrounding", "ENFORCE_SECURITY", fallback=True
+        )
+        self._config["web_grounding_allowed_hosts"] = config.get(
+            "WebGrounding", "ALLOWED_HOSTS", fallback=""
+        )
+        self._config["web_grounding_allow_localhost"] = config.getboolean(
+            "WebGrounding", "ALLOW_LOCALHOST", fallback=False
+        )
+        self._config["web_grounding_allow_private_networks"] = config.getboolean(
+            "WebGrounding", "ALLOW_PRIVATE_NETWORKS", fallback=False
+        )
+
         # LOGLEVELS
         default_loglevel = config["Logging"].get("LOGLEVEL", "INFO").upper()
         loglevel_console = (
@@ -244,6 +257,21 @@ class ConfigManager:
         # make sure the key is always lowercase
         if isinstance(key, str):
             key = key.lower()
+
+        if key in (
+            "web_grounding_enforce_security",
+            "web_grounding_allow_localhost",
+            "web_grounding_allow_private_networks",
+        ):
+            if isinstance(value, str):
+                normalized = value.strip().lower()
+                if normalized not in configparser.ConfigParser.BOOLEAN_STATES:
+                    raise ValueError(f"Invalid boolean for {key}: {value!r}")
+                value = configparser.ConfigParser.BOOLEAN_STATES[normalized]
+            if not isinstance(value, bool):
+                raise ValueError(f"{key} must be a boolean")
+        elif key == "web_grounding_allowed_hosts" and not isinstance(value, str):
+            raise ValueError("web_grounding_allowed_hosts must be a comma-separated string")
 
         if key in self._config:
             self._config[key] = value

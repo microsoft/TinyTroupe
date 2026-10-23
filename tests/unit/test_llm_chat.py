@@ -15,6 +15,8 @@ from testing_utils import proposition_holds
 
 from tinytroupe.utils.llm import (
     LLMChat,
+    LLMIntegerWithJustificationAndReasoningResponse,
+    LLMIntegerWithJustificationResponse,
     LLMScalarWithJustificationAndReasoningResponse,
     LLMScalarWithJustificationResponse,
 )
@@ -526,6 +528,55 @@ class TestLLMChat:
         assert chat.response_confidence == 0.95
         assert chat.response_value == 42
 
+    @patch("tinytroupe.clients.client")
+    def test_call_uses_type_specific_structured_response_schema(self, mock_client):
+        """Test that scalar structured responses use the requested value type."""
+        mock_client_instance = MagicMock()
+        mock_client.return_value = mock_client_instance
+        mock_client_instance.send_message.return_value = {
+            "content": '{"reasoning": "Compute it", "justification": "It is 42", "value": 42, "confidence": 0.95}'
+        }
+
+        chat = LLMChat(
+            system_prompt="Test system",
+            user_prompt="Test user",
+            output_type=int,
+            enable_json_output_format=True,
+            enable_justification_step=True,
+            enable_reasoning_step=True,
+        )
+
+        result = chat.call()
+
+        assert result == 42
+        _, kwargs = mock_client_instance.send_message.call_args
+        assert kwargs["response_format"] is LLMIntegerWithJustificationAndReasoningResponse
+
+    @patch("tinytroupe.clients.client")
+    def test_call_syncs_coerced_value_back_to_response_json(self, mock_client):
+        """Test that full responses expose the same coerced value as direct calls."""
+        mock_client_instance = MagicMock()
+        mock_client.return_value = mock_client_instance
+        mock_client_instance.send_message.return_value = {
+            "content": '{"reasoning": "Compute it", "justification": "It is 42", "value": "42", "confidence": 0.95}'
+        }
+
+        chat = LLMChat(
+            system_prompt="Test system",
+            user_prompt="Test user",
+            output_type=int,
+            enable_json_output_format=True,
+            enable_justification_step=True,
+            enable_reasoning_step=True,
+        )
+
+        result = chat.call()
+
+        assert result == 42
+        assert chat.response_value == 42
+        assert chat.response_json["value"] == 42
+        assert isinstance(chat.response_json["value"], int)
+
     # ==== ERROR HANDLING TESTS ====
 
     @patch("tinytroupe.clients.client")
@@ -720,6 +771,15 @@ class TestLLMPydanticModels:
         assert response.justification == "This is my reasoning"
         assert response.value == 42
         assert response.confidence == 0.9
+
+    def test_type_specific_structured_response_rejects_wrong_value_type(self):
+        """Test that integer response schemas reject explanatory text in value."""
+        with pytest.raises(Exception):
+            LLMIntegerWithJustificationResponse(
+                justification="This is my reasoning",
+                value=") — but importantly, the final value is 3.",
+                confidence=0.9,
+            )
 
     def test_pydantic_model_validation(self):
         """Test that Pydantic models properly validate inputs."""
