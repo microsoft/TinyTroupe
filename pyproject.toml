@@ -39,6 +39,9 @@ dependencies = [
     "scipy"
 ]
 
+[project.optional-dependencies]
+litellm = ["litellm>=1.83.0,<2.0"]
+
 [project.urls]
 "Homepage" = "https://github.com/microsoft/tinytroupe"
 
