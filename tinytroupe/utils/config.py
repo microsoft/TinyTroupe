@@ -210,7 +210,7 @@ class ThreadSafeFileHandler(logging.FileHandler):
 
 
 def start_logger(config: configparser.ConfigParser):
-    global _log_file_path, _console_handler, _file_handler, _console_level, _file_level, _include_thread_info
+    global _log_file_path, _console_handler, _file_handler, _root_level, _console_level, _file_level, _include_thread_info
 
     # Collect changes under lock, but avoid calling logging APIs while holding it.
     with _logging_lock:
