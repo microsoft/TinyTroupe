@@ -385,6 +385,8 @@ class ActionGenerator(JsonSerializableRegistry):
             # disable dedenting (because content is a list, not a string).
             has_multimodal = self._has_multimodal_content(current_messages_context)
             send_kwargs = {"response_format": response_format}
+            if agent.temperature is not None:
+                send_kwargs["temperature"] = agent.temperature
             if has_multimodal:
                 from tinytroupe import config_manager as _cm
                 send_kwargs["model"] = _cm.get_with_fallback("vision_model", "model")
@@ -408,6 +410,8 @@ class ActionGenerator(JsonSerializableRegistry):
 
             has_multimodal = self._has_multimodal_content(current_messages_context)
             send_kwargs = {"response_format": response_format}
+            if agent.temperature is not None:
+                send_kwargs["temperature"] = agent.temperature
             if has_multimodal:
                 from tinytroupe import config_manager as _cm
                 send_kwargs["model"] = _cm.get_with_fallback("vision_model", "model")
