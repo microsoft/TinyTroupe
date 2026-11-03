@@ -678,6 +678,8 @@ the two datasets, even if a category occurs in only one of them. The original
 datasets retain their own encodings; `result.statistical_results["comparison_mappings"]`
 records the codes used for the comparison. Both datasets must provide compatible
 label mappings for such a metric. Numeric metrics are compared without recoding.
+String-ordinal comparisons preserve both datasets' relative label orders and
+report an error when those orders conflict. Numeric ordinal scales are not recoded.
 This alignment does not select or change the statistical test: choose a test
 appropriate for your data, especially when categories have no meaningful order.
 

@@ -216,9 +216,17 @@ class SimulationExperimentDataset(BaseModel):
                 
                 # Convert to ordinal values
                 self.key_results[metric_name] = self._convert_to_ordinal(metric_data, ordinal_mapping)
-        else:
+        elif not self._get_label_mapping(metric_name):
             # Numeric ordinal data - validate that values are reasonable
             self._validate_ordinal_numeric_data(metric_name, metric_data)
+
+    def _get_label_mapping(self, metric_name: str) -> Optional[Dict[str, int]]:
+        """Return a label encoding, excluding numeric ordinal summary metadata."""
+        mapping = (self.categorical_mappings.get(metric_name)
+                   or self.ordinal_mappings.get(metric_name))
+        if mapping and all(isinstance(code, int) for code in mapping.values()):
+            return mapping
+        return None
     
     def _process_ranking_data_for_metric(self, metric_name: str, metric_data):
         """Process ranking data for a specific metric."""
@@ -809,10 +817,8 @@ class SimulationExperimentEmpiricalValidator:
         """
         control_type = control.data_types.get(metric)
         treatment_type = treatment.data_types.get(metric)
-        control_mapping = (control.categorical_mappings.get(metric)
-                           or control.ordinal_mappings.get(metric))
-        treatment_mapping = (treatment.categorical_mappings.get(metric)
-                             or treatment.ordinal_mappings.get(metric))
+        control_mapping = control._get_label_mapping(metric)
+        treatment_mapping = treatment._get_label_mapping(metric)
         if not control_mapping and not treatment_mapping:
             return control_values, treatment_values, None
         if not control_mapping or not treatment_mapping or control_type != treatment_type:
@@ -820,7 +826,24 @@ class SimulationExperimentEmpiricalValidator:
 
         categories = sorted(set(control_mapping) | set(treatment_mapping))
         if control_type == "ordinal":
-            categories = control._order_ordinal_categories(categories)
+            # Respect both supplied orders; the existing heuristic only breaks
+            # ties between labels whose relative order neither dataset defines.
+            preferred = control._order_ordinal_categories(categories)
+            predecessors = {category: set() for category in categories}
+            for mapping in (control_mapping, treatment_mapping):
+                ordered = sorted(mapping, key=mapping.get)
+                for previous, category in zip(ordered, ordered[1:]):
+                    predecessors[category].add(previous)
+            remaining = set(categories)
+            categories = []
+            while remaining:
+                ready = next((category for category in preferred
+                              if category in remaining
+                              and not (predecessors[category] & remaining)), None)
+                if ready is None:
+                    raise ValueError(f"Incompatible ordinal orders for metric '{metric}'")
+                categories.append(ready)
+                remaining.remove(ready)
         comparison_mapping = {category: index for index, category in enumerate(categories)}
 
         def remap(values, mapping):
