@@ -799,6 +799,37 @@ class SimulationExperimentEmpiricalValidator:
         else:
             return result
 
+    def _align_metric_encodings(self, metric, control, treatment, control_values, treatment_values):
+        """Translate dataset-local label codes to one comparison encoding.
+
+        Dataset encoders number only the labels present in each dataset, so the
+        same integer can represent different responses. Reuse their ordering
+        rules over the union of labels without modifying either dataset.
+        Numeric metrics have no label mapping and are returned unchanged.
+        """
+        control_type = control.data_types.get(metric)
+        treatment_type = treatment.data_types.get(metric)
+        control_mapping = (control.categorical_mappings.get(metric)
+                           or control.ordinal_mappings.get(metric))
+        treatment_mapping = (treatment.categorical_mappings.get(metric)
+                             or treatment.ordinal_mappings.get(metric))
+        if not control_mapping and not treatment_mapping:
+            return control_values, treatment_values, None
+        if not control_mapping or not treatment_mapping or control_type != treatment_type:
+            raise ValueError(f"Incompatible label encodings for metric '{metric}'")
+
+        categories = sorted(set(control_mapping) | set(treatment_mapping))
+        if control_type == "ordinal":
+            categories = control._order_ordinal_categories(categories)
+        comparison_mapping = {category: index for index, category in enumerate(categories)}
+
+        def remap(values, mapping):
+            original_labels = {code: label for label, code in mapping.items()}
+            return [comparison_mapping[original_labels[value]] for value in values]
+
+        return (remap(control_values, control_mapping),
+                remap(treatment_values, treatment_mapping), comparison_mapping)
+
     def _perform_statistical_validation(self, 
                                       control: SimulationExperimentDataset, 
                                       treatment: SimulationExperimentDataset,
@@ -820,6 +851,7 @@ class SimulationExperimentEmpiricalValidator:
             # Prepare data for StatisticalTester
             control_data = {"control": {}}
             treatment_data = {"treatment": {}}
+            comparison_mappings = {}
 
             # Convert single values to lists if needed and find common metrics
             common_metrics = set(control.key_results.keys()) & set(treatment.key_results.keys())
@@ -841,6 +873,11 @@ class SimulationExperimentEmpiricalValidator:
                 
                 # Only include metrics that have valid data points
                 if len(control_value) > 0 and len(treatment_value) > 0:
+                    control_value, treatment_value, mapping = self._align_metric_encodings(
+                        metric, control, treatment, control_value, treatment_value
+                    )
+                    if mapping is not None:
+                        comparison_mappings[metric] = mapping
                     control_data["control"][metric] = control_value
                     treatment_data["treatment"][metric] = treatment_value
 
@@ -857,6 +894,7 @@ class SimulationExperimentEmpiricalValidator:
             return {
                 "common_metrics": list(common_metrics),
                 "test_results": test_results,
+                **({"comparison_mappings": comparison_mappings} if comparison_mappings else {}),
                 "test_type": test_type,
                 "significance_level": significance_level
             }

@@ -673,6 +673,14 @@ print(result.statistical_results)
 
 This allows you to quantitatively assess how well your simulation matches real-world behavior, which is essential for building confidence in simulation-based insights.
 
+Categorical and string-ordinal metrics use a shared label encoding when comparing
+the two datasets, even if a category occurs in only one of them. The original
+datasets retain their own encodings; `result.statistical_results["comparison_mappings"]`
+records the codes used for the comparison. Both datasets must provide compatible
+label mappings for such a metric. Numeric metrics are compared without recoding.
+This alignment does not select or change the statistical test: choose a test
+appropriate for your data, especially when categories have no meaningful order.
+
 ### Caching
 Calling LLM APIs can be expensive, thus caching strategies are important to help reduce that cost.
 TinyTroupe comes with two such mechanisms: one for the simulation state, another for the LLM calls themselves.
