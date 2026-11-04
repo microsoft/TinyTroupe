@@ -60,7 +60,12 @@ class TinyWorld:
         if name is not None:
             self.name = name
         else:
-            self.name = f"TinyWorld {utils.fresh_id(self.__class__.__name__)}"
+            # Replay may reconstruct worlds by their persisted explicit names
+            # without advancing the fresh-ID counter. Skip those canonical names.
+            while True:
+                self.name = f"TinyWorld {utils.fresh_id(self.__class__.__name__)}"
+                if self.name not in TinyWorld.all_environments:
+                    break
 
         if initial_datetime is not None:
             self.current_datetime = initial_datetime

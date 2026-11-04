@@ -2299,10 +2299,11 @@ class TinyPerson(JsonSerializableRegistry):
         self.episodic_memory = EpisodicMemory.from_json(state["episodic_memory"])
         self.semantic_memory = SemanticMemory.from_json(state["semantic_memory"])
 
-        self._mental_faculties = [
-            JsonSerializableRegistry.from_json(faculty_state)
-            for faculty_state in state["_mental_faculties"]
-        ]
+        from tinytroupe.agent._faculty_state import restore_faculties
+
+        self._mental_faculties = restore_faculties(
+            state["_mental_faculties"], self._mental_faculties
+        )
 
         # delete fields already present in the state
         del state["_accessible_agents"]

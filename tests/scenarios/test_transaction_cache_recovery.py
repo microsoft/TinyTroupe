@@ -402,7 +402,7 @@ def test_reconstruction_reuses_preexisting_free_objects_without_provider_initial
     sim.name_to_environment = {}
     alice.simulation_id = bob.simulation_id = world.simulation_id = None
     with patch(
-        "openai.OpenAI", side_effect=AssertionError("provider initialization forbidden")
+        "openai.OpenAI.__init__", side_effect=AssertionError("provider initialization forbidden")
     ):
         sim._decode_simulation_state(state)
     assert sim.name_to_agent == {"Alice": alice, "Bob": bob}
@@ -414,3 +414,72 @@ def test_reconstruction_reuses_preexisting_free_objects_without_provider_initial
     sim._decode_simulation_state(state)
     assert sim.agents == [alice, bob]
     assert sim.environments == [world]
+
+
+def create_auto_worlds(count):
+    worlds = [TinyWorld() for _ in range(count)]
+    for world in worlds:
+        control.current_simulation().add_environment(world)
+    return worlds
+
+
+def replay_auto_worlds_in_process(path, count, result_path):
+    control.reset()
+    control.begin(str(path))
+    owner = TinyPerson("Owner")
+    sim = control.current_simulation()
+    restored = control.Transaction(owner, sim, create_auto_worlds, count).execute(
+        parallel_id="owner"
+    )
+    fresh = [TinyWorld(), TinyWorld()]
+    Path(result_path).write_text(
+        json.dumps(
+            {
+                "restored": [world.name for world in restored],
+                "fresh": [world.name for world in fresh],
+                "canonical": all(
+                    world is TinyWorld.get_environment_by_name(world.name)
+                    for world in restored
+                ),
+                "hits": sim.cache_hits,
+            }
+        )
+    )
+    control.reset()
+
+
+@pytest.mark.parametrize("count", [1, 3])
+def test_spawned_replay_of_auto_named_worlds_leaves_next_names_unused(tmp_path, count):
+    path, results = tmp_path / "auto.json", tmp_path / "result.json"
+    control.begin(str(path))
+    owner = TinyPerson("Owner")
+    sim = control.current_simulation()
+    recorded = control.Transaction(owner, sim, create_auto_worlds, count).execute(
+        parallel_id="owner"
+    )
+    assert [world.name for world in recorded] == [
+        f"TinyWorld {i}" for i in range(1, count + 1)
+    ]
+    control.checkpoint()
+    control.end()
+    control.reset()
+    context = multiprocessing.get_context("spawn")
+    worker = context.Process(
+        target=replay_auto_worlds_in_process, args=(path, count, results)
+    )
+    try:
+        worker.start()
+        worker.join(timeout=30)
+        assert worker.exitcode == 0
+    finally:
+        if worker.is_alive():
+            worker.terminate()
+        if worker.pid is not None:
+            worker.join(timeout=5)
+    result = json.loads(results.read_text())
+    assert result == {
+        "restored": [f"TinyWorld {i}" for i in range(1, count + 1)],
+        "fresh": [f"TinyWorld {count + 1}", f"TinyWorld {count + 2}"],
+        "canonical": True,
+        "hits": 1,
+    }

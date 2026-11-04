@@ -703,6 +703,11 @@ Existing `None`, `JSON`, `List`, and entity-reference cache outputs remain reada
 New dictionary and tuple output envelopes require this version's decoder; older
 TinyTroupe versions cannot replay those new envelopes. Custom entity subclasses
 and arbitrary Python objects are not reconstructed by this cache mechanism.
+Matching live faculties/tools retain runtime-only owners, exporters and enrichers.
+Missing standard calendar/word-processor tools use normal constructor defaults;
+legacy snapshots cannot recover their omitted resources or ownership. Supply the
+live tool to preserve those settings. Missing custom tools require a caller-supplied
+runtime instance. Auto-named worlds skip restored names when allocating new ones.
 
 #### Caching LLM API Calls
 
