@@ -691,6 +691,19 @@ provides useful simulation management methods:
   - `control.checkpoint()`: saves the simulation state at this point.
   - `control.end()`: terminates the simulation recording scope that had been started by `control.begin()`.
 
+Transaction outputs keep references to registered agents, worlds, and factories,
+including references nested in lists, dictionaries, and tuples. Ordinary output
+containers are detached from the cache: changing a returned value does not modify
+subsequent replays. Restoring a snapshot reuses existing simulated objects and
+reconstructs agents or worlds created inside a cached transaction when necessary.
+Failed calls release their transaction scope; failed replay does not advance its
+execution position. User side effects from a failed call are not rolled back.
+
+Existing `None`, `JSON`, `List`, and entity-reference cache outputs remain readable.
+New dictionary and tuple output envelopes require this version's decoder; older
+TinyTroupe versions cannot replay those new envelopes. Custom entity subclasses
+and arbitrary Python objects are not reconstructed by this cache mechanism.
+
 #### Caching LLM API Calls
 
 This is enabled preferably in the `config.ini` file by setting `CACHE_API_CALLS=True`.

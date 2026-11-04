@@ -2299,8 +2299,10 @@ class TinyPerson(JsonSerializableRegistry):
         self.episodic_memory = EpisodicMemory.from_json(state["episodic_memory"])
         self.semantic_memory = SemanticMemory.from_json(state["semantic_memory"])
 
-        for i, faculty in enumerate(self._mental_faculties):
-            faculty = faculty.from_json(state["_mental_faculties"][i])
+        self._mental_faculties = [
+            JsonSerializableRegistry.from_json(faculty_state)
+            for faculty_state in state["_mental_faculties"]
+        ]
 
         # delete fields already present in the state
         del state["_accessible_agents"]
