@@ -17,7 +17,7 @@ import logging
 logger = logging.getLogger("tinytroupe")
 
 # to protect from race conditions when running in parallel
-concurrent_execution_lock = threading.Lock()
+concurrent_execution_lock = threading.RLock()
 
 class Simulation:
 
@@ -404,10 +404,18 @@ class Simulation:
         Starts parallel transactions.
         """
         with concurrent_execution_lock:
+            if self.is_under_parallel_transactions():
+                raise ValueError("Nested parallel transaction segments are unsupported")
+            position = len(self.execution_trace)
+            # Isolate worker replacements from the previous cached segment so
+            # a failed owner can restore its original trace without mutation.
+            self.cached_trace = list(self.cached_trace)
+            if position < len(self.cached_trace) and isinstance(self.cached_trace[position], dict):
+                self.cached_trace[position] = dict(self.cached_trace[position])
+            else:
+                self.cached_trace = self.cached_trace[:position] + [{}]
+            self.execution_trace.append({})
             self._under_parallel_transactions = True
-            # add a new parallel segment to the execution and cache traces
-            self.execution_trace.append({}) 
-            self.cached_trace.append({})
     
     def end_parallel_transactions(self):
         """
@@ -465,6 +473,32 @@ class Simulation:
         logger.debug(f"Registered factories: {self.name_to_factory}")
         logger.debug(f"Registered agents: {self.name_to_agent}")
         logger.debug(f"Registered environments: {self.name_to_environment}")
+
+        # A cached outer transaction can have created agents/worlds that its
+        # replay deliberately skips constructing (e.g. sequential factories).
+        # Establish their canonical identities before resolving any graph edges.
+        agent_states = list(state["agents"])
+        for environment_state in state["environments"]:
+            agent_states.extend(environment_state["agents"])
+        for agent_state in agent_states:
+            name = agent_state["name"]
+            if name not in self.name_to_agent:
+                agent = TinyPerson.get_agent_by_name(name)
+                if agent is None:
+                    agent = TinyPerson(name)
+                if agent.simulation_id not in (None, self.id):
+                    raise ValueError(f"Agent {name} belongs to another simulation")
+                if name not in self.name_to_agent:
+                    self.add_agent(agent)
+        for environment_state in state["environments"]:
+            name = environment_state["name"]
+            if name not in self.name_to_environment:
+                environment = TinyWorld.get_environment_by_name(name)
+                if environment is None:
+                    environment = TinyWorld(name, agents=[])
+                if environment.simulation_id not in (None, self.id):
+                    raise ValueError(f"Environment {name} belongs to another simulation")
+                self.add_environment(environment)
 
         # Decode factories
         for factory_state in state["factories"]:
@@ -543,191 +577,105 @@ class Transaction:
                 
         
     def execute(self, begin_parallel=False, parallel_id=None):
+        """Execute or replay one completed transaction, releasing scopes on errors.
 
-        output = None
+        User side effects are not rolled back. A failing call publishes no cache
+        entry, and a failing replay does not consume its execution position.
+        """
+        sim = self.simulation
+        if sim is None or sim.status == Simulation.STATUS_STOPPED:
+            return self.function(*self.args, **self.kwargs)
+        if sim.status != Simulation.STATUS_STARTED:
+            raise ValueError(f"Simulation status is invalid at this point: {sim.status}")
 
-        # Transaction caching will only operate if there is a simulation and it is started
-        if self.simulation is None or self.simulation.status == Simulation.STATUS_STOPPED:
-            # Compute the function and return it, no caching, since the simulation is not started
-            output = self.function(*self.args, **self.kwargs)
-        
-        elif self.simulation.status == Simulation.STATUS_STARTED:
-            # Compute the event hash
-            event_hash = self.simulation._function_call_hash(self.function_name, *self.args, **self.kwargs)
-
-            # Sequential and parallel transactions are handled in different ways
-            if begin_parallel:
-                self.simulation.begin_parallel_transactions()
-            
-            # CACHED? Check if the event hash is in the cache
-            if self.simulation._is_transaction_event_cached(event_hash, 
-                                                            parallel=self.simulation.is_under_parallel_transactions()):
-                self.simulation.cache_hits += 1
-
-                # Restore the full state and return the cached output
-                logger.debug(f"Skipping execution of {self.function_name} with args {self.args} and kwargs {self.kwargs} because it is already cached.")
-
-                # SEQUENTIAL
-                if not self.simulation.is_under_parallel_transactions():
-                    
-                    self.simulation._skip_execution_with_cache()
-                    state = self.simulation.cached_trace[self.simulation._execution_trace_position()][3] # state
-                    self.simulation._decode_simulation_state(state)
-                    
-                    # Output encoding/decoding is used to preserve references to TinyPerson and TinyWorld instances
-                    # mainly. Scalar values (int, float, str, bool) and composite values (list, dict) are 
-                    # encoded/decoded as is.
-                    encoded_output = self.simulation.cached_trace[self.simulation._execution_trace_position()][2] # output
-                    output = self._decode_function_output(encoded_output)
-                
-                # PARALLEL
-                else: # is under parallel transactions
-
-                    # in parallel segments, state is not restored, only outputs
-                    encoded_output = self.simulation._get_cached_parallel_value(event_hash, "encoded_output")
-                    output = self._decode_function_output(encoded_output)
-
-            else: # not cached
-
-                if not begin_parallel:
-                    # in case of beginning a parallel segment, we don't want to count it as a cache miss,
-                    # since the segment itself will not be cached, but rather the events within it.
-                    self.simulation.cache_misses += 1
-                
-                if not self.simulation.is_under_transaction(id=parallel_id) and not begin_parallel:
-                    
-                    # BEGIN SEQUENTIAL TRANSACTION ###############################################################
-                    #
-                    # if this is the beginning of a parallel segment, we don't need to begin a transaction, since
-                    # we want to allow additional transactions within the parallel segment (i.e., one-level reentrancy).
-                    if not begin_parallel:
-                        self.simulation.begin_transaction(id=parallel_id)
-
-                    # Compute the function and encode the relevant output and simulation state
+        if begin_parallel:
+            output = self._execute_parallel_segment(parallel_id)
+        elif sim.is_under_transaction(id=parallel_id):
+            # A nested call belongs to its outer transaction. In particular it
+            # must not consume a future cache entry that happens to match it.
+            return self.function(*self.args, **self.kwargs)
+        else:
+            event_hash = sim._function_call_hash(
+                self.function_name, *self.args, **self.kwargs
+            )
+            if sim._is_transaction_event_cached(
+                event_hash, parallel=sim.is_under_parallel_transactions()
+            ):
+                if sim.is_under_parallel_transactions():
+                    encoded = sim._get_cached_parallel_value(event_hash, "encoded_output")
+                    output = self._decode_function_output(encoded)
+                else:
+                    entry = sim.cached_trace[sim._execution_trace_position() + 1]
+                    sim._decode_simulation_state(entry[3])
+                    output = self._decode_function_output(entry[2])
+                    # Publish the cursor only after both restoration stages pass.
+                    sim._skip_execution_with_cache()
+                sim.cache_hits += 1
+            else:
+                sim.cache_misses += 1
+                sim.begin_transaction(id=parallel_id)
+                try:
                     output = self.function(*self.args, **self.kwargs)
                     self._save_output_with_simulation_state(event_hash, output)
+                finally:
+                    sim.end_transaction(id=parallel_id)
 
-                    # END TRANSACTION #################################################################
-                    if not begin_parallel:
-                        self.simulation.end_transaction(id=parallel_id)
-                    
-                else: # already under transaction (thus, now a reentrant transaction) OR beginning a parallel segment
-
-                    # NOTES: 
-                    #
-                    #   - Reentrant sequential transactions are not cached, since what matters is the final result of
-                    #     the top-level transaction.
-                    #
-                    #   - The event that starts the parallel transactions segment WILL NOT itself be cached, since
-                    #     it is not part of the parallel segment, but rather the beginning of it. This event will be
-                    #     reconstructed during runtime from the parallel events within the segment.
-
-                    output = self.function(*self.args, **self.kwargs)
-
-            if begin_parallel:
-                self.simulation.end_parallel_transactions()
-
-                # execute an ad-hoc Transaction to save the simulation state AFTER the parallel segment is done.
-                Transaction(self.obj_under_transaction, self.simulation, lambda: True).execute(begin_parallel=False, parallel_id=parallel_id)
-
-        else:
-            raise ValueError(f"Simulation status is invalid at this point: {self.simulation.status}")
-
-        # Checkpoint if needed
-        logger.debug(f"Will attempt to checkpoint simulation state after transaction execution.")
-        if self.simulation is not None and self.simulation.auto_checkpoint:
-            logger.debug("Auto-checkpointing simulation state after transaction execution.")
-            self.simulation.checkpoint()
-
-        # after all the transaction is done, return the output - the client will never know about all the complexity we've
-        # gone through to get here.
+        # Do not checkpoint half of a reentrant call or parallel segment. The
+        # outer successful transaction (or explicit checkpoint) owns publication.
+        if sim.auto_checkpoint and not sim.is_under_parallel_transactions():
+            sim.checkpoint()
         return output
-    
+
+    def _execute_parallel_segment(self, parallel_id):
+        sim = self.simulation
+        with concurrent_execution_lock:
+            previous_cache = sim.cached_trace
+            previous_execution = list(sim.execution_trace)
+            previous_dirty = sim.has_unsaved_cache_changes
+            sim.begin_parallel_transactions()
+        try:
+            output = self.function(*self.args, **self.kwargs)
+            sim.end_parallel_transactions()
+            # The segment is complete only after its final state is restored or
+            # saved. A surrounding sequential owner saves that state itself.
+            Transaction(self.obj_under_transaction, sim, lambda: True).execute(
+                parallel_id=parallel_id
+            )
+            return output
+        except BaseException:
+            # The parallel function owns joining its workers before it returns
+            # or raises. Their external/user mutations cannot be undone here.
+            with concurrent_execution_lock:
+                sim.cached_trace = previous_cache
+                sim.execution_trace = previous_execution
+                sim.has_unsaved_cache_changes = previous_dirty
+            raise
+        finally:
+            sim.end_parallel_transactions()
+
     def _save_output_with_simulation_state(self, event_hash, output):
         encoded_output = self._encode_function_output(output)
-        state = self.simulation._encode_simulation_state()
+        # Parallel entries store only output. Taking a global state snapshot
+        # while sibling workers mutate agents is unnecessary and unsafe.
+        parallel = self.simulation.is_under_parallel_transactions()
+        state = None if parallel else self.simulation._encode_simulation_state()
+        with concurrent_execution_lock:
+            self.simulation._drop_cached_trace_suffix()
+            self.simulation._add_to_cache_trace(
+                state, event_hash, encoded_output, parallel=parallel
+            )
+            self.simulation._add_to_execution_trace(
+                state, event_hash, encoded_output, parallel=parallel
+            )
 
-        # immediately drop the cached trace suffix, since we are starting a new execution from this point on.
-        # in the case of parallel transactions, this will drop everything _after_ the current parallel segment
-        # (which itself occupies one position only, with a dictionary of event hashes and their outputs).
-        self.simulation._drop_cached_trace_suffix()
-
-        # Cache the result and update the current execution trace. If this is a parallel transaction, the
-        # cache and execution traces will be updated in a different way.
-        self.simulation._add_to_cache_trace(state, event_hash, encoded_output, 
-                                            parallel=self.simulation.is_under_parallel_transactions())
-        self.simulation._add_to_execution_trace(state, event_hash, encoded_output, 
-                                                parallel=self.simulation.is_under_parallel_transactions())
-
-  
     def _encode_function_output(self, output) -> dict:
-        """
-        Encodes the given function output.
-        """
-        # local import to avoid circular dependencies
-        from tinytroupe.agent import TinyPerson
-        from tinytroupe.environment import TinyWorld
-        from tinytroupe.factory.tiny_factory import TinyFactory
-
-        # if the output is a supported object, encode it
-        if output is None:
-            return None
-        elif isinstance(output, TinyPerson):
-            return {"type": "TinyPersonRef", "name": output.name}
-        elif isinstance(output, TinyWorld):
-            return {"type": "TinyWorldRef", "name": output.name}
-        elif isinstance(output, TinyFactory):
-            return {"type": "TinyFactoryRef", "name": output.name}
-        elif isinstance(output, list):
-            encoded_list = []
-            for item in output:
-                if isinstance(item, TinyPerson):
-                    encoded_list.append({"type": "TinyPersonRef", "name": item.name})
-                elif isinstance(item, TinyWorld):
-                    encoded_list.append({"type": "TinyWorldRef", "name": item.name})
-                elif isinstance(item, TinyFactory):
-                    encoded_list.append({"type": "TinyFactoryRef", "name": item.name})
-                else:
-                    encoded_list.append({"type": "JSON", "value": item})
-            return {"type": "List", "value": encoded_list}
-        elif isinstance(output, (int, float, str, bool, dict, tuple)):
-            return {"type": "JSON", "value": output}
-        else:
-            raise ValueError(f"Unsupported output type: {type(output)}")
+        from tinytroupe._transaction_output import encode_output
+        return encode_output(output)
 
     def _decode_function_output(self, encoded_output: dict):
-        """
-        Decodes the given encoded function output.
-        """
-        # local import to avoid circular dependencies
-        from tinytroupe.agent import TinyPerson
-        from tinytroupe.environment import TinyWorld
-        from tinytroupe.factory.tiny_factory import TinyFactory
+        from tinytroupe._transaction_output import decode_output
+        return decode_output(encoded_output)
 
-        if encoded_output is None:
-            return None
-        elif encoded_output["type"] == "TinyPersonRef":
-            return TinyPerson.get_agent_by_name(encoded_output["name"])
-        elif encoded_output["type"] == "TinyWorldRef":
-            return TinyWorld.get_environment_by_name(encoded_output["name"])
-        elif encoded_output["type"] == "TinyFactoryRef":
-            return TinyFactory.get_factory_by_name(encoded_output["name"])
-        elif encoded_output["type"] == "List":
-            decoded_list = []
-            for item in encoded_output["value"]:
-                if item["type"] == "TinyPersonRef":
-                    decoded_list.append(TinyPerson.get_agent_by_name(item["name"]))
-                elif item["type"] == "TinyWorldRef":
-                    decoded_list.append(TinyWorld.get_environment_by_name(item["name"]))
-                elif item["type"] == "TinyFactoryRef":
-                    decoded_list.append(TinyFactory.get_factory_by_name(item["name"]))
-                else:
-                    decoded_list.append(item["value"])
-            return decoded_list
-        elif encoded_output["type"] == "JSON":
-            return encoded_output["value"]
-        else:
-            raise ValueError(f"Unsupported output type: {encoded_output['type']}")
 
 def transactional(parallel=False):
     """
