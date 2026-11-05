@@ -146,8 +146,8 @@ class OpenAIClient(LLMCacheBase):
             self._model_calls = 0
             self._cached_calls = 0
 
-    @config_manager.config_defaults(timeout="timeout")
-    def _setup_from_config(self, timeout=None):
+    @config_manager.config_defaults(timeout="timeout", base_url="base_url")
+    def _setup_from_config(self, timeout=None, base_url=None):
         """
         Sets up the OpenAI API configurations for this client.
         """
@@ -170,7 +170,10 @@ class OpenAIClient(LLMCacheBase):
 
         # we set max_retries to 0 because we do our own retrying with customized exponential backoff
         self.client = OpenAI(
-            api_key=os.getenv("OPENAI_API_KEY"), max_retries=0, http_client=httpx_client
+            api_key=os.getenv("OPENAI_API_KEY"),
+            base_url=base_url,
+            max_retries=0,
+            http_client=httpx_client,
         )
 
     @config_manager.config_defaults(
