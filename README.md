@@ -712,7 +712,7 @@ Key configuration sections include:
 Models used by default:
 - `MODEL=gpt-5-mini`: Main text generation model for agent responses (previous default `gpt-4.1-mini` is now legacy but still supported)
 - `EMBEDDING_MODEL=text-embedding-3-small`: For text similarity tasks
-- `REASONING_MODEL=o3-mini`: Used for detailed analyses and reasoning tasks (even more experimental -- not really recommended yet)
+- `REASONING_MODEL=gpt-5-mini`: Used for detailed analyses and reasoning tasks (even more experimental -- not really recommended yet)
 
 We provide an example of a `config.ini` file, [./examples/config.ini](./examples/config.ini), which you can use as a template for your own, or just modify to run the examples.
 
