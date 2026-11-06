@@ -96,7 +96,7 @@ class ConfigManager:
                 "AZURE_EMBEDDING_MODEL_API_VERSION", "2023-05-15"
             )
         self._config["reasoning_model"] = config["OpenAI"].get(
-            "REASONING_MODEL", "o3-mini"
+            "REASONING_MODEL", "gpt-5-mini"
         )
 
         # Vision model: used for image understanding. Falls back to MODEL if not set.
