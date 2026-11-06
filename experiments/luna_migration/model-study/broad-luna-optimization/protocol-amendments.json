@@ -1,0 +1,10 @@
+{
+  "initial_plan": "26 development inputs / 52 calls; 12 reserved inputs / 24 calls.",
+  "pre_unblinding_validation_amendment": "Expanded reserved validation to 24 inputs / 48 calls, four per available family, before accessing selected contents. The original instructions remained byte-for-byte unchanged; see validation-freeze.json.",
+  "normalization_v2": "Three development-only calls: v2 on the 815-member failure, plus baseline/v2 on the smallest unused optimization input (one member). A replacement system contract distinguishes short labels from immutable full members.",
+  "normalization_v3": "An additional three-call bounded development refinement, beyond the initial three-call repair plan. Added meaningful-theme guidance after v2 collapsed everything into one category. Ran v3 on 815 members, plus baseline/v3 on the unused optimization input closest to 50 members. The actual selected size was 225, not 50; the only smaller unused control was the already used one-member case.",
+  "transport": "Normalization repair/refinement use a 600-second timeout instead of 300 seconds. Model, effort, token budgets and source evidence remain unchanged. No retries.",
+  "final_total": "52 initial development + 48 reserved validation + 3 v2 repair + 3 v3 refinement = 106 calls on 52 unique source inputs.",
+  "stopping_rule": "Stop paid exploration after these batches. Preserve and reject failed revisions rather than tune against reserved outputs or claim a universal fix.",
+  "deployment": "None. Runtime templates and notebooks are unchanged by this experiment."
+}

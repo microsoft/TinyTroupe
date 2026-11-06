@@ -1,0 +1,20 @@
+{
+  "model": "gpt-6-luna",
+  "requested_effort": "xhigh",
+  "effort_caveat": "The client does not forward this setting to GPT-5-mini; the comparison is not effort-controlled.",
+  "elapsed_seconds": 110.40599999995902,
+  "usage": {
+    "input_tokens": 304758,
+    "output_tokens": 21603,
+    "total_tokens": 326361,
+    "model_calls": 32,
+    "cached_calls": 0
+  },
+  "variant_sha256": "918f1c64068a1402c4bea355c5ac728bd0efd2b1f9dd4184ff5ca0e1fda9fa9c",
+  "parent_holdout": false,
+  "require_unsupervised_control": false,
+  "require_regular_purchases_control": false,
+  "source_run_prefix": "cf4-",
+  "gaz_random_adults": 8,
+  "scope": "Fixed-persona diagnostics, not representative population estimates. Backend changes include quality evaluation and extraction. Persona preferences and original quality thresholds were retained. Original survey wording was retained except in the explicitly recorded require_unsupervised_control or require_regular_purchases_control, which are not original-notebook results."
+}

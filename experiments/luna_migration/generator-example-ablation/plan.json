@@ -1,0 +1,12 @@
+{
+  "created_at": "2026-11-02T22:17:15.144024+00:00",
+  "hypothesis": "Two fixed unrelated example biographies may anchor generated food preferences: one dislikes cold foods; the other likes warm soup.",
+  "design": "Three previously selected observed generator requests, one fresh replication with examples retained and one with examples removed per person, followed by the corresponding six frozen first-turn actor replays.",
+  "constants": "All supplied characteristics, population eligibility, general generation rules, required output fields, actor instructions, chronological stimuli, schema, model gpt-6-luna, effort xhigh and captured output-token limits.",
+  "intervention": "Remove unrelated worked biographies and replace only their output-format cross-reference with a description of permitted JSON structures.",
+  "acceptance": "Preserve identity, eligibility and supplied traits; inspect generated preferences and actual public speech. Neither a higher rating nor a closer human mean is an acceptance criterion.",
+  "limitations": "Small stochastic screen, not a population calibration. New biography elaborations are not unchanged-persona comparisons. Raw actor turns do not exercise quality correction or a complete notebook.",
+  "production_changed": false,
+  "production_template_sha256": "3e93696bc2ed4e2990f17b72cb5627635d8a5891a9f38cc8268c67d8444db3a3",
+  "candidate_sha256": "c14809b649d5380508fa630754427112e218d12c836edb27a91cc73fcca71294"
+}

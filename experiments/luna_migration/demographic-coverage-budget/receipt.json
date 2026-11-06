@@ -1,0 +1,16 @@
+{
+  "returned_responses": 1,
+  "returned_usage_estimate": {
+    "unique_saved_api_responses_in_run_window": 1,
+    "responses_missing_usage": 0,
+    "tokens": {
+      "prompt": 20860,
+      "completion": 68881,
+      "cached": 0,
+      "writes": 20857
+    },
+    "usd": "0.037047925",
+    "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+  },
+  "unknown_unreturned_charges": "Excluded; estimate is not an invoice."
+}

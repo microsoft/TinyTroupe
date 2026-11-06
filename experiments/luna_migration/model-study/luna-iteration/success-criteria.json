@@ -1,0 +1,25 @@
+{
+  "objective": "Improve the 20 selected diagnostic calls on Luna without prescribing opinions or changing frozen persona facts.",
+  "start_local": "2026-10-28T10:37:36-03:00",
+  "gates": {
+    "all": "Complete API response, valid JSON and requested schema; no altered transport parameters or hidden failed attempts.",
+    "actions": "Public contribution addresses the pending task, ends in DONE, retains identity/history/safety and does not invent external facts or events.",
+    "chat": "Relevant, natural and reciprocal; no unrecorded specific anecdotes presented as memories.",
+    "interview": "Useful concrete project proposal with bounded authority, conditional assumptions, no invented measured business outcomes.",
+    "brainstorming": "Distinct useful mechanisms grounded in each profession, beyond synonyms for one evidence map; no claims that speculative capabilities already exist.",
+    "safeguard": "Preserve explicit uncertainty and human review; absence of flags is not proof of regulatory compliance.",
+    "extraction": "Preserve public No and explicitly mark missing public justification; never report private thoughts as said aloud.",
+    "travel": "Public Yes/No and persona-grounded reason; no invented prices or changes to the offered service. Negative choices can pass.",
+    "ranking": "A complete permutation, explanation consistent with the order and offered independent-use products; concerns allowed, unprovided capabilities not assumed.",
+    "gazpacho": "One public score 1-5 and an age-appropriate reason that fits the scale. Low scores can pass; do not force variance.",
+    "personas": "Every demographic constraint and mandatory field; coherent life, usable specific preferences, no repetitive trait catalogue. Across repeated generations examine whether open life choices actually vary; no target purchase preference."
+  },
+  "validation_loop": [
+    "Review each development output against the gates and compare with saved baselines.",
+    "Record exact prompt revision and hypothesis before each next trial; preserve failures.",
+    "Refine only the failed or weak surfaces; keep successful controls.",
+    "Freeze final candidates and run at least three fresh responses for each of the 20 cases.",
+    "Audit full confirmation outputs manually and structurally, cost and timing independently; report unresolved limits rather than redefining success."
+  ],
+  "limits_of_claim": "Passing diagnostic cases does not establish human population calibration, downstream multi-turn quality, or a statistically validated behavioral model. If underdispersion stems from frozen personas or unavailable empirical data, report that boundary rather than changing facts to obtain preferred outcomes."
+}

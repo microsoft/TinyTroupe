@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "full_population_input_unchanged": true,
+  "nonmessage_model_options_unchanged": true,
+  "only_system_change": [
+    "- each categorical option must identify one coherent characteristic that can be selected for an individual.",
+    "Keep opposing ends as separate options, not a single option such as \"strongly rejects novelty OR adopts everything impulsively\".",
+    "A list can contain both ends; one selected option must not leave the person's position between incompatible alternatives unresolved.",
+    "Related reasons for the same characteristic can share an option, but opposite behaviors require distinct options."
+  ],
+  "production_method_and_json_mode": true,
+  "native_response_matches_saved_dimensions": true,
+  "reviewed_dimension_options": {
+    "attitude_toward_new_products": [
+      "Eagerly tries new products early, enjoys novelty, and is willing to tolerate occasional defects or disappointment.",
+      "Is adventurous about products in favored categories, such as food, technology, cosmetics, games, or home goods.",
+      "Will consider a new product after seeing credible reviews, recommendations, or evidence that it offers a clear benefit.",
+      "Usually waits until a new product is established, widely available, and supported by dependable customer service.",
+      "Prefers proven brands and familiar products, believing reliability matters more than novelty or fashionable features.",
+      "Is skeptical of marketing claims and carefully checks ingredients, privacy terms, safety, durability, and total cost.",
+      "Avoids new products when current belongings still work, preferring repair, reuse, or keeping a stable routine.",
+      "Is enthusiastic about innovative technology but cautious about products that collect personal data or require subscriptions.",
+      "Is impulsive about trends and may buy newly advertised products before comparing alternatives or considering the cost.",
+      "Strongly rejects most unfamiliar products, finds changes inconvenient, and prefers long-standing habits and brands.",
+      "Tries new food and household products but avoids experimenting with major financial, medical, or technology decisions.",
+      "Actively seeks sustainable, accessible, or ethically sourced new products when their claims can be verified."
+    ],
+    "culinary_tastes": [
+      "Prefers mild, plain foods with familiar flavors and little heat, seasoning, or variation.",
+      "Enjoys traditional family dishes and familiar regional foods, valuing comfort, continuity, and recipes passed between generations.",
+      "Enjoys strongly seasoned and spicy dishes, seeking hot peppers, bold sauces, and intense flavors.",
+      "Enjoys exploring global cuisines and is willing to try unfamiliar ingredients, cooking methods, or flavor combinations.",
+      "Prefers a vegetarian diet and chooses meals centered on vegetables, grains, legumes, or plant-based alternatives.",
+      "Follows a fully vegan diet, avoiding animal products in food and often paying attention to ingredients and preparation.",
+      "Prefers meat-centered meals and considers meat, poultry, or fish an important part of everyday eating.",
+      "Enjoys seafood and regional dishes connected to coasts, lakes, family heritage, or local food traditions.",
+      "Prefers simple, inexpensive meals and prioritizes convenience, fullness, and predictable costs over culinary novelty.",
+      "Enjoys elaborate cooking, specialty ingredients, restaurant dining, and carefully planned meals as a source of pleasure.",
+      "Has medically necessary dietary restrictions or food sensitivities that shape food choices and require careful ingredient checking.",
+      "Frequently chooses sweet, salty, or rich comfort foods and may prioritize immediate enjoyment over nutritional goals."
+    ]
+  },
+  "semantic_review": "The original combined rejection-or-impulsivity option is replaced by separately selectable impulsive-trend buying and strong rejection options. Traditional food and unfamiliar-cuisine exploration also remain separately selectable. These are coherent individual characteristics, not assigned purchase scores.",
+  "scope": "A single full-original-input dimension replication, not exhaustive joint dimension validation, a full new population survey, or proof of calibration."
+}

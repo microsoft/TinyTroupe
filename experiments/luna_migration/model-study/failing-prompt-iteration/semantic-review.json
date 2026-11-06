@@ -1,0 +1,37 @@
+{
+  "method": "Unblinded qualitative review against literal task requirements, separated from schema/arithmetic/copying checks. No independent human panel or statistical model ranking is claimed.",
+  "action_v2": {
+    "verdict": "Accepted on seven calls across four inputs.",
+    "evidence": "The original translation failure and three repetitions actually address the attendant through TALK, without fabricating the missing speech or a reply. Three additional action cases preserve useful customer, advertisement and product interactions."
+  },
+  "story_v3": {
+    "verdict": "Accepted on 31 calls across ten inputs.",
+    "evidence": "Seven development outputs, 21 repeated outputs and three fresh-source outputs were read. Requested endings stop the episode; consulting transitions close the old engagement and introduce a materially different customer. Missing professional evidence remains qualified. The open continuation uses hypothetical rather than fabricated autobiographical examples.",
+    "limits": "Fictional supporting events and expressly delegated narration are permitted. These are qualitative judgments, not proof of perfect autonomy preservation in all future stories."
+  },
+  "sampling_membership_v2": {
+    "verdict": "Rejected despite all 19 mechanical checks passing.",
+    "evidence": "Review of actual selected meanings exposed infant-incompatible hobby/technology strata and a general-population age-coverage gap. Exact eligible strings alone are insufficient.",
+    "concrete_rejections": [
+      {"batch": "round4", "source": "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR", "repetition": 1, "reason": "A reading-interest stratum spans ages 0-54, permitting infants."},
+      {"batch": "final-confirmation", "source": "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR", "repetition": 1, "reason": "Cooking-for-leisure stratum spans ages 0-14."},
+      {"batch": "final-confirmation", "source": "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR", "repetition": 2, "reason": "Ages 0-14 are allowed adult-style smartphone/news and console-gaming preferences."},
+      {"batch": "final-confirmation", "source": "exec-chatcmpl-EcNZrgB7NnHHQ32gLuD0kVWCH8bKw", "repetition": 1, "reason": "Cooking-interest stratum spans ages 0-14."},
+      {"batch": "final-confirmation", "source": "exec-chatcmpl-EcPVXPdL4sj3j6kfDX47ef2fsDrvS", "repetition": 1, "reason": "Positive leisure-reading stratum spans ages 0-24."},
+      {"batch": "final-confirmation", "source": "exec-chatcmpl-EcPVXPdL4sj3j6kfDX47ef2fsDrvS", "repetition": 3, "reason": "General-population plan begins at age 5, omitting ages 0-4."}
+    ],
+    "revision": "Membership v3 explicitly checks youngest admissible age and other joint constraints, keeps optional age-incompatible axes unconstrained, and forbids deleting the youngest population to simplify hobby contrasts."
+  },
+  "sampling_membership_v3": {
+    "verdict": "Accepted on 24 confirmations across ten source spaces: three repetitions of seven prior spaces plus three newly selected spaces.",
+    "evidence": "Every response reconstructs without repair, uses exact supplied options and names, has valid numeric bounds and IDs, and sums to N. Critical age, child-years/months, parent/book eligibility, labor-force/employment, geography and travel-party constraints were reviewed. General-population plans retain their youngest ages without imposing infant hobbies. Behavioral contrasts remain present in suitable older groups.",
+    "limits": "Semantic inspection is targeted and unblinded, not an exhaustive audit of every Cartesian combination or an independent panel. Valid plans and plausible combinations do not establish population calibration, unbiased joint sampling, applicability of adult-survey denominators to children, or downstream persona diversity. Some allocations are illustrative and can overrepresent rare age/caregiving combinations; these are not validated prevalence estimates."
+  },
+  "normalization": {
+    "verdict": "Twelve lossless partitions over six source lists accepted on sampled thematic review.",
+    "source_sizes": [225, 231, 781, 815, 2127, 2130],
+    "evidence": "The 225- and 815-item cases each have an initial accepted indexed output and three successful repetitions. Additional 231- and 781-item inputs also pass. Global-theme planning plus bounded assignments reconstructs both 2130 and 2127 exact occurrences into six meaningful themes. Duplicate occurrences are preserved.",
+    "limits": "Thematic review uses spread-out samples, not exhaustive annotation. Exact-string preservation comes from explicit identifier assignments and deterministic reconstruction, not from asking the model to copy thousands of strings. The large-list workflow has one completed run per source, not a three-repeat reliability estimate."
+  },
+  "scope": "Standalone Luna/xhigh experiments only. No runtime prompt deployment, notebook rerun, commit, push or PR. This does not claim that every family in the 8839-observation corpus is solved."
+}

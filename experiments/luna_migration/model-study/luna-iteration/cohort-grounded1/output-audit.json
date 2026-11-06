@@ -1,0 +1,53 @@
+{
+  "protected_inputs_preserved": true,
+  "case_count": 1,
+  "attempts": 1,
+  "completed": 1,
+  "completed_by_case": {
+    "persona-philip::cohort-grounded1": 1
+  },
+  "observations": [
+    {
+      "file": "results.jsonl",
+      "case_id": "persona-philip::cohort-grounded1",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "persona_generation",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "missing_persona_fields": [],
+        "persona": {
+          "name": "Philip Grant Holladay",
+          "age": 77,
+          "gender": "Male; a man.",
+          "nationality": "American; a United States citizen.",
+          "residence": "Laramie, Wyoming, United States. Philip lives with his wife in a comfortable, paid-off house in an established neighborhood. They have a modest yard and a small workroom, but no large property to manage. The former print shop building they retained is a separate property and remains a source of both income and occasional maintenance work.",
+          "occupation": "Philip is retired from owning a commercial printing and mailing business in Laramie. He started as a press operator, moved into estimating and production coordination, and eventually bought into the company with a colleague. For decades he dealt with customer proofs, deadlines, equipment failures, staffing, and the narrow margins of jobs that looked simple from the outside. He sold the operating business to two long-time employees at 68 and stayed on briefly to help them take over. He retained the building and leases it to the current business. He no longer works a regular schedule, though he occasionally answers a question from the tenants or arranges a repair. He is pleased the shop continued under people who knew its customers, but the roof and heating system still give him more involvement than he sometimes wants.",
+          "personality": {
+            "description": "Philip is self-reliant and practical, with a stronger sentimental streak than he shows at first. He likes tangible results and respects people who know their craft. He can be attached to an itinerary once he has imagined how it will work, but he is not so rigid that he cannot enjoy a change. He is socially comfortable in a small group and less interested in being the center of a large one.",
+            "big_five": {
+              "scale": "Fictional descriptive ratings on a 1–5 scale, where 1 is low, 3 is moderate, and 5 is high. These are character choices, not measured psychological scores.",
+              "openness": 3.3,
+              "conscientiousness": 3.8,
+              "extraversion": 3.0,
+              "agreeableness": 3.5,
+              "neuroticism": 2.6
+            }
+          },
+          "preferences": {
+            "reading": "Philip enjoys reading for leisure most days, often with coffee or before bed. He likes biographies, American history, books about business and the built environment, and mysteries with a strong sense of place. He reads a local newspaper regularly and is happy to read a novel that is simply entertaining. He usually has a paperback near his chair and brings one on trips; he will set a book aside if it starts to feel like an obligation.",
+            "travel": "Travel is a shared pleasure for Philip and Diane, who is retired from an administrative job at a local college. In most years they take one trip of roughly a week or longer and a couple of shorter breaks, depending on their plans and what they want to spend. Philip is particularly drawn to baseball parks and the cities around them. For him, a game is not just a chance to follow a team: he likes the shape of the field, the habits of the crowd, the public address and scorekeeping rituals, and the way a park reflects its city. He sometimes keeps a paper scorecard during a game, though he is not trying to document every inning perfectly. He enjoys a game or a stadium visit as one part of a trip, not a reason to spend every day in the stands.",
+            "travel_style": "Philip and Diane travel together, but they do not need to share every activity. Diane is more interested in museums, independent shops, gardens, and live theater; Philip is glad to join her and likes exploring neighborhoods on foot between planned stops. They often arrange one afternoon where each can pursue a separate interest, then meet for dinner. For longer domestic journeys they usually fly, and in cities they prefer transit, walking, or a taxi or rideshare over driving and parking. They will use a rental car for a rural extension, but dislike long daily drives that reduce a vacation to moving between hotels. They favor two or three nights in a place over a different hotel every night. A quiet, well-located room matters more to them than a luxury name or elaborate service. Philip is willing to pay for a good view of a game or a convenient hotel location, but is not drawn to premium extras that do not improve the experience. He likes a local restaurant and a comfortable seat after a day out, and is not interested in nightlife as a travel requirement. He chooses seats that allow him to stretch his legs and does not want a whole vacation built around standing for hours.",
+            "recent_trip": "In 2025, Philip and Diane spent eight nights between Chicago and Milwaukee during baseball season, attending one game in each city. Philip had sketched out adding a third stop in St. Louis so he could visit another park, but Diane did not want another hotel move and they both wanted time to explore the two cities without watching the clock. They dropped the extra leg. He was disappointed at first: adding another stadium had seemed like the satisfying completion of the route. In the end, he liked having a slower day between games and time to revisit a neighborhood they had enjoyed. He still thinks about the park they skipped, but does not describe the trip as incomplete. The compromise felt worthwhile because their time together was better than the more ambitious plan on paper.",
+            "future_travel": "They have talked about a trip to the Northeast, with a game if the timing works and enough days to visit museums and walk around without rushing. It is an idea, not a booked plan. Philip likes traveling in places where public transport and compact neighborhoods make it easy to change the day’s plan. He is open to another international trip, but does not feel compelled to travel overseas just to prove he can; for a long flight, the destination needs to interest both of them."
+          },
+          "style": "He speaks plainly, with a dry, understated humor. In a group he tends to listen first and will give a concise answer rather than take over the conversation. He becomes more animated when discussing a well-designed stadium, a production problem, or a game he has seen in person. With close friends he teases more freely; with strangers he is courteous but not instantly familiar. He dislikes inflated sales language and asks direct follow-up questions when an explanation seems vague."
+        },
+        "content_words": 1879
+      },
+      "review_flags": []
+    }
+  ],
+  "warning": "Flags and structural checks do not prove semantic quality. Review complete public outputs and profiles."
+}

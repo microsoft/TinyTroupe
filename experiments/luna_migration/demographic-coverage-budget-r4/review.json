@@ -1,0 +1,23 @@
+{
+  "status": "Unchanged numerical criteria passed; all 25 directives manually reviewed; integrated with three targeted planner cases and 450 core cases passed.",
+  "baseline_redrawn": false,
+  "criterion_changed": false,
+  "request_and_structural_audit": "passed",
+  "findings": [
+    "Expected race, gender, region and settlement marginals match original proportions to floating-point precision, with no omitted people.",
+    "All four predefined singleton endpoints are retained: traditional food 2, adventurous food 2, strong product resistance 2, extreme novelty seeking 1.",
+    "Age totals remain 9/7/20/6/8 with complete integer support 0-110 and no incompatible age labels across 100 fixed draw seeds.",
+    "Both older-adult bands allow all three attainment options, with no imposed advanced-learning profile.",
+    "The plan leaves optional race-specific cultural profiles, state, occupations and labor-force status unconstrained to avoid inconsistent independent draws.",
+    "The lower-schooling contrast uses compatible attainment; the highly accomplished specialist contrast selects advanced attainment. Infants and young children have no imposed independent hobbies or adult decisions.",
+    "The 25-directive plan remains inside the original count/quantity constraints. It retains explicit U.S. residence in every directive.",
+    "Broader political and personality alternatives remain independently sampled. This is not a measured joint population model or an exhaustive validation of every possible semantic combination.",
+    "Uniform numeric age draws, illustrative behavioral allocations and unmatched human recruitment remain limitations. No survey rating informed the selection or acceptance of this candidate."
+  ],
+  "decision": "Exact tested structural paragraph integrated and verified. Actual production-method replay preserves the accepted original-input response without a new saved API response. Three targeted planner cases and all 450 selected core cases passed on the captured source. Do not claim a new full survey or repaired gazpacho calibration.",
+  "current_library_sha256": "3f5b80697765c367766a8291cc4a9a27aa8db7b9889ecb058bb2dede96c9d501",
+  "validation": "../marginal-choices-validation.json",
+  "integration": "../marginal-choices-integration/receipt.json",
+  "returned_usage_usd": "0.02867855",
+  "revision_3_and_4_returned_usage_usd": "0.063865225"
+}

@@ -1,0 +1,79 @@
+{
+  "transport": {
+    "fixed-persona-gaz-text-transport": {
+      "status": "Passed",
+      "actor_requests": 8,
+      "plain_system_and_control_strings": true,
+      "actual_model_and_effort": "gpt-6-luna/xhigh",
+      "original_response_schema": "tinytroupe.agent.CognitiveActionsModel"
+    },
+    "fixed-persona-gaz-text-controls": {
+      "status": "Passed",
+      "actor_requests": 2,
+      "plain_system_and_control_strings": true,
+      "actual_model_and_effort": "gpt-6-luna/xhigh",
+      "original_response_schema": "tinytroupe.agent.CognitiveActionsModel"
+    },
+    "fixed-persona-gaz-situated-decisions": {
+      "status": "Passed",
+      "actor_requests": 8,
+      "plain_system_and_control_strings": true,
+      "actual_model_and_effort": "gpt-6-luna/xhigh",
+      "original_response_schema": "tinytroupe.agent.CognitiveActionsModel"
+    },
+    "fixed-persona-gaz-holdout-text": {
+      "status": "Passed",
+      "actor_requests": 8,
+      "plain_system_and_control_strings": true,
+      "actual_model_and_effort": "gpt-6-luna/xhigh",
+      "original_response_schema": "tinytroupe.agent.CognitiveActionsModel"
+    },
+    "fixed-persona-gaz-holdout-situated": {
+      "status": "Passed",
+      "actor_requests": 8,
+      "plain_system_and_control_strings": true,
+      "actual_model_and_effort": "gpt-6-luna/xhigh",
+      "original_response_schema": "tinytroupe.agent.CognitiveActionsModel"
+    },
+    "fixed-persona-gaz-situated-controls": {
+      "status": "Passed",
+      "actor_requests": 2,
+      "plain_system_and_control_strings": true,
+      "actual_model_and_effort": "gpt-6-luna/xhigh",
+      "original_response_schema": "tinytroupe.agent.CognitiveActionsModel"
+    },
+    "fixed-persona-gaz-minimal-actor": {
+      "status": "Passed",
+      "actor_requests": 8,
+      "plain_system_and_control_strings": true,
+      "actual_model_and_effort": "gpt-6-luna/xhigh",
+      "original_response_schema": "tinytroupe.agent.CognitiveActionsModel"
+    },
+    "fixed-persona-gaz-minimal-controls": {
+      "status": "Passed",
+      "actor_requests": 2,
+      "plain_system_and_control_strings": true,
+      "actual_model_and_effort": "gpt-6-luna/xhigh",
+      "original_response_schema": "tinytroupe.agent.CognitiveActionsModel"
+    },
+    "fixed-persona-gaz-low-effort": {
+      "status": "Passed",
+      "actor_requests": 8,
+      "plain_system_and_control_strings": true,
+      "actual_model_and_effort": "gpt-6-luna/low",
+      "original_response_schema": "tinytroupe.agent.CognitiveActionsModel"
+    }
+  },
+  "investment_retention_replay_returned_usage": {
+    "unique_saved_api_responses_in_run_window": 2,
+    "responses_missing_usage": 0,
+    "tokens": {
+      "prompt": 39363,
+      "completion": 1969,
+      "cached": 0,
+      "writes": 39357
+    },
+    "usd": "0.005904725",
+    "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+  }
+}

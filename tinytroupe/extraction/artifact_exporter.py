@@ -13,7 +13,8 @@ import tinytroupe.utils as utils
 class ArtifactExporter(JsonSerializableRegistry):
     """
     An artifact exporter is responsible for exporting artifacts from TinyTroupe elements, for example 
-    in order to create synthetic data files from simulations. 
+    in order to create synthetic data files from simulations.
+    Long Windows output paths use the native extended-length form without shortening artifact names.
     """
 
     def __init__(self, base_output_folder:str) -> None:
@@ -153,6 +154,16 @@ class ArtifactExporter(JsonSerializableRegistry):
 
         # save to the specified file name or path, considering the base output folder.
         artifact_file_path = os.path.join(self.base_output_folder, subfolder, f"{artifact_name}.{extension}")    
+
+        if os.name == "nt":
+            absolute_path = os.path.abspath(artifact_file_path)
+            # Windows directory creation has a 248-character legacy path limit.
+            if len(absolute_path) >= 248 and not absolute_path.startswith("\\\\?\\"):
+                artifact_file_path = (
+                    "\\\\?\\UNC\\" + absolute_path[2:]
+                    if absolute_path.startswith("\\\\")
+                    else "\\\\?\\" + absolute_path
+                )
 
         # create intermediate directories if necessary
         os.makedirs(os.path.dirname(artifact_file_path), exist_ok=True)

@@ -1,0 +1,23 @@
+{
+  "created_at": "2026-11-02T22:46:53.819908+00:00",
+  "hypothesis": "Explicitly requested endpoints can disappear when only allowed as members of multi-option lists; actual coverage needs compatible singleton allocations, not a downstream rating target.",
+  "conditions": [
+    "production_baseline_replication",
+    "concrete_contrast_coverage"
+  ],
+  "constants": "Original 79 dimensions, original population description, sample size 50, bounds/count limits, optional fields, strict closed-vocabulary schema, model gpt-6-luna and effort xhigh.",
+  "candidate_paragraph": "\nMake explicitly requested behavioral contrasts survive the caller's random draws.\nA long list of allowed alternatives does not guarantee that any particular contrast\nwill occur in a small realized sample. When eligibility and sample size permit,\nreserve compatible directives that select just one value at each requested end of\nthe contrast, rather than allowing every relevant value only in mixed lists.\nThis is illustrative contrast coverage, not an estimate of those traits' prevalence.\nKeep reported demographic proportions and eligibility constraints; do not force\nrare demographic categories into equal shares or prescribe downstream decisions.\n",
+  "production_prompt_sha256": "36db9090c77858b032230cae07cccb26382157ffdcb890bc208481dc7b4695db",
+  "targeted_options": {
+    "culinary_tastes": [
+      "Prefers familiar, traditional home cooking, such as regional family recipes, straightforward sides, and meals tied to personal or community traditions.",
+      "Is adventurous about food, regularly tries unfamiliar cuisines, ingredients, and cooking techniques, and enjoys discussing how dishes reflect their cultural origins."
+    ],
+    "attitude_toward_new_products": [
+      "Is strongly resistant to changes in routines and products, viewing many new offerings as unnecessary, confusing, or designed to create avoidable costs.",
+      "Is an extreme novelty seeker who buys untested products impulsively and disregards reasonable warnings, costs, or safety information."
+    ]
+  },
+  "acceptance": "Actual guaranteed coverage of the four predefined requested contrast ends; valid counts and schema; preserved approximate supplied demographic proportions; age/group compatibility and subsequent manual joint-eligibility review. Do not select or redraw based on survey ratings.",
+  "production_changed": false
+}

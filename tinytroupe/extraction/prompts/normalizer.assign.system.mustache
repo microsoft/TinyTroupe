@@ -1,0 +1,13 @@
+# Assign this batch to fixed global themes
+
+The JSON input contains global group identifiers, labels and scope boundaries established from the entire source collection, followed by one bounded batch of unchanged source items.
+
+Assign EVERY item identifier in this batch to exactly one existing integer group identifier.
+Interpret each item as a whole and choose its main substantive meaning.
+For mixed items, apply the supplied theme boundaries consistently.
+Do not invent a group, alter the themes, sort by identifier, duplicate an item or leave an item unassigned.
+
+Return only the requested JSON assignments object.
+Do not repeat, paraphrase or copy the source strings.
+The caller uses the identifiers to reconstruct each complete original string exactly once.
+A group may have no member in this batch; the global partition, not each individual batch, uses all groups.

@@ -1,0 +1,441 @@
+{
+  "sample_plan": [
+    {
+      "id": 1,
+      "subpopulation_description": "Young children in a Texas household, represented across household circumstances.",
+      "sampled_values": {
+        "age": [
+          0,
+          4
+        ],
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": "White, non-Hispanic, including people with European, Middle Eastern, North African, or other ancestries who identify within this broad census-style category.",
+        "state_or_district_of_residence": "Texas",
+        "household_and_family_structure": "Is a child or dependent living with parents, guardians, relatives, or foster caregivers."
+      },
+      "quantity": 5
+    },
+    {
+      "id": 2,
+      "subpopulation_description": "School-age children in the Northeast, including a range of racial identities and family backgrounds.",
+      "sampled_values": {
+        "age": [
+          5,
+          9
+        ],
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": [
+          "White, non-Hispanic, including people with European, Middle Eastern, North African, or other ancestries who identify within this broad census-style category.",
+          "Two or more races, describing people who identify with multiple racial groups or family heritages."
+        ],
+        "state_or_district_of_residence": "New York",
+        "household_and_family_structure": "Is a child or dependent living with parents, guardians, relatives, or foster caregivers.",
+        "educational_attainment": "Has not completed high school and may be currently enrolled, have left school, or be pursuing an equivalency credential."
+      },
+      "quantity": 4
+    },
+    {
+      "id": 3,
+      "subpopulation_description": "Black children and young adolescents in California, with varied learning experiences.",
+      "sampled_values": {
+        "age": [
+          10,
+          14
+        ],
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": "Black or African American, including people with multigenerational U.S. roots and people with African, Caribbean, or Afro-Latin American family origins.",
+        "state_or_district_of_residence": "California",
+        "educational_attainment": "Has not completed high school and may be currently enrolled, have left school, or be pursuing an equivalency credential.",
+        "reading_and_learning_preferences": [
+          "Learns through hands-on practice, conversation, video, or community instruction rather than extended reading.",
+          "Enjoys frequent reading and seeks out books, articles, or other written material."
+        ]
+      },
+      "quantity": 4
+    },
+    {
+      "id": 4,
+      "subpopulation_description": "Hispanic or Latino teenagers and young adults in Florida, balancing education, work, or both.",
+      "sampled_values": {
+        "age": [
+          15,
+          19
+        ],
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": "Hispanic or Latino, including people with Mexican, Puerto Rican, Cuban, Central American, South American, Spanish, and other Latin American heritages, across all racial identities.",
+        "state_or_district_of_residence": "Florida",
+        "educational_attainment": [
+          "Has completed high school or an equivalent credential and has not completed a postsecondary degree.",
+          "Has some college, trade-school, or technical education without a completed bachelor's degree."
+        ],
+        "employment_and_work_arrangement": [
+          "Works part time, seasonally, on call, or in multiple jobs.",
+          "Is a student, caregiver, retiree, or otherwise outside paid employment."
+        ],
+        "travel_and_dining_preferences": [
+          "Enjoys trying unfamiliar cuisines and seeking new food experiences.",
+          "Usually eats at home because of budget, preference, health needs, or convenience."
+        ]
+      },
+      "quantity": 5
+    },
+    {
+      "id": 5,
+      "subpopulation_description": "Asian young adults in the Midwest, with varied language use and postsecondary pathways.",
+      "sampled_values": {
+        "age": [
+          20,
+          24
+        ],
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": "Asian, including people with East Asian, South Asian, Southeast Asian, and other Asian heritages.",
+        "state_or_district_of_residence": "Ohio",
+        "language_use": [
+          "Uses English alongside Chinese languages, including Mandarin, Cantonese, or another Chinese language.",
+          "Uses English alongside an Indian or South Asian language such as Hindi, Urdu, Bengali, Punjabi, Gujarati, Tamil, or Telugu.",
+          "Uses English alongside a Southeast Asian language such as Tagalog, Vietnamese, Hmong, Khmer, or Thai.",
+          "Is multilingual, with language ability and use varying across family, work, school, and community settings."
+        ],
+        "educational_attainment": [
+          "Has some college, trade-school, or technical education without a completed bachelor's degree.",
+          "Has completed a bachelor's degree."
+        ],
+        "technology_and_gaming_preferences": [
+          "Uses a computer or tablet frequently for work, school, creative work, or personal organization.",
+          "Uses social media rarely or avoids it because of privacy, stress, time, or personal preference."
+        ]
+      },
+      "quantity": 4
+    },
+    {
+      "id": 6,
+      "subpopulation_description": "Working-age adults in Michigan, spanning professional, service, and other employment circumstances.",
+      "sampled_values": {
+        "age": [
+          25,
+          34
+        ],
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": "White, non-Hispanic, including people with European, Middle Eastern, North African, or other ancestries who identify within this broad census-style category.",
+        "state_or_district_of_residence": "Michigan",
+        "educational_attainment": [
+          "Has some college, trade-school, or technical education without a completed bachelor's degree.",
+          "Has completed a bachelor's degree.",
+          "Has learned substantial skills through military service, work, apprenticeships, family responsibilities, or community experience."
+        ],
+        "employment_and_work_arrangement": [
+          "Works full time for an employer in a permanent or ongoing position.",
+          "Is self-employed, a freelancer, an independent contractor, or a small-business owner.",
+          "Works in a gig, platform, temporary, or other insecure job arrangement."
+        ],
+        "financial_situation": [
+          "Lives in a household with annual income from $25,000 to $49,999, with financial flexibility varying by location and household size.",
+          "Lives in a household with annual income from $50,000 to $99,999, with expenses and security varying by family needs and cost of living.",
+          "Lives in a household with annual income from $100,000 to $199,999, with financial circumstances varying substantially across regions and household sizes."
+        ]
+      },
+      "quantity": 6
+    },
+    {
+      "id": 7,
+      "subpopulation_description": "Hispanic or Latino adults in Georgia, including people with varied family and work responsibilities.",
+      "sampled_values": {
+        "age": [
+          35,
+          44
+        ],
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": "Hispanic or Latino, including people with Mexican, Puerto Rican, Cuban, Central American, South American, Spanish, and other Latin American heritages, across all racial identities.",
+        "state_or_district_of_residence": "Georgia",
+        "household_and_family_structure": [
+          "Lives with a spouse or partner and one or more children or young people.",
+          "Is a single parent or guardian raising one or more children.",
+          "Provides regular care for a child, older relative, disabled family member, or other dependent."
+        ],
+        "occupation": [
+          "Healthcare support occupation; supplied figures report about 7.1 million workers and an annual wage of about $38,220.",
+          "Food preparation or food service occupation; supplied figures report about 13.2 million workers and an annual wage of about $34,490.",
+          "Works in transportation, production, installation, maintenance, protective services, sales, personal care, agriculture, or another occupation not detailed above."
+        ],
+        "financial_security_and_resources": [
+          "Pays current bills but has little savings and would struggle with a large unexpected expense.",
+          "Has irregular income from seasonal work, tips, contract work, gig work, or multiple jobs.",
+          "Has financial security that is strongly shaped by disability costs, caregiving responsibilities, family support, or local living costs."
+        ]
+      },
+      "quantity": 6
+    },
+    {
+      "id": 8,
+      "subpopulation_description": "Middle-aged adults in the Northeast, representing varied economic views and religious backgrounds.",
+      "sampled_values": {
+        "age": [
+          45,
+          54
+        ],
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": "White, non-Hispanic, including people with European, Middle Eastern, North African, or other ancestries who identify within this broad census-style category.",
+        "state_or_district_of_residence": "Massachusetts",
+        "economic_beliefs": [
+          "Believes current economic conditions are poor.",
+          "Believes current economic conditions are not so good.",
+          "Believes current economic conditions are good.",
+          "Believes current economic conditions are excellent."
+        ],
+        "religious_affiliation": [
+          "Identifies as Christian, including Protestant, Catholic, Mormon, and other Christian traditions.",
+          "Identifies as Jewish.",
+          "Is religiously unaffiliated, including atheist, agnostic, or no particular religion."
+        ],
+        "political_ideology": [
+          "Moderately liberal, generally supporting social change and public programs while preferring pragmatic or incremental approaches.",
+          "Centrist or moderate, combining views from different ideological traditions and favoring compromise on some issues.",
+          "Moderately conservative, emphasizing tradition, personal responsibility, and limits on government while accepting some public programs."
+        ]
+      },
+      "quantity": 6
+    },
+    {
+      "id": 9,
+      "subpopulation_description": "Adults in Washington state with varied education, financial circumstances, and political outlooks.",
+      "sampled_values": {
+        "age": [
+          25,
+          34
+        ],
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": "White, non-Hispanic, including people with European, Middle Eastern, North African, or other ancestries who identify within this broad census-style category.",
+        "state_or_district_of_residence": "Washington",
+        "occupation": [
+          "Computer or mathematical occupation, including software, information technology, data, or analytics; supplied figures report about 5.2 million workers and an annual wage of about $113,140.",
+          "Arts, design, entertainment, sports, or media occupation; supplied figures report about 2.1 million workers and an annual wage of about $75,520.",
+          "Works in transportation, production, installation, maintenance, protective services, sales, personal care, agriculture, or another occupation not detailed above."
+        ],
+        "financial_situation": [
+          "Lives in a household with annual income under $25,000, often facing substantial limits on housing, health care, transportation, or other costs.",
+          "Lives in a household with annual income from $50,000 to $99,999, with expenses and security varying by family needs and cost of living.",
+          "Lives in a household with annual income of $200,000 or more, while still potentially facing high costs, debt, or financial uncertainty."
+        ],
+        "political_ideology": [
+          "Strongly progressive or liberal, emphasizing social equality, civil rights, and an active public role in addressing social problems.",
+          "Libertarian, prioritizing individual liberty and skepticism toward government restrictions in both social and economic life.",
+          "Does not use a consistent ideological label, is disengaged from politics, or prefers not to disclose."
+        ],
+        "interests_and_hobbies_reading": [
+          "Enjoys reading for leisure or personal interest.",
+          "Does not identify reading as a leisure interest."
+        ]
+      },
+      "quantity": 5
+    },
+    {
+      "id": 10,
+      "subpopulation_description": "Hispanic or Latino adults in North Carolina, with diverse language practices and financial experiences.",
+      "sampled_values": {
+        "age": [
+          45,
+          54
+        ],
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": "Hispanic or Latino, including people with Mexican, Puerto Rican, Cuban, Central American, South American, Spanish, and other Latin American heritages, across all racial identities.",
+        "state_or_district_of_residence": "North Carolina",
+        "nativity_and_migration_history": [
+          "Born in the United States and has lived in the same state or region for most of life.",
+          "Born in the United States and moved between several states for family, education, military service, or work.",
+          "Born outside the United States, immigrated as a child, and grew up navigating home and wider community cultures.",
+          "Born outside the United States and immigrated as an adult for family reunification, work, education, safety, or other reasons."
+        ],
+        "language_use": [
+          "Uses English and Spanish in daily life, switching by setting, relationship, or topic.",
+          "Uses English fluently but has limited literacy or confidence in formal written English.",
+          "Is multilingual, with language ability and use varying across family, work, school, and community settings."
+        ],
+        "financial_situation": [
+          "Lives in a household with annual income under $25,000, often facing substantial limits on housing, health care, transportation, or other costs.",
+          "Lives in a household with annual income from $25,000 to $49,999, with financial flexibility varying by location and household size.",
+          "Lives in a household with annual income from $100,000 to $199,999, with financial circumstances varying substantially across regions and household sizes."
+        ]
+      },
+      "quantity": 5
+    },
+    {
+      "id": 11,
+      "subpopulation_description": "Adults approaching retirement age in Illinois, including varied household and employment situations.",
+      "sampled_values": {
+        "age": [
+          55,
+          59
+        ],
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": "White, non-Hispanic, including people with European, Middle Eastern, North African, or other ancestries who identify within this broad census-style category.",
+        "state_or_district_of_residence": "Illinois",
+        "marital_status": [
+          "Married, including people in different household, caregiving, and partnership circumstances.",
+          "Divorced, including people who may be remarried, co-parenting, or living independently.",
+          "Never married, including people who are young, partnered, single, or otherwise not currently married."
+        ],
+        "employment_and_work_arrangement": [
+          "Works full time for an employer in a permanent or ongoing position.",
+          "Works part time, seasonally, on call, or in multiple jobs.",
+          "Is looking for work or is temporarily unemployed.",
+          "Is a student, caregiver, retiree, or otherwise outside paid employment."
+        ],
+        "financial_security_and_resources": [
+          "Has stable income, emergency savings, manageable debt, and room to plan for longer-term goals.",
+          "Carries substantial credit-card, student, medical, auto, or housing debt and is working to manage payments.",
+          "Has significant assets or savings but remains cautious about future costs, retirement, or economic uncertainty."
+        ],
+        "religious_or_spiritual_practice": [
+          "Participates regularly in a Protestant congregation or community, with beliefs and practices varying widely by denomination.",
+          "Participates in Catholic worship or community life, whether regularly, occasionally, or primarily for family milestones.",
+          "Is spiritual but not affiliated with an organized religion.",
+          "Is atheist, agnostic, secular, or not interested in religious practice."
+        ]
+      },
+      "quantity": 5
+    },
+    {
+      "id": 12,
+      "subpopulation_description": "Black adults aged 60–64 in Tennessee, spanning a range of financial and health-care perspectives.",
+      "sampled_values": {
+        "age": [
+          60,
+          64
+        ],
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": "Black or African American, including people with multigenerational U.S. roots and people with African, Caribbean, or Afro-Latin American family origins.",
+        "state_or_district_of_residence": "Tennessee",
+        "family_financial_situation_compared_with_four_years_ago": [
+          "Feels the family's financial situation is worse than it was four years ago.",
+          "Feels the family's financial situation is about the same as it was four years ago.",
+          "Feels the family's financial situation is better than it was four years ago."
+        ],
+        "inflation_hardship": [
+          "Reports severe financial hardship from inflation.",
+          "Reports moderate financial hardship from inflation.",
+          "Reports no hardship from inflation."
+        ],
+        "views_on_government_healthcare_responsibility": [
+          "Believes the government should provide health care.",
+          "Does not believe the government should provide health care or does not select that position."
+        ],
+        "difficulty_affording_healthcare": [
+          "Reports difficulty affording health care.",
+          "Does not report difficulty affording health care."
+        ]
+      },
+      "quantity": 4
+    },
+    {
+      "id": 13,
+      "subpopulation_description": "Older adults in Arizona, including varied retirement, recreation, and household circumstances.",
+      "sampled_values": {
+        "age": [
+          65,
+          74
+        ],
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": "White, non-Hispanic, including people with European, Middle Eastern, North African, or other ancestries who identify within this broad census-style category.",
+        "state_or_district_of_residence": "Arizona",
+        "employment_and_work_arrangement": [
+          "Is a student, caregiver, retiree, or otherwise outside paid employment.",
+          "Works part time, seasonally, on call, or in multiple jobs.",
+          "Is unable to work or has limited work capacity because of health, disability, or other circumstances."
+        ],
+        "household_and_family_structure": [
+          "Lives alone, with a household consisting of one person.",
+          "Lives with a spouse or partner and no children in the household.",
+          "Provides regular care for a child, older relative, disabled family member, or other dependent."
+        ],
+        "sports_and_recreation_preferences": [
+          "Prefers walking, gentle movement, or accessible recreational activity.",
+          "Prefers hiking, camping, fishing, or other outdoor recreation.",
+          "Avoids most sports or physical recreation because of preference, access, disability, health, time, or cost."
+        ],
+        "financial_habits": [
+          "Maintains a budget, saves consistently, and usually plans purchases in advance.",
+          "Has inadequate savings and would struggle to cover an unexpected expense.",
+          "Is highly cautious about spending because of financial insecurity or past hardship."
+        ]
+      },
+      "quantity": 6
+    },
+    {
+      "id": 14,
+      "subpopulation_description": "Older adults in New Jersey, with varied racial and cultural identities, beliefs, and leisure interests.",
+      "sampled_values": {
+        "age": [
+          75,
+          115
+        ],
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": [
+          "White, non-Hispanic, including people with European, Middle Eastern, North African, or other ancestries who identify within this broad census-style category.",
+          "Two or more races, describing people who identify with multiple racial groups or family heritages.",
+          "American Indian or Alaska Native, including people with tribal, Native, Indigenous, or Alaska Native identities and varied community affiliations.",
+          "Native Hawaiian or Pacific Islander, including Native Hawaiian, Samoan, Tongan, Chamorro, Fijian, and other Pacific Islander heritages."
+        ],
+        "state_or_district_of_residence": "New Jersey",
+        "religious_affiliation": [
+          "Identifies as Christian, including Protestant, Catholic, Mormon, and other Christian traditions.",
+          "Identifies as Jewish.",
+          "Identifies with another religion or spiritual tradition.",
+          "Is religiously unaffiliated, including atheist, agnostic, or no particular religion.",
+          "Has no reported affiliation or falls in a residual category needed because supplied figures do not total 100 percent."
+        ],
+        "interests_and_hobbies_pets": [
+          "Has or enjoys pets as a substantial personal interest.",
+          "Does not have or identify pets as a substantial personal interest."
+        ],
+        "technology_use_and_screen_time": [
+          "Uses digital technology regularly but limits social media or recreational screen time.",
+          "Uses digital devices minimally by choice or because of limited access or confidence.",
+          "Has reliable broadband and multiple devices for work, learning, and entertainment."
+        ]
+      },
+      "quantity": 5
+    }
+  ]
+}

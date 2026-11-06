@@ -280,6 +280,9 @@ class OpenAIClient(LLMCacheBase):
         if response_format is not None:
             chat_api_params["response_format"] = response_format
 
+        if self._is_reasoning_model(model):
+            chat_api_params["reasoning_effort"] = config_manager.get("reasoning_effort")
+
         # remove any parameter that is None, so we use the API defaults
         chat_api_params = {k: v for k, v in chat_api_params.items() if v is not None}
 
@@ -408,18 +411,14 @@ class OpenAIClient(LLMCacheBase):
         # adjust parameters depending on the model
         if self._is_reasoning_model(model):
             # Reasoning models have slightly different parameters
-            del chat_api_params["stream"]
-            del chat_api_params["temperature"]
-            del chat_api_params["top_p"]
-            del chat_api_params["frequency_penalty"]
-            del chat_api_params["presence_penalty"]
+            for parameter in (
+                "stream", "temperature", "top_p", "frequency_penalty", "presence_penalty"
+            ):
+                chat_api_params.pop(parameter, None)
 
-            chat_api_params["max_completion_tokens"] = chat_api_params[
-                "max_completion_tokens"
-            ]
-            del chat_api_params["max_completion_tokens"]
-
-            chat_api_params["reasoning_effort"] = config_manager.get("reasoning_effort")
+            chat_api_params.setdefault(
+                "reasoning_effort", config_manager.get("reasoning_effort")
+            )
 
         # gpt-5 only supports temperature=1.0 (default), so remove temperature param if not default
         if "gpt-5" in model and "temperature" in chat_api_params:
@@ -457,7 +456,7 @@ class OpenAIClient(LLMCacheBase):
             return self.client.chat.completions.create(**chat_api_params)
 
     def _is_reasoning_model(self, model):
-        return "o1" in model or "o3" in model
+        return "o1" in model or "o3" in model or model.startswith("gpt-6")
 
     def _raw_model_response_extractor(self, response):
         """
@@ -607,9 +606,9 @@ class OpenAIClient(LLMCacheBase):
                     "Token count: gpt-4 may update over time. Returning num tokens assuming gpt-4-0613."
                 )
                 return self._count_tokens(messages, model="gpt-4-0613")
-            elif "gpt-5" in model:
+            elif "gpt-5" in model or model.startswith("gpt-6"):
                 logger.debug(
-                    "Token count: no info on GPT-5 tokenizer yet, so we are just reusing GPT-4's."
+                    "Token count: estimating GPT-5/6 chat overhead using GPT-4's format."
                 )
                 return self._count_tokens(messages, model="gpt-4-0613")
             else:

@@ -1,0 +1,3266 @@
+{
+  "options": [
+    {
+      "id": "S1",
+      "dimension": "age_group",
+      "text": "A child or young adolescent aged 0–14, with age drawn within this band."
+    },
+    {
+      "id": "S2",
+      "dimension": "age_group",
+      "text": "A teenager or young adult aged 15–24, including people in school, training, work, or transitions between them."
+    },
+    {
+      "id": "S3",
+      "dimension": "age_group",
+      "text": "An adult aged 25–54, spanning early, mid-career, parenting, and other adult life circumstances."
+    },
+    {
+      "id": "S4",
+      "dimension": "interests_and_hobbies_reading",
+      "text": "Enjoys reading for leisure or personal interest."
+    },
+    {
+      "id": "S5",
+      "dimension": "interests_and_hobbies_reading",
+      "text": "Does not identify reading as a leisure interest."
+    },
+    {
+      "id": "S6",
+      "dimension": "age_group",
+      "text": "An adult aged 55–64, potentially approaching retirement or continuing work and caregiving responsibilities."
+    },
+    {
+      "id": "S7",
+      "dimension": "age_group",
+      "text": "An older adult aged 65 or above, with age drawn across the broad older-adult range."
+    },
+    {
+      "id": "S8",
+      "dimension": "age_group",
+      "text": "Age 0–14, including infants, school-age children, and young teenagers; 18.6% of the supplied population profile."
+    },
+    {
+      "id": "S9",
+      "dimension": "age_group",
+      "text": "Age 15–24, including older teenagers, students, young workers, and people beginning independent adulthood; 13.1%."
+    },
+    {
+      "id": "S10",
+      "dimension": "age_group",
+      "text": "Age 25–54, spanning early adulthood through midlife, with wide variation in family and career circumstances; 39.4%."
+    },
+    {
+      "id": "S11",
+      "dimension": "sports_and_recreation_preferences",
+      "text": "Enjoys running, cycling, swimming, or regular fitness activities and pursues them enthusiastically."
+    },
+    {
+      "id": "S12",
+      "dimension": "sports_and_recreation_preferences",
+      "text": "Enjoys team sports such as basketball or football as a player, spectator, or both."
+    },
+    {
+      "id": "S13",
+      "dimension": "sports_and_recreation_preferences",
+      "text": "Prefers hiking, camping, fishing, or other outdoor recreation, from occasional outings to frequent trips."
+    },
+    {
+      "id": "S14",
+      "dimension": "sports_and_recreation_preferences",
+      "text": "Prefers walking, gardening, or other gentle recreation and may have limited mobility or stamina."
+    },
+    {
+      "id": "S15",
+      "dimension": "sports_and_recreation_preferences",
+      "text": "Enjoys sports mainly as a spectator and follows local, college, or professional teams."
+    },
+    {
+      "id": "S16",
+      "dimension": "sports_and_recreation_preferences",
+      "text": "Has little interest in exercise or sport and may avoid it because of preference, disability, cost, access, or health."
+    },
+    {
+      "id": "S17",
+      "dimension": "age_group",
+      "text": "Age 55–64, including people approaching retirement as well as those continuing established careers; 12.9%."
+    },
+    {
+      "id": "S18",
+      "dimension": "age_group",
+      "text": "Age 65 and older, including active older adults, retirees, and people who may need substantial support; 16.0%."
+    },
+    {
+      "id": "S19",
+      "dimension": "country_of_residence",
+      "text": "Lives in the United States of America, in one of its states or the District of Columbia; territory and overseas-residence cases are not separately specified in the supplied demographic data."
+    },
+    {
+      "id": "S20",
+      "dimension": "age_group",
+      "text": "Age 0 to 14, including infants, school-age children, and young teenagers; 18.6% of the population in the supplied data."
+    },
+    {
+      "id": "S21",
+      "dimension": "age_group",
+      "text": "Age 15 to 24, including older teenagers, students, and young adults entering work or independent life; 13.1%."
+    },
+    {
+      "id": "S22",
+      "dimension": "reading_interest",
+      "text": "Enjoys reading books, articles, or other written material for pleasure or personal interest; source reports 37%."
+    },
+    {
+      "id": "S23",
+      "dimension": "reading_interest",
+      "text": "Does not regularly identify reading as a leisure interest; complement of the supplied 37% figure."
+    },
+    {
+      "id": "S24",
+      "dimension": "age_group",
+      "text": "Age 25 to 54, spanning early adulthood through midlife and a wide range of family and work situations; 39.4%."
+    },
+    {
+      "id": "S25",
+      "dimension": "age_group",
+      "text": "Age 55 to 64, including people approaching retirement as well as those continuing full-time work or caregiving; 12.9%."
+    },
+    {
+      "id": "S26",
+      "dimension": "age_group",
+      "text": "Age 65 and older, including active older adults, retirees, and people with a wide range of health and support needs; 16.0%."
+    },
+    {
+      "id": "S27",
+      "dimension": "interests_and_hobbies_cooking_and_baking",
+      "text": "Enjoys cooking or baking as a hobby or regular leisure activity."
+    },
+    {
+      "id": "S28",
+      "dimension": "interests_and_hobbies_cooking_and_baking",
+      "text": "Does not identify cooking or baking as a hobby or regular leisure activity."
+    },
+    {
+      "id": "S29",
+      "dimension": "interest_in_cooking_and_baking",
+      "text": "Enjoys cooking or baking as an interest; 41% reported."
+    },
+    {
+      "id": "S30",
+      "dimension": "interest_in_cooking_and_baking",
+      "text": "Does not report cooking or baking as an interest; 59%."
+    },
+    {
+      "id": "S31",
+      "dimension": "parent_child_reading_practice",
+      "text": "Reads aloud with the child most days, allowing the child to choose books, ask questions, and revisit favorite stories."
+    },
+    {
+      "id": "S32",
+      "dimension": "parent_child_reading_practice",
+      "text": "Shares books several times each week, often as part of a bedtime, after-school, or weekend routine."
+    },
+    {
+      "id": "S33",
+      "dimension": "parent_child_reading_practice",
+      "text": "Reads with the child occasionally when time and energy allow, without a consistent daily schedule."
+    },
+    {
+      "id": "S34",
+      "dimension": "parent_child_reading_practice",
+      "text": "Would like to read with the child more often but faces barriers such as work schedules, fatigue, limited access to books, language differences, or competing care needs."
+    },
+    {
+      "id": "S35",
+      "dimension": "partner_status",
+      "text": "Is single and expects to travel alone, valuing independence while wanting clear information about solo occupancy costs, safety, and opportunities to meet others."
+    },
+    {
+      "id": "S36",
+      "dimension": "travel_party_composition",
+      "text": "Plans to travel alone and wants a comfortable itinerary with safe transfers, transparent single-room pricing, and optional social activities."
+    },
+    {
+      "id": "S37",
+      "dimension": "financial_situation",
+      "text": "Faces severe financial constraints, has little discretionary income, and would need a low-cost package, careful saving, or substantial advance planning to make the trip possible."
+    },
+    {
+      "id": "S38",
+      "dimension": "financial_situation",
+      "text": "Has a tight budget and must weigh travel costs against rent, debt payments, family needs, and other essentials; discounts and predictable total pricing matter greatly."
+    },
+    {
+      "id": "S39",
+      "dimension": "financial_situation",
+      "text": "Has a modest but workable travel budget, can save for a European trip, and is willing to trade some convenience or luxury for good value."
+    },
+    {
+      "id": "S40",
+      "dimension": "financial_situation",
+      "text": "Is financially comfortable enough to afford a well-planned trip without major hardship, while still comparing prices and wanting clear value for money."
+    },
+    {
+      "id": "S41",
+      "dimension": "luxury_preferences",
+      "text": "Prefers simple, practical travel: a clean and safe place to sleep, reliable transport, and worthwhile experiences matter more than décor, status, or premium service."
+    },
+    {
+      "id": "S42",
+      "dimension": "luxury_preferences",
+      "text": "Enjoys comfortable basics and small conveniences, such as a private bathroom, good bedding, breakfast, and a helpful front desk, but does not seek extravagance."
+    },
+    {
+      "id": "S43",
+      "dimension": "luxury_preferences",
+      "text": "Is interested in occasional luxury but prefers to spend selectively, choosing one memorable splurge while keeping other parts of the trip practical."
+    },
+    {
+      "id": "S44",
+      "dimension": "luxury_preferences",
+      "text": "Avoids costly extras and may feel uncomfortable in highly formal or exclusive settings, preferring welcoming, unpretentious service."
+    },
+    {
+      "id": "S45",
+      "dimension": "social_confirmation",
+      "text": "Strongly prefers doing their own thing and chooses destinations and activities based on personal curiosity rather than trends, reviews, or group opinion."
+    },
+    {
+      "id": "S46",
+      "dimension": "social_confirmation",
+      "text": "Is independent-minded but checks a few trusted sources for practical reassurance before making a major travel purchase."
+    },
+    {
+      "id": "S47",
+      "dimension": "social_confirmation",
+      "text": "Values recommendations from friends and family but makes the final decision according to personal interests and budget."
+    },
+    {
+      "id": "S48",
+      "dimension": "social_confirmation",
+      "text": "Relies on reviews, ratings, and travel forums to compare options, while recognizing that other travelers' preferences may differ."
+    },
+    {
+      "id": "S49",
+      "dimension": "travel_budget_and_value_orientation",
+      "text": "Needs the lowest feasible total cost and compares package prices closely, accepting basic accommodation or inconvenient timing to stay within budget."
+    },
+    {
+      "id": "S50",
+      "dimension": "travel_budget_and_value_orientation",
+      "text": "Sets a strict spending cap and wants all fees, meals, transfers, and optional activities disclosed in advance to avoid surprises."
+    },
+    {
+      "id": "S51",
+      "dimension": "travel_budget_and_value_orientation",
+      "text": "Seeks good value and will pay more for meaningful improvements in location, reliability, comfort, or included experiences."
+    },
+    {
+      "id": "S52",
+      "dimension": "travel_budget_and_value_orientation",
+      "text": "Balances cost and comfort, choosing a dependable mid-range package with a few optional upgrades rather than the cheapest or most expensive offer."
+    },
+    {
+      "id": "S53",
+      "dimension": "partner_status",
+      "text": "Is single and may travel with a friend, sibling, relative, or organized group rather than a romantic partner."
+    },
+    {
+      "id": "S54",
+      "dimension": "travel_party_composition",
+      "text": "Plans to travel with one companion and wants flexibility to choose activities together without having every hour scheduled."
+    },
+    {
+      "id": "S55",
+      "dimension": "travel_party_composition",
+      "text": "Plans to travel with a small group of friends or relatives whose interests, budgets, and walking speeds may differ."
+    },
+    {
+      "id": "S56",
+      "dimension": "travel_party_composition",
+      "text": "Plans to join a hosted tour or organized group, appreciating built-in companionship while wanting some time away from the group."
+    },
+    {
+      "id": "S57",
+      "dimension": "travel_planning_style",
+      "text": "Plans the main flights, lodging, and a few must-see activities independently, leaving meals and much of each day open."
+    },
+    {
+      "id": "S58",
+      "dimension": "travel_planning_style",
+      "text": "Prefers a flexible package that bundles essential logistics while allowing independent choices, optional excursions, and unstructured time."
+    },
+    {
+      "id": "S59",
+      "dimension": "travel_planning_style",
+      "text": "Likes a clear itinerary with major arrangements handled in advance but wants to decide some daily activities as the trip unfolds."
+    },
+    {
+      "id": "S60",
+      "dimension": "travel_planning_style",
+      "text": "Prefers a travel advisor or package provider to arrange flights, lodging, transfers, and reservations, while retaining approval over major choices."
+    },
+    {
+      "id": "S61",
+      "dimension": "social_confirmation",
+      "text": "Feels more comfortable choosing a popular, well-reviewed package that many travelers have enjoyed, especially when visiting Europe for the first time."
+    },
+    {
+      "id": "S62",
+      "dimension": "social_confirmation",
+      "text": "Likes traveling with a group and sharing experiences, and is influenced by whether friends, relatives, or peers are enthusiastic about the itinerary."
+    },
+    {
+      "id": "S63",
+      "dimension": "partner_status",
+      "text": "Is dating someone and is considering a first or relatively new trip together, with interest in balancing shared activities and personal preferences."
+    },
+    {
+      "id": "S64",
+      "dimension": "partner_status",
+      "text": "Has a committed partner and expects to travel as a couple, preferring a package that makes it easy to coordinate lodging, meals, and activities."
+    },
+    {
+      "id": "S65",
+      "dimension": "partner_status",
+      "text": "Is married or in a long-term partnership and treats travel as shared time, while still wanting room for different interests or occasional independent activities."
+    },
+    {
+      "id": "S66",
+      "dimension": "travel_party_composition",
+      "text": "Plans to travel as a couple and prioritizes shared experiences, convenient accommodation, and a manageable balance of sightseeing and downtime."
+    },
+    {
+      "id": "S67",
+      "dimension": "financial_situation",
+      "text": "Is affluent and can choose upgraded flights, desirable hotels, and paid experiences, though still expects quality and convenience to justify the expense."
+    },
+    {
+      "id": "S68",
+      "dimension": "financial_situation",
+      "text": "Is very wealthy or has unusually substantial travel resources and can readily consider premium suites, private transport, bespoke itineraries, and high-end experiences."
+    },
+    {
+      "id": "S69",
+      "dimension": "luxury_preferences",
+      "text": "Likes a polished mid-range experience with attractive rooms, dependable service, convenient locations, and a few carefully chosen upgrades."
+    },
+    {
+      "id": "S70",
+      "dimension": "luxury_preferences",
+      "text": "Appreciates sophisticated design, thoughtful details, excellent food, attentive staff, and a sense that the trip has been specially curated."
+    },
+    {
+      "id": "S71",
+      "dimension": "luxury_preferences",
+      "text": "Actively seeks luxury, including high-end hotels, premium transport, spacious rooms, concierge support, and distinctive experiences with exceptional service."
+    },
+    {
+      "id": "S72",
+      "dimension": "hotel_amenities",
+      "text": "Wants a comfortable hotel with a private bathroom, quality bedding, breakfast options, air conditioning where needed, and helpful local information."
+    },
+    {
+      "id": "S73",
+      "dimension": "hotel_amenities",
+      "text": "Values a central or well-connected location, soundproofing, dependable Wi-Fi, an elevator, good breakfast, and a lounge or other pleasant shared space."
+    },
+    {
+      "id": "S74",
+      "dimension": "hotel_amenities",
+      "text": "Prefers a full-service hotel with a restaurant, room service, fitness facilities, laundry, concierge help, and flexible check-in or luggage arrangements."
+    },
+    {
+      "id": "S75",
+      "dimension": "hotel_amenities",
+      "text": "Seeks upscale amenities such as a spa, pool, fine dining, premium toiletries, generous room space, high-touch service, and distinctive design."
+    },
+    {
+      "id": "S76",
+      "dimension": "travel_party_composition",
+      "text": "Plans to travel with children or teenagers and needs family-friendly pacing, suitable room arrangements, and activities that work across ages."
+    },
+    {
+      "id": "S77",
+      "dimension": "travel_party_composition",
+      "text": "Plans to travel with older relatives or people who may need extra rest, shorter walking distances, or assistance with mobility and logistics."
+    },
+    {
+      "id": "S78",
+      "dimension": "travel_planning_style",
+      "text": "Wants nearly all planning delegated to a trusted professional, including itinerary design and problem-solving, because time or confidence is limited."
+    },
+    {
+      "id": "S79",
+      "dimension": "travel_planning_style",
+      "text": "Has little interest in planning and prefers a guided, all-inclusive or highly organized itinerary with straightforward instructions and few decisions."
+    },
+    {
+      "id": "S80",
+      "dimension": "itinerary_pace",
+      "text": "Prefers a gentle but purposeful schedule, with a main activity each day and enough free time for meals, rest, and spontaneous discoveries."
+    },
+    {
+      "id": "S81",
+      "dimension": "itinerary_pace",
+      "text": "Likes a balanced itinerary that includes several highlights but leaves some afternoons or evenings open."
+    },
+    {
+      "id": "S82",
+      "dimension": "itinerary_pace",
+      "text": "Needs a flexible pace that can change day by day because of health, energy, weather, companions, or uncertain work and family commitments."
+    },
+    {
+      "id": "S83",
+      "dimension": "package_inclusions_preference",
+      "text": "Wants flights, lodging, and essential transfers bundled to simplify logistics while keeping meals and activities flexible."
+    },
+    {
+      "id": "S84",
+      "dimension": "package_inclusions_preference",
+      "text": "Prefers breakfast and several key excursions included, with free time for independent exploration and dining."
+    },
+    {
+      "id": "S85",
+      "dimension": "package_inclusions_preference",
+      "text": "Likes an all-inclusive or nearly all-inclusive package with meals, transport, and activities arranged in advance to make costs predictable."
+    },
+    {
+      "id": "S86",
+      "dimension": "package_inclusions_preference",
+      "text": "Wants a package with expert-guided tours, museum access, and reservations included, but does not need every meal or hour planned."
+    },
+    {
+      "id": "S87",
+      "dimension": "package_inclusions_preference",
+      "text": "Prefers a highly customized package whose inclusions can be adjusted to personal interests, accessibility needs, and budget."
+    },
+    {
+      "id": "S88",
+      "dimension": "security_concerns_and_adventure_tolerance",
+      "text": "Is extremely cautious, worries about unfamiliar neighborhoods, scams, illness, transport disruption, and emergencies, and prefers guided transfers and dependable support."
+    },
+    {
+      "id": "S89",
+      "dimension": "security_concerns_and_adventure_tolerance",
+      "text": "Is strongly safety-conscious and researches destinations carefully, favors well-reviewed accommodation, and prefers clear instructions and support contacts."
+    },
+    {
+      "id": "S90",
+      "dimension": "security_concerns_and_adventure_tolerance",
+      "text": "Has heightened security concerns due to past experiences, health needs, discrimination concerns, or anxiety, and needs reassurance without being pressured into activities."
+    },
+    {
+      "id": "S91",
+      "dimension": "travel_planning_style",
+      "text": "Is comfortable delegating logistics but wants access to the itinerary, costs, and decision-making rationale rather than feeling excluded from the process."
+    },
+    {
+      "id": "S92",
+      "dimension": "europe_travel_experience",
+      "text": "Has never traveled to Europe and needs clear, reassuring guidance about flights, local transport, cultural expectations, payments, and daily logistics."
+    },
+    {
+      "id": "S93",
+      "dimension": "europe_travel_experience",
+      "text": "Has traveled internationally but not to Europe and is confident about travel basics while still needing help with European routes and local arrangements."
+    },
+    {
+      "id": "S94",
+      "dimension": "europe_travel_experience",
+      "text": "Has past travel experience that was stressful or disappointing and needs the package to address specific concerns before feeling ready to book."
+    },
+    {
+      "id": "S95",
+      "dimension": "transportation_preferences",
+      "text": "Prefers flights and transfers to be fully arranged, with clear meeting points, assistance with luggage, and minimal uncertainty on arrival."
+    },
+    {
+      "id": "S96",
+      "dimension": "transportation_preferences",
+      "text": "Enjoys using trains between cities and values scenic routes, central stations, and help understanding reservations and platform information."
+    },
+    {
+      "id": "S97",
+      "dimension": "transportation_preferences",
+      "text": "Is comfortable using public transit independently and prefers a package that provides useful orientation without adding unnecessary private transfers."
+    },
+    {
+      "id": "S98",
+      "dimension": "transportation_preferences",
+      "text": "Prefers private cars or prearranged taxis for comfort, accessibility, safety, or time savings, even when they cost more."
+    },
+    {
+      "id": "S99",
+      "dimension": "travel_insurance_and_contingency_attitude",
+      "text": "Would buy basic travel insurance after comparing coverage and price, focusing on medical emergencies and trip interruption."
+    },
+    {
+      "id": "S100",
+      "dimension": "travel_insurance_and_contingency_attitude",
+      "text": "Prefers comprehensive insurance covering medical needs, cancellation, baggage, and travel disruption, and wants exclusions explained clearly."
+    },
+    {
+      "id": "S101",
+      "dimension": "travel_insurance_and_contingency_attitude",
+      "text": "Is highly concerned about unexpected events and wants strong cancellation flexibility, accessible emergency support, and clear rebooking options."
+    },
+    {
+      "id": "S102",
+      "dimension": "travel_insurance_and_contingency_attitude",
+      "text": "Has medical, mobility, family, or financial circumstances that make tailored coverage and a dependable emergency contact particularly important."
+    },
+    {
+      "id": "S103",
+      "dimension": "booking_decision_making",
+      "text": "Compares several providers, dates, reviews, and inclusions before deciding, and wants a clear explanation of differences."
+    },
+    {
+      "id": "S104",
+      "dimension": "booking_decision_making",
+      "text": "Is hesitant to book because of price uncertainty, unfamiliar providers, safety concerns, or fear of making the wrong choice."
+    },
+    {
+      "id": "S105",
+      "dimension": "booking_decision_making",
+      "text": "Prefers an advisor or trusted person to narrow down choices and explain trade-offs before making the final decision."
+    },
+    {
+      "id": "S106",
+      "dimension": "household_and_family_structure",
+      "text": "Is a child or dependent living with parents, guardians, relatives, or foster caregivers."
+    },
+    {
+      "id": "S107",
+      "dimension": "educational_attainment",
+      "text": "Has not completed high school and may be currently enrolled, have left school, or be pursuing an equivalency credential."
+    },
+    {
+      "id": "S108",
+      "dimension": "employment_and_work_arrangement",
+      "text": "Is a student, caregiver, retiree, or otherwise outside paid employment."
+    },
+    {
+      "id": "S109",
+      "dimension": "employment_and_work_arrangement",
+      "text": "Performs unpaid household, family, volunteer, or community work."
+    },
+    {
+      "id": "S110",
+      "dimension": "occupation",
+      "text": "Has no current occupation because they are a child, student, retired, unemployed, caregiving, unable to work, or otherwise outside paid employment."
+    },
+    {
+      "id": "S111",
+      "dimension": "technology_and_gaming_preferences",
+      "text": "Primarily uses a smartphone for communication, entertainment, news, and everyday services."
+    },
+    {
+      "id": "S112",
+      "dimension": "technology_and_gaming_preferences",
+      "text": "Enjoys console gaming, including solo, cooperative, or competitive games."
+    },
+    {
+      "id": "S113",
+      "dimension": "technology_and_gaming_preferences",
+      "text": "Mostly plays mobile games in brief or occasional sessions."
+    },
+    {
+      "id": "S114",
+      "dimension": "technology_and_gaming_preferences",
+      "text": "Has limited access to reliable devices, broadband, or digital skills."
+    },
+    {
+      "id": "S115",
+      "dimension": "technology_and_gaming_preferences",
+      "text": "Uses assistive technology or accessibility features for communication, work, or daily life."
+    },
+    {
+      "id": "S116",
+      "dimension": "household_and_family_structure",
+      "text": "Lives with a spouse or partner and no children in the household."
+    },
+    {
+      "id": "S117",
+      "dimension": "household_and_family_structure",
+      "text": "Lives with parents, adult children, siblings, or other relatives in a multigenerational or extended-family household."
+    },
+    {
+      "id": "S118",
+      "dimension": "household_and_family_structure",
+      "text": "Shares housing with roommates, friends, or unrelated adults."
+    },
+    {
+      "id": "S119",
+      "dimension": "labor_force_participation",
+      "text": "Is in the labor force, either employed or actively seeking work, using the supplied population estimate."
+    },
+    {
+      "id": "S120",
+      "dimension": "employment_and_work_arrangement",
+      "text": "Works full time for an employer in a permanent or ongoing position."
+    },
+    {
+      "id": "S121",
+      "dimension": "employment_and_work_arrangement",
+      "text": "Works part time, seasonally, on call, or in multiple jobs."
+    },
+    {
+      "id": "S122",
+      "dimension": "employment_and_work_arrangement",
+      "text": "Is self-employed, a freelancer, an independent contractor, or a small-business owner."
+    },
+    {
+      "id": "S123",
+      "dimension": "employment_and_work_arrangement",
+      "text": "Works in a gig, platform, temporary, or other insecure job arrangement."
+    },
+    {
+      "id": "S124",
+      "dimension": "employment_and_work_arrangement",
+      "text": "Is looking for work or is temporarily unemployed."
+    },
+    {
+      "id": "S125",
+      "dimension": "employment_and_work_arrangement",
+      "text": "Serves in the military or works in a military-related role."
+    },
+    {
+      "id": "S126",
+      "dimension": "labor_force_participation",
+      "text": "Is not currently in the labor force, for example because of age, schooling, caregiving, disability, retirement, or other circumstances; 38.3%."
+    },
+    {
+      "id": "S127",
+      "dimension": "labor_force_participation",
+      "text": "Participates in the labor force through employment or active job-seeking; 61.7% in the supplied profile."
+    },
+    {
+      "id": "S128",
+      "dimension": "interest_in_video_gaming",
+      "text": "Enjoys video gaming as an interest; 33% reported."
+    },
+    {
+      "id": "S129",
+      "dimension": "interest_in_video_gaming",
+      "text": "Does not report video gaming as an interest; 67%."
+    },
+    {
+      "id": "S130",
+      "dimension": "outdoor_activities_interest",
+      "text": "Enjoys outdoor recreation such as walking, hiking, camping, fishing, or spending time in parks; source reports 30%."
+    },
+    {
+      "id": "S131",
+      "dimension": "outdoor_activities_interest",
+      "text": "Does not regularly pursue outdoor recreation as a personal interest; complement of the supplied 30% figure."
+    },
+    {
+      "id": "S132",
+      "dimension": "age_group",
+      "text": "A child aged 0–14, whose daily life may center on family, schooling, play, and age-appropriate care."
+    },
+    {
+      "id": "S133",
+      "dimension": "country_of_residence",
+      "text": "Colombia, including residents in cities, small towns, rural communities, and remote territories."
+    },
+    {
+      "id": "S134",
+      "dimension": "household_and_care_context",
+      "text": "Is a child or young person dependent on caregivers and participating in school, family life, or other age-appropriate activities."
+    },
+    {
+      "id": "S135",
+      "dimension": "age_group",
+      "text": "A person aged 15–64, spanning adolescence, young adulthood, working years, and later working age."
+    },
+    {
+      "id": "S136",
+      "dimension": "settlement_type_and_major_city",
+      "text": "Lives in Bogotá, in a large, diverse capital city with extensive services, universities, public transport, and pronounced differences in income and neighborhood conditions."
+    },
+    {
+      "id": "S137",
+      "dimension": "settlement_type_and_major_city",
+      "text": "Lives in Medellín, in a major urban area shaped by regional identity, industry, services, and varied urban and hillside neighborhoods."
+    },
+    {
+      "id": "S138",
+      "dimension": "settlement_type_and_major_city",
+      "text": "Lives in Cali, in a large southwestern city with strong regional, Pacific, Afro-Colombian, and musical influences."
+    },
+    {
+      "id": "S139",
+      "dimension": "settlement_type_and_major_city",
+      "text": "Lives in Barranquilla, a Caribbean coastal city with active commerce, migration, music, and carnival traditions."
+    },
+    {
+      "id": "S140",
+      "dimension": "settlement_type_and_major_city",
+      "text": "Lives in Cartagena, a Caribbean port city with historic, tourism, commercial, and Afro-Caribbean influences, alongside marked social inequality."
+    },
+    {
+      "id": "S141",
+      "dimension": "settlement_type_and_major_city",
+      "text": "Lives in another urban area, including a departmental capital, intermediate city, small town, or peri-urban neighborhood."
+    },
+    {
+      "id": "S142",
+      "dimension": "labor_force_participation",
+      "text": "Participates in the labor force, whether currently employed or actively seeking work."
+    },
+    {
+      "id": "S143",
+      "dimension": "employment_outcome_among_labor_force",
+      "text": "Is employed, including people in formal, informal, self-employed, temporary, or family work."
+    },
+    {
+      "id": "S144",
+      "dimension": "technology_and_internet_access",
+      "text": "Has access to and uses a smartphone, consistent with an approximate midpoint of the supplied 80–90% smartphone-penetration estimate."
+    },
+    {
+      "id": "S145",
+      "dimension": "urban_internet_access",
+      "text": "Has internet access in an urban area, consistent with the supplied estimate of at least approximately 80% urban access."
+    },
+    {
+      "id": "S146",
+      "dimension": "technology_use_style",
+      "text": "Uses a smartphone and online services daily for messaging, social networks, entertainment, payments, learning, or work."
+    },
+    {
+      "id": "S147",
+      "dimension": "technology_use_style",
+      "text": "Uses digital tools frequently but mainly for practical communication, banking, education, or employment tasks."
+    },
+    {
+      "id": "S148",
+      "dimension": "technology_use_style",
+      "text": "Uses the internet occasionally, sharing devices or relying on available public, school, workplace, or family connections."
+    },
+    {
+      "id": "S149",
+      "dimension": "technology_and_internet_access",
+      "text": "Does not have reliable personal smartphone access, or depends on a shared device, basic phone, public connection, or intermittent service."
+    },
+    {
+      "id": "S150",
+      "dimension": "urban_internet_access",
+      "text": "Lacks reliable internet access in an urban area or faces interruptions, affordability barriers, or limited device access."
+    },
+    {
+      "id": "S151",
+      "dimension": "technology_use_style",
+      "text": "Has limited digital confidence or access and prefers in-person, telephone, or paper-based ways of completing many tasks."
+    },
+    {
+      "id": "S152",
+      "dimension": "settlement_type_and_major_city",
+      "text": "Lives in a rural area, such as an agricultural settlement, Indigenous territory, coastal community, dispersed village, or remote rural district."
+    },
+    {
+      "id": "S153",
+      "dimension": "occupation_and_work_role",
+      "text": "Is unemployed and looking for work, unable to find suitable work, or temporarily out of work."
+    },
+    {
+      "id": "S154",
+      "dimension": "employment_outcome_among_labor_force",
+      "text": "Is unemployed and seeking work; the supplied 8.8% figure is an approximate urban-average unemployment rate for 2025."
+    },
+    {
+      "id": "S155",
+      "dimension": "occupation_and_work_role",
+      "text": "Is a student, unpaid caregiver, retired person, person with a disability affecting employment, or otherwise outside paid employment."
+    },
+    {
+      "id": "S156",
+      "dimension": "labor_force_participation",
+      "text": "Is outside the labor force at present, for reasons such as study, caregiving, retirement, health, discouragement, or personal choice."
+    },
+    {
+      "id": "S157",
+      "dimension": "age_group",
+      "text": "An older adult aged 65 or above, with varied levels of independence, health, family involvement, and retirement experience."
+    },
+    {
+      "id": "S158",
+      "dimension": "physical_activity_and_health_habits",
+      "text": "Has low physical activity and spends much of the day sitting, because of work, health, access, preference, or other demands."
+    },
+    {
+      "id": "S159",
+      "dimension": "physical_activity_and_health_habits",
+      "text": "Gets occasional activity through walking, household tasks, work, or irregular exercise."
+    },
+    {
+      "id": "S160",
+      "dimension": "physical_activity_and_health_habits",
+      "text": "Would like to be more active but faces barriers such as time, cost, safety, disability, caregiving, or lack of facilities."
+    },
+    {
+      "id": "S161",
+      "dimension": "physical_activity_and_health_habits",
+      "text": "Has a health condition or disability that shapes daily activity, exertion, or access to recreation."
+    },
+    {
+      "id": "S162",
+      "dimension": "physical_activity_and_health_habits",
+      "text": "Exercises regularly at a moderate level, using activities suited to personal health and access."
+    },
+    {
+      "id": "S163",
+      "dimension": "physical_activity_and_health_habits",
+      "text": "Engages in frequent vigorous exercise, sports, or physically demanding recreation."
+    },
+    {
+      "id": "S164",
+      "dimension": "health_and_wellness_habits",
+      "text": "Has low physical activity and spends much of the day sitting, whether by choice, work conditions, disability, or limited access."
+    },
+    {
+      "id": "S165",
+      "dimension": "health_and_wellness_habits",
+      "text": "Gets occasional light exercise but does not have a consistent routine."
+    },
+    {
+      "id": "S166",
+      "dimension": "health_and_wellness_habits",
+      "text": "Has a chronic illness, disability, pain, or mobility limitation that shapes daily routines."
+    },
+    {
+      "id": "S167",
+      "dimension": "health_and_wellness_habits",
+      "text": "Is generally healthy but has limited access to preventive care or struggles to maintain healthy habits."
+    },
+    {
+      "id": "S168",
+      "dimension": "health_and_wellness_habits",
+      "text": "Has substantial health needs and frequent contact with healthcare services."
+    },
+    {
+      "id": "S169",
+      "dimension": "health_and_wellness_habits",
+      "text": "Exercises regularly through walking, sports, fitness classes, physically demanding work, or recreation."
+    },
+    {
+      "id": "S170",
+      "dimension": "health_and_wellness_habits",
+      "text": "Is highly active or athletic and prioritizes training, outdoor movement, or competitive sport."
+    },
+    {
+      "id": "S171",
+      "dimension": "cooking_and_baking_interest",
+      "text": "Enjoys cooking or baking as a hobby, including recipe exploration, meal preparation, or sharing homemade food; source reports 41%."
+    },
+    {
+      "id": "S172",
+      "dimension": "cooking_and_baking_interest",
+      "text": "Does not identify cooking or baking as a hobby, although may prepare food as a routine necessity; complement of the supplied 41% figure."
+    },
+    {
+      "id": "S173",
+      "dimension": "country_of_residence",
+      "text": "Lives in the United States of America, in a state, territory, tribal area, or U.S. community."
+    },
+    {
+      "id": "S174",
+      "dimension": "gender",
+      "text": "Man or male, including people who identify as men."
+    },
+    {
+      "id": "S175",
+      "dimension": "gender",
+      "text": "Woman or female, including people who identify as women."
+    },
+    {
+      "id": "S176",
+      "dimension": "parent_of_a_child_aged_4_to_5",
+      "text": "Is a parent or guardian of at least one child who is currently 4 or 5 years old."
+    },
+    {
+      "id": "S177",
+      "dimension": "parenting_and_caregiving_context",
+      "text": "Shares daily caregiving with a spouse or partner, coordinating preschool or kindergarten routines, meals, bedtime, and family activities."
+    },
+    {
+      "id": "S178",
+      "dimension": "parenting_and_caregiving_context",
+      "text": "Is a young parent balancing the child's care with education, early employment, or support from extended family."
+    },
+    {
+      "id": "S179",
+      "dimension": "preferences_and_tastes",
+      "text": "Likes reading books and favors short reading sessions, audiobooks, or books that fit into a busy parenting routine."
+    },
+    {
+      "id": "S180",
+      "dimension": "preferences_and_tastes",
+      "text": "Likes reading books but has limited time or concentration for reading, and often returns to a book intermittently."
+    },
+    {
+      "id": "S181",
+      "dimension": "book_reading_interest",
+      "text": "Likes reading books; this is required for every person in the target population, regardless of how often they read or which formats and genres they prefer."
+    },
+    {
+      "id": "S182",
+      "dimension": "parenting_and_caregiving_context",
+      "text": "Co-parents across two households and coordinates schedules, transportation, and decisions with the child's other parent."
+    },
+    {
+      "id": "S183",
+      "dimension": "preferences_and_tastes",
+      "text": "Likes reading books and most enjoys fiction, novels, or stories that offer emotional engagement and escape."
+    },
+    {
+      "id": "S184",
+      "dimension": "preferences_and_tastes",
+      "text": "Likes reading books and most enjoys nonfiction, history, biography, science, or practical guides."
+    },
+    {
+      "id": "S185",
+      "dimension": "preferences_and_tastes",
+      "text": "Likes reading books and enjoys discussing books, visiting libraries or bookstores, or reading with their child."
+    },
+    {
+      "id": "S186",
+      "dimension": "parenting_and_caregiving_context",
+      "text": "Is an older parent who brings substantial life experience to caregiving and may also be supporting older children or aging relatives."
+    },
+    {
+      "id": "S187",
+      "dimension": "parenting_and_caregiving_context",
+      "text": "Is a grandparent, adoptive parent, foster parent, or other legal guardian with primary responsibility for a 4- or 5-year-old."
+    }
+  ],
+  "plans": [
+    {
+      "case_id": "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR::membership-plan-v2::r1",
+      "directives": [
+        {
+          "quantity": 18,
+          "selection": {
+            "age": [
+              0,
+              54
+            ],
+            "age_group": [
+              "S1",
+              "S2",
+              "S3"
+            ],
+            "interests_and_hobbies_reading": [
+              "S4"
+            ]
+          }
+        },
+        {
+          "quantity": 32,
+          "selection": {
+            "age": [
+              0,
+              54
+            ],
+            "age_group": [
+              "S1",
+              "S2",
+              "S3"
+            ],
+            "interests_and_hobbies_reading": [
+              "S5"
+            ]
+          }
+        },
+        {
+          "quantity": 7,
+          "selection": {
+            "age": [
+              55,
+              115
+            ],
+            "age_group": [
+              "S6",
+              "S7"
+            ],
+            "interests_and_hobbies_reading": [
+              "S4"
+            ]
+          }
+        },
+        {
+          "quantity": 13,
+          "selection": {
+            "age": [
+              55,
+              115
+            ],
+            "age_group": [
+              "S6",
+              "S7"
+            ],
+            "interests_and_hobbies_reading": [
+              "S5"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "exec-chatcmpl-EcQoAeqqNKsUNJdJW4yPwzKCNo2mx::membership-plan-v2::r1",
+      "directives": [
+        {
+          "quantity": 13,
+          "selection": {
+            "parent_age_years": [
+              15,
+              39
+            ],
+            "age_of_qualifying_child_years": [
+              4,
+              5
+            ],
+            "age_of_qualifying_child_months": [
+              48,
+              71
+            ],
+            "parent_child_shared_reading_frequency_days_per_week": [
+              0,
+              3
+            ]
+          }
+        },
+        {
+          "quantity": 12,
+          "selection": {
+            "parent_age_years": [
+              15,
+              39
+            ],
+            "age_of_qualifying_child_years": [
+              4,
+              5
+            ],
+            "age_of_qualifying_child_months": [
+              48,
+              71
+            ],
+            "parent_child_shared_reading_frequency_days_per_week": [
+              4,
+              7
+            ]
+          }
+        },
+        {
+          "quantity": 12,
+          "selection": {
+            "parent_age_years": [
+              40,
+              85
+            ],
+            "age_of_qualifying_child_years": [
+              4,
+              5
+            ],
+            "age_of_qualifying_child_months": [
+              48,
+              71
+            ],
+            "parent_child_shared_reading_frequency_days_per_week": [
+              0,
+              3
+            ]
+          }
+        },
+        {
+          "quantity": 13,
+          "selection": {
+            "parent_age_years": [
+              40,
+              85
+            ],
+            "age_of_qualifying_child_years": [
+              4,
+              5
+            ],
+            "age_of_qualifying_child_months": [
+              48,
+              71
+            ],
+            "parent_child_shared_reading_frequency_days_per_week": [
+              4,
+              7
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "exec-chatcmpl-EcNZrgB7NnHHQ32gLuD0kVWCH8bKw::membership-plan-v2::r1",
+      "directives": [
+        {
+          "quantity": 5,
+          "selection": {
+            "age": [
+              0,
+              14
+            ],
+            "age_group": [
+              "S8"
+            ]
+          }
+        },
+        {
+          "quantity": 4,
+          "selection": {
+            "age": [
+              15,
+              24
+            ],
+            "age_group": [
+              "S9"
+            ]
+          }
+        },
+        {
+          "quantity": 6,
+          "selection": {
+            "age": [
+              25,
+              54
+            ],
+            "age_group": [
+              "S10"
+            ],
+            "sports_and_recreation_preferences": [
+              "S11",
+              "S12",
+              "S13"
+            ]
+          }
+        },
+        {
+          "quantity": 6,
+          "selection": {
+            "age": [
+              25,
+              54
+            ],
+            "age_group": [
+              "S10"
+            ],
+            "sports_and_recreation_preferences": [
+              "S14",
+              "S15",
+              "S16"
+            ]
+          }
+        },
+        {
+          "quantity": 4,
+          "selection": {
+            "age": [
+              55,
+              64
+            ],
+            "age_group": [
+              "S17"
+            ]
+          }
+        },
+        {
+          "quantity": 5,
+          "selection": {
+            "age": [
+              65,
+              110
+            ],
+            "age_group": [
+              "S18"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "exec-chatcmpl-EcPVXPdL4sj3j6kfDX47ef2fsDrvS::membership-plan-v2::r1",
+      "directives": [
+        {
+          "quantity": 9,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              0,
+              14
+            ],
+            "age_group": [
+              "S20"
+            ]
+          }
+        },
+        {
+          "quantity": 3,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              15,
+              24
+            ],
+            "age_group": [
+              "S21"
+            ],
+            "reading_interest": [
+              "S22"
+            ]
+          }
+        },
+        {
+          "quantity": 4,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              15,
+              24
+            ],
+            "age_group": [
+              "S21"
+            ],
+            "reading_interest": [
+              "S23"
+            ]
+          }
+        },
+        {
+          "quantity": 10,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              25,
+              64
+            ],
+            "age_group": [
+              "S24",
+              "S25"
+            ],
+            "reading_interest": [
+              "S22"
+            ]
+          }
+        },
+        {
+          "quantity": 16,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              25,
+              64
+            ],
+            "age_group": [
+              "S24",
+              "S25"
+            ],
+            "reading_interest": [
+              "S23"
+            ]
+          }
+        },
+        {
+          "quantity": 3,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              65,
+              110
+            ],
+            "age_group": [
+              "S26"
+            ],
+            "reading_interest": [
+              "S22"
+            ]
+          }
+        },
+        {
+          "quantity": 5,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              65,
+              110
+            ],
+            "age_group": [
+              "S26"
+            ],
+            "reading_interest": [
+              "S23"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR::membership-plan-v2-confirm::r1",
+      "directives": [
+        {
+          "quantity": 5,
+          "selection": {
+            "age": [
+              0,
+              14
+            ],
+            "age_group": [
+              "S1"
+            ],
+            "interests_and_hobbies_cooking_and_baking": [
+              "S27"
+            ]
+          }
+        },
+        {
+          "quantity": 8,
+          "selection": {
+            "age": [
+              0,
+              14
+            ],
+            "age_group": [
+              "S1"
+            ],
+            "interests_and_hobbies_cooking_and_baking": [
+              "S28"
+            ]
+          }
+        },
+        {
+          "quantity": 4,
+          "selection": {
+            "age": [
+              15,
+              24
+            ],
+            "age_group": [
+              "S2"
+            ],
+            "interests_and_hobbies_cooking_and_baking": [
+              "S27"
+            ]
+          }
+        },
+        {
+          "quantity": 5,
+          "selection": {
+            "age": [
+              15,
+              24
+            ],
+            "age_group": [
+              "S2"
+            ],
+            "interests_and_hobbies_cooking_and_baking": [
+              "S28"
+            ]
+          }
+        },
+        {
+          "quantity": 12,
+          "selection": {
+            "age": [
+              25,
+              54
+            ],
+            "age_group": [
+              "S3"
+            ],
+            "interests_and_hobbies_cooking_and_baking": [
+              "S27"
+            ]
+          }
+        },
+        {
+          "quantity": 16,
+          "selection": {
+            "age": [
+              25,
+              54
+            ],
+            "age_group": [
+              "S3"
+            ],
+            "interests_and_hobbies_cooking_and_baking": [
+              "S28"
+            ]
+          }
+        },
+        {
+          "quantity": 4,
+          "selection": {
+            "age": [
+              55,
+              64
+            ],
+            "age_group": [
+              "S6"
+            ],
+            "interests_and_hobbies_cooking_and_baking": [
+              "S27"
+            ]
+          }
+        },
+        {
+          "quantity": 5,
+          "selection": {
+            "age": [
+              55,
+              64
+            ],
+            "age_group": [
+              "S6"
+            ],
+            "interests_and_hobbies_cooking_and_baking": [
+              "S28"
+            ]
+          }
+        },
+        {
+          "quantity": 4,
+          "selection": {
+            "age": [
+              65,
+              115
+            ],
+            "age_group": [
+              "S7"
+            ],
+            "interests_and_hobbies_cooking_and_baking": [
+              "S27"
+            ]
+          }
+        },
+        {
+          "quantity": 7,
+          "selection": {
+            "age": [
+              65,
+              115
+            ],
+            "age_group": [
+              "S7"
+            ],
+            "interests_and_hobbies_cooking_and_baking": [
+              "S28"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "exec-chatcmpl-EcNZrgB7NnHHQ32gLuD0kVWCH8bKw::membership-plan-v2-confirm::r1",
+      "directives": [
+        {
+          "quantity": 2,
+          "selection": {
+            "age": [
+              0,
+              14
+            ],
+            "age_group": [
+              "S8"
+            ],
+            "interest_in_cooking_and_baking": [
+              "S29"
+            ]
+          }
+        },
+        {
+          "quantity": 4,
+          "selection": {
+            "age": [
+              0,
+              14
+            ],
+            "age_group": [
+              "S8"
+            ],
+            "interest_in_cooking_and_baking": [
+              "S30"
+            ]
+          }
+        },
+        {
+          "quantity": 2,
+          "selection": {
+            "age": [
+              15,
+              24
+            ],
+            "age_group": [
+              "S9"
+            ],
+            "interest_in_cooking_and_baking": [
+              "S29"
+            ]
+          }
+        },
+        {
+          "quantity": 2,
+          "selection": {
+            "age": [
+              15,
+              24
+            ],
+            "age_group": [
+              "S9"
+            ],
+            "interest_in_cooking_and_baking": [
+              "S30"
+            ]
+          }
+        },
+        {
+          "quantity": 5,
+          "selection": {
+            "age": [
+              25,
+              54
+            ],
+            "age_group": [
+              "S10"
+            ],
+            "interest_in_cooking_and_baking": [
+              "S29"
+            ]
+          }
+        },
+        {
+          "quantity": 7,
+          "selection": {
+            "age": [
+              25,
+              54
+            ],
+            "age_group": [
+              "S10"
+            ],
+            "interest_in_cooking_and_baking": [
+              "S30"
+            ]
+          }
+        },
+        {
+          "quantity": 2,
+          "selection": {
+            "age": [
+              55,
+              64
+            ],
+            "age_group": [
+              "S17"
+            ],
+            "interest_in_cooking_and_baking": [
+              "S29"
+            ]
+          }
+        },
+        {
+          "quantity": 2,
+          "selection": {
+            "age": [
+              55,
+              64
+            ],
+            "age_group": [
+              "S17"
+            ],
+            "interest_in_cooking_and_baking": [
+              "S30"
+            ]
+          }
+        },
+        {
+          "quantity": 1,
+          "selection": {
+            "age": [
+              65,
+              110
+            ],
+            "age_group": [
+              "S18"
+            ],
+            "interest_in_cooking_and_baking": [
+              "S29"
+            ]
+          }
+        },
+        {
+          "quantity": 3,
+          "selection": {
+            "age": [
+              65,
+              110
+            ],
+            "age_group": [
+              "S18"
+            ],
+            "interest_in_cooking_and_baking": [
+              "S30"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "exec-chatcmpl-EcPVXPdL4sj3j6kfDX47ef2fsDrvS::membership-plan-v2-confirm::r1",
+      "directives": [
+        {
+          "quantity": 6,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              0,
+              24
+            ],
+            "age_group": [
+              "S20",
+              "S21"
+            ],
+            "reading_interest": [
+              "S22"
+            ]
+          }
+        },
+        {
+          "quantity": 10,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              0,
+              24
+            ],
+            "age_group": [
+              "S20",
+              "S21"
+            ],
+            "reading_interest": [
+              "S23"
+            ]
+          }
+        },
+        {
+          "quantity": 7,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              25,
+              54
+            ],
+            "age_group": [
+              "S24"
+            ],
+            "reading_interest": [
+              "S22"
+            ]
+          }
+        },
+        {
+          "quantity": 13,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              25,
+              54
+            ],
+            "age_group": [
+              "S24"
+            ],
+            "reading_interest": [
+              "S23"
+            ]
+          }
+        },
+        {
+          "quantity": 5,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              55,
+              110
+            ],
+            "age_group": [
+              "S25",
+              "S26"
+            ],
+            "reading_interest": [
+              "S22"
+            ]
+          }
+        },
+        {
+          "quantity": 9,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              55,
+              110
+            ],
+            "age_group": [
+              "S25",
+              "S26"
+            ],
+            "reading_interest": [
+              "S23"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "exec-chatcmpl-EcQoAeqqNKsUNJdJW4yPwzKCNo2mx::membership-plan-v2-confirm::r1",
+      "directives": [
+        {
+          "quantity": 9,
+          "selection": {
+            "parent_age_years": [
+              22,
+              39
+            ],
+            "parent_child_shared_reading_frequency_days_per_week": [
+              5,
+              7
+            ],
+            "parent_child_reading_practice": [
+              "S31",
+              "S32"
+            ]
+          }
+        },
+        {
+          "quantity": 8,
+          "selection": {
+            "parent_age_years": [
+              40,
+              64
+            ],
+            "parent_child_shared_reading_frequency_days_per_week": [
+              5,
+              7
+            ],
+            "parent_child_reading_practice": [
+              "S31",
+              "S32"
+            ]
+          }
+        },
+        {
+          "quantity": 9,
+          "selection": {
+            "parent_age_years": [
+              22,
+              39
+            ],
+            "parent_child_shared_reading_frequency_days_per_week": [
+              1,
+              4
+            ],
+            "parent_child_reading_practice": [
+              "S33"
+            ]
+          }
+        },
+        {
+          "quantity": 8,
+          "selection": {
+            "parent_age_years": [
+              40,
+              64
+            ],
+            "parent_child_shared_reading_frequency_days_per_week": [
+              1,
+              4
+            ],
+            "parent_child_reading_practice": [
+              "S33"
+            ]
+          }
+        },
+        {
+          "quantity": 8,
+          "selection": {
+            "parent_age_years": [
+              22,
+              39
+            ],
+            "parent_child_shared_reading_frequency_days_per_week": 0,
+            "parent_child_reading_practice": [
+              "S34"
+            ]
+          }
+        },
+        {
+          "quantity": 8,
+          "selection": {
+            "parent_age_years": [
+              40,
+              64
+            ],
+            "parent_child_shared_reading_frequency_days_per_week": 0,
+            "parent_child_reading_practice": [
+              "S34"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "exec-chatcmpl-EdMnHggNcBaYKck4FEBp4D2YjA1I6::membership-plan-v2-fresh::r1",
+      "directives": [
+        {
+          "quantity": 20,
+          "selection": {
+            "age": [
+              18,
+              75
+            ],
+            "partner_status": [
+              "S35"
+            ],
+            "travel_party_composition": [
+              "S36"
+            ],
+            "financial_situation": [
+              "S37",
+              "S38",
+              "S39",
+              "S40"
+            ],
+            "luxury_preferences": [
+              "S41",
+              "S42",
+              "S43",
+              "S44"
+            ],
+            "social_confirmation": [
+              "S45",
+              "S46",
+              "S47",
+              "S48"
+            ],
+            "travel_budget_and_value_orientation": [
+              "S49",
+              "S50",
+              "S51",
+              "S52"
+            ]
+          }
+        },
+        {
+          "quantity": 20,
+          "selection": {
+            "age": [
+              18,
+              80
+            ],
+            "partner_status": [
+              "S53"
+            ],
+            "travel_party_composition": [
+              "S54",
+              "S55",
+              "S56"
+            ],
+            "travel_planning_style": [
+              "S57",
+              "S58",
+              "S59",
+              "S60"
+            ],
+            "social_confirmation": [
+              "S47",
+              "S48",
+              "S61",
+              "S62"
+            ]
+          }
+        },
+        {
+          "quantity": 20,
+          "selection": {
+            "age": [
+              25,
+              80
+            ],
+            "partner_status": [
+              "S63",
+              "S64",
+              "S65"
+            ],
+            "travel_party_composition": [
+              "S66"
+            ],
+            "financial_situation": [
+              "S39",
+              "S40",
+              "S67",
+              "S68"
+            ],
+            "luxury_preferences": [
+              "S42",
+              "S69",
+              "S70",
+              "S71",
+              "S43"
+            ],
+            "hotel_amenities": [
+              "S72",
+              "S73",
+              "S74",
+              "S75"
+            ],
+            "travel_planning_style": [
+              "S57",
+              "S58",
+              "S59",
+              "S60"
+            ],
+            "preferred_trip_duration_days": [
+              3,
+              30
+            ]
+          }
+        },
+        {
+          "quantity": 20,
+          "selection": {
+            "age": [
+              25,
+              75
+            ],
+            "travel_party_composition": [
+              "S76",
+              "S77"
+            ],
+            "financial_situation": [
+              "S37",
+              "S38",
+              "S39",
+              "S40"
+            ],
+            "travel_planning_style": [
+              "S58",
+              "S59",
+              "S60",
+              "S78",
+              "S79"
+            ],
+            "itinerary_pace": [
+              "S80",
+              "S81",
+              "S82"
+            ],
+            "travel_budget_and_value_orientation": [
+              "S49",
+              "S50",
+              "S51",
+              "S52"
+            ],
+            "package_inclusions_preference": [
+              "S83",
+              "S84",
+              "S85",
+              "S86",
+              "S87"
+            ]
+          }
+        },
+        {
+          "quantity": 20,
+          "selection": {
+            "age": [
+              18,
+              90
+            ],
+            "security_concerns_and_adventure_tolerance": [
+              "S88",
+              "S89",
+              "S90"
+            ],
+            "travel_planning_style": [
+              "S60",
+              "S78",
+              "S79",
+              "S91"
+            ],
+            "social_confirmation": [
+              "S46",
+              "S48",
+              "S61"
+            ],
+            "europe_travel_experience": [
+              "S92",
+              "S93",
+              "S94"
+            ],
+            "transportation_preferences": [
+              "S95",
+              "S96",
+              "S97",
+              "S98"
+            ],
+            "travel_insurance_and_contingency_attitude": [
+              "S99",
+              "S100",
+              "S101",
+              "S102"
+            ],
+            "booking_decision_making": [
+              "S103",
+              "S104",
+              "S105"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR::membership-plan-v2-confirm::r2",
+      "directives": [
+        {
+          "quantity": 13,
+          "selection": {
+            "age": [
+              0,
+              14
+            ],
+            "age_group": [
+              "S1"
+            ],
+            "household_and_family_structure": [
+              "S106"
+            ],
+            "educational_attainment": [
+              "S107"
+            ],
+            "employment_and_work_arrangement": [
+              "S108",
+              "S109"
+            ],
+            "occupation": [
+              "S110"
+            ],
+            "technology_and_gaming_preferences": [
+              "S111",
+              "S112",
+              "S113",
+              "S114",
+              "S115"
+            ]
+          }
+        },
+        {
+          "quantity": 9,
+          "selection": {
+            "age": [
+              15,
+              24
+            ],
+            "age_group": [
+              "S2"
+            ],
+            "household_and_family_structure": [
+              "S116",
+              "S117",
+              "S118",
+              "S106"
+            ]
+          }
+        },
+        {
+          "quantity": 28,
+          "selection": {
+            "age": [
+              25,
+              54
+            ],
+            "age_group": [
+              "S3"
+            ],
+            "labor_force_participation": [
+              "S119"
+            ],
+            "employment_and_work_arrangement": [
+              "S120",
+              "S121",
+              "S122",
+              "S123",
+              "S124",
+              "S125"
+            ]
+          }
+        },
+        {
+          "quantity": 9,
+          "selection": {
+            "age": [
+              55,
+              64
+            ],
+            "age_group": [
+              "S6"
+            ]
+          }
+        },
+        {
+          "quantity": 11,
+          "selection": {
+            "age": [
+              65,
+              115
+            ],
+            "age_group": [
+              "S7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "exec-chatcmpl-EcNZrgB7NnHHQ32gLuD0kVWCH8bKw::membership-plan-v2-confirm::r2",
+      "directives": [
+        {
+          "quantity": 6,
+          "selection": {
+            "age": [
+              0,
+              14
+            ],
+            "age_group": [
+              "S8"
+            ],
+            "labor_force_participation": [
+              "S126"
+            ]
+          }
+        },
+        {
+          "quantity": 2,
+          "selection": {
+            "age": [
+              15,
+              24
+            ],
+            "age_group": [
+              "S9"
+            ],
+            "labor_force_participation": [
+              "S127",
+              "S126"
+            ],
+            "interest_in_video_gaming": [
+              "S128"
+            ]
+          }
+        },
+        {
+          "quantity": 2,
+          "selection": {
+            "age": [
+              15,
+              24
+            ],
+            "age_group": [
+              "S9"
+            ],
+            "labor_force_participation": [
+              "S127",
+              "S126"
+            ],
+            "interest_in_video_gaming": [
+              "S129"
+            ]
+          }
+        },
+        {
+          "quantity": 4,
+          "selection": {
+            "age": [
+              25,
+              54
+            ],
+            "age_group": [
+              "S10"
+            ],
+            "labor_force_participation": [
+              "S127",
+              "S126"
+            ],
+            "interest_in_video_gaming": [
+              "S128"
+            ]
+          }
+        },
+        {
+          "quantity": 8,
+          "selection": {
+            "age": [
+              25,
+              54
+            ],
+            "age_group": [
+              "S10"
+            ],
+            "labor_force_participation": [
+              "S127",
+              "S126"
+            ],
+            "interest_in_video_gaming": [
+              "S129"
+            ]
+          }
+        },
+        {
+          "quantity": 3,
+          "selection": {
+            "age": [
+              55,
+              110
+            ],
+            "age_group": [
+              "S17",
+              "S18"
+            ],
+            "labor_force_participation": [
+              "S127",
+              "S126"
+            ],
+            "interest_in_video_gaming": [
+              "S128"
+            ]
+          }
+        },
+        {
+          "quantity": 5,
+          "selection": {
+            "age": [
+              55,
+              110
+            ],
+            "age_group": [
+              "S17",
+              "S18"
+            ],
+            "labor_force_participation": [
+              "S127",
+              "S126"
+            ],
+            "interest_in_video_gaming": [
+              "S129"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "exec-chatcmpl-EcPVXPdL4sj3j6kfDX47ef2fsDrvS::membership-plan-v2-confirm::r2",
+      "directives": [
+        {
+          "quantity": 9,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              0,
+              14
+            ],
+            "age_group": [
+              "S20"
+            ]
+          }
+        },
+        {
+          "quantity": 2,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              15,
+              24
+            ],
+            "age_group": [
+              "S21"
+            ],
+            "outdoor_activities_interest": [
+              "S130"
+            ]
+          }
+        },
+        {
+          "quantity": 5,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              15,
+              24
+            ],
+            "age_group": [
+              "S21"
+            ],
+            "outdoor_activities_interest": [
+              "S131"
+            ]
+          }
+        },
+        {
+          "quantity": 6,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              25,
+              54
+            ],
+            "age_group": [
+              "S24"
+            ],
+            "outdoor_activities_interest": [
+              "S130"
+            ]
+          }
+        },
+        {
+          "quantity": 14,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              25,
+              54
+            ],
+            "age_group": [
+              "S24"
+            ],
+            "outdoor_activities_interest": [
+              "S131"
+            ]
+          }
+        },
+        {
+          "quantity": 2,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              55,
+              64
+            ],
+            "age_group": [
+              "S25"
+            ],
+            "outdoor_activities_interest": [
+              "S130"
+            ]
+          }
+        },
+        {
+          "quantity": 4,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              55,
+              64
+            ],
+            "age_group": [
+              "S25"
+            ],
+            "outdoor_activities_interest": [
+              "S131"
+            ]
+          }
+        },
+        {
+          "quantity": 2,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              65,
+              110
+            ],
+            "age_group": [
+              "S26"
+            ],
+            "outdoor_activities_interest": [
+              "S130"
+            ]
+          }
+        },
+        {
+          "quantity": 6,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              65,
+              110
+            ],
+            "age_group": [
+              "S26"
+            ],
+            "outdoor_activities_interest": [
+              "S131"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "exec-chatcmpl-EcQoAeqqNKsUNJdJW4yPwzKCNo2mx::membership-plan-v2-confirm::r2",
+      "directives": [
+        {
+          "quantity": 13,
+          "selection": {
+            "age_of_qualifying_child_months": [
+              48,
+              59
+            ],
+            "parent_child_shared_reading_frequency_days_per_week": [
+              5,
+              7
+            ],
+            "parent_child_reading_practice": [
+              "S31",
+              "S32"
+            ]
+          }
+        },
+        {
+          "quantity": 12,
+          "selection": {
+            "age_of_qualifying_child_months": [
+              60,
+              71
+            ],
+            "parent_child_shared_reading_frequency_days_per_week": [
+              5,
+              7
+            ],
+            "parent_child_reading_practice": [
+              "S31",
+              "S32"
+            ]
+          }
+        },
+        {
+          "quantity": 13,
+          "selection": {
+            "age_of_qualifying_child_months": [
+              48,
+              59
+            ],
+            "parent_child_shared_reading_frequency_days_per_week": [
+              0,
+              4
+            ]
+          }
+        },
+        {
+          "quantity": 12,
+          "selection": {
+            "age_of_qualifying_child_months": [
+              60,
+              71
+            ],
+            "parent_child_shared_reading_frequency_days_per_week": [
+              0,
+              4
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "exec-chatcmpl-EcOxD2opspEiQDwf3tfIPzZqewtnr::membership-plan-v2-fresh::r1",
+      "directives": [
+        {
+          "quantity": 7,
+          "selection": {
+            "age": [
+              0,
+              14
+            ],
+            "age_group": [
+              "S132"
+            ],
+            "country_of_residence": [
+              "S133"
+            ],
+            "household_and_care_context": [
+              "S134"
+            ]
+          }
+        },
+        {
+          "quantity": 6,
+          "selection": {
+            "age": [
+              15,
+              64
+            ],
+            "age_group": [
+              "S135"
+            ],
+            "country_of_residence": [
+              "S133"
+            ],
+            "settlement_type_and_major_city": [
+              "S136",
+              "S137",
+              "S138",
+              "S139",
+              "S140",
+              "S141"
+            ],
+            "labor_force_participation": [
+              "S142"
+            ],
+            "employment_outcome_among_labor_force": [
+              "S143"
+            ],
+            "technology_and_internet_access": [
+              "S144"
+            ],
+            "urban_internet_access": [
+              "S145"
+            ],
+            "technology_use_style": [
+              "S146",
+              "S147",
+              "S148"
+            ]
+          }
+        },
+        {
+          "quantity": 2,
+          "selection": {
+            "age": [
+              15,
+              64
+            ],
+            "age_group": [
+              "S135"
+            ],
+            "country_of_residence": [
+              "S133"
+            ],
+            "settlement_type_and_major_city": [
+              "S136",
+              "S137",
+              "S138",
+              "S139",
+              "S140",
+              "S141"
+            ],
+            "labor_force_participation": [
+              "S142"
+            ],
+            "employment_outcome_among_labor_force": [
+              "S143"
+            ],
+            "technology_and_internet_access": [
+              "S149"
+            ],
+            "urban_internet_access": [
+              "S150"
+            ],
+            "technology_use_style": [
+              "S148",
+              "S151"
+            ]
+          }
+        },
+        {
+          "quantity": 6,
+          "selection": {
+            "age": [
+              15,
+              64
+            ],
+            "age_group": [
+              "S135"
+            ],
+            "country_of_residence": [
+              "S133"
+            ],
+            "settlement_type_and_major_city": [
+              "S152"
+            ],
+            "labor_force_participation": [
+              "S142"
+            ],
+            "employment_outcome_among_labor_force": [
+              "S143"
+            ]
+          }
+        },
+        {
+          "quantity": 2,
+          "selection": {
+            "age": [
+              15,
+              64
+            ],
+            "age_group": [
+              "S135"
+            ],
+            "country_of_residence": [
+              "S133"
+            ],
+            "occupation_and_work_role": [
+              "S153"
+            ],
+            "labor_force_participation": [
+              "S142"
+            ],
+            "employment_outcome_among_labor_force": [
+              "S154"
+            ]
+          }
+        },
+        {
+          "quantity": 3,
+          "selection": {
+            "age": [
+              15,
+              64
+            ],
+            "age_group": [
+              "S135"
+            ],
+            "country_of_residence": [
+              "S133"
+            ],
+            "occupation_and_work_role": [
+              "S155"
+            ],
+            "labor_force_participation": [
+              "S156"
+            ]
+          }
+        },
+        {
+          "quantity": 4,
+          "selection": {
+            "age": [
+              65,
+              110
+            ],
+            "age_group": [
+              "S157"
+            ],
+            "country_of_residence": [
+              "S133"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR::membership-plan-v2-confirm::r3",
+      "directives": [
+        {
+          "quantity": 4,
+          "selection": {
+            "age": [
+              0,
+              4
+            ],
+            "age_group": [
+              "S1"
+            ],
+            "household_and_family_structure": [
+              "S106"
+            ]
+          }
+        },
+        {
+          "quantity": 5,
+          "selection": {
+            "age": [
+              5,
+              14
+            ],
+            "age_group": [
+              "S1"
+            ],
+            "household_and_family_structure": [
+              "S106"
+            ],
+            "physical_activity_and_health_habits": [
+              "S158",
+              "S159",
+              "S160",
+              "S161"
+            ]
+          }
+        },
+        {
+          "quantity": 4,
+          "selection": {
+            "age": [
+              5,
+              14
+            ],
+            "age_group": [
+              "S1"
+            ],
+            "household_and_family_structure": [
+              "S106"
+            ],
+            "physical_activity_and_health_habits": [
+              "S162",
+              "S163"
+            ]
+          }
+        },
+        {
+          "quantity": 5,
+          "selection": {
+            "age": [
+              15,
+              24
+            ],
+            "age_group": [
+              "S2"
+            ],
+            "physical_activity_and_health_habits": [
+              "S158",
+              "S159",
+              "S160",
+              "S161"
+            ]
+          }
+        },
+        {
+          "quantity": 4,
+          "selection": {
+            "age": [
+              15,
+              24
+            ],
+            "age_group": [
+              "S2"
+            ],
+            "physical_activity_and_health_habits": [
+              "S162",
+              "S163"
+            ]
+          }
+        },
+        {
+          "quantity": 14,
+          "selection": {
+            "age": [
+              25,
+              54
+            ],
+            "age_group": [
+              "S3"
+            ],
+            "physical_activity_and_health_habits": [
+              "S158",
+              "S159",
+              "S160",
+              "S161"
+            ]
+          }
+        },
+        {
+          "quantity": 14,
+          "selection": {
+            "age": [
+              25,
+              54
+            ],
+            "age_group": [
+              "S3"
+            ],
+            "physical_activity_and_health_habits": [
+              "S162",
+              "S163"
+            ]
+          }
+        },
+        {
+          "quantity": 5,
+          "selection": {
+            "age": [
+              55,
+              64
+            ],
+            "age_group": [
+              "S6"
+            ],
+            "physical_activity_and_health_habits": [
+              "S158",
+              "S159",
+              "S160",
+              "S161"
+            ]
+          }
+        },
+        {
+          "quantity": 4,
+          "selection": {
+            "age": [
+              55,
+              64
+            ],
+            "age_group": [
+              "S6"
+            ],
+            "physical_activity_and_health_habits": [
+              "S162",
+              "S163"
+            ]
+          }
+        },
+        {
+          "quantity": 6,
+          "selection": {
+            "age": [
+              65,
+              115
+            ],
+            "age_group": [
+              "S7"
+            ],
+            "physical_activity_and_health_habits": [
+              "S158",
+              "S159",
+              "S160",
+              "S161"
+            ]
+          }
+        },
+        {
+          "quantity": 5,
+          "selection": {
+            "age": [
+              65,
+              115
+            ],
+            "age_group": [
+              "S7"
+            ],
+            "physical_activity_and_health_habits": [
+              "S162",
+              "S163"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "exec-chatcmpl-EcNZrgB7NnHHQ32gLuD0kVWCH8bKw::membership-plan-v2-confirm::r3",
+      "directives": [
+        {
+          "quantity": 10,
+          "selection": {
+            "age": [
+              0,
+              24
+            ],
+            "age_group": [
+              "S8",
+              "S9"
+            ]
+          }
+        },
+        {
+          "quantity": 6,
+          "selection": {
+            "age": [
+              25,
+              54
+            ],
+            "age_group": [
+              "S10"
+            ],
+            "health_and_wellness_habits": [
+              "S164",
+              "S165",
+              "S166",
+              "S167",
+              "S168"
+            ]
+          }
+        },
+        {
+          "quantity": 6,
+          "selection": {
+            "age": [
+              25,
+              54
+            ],
+            "age_group": [
+              "S10"
+            ],
+            "health_and_wellness_habits": [
+              "S169",
+              "S170"
+            ]
+          }
+        },
+        {
+          "quantity": 8,
+          "selection": {
+            "age": [
+              55,
+              110
+            ],
+            "age_group": [
+              "S17",
+              "S18"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "exec-chatcmpl-EcPVXPdL4sj3j6kfDX47ef2fsDrvS::membership-plan-v2-confirm::r3",
+      "directives": [
+        {
+          "quantity": 4,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              5,
+              14
+            ],
+            "age_group": [
+              "S20"
+            ],
+            "cooking_and_baking_interest": [
+              "S171"
+            ]
+          }
+        },
+        {
+          "quantity": 5,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              5,
+              14
+            ],
+            "age_group": [
+              "S20"
+            ],
+            "cooking_and_baking_interest": [
+              "S172"
+            ]
+          }
+        },
+        {
+          "quantity": 11,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              15,
+              54
+            ],
+            "age_group": [
+              "S21",
+              "S24"
+            ],
+            "cooking_and_baking_interest": [
+              "S171"
+            ]
+          }
+        },
+        {
+          "quantity": 15,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              15,
+              54
+            ],
+            "age_group": [
+              "S21",
+              "S24"
+            ],
+            "cooking_and_baking_interest": [
+              "S172"
+            ]
+          }
+        },
+        {
+          "quantity": 6,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              55,
+              110
+            ],
+            "age_group": [
+              "S25",
+              "S26"
+            ],
+            "cooking_and_baking_interest": [
+              "S171"
+            ]
+          }
+        },
+        {
+          "quantity": 9,
+          "selection": {
+            "country_of_residence": [
+              "S19"
+            ],
+            "age": [
+              55,
+              110
+            ],
+            "age_group": [
+              "S25",
+              "S26"
+            ],
+            "cooking_and_baking_interest": [
+              "S172"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "exec-chatcmpl-EcQoAeqqNKsUNJdJW4yPwzKCNo2mx::membership-plan-v2-confirm::r3",
+      "directives": [
+        {
+          "quantity": 13,
+          "selection": {
+            "parent_age_years": [
+              15,
+              34
+            ],
+            "age_of_qualifying_child_years": [
+              4,
+              5
+            ],
+            "parent_child_shared_reading_frequency_days_per_week": [
+              4,
+              7
+            ]
+          }
+        },
+        {
+          "quantity": 12,
+          "selection": {
+            "parent_age_years": [
+              15,
+              34
+            ],
+            "age_of_qualifying_child_years": [
+              4,
+              5
+            ],
+            "parent_child_shared_reading_frequency_days_per_week": [
+              0,
+              3
+            ]
+          }
+        },
+        {
+          "quantity": 13,
+          "selection": {
+            "parent_age_years": [
+              35,
+              85
+            ],
+            "age_of_qualifying_child_years": [
+              4,
+              5
+            ],
+            "parent_child_shared_reading_frequency_days_per_week": [
+              4,
+              7
+            ]
+          }
+        },
+        {
+          "quantity": 12,
+          "selection": {
+            "parent_age_years": [
+              35,
+              85
+            ],
+            "age_of_qualifying_child_years": [
+              4,
+              5
+            ],
+            "parent_child_shared_reading_frequency_days_per_week": [
+              0,
+              3
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "exec-chatcmpl-EcPUnJ9jpREY6PPoDNYxBQdjCEh59::membership-plan-v2-fresh::r1",
+      "directives": [
+        {
+          "quantity": 17,
+          "selection": {
+            "country_of_residence": [
+              "S173"
+            ],
+            "age": [
+              20,
+              34
+            ],
+            "gender": [
+              "S174",
+              "S175"
+            ],
+            "parent_of_a_child_aged_4_to_5": [
+              "S176"
+            ],
+            "number_of_children": [
+              1,
+              3
+            ],
+            "parenting_and_caregiving_context": [
+              "S177",
+              "S178"
+            ],
+            "preferences_and_tastes": [
+              "S179",
+              "S180"
+            ],
+            "book_reading_interest": [
+              "S181"
+            ]
+          }
+        },
+        {
+          "quantity": 17,
+          "selection": {
+            "country_of_residence": [
+              "S173"
+            ],
+            "age": [
+              35,
+              49
+            ],
+            "gender": [
+              "S174",
+              "S175"
+            ],
+            "parent_of_a_child_aged_4_to_5": [
+              "S176"
+            ],
+            "number_of_children": [
+              1,
+              4
+            ],
+            "parenting_and_caregiving_context": [
+              "S177",
+              "S182"
+            ],
+            "preferences_and_tastes": [
+              "S183",
+              "S184",
+              "S185"
+            ],
+            "book_reading_interest": [
+              "S181"
+            ]
+          }
+        },
+        {
+          "quantity": 16,
+          "selection": {
+            "country_of_residence": [
+              "S173"
+            ],
+            "age": [
+              50,
+              70
+            ],
+            "gender": [
+              "S174",
+              "S175"
+            ],
+            "parent_of_a_child_aged_4_to_5": [
+              "S176"
+            ],
+            "number_of_children": [
+              1,
+              4
+            ],
+            "parenting_and_caregiving_context": [
+              "S186",
+              "S187"
+            ],
+            "preferences_and_tastes": [
+              "S184",
+              "S179",
+              "S185"
+            ],
+            "book_reading_interest": [
+              "S181"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

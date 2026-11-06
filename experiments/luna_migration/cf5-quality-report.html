@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><title>Luna notebook quality follow-up</title>
+<style>
+body{font:15px/1.55 system-ui,sans-serif;max-width:1180px;margin:32px auto;padding:0 20px;color:#20262e}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:14px}
+th,td{border:1px solid #d5dce3;padding:10px;text-align:left;vertical-align:top}
+th{background:#edf1f5}.warning{padding:16px;background:#fff2dc;border-left:5px solid #b87500}
+code{overflow-wrap:anywhere}h2{margin-top:30px}li{margin:6px 0}
+</style>
+<h1>Luna notebook quality follow-up</h1>
+<p class="warning"><strong>Not fully solved.</strong> All three requested complete notebook reruns
+finished, and concrete runtime and extraction repairs have been implemented. Gazpacho's
+quantitative response compression remains unresolved; these results do not justify calling
+Luna a validated drop-in replacement for this empirical survey.</p>
+<p>Generated 2026-11-03T15:23:17.253448+00:00.
+All complete rollouts used <code>gpt-6-luna</code> / <code>xhigh</code>.
+Only the most complete gazpacho variation was rerun, not its alternative notebooks.</p>
+<h2>Complete notebook results</h2><table><thead><tr><th>Notebook</th><th>Execution</th><th>Quality</th><th>Findings</th><th>Returned-usage USD</th></tr></thead><tbody><tr><td>Investment Firm</td><td>Complete: 20 steps / 3 participants</td><td>Better factual retention; mixed conversation</td><td>Final customer summary retains earlier financial facts. 23 public utterances versus CF4&#x27;s 11; early repetition and deferred valuation remain.</td><td>0.444084290</td></tr><tr><td>Children&#x27;s storytelling study 2</td><td>Complete: 50 parents</td><td>Better than original unanimity; narrower than CF4</td><td>First choices A0 / B31 / C10 / D0 / E9. Earlier repaired run: A1 / B20 / C16 / D1 / E12. Cost/privacy/screen-time themes remain repetitive.</td><td>0.487036525</td></tr><tr><td>Gazpacho study 5, behavior correction</td><td>Complete: 50 people; 47 ratings</td><td>Empirical compression unresolved</td><td>1:4 / 2:37 / 3:6 / 4:0 / 5:0; three genuine infant nonanswers. Same mean as CF4, and still no high-end ratings.</td><td>0.483724630</td></tr></tbody></table>
+<p>All source cells executed without recorded cell or simulation errors. Exact biographies
+match the previous CF4 cohorts; reused local API responses were not treated as fresh generation
+or newly billed calls. No questionnaire, sample size or quality threshold was relaxed.
+These are individual rollouts, not statistically established model rankings.</p>
+<h2>Repairs supported by the evidence</h2>
+<ul>
+<li>Actor system instructions and turn cues remain plain text; structured stimuli and image
+resolution retain their existing handling.</li>
+<li>Actual middle-memory omissions are visible; complete histories no longer carry false gap
+warnings. The finite Investment meeting has a local 100-event lookback, without changing global
+retention defaults. Its final summaries now retain the supplied sales, cost, price, EBITDA
+and cash figures; inaccessible market prices and independent valuation inputs remain unavailable.</li>
+<li>Extraction boundaries now apply to every field, including explanations of missing answers.
+Justifications favor the person's actual public clauses, keeping reasons, conditions and choices
+connected rather than composing a new rationale.</li>
+
+<li>Individual biography generation now separates population-planning instructions from
+personal characteristics. It retains eligibility requirements and asks for the person's
+selected traits, not catalogs of alternative population values.</li>
+
+</ul>
+<table><thead><tr><th>Observed defect</th><th>Before</th><th>After</th></tr></thead><tbody><tr><td>Nonanswer explanation cites a private turn boundary</td><td>Wyatt&#x27;s correct N/A explanation quotes DONE: &#x27;I can&#x27;t give a meaningful purchase rating.&#x27;</td><td>Uses his actual public babble and absence of a numeric answer, or leaves an absent justification null; does not quote DONE as speech.</td></tr><tr><td>An extraction reverses the reason for a preference</td><td>Tiana: &#x27;B is last because she would not leave a 3-to-5-year-old unsupervised with it.&#x27;</td><td>Preserves: &#x27;B is last because I&#x27;m open to seeing a sample and trying something new&#x27; together with her separate supervision qualification.</td></tr></tbody></table>
+<p>The final extraction repair was checked on all 100 real survey histories: all original
+ratings/rankings and their types were preserved. Ninety justifications were verbatim public
+substrings or null; the remaining ten were manually reviewed as faithful summaries, quotation
+wrappers or a public nonanswer explanation.</p>
+<h2>Gazpacho: the remaining empirical problem</h2><table><thead><tr><th>Rating</th><th>Prior Luna CF4</th><th>Current Luna CF5</th><th>Human control</th></tr></thead><tbody><tr><td>1</td><td>3</td><td>4</td><td>11</td></tr><tr><td>2</td><td>39</td><td>37</td><td>9</td></tr><tr><td>3</td><td>5</td><td>6</td><td>13</td></tr><tr><td>4</td><td>0</td><td>0</td><td>10</td></tr><tr><td>5</td><td>0</td><td>0</td><td>7</td></tr><tr><td>N/A</td><td>3</td><td>3</td><td>0</td></tr></tbody></table>
+<p>Current simulated mean: <strong>2.0426</strong>, sample SD
+<strong>0.4643</strong>, n=47. Human control mean:
+<strong>2.8600</strong>, sample SD <strong>1.3554</strong>,
+n=50. The current simulated mean equals the previous repaired run's mean.
+The absence of 4/5 responses remains the central unresolved issue, not an execution error.</p>
+<p>The original PickFu report verifies 50 US-based respondents, completed July 5, 2025,
+in 27 minutes, with matching rating-question and product-description substance. The export
+filename date is not the completion date. Exact targeting, an age-25 eligibility filter and
+national representativeness remain unknown. The simulation includes 13 minors and is not an
+eligibility-matched reproduction of that human panel; age-restricted earlier comparisons
+also retained compression. No private report link or poll identifier is included here.</p>
+<p>Twenty-one bounded prompt, transport, framing, season and effort conditions were investigated.
+The combined decision rules did not establish a calibration fix on either the development
+panel or an independent eight-person holdout. Separately, a genuinely minimal actor template
+failed to resolve compression on the development panel. Neither was adopted. An explicitly
+isolated low-effort diagnostic reduced native actor reasoning tokens from 4,325 to 829 but still
+produced only 2/3 responses on its eight-person panel. The production default remains
+<code>xhigh</code>. Synthetic favorable/unfavorable controls are diagnostics, not human observations.
+No rating distribution was forced toward the control.</p>
+<h2>Validation lineage</h2>
+<p>The three full simulations and the earlier 429-case core suite used
+<code>fca0c6b13bdbfb88a0856955384530f42bed3f2b8bee350bb23dccbe5d8375cd</code>. The first subsequent change was
+confined to the extraction template. A read-only reconstruction of that one file recovers the prior whole-library
+fingerprint; all actor/runtime code is unchanged.</p>
+<p>The extraction-repair implementation, <code>88c05fcfc6d336a487c57b1bca665eccf983c073ab8fec035507ed88f3dbf97d</code>,
+passed <strong>432 core cases</strong>
+(440 deselected;
+7 warnings). The 100-history replay used the final
+production extraction template. It is postprocessing of the actual completed studies, not
+a second full simulation under the later source hash. The corrected CSVs supersede extraction
+justifications in the attached frozen-run notebooks.</p>
+
+<p>A later generator-only paragraph repair produced the next validated implementation,
+<code>000fcfb488ab982f259f778def4269a13e6972f0113eb5046d7c0f45a6b6fbd8</code>, which passed <strong>434 core cases</strong>
+(440 deselected; 7 warnings). A second
+read-only reconstruction exactly recovers the 432-case implementation by undoing only
+that generator paragraph. The actor/runtime and extraction implementation are unchanged
+from the 432-case stage. The original full notebooks have not been regenerated with
+this later generator repair; the small generator and actor diagnostics are reported
+separately rather than represented as another full 50-person study.</p>
+
+
+<h2>Additional upstream repair: population catalogs are not individual traits</h2>
+<p>Inspection found biographies containing ten-value population spectra in addition to
+the individual's selected traits. The original population description was correctly
+retained for eligibility, but it also contained instructions to construct sampling
+dimensions. The generator prompt now explicitly scopes those instructions to planning,
+not the biography. No filtering heuristic discards arbitrary persona fields.</p>
+<p>Three captured generator cases returned catalog-free biographies while retaining
+their names, ages and the reviewed food/adoption preferences. Two new real-factory core
+cases additionally check opposed food preferences and current parent eligibility using
+the exact production template. These are fidelity checks, not proof of representative
+joint sampling or preservation of every originally sampled dimension.</p>
+<p>Replay-harness correction: those three exploratory generator calls omitted the
+factory's JSON-output setting. They are not exact-production request replays.
+The two real-factory core cases independently exercise the production template
+and JSON mode; the completed core result is unaffected.</p>
+<table><thead><tr><th>Person</th><th>Original rating</th><th>Only catalogs removed</th><th>New scoped biography</th></tr></thead><tbody><tr><td>Diego Andrés Quintana</td><td>3</td><td>3</td><td>3</td></tr><tr><td>Marco Antonio Salazar</td><td>2</td><td>2</td><td>2</td></tr><tr><td>Gabriel Leon Sandoval</td><td>2</td><td>2</td><td>2</td></tr></tbody></table>
+<p>All six frozen first-turn replies were read directly. Ratings did not change.
+Removing catalogs preserves the existing individual trait descriptions; regenerating
+a biography permits new life details under the same supplied characteristics. Neither
+condition establishes a calibration solution. These raw actor replays were not new
+complete simulations and were not passed through action-quality correction.</p>
+<p>A separate audit of the full CF5 trajectory found 53 actor calls for 50 people.
+Only Hazel, Wyatt and Clara, all infants, were regenerated. No adult purchase rating
+was selected by a correction loop, so disabling correction is not supported as a remedy
+for those observed adult ratings. Production quality thresholds remain unchanged.</p>
+
+
+<h2>Additional rejected hypothesis: unrelated biography examples</h2>
+<p>The generator's two fixed worked biographies include a dislike of cold foods
+and a preference for warm soup. A paired diagnostic removed these unrelated examples
+and clarified the permitted JSON structures, without requesting different tastes
+or a preferred rating. The corrected screen used production JSON mode, the same
+sampled traits and six frozen first-turn actor requests. All six biographies were
+valid JSON and retained names and ages; their culinary elaborations and all public
+replies were reviewed.</p>
+<table><thead><tr><th>Person</th><th>Examples retained</th><th>Examples removed</th></tr></thead><tbody><tr><td>Diego Andrés Quintana</td><td>3</td><td>3</td></tr><tr><td>Marco Antonio Salazar</td><td>2</td><td>2</td></tr><tr><td>Gabriel Leon Sandoval</td><td>1</td><td>2</td></tr></tbody></table>
+<p>The candidate was not adopted. Responses remained cautious, and the change
+from 1 to 2 for one person is not evidence of improved calibration. Three paired
+people and new stochastic life details do not identify a precise causal effect;
+this does not prove that examples have no influence. These are raw actor diagnostics,
+not another full study or a held-out human comparison.</p>
+<p>The first screen accidentally omitted production JSON mode: six generator
+responses included one malformed output, followed by five valid actor turns.
+That failure and its cost were preserved without replacement. It is not evidence
+of a production regression. The corrected twelve-response comparison was run
+separately with captured production generation settings; its protocol audit passed.
+The earlier population-scope generator replay has the same documented harness
+caveat, while its real-factory core cases and the 434-case core result remain valid.</p>
+
+
+<h2>Further iteration: permitted alternatives are not realized contrast coverage</h2>
+<p>The original 79-dimension vocabulary includes behavioral extremes, but allowing an
+option in a mixed list does not ensure the randomly drawn cohort contains it. A new
+baseline and candidate were assessed against four contrast endpoints defined before
+the calls: traditional versus adventurous food preferences, and strongly resistant
+versus extreme novelty-seeking product attitudes. No survey scores were used to
+choose those endpoints.</p>
+<table><thead><tr><th>Condition</th><th>Valid returned plan</th><th>Guaranteed contrast endpoints</th><th>Finding</th></tr></thead><tbody><tr><td>Fresh production baseline</td><td>Structurally valid</td><td>0/4</td><td>Extreme novelty-seeking absent in 64/100 sampling seeds; traditional tastes absent in 1/100 and strong resistance in 2/100.</td></tr><tr><td>First singleton-coverage clarification</td><td>Structurally valid</td><td>3/4</td><td>Traditional, adventurous and resistant endpoints guaranteed; extreme novelty-seeking still absent in 37/100 seeds. Rejected against the predefined requirement.</td></tr><tr><td>Completed-plan self-audit clarification</td><td>Rejected by unchanged production validator</td><td>Not assessed on an invalid plan</td><td>One timeout, then a returned plan with all-false political-belief membership in directive 5. Retained without repair or replacement.</td></tr><tr><td>Same self-audit, compact identifier lists</td><td>Structurally valid experimental representation</td><td>4/4</td><td>26 directives, 50 people, age totals 9/7/20/6/8; no incompatible age pairs. All four endpoints survive all 100 fixed seeds.</td></tr></tbody></table>
+<p>The first prompt revision did not meet the predefined requirement. A stricter
+revision first timed out, then returned an all-false categorical selection that the
+unchanged production validator correctly rejected. That invalid response was retained,
+not repaired into null or replaced. A separate experimental representation used nonempty
+lists of option identifiers instead of repeated boolean membership slots. Its returned
+plan passed reconstruction, guaranteed all four endpoints across 100 sampling seeds,
+and allocated ages 9/7/20/6/8. This does not establish reliability over independent
+model replications. Compact output did not demonstrate lower total completion usage:
+reasoning tokens still dominate.</p>
+<p>The six-person integration screen below selected people by the predefined traits,
+then included the youngest remaining draw and the first remaining adult. It exercised
+the actual generator, original questionnaire, correction threshold and extractor.
+It is a contrast-selected diagnostic, not another full notebook rerun or an estimate
+of population purchase propensity.</p>
+<table><thead><tr><th>Person</th><th>Age</th><th>Preselected role</th><th>Public rating</th><th>Review</th></tr></thead><tbody><tr><td>Elena Marquez</td><td>33</td><td>Traditional culinary tastes</td><td>3</td><td>Traditional foods and early product adoption survive generation. Public answer might try a bottle but shifts to uncertainty about regular buying.</td></tr><tr><td>Rafael Ignacio Cárdenas</td><td>65</td><td>Adventurous culinary tastes</td><td>3</td><td>Adventurous food preferences and extravagant consumption remain explicit. Answer cites bottled freshness and regular purchasing; no high score.</td></tr><tr><td>Terrence Malik Johnson</td><td>49</td><td>Strong resistance to new products</td><td>2</td><td>Mild, familiar tastes and resistance remain explicit. Cautious public answer is coherent with those traits; no forced endpoint rating.</td></tr><tr><td>Megan Kathleen Doyle</td><td>32</td><td>Extreme novelty-seeking</td><td>3</td><td>Extreme impulsivity survives both preferences and personality; the actor still expresses conditional curiosity and doubts about repeat purchasing. This does not prove she ought to rate this particular food 5.</td></tr><tr><td>Harper Louise Whitaker</td><td>1</td><td>Youngest remaining sampled person</td><td>N/A</td><td>Age-appropriate public babble, no fabricated numeric answer; extraction keeps justification null.</td></tr><tr><td>Darius Antoine Brooks</td><td>37</td><td>First remaining sampled adult</td><td>3</td><td>Vegetarian and ethically minded preferences remain visible. Answer considers a trial but is unsure about regular buying.</td></tr></tbody></table><p>The real pipeline completed and all five numeric ratings and justifications are grounded in public speech. The four targeted trait contrasts survive biography generation, but the five adult answers are still only 2 or 3 (four 3s and one 2). Coverage alone is not a demonstrated response-compression fix. The panel was deliberately contrast-selected and cannot estimate a population mean or establish improvement over the earlier 50-person survey.</p><p>Additional returned-usage subtotal for this follow-up: <strong>US$0.209980780</strong> across 49 returned responses.</p>
+<p>At the time of this six-person screen, no candidate had been integrated. The supplied
+demographic source explicitly identifies itself as GPT-4o-synthesized; approximate
+allocation to its figures is not authoritative census validation. Behavioral singleton
+quotas represent illustrative contrasts, not measured prevalence. The cost of the
+unreturned timeout is unknown and excluded from returned-usage estimates.</p>
+
+
+<h2>Integrated reliability repair: compact, nonempty categorical selections</h2>
+<p>The compact selection representation and the screened final coverage-check paragraph
+are now integrated. The model returns nonempty lists of local integer option identifiers;
+the public plan still contains the original complete option strings. Empty lists,
+duplicates, booleans, noninteger identifiers and out-of-range values are rejected rather
+than repaired. Optional dimensions remain explicitly null in the intermediate response
+and omitted in the restored plan.</p>
+<p>The exact integrated messages and schema match the experimental 79-dimension request,
+and its saved 50-person native response reconstructs directly to the same public plan.
+This is a compatibility check, not an independent full survey. Targeted validation passed
+<strong>42 cases</strong>, including real factory calls,
+preserved age allocations and deterministic singleton coverage across 100 sampling seeds.</p>
+<p>The new implementation, <code>8c6a0a640111c4c219a1dfa06e8bcee99621fd03c1d45a0bf3871c50f28b8333</code>,
+passed <strong>444 core cases</strong>
+(440 deselected; 7 warnings).
+Restoring only the two snapshotted pre-change library files in memory exactly recovers
+the preceding 434-case implementation. Documentation and directly related tests were
+updated; actor, extractor, model, effort and quality thresholds are unchanged.</p>
+<p>This is adopted as a selection-validity and requested-coverage repair, <strong>not</strong>
+as a demonstrated cure for gazpacho response compression. The earlier six-person screen
+predates integration and retains its own source lineage. No new full notebook result
+is implied by the core suite or the saved-response compatibility check.</p>
+
+
+<h2>Independent production replication: coverage survives, demographic caveats remain</h2>
+<p>A fresh 79-dimension request through the actual integrated production method
+returned 18 directives totaling 50 people. All four prospectively defined contrasts
+had singleton allocations and survived 100 fixed drawing seeds. Age totals were
+9/7/20/6/8, numeric ages matched their labels, explicit U.S. residence was preserved,
+and integer age support covered 0 through 110. The request audit applies exactly
+the production client's dedent preprocessing before comparing template and wire messages.</p>
+<p>Review did <strong>not</strong> treat these checks as full population fidelity:
+two fixed multiracial cultural-profile allocations were added to otherwise weighted
+race draws. Across the 100 seeds, the multiracial mean was 3.34 of 50, compared with
+the source-weight expectation of 1.45. All eight older-adult allocations also required
+a bachelor's degree or higher, although the supplied marginals establish no such
+age-education relationship. Uniform draws across age 65–110 preserve support but do
+not establish a realistic within-band age distribution.</p>
+<p>Two further prompt candidates explained fixed allocations, residual budgets,
+conditional-weight renormalization, and nominal versus ordinal categories. Both
+preserved the four contrasts and permitted more educational variation, but neither
+passed the original expected-marginal-error criterion: race total-variation errors
+were 1.5924 and 1.8197 people against a maximum of 1.0. Neither was integrated.
+Permitted educational variety alone does not establish compatibility with every
+simultaneously selected learning profile. No survey rating was used to choose a plan.</p>
+<p>The fresh complete gazpacho 5 notebook described below uses the validated integrated
+source, original source cells and thresholds, and no reused simulation cache.</p>
+
+
+<h2>Fresh complete CF6 gazpacho 5: execution succeeds, compression persists</h2>
+<p>A new independent population of 50 completed all original notebook cells in
+6,404.86 seconds, using <code>8c6a0a640111c4c219a1dfa06e8bcee99621fd03c1d45a0bf3871c50f28b8333</code>.
+Model and effort were Luna/xhigh; the library remained unchanged during execution.
+All 50 actor-visible biographies matched the saved generation outputs and drawn names
+and ages. These are new people, not a paired comparison against CF5.</p>
+<table><thead><tr><th>Metric</th><th>CF5</th><th>Fresh CF6</th><th>Human control</th></tr></thead><tbody><tr><td>1 / 2 / 3 / 4 / 5</td><td>4 / 37 / 6 / 0 / 0</td><td>5 / 31 / 13 / 0 / 0</td><td>11 / 9 / 13 / 10 / 7</td></tr><tr><td>N/A</td><td>3</td><td>1</td><td>0</td></tr><tr><td>Mean among numerical answers</td><td>2.0426</td><td>2.1633</td><td>2.8600</td></tr><tr><td>Sample SD among numerical answers</td><td>0.4643</td><td>0.5897</td><td>1.3554</td></tr></tbody></table>
+<p>All 49 numerical extractions match public speech; the infant nonanswer remains N/A.
+Forty-nine explanations are verbatim or null. The remaining explanation merely adds
+quotation marks around an exact public substring. No private-thought substitution or
+rationale reversal was found. All 50 public responses and explanations were reviewed.</p>
+<p>The adult subset still contains no 4/5 ratings (1:3 / 2:22 / 3:13; mean 2.2632).
+The small overall mean increase is not evidence that the repair improves empirical
+accuracy across different cohorts. Warm/familiar-food objections and regular-purchase
+qualifications remain repetitive. The human panel is not eligibility-matched.</p>
+<p>Two additional concrete defects were identified. The newly generated product-attitude
+vocabulary includes one option saying the person strongly rejects novelty <em>or</em>
+adopts products impulsively. A singleton allocation to that option cannot guarantee
+either actual end. Separately, children aged two and three stated purchase-rating
+digits despite not understanding the task; those digits were genuine speech, not an
+extraction error. A four-year-old's score is likewise not validated as an adult purchase
+judgment.</p>
+<p>The 117-year-old persona preserves its exact drawn age inside this fresh vocabulary's
+0–120 range. It does not violate the earlier frozen vocabulary's 0–110 bounds, because
+that is a different request. The uniform within-band sampling assumption does not encode
+the rarity of such ages. No arbitrary cutoff, age edit, or invented age distribution
+was introduced to hide this population-model limitation.</p>
+
+
+<h2>Bounded repairs: comprehension and coherent categorical options</h2>
+<p>The actor now distinguishes demanded response formatting from the person's actual
+knowledge and abilities; it does not invent a caregiver to answer for them. The rule is
+task-specific, not an age cutoff: children's counting and capable adults' numerical
+preferences remain available. Dimension-generation instructions now require opposing
+ends to be separately selectable rather than joined in one disjunctive option.</p>
+<p>Four live comprehension/capability regressions passed, as did a live dimension-vocabulary
+regression. This comprehension/coherence source, <code>ca9b09398b9dab603bc54a6fa729d7b27ce386dc80eeb3cff6e5117d51fa16f9</code>,
+passed <strong>449 core cases</strong>
+(440 deselected; 7 warnings). Removing only the three
+new actor lines and four dimension-method docstring lines in memory reconstructs the
+exact full-CF6/444-core source. README guidance and five related core cases were added.</p>
+<p>Six exact saved biographies were then exercised through the original gazpacho
+questionnaire, thought stimulus, quality-correction settings and extractor. The
+age-zero infant remained unscored; the two- and three-year-olds now gave unscored
+concrete reactions; adult controls retained public 2/3 responses. The four-year-old
+still gave a public 2, which is not presented as repaired or an adult propensity judgment.
+This is a bounded improvement, not a full new population survey or calibration cure.</p>
+<p>The six-person command exited at its final whole-library fingerprint assertion because
+the dimension-method docstring was edited while it ran. All actor and extractor outputs
+had already been saved. A separate audit recovered the receipt without repeating any
+model calls and proved that removing that four-line docstring delta restores the exact
+screen-start fingerprint. Every actor request contains the unchanged new actor rule;
+dimension generation is never called in this frozen-biography screen. The source-drift
+exception is disclosed rather than calling that command an unqualified pass.</p>
+<p>A separate real call repeated the original full-population dimension request through
+the production method and JSON mode. Its wire audit proves the original population input
+and all non-message model options are unchanged; removing only the four new instruction
+lines recovers the original system message exactly. The new vocabulary has 12 adoption
+options, with impulsive trend buying and strong rejection separately selectable.
+Traditional food and unfamiliar-cuisine exploration also remain distinct.
+This supports the specific option-coherence repair, not comprehensive demographic
+validity or a new survey-calibration result.</p>
+
+
+<h2>Further sampling repair: preserve weighted alternatives, not invented demographic profiles</h2>
+<p>Rather than repeat the unsuccessful residual-budget arithmetic instructions, two
+new candidates retain complete compatible weighted demographic alternatives within
+behavioral directives. Both pass the original frozen numerical criteria: expected
+race, gender, region and settlement proportions match the supplied weights to
+floating-point precision, age allocations remain 9/7/20/6/8, all four predefined
+singleton contrasts survive, and both older bands allow multiple attainments.
+Neither candidate was selected using downstream survey ratings.</p>
+<p>Revision 3 was withheld for a qualification/occupation compatibility follow-up.
+Revision 4 adds that generic guard and was integrated exactly as tested. All 25
+directives were manually reviewed. They retain the full integer age support and
+explicit U.S. residence, avoid independently sampled race-specific cultural profiles
+and credential-dependent occupations, and pair the specialist learning contrast
+with advanced attainment. A request/reconstruction audit and 100 fixed draw seeds
+confirm age compatibility. These are two model calls, not 100 model replications;
+the seed audit concerns the deterministic drawing stage.</p>
+<p>The actual integrated factory method replays the accepted original-input response
+with exactly matching messages and schema, without a new saved API response.
+A separate live core case checks weighted marginals, culinary endpoints and explicit
+medical-license compatibility on a synthetic diagnostic population.
+Current library source <code>3f5b80697765c367766a8291cc4a9a27aa8db7b9889ecb058bb2dede96c9d501</code>
+passed <strong>450 core cases</strong>
+(440 deselected; 7 warnings).
+Removing only the tested planner paragraph reconstructs the preceding 449-case source.</p>
+<p>This preserves expected marginals, not exact realized quotas, measured demographic
+correlations, or empirical representativeness. Optional redundant details are left
+open rather than invented. Uniform within-band ages and independently drawn opinion
+and personality alternatives remain assumptions, not a fully validated joint model.
+No new full survey under this source is claimed; gazpacho response compression remains
+unresolved.</p>
+
+<h2>Returned-usage costs</h2><table><thead><tr><th>Scope</th><th>Returned-usage estimate USD</th></tr></thead><tbody><tr><td>Three complete CF5 notebooks</td><td>1.414845445</td></tr><tr><td>21 bounded gazpacho prompt/transport/effort conditions</td><td>0.659406800</td></tr><tr><td>Two exact Investment retention replays</td><td>0.005904725</td></tr><tr><td>13 responses across three extraction-prompt candidates</td><td>0.004164620</td></tr><tr><td>100 real-history extractions with final production prompt</td><td>0.026659590</td></tr><tr><td>Three population-scope generator replays</td><td>0.023586525</td></tr><tr><td>Six frozen actor replays across two population-scope conditions</td><td>0.013568550</td></tr><tr><td>Two assertion-development diagnostics</td><td>0.004258600</td></tr><tr><td>Example-ablation screen with production JSON mode: 12 responses</td><td>0.055389895</td></tr><tr><td>Earlier out-of-contract example screen: 11 responses, including malformed JSON</td><td>0.057843800</td></tr><tr><td>Baseline and first coverage candidate: 2 returned plans</td><td>0.053505975</td></tr><tr><td>Self-audit revision: 1 invalid returned plan after timeout</td><td>0.031468580</td></tr><tr><td>Compact-format candidate: 1 returned plan</td><td>0.037028425</td></tr><tr><td>Six-person actual generation/survey/extraction screen: 45 returned responses</td><td>0.087977800</td></tr><tr><td>Independent fresh integrated production plan: one returned response</td><td>0.032352425</td></tr></tbody></table><table><thead><tr><th>Additional diagnostic</th><th>Returned-usage estimate USD</th></tr></thead><tbody><tr><td>Demographic-budget prompt revision 1</td><td>0.037047925</td></tr><tr><td>Demographic-budget prompt revision 2</td><td>0.03803005</td></tr></tbody></table><table><thead><tr><th>Fresh full run</th><th>Returned-usage estimate USD</th></tr></thead><tbody><tr><td>CF6 gazpacho 5, independent cohort; 50 people</td><td>0.921991735</td></tr></tbody></table><table><thead><tr><th>Bounded final diagnostic</th><th>Returned-usage estimate USD</th></tr></thead><tbody><tr><td>Six frozen biographies through action correction and extraction</td><td>0.032120345</td></tr><tr><td>Original full-population dimension request with coherent options</td><td>0.01172534</td></tr></tbody></table><table><thead><tr><th>Structural marginal diagnostic</th><th>Returned-usage estimate USD</th></tr></thead><tbody><tr><td>Revision 3: weighted alternatives, compatibility follow-up withheld</td><td>0.035186675</td></tr><tr><td>Revision 4: weighted alternatives plus qualification compatibility</td><td>0.02867855</td></tr></tbody></table>
+<p>Saved standard list rates and returned API usage, not invoices or project-wide spending.
+Full-run estimates reconcile exact new cache entries against the copied CF4 caches; the final
+extraction estimate includes all 100 owned saved responses after process completion, rather
+than the earlier 94-response in-process snapshot. Core-suite usage and failed/unreturned
+request charges are not included. Elapsed times were affected by concurrent work and are not
+performance benchmarks.</p>
+
+<h2>Next scientific gate, not an implemented workaround</h2>
+<p>A broader study should cross fixed population-generation conditions with fixed
+response-model conditions using the same concrete draws, survey wording and simulated
+time. Freeze the conditions and population-sampling seeds before examining outcomes;
+repeat independent model runs and retain the existing validation thresholds. No
+unsupported deterministic model-seed parameter is assumed. Unknown recruitment eligibility must remain
+unknown, rather than assuming an age-25 filter. Quantitative validation needs eligible
+human comparison data and product-level holdouts, not further tuning to this one
+gazpacho distribution. Mean, dispersion, ordinal distribution distance and, across
+multiple products, relative appeal must be assessed together; more varied numbers
+alone are not an acceptance criterion.</p>
+<p>Published survey-method research documents over-precise synthetic responses:
+<a href="https://www.cambridge.org/core/journals/political-analysis/article/synthetic-replacements-for-human-survey-data-the-perils-of-large-language-models/B92267DC26195C7F36E63EA04A47D2FE">
+Bisbee et al., Synthetic Replacements for Human Survey Data? (2024)</a>.
+An explicitly different measurement protocol is discussed in the preprint
+<a href="https://arxiv.org/abs/2510.08338v3">Maier et al., LLMs Reproduce Human Purchase
+Intent via Semantic Similarity Elicitation of Likert Ratings</a>: free-text
+responses are mapped through embedding similarities to rating distributions.
+Its 57-survey, 9,300-response personal-care evaluation is not evidence that the method
+works for Luna or gazpacho. Crucially, the authors state that their reference anchors
+were manually optimized for those same 57 surveys and that transfer to other surveys
+remains unclear. Their reported correlation attainment is not individual-response accuracy.</p>
+<p>No such measurement change has been implemented. Any future experiment must keep
+derived probabilities distinct from publicly stated ratings, preserve the original
+extraction contract, freeze anchors without gazpacho outcome tuning, and test unseen
+products. Replacing a spoken 2 with an embedding-derived higher score would not repair
+extraction fidelity or establish behavioral realism.</p>
+
+<h2>Conclusion</h2>
+<p>The factual-retention and extraction repairs are supported by actual end-to-end execution
+and targeted source-fidelity checks. The parents study is no longer uniformly rejecting the
+product, but remains repetitive and is not empirically validated. Investment is better grounded,
+not uniformly better conversationally. Gazpacho still needs a defensible research solution:
+neither successful execution, higher mean ratings nor more varied answers alone would establish
+one. A broader population/response calibration design would be a separate scientific and
+engineering decision, not an undisclosed prompt trick or silent model fallback.</p>
+</html>

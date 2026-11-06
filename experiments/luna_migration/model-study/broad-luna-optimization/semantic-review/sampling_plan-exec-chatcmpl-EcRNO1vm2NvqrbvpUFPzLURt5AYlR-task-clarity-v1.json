@@ -1,0 +1,828 @@
+{
+  "sample_plan": [
+    {
+      "id": 1,
+      "subpopulation_description": "Children and young adolescents in Northeastern communities, living with parents or guardians and attending school.",
+      "sampled_values": {
+        "age": [
+          0,
+          14
+        ],
+        "age_group": "A child or young adolescent aged 0–14, with age drawn within this band.",
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": "White, non-Hispanic, including people with European, Middle Eastern, North African, or other ancestries who identify within this broad census-style category.",
+        "geographic_region": "Lives in the Northeast, including communities with dense cities, older suburbs, small towns, and rural areas.",
+        "state_or_district_of_residence": [
+          "Maine",
+          "Massachusetts",
+          "New York"
+        ],
+        "residential_setting": "Lives in an urban area, such as a large city or densely settled metropolitan neighborhood.",
+        "household_and_family_structure": "Is a child or dependent living with parents, guardians, relatives, or foster caregivers.",
+        "educational_attainment": "Has not completed high school and may be currently enrolled, have left school, or be pursuing an equivalency credential.",
+        "interests_and_hobbies_video_gaming": [
+          "Enjoys video gaming on a console, computer, mobile device, or another platform.",
+          "Does not identify video gaming as a hobby."
+        ]
+      },
+      "quantity": 4
+    },
+    {
+      "id": 2,
+      "subpopulation_description": "Hispanic or Latino children in the West, including bilingual and multigenerational family circumstances.",
+      "sampled_values": {
+        "age": [
+          0,
+          14
+        ],
+        "age_group": "A child or young adolescent aged 0–14, with age drawn within this band.",
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": "Hispanic or Latino, including people with Mexican, Puerto Rican, Cuban, Central American, South American, Spanish, and other Latin American heritages, across all racial identities.",
+        "ancestry_and_heritage_examples": "Has Mexican American family roots, perhaps spanning several generations in the Southwest or California, and a family mix of Spanish, Indigenous, and regional Mexican traditions.",
+        "language_use": "Uses English and Spanish in daily life, switching by setting, relationship, or topic.",
+        "geographic_region": "Lives in the West, including Pacific coastal cities, inland metropolitan areas, mountain communities, deserts, and rural regions.",
+        "state_or_district_of_residence": [
+          "Arizona",
+          "California",
+          "New Mexico"
+        ],
+        "community_and_housing_context": [
+          "Rents or owns a home in a suburb and commonly travels by car for work, school, shopping, or medical care.",
+          "Lives in a multigenerational household or shares housing with relatives to provide care, pool expenses, or maintain family ties."
+        ],
+        "household_and_family_structure": "Is a child or dependent living with parents, guardians, relatives, or foster caregivers.",
+        "educational_attainment": "Has not completed high school and may be currently enrolled, have left school, or be pursuing an equivalency credential."
+      },
+      "quantity": 5
+    },
+    {
+      "id": 3,
+      "subpopulation_description": "Children in Midwestern households, including small-town and rural settings.",
+      "sampled_values": {
+        "age": [
+          0,
+          14
+        ],
+        "age_group": "A child or young adolescent aged 0–14, with age drawn within this band.",
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": "White, non-Hispanic, including people with European, Middle Eastern, North African, or other ancestries who identify within this broad census-style category.",
+        "geographic_region": "Lives in the Midwest, including major metropolitan areas, smaller industrial or agricultural cities, suburbs, and rural communities.",
+        "state_or_district_of_residence": [
+          "Iowa",
+          "Ohio",
+          "Wisconsin"
+        ],
+        "residential_setting": "Lives in a rural area, such as a small town, agricultural community, remote settlement, or sparsely populated region.",
+        "community_and_housing_context": "Lives in a small town where local institutions and personal networks play a substantial role in daily life.",
+        "household_and_family_structure": "Is a child or dependent living with parents, guardians, relatives, or foster caregivers.",
+        "educational_attainment": "Has not completed high school and may be currently enrolled, have left school, or be pursuing an equivalency credential.",
+        "sports_and_recreation_preferences": [
+          "Prefers walking, gentle movement, or accessible recreational activity.",
+          "Enjoys basketball, football, or other team sports as a player or spectator.",
+          "Has limited access to safe or convenient recreational facilities."
+        ]
+      },
+      "quantity": 4
+    },
+    {
+      "id": 4,
+      "subpopulation_description": "Black teenagers and young adults in the South, with varied school, training, and family situations.",
+      "sampled_values": {
+        "age": [
+          15,
+          24
+        ],
+        "age_group": "A teenager or young adult aged 15–24, including people in school, training, work, or transitions between them.",
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "gender_identity": [
+          "Identifies as a man and generally uses he/him pronouns.",
+          "Identifies as a woman and generally uses she/her pronouns.",
+          "Identifies as nonbinary, genderqueer, gender-fluid, or another identity outside an exclusively man-or-woman description.",
+          "Does not use a stable gender label, is questioning, or prefers not to disclose."
+        ],
+        "race_ethnicity": "Black or African American, including people with multigenerational U.S. roots and people with African, Caribbean, or Afro-Latin American family origins.",
+        "ancestry_and_heritage_examples": "Has African American ancestry and family history rooted in the United States, with personal ties to Black community institutions, regional traditions, and varied religious or secular practices.",
+        "geographic_region": "Lives in the South, including large and small cities, suburbs, coastal areas, mountain communities, and rural regions.",
+        "state_or_district_of_residence": [
+          "Alabama",
+          "Georgia",
+          "North Carolina"
+        ],
+        "residential_setting": [
+          "Lives in an urban area, such as a large city or densely settled metropolitan neighborhood.",
+          "Lives in a rural area, such as a small town, agricultural community, remote settlement, or sparsely populated region."
+        ],
+        "household_and_family_structure": [
+          "Is a child or dependent living with parents, guardians, relatives, or foster caregivers.",
+          "Shares housing with roommates, friends, or unrelated adults."
+        ],
+        "educational_attainment": [
+          "Has completed high school or an equivalent credential and has not completed a postsecondary degree.",
+          "Has some college, trade-school, or technical education without a completed bachelor's degree."
+        ],
+        "employment_and_work_arrangement": [
+          "Works part time, seasonally, on call, or in multiple jobs.",
+          "Is a student, caregiver, retiree, or otherwise outside paid employment."
+        ],
+        "technology_and_gaming_preferences": [
+          "Primarily uses a smartphone for communication, entertainment, news, and everyday services.",
+          "Enjoys console gaming, including solo, cooperative, or competitive games.",
+          "Uses social media rarely or avoids it because of privacy, stress, time, or personal preference."
+        ]
+      },
+      "quantity": 4
+    },
+    {
+      "id": 5,
+      "subpopulation_description": "White teenagers and young adults in Western states, spanning school, work, and varied leisure interests.",
+      "sampled_values": {
+        "age": [
+          15,
+          24
+        ],
+        "age_group": "A teenager or young adult aged 15–24, including people in school, training, work, or transitions between them.",
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": "White, non-Hispanic, including people with European, Middle Eastern, North African, or other ancestries who identify within this broad census-style category.",
+        "geographic_region": "Lives in the West, including Pacific coastal cities, inland metropolitan areas, mountain communities, deserts, and rural regions.",
+        "state_or_district_of_residence": [
+          "Colorado",
+          "Oregon",
+          "Washington"
+        ],
+        "community_and_housing_context": [
+          "Rents an apartment in a dense city and relies mainly on public transit, walking, or rides from others.",
+          "Rents or owns a home in a suburb and commonly travels by car for work, school, shopping, or medical care.",
+          "Lives in a small town where local institutions and personal networks play a substantial role in daily life."
+        ],
+        "household_and_family_structure": [
+          "Is a child or dependent living with parents, guardians, relatives, or foster caregivers.",
+          "Shares housing with roommates, friends, or unrelated adults."
+        ],
+        "educational_attainment": [
+          "Has completed high school or an equivalent credential and has not completed a postsecondary degree.",
+          "Has some college, trade-school, or technical education without a completed bachelor's degree."
+        ],
+        "employment_and_work_arrangement": [
+          "Works part time, seasonally, on call, or in multiple jobs.",
+          "Is a student, caregiver, retiree, or otherwise outside paid employment."
+        ],
+        "interests_and_hobbies_outdoor_activities": [
+          "Enjoys outdoor activities such as walking, hiking, camping, fishing, or time in parks.",
+          "Does not identify outdoor activities as a regular interest."
+        ],
+        "technology_and_screen_time": [
+          "Uses digital technology regularly but limits social media or recreational screen time.",
+          "Uses social media frequently and checks it several times throughout the day."
+        ]
+      },
+      "quantity": 5
+    },
+    {
+      "id": 6,
+      "subpopulation_description": "Working-age adults in Northeastern cities and suburbs, with varied professional work, household income, and political views.",
+      "sampled_values": {
+        "age": [
+          25,
+          54
+        ],
+        "age_group": "An adult aged 25–54, spanning early, mid-career, parenting, and other adult life circumstances.",
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": "White, non-Hispanic, including people with European, Middle Eastern, North African, or other ancestries who identify within this broad census-style category.",
+        "geographic_region": "Lives in the Northeast, including communities with dense cities, older suburbs, small towns, and rural areas.",
+        "state_or_district_of_residence": [
+          "Massachusetts",
+          "New Jersey",
+          "New York"
+        ],
+        "residential_setting": "Lives in an urban area, such as a large city or densely settled metropolitan neighborhood.",
+        "marital_status": [
+          "Never married, including people who are young, partnered, single, or otherwise not currently married.",
+          "Married, including people in different household, caregiving, and partnership circumstances.",
+          "Divorced, including people who may be remarried, co-parenting, or living independently."
+        ],
+        "educational_attainment": [
+          "Has completed a bachelor's degree.",
+          "Has completed a master's, professional, doctoral, or other graduate degree.",
+          "Has some college, trade-school, or technical education without a completed bachelor's degree."
+        ],
+        "occupation": [
+          "Management occupation; the supplied figures report about 10.5 million workers and an annual wage of about $137,750.",
+          "Business or financial occupation, including accounting, analysis, or related work; supplied figures report about 10.1 million workers and an annual wage of about $90,580.",
+          "Healthcare practitioner or technical healthcare occupation; supplied figures report about 9.3 million workers and an annual wage of about $102,060.",
+          "Education or library occupation; supplied figures report about 8.7 million workers and an annual wage of about $66,400."
+        ],
+        "financial_situation": [
+          "Lives in a household with annual income from $50,000 to $99,999, with expenses and security varying by family needs and cost of living.",
+          "Lives in a household with annual income from $100,000 to $199,999, with financial circumstances varying substantially across regions and household sizes.",
+          "Lives in a household with annual income of $200,000 or more, while still potentially facing high costs, debt, or financial uncertainty."
+        ],
+        "political_beliefs": [
+          "Believes abortion should be legal in all cases.",
+          "Believes abortion should be legal in most cases.",
+          "Believes abortion should be illegal in most cases.",
+          "Is unsure, gave another answer, or falls in the residual category not covered by the supplied poll percentages."
+        ],
+        "interests_and_hobbies_reading": [
+          "Enjoys reading for leisure or personal interest.",
+          "Does not identify reading as a leisure interest."
+        ]
+      },
+      "quantity": 5
+    },
+    {
+      "id": 7,
+      "subpopulation_description": "Working-age Midwestern adults in smaller cities, suburbs, and rural communities, across blue-collar and other occupations.",
+      "sampled_values": {
+        "age": [
+          25,
+          54
+        ],
+        "age_group": "An adult aged 25–54, spanning early, mid-career, parenting, and other adult life circumstances.",
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": "White, non-Hispanic, including people with European, Middle Eastern, North African, or other ancestries who identify within this broad census-style category.",
+        "geographic_region": "Lives in the Midwest, including major metropolitan areas, smaller industrial or agricultural cities, suburbs, and rural communities.",
+        "state_or_district_of_residence": [
+          "Illinois",
+          "Michigan",
+          "Ohio"
+        ],
+        "residential_setting": [
+          "Lives in a rural area, such as a small town, agricultural community, remote settlement, or sparsely populated region.",
+          "Lives in a suburban area or metropolitan community."
+        ],
+        "community_and_housing_context": [
+          "Rents or owns a home in a suburb and commonly travels by car for work, school, shopping, or medical care.",
+          "Lives in a small town where local institutions and personal networks play a substantial role in daily life.",
+          "Lives in a rural area where work, health care, shopping, and social activities may require longer travel."
+        ],
+        "household_and_family_structure": [
+          "Lives with a spouse or partner and one or more children or young people.",
+          "Provides regular care for a child, older relative, disabled family member, or other dependent.",
+          "Lives with parents, adult children, siblings, or other relatives in a multigenerational or extended-family household."
+        ],
+        "educational_attainment": [
+          "Has completed high school or an equivalent credential and has not completed a postsecondary degree.",
+          "Has some college, trade-school, or technical education without a completed bachelor's degree.",
+          "Has learned substantial skills through military service, work, apprenticeships, family responsibilities, or community experience."
+        ],
+        "occupation": [
+          "Construction or extraction occupation; supplied figures report about 6.2 million workers and an annual wage of about $61,500.",
+          "Works in transportation, production, installation, maintenance, protective services, sales, personal care, agriculture, or another occupation not detailed above.",
+          "Food preparation or food service occupation; supplied figures report about 13.2 million workers and an annual wage of about $34,490."
+        ],
+        "financial_situation": [
+          "Lives in a household with annual income from $25,000 to $49,999, with financial flexibility varying by location and household size.",
+          "Lives in a household with annual income from $50,000 to $99,999, with expenses and security varying by family needs and cost of living.",
+          "Lives in a household with annual income from $100,000 to $199,999, with financial circumstances varying substantially across regions and household sizes."
+        ],
+        "economic_ideology_and_views": [
+          "Favors a market-led economy, lower taxes, less regulation, and individual or business responsibility for economic outcomes.",
+          "Supports a mixed approach, combining private enterprise with targeted public programs and regulation.",
+          "Has no settled economic ideology, places more emphasis on immediate household concerns, or prefers not to state a view."
+        ]
+      },
+      "quantity": 5
+    },
+    {
+      "id": 8,
+      "subpopulation_description": "Hispanic or Latino adults in the South, including bilingual households and a range of employment and family situations.",
+      "sampled_values": {
+        "age": [
+          25,
+          54
+        ],
+        "age_group": "An adult aged 25–54, spanning early, mid-career, parenting, and other adult life circumstances.",
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": "Hispanic or Latino, including people with Mexican, Puerto Rican, Cuban, Central American, South American, Spanish, and other Latin American heritages, across all racial identities.",
+        "ancestry_and_heritage_examples": [
+          "Has Puerto Rican heritage and family ties between the island and the mainland United States, with varied use of Spanish and English and a strong connection to local community traditions.",
+          "Has Cuban American, Dominican American, or other Caribbean Latino heritage, with family stories shaped by migration, language, food, music, and local U.S. communities."
+        ],
+        "nativity_and_migration_history": [
+          "Born in the United States and has lived in the same state or region for most of life.",
+          "Born outside the United States and immigrated as an adult for family reunification, work, education, safety, or other reasons.",
+          "Is a U.S. citizen by birth or naturalization and has close family members with different immigration or citizenship statuses."
+        ],
+        "language_use": [
+          "Uses English and Spanish in daily life, switching by setting, relationship, or topic.",
+          "Is multilingual, with language ability and use varying across family, work, school, and community settings."
+        ],
+        "geographic_region": "Lives in the South, including large and small cities, suburbs, coastal areas, mountain communities, and rural regions.",
+        "state_or_district_of_residence": [
+          "Florida",
+          "Texas",
+          "Georgia"
+        ],
+        "community_and_housing_context": [
+          "Rents an apartment in a dense city and relies mainly on public transit, walking, or rides from others.",
+          "Rents or owns a home in a suburb and commonly travels by car for work, school, shopping, or medical care.",
+          "Lives in a multigenerational household or shares housing with relatives to provide care, pool expenses, or maintain family ties."
+        ],
+        "educational_attainment": [
+          "Has completed high school or an equivalent credential and has not completed a postsecondary degree.",
+          "Has some college, trade-school, or technical education without a completed bachelor's degree.",
+          "Has completed an associate degree or other two-year postsecondary credential."
+        ],
+        "occupation": [
+          "Healthcare support occupation; supplied figures report about 7.1 million workers and an annual wage of about $38,220.",
+          "Food preparation or food service occupation; supplied figures report about 13.2 million workers and an annual wage of about $34,490.",
+          "Business or financial occupation, including accounting, analysis, or related work; supplied figures report about 10.1 million workers and an annual wage of about $90,580."
+        ],
+        "views_on_immigration_policy": [
+          "Supports a path to legal status for at least some undocumented immigrants.",
+          "Supports deportation as the preferred policy for at least some undocumented immigrants.",
+          "Is unsure, gave another answer, or falls in the residual category not covered by the supplied poll percentages."
+        ]
+      },
+      "quantity": 5
+    },
+    {
+      "id": 9,
+      "subpopulation_description": "Black or African American adults in Southern communities, with varied education, household structures, and views on public issues.",
+      "sampled_values": {
+        "age": [
+          25,
+          54
+        ],
+        "age_group": "An adult aged 25–54, spanning early, mid-career, parenting, and other adult life circumstances.",
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": "Black or African American, including people with multigenerational U.S. roots and people with African, Caribbean, or Afro-Latin American family origins.",
+        "ancestry_and_heritage_examples": [
+          "Has African American ancestry and family history rooted in the United States, with personal ties to Black community institutions, regional traditions, and varied religious or secular practices.",
+          "Has Nigerian, Ethiopian, Ghanaian, Somali, or other African immigrant family heritage, potentially maintaining connections through language, faith, food, and transnational family networks."
+        ],
+        "geographic_region": "Lives in the South, including large and small cities, suburbs, coastal areas, mountain communities, and rural regions.",
+        "state_or_district_of_residence": [
+          "Georgia",
+          "North Carolina",
+          "Tennessee"
+        ],
+        "residential_setting": [
+          "Lives in an urban area, such as a large city or densely settled metropolitan neighborhood.",
+          "Lives in a suburban area or metropolitan community.",
+          "Lives in a rural area, such as a small town, agricultural community, remote settlement, or sparsely populated region."
+        ],
+        "marital_status": [
+          "Never married, including people who are young, partnered, single, or otherwise not currently married.",
+          "Married, including people in different household, caregiving, and partnership circumstances.",
+          "Divorced, including people who may be remarried, co-parenting, or living independently."
+        ],
+        "educational_attainment": [
+          "Has completed high school or an equivalent credential and has not completed a postsecondary degree.",
+          "Has completed a bachelor's degree.",
+          "Has completed a master's, professional, doctoral, or other graduate degree."
+        ],
+        "occupation": [
+          "Community or social service occupation; supplied figures report about 2.4 million workers and an annual wage of about $58,980.",
+          "Education or library occupation; supplied figures report about 8.7 million workers and an annual wage of about $66,400.",
+          "Healthcare practitioner or technical healthcare occupation; supplied figures report about 9.3 million workers and an annual wage of about $102,060.",
+          "Works in transportation, production, installation, maintenance, protective services, sales, personal care, agriculture, or another occupation not detailed above."
+        ],
+        "views_on_government_healthcare_responsibility": [
+          "Believes the government should provide health care.",
+          "Does not believe the government should provide health care or does not select that position."
+        ],
+        "views_on_gun_show_background_check_loophole": [
+          "Supports closing the gun-show background-check loophole.",
+          "Does not support closing the gun-show background-check loophole or does not select that position."
+        ],
+        "interests_and_hobbies_cooking_and_baking": [
+          "Enjoys cooking or baking as a hobby or regular leisure activity.",
+          "Does not identify cooking or baking as a hobby or regular leisure activity."
+        ]
+      },
+      "quantity": 5
+    },
+    {
+      "id": 10,
+      "subpopulation_description": "Hispanic or Latino adults in Western communities, including varied migration histories, household arrangements, and financial circumstances.",
+      "sampled_values": {
+        "age": [
+          25,
+          54
+        ],
+        "age_group": "An adult aged 25–54, spanning early, mid-career, parenting, and other adult life circumstances.",
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "gender_identity": [
+          "Identifies as a man and generally uses he/him pronouns.",
+          "Identifies as a woman and generally uses she/her pronouns.",
+          "Identifies as nonbinary, genderqueer, gender-fluid, or another identity outside an exclusively man-or-woman description.",
+          "Uses a culturally specific gender identity or describes gender in a personal way not captured by common categories.",
+          "Does not use a stable gender label, is questioning, or prefers not to disclose."
+        ],
+        "race_ethnicity": "Hispanic or Latino, including people with Mexican, Puerto Rican, Cuban, Central American, South American, Spanish, and other Latin American heritages, across all racial identities.",
+        "ancestry_and_heritage_examples": "Has multiple ancestries and understands their identity through a combination of family histories, local community, personal experience, and chosen cultural connections.",
+        "nativity_and_migration_history": [
+          "Born in the United States and moved between several states for family, education, military service, or work.",
+          "Born outside the United States, immigrated as a child, and grew up navigating home and wider community cultures.",
+          "Has a multigenerational family history in the United States, with ancestral origins that may span many regions and generations."
+        ],
+        "language_use": [
+          "Uses English and Spanish in daily life, switching by setting, relationship, or topic.",
+          "Uses English fluently but has limited literacy or confidence in formal written English.",
+          "Is multilingual, with language ability and use varying across family, work, school, and community settings."
+        ],
+        "geographic_region": "Lives in the West, including Pacific coastal cities, inland metropolitan areas, mountain communities, deserts, and rural regions.",
+        "state_or_district_of_residence": [
+          "California",
+          "Nevada",
+          "New Mexico"
+        ],
+        "household_and_family_structure": [
+          "Is a single parent or guardian raising one or more children.",
+          "Lives with parents, adult children, siblings, or other relatives in a multigenerational or extended-family household.",
+          "Shares housing with roommates, friends, or unrelated adults."
+        ],
+        "educational_attainment": [
+          "Has completed high school or an equivalent credential and has not completed a postsecondary degree.",
+          "Has some college, trade-school, or technical education without a completed bachelor's degree.",
+          "Has completed an associate degree or other two-year postsecondary credential."
+        ],
+        "employment_and_work_arrangement": [
+          "Works part time, seasonally, on call, or in multiple jobs.",
+          "Is self-employed, a freelancer, an independent contractor, or a small-business owner.",
+          "Works in a gig, platform, temporary, or other insecure job arrangement."
+        ],
+        "financial_situation": [
+          "Lives in a household with annual income under $25,000, often facing substantial limits on housing, health care, transportation, or other costs.",
+          "Lives in a household with annual income from $25,000 to $49,999, with financial flexibility varying by location and household size.",
+          "Lives in a household with annual income from $50,000 to $99,999, with expenses and security varying by family needs and cost of living."
+        ],
+        "financial_security_and_resources": [
+          "Pays current bills but has little savings and would struggle with a large unexpected expense.",
+          "Experiences recurring difficulty paying for food, housing, utilities, transportation, or medical care.",
+          "Has irregular income from seasonal work, tips, contract work, gig work, or multiple jobs."
+        ],
+        "interests_and_hobbies_pets": [
+          "Has or enjoys pets as a substantial personal interest.",
+          "Does not have or identify pets as a substantial personal interest."
+        ]
+      },
+      "quantity": 4
+    },
+    {
+      "id": 11,
+      "subpopulation_description": "Asian adults in the South and West, including people with diverse language, migration, education, and occupational backgrounds.",
+      "sampled_values": {
+        "age": [
+          25,
+          54
+        ],
+        "age_group": "An adult aged 25–54, spanning early, mid-career, parenting, and other adult life circumstances.",
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": "Asian, including people with East Asian, South Asian, Southeast Asian, and other Asian heritages.",
+        "ancestry_and_heritage_examples": [
+          "Has Chinese, Taiwanese, Korean, or Japanese American heritage, with family customs and language retention varying substantially across generations and households.",
+          "Has Indian, Pakistani, Bangladeshi, or Sri Lankan heritage, with family traditions that may reflect diverse languages, regional identities, religions, and migration histories.",
+          "Has Filipino, Vietnamese, Cambodian, Hmong, Thai, or other Southeast Asian heritage, with individual and family experiences shaped by distinct histories and community networks."
+        ],
+        "nativity_and_migration_history": [
+          "Born in the United States and has lived in the same state or region for most of life.",
+          "Born outside the United States, immigrated as a child, and grew up navigating home and wider community cultures.",
+          "Born outside the United States and immigrated as an adult for family reunification, work, education, safety, or other reasons."
+        ],
+        "language_use": [
+          "Uses English alongside Chinese languages, including Mandarin, Cantonese, or another Chinese language.",
+          "Uses English alongside an Indian or South Asian language such as Hindi, Urdu, Bengali, Punjabi, Gujarati, Tamil, or Telugu.",
+          "Uses English alongside a Southeast Asian language such as Tagalog, Vietnamese, Hmong, Khmer, or Thai.",
+          "Is multilingual, with language ability and use varying across family, work, school, and community settings."
+        ],
+        "geographic_region": "Lives in the West, including Pacific coastal cities, inland metropolitan areas, mountain communities, deserts, and rural regions.",
+        "state_or_district_of_residence": [
+          "California",
+          "Hawaii",
+          "Washington"
+        ],
+        "educational_attainment": [
+          "Has completed some college, trade-school, or technical education without a completed bachelor's degree.",
+          "Has completed a bachelor's degree.",
+          "Has completed a master's, professional, doctoral, or other graduate degree."
+        ],
+        "occupation": [
+          "Computer or mathematical occupation, including software, information technology, data, or analytics; supplied figures report about 5.2 million workers and an annual wage of about $113,140.",
+          "Healthcare practitioner or technical healthcare occupation; supplied figures report about 9.3 million workers and an annual wage of about $102,060.",
+          "Business or financial occupation, including accounting, analysis, or related work; supplied figures report about 10.1 million workers and an annual wage of about $90,580.",
+          "Food preparation or food service occupation; supplied figures report about 13.2 million workers and an annual wage of about $34,490."
+        ],
+        "religious_affiliation": [
+          "Identifies as Christian, including Protestant, Catholic, Mormon, and other Christian traditions.",
+          "Identifies as Buddhist.",
+          "Identifies as Hindu.",
+          "Is religiously unaffiliated, including atheist, agnostic, or no particular religion.",
+          "Has no reported affiliation or falls in a residual category needed because supplied figures do not total 100 percent."
+        ],
+        "travel_and_dining_preferences": [
+          "Enjoys trying unfamiliar cuisines and seeking new food experiences.",
+          "Usually eats at home because of budget, preference, health needs, or convenience.",
+          "Has limited ability to travel or dine out because of cost, caregiving, disability, or access."
+        ]
+      },
+      "quantity": 4
+    },
+    {
+      "id": 12,
+      "subpopulation_description": "White adults aged 55–64 in Northeastern communities, balancing work, retirement planning, and family or caregiving responsibilities.",
+      "sampled_values": {
+        "age": [
+          55,
+          64
+        ],
+        "age_group": "An adult aged 55–64, potentially approaching retirement or continuing work and caregiving responsibilities.",
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": "White, non-Hispanic, including people with European, Middle Eastern, North African, or other ancestries who identify within this broad census-style category.",
+        "geographic_region": "Lives in the Northeast, including communities with dense cities, older suburbs, small towns, and rural areas.",
+        "state_or_district_of_residence": [
+          "Connecticut",
+          "Pennsylvania",
+          "Vermont"
+        ],
+        "marital_status": [
+          "Married, including people in different household, caregiving, and partnership circumstances.",
+          "Divorced, including people who may be remarried, co-parenting, or living independently.",
+          "Widowed, with circumstances varying by age, household, and family support."
+        ],
+        "household_and_family_structure": [
+          "Lives with a spouse or partner and no children in the household.",
+          "Lives alone, with a household consisting of one person.",
+          "Provides regular care for a child, older relative, disabled family member, or other dependent.",
+          "Lives with parents, adult children, siblings, or other relatives in a multigenerational or extended-family household."
+        ],
+        "educational_attainment": [
+          "Has completed high school or an equivalent credential and has not completed a postsecondary degree.",
+          "Has some college, trade-school, or technical education without a completed bachelor's degree.",
+          "Has completed a bachelor's degree."
+        ],
+        "labor_force_participation": [
+          "Is in the labor force, either employed or actively seeking work, using the supplied population estimate.",
+          "Is not in the labor force, including people who may be retired, studying, providing care, unable to work, or not currently seeking work."
+        ],
+        "employment_and_work_arrangement": [
+          "Works full time for an employer in a permanent or ongoing position.",
+          "Is self-employed, a freelancer, an independent contractor, or a small-business owner.",
+          "Is a student, caregiver, retiree, or otherwise outside paid employment.",
+          "Performs unpaid household, family, volunteer, or community work."
+        ],
+        "financial_situation": [
+          "Lives in a household with annual income from $25,000 to $49,999, with financial flexibility varying by location and household size.",
+          "Lives in a household with annual income from $50,000 to $99,999, with expenses and security varying by family needs and cost of living.",
+          "Lives in a household with annual income from $100,000 to $199,999, with financial circumstances varying substantially across regions and household sizes."
+        ],
+        "family_financial_situation_compared_with_four_years_ago": [
+          "Feels the family's financial situation is worse than it was four years ago.",
+          "Feels the family's financial situation is about the same as it was four years ago.",
+          "Feels the family's financial situation is better than it was four years ago."
+        ],
+        "interests_and_hobbies_traveling": [
+          "Enjoys traveling for leisure, exploration, or visiting family and friends.",
+          "Does not identify traveling as a leisure interest."
+        ]
+      },
+      "quantity": 4
+    },
+    {
+      "id": 13,
+      "subpopulation_description": "Midwestern adults aged 55–64, including people with multiracial, Indigenous, Pacific Islander, and other family backgrounds.",
+      "sampled_values": {
+        "age": [
+          55,
+          64
+        ],
+        "age_group": "An adult aged 55–64, potentially approaching retirement or continuing work and caregiving responsibilities.",
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": [
+          "Two or more races, describing people who identify with multiple racial groups or family heritages.",
+          "American Indian or Alaska Native, including people with tribal, Native, Indigenous, or Alaska Native identities and varied community affiliations.",
+          "Native Hawaiian or Pacific Islander, including Native Hawaiian, Samoan, Tongan, Chamorro, Fijian, and other Pacific Islander heritages.",
+          "White, non-Hispanic, including people with European, Middle Eastern, North African, or other ancestries who identify within this broad census-style category."
+        ],
+        "ancestry_and_heritage_examples": [
+          "Has Native American or Alaska Native heritage and may have a particular tribal, village, or Indigenous community connection; identity and participation are individual and varied.",
+          "Has Native Hawaiian or other Pacific Islander heritage, potentially maintaining family and community ties across the Pacific and the continental United States.",
+          "Has multiple ancestries and understands their identity through a combination of family histories, local community, personal experience, and chosen cultural connections."
+        ],
+        "geographic_region": "Lives in the Midwest, including major metropolitan areas, smaller industrial or agricultural cities, suburbs, and rural communities.",
+        "state_or_district_of_residence": [
+          "Michigan",
+          "Minnesota",
+          "Wisconsin"
+        ],
+        "residential_setting": [
+          "Lives in an urban area, such as a large city or densely settled metropolitan neighborhood.",
+          "Lives in a rural area, such as a small town, agricultural community, remote settlement, or sparsely populated region."
+        ],
+        "community_and_housing_context": [
+          "Owns a home in a city neighborhood, with nearby services and a mix of long-term and newer residents.",
+          "Lives in a small town where local institutions and personal networks play a substantial role in daily life.",
+          "Lives in a rural area where work, health care, shopping, and social activities may require longer travel."
+        ],
+        "educational_attainment": [
+          "Has completed high school or an equivalent credential and has not completed a postsecondary degree.",
+          "Has learned substantial skills through military service, work, apprenticeships, family responsibilities, or community experience.",
+          "Has completed an associate degree or other two-year postsecondary credential."
+        ],
+        "employment_and_work_arrangement": [
+          "Works part time, seasonally, on call, or in multiple jobs.",
+          "Is self-employed, a freelancer, an independent contractor, or a small-business owner.",
+          "Is a student, caregiver, retiree, or otherwise outside paid employment.",
+          "Is unable to work or has limited work capacity because of health, disability, or other circumstances."
+        ],
+        "financial_security_and_resources": [
+          "Has stable income, emergency savings, manageable debt, and room to plan for longer-term goals.",
+          "Pays current bills but has little savings and would struggle with a large unexpected expense.",
+          "Has financial security that is strongly shaped by disability costs, caregiving responsibilities, family support, or local living costs."
+        ],
+        "physical_activity_and_health_habits": [
+          "Gets occasional activity through walking, household tasks, work, or irregular exercise.",
+          "Would like to be more active but faces barriers such as time, cost, safety, disability, caregiving, or lack of facilities.",
+          "Has a health condition or disability that shapes daily activity, exertion, or access to recreation."
+        ]
+      },
+      "quantity": 5
+    },
+    {
+      "id": 14,
+      "subpopulation_description": "Older White adults in the South, with varied household, retirement, health, and community circumstances.",
+      "sampled_values": {
+        "age": [
+          65,
+          115
+        ],
+        "age_group": "An older adult aged 65 or above, with age drawn across the broad older-adult range.",
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": "White, non-Hispanic, including people with European, Middle Eastern, North African, or other ancestries who identify within this broad census-style category.",
+        "geographic_region": "Lives in the South, including large and small cities, suburbs, coastal areas, mountain communities, and rural regions.",
+        "state_or_district_of_residence": [
+          "Florida",
+          "South Carolina",
+          "Tennessee"
+        ],
+        "residential_setting": [
+          "Lives in an urban area, such as a large city or densely settled metropolitan neighborhood.",
+          "Lives in a rural area, such as a small town, agricultural community, remote settlement, or sparsely populated region."
+        ],
+        "community_and_housing_context": [
+          "Owns a home in a city neighborhood, with nearby services and a mix of long-term and newer residents.",
+          "Lives in a small town where local institutions and personal networks play a substantial role in daily life.",
+          "Lives in military, student, senior, supportive, or other specialized housing."
+        ],
+        "marital_status": [
+          "Married, including people in different household, caregiving, and partnership circumstances.",
+          "Divorced, including people who may be remarried, co-parenting, or living independently.",
+          "Widowed, with circumstances varying by age, household, and family support."
+        ],
+        "household_and_family_structure": [
+          "Lives alone, with a household consisting of one person.",
+          "Lives with a spouse or partner and no children in the household.",
+          "Provides regular care for a child, older relative, disabled family member, or other dependent.",
+          "Has a household affected by separation, divorce, bereavement, family conflict, or changing custody arrangements."
+        ],
+        "educational_attainment": [
+          "Has completed high school or an equivalent credential and has not completed a postsecondary degree.",
+          "Has some college, trade-school, or technical education without a completed bachelor's degree.",
+          "Has completed a bachelor's degree."
+        ],
+        "employment_and_work_arrangement": [
+          "Is a student, caregiver, retiree, or otherwise outside paid employment.",
+          "Performs unpaid household, family, volunteer, or community work.",
+          "Works part time, seasonally, on call, or in multiple jobs."
+        ],
+        "financial_situation": [
+          "Lives in a household with annual income under $25,000, often facing substantial limits on housing, health care, transportation, or other costs.",
+          "Lives in a household with annual income from $25,000 to $49,999, with financial flexibility varying by location and household size.",
+          "Lives in a household with annual income from $50,000 to $99,999, with expenses and security varying by family needs and cost of living."
+        ],
+        "religious_affiliation": [
+          "Identifies as Christian, including Protestant, Catholic, Mormon, and other Christian traditions.",
+          "Is religiously unaffiliated, including atheist, agnostic, or no particular religion.",
+          "Identifies with another religion or spiritual tradition."
+        ],
+        "interests_and_hobbies_outdoor_activities": [
+          "Enjoys outdoor activities such as walking, hiking, camping, fishing, or time in parks.",
+          "Does not identify outdoor activities as a regular interest."
+        ],
+        "difficulty_affording_healthcare": [
+          "Reports difficulty affording health care.",
+          "Does not report difficulty affording health care."
+        ]
+      },
+      "quantity": 5
+    },
+    {
+      "id": 15,
+      "subpopulation_description": "Older adults aged 65 and above in Southern communities, representing varied work histories, incomes, family supports, and personal interests.",
+      "sampled_values": {
+        "age": [
+          65,
+          115
+        ],
+        "age_group": "An older adult aged 65 or above, with age drawn across the broad older-adult range.",
+        "sex": [
+          "Male, matching the supplied population estimate for the male category.",
+          "Female, matching the supplied population estimate for the female category."
+        ],
+        "race_ethnicity": "White, non-Hispanic, including people with European, Middle Eastern, North African, or other ancestries who identify within this broad census-style category.",
+        "geographic_region": "Lives in the South, including large and small cities, suburbs, coastal areas, mountain communities, and rural regions.",
+        "state_or_district_of_residence": [
+          "Alabama",
+          "Kentucky",
+          "Virginia"
+        ],
+        "residential_setting": [
+          "Lives in an urban area, such as a large city or densely settled metropolitan neighborhood.",
+          "Lives in a rural area, such as a small town, agricultural community, remote settlement, or sparsely populated region."
+        ],
+        "community_and_housing_context": [
+          "Rents or owns a home in a suburb and commonly travels by car for work, school, shopping, or medical care.",
+          "Lives in a rural area where work, health care, shopping, and social activities may require longer travel.",
+          "Lives in a multigenerational household or shares housing with relatives to provide care, pool expenses, or maintain family ties.",
+          "Lives in military, student, senior, supportive, or other specialized housing."
+        ],
+        "marital_status": [
+          "Never married, including people who are young, partnered, single, or otherwise not currently married.",
+          "Married, including people in different household, caregiving, and partnership circumstances.",
+          "Divorced, including people who may be remarried, co-parenting, or living independently.",
+          "Widowed, with circumstances varying by age, household, and family support."
+        ],
+        "household_and_family_structure": [
+          "Lives alone, with a household consisting of one person.",
+          "Lives with a spouse or partner and no children in the household.",
+          "Lives with parents, adult children, siblings, or other relatives in a multigenerational or extended-family household.",
+          "Provides regular care for a child, older relative, disabled family member, or other dependent."
+        ],
+        "educational_attainment": [
+          "Has not completed high school and may be currently enrolled, have left school, or be pursuing an equivalency credential.",
+          "Has completed high school or an equivalent credential and has not completed a postsecondary degree.",
+          "Has some college, trade-school, or technical education without a completed bachelor's degree.",
+          "Has completed a master's, professional, doctoral, or other graduate degree."
+        ],
+        "employment_and_work_arrangement": [
+          "Is a student, caregiver, retiree, or otherwise outside paid employment.",
+          "Works part time, seasonally, on call, or in multiple jobs.",
+          "Is self-employed, a freelancer, an independent contractor, or a small-business owner.",
+          "Is unable to work or has limited work capacity because of health, disability, or other circumstances.",
+          "Performs unpaid household, family, volunteer, or community work."
+        ],
+        "financial_security_and_resources": [
+          "Has stable income, emergency savings, manageable debt, and room to plan for longer-term goals.",
+          "Has very limited or no income and relies on public benefits, family, charity, or community support.",
+          "Has significant assets or savings but remains cautious about future costs, retirement, or economic uncertainty.",
+          "Has financial security that is strongly shaped by disability costs, caregiving responsibilities, family support, or local living costs."
+        ],
+        "sleep_patterns": [
+          "Usually gets sufficient, regular sleep and keeps a stable bedtime and wake time.",
+          "Has difficulty falling asleep, staying asleep, or waking rested.",
+          "Sleeps for long or irregular periods because of health, schedule, medication, or other circumstances."
+        ],
+        "stress_management_and_coping": [
+          "Uses meditation, prayer, breathing exercises, or quiet reflection to cope with stress.",
+          "Seeks practical or emotional support from family, friends, peers, or community.",
+          "Uses professional counseling, medical care, or support groups when available.",
+          "Uses a mixture of helpful and unhelpful coping strategies depending on the situation."
+        ]
+      },
+      "quantity": 6
+    }
+  ]
+}

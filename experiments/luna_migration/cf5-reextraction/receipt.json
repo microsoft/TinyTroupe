@@ -1,0 +1,37 @@
+{
+  "started_at": "2026-11-02T20:52:55.435266+00:00",
+  "elapsed_seconds": 97.45299999997951,
+  "library_sha256": "88c05fcfc6d336a487c57b1bca665eccf983c073ab8fec035507ed88f3dbf97d",
+  "template_sha256": "e48265ec04ce4467abc2f0e38dbf2f578e2a9ec067f7623e05e0f21f3d2a47b5",
+  "model": "gpt-6-luna",
+  "effort": "xhigh",
+  "public_responses_semantically_unchanged": 100,
+  "response_type_changes": [],
+  "scope": "Postprocessing replay of 100 real complete-study histories. Only extraction system instructions changed; original user/history messages and response schemas retained. This is not a new simulation rollout or a full notebook rerun under the later source hash.",
+  "returned_usage_estimate": {
+    "unique_saved_api_responses_in_run_window": 100,
+    "responses_missing_usage": 0,
+    "tokens": {
+      "prompt": 246375,
+      "completion": 16433,
+      "cached": 107359,
+      "writes": 138716
+    },
+    "usd": "0.026659590",
+    "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced.",
+    "ownership": "All 100 responses in the new isolated replay cache."
+  },
+  "prior_in_process_estimate": {
+    "unique_saved_api_responses_in_run_window": 94,
+    "responses_missing_usage": 0,
+    "tokens": {
+      "prompt": 232920,
+      "completion": 15741,
+      "cached": 100867,
+      "writes": 131771
+    },
+    "usd": "0.025378745",
+    "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+  },
+  "pricing_note": "The earlier in-process snapshot priced 94 saved responses. After process completion the isolated cache contains 100; the corrected estimate includes all 100 without rerunning or resampling any response."
+}

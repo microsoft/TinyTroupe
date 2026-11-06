@@ -1,0 +1,24 @@
+{
+  "order_seed": 281029,
+  "protocol": "Persona-only structural comparison after two prose revisions still produced very similar biographies. Two hypotheses alter the order in which the specification is constructed, not the demographic constraints, schema, model, effort or intended survey answer. Test both on both source constraints with two samples each. These are development samples, not confirmation.",
+  "imports": [{"path": "round2.json", "variants": ["life-first", "life-course"]}],
+  "variants": [
+    {
+      "id": "preferences-first", "parent": "life-course",
+      "hypothesis": "Writing concrete wants and choices before identity and trait labels reduces biography-driven generic preference defaults.",
+      "cases": ["persona-grace", "persona-philip"],
+      "operations": [
+        {"kind": "append", "message": 1, "text": "\n\n## Construction order\nBegin the JSON object with preferences, then other_facts, then the remaining required fields. First make the person's leisure desires tangible: what experience they look forward to, what they would willingly spend time or money on, what they skip, and a specific choice they have actually made in this fictional life. Write these as direct descriptions of tastes and actions, not a series of qualifications about being reasonable. Next establish the relevant life circumstances and relationships. Only then describe style and personality as tendencies consistent with those choices. Avoid using the same middle-of-the-road trait list as the starting point for everyone.\n\nThe order changes how the profile is built, not which constraints apply. All choices must fit the supplied demographic and household constraints from the beginning. Include every mandatory field. Do not prescribe a final product choice or make a preference unusual merely to attract attention.", "max_matches": 1}
+      ]
+    },
+    {
+      "id": "episodes-first", "parent": "life-course",
+      "hypothesis": "Building the biography around concrete episodes before abstractions yields less interchangeable profiles.",
+      "cases": ["persona-grace", "persona-philip"],
+      "operations": [
+        {"kind": "append", "message": 1, "text": "\n\n## Construction order\nBegin the JSON object with other_facts. Use that field for a few concrete episodes from this fictional life: a choice the person enjoyed, a commitment or obligation that changed a plan, and a minor disappointment or conflict that did not become a neat life lesson. Make the actual objects, activities and circumstances specific. The episodes need not be dramatic or exemplary. Derive preferences, ordinary behaviors and relationships next; describe occupation, education, style and personality in light of that life rather than using a conventional occupation-and-traits template to determine everything else.\n\nThese invented episodes belong to the fictional generated person, not a real individual. They must be compatible with every supplied demographic and household constraint. Finish all mandatory fields and check dates and finances against the episodes. Do not aim for any particular travel-product response, and do not manufacture a flaw or exceptional life to make the output seem creative.", "max_matches": 1}
+      ]
+    }
+  ],
+  "selection": {"persona-grace": "preferences-first", "persona-philip": "preferences-first"}
+}

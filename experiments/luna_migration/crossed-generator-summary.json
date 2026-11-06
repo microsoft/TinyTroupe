@@ -1,0 +1,141 @@
+{
+  "mini_generation": {
+    "returned_usage_estimate": {
+      "unique_saved_api_responses_in_run_window": 8,
+      "responses_missing_usage": 0,
+      "tokens": {
+        "prompt": 89275,
+        "completion": 78215,
+        "cached": 26880,
+        "writes": 0
+      },
+      "usd": "0.17270075",
+      "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+    }
+  },
+  "mini_biographies_luna_pipeline": {
+    "returned_usage_estimate": {
+      "unique_saved_api_responses_in_run_window": 32,
+      "responses_missing_usage": 0,
+      "tokens": {
+        "prompt": 240997,
+        "completion": 20082,
+        "cached": 8988,
+        "writes": 224727
+      },
+      "usd": "0.038949955",
+      "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+    },
+    "counts": {
+      "2": 8
+    },
+    "mean": 2,
+    "sample_sd": 0.0,
+    "results": [
+      {
+        "name": "Janet Louise Harwood",
+        "response": "2",
+        "justification": "Very unlikely to buy bottled gazpacho, though she might try a small bottle on a hot day if the ingredients looked good."
+      },
+      {
+        "name": "Stephen Michael Donnelly",
+        "response": "2",
+        "justification": "He likes vegetable soups but usually makes them at home and would want to check the ingredient list and price. He might try it if it’s simple and reasonably priced, but it’s not something he’d be very likely to buy."
+      },
+      {
+        "name": "Warren Ellis Gentry",
+        "response": "2",
+        "justification": "Very unlikely to buy bottled gazpacho, though might try one if it were hot and the ingredients looked good; generally prefers familiar, hearty meals."
+      },
+      {
+        "name": "Evan McAllister",
+        "response": "2",
+        "justification": "He rated bottled gazpacho 2 out of 5, saying he might try it once but is very unlikely to buy it regularly."
+      },
+      {
+        "name": "Rosa María Castañeda",
+        "response": "2",
+        "justification": "Very unlikely, but not impossible. She prefers familiar, home-cooked food and would perhaps try bottled cold soup once on a hot day if the price was reasonable."
+      },
+      {
+        "name": "Erin Michelle Dalton",
+        "response": "2",
+        "justification": "I’d be unlikely to buy bottled gazpacho, though I wouldn’t rule it out entirely. I like Mediterranean-style food, but cold blended soup isn’t something I usually choose, and I’d want to check the ingredients and flavor first."
+      },
+      {
+        "name": "Anthony James Holloway",
+        "response": "2",
+        "justification": "Cold blended soup isn't what he usually reaches for; he prefers hot, hearty meals. He might try it if inexpensive, but would not expect to buy it regularly."
+      },
+      {
+        "name": "Marjorie Keating",
+        "response": "2",
+        "justification": "I’m very unlikely to buy it. I prefer warm, familiar soups, and a cold blended vegetable drink doesn’t sound especially appealing. I might try a little if someone offered it, but I probably wouldn’t buy a bottle."
+      }
+    ]
+  },
+  "mini_biographies_mini_pipeline": {
+    "returned_usage_estimate": {
+      "unique_saved_api_responses_in_run_window": 32,
+      "responses_missing_usage": 0,
+      "tokens": {
+        "prompt": 251864,
+        "completion": 60580,
+        "cached": 24832,
+        "writes": 0
+      },
+      "usd": "0.17853880",
+      "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+    },
+    "counts": {
+      "4": 1,
+      "2": 3,
+      "3": 4
+    },
+    "mean": 2.75,
+    "sample_sd": 0.7071067811865476,
+    "results": [
+      {
+        "name": "Janet Louise Harwood",
+        "response": "4",
+        "justification": "My propensity is 4, because I like the idea of a ready-to-drink gazpacho as a convenient, vegetable-forward option — it fits my habit of keeping prepared soups on hand for low-energy days and I enjoy mild, savory breakfasts and lunches. I would buy it provided the bottle lists a low-sodium recipe, isn't overly spicy, and is reasonably priced (or from a local maker I trust). It's especially appealing in warmer months or as a light lunch with whole-grain crackers. If it were very high in salt or the flavor too sharp, I'd be less likely to repurchase, but I would certainly try it once."
+      },
+      {
+        "name": "Stephen Michael Donnelly",
+        "response": "2",
+        "justification": "Very unlikely but not impossible. Reason: I value home-cooked soups and stews that I can reheat and control for ingredients; I’m skeptical of processed convenience items with long ingredient lists or preservatives. A bottled cold soup would only tempt me in hot weather if it came from a trusted local maker, had a short, recognisable ingredient list (tomatoes, cucumbers, peppers, olive oil, vinegar, salt), and was reasonably priced. Otherwise I’d prefer to make my own or buy from a deli that makes it fresh."
+      },
+      {
+        "name": "Warren Ellis Gentry",
+        "response": "2",
+        "justification": "My propensity is 2 — very unlikely, but not impossible. First, I'm a country fella who prefers warm, slow-cooked dishes and home-made staples; cold blended soup isn't part of my regular meals. Second, when I want something like that I'd sooner make a pitcher from garden tomatoes or buy it from a local vendor I trust than reach for a bottled product with mystery ingredients. Third, I might try a bottle once in the heat of summer out of curiosity, especially if it's local and the label is honest about ingredients and price, but I wouldn't buy it regularly. So: 2."
+      },
+      {
+        "name": "Evan McAllister",
+        "response": "3",
+        "justification": "I'd maybe buy ready-to-drink gazpacho but it depends. I like fresh veg-forward food and would try it on a hot day or when I'm short on time, especially if it's from a local maker, bottled in glass, reasonably priced, and tastes like real tomatoes/peppers (not overly sweet or canned). I usually prefer to make things at home, and Noah probably wouldn't eat it, so it wouldn't be a regular family staple — more of an occasional convenience or summer treat. If the flavor profile included a little heat or tang, that'd increase the chances."
+      },
+      {
+        "name": "Rosa María Castañeda",
+        "response": "2",
+        "justification": "I prefer hot, familiar dishes and simple snacks I know how to trust; a bottled cold Spanish soup feels a bit unfamiliar and like a novelty to me. I worry about price, preservatives, and portion size. I might try one small bottle if it were cheap or Mimi recommended it on a hot day, but I probably would not buy it regularly. Mira, that’s honest — convenient could win me over sometimes, but not often."
+      },
+      {
+        "name": "Erin Michelle Dalton",
+        "response": "3",
+        "justification": "My propensity is 3, because while the flavors (tomato, cucumber, olive oil, lemon) line up well with what I like and it would be appealing in warmer months, Iu0002m cautious about ready-to-drink bottles. I would want a clear ingredient list, modest sodium, and reasonable price. If itu0002s sold refrigerated, clearly labeled, and priced like a light lunch or substantial snack, Iu0002d consider buying it occasionally (especially in summer). Iu0002m not an automatic buyer of novel packaged foods, so Iu0002d say u0002maybeu0002 — open to trying if the packaging and price look honest."
+      },
+      {
+        "name": "Anthony James Holloway",
+        "response": "3",
+        "justification": "My propensity is 3 — maybe I'd buy it. Here's why: I ain't against trying new, convenient foods, and a chilled gazpacho sounds all right on a hot day, but it's not the kind of filling, meat-centered thing my family usually eats. If y'all put it in a small, inexpensive bottle (say under a few dollars), labeled plainly with simple ingredients and sold chilled in the supermarket, I'd pick one up now and then for myself as a refreshing snack. I wouldn't buy it for a family dinner or as a regular staple unless the price and portion made sense. Things that'd make me more likely: a sampler, a sale, or a familiar brand doing a mild-flavored version. Things that'd make me less likely: high price, fancy packaging that makes it seem expensive, or a flavor that's too vinegary or spicy. Hope that helps — I can also give y'all my self-intro and top-10 interests if you still need that."
+      },
+      {
+        "name": "Marjorie Keating",
+        "response": "3",
+        "justification": "I’m cautious about new food products and I watch my salt, so I’d only try it if the flavor sounded mild and the label said low-sodium and simple ingredients. I’d be more likely to buy one in warm weather as a small, refreshing treat, especially if it was a single-serving bottle and I could sample it first or a neighbor recommended it. If it tasted too acidic, raw, or spicy, or if it was pricey for the size, I’d pass. In short — possible in summer under the right conditions, otherwise unlikely."
+      }
+    ]
+  },
+  "scope": "A bounded crossed-generator diagnostic, not population calibration. Eight original factory message lists, demographic/behavior draws, names and ages are preserved. Other biography details may differ. Backend-specific parameters follow the existing client; requested effort is not forwarded to Mini. No human outcome was supplied. One generated biography per condition does not establish a causal effect size or a representative joint population distribution. Response pipelines also include model-specific evaluation and extraction."
+}

@@ -1,0 +1,375 @@
+{
+  "all_fifty_public_rankings_match": true,
+  "only_five_ordinal_options": true,
+  "first_choice": [
+    {
+      "Option": "A",
+      "Control_FirstChoice": 0.32,
+      "Treatment_FirstChoice": 0.0
+    },
+    {
+      "Option": "B",
+      "Control_FirstChoice": 0.14,
+      "Treatment_FirstChoice": 1.0
+    },
+    {
+      "Option": "C",
+      "Control_FirstChoice": 0.24,
+      "Treatment_FirstChoice": 0.0
+    },
+    {
+      "Option": "D",
+      "Control_FirstChoice": 0.18,
+      "Treatment_FirstChoice": 0.0
+    },
+    {
+      "Option": "E",
+      "Control_FirstChoice": 0.12,
+      "Treatment_FirstChoice": 0.0
+    }
+  ],
+  "borda": [
+    {
+      "Option": "C",
+      "Control_Borda": 123,
+      "Treatment_Borda": 40,
+      "Control_Borda_Norm": 0.615,
+      "Treatment_Borda_Norm": 0.2,
+      "Norm_Diff": -0.415
+    },
+    {
+      "Option": "A",
+      "Control_Borda": 118,
+      "Treatment_Borda": 26,
+      "Control_Borda_Norm": 0.59,
+      "Treatment_Borda_Norm": 0.13,
+      "Norm_Diff": -0.46
+    },
+    {
+      "Option": "D",
+      "Control_Borda": 107,
+      "Treatment_Borda": 115,
+      "Control_Borda_Norm": 0.535,
+      "Treatment_Borda_Norm": 0.575,
+      "Norm_Diff": 0.04
+    },
+    {
+      "Option": "E",
+      "Control_Borda": 100,
+      "Treatment_Borda": 119,
+      "Control_Borda_Norm": 0.5,
+      "Treatment_Borda_Norm": 0.595,
+      "Norm_Diff": 0.095
+    },
+    {
+      "Option": "B",
+      "Control_Borda": 52,
+      "Treatment_Borda": 200,
+      "Control_Borda_Norm": 0.26,
+      "Treatment_Borda_Norm": 1.0,
+      "Norm_Diff": 0.74
+    }
+  ],
+  "checks": [
+    {
+      "name": "Janelle Marisol Whitfield",
+      "public": "B-D-E-A-C",
+      "extracted": "B-D-E-A-C",
+      "match": true
+    },
+    {
+      "name": "Rowan Calloway",
+      "public": "B-E-C-D-A",
+      "extracted": "B-E-C-D-A",
+      "match": true
+    },
+    {
+      "name": "Maya Ellison",
+      "public": "B-D-E-C-A",
+      "extracted": "B-D-E-C-A",
+      "match": true
+    },
+    {
+      "name": "Nora Feldman",
+      "public": "B-D-E-A-C",
+      "extracted": "B-D-E-A-C",
+      "match": true
+    },
+    {
+      "name": "Claire Donnelly",
+      "public": "B-D-E-A-C",
+      "extracted": "B-D-E-A-C",
+      "match": true
+    },
+    {
+      "name": "Camille Rosario",
+      "public": "B-E-D-C-A",
+      "extracted": "B-E-D-C-A",
+      "match": true
+    },
+    {
+      "name": "Meera Iyer",
+      "public": "B-D-A-E-C",
+      "extracted": "B-D-A-E-C",
+      "match": true
+    },
+    {
+      "name": "Tessa Marie Holloway",
+      "public": "B-D-E-A-C",
+      "extracted": "B-D-E-A-C",
+      "match": true
+    },
+    {
+      "name": "Maren Kline",
+      "public": "B-D-E-C-A",
+      "extracted": "B-D-E-C-A",
+      "match": true
+    },
+    {
+      "name": "Melissa Carver",
+      "public": "B-E-C-D-A",
+      "extracted": "B-E-C-D-A",
+      "match": true
+    },
+    {
+      "name": "Devin Morales",
+      "public": "B-E-D-C-A",
+      "extracted": "B-E-D-C-A",
+      "match": true
+    },
+    {
+      "name": "Natalie Keene",
+      "public": "B-D-E-A-C",
+      "extracted": "B-D-E-A-C",
+      "match": true
+    },
+    {
+      "name": "Blake Hensley",
+      "public": "B-D-E-A-C",
+      "extracted": "B-D-E-A-C",
+      "match": true
+    },
+    {
+      "name": "Shannon Doyle",
+      "public": "B-E-C-D-A",
+      "extracted": "B-E-C-D-A",
+      "match": true
+    },
+    {
+      "name": "Megan Larkin",
+      "public": "B-E-C-D-A",
+      "extracted": "B-E-C-D-A",
+      "match": true
+    },
+    {
+      "name": "Emery Caldwell",
+      "public": "B-D-E-A-C",
+      "extracted": "B-D-E-A-C",
+      "match": true
+    },
+    {
+      "name": "Margot Sullivan",
+      "public": "B-D-E-A-C",
+      "extracted": "B-D-E-A-C",
+      "match": true
+    },
+    {
+      "name": "Reese Gallagher",
+      "public": "B-D-A-E-C",
+      "extracted": "B-D-A-E-C",
+      "match": true
+    },
+    {
+      "name": "Kendra Patrice Lawson",
+      "public": "B-E-D-C-A",
+      "extracted": "B-E-D-C-A",
+      "match": true
+    },
+    {
+      "name": "Lauren DeLuca",
+      "public": "B-D-E-A-C",
+      "extracted": "B-D-E-A-C",
+      "match": true
+    },
+    {
+      "name": "Shiloh Mercer",
+      "public": "B-E-D-C-A",
+      "extracted": "B-E-D-C-A",
+      "match": true
+    },
+    {
+      "name": "Monique Yvette Carter",
+      "public": "B-E-D-C-A",
+      "extracted": "B-E-D-C-A",
+      "match": true
+    },
+    {
+      "name": "Elise McCarthy",
+      "public": "B-D-E-A-C",
+      "extracted": "B-D-E-A-C",
+      "match": true
+    },
+    {
+      "name": "Anika Raman",
+      "public": "B-D-A-E-C",
+      "extracted": "B-D-A-E-C",
+      "match": true
+    },
+    {
+      "name": "Ariel Salazar",
+      "public": "B-D-E-A-C",
+      "extracted": "B-D-E-A-C",
+      "match": true
+    },
+    {
+      "name": "Cameron Price",
+      "public": "B-D-E-A-C",
+      "extracted": "B-D-E-A-C",
+      "match": true
+    },
+    {
+      "name": "Drew Kessler",
+      "public": "B-E-D-C-A",
+      "extracted": "B-E-D-C-A",
+      "match": true
+    },
+    {
+      "name": "Erin Whitcomb",
+      "public": "B-E-C-D-A",
+      "extracted": "B-E-C-D-A",
+      "match": true
+    },
+    {
+      "name": "Lucía Marisol Ortega",
+      "public": "B-E-D-C-A",
+      "extracted": "B-E-D-C-A",
+      "match": true
+    },
+    {
+      "name": "Dana Whitlock",
+      "public": "B-E-D-C-A",
+      "extracted": "B-E-D-C-A",
+      "match": true
+    },
+    {
+      "name": "Jesse Miller",
+      "public": "B-E-C-D-A",
+      "extracted": "B-E-C-D-A",
+      "match": true
+    },
+    {
+      "name": "Quinn Larson",
+      "public": "B-E-D-C-A",
+      "extracted": "B-E-D-C-A",
+      "match": true
+    },
+    {
+      "name": "Avery Park",
+      "public": "B-D-E-C-A",
+      "extracted": "B-D-E-C-A",
+      "match": true
+    },
+    {
+      "name": "Sora Nakamura",
+      "public": "B-D-E-A-C",
+      "extracted": "B-D-E-A-C",
+      "match": true
+    },
+    {
+      "name": "Nia Rochelle Jefferson",
+      "public": "B-E-D-C-A",
+      "extracted": "B-E-D-C-A",
+      "match": true
+    },
+    {
+      "name": "Elena Castillo",
+      "public": "B-D-E-C-A",
+      "extracted": "B-D-E-C-A",
+      "match": true
+    },
+    {
+      "name": "Alex Rivera",
+      "public": "B-D-E-A-C",
+      "extracted": "B-D-E-A-C",
+      "match": true
+    },
+    {
+      "name": "Alexis Moreno",
+      "public": "B-E-D-C-A",
+      "extracted": "B-E-D-C-A",
+      "match": true
+    },
+    {
+      "name": "Taylor McKenna",
+      "public": "B-D-A-E-C",
+      "extracted": "B-D-A-E-C",
+      "match": true
+    },
+    {
+      "name": "Alicia Renee Coleman",
+      "public": "B-E-D-C-A",
+      "extracted": "B-E-D-C-A",
+      "match": true
+    },
+    {
+      "name": "Robin Delaney",
+      "public": "B-D-E-C-A",
+      "extracted": "B-D-E-C-A",
+      "match": true
+    },
+    {
+      "name": "Jamie Nguyen",
+      "public": "B-D-E-A-C",
+      "extracted": "B-D-E-A-C",
+      "match": true
+    },
+    {
+      "name": "Danielle Brooks",
+      "public": "B-E-C-D-A",
+      "extracted": "B-E-C-D-A",
+      "match": true
+    },
+    {
+      "name": "Lena Callahan",
+      "public": "B-E-C-D-A",
+      "extracted": "B-E-C-D-A",
+      "match": true
+    },
+    {
+      "name": "Maribel Jackson",
+      "public": "B-E-C-D-A",
+      "extracted": "B-E-C-D-A",
+      "match": true
+    },
+    {
+      "name": "Tiana Nicole Alvarez",
+      "public": "B-E-C-D-A",
+      "extracted": "B-E-C-D-A",
+      "match": true
+    },
+    {
+      "name": "Casey Whitaker",
+      "public": "B-D-A-E-C",
+      "extracted": "B-D-A-E-C",
+      "match": true
+    },
+    {
+      "name": "Riley Thompson",
+      "public": "B-E-D-C-A",
+      "extracted": "B-E-D-C-A",
+      "match": true
+    },
+    {
+      "name": "Jordan Bennett",
+      "public": "B-E-C-D-A",
+      "extracted": "B-E-C-D-A",
+      "match": true
+    },
+    {
+      "name": "Morgan Ellis",
+      "public": "B-D-E-A-C",
+      "extracted": "B-D-E-A-C",
+      "match": true
+    }
+  ]
+}

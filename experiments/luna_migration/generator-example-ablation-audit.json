@@ -1,0 +1,233 @@
+{
+  "protocol_status": "Passed",
+  "semantic_verdict": "Review public responses and sampled traits separately; protocol fidelity does not establish empirical calibration.",
+  "paired_people": 3,
+  "generator_responses": 6,
+  "actor_responses": 6,
+  "production_json_mode_preserved": true,
+  "production_template_sha256": "3e93696bc2ed4e2990f17b72cb5627635d8a5891a9f38cc8268c67d8444db3a3",
+  "candidate_sha256": "c14809b649d5380508fa630754427112e218d12c836edb27a91cc73fcca71294",
+  "candidate_hash_basis": "UTF-8 of newline-normalized candidate text; exact sent messages are independently matched against saved requests.",
+  "returned_usage_estimate": {
+    "unique_saved_api_responses_in_run_window": 12,
+    "responses_missing_usage": 0,
+    "tokens": {
+      "prompt": 145175,
+      "completion": 87895,
+      "cached": 58292,
+      "writes": 86847
+    },
+    "usd": "0.055389895",
+    "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+  },
+  "prior_out_of_contract_screen": {
+    "folder": "generator-example-ablation",
+    "generator_responses": 6,
+    "valid_biographies": 5,
+    "actor_responses": 5,
+    "malformed_json": 1,
+    "caveat": "The missing JSON-output flag means this syntax failure is not evidence of a production regression. No replacement was drawn.",
+    "returned_usage_estimate": {
+      "unique_saved_api_responses_in_run_window": 11,
+      "responses_missing_usage": 0,
+      "tokens": {
+        "prompt": 129381,
+        "completion": 83344,
+        "cached": 0,
+        "writes": 129348
+      },
+      "usd": "0.057843800",
+      "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+    }
+  },
+  "rows": [
+    {
+      "name": "Diego Andrés Quintana",
+      "condition": "examples_retained_replication",
+      "sampled_culinary_traits": {
+        "culinary_tastes": "Is adventurous about food, regularly tries unfamiliar cuisines, ingredients, and cooking techniques, and enjoys discussing how dishes reflect their cultural origins.",
+        "attitude_toward_new_products": "Eagerly tests new products early, enjoys emerging technology and novel services, and tolerates occasional defects or inconvenience for the experience."
+      },
+      "generated_culinary_preferences": {
+        "culinary_tastes": {
+          "overall": "Adventurous and flexible, with a strong interest in tasting unfamiliar food and understanding what gives a dish its character. He enjoys heat but does not equate spice with quality, and he can appreciate mild food when the ingredients are fresh and well prepared.",
+          "cooking_habits": [
+            "He regularly cooks at home and likes learning a technique by watching someone demonstrate it, then adapting it to his own kitchen.",
+            "He keeps a few reliable Mexican-American family dishes in rotation, while also trying recipes from cuisines he does not know well.",
+            "He is more interested in the balance of flavor and texture than in following a recipe with exact formality.",
+            "He reads nutrition labels and ingredient lists, especially when comparing packaged sauces, snacks, and frozen meals.",
+            "He enjoys cooking for his parents and sister, but does not insist that they like every experiment he tries.",
+            "He will use convenience ingredients on a work night rather than pretend every meal has to be made from scratch.",
+            "He likes hot sauce, fresh chiles, citrus, herbs, toasted spices, and crisp vegetables, but adjusts heat when cooking for other people.",
+            "He is willing to order a dish he cannot pronounce confidently if he can ask what it contains without feeling rushed.",
+            "He likes learning how a dish connects to a place or family tradition, but avoids treating one person's version as the only authentic version.",
+            "He enjoys baking occasionally, particularly simple breads or a dessert that can be shared, though cooking is the more regular hobby."
+          ]
+        }
+      },
+      "public": [
+        "3 — I might try ready-to-drink gazpacho, especially if the ingredients look good and it isn’t too expensive. I like trying unfamiliar foods, but I’m not sure I’d want cold soup from a bottle often enough to say it’s likely."
+      ],
+      "possible_planning_fields": []
+    },
+    {
+      "name": "Diego Andrés Quintana",
+      "condition": "unrelated_examples_removed",
+      "sampled_culinary_traits": {
+        "culinary_tastes": "Is adventurous about food, regularly tries unfamiliar cuisines, ingredients, and cooking techniques, and enjoys discussing how dishes reflect their cultural origins.",
+        "attitude_toward_new_products": "Eagerly tests new products early, enjoys emerging technology and novel services, and tolerates occasional defects or inconvenience for the experience."
+      },
+      "generated_culinary_preferences": [
+        "Cooking is one of the few leisure interests he pursues consistently. He likes making a meal that is flavorful and satisfying without needing an elaborate recipe.",
+        "He enjoys trying foods he has not eaten before and is curious about the ingredients and methods behind them, rather than treating unfamiliar cuisine as a dare.",
+        "He likes heat in food, especially when it adds flavor rather than overwhelming everything else; he keeps hot sauce available but does not insist that every dish be spicy.",
+        "He enjoys Mexican dishes connected to his family's cooking, including meals that are ordinary weeknight food rather than special-occasion performances.",
+        "He is happy to try Korean, Middle Eastern, West African, Indian, or other cuisines when a friend or coworker suggests a place and can explain what they like there.",
+        "He likes adjusting recipes with vegetables, beans, and leaner proteins, but does not want food choices to become a source of moral judgment.",
+        "He is interested in practical cooking techniques, such as getting rice right, building flavor in a pan, and using leftovers before they spoil.",
+        "He likes kitchen equipment that solves a real annoyance. A useful thermometer or a well-designed pan interests him more than a decorative gadget with only one use.",
+        "He reads nutrition labels and ingredient lists when shopping, especially for foods he buys often, but does not track every calorie or treat a single indulgent meal as a failure.",
+        "He prefers a mix of home-cooked meals and occasional takeout. Eating out is a treat and a chance to try a new flavor, not something he wants to do every day.",
+        "He likes shopping as an occasional leisure activity, particularly when he can browse in person, compare quality, and take advantage of a genuine sale.",
+        "He enjoys finding a useful item at a promotional price but dislikes feeling manipulated by countdowns, confusing subscriptions, or pressure from a salesperson.",
+        "His spontaneous purchases are usually modest: a cooking ingredient, a shirt, or a household item. He is more likely to pause before buying something expensive.",
+        "He prefers to inspect products in a store before buying them when fit, durability, or feel matters. He uses online shopping selectively rather than as his default.",
+        "He is an early adopter of new consumer products when the product is tangible and the possible downside is limited; he enjoys being among the first in his family to try a new appliance or device.",
+        "He is willing to tolerate a small defect or awkward setup in a new product if he can return it or if trying it seems worthwhile. He is less tolerant of unclear fees or unnecessary data collection.",
+        "He likes contemporary music and art from a range of communities, and enjoys hearing how a song, design, or dish came to be.",
+        "He appreciates cultural traditions when they feel lived and personal, but dislikes being told that one way of being Mexican American is more authentic than another.",
+        "He watches some television and films at home, often choosing comedy, a well-paced drama, or a food program. He does not make social-media trends a regular source of entertainment.",
+        "He does not identify reading as a hobby. He reads work notices, labels, short articles, and practical information when needed, but rarely chooses a book just to pass an evening.",
+        "He does not identify pets or animals as a particular interest and is not currently looking to adopt an animal, though he is not hostile toward other people's pets.",
+        "He does not identify video games as an interest and does not spend leisure time following gaming news or playing console or PC games.",
+        "He does not seek outdoor activities as recreation. He walks as part of ordinary transportation and exercises indoors, but hiking, camping, fishing, and similar outings do not appeal to him as hobbies.",
+        "Travel is not a major interest. He is willing to join a planned domestic family vacation now and then, but he does not spend his free time researching destinations or collecting travel experiences.",
+        "He does not identify arts, crafts, or do-it-yourself projects as hobbies. He can handle basic practical tasks when necessary but has little desire to spend a weekend building or refurbishing something.",
+        "He does not identify socializing as a leisure interest. He values a few close relationships and will enjoy a low-key meal with them, but would rather not fill every free evening with plans.",
+        "Board games are not a particular interest; if relatives bring one out, he can participate politely without wanting to organize a regular game night.",
+        "He likes indoor exercise that is easy to fit around shifts, including a short gym routine or a planned set of exercises at home.",
+        "He appreciates comfortable, uncluttered surroundings and likes a kitchen where everyday tools are easy to find, even though he is not a minimalist and enjoys buying occasional useful things.",
+        "He prefers travel plans that are arranged in advance, with a clear budget and a comfortable place to stay, over spontaneous trips with uncertain costs."
+      ],
+      "public": [
+        "3 — I’d be curious enough to try a bottle, especially if the price was reasonable, but I’m not sure I’d buy it regularly. I’d want to see how it tastes first."
+      ],
+      "possible_planning_fields": []
+    },
+    {
+      "name": "Gabriel Leon Sandoval",
+      "condition": "examples_retained_replication",
+      "sampled_culinary_traits": {
+        "culinary_tastes": "Prefers mild, simple flavors and may avoid hot spices, strong aromas, unfamiliar textures, or complicated combinations because they feel unpleasant or overwhelming.",
+        "attitude_toward_new_products": "Is strongly resistant to changes in routines and products, viewing many new offerings as unnecessary, confusing, or designed to create avoidable costs."
+      },
+      "generated_culinary_preferences": {
+        "culinary_tastes": {
+          "overall_profile": "Gabriel prefers mild, simple, familiar food. He likes traditional family dishes when they are prepared without much heat, but he does not seek culinary novelty and is comfortable relying on inexpensive staples.",
+          "specific_preferences": [
+            "He prefers black pepper, garlic, and a little onion to hot chile heat.",
+            "He will usually keep salsa on the side so he can choose whether to use any.",
+            "He likes rice, beans, eggs, chicken, potatoes, tortillas, toast, and straightforward soups.",
+            "He enjoys tamales made by relatives but may choose a mild filling and skip a spicy sauce.",
+            "He would rather have a familiar cheeseburger or grilled chicken sandwich than a menu item with a long list of unfamiliar ingredients.",
+            "He likes cookies as an occasional comfort snack but does not consider baking a pastime.",
+            "He tends to choose water, coffee, or a familiar soft drink over specialty beverages.",
+            "He will eat vegetables when they are cooked simply or included in a dish he already likes, but he rarely builds a meal around a salad.",
+            "He is not vegetarian and eats meat, although he does not feel every meal needs to include it.",
+            "He is wary of unfamiliar textures, especially foods that are slimy, unusually chewy, or strongly fermented.",
+            "He prefers food served warm and plainly presented to elaborate plating or tasting menus.",
+            "He can cook basic meals for himself and his son but sees meal preparation primarily as a responsibility, not an enjoyable project."
+          ]
+        }
+      },
+      "public": [
+        "1. I wouldn’t buy it. Cold blended vegetables aren’t really my thing, and I prefer warm, familiar food. I might try a sample, but I wouldn’t choose a bottled gazpacho at the store."
+      ],
+      "possible_planning_fields": []
+    },
+    {
+      "name": "Gabriel Leon Sandoval",
+      "condition": "unrelated_examples_removed",
+      "sampled_culinary_traits": {
+        "culinary_tastes": "Prefers mild, simple flavors and may avoid hot spices, strong aromas, unfamiliar textures, or complicated combinations because they feel unpleasant or overwhelming.",
+        "attitude_toward_new_products": "Is strongly resistant to changes in routines and products, viewing many new offerings as unnecessary, confusing, or designed to create avoidable costs."
+      },
+      "generated_culinary_preferences": {
+        "culinary_tastes": [
+          "Prefers mild, uncomplicated food with familiar ingredients and distinct flavors rather than several strong flavors competing at once.",
+          "Enjoys rice, beans, eggs, oatmeal, plain grilled chicken, tortillas, soup, and simple pasta dishes.",
+          "Likes some traditional foods at family gatherings, particularly when relatives make them in a familiar, not overly spicy style.",
+          "Avoids very hot chiles, strong raw onion, heavy vinegar, and unfamiliar textures that make a meal feel difficult to finish.",
+          "Will add a small amount of mild salsa but does not want a dish to become a test of spice tolerance.",
+          "Drinks coffee in the morning, usually with a little milk and sugar; later in the day he more often chooses water or iced tea.",
+          "Keeps a few reliable snacks at home, such as cookies, crackers, or yogurt, and is more likely to snack while watching videos than to prepare an elaborate dessert.",
+          "Does not identify cooking or baking as a hobby. He can make a few dependable meals and will cook when needed, but sees meal preparation as a task rather than a creative outlet."
+        ]
+      },
+      "public": [
+        "2 — very unlikely, but not impossible. I usually stick with familiar, simple foods, and a cold bottled blend of vegetables isn’t something I’d naturally reach for. I might try a small bottle if it looked mild and the price was reasonable, but I wouldn’t expect to buy it regularly."
+      ],
+      "possible_planning_fields": []
+    },
+    {
+      "name": "Marco Antonio Salazar",
+      "condition": "examples_retained_replication",
+      "sampled_culinary_traits": {
+        "culinary_tastes": "Prefers familiar, traditional home cooking, such as regional family recipes, straightforward sides, and meals tied to personal or community traditions.",
+        "attitude_toward_new_products": "Eagerly tests new products early, enjoys emerging technology and novel services, and tolerates occasional defects or inconvenience for the experience."
+      },
+      "generated_culinary_preferences": {
+        "culinary_tastes": {
+          "general": "He prefers familiar, traditional home cooking and is not especially interested in cooking as a hobby. He prepares meals because the household needs to eat, and appreciates dishes that are filling, reasonably priced, and familiar to both sides of the family.",
+          "typical_foods": [
+            "Rice and beans with chicken or eggs.",
+            "Tortillas with a simple filling.",
+            "Chicken soup or another warm, straightforward soup when someone is sick.",
+            "Family-style dishes associated with Mexican American relatives, adapted to the ingredients and time available.",
+            "Fruit or yogurt when it is already in the refrigerator, though cookies are more likely to be his quick snack."
+          ],
+          "preferences_and_limits": [
+            "He likes traditional flavors more than trend-driven restaurant menus.",
+            "He enjoys chile but usually wants it moderate or available separately.",
+            "He is comfortable with familiar meat-based meals and also eats beans, eggs, and vegetable sides.",
+            "He is not committed to vegetarian eating, organic food, or specialty diets.",
+            "He avoids spending extra on a wellness label unless there is a clear practical reason.",
+            "He prefers a meal that tastes good and fills everyone up over an elaborate presentation.",
+            "He does not enjoy food waste and is happy to eat leftovers if they have been stored safely.",
+            "He is willing to try a new packaged food or restaurant item if his wife or a relative recommends it, but does not seek out new cuisines as a hobby."
+          ]
+        }
+      },
+      "public": [
+        "2. I usually go for familiar, filling foods, so bottled cold vegetable soup isn’t something I’d seek out. If it was inexpensive, I might try a small bottle, but I’m unlikely to buy it regularly."
+      ],
+      "possible_planning_fields": []
+    },
+    {
+      "name": "Marco Antonio Salazar",
+      "condition": "unrelated_examples_removed",
+      "sampled_culinary_traits": {
+        "culinary_tastes": "Prefers familiar, traditional home cooking, such as regional family recipes, straightforward sides, and meals tied to personal or community traditions.",
+        "attitude_toward_new_products": "Eagerly tests new products early, enjoys emerging technology and novel services, and tolerates occasional defects or inconvenience for the experience."
+      },
+      "generated_culinary_preferences": {
+        "food_and_culinary_tastes": [
+          "He prefers familiar, traditional home-style meals and is happiest when dinner is filling and unpretentious.",
+          "He likes the kind of family recipes that have been adapted over time rather than followed precisely from a written card.",
+          "He enjoys red or green chile when it is flavorful, but does not need every dish to be extremely hot.",
+          "He tends to prefer meat-centered meals with beans, potatoes, rice, tortillas, or a straightforward vegetable side.",
+          "He likes a plate that is recognizable and balanced, and is wary of food combinations that seem elaborate just for appearance.",
+          "He is not interested in cooking or baking as a hobby, though he can make basic eggs, sandwiches, reheated leftovers, and a simple pot of beans when needed.",
+          "He prefers conventional groceries and familiar brands over premium organic products, especially when the price difference is noticeable.",
+          "He snacks frequently and often reaches for cookies, especially inexpensive packaged cookies kept for the household.",
+          "He likes coffee in the morning and usually chooses a basic, familiar preparation rather than a specialty drink.",
+          "He will try a new restaurant if a relative recommends it, but he does not routinely seek out dining experiences."
+        ]
+      },
+      "public": [
+        "2 — Very unlikely, but not impossible. I usually prefer a filling, familiar meal, and cold blended vegetables aren't what I'd normally reach for. If it were inexpensive, I might try a bottle once, but I wouldn't make a point of buying it."
+      ],
+      "possible_planning_fields": []
+    }
+  ]
+}

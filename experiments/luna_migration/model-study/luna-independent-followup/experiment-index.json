@@ -1,0 +1,60 @@
+{
+  "experiments": [
+    {
+      "name": "neutral-biography",
+      "role": "independent-persona-development",
+      "expected_calls": 6,
+      "corpus": "neutral-biography/selected.jsonl",
+      "results": "neutral-biography/results.jsonl"
+    },
+    {
+      "name": "candidate-plan",
+      "role": "independent-candidate-planning",
+      "expected_calls": 6,
+      "corpus": "candidate-plan/selected.jsonl",
+      "results": "candidate-plan/results.jsonl"
+    },
+    {
+      "name": "candidate-plan-v2",
+      "role": "independent-candidate-planning-repaired",
+      "expected_calls": 6,
+      "corpus": "candidate-plan-v2/selected.jsonl",
+      "results": "candidate-plan-v2/results.jsonl"
+    },
+    {
+      "name": "candidate-expansion",
+      "role": "independent-selected-expansion",
+      "expected_calls": 6,
+      "corpus": "candidate-expansion/selected.jsonl",
+      "results": "candidate-expansion/results.jsonl"
+    },
+    {
+      "name": "contrast-plan",
+      "role": "contrast-motivation-planning",
+      "expected_calls": 6,
+      "corpus": "contrast-plan/selected.jsonl",
+      "results": "contrast-plan/results.jsonl"
+    },
+    {
+      "name": "contrast-plan-json",
+      "role": "contrast-motivation-planning-transport-repair",
+      "expected_calls": 6,
+      "corpus": "contrast-plan-json/selected.jsonl",
+      "results": "contrast-plan-json/results.jsonl"
+    },
+    {
+      "name": "contrast-structured",
+      "role": "contrast-structured-planning",
+      "expected_calls": 6,
+      "corpus": "contrast-structured/selected.jsonl",
+      "results": "contrast-structured/results.jsonl"
+    },
+    {
+      "name": "contrast-expansion",
+      "role": "contrast-selected-expansion",
+      "expected_calls": 6,
+      "corpus": "contrast-expansion/selected.jsonl",
+      "results": "contrast-expansion/results.jsonl"
+    }
+  ]
+}

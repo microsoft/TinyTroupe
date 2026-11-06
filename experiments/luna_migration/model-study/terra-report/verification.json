@@ -1,0 +1,26 @@
+{
+  "verified_at": "2026-10-27T23:59:29.970572+00:00",
+  "case_count": 20,
+  "only_model_changed": true,
+  "api_completed": 20,
+  "json_parsed": 20,
+  "strict_schemas_passed": 14,
+  "missing_public_answer_cases": [
+    "gazpacho-underdispersion-1"
+  ],
+  "public_only_grounding_checks": {
+    "extraction-ricardo-original": false,
+    "extraction-ricardo-public-only": true,
+    "extraction-jolene-original": false,
+    "extraction-jolene-public-only": true
+  },
+  "run_started_at": "2026-10-27T23:47:56.872163+00:00",
+  "run_finished_at": "2026-10-27T23:56:24.408982+00:00",
+  "run_wall_seconds": 507.536819,
+  "api_elapsed_seconds": 507.486,
+  "usage_priced_usd": "0.44130975",
+  "luna_stored_usage_priced_usd": "0.041481125",
+  "cost_ratio": "10.63880861476153310692513764",
+  "offline_unit_tests_passed": 11,
+  "invoice_reconciled": false
+}

@@ -92,6 +92,32 @@ class TestProfiler:
         """Create a profiler with more attributes for advanced testing."""
         return Profiler(attributes=["age", "nationality", "occupation.title", "actions_count", "social_connections"])
 
+    @pytest.mark.core
+    @pytest.mark.parametrize("representation", ["legacy_dict", "nested_dict", "tiny_person"])
+    def test_profile_persona_preferences(self, setup, representation):
+        """Canonical preferences and legacy flat dictionaries retain all profile facets."""
+        preferences = {
+            "interests": ["pottery"],
+            "likes": ["fresh vegetables"],
+            "dislikes": ["loud music"],
+        }
+        if representation == "tiny_person":
+            agent = TinyPerson("Preference Profile")
+            agent.define("preferences", preferences)
+        elif representation == "nested_dict":
+            agent = {"preferences": preferences}
+        else:
+            agent = preferences
+
+        profiler = Profiler()
+        profiler.profile([agent], plot=False)
+        facets = profiler.analysis_results["persona_composition"]
+
+        assert facets["interests"]["count"].sum() == 1
+        assert facets["interests"]["agent_count"].sum() == 1
+        assert facets["likes_dislikes"]["likes"].sum() == 1
+        assert facets["likes_dislikes"]["dislikes"].sum() == 1
+
     def test_profiler_initialization(self):
         """Test that the profiler initializes correctly."""
         profiler = Profiler()

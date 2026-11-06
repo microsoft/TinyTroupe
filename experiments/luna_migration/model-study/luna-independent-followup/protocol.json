@@ -1,0 +1,26 @@
+{
+  "started_at": "2026-10-29T08:35:05-03:00",
+  "scope": "Continue standalone prompt iteration on unresolved independent persona generation. Keep the 18 confirmed action/extraction prompts frozen. No production prompt changes, repository commits or full notebook reruns.",
+  "probe": {
+    "recipe": "neutral-biography.json",
+    "sources": ["persona-grace", "persona-philip"],
+    "repeats_per_source": 3,
+    "model": "gpt-6-luna",
+    "reasoning_effort": "xhigh",
+    "timeout_seconds": 300
+  },
+  "acceptance": [
+    "All original demographic, household, financial, political, reading and exact-name constraints explicitly retained.",
+    "All 17 mandatory fields and all five stated-scale personality values present; complete response, no refusal.",
+    "Coherent biography, chronology, finances and travel; no unsupported external event-calendar premise.",
+    "Within each source, differences extend beyond city names and job titles to desired experiences, routines or social commitments.",
+    "No prescribed survey answer, spending direction, personality score spread, occupation quota or rejection of coherent preferences merely because they repeat.",
+    "A candidate with substantial diversity or coherence failures is not selected by retaining only its best responses."
+  ],
+  "reassessment": "Review all six responses before further paid work. If the known archetype collapse persists, do not repeat small wording changes indefinitely. Consider a clearly labeled change in generation procedure, or report a prompt-only limitation.",
+  "limitations": [
+    "Small selected diagnostic sample, assistant qualitative review, not blinded human ratings.",
+    "Observed variation is not a calibrated population distribution or proof of absent demographic stereotypes.",
+    "No fixed-prompt method can guarantee a distribution when no target distribution was supplied."
+  ]
+}

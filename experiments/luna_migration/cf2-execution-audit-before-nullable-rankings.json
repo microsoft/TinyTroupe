@@ -1,0 +1,152 @@
+{
+  "updated_at": "2026-11-02T14:23:01.262921+00:00",
+  "runs": [
+    {
+      "name": "AI-enabled Children Story Telling Market Research 2",
+      "folder": "cf2-kids",
+      "status": "completed",
+      "elapsed_seconds": 5999.89,
+      "current_cell": 59,
+      "started_at": "2026-11-02T12:39:17.240629+00:00",
+      "library_sha256": "a46b7e43c8e5b39f0157642ce015aa6b3c6af95e34d36015484ea9e4efb0b2b8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {
+        "_": {
+          "rows": 5,
+          "columns": [
+            "Option",
+            "Control_Borda",
+            "Treatment_Borda",
+            "Control_Borda_Norm",
+            "Treatment_Borda_Norm",
+            "Norm_Diff"
+          ]
+        },
+        "__": {
+          "rows": 5,
+          "columns": [
+            "Option",
+            "Control_FirstChoice",
+            "Treatment_FirstChoice"
+          ]
+        },
+        "df": {
+          "rows": 50,
+          "columns": [
+            "name",
+            "response",
+            "justification"
+          ]
+        },
+        "_21": {
+          "rows": 50,
+          "columns": [
+            "name",
+            "response",
+            "justification"
+          ]
+        },
+        "df_control": {
+          "rows": 50,
+          "columns": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "Age Range",
+            "Gender Identity"
+          ]
+        },
+        "_27": {
+          "rows": 5,
+          "columns": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "Age Range",
+            "Gender Identity"
+          ]
+        },
+        "control_rank_df": {
+          "rows": 50,
+          "columns": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ]
+        },
+        "treatment_rank_df": {
+          "rows": 50,
+          "columns": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ]
+        },
+        "comparison": {
+          "rows": 5,
+          "columns": [
+            "Option",
+            "Control_FirstChoice",
+            "Treatment_FirstChoice"
+          ]
+        },
+        "_38": {
+          "rows": 5,
+          "columns": [
+            "Option",
+            "Control_FirstChoice",
+            "Treatment_FirstChoice"
+          ]
+        },
+        "borda_df": {
+          "rows": 5,
+          "columns": [
+            "Option",
+            "Control_Borda",
+            "Treatment_Borda",
+            "Control_Borda_Norm",
+            "Treatment_Borda_Norm",
+            "Norm_Diff"
+          ]
+        },
+        "_39": {
+          "rows": 5,
+          "columns": [
+            "Option",
+            "Control_Borda",
+            "Treatment_Borda",
+            "Control_Borda_Norm",
+            "Treatment_Borda_Norm",
+            "Norm_Diff"
+          ]
+        }
+      },
+      "execution_audit_passed": true
+    },
+    {
+      "name": "Bottled Gazpacho Market Research 5 (with behavior correction)",
+      "folder": "cf2-gaz",
+      "status": "running",
+      "elapsed_seconds": 3565.72,
+      "current_cell": 24,
+      "started_at": "2026-11-02T12:39:17.617481+00:00",
+      "library_sha256": "a46b7e43c8e5b39f0157642ce015aa6b3c6af95e34d36015484ea9e4efb0b2b8",
+      "expected_model": true,
+      "library_matches": false
+    }
+  ]
+}

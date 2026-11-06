@@ -1,0 +1,137 @@
+{
+  "experiments": [
+    {
+      "name": "round1",
+      "role": "development",
+      "expected_calls": 20,
+      "corpus": "round1/cases.jsonl",
+      "results": "round1/results.jsonl"
+    },
+    {
+      "name": "round2",
+      "role": "development",
+      "expected_calls": 20,
+      "corpus": "round2/cases.jsonl",
+      "results": "round2/results.jsonl"
+    },
+    {
+      "name": "round2-persona-repeats",
+      "role": "development",
+      "expected_calls": 4,
+      "corpus": "round2/cases.jsonl",
+      "results": "round2/persona-repeats.jsonl"
+    },
+    {
+      "name": "round3",
+      "role": "development",
+      "expected_calls": 8,
+      "corpus": "round3/cases.jsonl",
+      "results": "round3/results.jsonl"
+    },
+    {
+      "name": "evidence-controls",
+      "role": "synthetic-controls",
+      "expected_calls": 3,
+      "corpus": "evidence-controls/cases.jsonl",
+      "results": "evidence-controls/results.jsonl"
+    },
+    {
+      "name": "action-confirmation",
+      "role": "fixed-input-confirmation",
+      "expected_calls": 54,
+      "corpus": "confirmation/action-extraction-cases.jsonl",
+      "results": "confirmation/action-extraction-results.jsonl"
+    },
+    {
+      "name": "cohort-probe",
+      "role": "adaptive-diversity-probe",
+      "expected_calls": 2,
+      "corpus": "cohort-probe/selected.jsonl",
+      "results": "cohort-probe/results.jsonl"
+    },
+    {
+      "name": "cohort-step2",
+      "role": "adaptive-diversity-probe",
+      "expected_calls": 2,
+      "corpus": "cohort-step2/selected.jsonl",
+      "results": "cohort-step2/results.jsonl"
+    },
+    {
+      "name": "cohort-step3",
+      "role": "adaptive-diversity-probe",
+      "expected_calls": 2,
+      "corpus": "cohort-step3/selected.jsonl",
+      "results": "cohort-step3/results.jsonl"
+    },
+    {
+      "name": "round4",
+      "role": "fixed-input-persona-test",
+      "expected_calls": 6,
+      "corpus": "round4/selected.jsonl",
+      "results": "round4/results.jsonl"
+    },
+    {
+      "name": "cohort-confirm1",
+      "role": "adaptive-confirmation-superseded",
+      "expected_calls": 2,
+      "corpus": "cohort-confirm1/selected.jsonl",
+      "results": "cohort-confirm1/results.jsonl"
+    },
+    {
+      "name": "cohort-confirm2",
+      "role": "adaptive-confirmation-superseded",
+      "expected_calls": 2,
+      "corpus": "cohort-confirm2/selected.jsonl",
+      "results": "cohort-confirm2/results.jsonl"
+    },
+    {
+      "name": "cohort-confirm3",
+      "role": "adaptive-confirmation-superseded",
+      "expected_calls": 2,
+      "corpus": "cohort-confirm3/selected.jsonl",
+      "results": "cohort-confirm3/results.jsonl"
+    },
+    {
+      "name": "cohort-explicit1",
+      "role": "adaptive-confirmation-explicit",
+      "expected_calls": 2,
+      "corpus": "cohort-explicit1/selected.jsonl",
+      "results": "cohort-explicit1/results.jsonl"
+    },
+    {
+      "name": "cohort-explicit2",
+      "role": "adaptive-confirmation-explicit",
+      "expected_calls": 2,
+      "corpus": "cohort-explicit2/selected.jsonl",
+      "results": "cohort-explicit2/results.jsonl"
+    },
+    {
+      "name": "cohort-explicit3",
+      "role": "adaptive-confirmation-explicit",
+      "expected_calls": 2,
+      "corpus": "cohort-explicit3/selected.jsonl",
+      "results": "cohort-explicit3/results.jsonl"
+    },
+    {
+      "name": "cohort-grounded1",
+      "role": "adaptive-confirmation-grounded",
+      "expected_calls": 1,
+      "corpus": "cohort-grounded1/selected.jsonl",
+      "results": "cohort-grounded1/results.jsonl"
+    },
+    {
+      "name": "cohort-grounded2",
+      "role": "adaptive-confirmation-grounded",
+      "expected_calls": 1,
+      "corpus": "cohort-grounded2/selected.jsonl",
+      "results": "cohort-grounded2/results.jsonl"
+    },
+    {
+      "name": "cohort-grounded3",
+      "role": "adaptive-confirmation-grounded",
+      "expected_calls": 1,
+      "corpus": "cohort-grounded3/selected.jsonl",
+      "results": "cohort-grounded3/results.jsonl"
+    }
+  ]
+}

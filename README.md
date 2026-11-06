@@ -37,6 +37,11 @@ We are releasing *TinyTroupe* at a relatively early stage, with considerable wor
 
 ## Contents
 
+Temporary migration branch handoff: see
+[`experiments/luna_migration/HANDOFF.md`](./experiments/luna_migration/HANDOFF.md)
+for GPT-6 Luna experiments, verified repairs, failed hypotheses, portable helpers,
+and the explicitly paused/unresolved survey-quality state.
+
 - 📰 [Latest News](#latest-news)
 - 📚 [Examples](#examples)
 - 🛠️ [Pre-requisites](#pre-requisites)
@@ -207,7 +212,7 @@ To run the library, you need:
       * For Azure OpenAI Service, you will need to set the `AZURE_OPENAI_KEY` and `AZURE_OPENAI_ENDPOINT` environment variables to your API key and endpoint, respectively.
       * For OpenAI, you will need to set the `OPENAI_API_KEY` environment variable to your API key.
       * For example, on Linux/macOS: `export OPENAI_API_KEY=your-key-here`, or on Windows (PowerShell): `$env:OPENAI_API_KEY="your-key-here"`. To persist it, add it to your shell profile or use `setx OPENAI_API_KEY "your-key-here"` on Windows.
-  - By default, TinyTroupe `config.ini` is set to use OpenAI API with `gpt-5-mini` as the main model. The previous default (`gpt-4.1-mini`) is now considered legacy but is still expected to work. You can customize these values by including your own `config.ini` file in the same folder as the program or notebook you are running. An example of a `config.ini` file is provided in the [examples/](./examples/) folder.
+  - By default, TinyTroupe `config.ini` is set to use OpenAI API with `gpt-6-luna` as the main model and `xhigh` reasoning effort. Earlier models such as `gpt-5-mini` and `gpt-4.1-mini` remain configurable. You can customize these values by including your own `config.ini` file in the same folder as the program or notebook you are running. An example of a `config.ini` file is provided in the [examples/](./examples/) folder.
 
 >[!IMPORTANT]
 > **Content Filters**: To ensure no harmful content is generated during simulations, it is strongly recommended to use content filters whenever available at the API level. In particular, **if using Azure OpenAI, there's extensive support for content moderation, and we urge you to use it.** For details about how to do so, please consult [the corresponding Azure OpenAI documentation](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/content-filter). If content filters are in place, and an API call is rejected by them, the library will raise an exception, as it will be unable to proceed with the simulation at that point.
@@ -425,6 +430,10 @@ The other is by defining the agent programmatically, with statements like these:
 
 You can also combine both approaches, using the JSON file as a base and then adding or modifying details programmatically.
 
+When describing choices, distinguish capabilities from requirements. For example, "no supervision needed"
+does not forbid adult participation, but also does not establish unmentioned safeguards or parental controls.
+The agent prompt preserves that distinction without prescribing which option a person should prefer.
+
 #### Fragments
 
 `TinyPerson`s can also be further enriched via **fragments**, which are sub-specifications that can be added to the main specification. This is useful to reuse common parts across different agents. For example, the following fragment can be used to specify love of travel ([examples/fragments/travel_enthusiast.agent.fragment.json](./examples/fragments/travel_enthusiast.agent.fragment.json)):
@@ -505,7 +514,37 @@ people = factory.generate_people(number_of_people=50, parallelize=True, verbose=
 
 The `parallelize` parameter defaults to `True`, which significantly speeds up population generation by creating agents concurrently via parallel API calls.
 
-The factory automatically creates a sampling plan to ensure diverse representation. You can inspect this:
+The factory automatically creates a sampling plan to guide population coverage. The original population definition is retained during planning rather than replaced by the
+model's dimension summary. It and each selected stratum's description are passed through to persona generation, including
+eligibility conditions that are not repeated in every sampled field. Inspect the generated biographies
+as well as the plan: valid plan structure does not guarantee eligible households, diverse preferences,
+or empirical representativeness.
+Within each directive the factory draws concrete numeric values and categorical alternatives before
+asking the model to write a biography. Numeric intervals use uniform draws (inclusive for integers);
+categorical draws use supplied weights conditioned on allowed options, or equal weights if none are
+supplied. These are explicit sampling assumptions, not estimated population joint distributions.
+Generated biographies must retain the sampled age, including zero for an infant. Requests for detailed
+fields do not justify aging someone up or inventing adult beliefs and independent decisions for an infant.
+During interaction, a demanded answer format does not grant the person an ability they lack.
+An infant or toddler may express a concrete reaction without understanding a purchasing-propensity
+scale; no arbitrary rating or invented caregiver answer should fill that gap. This is task-specific,
+not a blanket exclusion of children's preferences or numerical abilities.
+Instructions for defining sampling dimensions and their possible values apply to population planning,
+not to individual biographies. Generated personas should describe their own sampled characteristics
+and eligibility, without copying catalogs of alternative traits or population distributions.
+For explicitly requested behavioral contrasts, the planner is instructed to reserve compatible
+singleton selections at their opposing ends when sample size and eligibility permit. An option
+allowed only in a mixed list can disappear from a small realized sample. Inspect the returned
+allocations: illustrative contrast coverage is not measured behavioral prevalence, and must not
+override supplied demographic proportions or prescribe survey ratings.
+Opposing categorical traits must be separately selectable. A single option combining strong
+resistance and impulsive adoption with "or" does not preserve either contrast when sampled;
+inspect the generated dimension vocabulary as well as the plan and biographies.
+Behavioral contrasts should retain compatible weighted demographic alternatives rather
+than fix a race, gender or region to make a profile distinctive. Redundant optional
+descriptions, such as a race-specific cultural profile drawn independently of race,
+can remain unconstrained to avoid conflicts. This preserves expected marginal weights,
+not exact realized quotas, measured demographic correlations, or empirical representativeness.
 
 ```python
 # View the sampling dimensions and plan
@@ -592,6 +631,24 @@ profiler.profile(people)  # displays demographic and trait distributions
 
 This helps validate that your generated population has the diversity and characteristics you intended.
 
+The model-facing sampling format uses nonempty lists of local option identifiers, then restores
+their exact names and option text in the public plan.
+Plan quantities must sum to the requested population size; empty, duplicate or out-of-range identifiers,
+invalid counts, and invalid numeric bounds fail explicitly. Optional dimensions use null rather than
+empty lists in the intermediate response and are omitted from the restored plan.
+Optional dimensions can remain unconstrained, and the planner checks age compatibility and population coverage.
+These checks do **not** establish representative joint distributions or calibrated population proportions.
+
+Persona profiling groups source text through identifier assignments rather than asking the model to copy it.
+`Normalizer(elements, n=6, max_length=40)` returns up to six semantic categories, preserving the original strings and duplicate occurrences.
+Collections larger than 240 distinct strings use one global theme-planning call followed by bounded assignment calls with frozen theme definitions.
+Previously assigned strings reuse their category without another model call.
+Invalid partitions raise an error instead of silently substituting raw labels or an arbitrary "Other" category.
+
+Story continuations preserve agent autonomy while honoring explicit narrator requirements such as ending an episode or starting a different engagement.
+`TinyStory.continue_story(number_of_words=100)` targets 65-80 words and enforces the requested ceiling; other positive limits scale the target proportionally.
+The current requirements are repeated after the simulation history to keep requested transitions explicit.
+
 ### Cost Tracking
 
 Simulations can incur significant API costs. TinyTroupe provides cost tracking at multiple levels:
@@ -672,6 +729,9 @@ print(result.statistical_results)
 ```
 
 This allows you to quantitatively assess how well your simulation matches real-world behavior, which is essential for building confidence in simulation-based insights.
+Missing DataFrame responses are retained as `None` in the imported dataset rather than imputed.
+Whole-number ranks stored as floats (for example, because a numeric column contains missing values)
+are accepted; fractional, nonfinite, and nonpositive ranking positions are rejected.
 
 ### Caching
 Calling LLM APIs can be expensive, thus caching strategies are important to help reduce that cost.
@@ -709,10 +769,47 @@ Key configuration sections include:
 - **[WebGrounding]**: Webpage destination allowlist and SSRF safeguards
 - **[Logging]**: Log level configuration
 
+`MAX_CONTENT_DISPLAY_LENGTH` shortens human-readable interaction output, not the
+model-visible episodic memory. The selected memory window
+(`EPISODIC_MEMORY_FIXED_PREFIX_LENGTH` and `EPISODIC_MEMORY_LOOKBACK_LENGTH`)
+retains the full content of its events. Large documents can therefore increase
+prompt size and cost. When a middle block actually falls outside this window,
+the actor prompt includes an explicit memory-gap notice; a fully retained history
+does not carry an omission warning.
+
+The Investment Firm example uses a 100-event lookback for its finite meeting so
+the final summary can retain earlier document-based answers. Global memory-window
+defaults are unchanged.
+
+Actor system instructions and turn-control cues are sent as plain text, without
+an additional JSON-string wrapper. Structured stimulus objects are still encoded
+as JSON, with image references resolved into multimodal content when present.
+
+Contextual semantic-memory retrieval uses a separate, bounded embedding query.
+It includes the current cognitive state and short event previews, not repeated
+historical cognitive states. Oversized queries are shortened with a warning to
+fit the embedding endpoint; stored memories and the agent's document-reading
+prompt remain complete.
+
+Agent prompts also include the current cognitive state: time, location, context,
+goals, attention, emotions, relevant semantic memories, and reachable contacts.
+Removing a contact from accessibility also removes it from the prompt's social context.
+
+For document consultation, agents use `LIST_DOCUMENTS`, then put an exact listed
+document name in the `CONSULT` action's `content` field and leave `target` empty.
+Missing documents produce explicit corrective feedback rather than a successful-read claim.
+
 Models used by default:
-- `MODEL=gpt-5-mini`: Main text generation model for agent responses (previous default `gpt-4.1-mini` is now legacy but still supported)
+- `MODEL=gpt-6-luna`: Main text generation model for agent responses
 - `EMBEDDING_MODEL=text-embedding-3-small`: For text similarity tasks
-- `REASONING_MODEL=o3-mini`: Used for detailed analyses and reasoning tasks (even more experimental -- not really recommended yet)
+- `REASONING_MODEL=gpt-6-luna`: Used for detailed analyses and reasoning tasks
+
+`REASONING_EFFORT=xhigh` selects the highest effort supported by `gpt-6-luna`
+through the OpenAI API; the API does not accept `max`. Higher effort may increase
+latency and token usage. The vision model also defaults to the main model unless
+`VISION_MODEL` is set explicitly. When choosing an older reasoning model, also
+choose an effort it supports (for example, `high` for `o3-mini`).
+Historical publication configurations retain their original model selections.
 
 We provide an example of a `config.ini` file, [./examples/config.ini](./examples/config.ini), which you can use as a template for your own, or just modify to run the examples.
 
@@ -838,6 +935,13 @@ TinyTroupe provides additional utilities and conveniences not covered in detail 
   - `TinyStory`: helps you create and manage narratives told through simulations.
   - `TinyPersonValidator`: helps you validate the behavior of your `TinyPerson`s.
   - `ResultsExtractor` and `ResultsReducer`: extract and reduce the results of interactions between agents.
+    For stated survey answers and justifications, extraction uses public speech, not private thoughts or
+    interviewer examples; missing answers remain null or the requested missing-value marker. Explicit
+    objectives can still request private thoughts or other action types. Check missing responses before
+    computing population statistics rather than replacing them with inferred scores.
+    The same evidence boundary applies to explanations of missing answers: `DONE` is a turn
+    boundary, not public speech. Stated justifications favor the person's own words, preserving
+    which preferences their reasons and qualifications actually support.
   - `ArtifactExporter`: export simulation artifacts (documents, data) to files.
   - Mental faculties (`TinyToolUse`, `FilesAndWebGroundingFaculty`): extend agent capabilities with tool use and grounding.
   - ... and more ...

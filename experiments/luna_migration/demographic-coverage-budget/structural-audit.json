@@ -1,0 +1,132 @@
+{
+  "request_and_exact_reconstruction": "passed",
+  "response_id": "chatcmpl-EfwdtQ3tINmYUJ2bvJjVe6YvDrGXI",
+  "library_sha256": "8c6a0a640111c4c219a1dfa06e8bcee99621fd03c1d45a0bf3871c50f28b8333",
+  "population": 50,
+  "directives": 27,
+  "incompatible_or_unconstrained_age_directives": [],
+  "uncovered_integer_ages": [],
+  "missing_explicit_residence_directives": [],
+  "incompatible_age_draws_over_100_seeds": [],
+  "singleton_age_allocations": {
+    "Age 0–14, including infants, school-age children, and young teenagers, with everyday needs and activities substantially shaped by caregivers and developmental stage.": 9,
+    "Age 15–24, including older adolescents and young adults navigating education, early employment, independence, and changing family or social roles.": 7,
+    "Age 25–54, spanning early adulthood through midlife, with varied combinations of work, caregiving, family life, education, and community involvement.": 20,
+    "Age 55–64, often including people approaching retirement or making midlife career, health, and household transitions.": 6,
+    "Age 65 and older, including active older adults as well as people who may have significant health, mobility, caregiving, or support needs.": 8
+  },
+  "demographic_draw_counts_over_100_seeds": {
+    "age_distribution": {
+      "Age 55–64, often including people approaching retirement or making midlife career, health, and household transitions.": {
+        "minimum": 6,
+        "maximum": 6,
+        "mean": 6.0
+      },
+      "Age 15–24, including older adolescents and young adults navigating education, early employment, independence, and changing family or social roles.": {
+        "minimum": 7,
+        "maximum": 7,
+        "mean": 7.0
+      },
+      "Age 0–14, including infants, school-age children, and young teenagers, with everyday needs and activities substantially shaped by caregivers and developmental stage.": {
+        "minimum": 9,
+        "maximum": 9,
+        "mean": 9.0
+      },
+      "Age 25–54, spanning early adulthood through midlife, with varied combinations of work, caregiving, family life, education, and community involvement.": {
+        "minimum": 20,
+        "maximum": 20,
+        "mean": 20.0
+      },
+      "Age 65 and older, including active older adults as well as people who may have significant health, mobility, caregiving, or support needs.": {
+        "minimum": 8,
+        "maximum": 8,
+        "mean": 8.0
+      }
+    },
+    "gender": {
+      "Male, as represented in the supplied binary gender-distribution figures; individual identity, expression, and sex characteristics may vary.": {
+        "minimum": 15,
+        "maximum": 33,
+        "mean": 24.95
+      },
+      "Female, as represented in the supplied binary gender-distribution figures; individual identity, expression, and sex characteristics may vary.": {
+        "minimum": 17,
+        "maximum": 35,
+        "mean": 25.05
+      }
+    },
+    "race_and_ethnicity": {
+      "Native Hawaiian or Pacific Islander, including people with Native Hawaiian, Samoan, Chamorro, Tongan, or other Pacific Islander heritage.": {
+        "minimum": 0,
+        "maximum": 1,
+        "mean": 0.07
+      },
+      "Two or more races, reflecting multiracial family histories and identities that may include any combination of racial or ethnic backgrounds.": {
+        "minimum": 1,
+        "maximum": 1,
+        "mean": 1.0
+      },
+      "American Indian or Alaska Native, including people connected to diverse Indigenous nations, communities, and cultural traditions.": {
+        "minimum": 0,
+        "maximum": 3,
+        "mean": 0.61
+      },
+      "Hispanic or Latino, including people with Mexican, Puerto Rican, Cuban, Central American, South American, or other Hispanic and Latino heritage, and people of any race.": {
+        "minimum": 4,
+        "maximum": 21,
+        "mean": 9.83
+      },
+      "Black or African American, including multigenerational African American communities and people with African, Caribbean, or other Black diasporic backgrounds.": {
+        "minimum": 3,
+        "maximum": 13,
+        "mean": 6.73
+      },
+      "White, non-Hispanic or Latino, with family histories that may be multigenerational in the United States or connected to many European, Middle Eastern, or other backgrounds.": {
+        "minimum": 19,
+        "maximum": 35,
+        "mean": 27.2
+      },
+      "Asian, including people with East Asian, South Asian, Southeast Asian, and other Asian heritages, with a wide range of languages and migration histories.": {
+        "minimum": 1,
+        "maximum": 11,
+        "mean": 4.56
+      }
+    },
+    "geographic_region": {
+      "South, including major metropolitan areas, small towns, rural communities, coastal regions, and rapidly growing suburbs across the southern states.": {
+        "minimum": 12,
+        "maximum": 28,
+        "mean": 18.96
+      },
+      "West, including Pacific coastal cities, inland metropolitan areas, mountain communities, deserts, agricultural areas, and remote rural regions.": {
+        "minimum": 6,
+        "maximum": 18,
+        "mean": 12.02
+      },
+      "Northeast, including dense metropolitan areas, older industrial cities, small towns, coastal communities, and rural areas across the northeastern states.": {
+        "minimum": 4,
+        "maximum": 15,
+        "mean": 8.57
+      },
+      "Midwest, including large cities, agricultural regions, smaller industrial communities, suburbs, and rural towns across the central and north-central states.": {
+        "minimum": 5,
+        "maximum": 19,
+        "mean": 10.45
+      }
+    },
+    "settlement_type": {
+      "Rural resident living in a less densely populated community, where longer travel distances, local relationships, and access to services may shape daily life.": {
+        "minimum": 4,
+        "maximum": 16,
+        "mean": 9.43
+      },
+      "Urban resident living in a city or densely developed metropolitan area, with relatively close access to services, workplaces, public amenities, and varied communities.": {
+        "minimum": 34,
+        "maximum": 46,
+        "mean": 40.57
+      }
+    }
+  },
+  "scope": "One fresh plan and 100 fixed drawing seeds, not 100 model replications or proof of demographic representativeness. Joint semantic review is separate.",
+  "request_normalization": "Expected template messages receive exactly the production client's utils.dedent preprocessing before wire comparison."
+}

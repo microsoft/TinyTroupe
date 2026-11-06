@@ -1,0 +1,49 @@
+{
+  "laneA": [
+    {"id": "lx01", "name": "Interview with Customer.ipynb"},
+    {"id": "lx06", "name": "Synthetic Data Generation 1.ipynb"},
+    {"id": "lx18", "name": "Bottled Gazpacho Market Research 5b.ipynb"},
+    {"id": "lx03", "name": "Political Compass (customizing agents with fragments).ipynb"},
+    {"id": "lx04", "name": "DnD Adventure with Vision (image modality).ipynb"},
+    {"id": "lx02", "name": "Creating and Validating Agents.ipynb"},
+    {"id": "lx10", "name": "Story telling (long narratives).ipynb"},
+    {"id": "lx11", "name": "Product Brainstorming (with behavior correction).ipynb"},
+    {"id": "lx12", "name": "Advertisement for TV.ipynb"},
+    {"id": "lx14", "name": "Tendencia de Compra en eComerce Colombia (Spanish).ipynb"},
+    {"id": "lx16", "name": "Bottled Gazpacho Market Research 5.ipynb"},
+    {"id": "lx15", "name": "Travel Product Market Research.ipynb"}
+  ],
+  "laneB": [
+    {"id": "lx07", "name": "Synthetic Data Generation.ipynb"},
+    {"id": "lx13", "name": "Online Advertisement for Travel.ipynb"},
+    {"id": "lx17", "name": "Bottled Gazpacho Market Research 5 (with behavior correction).ipynb"},
+    {"id": "lx20", "name": "AI-enabled Children Story Telling Market Research.ipynb"},
+    {"id": "lx21", "name": "AI-enabled Children Story Telling Market Research 2.ipynb"}
+  ],
+  "pilot": [
+    {"id": "lx19", "name": "Bottled Gazpacho Market Research 5c.ipynb"}
+  ],
+  "initial": [
+    {"id": "lx03", "name": "Political Compass (customizing agents with fragments).ipynb"},
+    {"id": "lx04", "name": "DnD Adventure with Vision (image modality).ipynb"},
+    {"id": "lx05", "name": "Vision for Product, Diagnosis and Appreciation Feedback (image modality).ipynb"},
+    {"id": "lx08", "name": "Investment Firm.ipynb"},
+    {"id": "lx09", "name": "Synthetic Data Generation 2 (tool usage).ipynb"}
+  ],
+  "previous": [
+    {"id": "notebook-comparison\\gpt-6-luna", "name": "Simple Chat.ipynb"},
+    {"id": "notebook-comparison\\gpt-6-luna-recheck", "name": "Create Ad for Apartment.ipynb"},
+    {"id": "notebook-comparison\\luna-brainstorm", "name": "Product Brainstorming.ipynb"},
+    {"id": "wp6", "name": "Word Processor Tool Usage.ipynb"}
+  ],
+  "repairs": [
+    {"id": "lx08", "name": "Investment Firm.ipynb"},
+    {"id": "lx06", "name": "Synthetic Data Generation 1.ipynb"}
+  ],
+  "followup": [
+    {"id": "lx04", "name": "DnD Adventure with Vision (image modality).ipynb"},
+    {"id": "lx09", "name": "Synthetic Data Generation 2 (tool usage).ipynb"},
+    {"id": "lx19", "name": "Bottled Gazpacho Market Research 5c.ipynb"},
+    {"id": "lx18", "name": "Bottled Gazpacho Market Research 5b.ipynb"}
+  ]
+}

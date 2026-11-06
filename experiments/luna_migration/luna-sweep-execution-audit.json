@@ -1,0 +1,848 @@
+{
+  "updated_at": "2026-10-27T01:44:04.228255+00:00",
+  "runs": [
+    {
+      "name": "DnD Adventure with Vision (image modality)",
+      "folder": "lx04",
+      "status": "completed",
+      "elapsed_seconds": 296.77,
+      "current_cell": 16,
+      "started_at": "2026-10-24T05:06:46.857447+00:00",
+      "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {},
+      "execution_audit_passed": true
+    },
+    {
+      "name": "Simple Chat",
+      "folder": "notebook-comparison\\gpt-6-luna",
+      "status": "completed",
+      "elapsed_seconds": 206.36,
+      "current_cell": 10,
+      "started_at": "2026-10-24T05:18:34.692353+00:00",
+      "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {},
+      "execution_audit_passed": true
+    },
+    {
+      "name": "Create Ad for Apartment",
+      "folder": "notebook-comparison\\gpt-6-luna-recheck",
+      "status": "completed",
+      "elapsed_seconds": 163.36,
+      "current_cell": 12,
+      "started_at": "2026-10-24T05:14:43.868902+00:00",
+      "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {},
+      "execution_audit_passed": true
+    },
+    {
+      "name": "Product Brainstorming",
+      "folder": "notebook-comparison\\luna-brainstorm",
+      "status": "completed",
+      "elapsed_seconds": 301.09,
+      "current_cell": 24,
+      "started_at": "2026-10-24T05:17:38.443558+00:00",
+      "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {},
+      "execution_audit_passed": true
+    },
+    {
+      "name": "Word Processor Tool Usage",
+      "folder": "wp6",
+      "status": "completed",
+      "elapsed_seconds": 90.94,
+      "current_cell": 9,
+      "started_at": "2026-10-24T05:22:43.854621+00:00",
+      "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {},
+      "execution_audit_passed": true
+    },
+    {
+      "name": "Interview with Customer",
+      "folder": "lx01",
+      "status": "completed",
+      "elapsed_seconds": 144.11,
+      "current_cell": 15,
+      "started_at": "2026-10-24T05:24:21.119761+00:00",
+      "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {},
+      "execution_audit_passed": true
+    },
+    {
+      "name": "Synthetic Data Generation",
+      "folder": "lx07",
+      "status": "completed",
+      "elapsed_seconds": 125.88,
+      "current_cell": 17,
+      "started_at": "2026-10-24T05:26:55.634919+00:00",
+      "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {
+        "_": {
+          "rows": 11,
+          "columns": [
+            "author",
+            "content"
+          ]
+        },
+        "df": {
+          "rows": 11,
+          "columns": [
+            "author",
+            "content"
+          ]
+        },
+        "_11": {
+          "rows": 11,
+          "columns": [
+            "author",
+            "content"
+          ]
+        }
+      },
+      "execution_audit_passed": true
+    },
+    {
+      "name": "Synthetic Data Generation 1",
+      "folder": "lx06",
+      "status": "completed",
+      "elapsed_seconds": 142.09,
+      "current_cell": 17,
+      "started_at": "2026-10-24T05:29:13.218124+00:00",
+      "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {
+        "_": {
+          "rows": 11,
+          "columns": [
+            "author",
+            "content"
+          ]
+        },
+        "df": {
+          "rows": 11,
+          "columns": [
+            "author",
+            "content"
+          ]
+        },
+        "_11": {
+          "rows": 11,
+          "columns": [
+            "author",
+            "content"
+          ]
+        }
+      },
+      "execution_audit_passed": true
+    },
+    {
+      "name": "Political Compass (customizing agents with fragments)",
+      "folder": "lx03",
+      "status": "completed",
+      "elapsed_seconds": 274.39,
+      "current_cell": 14,
+      "started_at": "2026-10-24T05:31:40.162524+00:00",
+      "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {},
+      "execution_audit_passed": true
+    },
+    {
+      "name": "Creating and Validating Agents",
+      "folder": "lx02",
+      "status": "completed",
+      "elapsed_seconds": 231.5,
+      "current_cell": 28,
+      "started_at": "2026-10-24T05:36:19.507767+00:00",
+      "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {},
+      "execution_audit_passed": true
+    },
+    {
+      "name": "Story telling (long narratives)",
+      "folder": "lx10",
+      "status": "completed",
+      "elapsed_seconds": 521.64,
+      "current_cell": 21,
+      "started_at": "2026-10-24T06:26:01.417211+00:00",
+      "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {},
+      "execution_audit_passed": true
+    },
+    {
+      "name": "Product Brainstorming (with behavior correction)",
+      "folder": "lx11",
+      "status": "completed",
+      "elapsed_seconds": 522.98,
+      "current_cell": 25,
+      "started_at": "2026-10-24T05:47:58.531484+00:00",
+      "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {},
+      "execution_audit_passed": true
+    },
+    {
+      "name": "Vision for Product, Diagnosis and Appreciation Feedback (image modality)",
+      "folder": "lx05",
+      "status": "completed",
+      "elapsed_seconds": 189.34,
+      "current_cell": 19,
+      "started_at": "2026-10-24T05:56:45.502973+00:00",
+      "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {},
+      "execution_audit_passed": true
+    },
+    {
+      "name": "Synthetic Data Generation 2 (tool usage)",
+      "folder": "lx09",
+      "status": "completed",
+      "elapsed_seconds": 4909.06,
+      "current_cell": 24,
+      "started_at": "2026-10-24T07:37:54.023409+00:00",
+      "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {},
+      "execution_audit_passed": true
+    },
+    {
+      "name": "Bottled Gazpacho Market Research 5b",
+      "folder": "lx18",
+      "status": "completed",
+      "elapsed_seconds": 2067.52,
+      "current_cell": 54,
+      "started_at": "2026-10-24T05:14:35.071670+00:00",
+      "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {
+        "df": {
+          "rows": 15,
+          "columns": [
+            "name",
+            "response",
+            "justification"
+          ]
+        },
+        "_18": {
+          "rows": 15,
+          "columns": [
+            "name",
+            "response",
+            "justification"
+          ]
+        },
+        "df_for_validation": {
+          "rows": 15,
+          "columns": [
+            "name",
+            "response",
+            "justification",
+            "Vote"
+          ]
+        }
+      },
+      "execution_audit_passed": true
+    },
+    {
+      "name": "Bottled Gazpacho Market Research 5c",
+      "folder": "lx19",
+      "status": "completed",
+      "elapsed_seconds": 3005.97,
+      "current_cell": 67,
+      "started_at": "2026-10-24T06:29:44.000769+00:00",
+      "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {
+        "df": {
+          "rows": 15,
+          "columns": [
+            "name",
+            "response",
+            "justification"
+          ]
+        },
+        "_20": {
+          "rows": 15,
+          "columns": [
+            "name",
+            "response",
+            "justification"
+          ]
+        },
+        "df_for_validation": {
+          "rows": 15,
+          "columns": [
+            "name",
+            "response",
+            "justification",
+            "Vote"
+          ]
+        }
+      },
+      "execution_audit_passed": true
+    },
+    {
+      "name": "Bottled Gazpacho Market Research 5",
+      "folder": "lx16",
+      "status": "completed",
+      "elapsed_seconds": 3752.89,
+      "current_cell": 60,
+      "started_at": "2026-10-24T06:21:58.596567+00:00",
+      "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {
+        "df": {
+          "rows": 50,
+          "columns": [
+            "name",
+            "response",
+            "justification"
+          ]
+        },
+        "_22": {
+          "rows": 50,
+          "columns": [
+            "name",
+            "response",
+            "justification"
+          ]
+        },
+        "df_for_validation": {
+          "rows": 50,
+          "columns": [
+            "name",
+            "response",
+            "justification",
+            "Vote"
+          ]
+        }
+      },
+      "execution_audit_passed": true
+    },
+    {
+      "name": "Bottled Gazpacho Market Research 5 (with behavior correction)",
+      "folder": "lx17",
+      "status": "completed",
+      "elapsed_seconds": 7897.23,
+      "current_cell": 61,
+      "started_at": "2026-10-24T07:24:45.628450+00:00",
+      "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {
+        "df": {
+          "rows": 50,
+          "columns": [
+            "name",
+            "response",
+            "justification"
+          ]
+        },
+        "_23": {
+          "rows": 50,
+          "columns": [
+            "name",
+            "response",
+            "justification"
+          ]
+        },
+        "df_for_validation": {
+          "rows": 50,
+          "columns": [
+            "name",
+            "response",
+            "justification",
+            "Vote"
+          ]
+        }
+      },
+      "execution_audit_passed": true
+    },
+    {
+      "name": "AI-enabled Children Story Telling Market Research",
+      "folder": "lx20",
+      "status": "completed",
+      "elapsed_seconds": 4639.2,
+      "current_cell": 61,
+      "started_at": "2026-10-26T21:35:24.617343+00:00",
+      "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {
+        "_": {
+          "rows": 5,
+          "columns": [
+            "Option",
+            "Control_Borda",
+            "Treatment_Borda",
+            "Control_Borda_Norm",
+            "Treatment_Borda_Norm",
+            "Norm_Diff"
+          ]
+        },
+        "__": {
+          "rows": 5,
+          "columns": [
+            "Option",
+            "Control_FirstChoice",
+            "Treatment_FirstChoice"
+          ]
+        },
+        "df": {
+          "rows": 50,
+          "columns": [
+            "name",
+            "response",
+            "justification"
+          ]
+        },
+        "_22": {
+          "rows": 50,
+          "columns": [
+            "name",
+            "response",
+            "justification"
+          ]
+        },
+        "df_control": {
+          "rows": 50,
+          "columns": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "Age Range",
+            "Gender Identity"
+          ]
+        },
+        "_28": {
+          "rows": 5,
+          "columns": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "Age Range",
+            "Gender Identity"
+          ]
+        },
+        "control_rank_df": {
+          "rows": 50,
+          "columns": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ]
+        },
+        "treatment_rank_df": {
+          "rows": 50,
+          "columns": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ]
+        },
+        "comparison": {
+          "rows": 5,
+          "columns": [
+            "Option",
+            "Control_FirstChoice",
+            "Treatment_FirstChoice"
+          ]
+        },
+        "_39": {
+          "rows": 5,
+          "columns": [
+            "Option",
+            "Control_FirstChoice",
+            "Treatment_FirstChoice"
+          ]
+        },
+        "borda_df": {
+          "rows": 5,
+          "columns": [
+            "Option",
+            "Control_Borda",
+            "Treatment_Borda",
+            "Control_Borda_Norm",
+            "Treatment_Borda_Norm",
+            "Norm_Diff"
+          ]
+        },
+        "_40": {
+          "rows": 5,
+          "columns": [
+            "Option",
+            "Control_Borda",
+            "Treatment_Borda",
+            "Control_Borda_Norm",
+            "Treatment_Borda_Norm",
+            "Norm_Diff"
+          ]
+        }
+      },
+      "execution_audit_passed": true
+    },
+    {
+      "name": "AI-enabled Children Story Telling Market Research 2",
+      "folder": "lx21",
+      "status": "completed",
+      "elapsed_seconds": 3247.86,
+      "current_cell": 59,
+      "started_at": "2026-10-24T08:57:22.124692+00:00",
+      "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {
+        "_": {
+          "rows": 5,
+          "columns": [
+            "Option",
+            "Control_Borda",
+            "Treatment_Borda",
+            "Control_Borda_Norm",
+            "Treatment_Borda_Norm",
+            "Norm_Diff"
+          ]
+        },
+        "__": {
+          "rows": 5,
+          "columns": [
+            "Option",
+            "Control_FirstChoice",
+            "Treatment_FirstChoice"
+          ]
+        },
+        "df": {
+          "rows": 50,
+          "columns": [
+            "name",
+            "response",
+            "justification"
+          ]
+        },
+        "_21": {
+          "rows": 50,
+          "columns": [
+            "name",
+            "response",
+            "justification"
+          ]
+        },
+        "df_control": {
+          "rows": 50,
+          "columns": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "Age Range",
+            "Gender Identity"
+          ]
+        },
+        "_27": {
+          "rows": 5,
+          "columns": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "Age Range",
+            "Gender Identity"
+          ]
+        },
+        "control_rank_df": {
+          "rows": 50,
+          "columns": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ]
+        },
+        "treatment_rank_df": {
+          "rows": 50,
+          "columns": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ]
+        },
+        "comparison": {
+          "rows": 5,
+          "columns": [
+            "Option",
+            "Control_FirstChoice",
+            "Treatment_FirstChoice"
+          ]
+        },
+        "_38": {
+          "rows": 5,
+          "columns": [
+            "Option",
+            "Control_FirstChoice",
+            "Treatment_FirstChoice"
+          ]
+        },
+        "borda_df": {
+          "rows": 5,
+          "columns": [
+            "Option",
+            "Control_Borda",
+            "Treatment_Borda",
+            "Control_Borda_Norm",
+            "Treatment_Borda_Norm",
+            "Norm_Diff"
+          ]
+        },
+        "_39": {
+          "rows": 5,
+          "columns": [
+            "Option",
+            "Control_Borda",
+            "Treatment_Borda",
+            "Control_Borda_Norm",
+            "Treatment_Borda_Norm",
+            "Norm_Diff"
+          ]
+        }
+      },
+      "execution_audit_passed": true
+    },
+    {
+      "name": "Investment Firm",
+      "folder": "lx08",
+      "status": "completed",
+      "elapsed_seconds": 991.86,
+      "current_cell": 29,
+      "started_at": "2026-10-24T05:06:47.126505+00:00",
+      "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {},
+      "execution_audit_passed": true
+    },
+    {
+      "name": "Advertisement for TV",
+      "folder": "lx12",
+      "status": "completed",
+      "elapsed_seconds": 1289.84,
+      "current_cell": 30,
+      "started_at": "2026-10-24T05:53:53.198912+00:00",
+      "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {},
+      "execution_audit_passed": true
+    },
+    {
+      "name": "Tendencia de Compra en eComerce Colombia (Spanish)",
+      "folder": "lx14",
+      "status": "completed",
+      "elapsed_seconds": 3926.83,
+      "current_cell": 23,
+      "started_at": "2026-10-24T05:46:13.566184+00:00",
+      "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {
+        "df": {
+          "rows": 30,
+          "columns": [
+            "name",
+            "response",
+            "justification"
+          ]
+        }
+      },
+      "execution_audit_passed": true
+    },
+    {
+      "name": "Online Advertisement for Travel",
+      "folder": "lx13",
+      "status": "completed",
+      "elapsed_seconds": 6187.47,
+      "current_cell": 25,
+      "started_at": "2026-10-26T21:38:50.805136+00:00",
+      "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {},
+      "execution_audit_passed": true
+    },
+    {
+      "name": "Travel Product Market Research",
+      "folder": "lx15",
+      "status": "completed",
+      "elapsed_seconds": 3558.89,
+      "current_cell": 48,
+      "started_at": "2026-10-27T00:43:51.024653+00:00",
+      "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {},
+      "execution_audit_passed": true
+    }
+  ]
+}

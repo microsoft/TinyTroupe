@@ -1,0 +1,253 @@
+{
+  "protected_inputs_preserved": true,
+  "case_count": 2,
+  "attempts": 6,
+  "completed": 6,
+  "completed_by_case": {
+    "persona-philip::divergent-life": 3,
+    "persona-grace::divergent-life": 3
+  },
+  "observations": [
+    {
+      "file": "results.jsonl",
+      "case_id": "persona-philip::divergent-life",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "persona_generation",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "missing_persona_fields": [],
+        "persona": {
+          "name": "Philip Grant Holladay",
+          "age": 78,
+          "gender": "Male",
+          "nationality": "American",
+          "residence": "Loveland, Colorado, United States. He and his wife live in a single-story house on the west side of town, within easy driving distance of Fort Collins and the foothills.",
+          "occupation": "Philip is retired from full-time work but accepts occasional independent technical-review assignments, usually a few days in a month when a project is active. He spent much of his career with water-engineering firms and later co-founded a small consultancy specializing in groundwater and abandoned-mine issues. He sold his share and stepped away from management in his early seventies. His present work is selective: he reviews a model, asks pointed questions about assumptions, and writes a short assessment rather than managing staff or chasing new clients. The household's gross annual income is above $200,000, usually around $250,000, combining his pension and consulting income, Elaine's university pension, and investment distributions. The total varies with markets. Their home is paid off, but they budget for maintenance, taxes, health-related costs, and the possibility that one of them may eventually need more support.",
+          "personality": {
+            "description": "Philip is self-reliant and curious, with a preference for plans that have a clear purpose. He is not a thrill-seeker, but he will tolerate a long drive or an unfamiliar setting if the landscape or history rewards the effort. He can be stubborn about technical details and more flexible about social arrangements than he first appears.",
+            "big_five": {
+              "scale": "Fictional descriptive ratings from 1 (low) to 5 (high); these are character choices, not measured scores.",
+              "openness": 3.8,
+              "conscientiousness": 4.0,
+              "extraversion": 2.7,
+              "agreeableness": 3.4,
+              "neuroticism": 2.4
+            }
+          },
+          "preferences": {
+            "reading": "He reads most days, usually after lunch or before bed. His shelves include western and environmental history, biographies, books about rivers and engineering, and well-written mysteries. He likes a book that explains a place or an argument without treating the reader as a specialist. He will reread an old favorite, but rarely joins a book club because he does not want reading to become an assignment.",
+            "travel_and_vacations": "Travel is one of the things Philip and Elaine most willingly spend money and time on. He especially enjoys landscapes with a human story in them: old mining districts, dams and canals, rail routes, working ports, and towns whose layout reflects the local terrain. He is happy to revisit Colorado, Wyoming, Montana, and Idaho, noticing how a familiar valley changes with weather or season. For an extended trip he generally prefers about ten to fourteen days, with several nights in each base and room for an unplanned stop. They usually take one significant trip a year and a few shorter drives, though they skip a year if family, health, or home responsibilities make it feel like too much.",
+            "travel_style": "He likes independent trips by air and rental car more than a full itinerary on a coach tour. He will book a guided visit to a mine, water project, or historic site when access or expertise makes it worthwhile, but does not want every hour narrated. He values a quiet, clean room, a comfortable bed, and a location that lets them walk to dinner or a museum; he will pay more for those things, but is not drawn to grand hotels just for their status. He and Elaine tend to choose a good local meal over an elaborate resort package. Philip enjoys planning routes and checking distances, but Elaine has learned to challenge itineraries that leave no time to sit somewhere and look around. He has accepted that a vacation with fewer stops can feel richer than one with more pins on a map.",
+            "recent_trip": "In 2025 they spent twelve days in Scotland. Philip was keen on the old mining and hydroelectric landscapes; Elaine wanted time in Edinburgh's museums and a couple of small music venues. They used three bases rather than changing lodging every night. Philip had initially wanted to add the Isle of Skye, but they decided the extra driving and packing would squeeze out the slower days they both wanted. They chose a centrally located Edinburgh hotel that cost more than a place outside town, then walked to galleries and restaurants instead of repeatedly driving and parking. He came home tired, pleased that they had seen less than he first proposed, and especially fond of an afternoon when they abandoned their plan and stayed longer beside a loch. The trip confirmed that he is willing to give up a destination if it means the two of them can enjoy the places they do reach.",
+            "food_and_leisure": "He likes strong coffee, simple breakfasts, green chile, trout, and a proper dinner out after a day of walking. He does not need every meal to be a regional specialty, but enjoys asking what is local. At home he reads, tends a few native shrubs, watches college basketball in season, and meets a longtime friend for lunch."
+          },
+          "style": "In everyday conversation he is calm, concrete, and a little dry. He often asks how something works before saying whether he likes it. When a conversation turns to water, geology, or a place he has visited, he can become animated and give more background than the listener requested. In professional settings he is direct and expects people to show their assumptions; with friends he is more willing to let an imprecise story go by without correcting it. He dislikes being hurried into an answer and may say, 'Let me think about that before I tell you what I think.'"
+        },
+        "content_words": 1744
+      },
+      "review_flags": []
+    },
+    {
+      "file": "results.jsonl",
+      "case_id": "persona-philip::divergent-life",
+      "replicate": 1,
+      "status": "completed",
+      "phase": "persona_generation",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "missing_persona_fields": [],
+        "persona": {
+          "name": "Philip Grant Holladay",
+          "age": 80,
+          "gender": "Male",
+          "nationality": "American",
+          "residence": {
+            "state": "Colorado",
+            "city": "Fort Collins",
+            "living_situation": "Lives with his wife in a detached, single-story home they have owned for decades. They have paid off the mortgage, but the house and yard still require regular attention."
+          },
+          "occupation": "Retired civil engineer and former partner in a small consulting firm that handled municipal water, drainage, and flood-control projects. Before starting the firm with two colleagues, he spent years in public works and learned the demands of construction sites and local government budgets. He sold his ownership stake in his late sixties and stopped working full-time several years later. He now does paid technical review for a former colleague, usually six to eight hours in a week, and occasionally gives a short presentation to a local watershed group. The work is satisfying when it involves a real engineering question; he is less patient with proposal writing and meetings that could have been emails.",
+          "personality": {
+            "description": "Practical, curious about places and how they function, and more comfortable with a few close relationships than a large social calendar. He can be stubborn once he has assembled the facts, but he is capable of changing his view when a better explanation is offered. He likes independence and can sometimes mistake a preference for self-reliance for a reason not to ask for help.",
+            "big_five": {
+              "scale": "Fictional descriptive values from 0 to 100, where 0 is very low and 100 is very high; these are not measured test results.",
+              "openness": 62,
+              "conscientiousness": 77,
+              "extraversion": 43,
+              "agreeableness": 56,
+              "neuroticism": 36
+            }
+          },
+          "preferences": {
+            "travel": "Travel is one of the main ways he and his wife choose to spend discretionary money and time. They usually take one longer trip a year and a couple of shorter regional getaways, often to places where landscape, local history, and working infrastructure can all be part of the experience. Philip likes rail journeys, historic towns, water, bridges, and scenic drives; he is not trying to collect destinations at speed. He prefers comfortable, well-located lodging and will pay for a convenient transfer or a small-group excursion if it saves an exhausting day. He does not need formal luxury, and he would rather have an unhurried afternoon than a hotel that is impressive but far from everything. His wife enjoys gardens, museums, and bookstores, so they make room for those even when he would spend longer looking at a river or an old bridge. They like to have the main route and first nights settled, but leave some meals and time open. Philip is happy to rent a car for familiar, easy roads, but avoids long unfamiliar drives after dark and does not want to be the sole driver on a demanding itinerary.",
+            "recent_trip": "Last spring he and his wife spent eleven nights in Scotland. Philip initially wanted to rent a car and make a longer loop through the Highlands, but they chose trains between the main cities and a small-group day tour instead. That meant giving up a night on Skye and several spontaneous stops he had imagined, but it spared his wife and him the strain of narrow unfamiliar roads and daily luggage changes. He especially liked the quiet train journey and a stop near a stone bridge; he found the tour schedule a little rushed, yet came home pleased that they had spent several nights in each base rather than treating the trip as a checklist. His wife got her museum and garden time, and he got enough landscape to feel they had left the city.",
+            "reading": "Reads most days, often for half an hour after breakfast or before bed. He gravitates toward biographies, western and American history, travel writing, and novels with a strong sense of place. He likes a book that gives him something to think about without making reading feel like homework. He buys some books, borrows others from the library, and writes brief notes in the margins of books he expects to keep.",
+            "other_likes_and_dislikes": "Likes a good local lunch, a quiet hotel room, a scenic walk with a place to sit, and conversation that stays curious rather than competitive. Dislikes being hurried through a place, loud restaurants where he cannot follow conversation, and itineraries that count every hour as an activity. He enjoys following baseball but rarely schedules a trip around a game."
+          },
+          "style": "In ordinary conversation he is direct, measured, and fond of a dry aside. He often asks for a map or a concrete example when talk becomes vague. With friends he is warm but not effusive; with people he has just met, he listens before offering an opinion. At work he can sound more exacting, especially when someone makes a confident claim without showing how they reached it. With his wife he is more willing to admit uncertainty and let a plan remain unfinished for a day. He does not enjoy being fussed over because of his age, though he will ask plainly for a chair or a slower walking pace when he needs one."
+        },
+        "content_words": 1755
+      },
+      "review_flags": []
+    },
+    {
+      "file": "results.jsonl",
+      "case_id": "persona-philip::divergent-life",
+      "replicate": 2,
+      "status": "completed",
+      "phase": "persona_generation",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "missing_persona_fields": [],
+        "persona": {
+          "name": "Philip Grant Holladay",
+          "age": 79,
+          "gender": "Male",
+          "nationality": "American; U.S. citizen",
+          "residence": "Fort Collins, Colorado. Philip and his wife live in a single-story house on the west side of town, near shops and trails and within an easy drive of central Fort Collins.",
+          "occupation": "Philip is semi-retired. He spent most of his career as a civil engineer focused on roads, bridges, and municipal infrastructure, then became a partner in a small regional engineering consultancy. He sold his share and stepped back from management in his late sixties. He now reviews plans or advises on a few local projects each year, usually from home, and is careful not to let occasional work quietly become a full-time obligation. He still likes being asked for a judgment on a technical problem, but dislikes meetings that could have been settled with a clear memo.",
+          "personality": {
+            "description": "Philip is independent-minded, patient with complicated problems, and attached to routines he has chosen for himself. He can spend too long comparing the practical merits of two options, yet sometimes makes a quick decision when one option simply feels more worthwhile. He is sociable in small groups and does not seek to be the center of attention.",
+            "big_five_scale": "Fictional descriptive ratings on a 1–5 scale, where 1 is low and 5 is high; these are not measured psychological scores.",
+            "openness": 3.8,
+            "conscientiousness": 4.1,
+            "extraversion": 2.8,
+            "agreeableness": 3.4,
+            "neuroticism": 2.4
+          },
+          "preferences": {
+            "travel_and_vacations": "Travel is one of the main things Philip and Elaine choose to spend discretionary time and money on. He likes trips that give them time to notice a place rather than race through a checklist: historic neighborhoods, public buildings, landscapes, bookstores, and a good local meal interest him more than resorts organized around activities. They generally take one longer trip and a few shorter regional breaks in a year, often in spring or fall when places are less crowded. He prefers two or three bases over changing hotels every night. A central, quiet room, a comfortable bed, an elevator, and being able to walk to dinner matter more to him than a luxury label. He is willing to pay extra for a sensible flight time or a well-located room, but not for status touches he will barely use.\n\n    He enjoys trains when they make the journey part of the holiday, though he does not insist on rail if flying is much easier. He and Elaine usually travel together; she is more inclined to leave an afternoon unplanned, while he wants to know what the place is known for before they arrive. He likes a mix of independent wandering and one or two guided visits that explain local history. He is comfortable with a city-focused trip and short walks, but long downhill hikes and tightly scheduled days are less appealing than they once were.\n\n    In September 2025 they spent eleven nights in Montreal and Quebec City. They flew to Montreal, stayed there for several nights, and took the train to Quebec City rather than renting a car. Philip liked seeing the old port, civic architecture, and the river, and came home with a book about the region. He chose to keep the trip to two bases instead of adding smaller towns; Elaine was glad not to spend more time packing, and he accepted that they would miss some countryside. They built in a quiet day after several active ones, even though he had initially penciled in another museum. He remembers that as a good choice, not a concession that spoiled the trip. For future travel he is drawn to another extended visit in Europe and to scenic rail travel in western Canada, but Elaine's comfort on long journeys and how much walking a destination requires will affect the decision.",
+            "reading": "He reads most evenings, usually nonfiction about history, engineering, or the American West, alongside an occasional novel. He borrows from the library as readily as he buys books and keeps a small stack of things he means to get to. He enjoys a book that complicates his view of an event; he does not need every book to confirm an opinion.",
+            "other_interests": "He takes regular neighborhood and foothill walks, follows local planning issues, and enjoys looking at old maps. He likes a relaxed dinner with friends more than a large formal gathering. He is not especially interested in golf or in building a vacation around shopping."
+          },
+          "style": "In ordinary conversation he is measured, direct, and more likely to ask a follow-up question than to tell a long story. He uses dry humor with people he knows and can be blunt when a plan seems wasteful or poorly thought out. With newer acquaintances he is courteous and reserved rather than instantly warm. In a technical discussion he becomes more animated and precise; with Elaine he is less formal, and often lets her finish a thought before offering his own. He prefers a useful answer to a polished sales pitch."
+        },
+        "content_words": 1628
+      },
+      "review_flags": []
+    },
+    {
+      "file": "results.jsonl",
+      "case_id": "persona-grace::divergent-life",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "persona_generation",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "missing_persona_fields": [],
+        "persona": {
+          "name": "Grace Minseo Han",
+          "age": 39,
+          "gender": "Female; a woman",
+          "nationality": "American; a U.S. citizen born and raised in California, from a Korean American family",
+          "residence": "Lives alone in a rented, pet-friendly one-bedroom apartment in Portland, Oregon. The neighborhood is walkable and close to bus lines, cafes, and a public library; she also keeps an older hatchback for errands and trailheads. Her household has one earner and a gross annual income of about $150,000, including a variable work bonus, within the $100,000–$199,999 range. Rent and retirement contributions take priority, and she is comfortable but does not treat her income as unlimited travel money. She chooses a central apartment over a larger place farther out, even though the rent has risen.",
+          "occupation": "Works as a quality-assurance lead at a midsize software company that makes dispatch and scheduling tools for freight terminals. She moved into QA after beginning in customer support and noticing that many user complaints came from edge cases no one had tested. Her week includes reviewing proposed changes, writing and maintaining test scenarios, reproducing defects, and coordinating with developers and customer-facing staff before releases. She is valued for explaining a technical failure in plain language, though release periods can bring long days and make vacation dates harder to move. Her salary and usual bonus together are around $150,000 gross per year. She works from home most days and goes into the office about twice a week.",
+          "personality": {
+            "description": "Curious and self-directed, with a strong preference for having room to choose her own pace. She is reliable about obligations that affect other people but can leave small personal chores undone for a week. She enjoys unfamiliar settings more than unfamiliar social scenes, and can be stubborn when she thinks someone is confusing authority with expertise.",
+            "big_five": {
+              "scale": "Fictional descriptive estimates on a 1–5 scale, where 1 is low and 5 is high; these are not measured psychological scores.",
+              "openness": 4.2,
+              "conscientiousness": 3.6,
+              "extraversion": 2.9,
+              "agreeableness": 3.4,
+              "neuroticism": 2.8
+            }
+          },
+          "preferences": {
+            "reading": "Enjoys reading for leisure, particularly literary fiction, science fiction, and narrative nonfiction about cities, technology, or history. She reads on the bus, before bed, and in cafes when traveling. She borrows from the library as often as she buys books, and belongs to a small monthly book group where the conversation is more important to her than finishing every selection on time.",
+            "travel_and_vacations": "Travel is one of the main things she saves discretionary money and paid time off for, but she usually takes one substantial trip a year rather than traveling constantly. She has roughly three weeks of paid leave; release schedules make it easiest to take one week-long trip and add a few regional long weekends. She likes walkable cities that can be paired with water, hills, or an easy day hike. Markets, neighborhood restaurants, bookshops, museums, ferries, and regional trains interest her more than a packed list of famous attractions. She wants a comfortable bed and a convenient base, but does not need a resort, elaborate service, or a hotel that is itself the destination. A slow morning and an unplanned stretch of an afternoon feel like part of the holiday, not wasted time.\n\nShe travels with one close friend when their interests and pace fit, and is also happy to travel alone for a shorter trip. Large groups tire her because every meal and route becomes a negotiation. She makes sure flights, lodging, and any essential rail reservations are settled, saves a handful of places on a map, and leaves the rest loose. She can enjoy a long walking day, but does not seek punishing hikes or camping; she likes returning to a shower and a meal indoors. She will pay more for a central location that lets her walk or use transit, and is less interested in paying extra for luxury branding.\n\nHer last week-long vacation was a nine-night trip to Montreal and Quebec City in September 2025 with her longtime friend Celia. They flew from Portland, used the train between the cities, and stayed in modest hotels near transit. Grace liked wandering through neighborhoods, visiting a market and a museum, and taking an afternoon to browse bookstores without a strict route. They considered renting a car to see more countryside, but she chose to spend the available nights in Montreal and Quebec City instead. She gave up the foliage drive and a more varied itinerary; she was glad to avoid coordinating a car and enjoyed having time to revisit a cafe, though she still wonders what the countryside would have been like. On a rainy afternoon she read for an hour in a cafe while Celia went shopping, and both considered that a successful use of vacation time. She would repeat a similar trip, but not the exact same itinerary. Locally, she takes occasional weekend drives to the Oregon coast or the Columbia River Gorge, usually with a friend, and is content to cancel a hike if the weather turns unpleasant.",
+            "other_leisure": "Likes cooking a few reliable dishes, trying a new recipe when she has company, and walking the city with a podcast or audiobook. She is not a regular gym-goer, but walks enough in daily life and takes moderate hikes several times a season."
+          },
+          "style": "Speaks plainly and often uses dry humor, especially with friends. At work she is composed and specific, and will ask a direct question rather than let an unclear plan drift. With family she is gentler and more patient, though she can get brisk when asked to fix the same device problem repeatedly. In groups she tends to listen for a while before offering an opinion. She does not perform enthusiasm when she is undecided; a quiet 'I might be up for that' usually means she is genuinely considering it, not committing."
+        },
+        "content_words": 1690
+      },
+      "review_flags": []
+    },
+    {
+      "file": "results.jsonl",
+      "case_id": "persona-grace::divergent-life",
+      "replicate": 1,
+      "status": "completed",
+      "phase": "persona_generation",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "missing_persona_fields": [],
+        "persona": {
+          "name": "Grace Minseo Han",
+          "age": 38,
+          "gender": "Female",
+          "nationality": "American; a U.S. citizen",
+          "residence": "Portland, Oregon, United States. Grace rents a one-bedroom apartment with a small den on the east side, where she can reach a bus line, a grocery store, and several friends without driving. She lives by herself with her 11-year-old cat, Pippa.",
+          "occupation": "Grace is a senior content designer at a software company whose products help electric and water utilities manage customer accounts, outages, and billing. She earns roughly $150,000 in annual salary and bonus. She works from home most days and goes to the office about once or twice a week. Her work includes interviewing customer-service staff, mapping confusing account flows, writing concise instructions and error messages, and persuading product and engineering teams to fix problems that cannot be solved with better wording alone. She is conscientious about deadlines and peer review, but does not enjoy performative meetings. She has occasionally been invited to pursue people-management work and has so far preferred to stay close to the actual craft.",
+          "personality": {
+            "description": "Grace is observant and self-directed, with a strong preference for making her own decisions. She likes competence and candor more than status or polish. She can be patient with a complicated problem and impatient with unnecessary procedure. She is social in a selective way: she enjoys regular time with a few close people and can manage a lively dinner, but she needs quiet afterward.",
+            "big_five": {
+              "scale": "Fictional descriptive ratings from 0 to 100, where 0 is very low and 100 is very high; these are not clinical or measured scores.",
+              "openness": 78,
+              "conscientiousness": 71,
+              "extraversion": 44,
+              "agreeableness": 62,
+              "neuroticism": 42
+            }
+          },
+          "preferences": {
+            "travel": "Grace likes trips that give her a strong sense of place without turning every hour into an activity. Water, ferries, coastal walks, local bookstores, museums, and a good neighborhood café are reliable draws. She likes a mix of independent wandering and one or two planned anchors, such as a small-boat outing or a guided walk; she is not opposed to paying for a guide when it gives her access or knowledge she would not get on her own. She prefers trains and ferries when they make sense, but will fly rather than spend a vacation day on an awkward connection. A comfortable, quiet room and a proper shower matter more to her than a luxurious lobby. She is happy with a simple inn or guesthouse, but does not like hostels or trips where discomfort is treated as proof of authenticity. She likes traveling with one close friend who is easygoing about splitting up for an afternoon. Solo travel also suits her, though she usually enjoys having someone to share dinner or an unexpected discovery with. Large group tours and itineraries that change hotels every night leave her feeling hurried.\n\nIn late summer 2025, she used nine workdays for a trip to Alaska with her longtime friend Nina. They spent time in Anchorage, took the Alaska Railroad to Seward, and stayed there for several nights. Grace had wanted to add Denali, but they decided that the extra travel and car logistics would leave too little time for Seward. They took a small-boat trip in Kenai Fjords and went kayaking for half a day. Fog softened the scenery on the boat outing, which disappointed her at first; she was glad they had left unscheduled time rather than trying to make the day up with another booked excursion. The choice felt like a real compromise, but the slower pace was ultimately more satisfying than collecting another destination. Grace has about 20 vacation days a year and usually reserves most of them for one longer trip, with a few shorter breaks closer to home. She arranges a neighbor to care for Pippa and factors in the cat’s routine when deciding how long to be away.\n\nShe is not a strict budget traveler, but she does notice whether an upgrade buys something she values. She will pay for a convenient train or a small-group outing, and is less interested in a premium room she will barely use. She likes to have transport and the first nights of lodging settled, then leave some days open. A rainy forecast does not make her cancel a trip; it can, however, change how much hiking she plans.",
+            "reading": "Reading is a regular leisure activity rather than a goal she tracks. She reads literary fiction, mysteries, essays, and nature writing, often alternating a paper book with an e-reader. She borrows from the public library, buys books by writers she wants to keep, and likes browsing independent bookstores while traveling. She often reads for twenty or thirty minutes before bed, though a book she gets absorbed in can keep her up later than intended.",
+            "everyday": "She enjoys long walks, swimming when a convenient pool fits her week, and relaxed dinners with friends. She likes trying a new restaurant but is just as content to cook at home and talk over a meal. She prefers a few well-used possessions to constantly replacing things, though she will spend on travel, books, and food experiences she genuinely looks forward to."
+          },
+          "style": "In work discussions Grace is direct, precise, and willing to ask what a vague word such as easy or intuitive means in practice. She often says, “What does the customer see at that point?” She edits her own messages more than she needs to and can sound terse when she is concentrating. With friends she is warmer, drier, and more digressive; she tells stories with small observational details and enjoys a well-timed complaint. She is not especially loud in a group, but she will speak up when plans are being made on an assumption she thinks is wrong. When relaxed, she is comfortable with pauses and does not feel obliged to fill every silence."
+        },
+        "content_words": 1937
+      },
+      "review_flags": []
+    },
+    {
+      "file": "results.jsonl",
+      "case_id": "persona-grace::divergent-life",
+      "replicate": 2,
+      "status": "completed",
+      "phase": "persona_generation",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "missing_persona_fields": [],
+        "persona": {
+          "name": "Grace Minseo Han",
+          "age": 38,
+          "gender": "Woman",
+          "nationality": "American",
+          "residence": "Seattle, Washington; lives alone in a rented one-bedroom apartment in a walkable neighborhood.",
+          "occupation": "She is a senior software engineer at a Seattle-based company that builds routing and scheduling software for freight businesses. She works on backend services, reviews code, investigates production problems, and translates technical trade-offs for product colleagues. She is not a manager, though she mentors a newer engineer. Her workweek is hybrid, usually three days at home and two in the office. Release periods and a rotating incident-support duty sometimes make vacation dates awkward, so she checks the team calendar before booking a major trip. Her gross household income, from her job and occasional bonus, is generally in the $150,000–$165,000 range. She is the sole earner in a one-person household.",
+          "personality": {
+            "description": "Grace is independent and curious, and she likes having enough structure to act without feeling that every hour is spoken for. She is comfortable doing many things alone, but values a small number of dependable friendships. She can leave low-stakes tasks until the last minute even while being careful about systems that other people rely on.",
+            "big_five": {
+              "scale": "Fictional descriptive ratings from 1 (low) to 5 (high); not measured psychological scores.",
+              "openness": 4.2,
+              "conscientiousness": 3.6,
+              "extraversion": 2.8,
+              "agreeableness": 3.4,
+              "neuroticism": 2.9
+            }
+          },
+          "preferences": {
+            "reading": "Reading is a regular pleasure rather than a productivity project. She borrows from the library and buys books when she wants to mark a trip or keep a particular author close. She reads contemporary fiction, translated novels, essays, and histories of cities and technology. She often reads for half an hour before bed, but will abandon a book that feels like homework and return it unfinished without much guilt.",
+            "travel": "Grace travels for the feeling of being in a place and moving through it, not to collect a checklist of landmarks. She especially enjoys walkable cities, neighborhood food, bookshops, markets, museums, ferries, and trains; she likes seeing how a place changes between a busy center and an ordinary residential street. She enjoys long urban walks and easy-to-moderate nature trails, but has little interest in technical trekking or making a vacation revolve around athletic achievement. She prefers independent travel and usually takes short trips alone. For more remote hikes or a shared cabin weekend, she goes with her friend Nisha, who has a similar pace. She likes private, clean, unshowy lodging and will spend extra selectively for a memorable location or experience; luxury branding by itself does not appeal to her. She dislikes cruises and all-inclusive resorts because she would feel cut off from the surrounding place, though she would consider a comfortable resort when traveling with family. She uses public transport when it works well and will rent a car when it opens up a landscape that would otherwise be inaccessible, but she avoids long driving days and is not confident on snowy roads.",
+            "recent_trip": "Her most recent major vacation was twelve days in Japan in April 2026. She spent the first four days in Tokyo with Nisha, who had less leave, then continued alone by train to Kanazawa and Kaga Onsen. Grace chose Hokuriku rather than adding Kyoto, which she had visited before, because she wanted a slower trip with time for craft museums, covered markets, neighborhood wandering, and an overnight in a small hot-spring inn. She paid more for that one night and balanced it with straightforward city hotels for the rest of the trip. Rain changed one planned long walk; she spent the afternoon in a café reading and was content with the trade. She came home glad she had not tried to fit in another city, though she wished she had one extra day. She used nine vacation days and would not normally take a trip of that length every year. A few shorter Pacific Northwest weekends—often by ferry or train—fit more easily around work.",
+            "other_likes_and_dislikes": "She enjoys trying local food without researching every meal in advance, strong coffee, used bookstores, quiet swimming pools, and small live music venues where conversation is still possible. She dislikes tightly scheduled group itineraries and being pressured to turn every holiday into a special occasion."
+          },
+          "style": "In conversation she is direct and thoughtful, with a dry, occasionally self-mocking sense of humor. She tends to explain what she means rather than hint, but softens her tone when someone is new to a subject or feeling put on the spot. With close friends she is more playful and sends long messages about a book, a restaurant, or a minor travel mishap. At work she is concise and calm during technical problems; she can become impatient with meetings that have no clear decision to make."
+        },
+        "content_words": 1501
+      },
+      "review_flags": []
+    }
+  ],
+  "warning": "Flags and structural checks do not prove semantic quality. Review complete public outputs and profiles."
+}

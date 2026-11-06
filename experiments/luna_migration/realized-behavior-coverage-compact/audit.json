@@ -1,0 +1,43 @@
+{
+  "directives": 26,
+  "population": 50,
+  "guaranteed_predefined_contrasts": {
+    "culinary_tastes": {
+      "Prefers familiar, traditional home cooking, such as regional family recipes, straightforward sides, and meals tied to personal or community traditions.": 3,
+      "Is adventurous about food, regularly tries unfamiliar cuisines, ingredients, and cooking techniques, and enjoys discussing how dishes reflect their cultural origins.": 1
+    },
+    "attitude_toward_new_products": {
+      "Is strongly resistant to changes in routines and products, viewing many new offerings as unnecessary, confusing, or designed to create avoidable costs.": 5,
+      "Is an extreme novelty seeker who buys untested products impulsively and disregards reasonable warnings, costs, or safety information.": 1
+    }
+  },
+  "all_four_predefined_contrasts_guaranteed": true,
+  "directives_with_unconstrained_or_incompatible_age_pairs": [],
+  "coverage_over_100_seeds": {
+    "culinary_tastes": {
+      "Prefers familiar, traditional home cooking, such as regional family recipes, straightforward sides, and meals tied to personal or community traditions.": {
+        "minimum": 3,
+        "maximum": 3,
+        "seeds_without_value": 0
+      },
+      "Is adventurous about food, regularly tries unfamiliar cuisines, ingredients, and cooking techniques, and enjoys discussing how dishes reflect their cultural origins.": {
+        "minimum": 1,
+        "maximum": 1,
+        "seeds_without_value": 0
+      }
+    },
+    "attitude_toward_new_products": {
+      "Is strongly resistant to changes in routines and products, viewing many new offerings as unnecessary, confusing, or designed to create avoidable costs.": {
+        "minimum": 5,
+        "maximum": 5,
+        "seeds_without_value": 0
+      },
+      "Is an extreme novelty seeker who buys untested products impulsively and disregards reasonable warnings, costs, or safety information.": {
+        "minimum": 1,
+        "maximum": 1,
+        "seeds_without_value": 0
+      }
+    }
+  },
+  "semantic_review": "Pending; structural validity is not semantic acceptance or calibration."
+}

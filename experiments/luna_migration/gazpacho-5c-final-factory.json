@@ -1,0 +1,1142 @@
+{
+  "context_text": null,
+  "population_size": 15,
+  "enforce_usage_of_all_dimensions": false,
+  "sampling_dimensions": {
+    "sampling_space_description": "A representative, nuanced sampling space for people living in the United States, using the supplied demographic figures and issue-opinion percentages where available. The age, gender, race and ethnicity, household income, geography, marital status, education, religion, employment, occupation, hobby, and public-opinion dimensions preserve the reported proportions. The supplied political-affiliation percentages overlap and sum to more than 100%, so they are retained as separate indicators; a separate political-beliefs profile uses explicitly approximate balancing weights. The source combines figures from different years and surveys, and some reported figures do not sum to 100%; residual or unreported responses are identified where needed. Unmeasured personal characteristics are included as varied possibilities rather than asserted population statistics.",
+    "dimensions": [
+      {
+        "name": "age",
+        "range": [
+          0,
+          110
+        ]
+      },
+      {
+        "name": "age_band",
+        "values": {
+          "Age 0–14, including infants, children, and young adolescents at different stages of development and schooling.": 0.186,
+          "Age 15–24, spanning older teenagers, students, early workers, and young adults making independent life choices.": 0.131,
+          "Age 25–54, spanning early-career adults, established workers, parents and caregivers, and people changing careers or household arrangements.": 0.394,
+          "Age 55–64, including later-career adults, people approaching retirement, and people with a wide range of family and work circumstances.": 0.129,
+          "Age 65 or older, including active retirees, older workers, people receiving care, and adults across a broad range of health and independence.": 0.16
+        }
+      },
+      {
+        "name": "gender_distribution_as_reported",
+        "values": {
+          "Male, as represented in the supplied population gender figures.": 0.492,
+          "Female, as represented in the supplied population gender figures.": 0.508
+        }
+      },
+      {
+        "name": "gender_identity",
+        "values": [
+          "Identifies as a man and is comfortable with that identity; expression may be conventionally masculine, understated, expressive, or otherwise individual.",
+          "Identifies as a woman and is comfortable with that identity; expression may be conventionally feminine, understated, expressive, or otherwise individual.",
+          "Identifies as nonbinary and uses language or presentation that does not fit exclusively within the categories of man or woman.",
+          "Identifies as gender-fluid, with their sense of gender or preferred presentation varying over time or across situations.",
+          "Identifies as transgender and has a gender identity different from the sex assigned to them at birth.",
+          "Identifies as agender or has little or no felt connection to gender categories.",
+          "Uses another personally meaningful gender identity or is still exploring how to describe their identity.",
+          "Prefers not to disclose a gender identity in a particular setting, while retaining their own private understanding of it."
+        ]
+      },
+      {
+        "name": "racial_and_ethnic_composition",
+        "values": {
+          "White, non-Hispanic, including people with varied European, Middle Eastern, North African, and other family heritages who identify within this reported category.": 0.571,
+          "Hispanic or Latino, including people of any race with Mexican, Puerto Rican, Cuban, Central American, South American, or other Latino heritage.": 0.194,
+          "Black or African American, including people with longstanding U.S. family roots and people with African, Caribbean, or other Black diasporic heritage.": 0.121,
+          "Asian, including people with East Asian, South Asian, Southeast Asian, and other Asian family and cultural backgrounds.": 0.07,
+          "Two or more races, reflecting people whose family heritage or self-identification spans more than one racial category.": 0.029,
+          "American Indian or Alaska Native, including people with Indigenous identity and varied tribal, community, and regional ties.": 0.013,
+          "Native Hawaiian or Pacific Islander, including people with Native Hawaiian, Samoan, Tongan, Chamorro, and other Pacific Islander heritage.": 0.002
+        }
+      },
+      {
+        "name": "geographic_region",
+        "values": {
+          "Northeast, including communities in New England and the Mid-Atlantic, from dense urban centers to small towns and rural areas.": 0.171,
+          "Midwest, including Great Lakes, Plains, and inland communities with urban, suburban, small-town, and rural settings.": 0.208,
+          "South, including the Southeast, south-central states, and a wide range of coastal, metropolitan, suburban, and rural communities.": 0.383,
+          "West, including Pacific Coast, Mountain, Southwest, and other western communities ranging from major cities to remote areas.": 0.238
+        }
+      },
+      {
+        "name": "residential_setting",
+        "values": {
+          "Urban resident, living in a city or densely settled metropolitan area with relatively close access to services, transit, workplaces, and cultural institutions.": 0.83,
+          "Rural resident, living in a sparsely populated area where travel distances, local services, work, and community life may differ substantially from metropolitan settings.": 0.17
+        }
+      },
+      {
+        "name": "marital_status",
+        "values": {
+          "Never married, including people who are dating, partnered, single by choice, or not currently seeking a partner.": 0.331,
+          "Married, including people in varied household arrangements and stages of marriage, with or without children.": 0.482,
+          "Divorced, including people who are newly divorced or have established independent or new partnered households.": 0.13,
+          "Widowed, including people at different stages of bereavement who may live alone, with family, or with a new partner.": 0.057
+        }
+      },
+      {
+        "name": "educational_attainment_reported",
+        "values": {
+          "Has not completed high school or its equivalent; includes people with limited formal schooling and, in the broad population, children who have not yet reached graduation age.": 0.1,
+          "Has completed high school or an equivalent credential, or has attended college or completed a certificate or associate degree, without a bachelor's degree.": 0.55,
+          "Has earned a bachelor's degree or a higher credential, including graduate and professional degrees.": 0.35
+        }
+      },
+      {
+        "name": "household_income",
+        "values": {
+          "Household income under $25,000 a year, often requiring careful prioritization of housing, food, healthcare, transportation, and other essentials.": 0.172,
+          "Household income from $25,000 to $49,999 a year, with financial flexibility varying considerably by household size, location, and debt.": 0.223,
+          "Household income from $50,000 to $99,999 a year, spanning financially constrained households and households with moderate discretionary resources depending on circumstances.": 0.293,
+          "Household income from $100,000 to $199,999 a year, with purchasing power strongly affected by local costs, family responsibilities, and savings or debt.": 0.235,
+          "Household income of $200,000 or more a year, ranging from comfortable high-income households to very affluent households with substantial resources.": 0.077
+        }
+      },
+      {
+        "name": "household_income_context",
+        "values": [
+          "Household income is close to the supplied median of $75,149, with costs and financial security shaped by household size and location.",
+          "Household income is far below the median, and routine bills leave little room for emergencies or discretionary purchases.",
+          "Household income is substantially above the median, but housing, healthcare, childcare, debt, or local costs still create financial pressure.",
+          "Household income is very high, allowing substantial savings and discretionary spending, though the person may still face financial obligations or insecurity."
+        ]
+      },
+      {
+        "name": "financial_situation",
+        "values": {
+          "Reports that family finances are worse than four years ago, with reduced purchasing power, higher bills, lost income, or increased debt.": 0.47,
+          "Reports that family finances are about the same as four years ago, despite changes in prices, income, expenses, or household needs.": 0.29,
+          "Reports that family finances are better than four years ago, through higher earnings, reduced debt, improved savings, or other gains.": 0.24
+        }
+      },
+      {
+        "name": "inflation_hardship",
+        "values": {
+          "Experiences severe hardship from inflation, struggling to afford important necessities or falling behind on bills.": 0.22,
+          "Experiences moderate hardship from inflation, making trade-offs or reducing nonessential spending to manage higher prices.": 0.53,
+          "Reports no inflation-related hardship, while still noticing higher prices or adjusting some purchasing decisions.": 0.24,
+          "Unreported or rounding residual in the supplied figures.": 0.01
+        }
+      },
+      {
+        "name": "labor_force_participation_reported",
+        "values": {
+          "Participates in the labor force, either employed or actively seeking work, at the reported population rate.": 0.617,
+          "Is outside the labor force, such as a student, retiree, caregiver, person unable to work, or someone not currently seeking work.": 0.383
+        }
+      },
+      {
+        "name": "unemployment_status_reported",
+        "values": {
+          "Unemployed and counted in the labor force under the supplied unemployment figure.": 0.042,
+          "Not unemployed under the supplied rate; this includes employed people and does not describe people outside the labor force.": 0.958
+        }
+      },
+      {
+        "name": "occupation_within_13_listed_groups",
+        "values": {
+          "Management: leads teams, organizations, projects, or operations; the source reports 10.5 million employed and an annual wage of $137,750.": 0.1314,
+          "Business and financial work: handles finance, accounting, analysis, insurance, or business operations; 10.1 million employed and an annual wage of $90,580.": 0.1264,
+          "Computer and mathematical work: develops software, analyzes data, manages systems, or applies mathematical methods; 5.2 million employed and an annual wage of $113,140.": 0.0651,
+          "Architecture and engineering: designs, plans, tests, or maintains buildings, infrastructure, products, and technical systems; 2.5 million employed and an annual wage of $99,090.": 0.0313,
+          "Life and physical sciences: conducts research, laboratory work, field science, or related technical work; 1.4 million employed and an annual wage of $87,870.": 0.0175,
+          "Community and social service: supports individuals, families, and communities through counseling, advocacy, or social programs; 2.4 million employed and an annual wage of $58,980.": 0.03,
+          "Legal work: practices law or supports legal services through research, court work, compliance, or related roles; 1.2 million employed and an annual wage of $133,820.": 0.015,
+          "Education and library work: teaches, provides learning support, or organizes educational and library resources; 8.7 million employed and an annual wage of $66,400.": 0.1089,
+          "Arts and media: creates, performs, produces, edits, or distributes artistic, journalistic, or media work; 2.1 million employed and an annual wage of $75,520.": 0.0263,
+          "Healthcare practitioner work: diagnoses, treats, or prevents illness as a clinician or other licensed health professional; 9.3 million employed and an annual wage of $102,060.": 0.1164,
+          "Healthcare support: assists patients and clinical teams with direct care or other health services; 7.1 million employed and an annual wage of $38,220.": 0.0889,
+          "Food preparation and service: prepares or serves food in restaurants, institutions, or other settings; 13.2 million employed and an annual wage of $34,490.": 0.1652,
+          "Construction and extraction: builds, repairs, installs, or extracts materials and resources; 6.2 million employed and an annual wage of $61,500.": 0.0776
+        }
+      },
+      {
+        "name": "occupation_examples_beyond_listed_groups",
+        "values": [
+          "Works in retail, sales, customer support, or personal services, with responsibilities ranging from entry-level tasks to supervision and ownership.",
+          "Works in transportation, logistics, warehousing, or delivery, potentially with shift work, travel, physical demands, or specialized credentials.",
+          "Works in manufacturing, maintenance, or skilled trades, using practical expertise to build, repair, inspect, or operate equipment.",
+          "Is a farmer, rancher, forestry worker, or other agricultural worker whose schedule and livelihood are affected by weather and commodity markets.",
+          "Is self-employed, a small-business owner, a contractor, or a freelancer with variable income and substantial control over daily work.",
+          "Is a public-sector worker, first responder, military member, or public administrator serving a local, state, tribal, or federal institution.",
+          "Is unemployed, retired, studying, caregiving, disabled, or otherwise not currently engaged in paid employment."
+        ]
+      },
+      {
+        "name": "political_affiliation_reported_as_separate_indicators",
+        "values": [
+          "Identifies as or reports a Democratic affiliation; the source reports 45.1%, an indicator that may overlap with other responses.",
+          "Identifies as or reports a Republican affiliation; the source reports 36.0%, an indicator that may overlap with other responses.",
+          "Identifies as or reports an Independent affiliation; the source reports 43.0%, an indicator that may overlap with party leaning or other responses.",
+          "Has another affiliation, no affiliation, or does not disclose one; the supplied figures do not give a separate percentage for this group."
+        ]
+      },
+      {
+        "name": "political_affiliation_indicators",
+        "values": {
+          "Reports Democratic affiliation, as a separate yes/no indicator.": 0.451,
+          "Does not report Democratic affiliation under that indicator.": 0.549
+        }
+      },
+      {
+        "name": "republican_affiliation_indicator",
+        "values": {
+          "Reports Republican affiliation, as a separate yes/no indicator.": 0.36,
+          "Does not report Republican affiliation under that indicator.": 0.64
+        }
+      },
+      {
+        "name": "independent_affiliation_indicator",
+        "values": {
+          "Reports Independent affiliation, as a separate yes/no indicator.": 0.43,
+          "Does not report Independent affiliation under that indicator.": 0.57
+        }
+      },
+      {
+        "name": "political_beliefs",
+        "values": {
+          "Progressive or liberal outlook: prioritizes civil rights, social inclusion, environmental protection, and public action to reduce inequality, while accepting variation on particular issues.": 0.24,
+          "Conservative outlook: emphasizes continuity, personal responsibility, local community, public order, and caution about expanding government authority.": 0.24,
+          "Centrist or pragmatic outlook: favors a mixture of policy approaches and is willing to judge proposals case by case rather than follow a single ideological line.": 0.24,
+          "Libertarian-leaning outlook: places strong emphasis on individual liberty, privacy, voluntary cooperation, and limits on government power.": 0.1,
+          "Cross-pressured or politically disengaged outlook: holds mixed views, distrusts party labels, or avoids making politics a central part of everyday identity.": 0.18
+        }
+      },
+      {
+        "name": "religious_affiliation_reported",
+        "values": {
+          "Christian, including Protestant, Catholic, Mormon, and other Christian traditions; reported total is 63%.": 0.63,
+          "Unaffiliated, including atheist, agnostic, and religiously unaffiliated people; reported total is 28%.": 0.28,
+          "Jewish; reported total is 2%.": 0.02,
+          "Muslim; reported total is 1%.": 0.01,
+          "Buddhist; reported total is 1%.": 0.01,
+          "Hindu; reported total is 1%.": 0.01,
+          "Other non-Christian religion; reported total is 1%.": 0.01,
+          "Unspecified or residual share needed to reconcile the supplied religion totals to 100%.": 0.03
+        }
+      },
+      {
+        "name": "christian_tradition_examples",
+        "values": [
+          "Protestant Christian, including people in evangelical, mainline, historically Black, and other Protestant congregations; the source lists 33%.",
+          "Catholic Christian, including people whose practice ranges from highly observant to primarily cultural or occasional; the source lists 22%.",
+          "Mormon or Latter-day Saint Christian, with varied levels of religious practice; the source lists 1%.",
+          "Other Christian tradition, including Orthodox, independent, and other Christian communities; the source lists 11%.",
+          "Christian with a personal or non-denominational practice that does not fit neatly into a specific tradition.",
+          "Christian by family or cultural background but not currently active in a congregation."
+        ]
+      },
+      {
+        "name": "personality_traits",
+        "values": {
+          "Mostly upbeat and resilient, tends to recover from disappointments, and generally expects that constructive effort can improve a difficult situation.": 0.2,
+          "Generally even-tempered and realistic, balancing positive expectations with awareness of practical limits and possible setbacks.": 0.2,
+          "Highly curious and imaginative, enjoys unfamiliar ideas, and is willing to reconsider established habits when presented with convincing reasons.": 0.2,
+          "Careful and dependable, plans ahead, follows through on commitments, and prefers a degree of order in work and home life.": 0.2,
+          "Socially reserved or cautious, easily stressed by uncertainty, or often pessimistic; may be experiencing a difficult period rather than a fixed disposition.": 0.2
+        }
+      },
+      {
+        "name": "openness_to_experience",
+        "values": {
+          "High openness: eagerly explores unfamiliar ideas, art, people, foods, and experiences; the source associates high openness with New York and California.": 0.2,
+          "Moderate openness: enjoys some novelty but prefers familiar routines in other areas of life.": 0.6,
+          "Low openness: prefers familiar practices and proven approaches, and is less comfortable with rapid change; the source associates lower openness with parts of the Midwest and South.": 0.2
+        }
+      },
+      {
+        "name": "conscientiousness",
+        "values": {
+          "High conscientiousness: organized, persistent, and attentive to commitments; the source names Kansas, Nebraska, Oklahoma, Missouri, Utah, Arizona, and Florida in this association.": 0.2,
+          "Moderate conscientiousness: usually reliable but flexible, with organization varying according to stress, interest, and circumstances.": 0.6,
+          "Low conscientiousness: more spontaneous or disorganized, sometimes struggling with planning and follow-through; the source names Rhode Island, Hawaii, Maine, and Alaska in this association.": 0.2
+        }
+      },
+      {
+        "name": "extraversion",
+        "values": {
+          "High extraversion: energized by frequent conversation, group activities, and social events; the source associates higher extraversion with the Midwest and Southeast.": 0.2,
+          "Moderate extraversion: enjoys company but also needs regular quiet or time alone.": 0.6,
+          "Low extraversion: reserved and comfortable with solitude or small groups; the source associates lower extraversion with the West Coast.": 0.2
+        }
+      },
+      {
+        "name": "agreeableness",
+        "values": {
+          "High agreeableness: considerate, cooperative, and inclined to give others the benefit of the doubt; the source lists several states including Minnesota, Utah, Wisconsin, Tennessee, and Georgia.": 0.2,
+          "Moderate agreeableness: tries to cooperate but can be direct or firm when personal boundaries or important interests are involved.": 0.6,
+          "Low agreeableness: skeptical, blunt, or competitive, and may be slow to trust; the source associates lower agreeableness with the Northeast.": 0.2
+        }
+      },
+      {
+        "name": "emotional_sensitivity_and_stress_reactivity",
+        "values": {
+          "High stress reactivity: experiences worry or strong emotional responses readily and may need reassurance or predictable routines; the source names New York and New Jersey in its high-neuroticism association.": 0.2,
+          "Moderate stress reactivity: has ordinary fluctuations in worry and mood and can usually regain balance with time or support.": 0.6,
+          "Low stress reactivity: tends to remain calm under pressure and recover quickly; the source associates lower neuroticism with western states.": 0.2
+        }
+      },
+      {
+        "name": "economic_beliefs",
+        "values": {
+          "Emphasizes individual effort and opportunity, believing that education, persistence, and responsible choices can improve economic circumstances, while recognizing obstacles.": 0.24,
+          "Believes that economic outcomes depend substantially on structural conditions, bargaining power, inherited advantage, and access to public services.": 0.24,
+          "Favors a mixed approach that combines markets and private enterprise with targeted public support and oversight.": 0.24,
+          "Prefers limited regulation and lower public spending, believing that private decisions and market competition usually allocate resources more effectively.": 0.14,
+          "Feels economically pessimistic or distrustful of standard explanations, believing that powerful institutions often shape outcomes more than ordinary households can.": 0.14
+        }
+      },
+      {
+        "name": "preferences_and_tastes",
+        "values": {
+          "Enjoys cooking, baking, and sharing familiar or experimental meals, and often treats food as a creative and social activity.": 0.18,
+          "Prefers reading, learning, or quiet hobbies, with interests ranging from fiction and news to practical nonfiction and online courses.": 0.14,
+          "Enjoys games and technology, from mobile or console play to PC games, social media, and digital communities.": 0.14,
+          "Values outdoor recreation such as walking, hiking, fishing, camping, cycling, or simply spending time in nature.": 0.14,
+          "Enjoys sports, live entertainment, music, television, streaming, comedy, drama, or other forms of popular culture.": 0.12,
+          "Likes arts, crafts, do-it-yourself projects, making things, or expressing ideas through visual or performing arts.": 0.1,
+          "Enjoys travel, dining out, and discovering unfamiliar places or cuisines, whether on local outings or longer trips.": 0.08,
+          "Prefers low-stimulation, familiar entertainment and may avoid crowds, loud venues, or highly adventurous leisure activities.": 0.05,
+          "Has little discretionary time or interest for hobbies at present and focuses attention on work, caregiving, health, or other obligations.": 0.05
+        }
+      },
+      {
+        "name": "interest_cooking_and_baking",
+        "values": {
+          "Reports an interest in cooking or baking, ranging from practical meal preparation to an enthusiastic culinary hobby.": 0.41,
+          "Does not report cooking or baking as an interest, though may still prepare food when needed.": 0.59
+        }
+      },
+      {
+        "name": "interest_reading",
+        "values": {
+          "Reports an interest in reading, including fiction, nonfiction, news, or educational material.": 0.37,
+          "Does not report reading as a personal interest, or reads only as required for work, school, or daily tasks.": 0.63
+        }
+      },
+      {
+        "name": "interest_pets",
+        "values": {
+          "Reports an interest in pets, including caring for animals, spending time with them, or following pet-related activities.": 0.35,
+          "Does not report pets as an interest, whether due to preference, circumstance, housing, cost, or other constraints.": 0.65
+        }
+      },
+      {
+        "name": "interest_video_gaming",
+        "values": {
+          "Reports an interest in video gaming on mobile, console, computer, or other platforms.": 0.33,
+          "Does not report video gaming as a personal interest.": 0.67
+        }
+      },
+      {
+        "name": "interest_outdoor_activities",
+        "values": {
+          "Reports an interest in outdoor activities such as walking, hiking, gardening, camping, fishing, or nature outings.": 0.3,
+          "Does not report outdoor activities as an interest, or has limited access, time, health, or inclination for them.": 0.7
+        }
+      },
+      {
+        "name": "interest_shopping",
+        "values": {
+          "Reports shopping as an interest, whether for necessities, browsing, fashion, collectibles, or household purchases.": 0.3,
+          "Does not report shopping as an interest and generally shops only when a practical need arises.": 0.7
+        }
+      },
+      {
+        "name": "interest_traveling",
+        "values": {
+          "Reports an interest in traveling, including domestic trips, international travel, or exploration closer to home.": 0.29,
+          "Does not report traveling as an interest, or travels infrequently because of cost, time, health, or preference.": 0.71
+        }
+      },
+      {
+        "name": "interest_arts_crafts_and_diy",
+        "values": {
+          "Reports an interest in arts, crafts, or do-it-yourself projects, from occasional repairs to regular creative work.": 0.25,
+          "Does not report arts, crafts, or DIY as a personal interest.": 0.75
+        }
+      },
+      {
+        "name": "interest_socializing",
+        "values": {
+          "Reports socializing as an interest and enjoys some combination of visits, gatherings, clubs, or community events.": 0.26,
+          "Does not report socializing as a major interest, or prefers solitary pursuits and a small social circle.": 0.74
+        }
+      },
+      {
+        "name": "interest_board_games",
+        "values": {
+          "Reports an interest in board games, tabletop play, puzzles, or similar shared leisure activities.": 0.26,
+          "Does not report board games or similar tabletop activities as an interest.": 0.74
+        }
+      },
+      {
+        "name": "sports_and_recreation_examples",
+        "values": [
+          "Enjoys walking as a low-cost and adaptable way to move, relax, commute, or spend time with another person.",
+          "Runs occasionally or regularly, from gentle fitness outings to organized races or competitive training.",
+          "Cycles for transportation, recreation, exercise, or sport, with access and frequency shaped by location and resources.",
+          "Plays or follows basketball, from informal neighborhood games to school, college, or professional competition.",
+          "Plays or follows American football, whether through family, school, community, or spectator traditions.",
+          "Hikes on local trails or remote routes, with comfort levels ranging from short accessible walks to strenuous outings.",
+          "Enjoys camping, from well-equipped campgrounds to remote trips, or prefers the idea of camping without doing it often.",
+          "Goes fishing for recreation, food, tradition, or quiet time, with participation ranging from occasional outings to a serious hobby."
+        ]
+      },
+      {
+        "name": "entertainment_and_media_examples",
+        "values": [
+          "Watches broadcast television for familiar programs, local news, sports, or scheduled entertainment.",
+          "Uses streaming services heavily and chooses from a wide range of on-demand films, shows, and documentaries.",
+          "Listens to music across one or more genres, as background, focused listening, live performance, or social activity.",
+          "Prefers drama or serious storytelling that explores relationships, conflict, history, or social questions.",
+          "Prefers comedy and light entertainment as a way to relax or share humor with others.",
+          "Watches reality television for competition, social interaction, practical advice, or casual background viewing."
+        ]
+      },
+      {
+        "name": "technology_and_gaming_examples",
+        "values": [
+          "Plays console games, alone or with others, and may follow specific franchises or online communities.",
+          "Uses mobile games for brief entertainment during breaks or as a more sustained hobby.",
+          "Plays computer games, ranging from casual titles to complex, competitive, or highly social games.",
+          "Uses social media frequently to communicate, follow news and interests, share content, or participate in online communities.",
+          "Uses digital technology mainly for practical communication and essential tasks, and intentionally limits recreational screen time.",
+          "Avoids many digital platforms because of privacy concerns, access barriers, fatigue, or personal preference."
+        ]
+      },
+      {
+        "name": "reading_and_learning_examples",
+        "values": [
+          "Prefers novels, short stories, or other fiction for entertainment, emotional connection, or imaginative escape.",
+          "Reads nonfiction about history, science, biography, practical skills, politics, or personal interests.",
+          "Follows local, national, or international news closely, occasionally, or primarily through a trusted source.",
+          "Takes online courses or uses educational videos to pursue credentials, professional skills, or personal interests.",
+          "Reads infrequently and prefers audio, visual, conversational, or hands-on ways of learning.",
+          "Has difficulty accessing reading because of literacy barriers, disability, limited time, language access, or lack of suitable materials."
+        ]
+      },
+      {
+        "name": "travel_and_dining_examples",
+        "values": [
+          "Takes domestic trips to visit family, explore regions, attend events, or enjoy vacations, with travel frequency shaped by budget and time.",
+          "Travels internationally when possible and values exposure to other countries, languages, histories, or landscapes.",
+          "Prefers short local outings and familiar places over long-distance travel.",
+          "Enjoys dining out for convenience, celebration, social connection, or the chance to try unfamiliar dishes.",
+          "Likes experimenting with new cuisines and may actively seek restaurants, recipes, or food traditions from different cultures.",
+          "Rarely dines out or travels because of cost, health, caregiving responsibilities, dietary needs, or a preference for home."
+        ]
+      },
+      {
+        "name": "physical_activity_and_wellness_habits",
+        "values": [
+          "Has low physical-activity engagement and spends much of the day sitting, because of preference, work, health, access, or time constraints.",
+          "Gets light movement through errands, household tasks, walking, or occasional recreation but does not follow a regular exercise plan.",
+          "Maintains a moderate routine of walking, fitness classes, sports, or home exercise several times a week.",
+          "Is highly active through demanding work, regular training, competitive sport, or frequent outdoor recreation.",
+          "Would like to be more active but faces barriers such as pain, disability, unsafe surroundings, fatigue, cost, or lack of time.",
+          "Has periods of high activity followed by inactivity, with habits changing as work, health, motivation, or family responsibilities shift."
+        ]
+      },
+      {
+        "name": "dietary_and_snacking_habits",
+        "values": [
+          "Snacks frequently between meals and often chooses convenient, sweet, salty, or packaged foods.",
+          "Snacks occasionally and usually plans meals around hunger, routine, work, or family schedules.",
+          "Prefers cookies as a favorite snack, matching the supplied figure that reports this preference among 59%.",
+          "Rarely eats cookies and prefers fruit, savory snacks, dairy, nuts, or no snack at all.",
+          "Has dietary needs shaped by health, allergies, religion, ethics, culture, or personal preference.",
+          "Has irregular access to food or limited time and relies on whatever affordable, convenient options are available."
+        ]
+      },
+      {
+        "name": "financial_habits",
+        "values": [
+          "Has inadequate savings and little emergency cushion, and must prioritize immediate bills over longer-term financial goals.",
+          "Saves regularly when possible and maintains a modest emergency fund, while still managing ordinary expenses or debt.",
+          "Has substantial savings and plans carefully for retirement, major purchases, and unexpected expenses.",
+          "Spends impulsively or buys for immediate pleasure, sometimes regretting purchases or carrying debt afterward.",
+          "Is extremely frugal and avoids discretionary spending even when finances permit, due to habit, worry, or past hardship.",
+          "Has difficulty managing money because of unstable income, financial stress, limited access to services, or competing responsibilities."
+        ]
+      },
+      {
+        "name": "sleep_patterns",
+        "values": [
+          "Regularly gets insufficient sleep because of work schedules, caregiving, stress, health issues, or late-night habits.",
+          "Keeps a fairly regular sleep schedule and generally gets enough rest, though occasional disruptions occur.",
+          "Often stays up late for entertainment, work, social media, gaming, or personal time after daytime obligations.",
+          "Works nights or rotating shifts, making sleep timing irregular and complicating family and social routines.",
+          "Experiences serious or persistent sleep difficulty and may seek professional help, treatment, or practical coping strategies.",
+          "Sleeps a great deal or has changing sleep needs because of age, illness, recovery, medication, or individual circumstances."
+        ]
+      },
+      {
+        "name": "stress_management",
+        "values": [
+          "Uses exercise, walking, or other physical activity to manage stress and maintain mood or energy.",
+          "Uses meditation, breathing, prayer, mindfulness, or quiet reflection to calm down and regain perspective.",
+          "Seeks support from friends, relatives, peers, community groups, or professionals when stress becomes difficult.",
+          "Copes through comfort eating, smoking, inactivity, or other habits that may bring short-term relief but create longer-term problems.",
+          "Feels overwhelmed and isolated, has difficulty identifying effective coping strategies, and may need practical or clinical support.",
+          "Combines several coping methods flexibly and recognizes that what helps can vary with the source and severity of stress."
+        ]
+      },
+      {
+        "name": "technology_use",
+        "values": [
+          "Has high daily screen time for work, entertainment, communication, or a combination of these activities.",
+          "Uses social media frequently to keep in touch, follow interests, share updates, or participate in online communities.",
+          "Uses screens mainly for work or essential communication and deliberately limits recreational use.",
+          "Has limited internet or device access because of income, location, disability, age, or personal choice.",
+          "Is highly digitally engaged and comfortable trying new devices, apps, platforms, and online services.",
+          "Is wary of screen time, privacy risks, online misinformation, or technology dependence and avoids unnecessary digital engagement."
+        ]
+      },
+      {
+        "name": "general_attitude",
+        "values": [
+          "Usually optimistic and enthusiastic, expects effort to produce improvement, and tends to encourage others during setbacks.",
+          "Hopeful but realistic, notices difficulties while still identifying manageable next steps and reasons for confidence.",
+          "Generally even-handed and open-minded, revises opinions when new evidence or lived experience calls for reconsideration.",
+          "Practical and cautious, considers likely risks and benefits before committing to a new idea or plan.",
+          "Skeptical but curious, asks pointed questions while remaining willing to be persuaded by credible evidence.",
+          "Often pessimistic and expects circumstances to worsen, which may reflect current hardship, temperament, or both.",
+          "Frequently feels apathetic or disengaged and has difficulty finding motivation for activities that once mattered.",
+          "Experiences persistent sadness or discouragement and may benefit from compassionate social or professional support.",
+          "Is highly confident and enthusiastic, sometimes underestimates obstacles or dismisses reasonable concerns.",
+          "Is strongly closed-minded or distrustful of opposing views, and rarely changes position even when presented with relevant evidence."
+        ]
+      },
+      {
+        "name": "education",
+        "values": [
+          "Has extremely limited literacy and may be unable to read ordinary materials independently; communicates in ways that work for them and may need accessible instruction or support.",
+          "Has some basic reading, writing, or numeracy skills but struggles with forms, official documents, or complex instructions.",
+          "Has not completed high school and learned many practical skills through family, work, community, or personal experience.",
+          "Completed high school or an equivalent credential and relies on a mixture of formal learning and hands-on experience.",
+          "Completed a trade, vocational, or technical program and applies specialized practical knowledge in work or daily life.",
+          "Earned an associate degree or professional certificate and may continue learning through employment or community education.",
+          "Earned a bachelor's degree in a broad academic or professional field and uses that education in work or personal interests.",
+          "Completed graduate study and may work in a specialized, analytical, educational, or leadership role.",
+          "Earned a doctoral or professional degree and has extensive training in a specialized field, though expertise varies by subject.",
+          "Is a leading scientist, scholar, or technical expert who contributes to advanced research and communicates complex findings to others."
+        ]
+      },
+      {
+        "name": "culinary_tastes",
+        "values": [
+          "Prefers traditional home cooking tied to family routines, regional dishes, familiar ingredients, and recipes passed between generations.",
+          "Enjoys familiar, mild-flavored meals and avoids foods that are strongly spicy, bitter, fermented, or unfamiliar.",
+          "Seeks very spicy foods and enjoys heat, bold seasoning, and dishes from a range of culinary traditions.",
+          "Prefers modern, experimental cuisine and enjoys trying unfamiliar combinations, techniques, and presentation styles.",
+          "Follows a vegetarian diet and chooses meals around vegetables, grains, legumes, and other non-meat ingredients.",
+          "Follows a vegan diet, avoiding animal products for ethical, environmental, health, religious, or personal reasons.",
+          "Prefers meat-centered meals and values familiar preparations such as barbecue, roasts, burgers, or regional meat dishes.",
+          "Enjoys seafood-forward meals, with preferences ranging from simple preparations to diverse coastal and international cuisines.",
+          "Chooses food mainly for convenience, price, and speed, and may rely on prepared meals or fast food during busy periods.",
+          "Has medically necessary, religious, ethical, or sensory dietary restrictions that strongly shape everyday food choices."
+        ]
+      },
+      {
+        "name": "shopping_habits",
+        "values": [
+          "Shops frequently in physical stores, comparing products in person and valuing immediate availability or personal assistance.",
+          "Shops frequently online, using delivery, subscriptions, reviews, and price comparisons to save time or find specific products.",
+          "Shops only occasionally, planning purchases carefully and combining errands to reduce cost, time, or travel.",
+          "Is highly frugal, choosing discounts, generic products, secondhand goods, and durable items to stretch available resources.",
+          "Spends freely on convenience, premium brands, or enjoyable purchases and may prioritize immediate satisfaction over long-term savings.",
+          "Researches products extensively, comparing quality, reviews, warranties, and prices before making even ordinary purchases.",
+          "Makes frequent impulse purchases, especially when responding to promotions, stress, attractive displays, or social-media recommendations.",
+          "Prefers local independent shops and values relationships with shopkeepers, community investment, and distinctive products.",
+          "Uses a mixture of online and in-store shopping, choosing the channel based on price, urgency, product type, and accessibility.",
+          "Avoids shopping when possible, dislikes crowded retail environments, or purchases only essential items because of anxiety, cost, or preference."
+        ]
+      },
+      {
+        "name": "health_consciousness",
+        "values": [
+          "Carefully monitors health, seeks preventive care, reads nutrition and safety information, and makes daily choices with long-term wellbeing in mind.",
+          "Tries to eat well and stay active but balances health goals with work, family demands, affordability, and enjoyment.",
+          "Prefers organic or minimally processed products when affordable and available, while recognizing that access and budget can be limiting.",
+          "Chooses conventional products and practical meals, focusing more on affordability, availability, or taste than organic labeling.",
+          "Enjoys indulgent food and drink and gives immediate pleasure more weight than strict health rules.",
+          "Has very limited health focus at present and may postpone care or healthy routines because of stress, access barriers, or low motivation.",
+          "Follows health guidance closely because of a chronic condition, disability, recovery, pregnancy, or medical advice.",
+          "Is skeptical of health claims and prefers to rely on trusted clinicians or carefully checked evidence rather than marketing.",
+          "Uses wellness products or alternative approaches enthusiastically, sometimes alongside conventional medical care.",
+          "Has severe or complex health needs that affect daily activities and require substantial support, treatment, or accommodations."
+        ]
+      },
+      {
+        "name": "attitude_toward_new_products",
+        "values": [
+          "Is an early adopter who enjoys trying new products and accepts some uncertainty in exchange for novelty or convenience.",
+          "Is adventurous but selective, trying new products when there is a clear benefit, trustworthy recommendation, or low-risk way to test them.",
+          "Is curious and open-minded, but prefers to read independent reviews and understand how a product works before buying.",
+          "Takes a neutral, practical approach and changes products when the new option is affordable, accessible, and clearly useful.",
+          "Is skeptical of product claims, advertising, influencers, and dramatic promises, and expects credible evidence before adopting something new.",
+          "Prefers established brands and familiar products because reliability and predictability matter more than novelty.",
+          "Is highly conservative about change and avoids new products unless an old product is unavailable or a trusted person recommends a replacement.",
+          "Tries new technology readily but is cautious about unfamiliar food, personal-care items, or products involving health or safety.",
+          "Is enthusiastic about sustainable, locally made, or ethically sourced products and actively seeks alternatives to conventional options.",
+          "Avoids new products because of limited money, limited access, disability, privacy worries, or previous experiences with misleading claims."
+        ]
+      },
+      {
+        "name": "cultural_influences",
+        "values": [
+          "Is strongly influenced by local community customs, regional speech, neighborhood businesses, and long-standing family traditions.",
+          "Balances local traditions with contemporary U.S. popular culture, adapting customs to current work, school, and family life.",
+          "Has a globally oriented outlook shaped by international media, travel, multilingual relationships, or cross-border family ties.",
+          "Maintains a relatively homogeneous cultural environment and values familiar social norms, shared practices, and continuity across generations.",
+          "Moves comfortably among multiple cultural settings and draws on varied family, community, or professional influences.",
+          "Is deeply rooted in a religious or spiritual community that shapes holidays, food, family practices, and moral commitments.",
+          "Is shaped primarily by contemporary urban culture, diverse social networks, rapidly changing trends, and digital communities.",
+          "Is strongly shaped by rural or small-town life, where local relationships, practical skills, and community institutions are central.",
+          "Has a blended cultural identity and adjusts language, customs, or self-presentation according to context without feeling inauthentic.",
+          "Feels disconnected from inherited traditions or mainstream cultural expectations and is actively building a personal sense of belonging."
+        ]
+      },
+      {
+        "name": "travel_habits",
+        "values": [
+          "Travels internationally several times a year for work, family, leisure, or a combination of reasons.",
+          "Takes an international trip occasionally and plans carefully around budget, documents, time off, and personal interests.",
+          "Travels frequently within the United States, enjoying different regions, cities, national parks, or family destinations.",
+          "Takes occasional domestic vacations or family trips but usually stays close to home because of cost or limited time.",
+          "Prefers adventurous travel, including remote landscapes, unfamiliar activities, and flexible itineraries that allow exploration.",
+          "Prefers carefully planned, comfortable travel with predictable accommodation, accessible transport, and low uncertainty.",
+          "Enjoys short local outings and day trips but rarely takes overnight or long-distance journeys.",
+          "Is a homebody who finds comfort and enjoyment in familiar surroundings and has little desire to travel.",
+          "Would like to travel more but is constrained by finances, disability, health, caregiving, work, or immigration and documentation barriers.",
+          "Travels reluctantly or avoids travel because of anxiety, safety concerns, sensory needs, mobility limitations, or prior negative experiences."
+        ]
+      },
+      {
+        "name": "cultural_background",
+        "values": [
+          "Has White non-Hispanic U.S. family roots, which may include European, Middle Eastern, North African, or other ancestries, and a distinctive regional or family tradition.",
+          "Has Mexican American or other Mexican heritage, with family traditions shaped by varied regional histories, language practices, faith, and contemporary U.S. life.",
+          "Has Puerto Rican, Cuban, Dominican, or other Caribbean Latino heritage and may maintain connections across island, mainland, and diaspora communities.",
+          "Has Central American heritage, with family ties to one or more countries and cultural practices adapted across generations in the United States.",
+          "Has South American or other Latino heritage, with family traditions and identity shaped by national, regional, Indigenous, African, European, or mixed ancestry.",
+          "Has Black American heritage with family roots in the United States and cultural connections that may include African American history, faith, foodways, and regional traditions.",
+          "Has African or Caribbean immigrant or multigenerational Black heritage, with cultural influences that may include multiple languages and diaspora traditions.",
+          "Has East Asian heritage, such as Chinese, Japanese, Korean, or other backgrounds, with family customs that vary widely by generation and community.",
+          "Has South Asian or Southeast Asian heritage, such as Indian, Pakistani, Bangladeshi, Filipino, Vietnamese, or other backgrounds, with diverse languages, faiths, and traditions.",
+          "Has Indigenous, Native Hawaiian, Pacific Islander, multiracial, or multiple cultural heritages, with identity and community ties that cannot be reduced to one tradition."
+        ]
+      },
+      {
+        "name": "cultural_background_sampling_mix",
+        "values": {
+          "White, non-Hispanic cultural and family backgrounds, represented as the broad category in the supplied demographic data.": 0.571,
+          "Hispanic or Latino cultural backgrounds, including diverse Mexican, Caribbean, Central American, South American, and other heritages.": 0.194,
+          "Black or African American cultural backgrounds, including U.S., African, Caribbean, and other diasporic histories.": 0.121,
+          "Asian cultural backgrounds, including East Asian, South Asian, Southeast Asian, and other Asian heritages.": 0.07,
+          "People identifying with two or more races or cultural heritages.": 0.029,
+          "American Indian or Alaska Native cultural backgrounds, including varied tribal and community identities.": 0.013,
+          "Native Hawaiian or Pacific Islander cultural backgrounds, including varied island and diaspora communities.": 0.002
+        }
+      },
+      {
+        "name": "lifestyle",
+        "values": [
+          "Maintains an active lifestyle with regular exercise, outdoor recreation, or physically demanding work, adapting activity to health and ability.",
+          "Has a moderately active routine built around walking, errands, household tasks, occasional recreation, or manageable exercise.",
+          "Lives a largely sedentary lifestyle because of desk work, limited access, disability, fatigue, preference, or competing responsibilities.",
+          "Lives in a dense urban area and relies on transit, walking, nearby services, and a compact home or neighborhood routine.",
+          "Lives in a suburban setting with a mix of driving, family activities, home routines, and access to metropolitan services.",
+          "Lives in a rural area and may depend on a car, local networks, practical skills, and longer trips to reach services.",
+          "Prefers a minimalist lifestyle, limits possessions, and values simplicity, low expenses, or reduced environmental impact.",
+          "Enjoys an extravagant lifestyle with premium purchases, frequent leisure activities, and a high level of material comfort.",
+          "Balances work, caregiving, community involvement, and personal interests, often with limited free time and changing priorities.",
+          "Is socially isolated or homebound, with few activities outside the home because of preference, health, disability, safety, or circumstance."
+        ]
+      },
+      {
+        "name": "racial_and_ethnic_cultural_examples",
+        "values": [
+          "A multigenerational family with European American roots maintains a regional food tradition while participating in contemporary U.S. community life.",
+          "A Mexican American household blends family celebrations, regional Mexican food traditions, English or Spanish language use, and local U.S. customs.",
+          "A Puerto Rican American individual maintains island and mainland family ties and celebrates cultural traditions alongside life in a U.S. city or suburb.",
+          "A Black American family draws on local community, faith, music, and family history while navigating contemporary work and civic life.",
+          "A Chinese American household blends Chinese family heritage with U.S. schooling, work, and community traditions, with practices varying by generation.",
+          "An Indian American family may combine regional Indian heritage, multilingual relatives, religious or secular customs, and everyday U.S. life.",
+          "A Filipino American household maintains family connections and food or holiday traditions shaped by both Filipino heritage and U.S. community life.",
+          "A Native American individual has ties to a specific Indigenous community and may balance community traditions, family responsibilities, and urban or rural life.",
+          "A Native Hawaiian or Pacific Islander person maintains cultural or family connections while living within a diverse mainland or island community.",
+          "A multiracial person draws on more than one family heritage and may describe identity differently across family, community, and personal settings."
+        ]
+      },
+      {
+        "name": "inflation_as_very_big_problem",
+        "values": {
+          "Views inflation as a very big problem, as reported in the supplied 2023 figure.": 0.7,
+          "Does not classify inflation as a very big problem under that survey measure.": 0.3
+        }
+      },
+      {
+        "name": "healthcare_affordability_as_very_big_problem",
+        "values": {
+          "Views healthcare affordability as a very big problem, as reported in the supplied 2024 figure.": 0.57,
+          "Does not classify healthcare affordability as a very big problem under that survey measure.": 0.43
+        }
+      },
+      {
+        "name": "drug_addiction_as_very_big_problem",
+        "values": {
+          "Views drug addiction as a very big problem, as reported in the supplied 2024 figure.": 0.55,
+          "Does not classify drug addiction as a very big problem under that survey measure.": 0.45
+        }
+      },
+      {
+        "name": "federal_budget_deficit_as_very_big_problem",
+        "values": {
+          "Views the federal budget deficit as a very big problem, as reported in the supplied 2024 figure.": 0.53,
+          "Does not classify the federal budget deficit as a very big problem under that survey measure.": 0.47
+        }
+      },
+      {
+        "name": "illegal_immigration_as_very_big_problem",
+        "values": {
+          "Views illegal immigration as a very big problem, as reported in the supplied 2024 figure.": 0.51,
+          "Does not classify illegal immigration as a very big problem under that survey measure.": 0.49
+        }
+      },
+      {
+        "name": "gun_violence_as_very_big_problem",
+        "values": {
+          "Views gun violence as a very big problem, as reported in the supplied 2024 figure.": 0.49,
+          "Does not classify gun violence as a very big problem under that survey measure.": 0.51
+        }
+      },
+      {
+        "name": "violent_crime_as_very_big_problem",
+        "values": {
+          "Views violent crime as a very big problem, as reported in the supplied 2024 figure.": 0.48,
+          "Does not classify violent crime as a very big problem under that survey measure.": 0.52
+        }
+      },
+      {
+        "name": "state_of_moral_values_as_very_big_problem",
+        "values": {
+          "Views the state of moral values as a very big problem, as reported in the supplied 2024 figure.": 0.46,
+          "Does not classify the state of moral values as a very big problem under that survey measure.": 0.54
+        }
+      },
+      {
+        "name": "partisan_cooperation_as_very_big_problem",
+        "values": {
+          "Views lack of cooperation between political parties as a very big problem, as reported in the supplied 2023 figure.": 0.65,
+          "Does not classify partisan cooperation as a very big problem under that survey measure.": 0.35
+        }
+      },
+      {
+        "name": "climate_change_top_policy_priority_among_democrats",
+        "values": {
+          "Among Democrats, regards climate change as a top policy priority, as reported in the supplied 2020 figure.": 0.78,
+          "Among Democrats, does not report climate change as a top policy priority under that measure.": 0.22
+        }
+      },
+      {
+        "name": "climate_change_top_policy_priority_among_republicans",
+        "values": {
+          "Among Republicans, regards climate change as a top policy priority, as reported in the supplied 2020 figure.": 0.21,
+          "Among Republicans, does not report climate change as a top policy priority under that measure.": 0.79
+        }
+      },
+      {
+        "name": "government_responsibility_for_healthcare",
+        "values": {
+          "Believes government should provide healthcare, as reported in the supplied 2018 figure.": 0.6,
+          "Does not hold that view under the supplied survey measure.": 0.4
+        }
+      },
+      {
+        "name": "abortion_legality_opinion",
+        "values": {
+          "Believes abortion should be legal in all cases, as reported in the supplied 2024 figure.": 0.33,
+          "Believes abortion should be legal in most cases, as reported in the supplied 2024 figure.": 0.33,
+          "Believes abortion should be illegal in most cases, as reported in the supplied 2024 figure.": 0.25,
+          "Believes abortion should be illegal in all cases, as reported in the supplied 2024 figure.": 0.05,
+          "Unreported or residual response needed to reconcile the supplied categories to 100%.": 0.04
+        }
+      },
+      {
+        "name": "immigration_policy_opinion",
+        "values": {
+          "Supports a path to legal status for some undocumented immigrants, as reported in the supplied 2024 figure.": 0.56,
+          "Supports deportation as described in the supplied 2024 figure.": 0.4,
+          "Neither response, another response, or unreported residual in the supplied figures.": 0.04
+        }
+      },
+      {
+        "name": "economic_outlook",
+        "values": {
+          "Believes the country is on the wrong track, as reported in the supplied 2024 figure.": 0.7,
+          "Does not believe the country is on the wrong track under that survey measure.": 0.3
+        }
+      },
+      {
+        "name": "concern_about_pandemic_economic_impact",
+        "values": {
+          "Is concerned about the economic impact of pandemic policies, as reported in the supplied 2024 figure.": 0.8,
+          "Does not report that concern under the supplied survey measure.": 0.2
+        }
+      },
+      {
+        "name": "difficulty_affording_healthcare",
+        "values": {
+          "Reports difficulty affording healthcare, as reported in the supplied 2022 survey figure.": 0.47,
+          "Does not report difficulty affording healthcare under that survey measure.": 0.53
+        }
+      },
+      {
+        "name": "support_closing_gun_show_loophole",
+        "values": {
+          "Supports closing the gun-show loophole, as reported in the supplied 2019 figure.": 0.83,
+          "Does not support the measure under that survey response.": 0.17
+        }
+      },
+      {
+        "name": "support_red_flag_laws",
+        "values": {
+          "Supports red-flag laws, as reported in the supplied 2019 figure.": 0.72,
+          "Does not support the measure under that survey response.": 0.28
+        }
+      },
+      {
+        "name": "support_mental_health_funding",
+        "values": {
+          "Supports mental-health funding as a gun-violence prevention measure, as reported in the supplied 2019 figure.": 0.89,
+          "Does not support the measure under that survey response.": 0.11
+        }
+      },
+      {
+        "name": "perception_of_democracy_as_threatened",
+        "values": {
+          "Believes democracy is very threatened, as reported in the supplied 2024 figure.": 0.39,
+          "Believes democracy is somewhat threatened, as reported in the supplied 2024 figure.": 0.34,
+          "Reports a different level of concern or does not classify democracy as threatened under those categories.": 0.27
+        }
+      },
+      {
+        "name": "confidence_in_election_fairness",
+        "values": {
+          "Is very confident in election fairness, as reported in the supplied 2024 figure.": 0.35,
+          "Is somewhat confident in election fairness, as reported in the supplied 2024 figure.": 0.32,
+          "Is not very confident in election fairness, as reported in the supplied 2024 figure.": 0.21,
+          "Is not at all confident in election fairness, as reported in the supplied 2024 figure.": 0.1,
+          "Unreported or rounding residual in the supplied figures.": 0.02
+        }
+      },
+      {
+        "name": "concern_about_post_election_violence",
+        "values": {
+          "Is concerned about post-election violence, as reported in the supplied 2024 figure.": 0.7,
+          "Does not report concern about post-election violence under that survey measure.": 0.3
+        }
+      },
+      {
+        "name": "perception_of_the_economy",
+        "values": {
+          "Rates the economy as poor, as reported in the supplied 2024 figure.": 0.33,
+          "Rates the economy as not so good, as reported in the supplied 2024 figure.": 0.35,
+          "Rates the economy as good, as reported in the supplied 2024 figure.": 0.27,
+          "Rates the economy as excellent, as reported in the supplied 2024 figure.": 0.05
+        }
+      },
+      {
+        "name": "support_for_israel",
+        "values": {
+          "Believes U.S. support for Israel is too strong, as reported in the supplied 2024 figure.": 0.31,
+          "Believes the level of U.S. support for Israel is about right, as reported in the supplied 2024 figure.": 0.3,
+          "Believes U.S. support for Israel is not strong enough, as reported in the supplied 2024 figure.": 0.31,
+          "Unreported or residual response needed to reconcile the supplied categories to 100%.": 0.08
+        }
+      },
+      {
+        "name": "trust_in_supreme_court",
+        "values": {
+          "Approves of the Supreme Court, as reported in the supplied 2024 figure.": 0.36,
+          "Disapproves of the Supreme Court, as reported in the supplied 2024 figure.": 0.59,
+          "Neither response, no opinion, or unreported residual in the supplied figures.": 0.05
+        }
+      }
+    ]
+  },
+  "sampling_plan": [
+    {
+      "id": 1,
+      "subpopulation_description": "School-age child in a lower-income White, non-Hispanic household in the rural Midwest.",
+      "sampled_values": {
+        "age": 6,
+        "gender_distribution_as_reported": "Male, as represented in the supplied population gender figures.",
+        "racial_and_ethnic_composition": "White, non-Hispanic, including people with varied European, Middle Eastern, North African, and other family heritages who identify within this reported category.",
+        "geographic_region": "Midwest, including Great Lakes, Plains, and inland communities with urban, suburban, small-town, and rural settings.",
+        "residential_setting": "Rural resident, living in a sparsely populated area where travel distances, local services, work, and community life may differ substantially from metropolitan settings.",
+        "household_income": "Household income under $25,000 a year, often requiring careful prioritization of housing, food, healthcare, transportation, and other essentials.",
+        "financial_situation": "Reports that family finances are worse than four years ago, with reduced purchasing power, higher bills, lost income, or increased debt."
+      },
+      "quantity": 1
+    },
+    {
+      "id": 2,
+      "subpopulation_description": "School-age girl in a lower-middle-income Latino household in the South.",
+      "sampled_values": {
+        "age": 10,
+        "gender_distribution_as_reported": "Female, as represented in the supplied population gender figures.",
+        "racial_and_ethnic_composition": "Hispanic or Latino, including people of any race with Mexican, Puerto Rican, Cuban, Central American, South American, or other Latino heritage.",
+        "geographic_region": "South, including the Southeast, south-central states, and a wide range of coastal, metropolitan, suburban, and rural communities.",
+        "residential_setting": "Urban resident, living in a city or densely settled metropolitan area with relatively close access to services, transit, workplaces, and cultural institutions.",
+        "household_income": "Household income from $25,000 to $49,999 a year, with financial flexibility varying considerably by household size, location, and debt.",
+        "financial_situation": "Reports that family finances are worse than four years ago, with reduced purchasing power, higher bills, lost income, or increased debt."
+      },
+      "quantity": 1
+    },
+    {
+      "id": 3,
+      "subpopulation_description": "Early adolescent in a middle-income White, non-Hispanic household in the Northeast.",
+      "sampled_values": {
+        "age": 13,
+        "gender_distribution_as_reported": "Female, as represented in the supplied population gender figures.",
+        "racial_and_ethnic_composition": "White, non-Hispanic, including people with varied European, Middle Eastern, North African, and other family heritages who identify within this reported category.",
+        "geographic_region": "Northeast, including communities in New England and the Mid-Atlantic, from dense urban centers to small towns and rural areas.",
+        "residential_setting": "Urban resident, living in a city or densely settled metropolitan area with relatively close access to services, transit, workplaces, and cultural institutions.",
+        "household_income": "Household income from $50,000 to $99,999 a year, spanning financially constrained households and households with moderate discretionary resources depending on circumstances.",
+        "financial_situation": "Reports that family finances are about the same as four years ago, despite changes in prices, income, expenses, or household needs."
+      },
+      "quantity": 1
+    },
+    {
+      "id": 4,
+      "subpopulation_description": "Teenage girl in a lower-middle-income Black household in the South.",
+      "sampled_values": {
+        "age": 17,
+        "gender_distribution_as_reported": "Female, as represented in the supplied population gender figures.",
+        "racial_and_ethnic_composition": "Black or African American, including people with longstanding U.S. family roots and people with African, Caribbean, or other Black diasporic heritage.",
+        "geographic_region": "South, including the Southeast, south-central states, and a wide range of coastal, metropolitan, suburban, and rural communities.",
+        "residential_setting": "Urban resident, living in a city or densely settled metropolitan area with relatively close access to services, transit, workplaces, and cultural institutions.",
+        "household_income": "Household income from $25,000 to $49,999 a year, with financial flexibility varying considerably by household size, location, and debt.",
+        "financial_situation": "Reports that family finances are worse than four years ago, with reduced purchasing power, higher bills, lost income, or increased debt."
+      },
+      "quantity": 1
+    },
+    {
+      "id": 5,
+      "subpopulation_description": "Young adult with Asian heritage in the West, from a middle-income household; progressive outlook and mixed views on economic and social issues.",
+      "sampled_values": {
+        "age": 23,
+        "gender_distribution_as_reported": "Male, as represented in the supplied population gender figures.",
+        "racial_and_ethnic_composition": "Asian, including people with East Asian, South Asian, Southeast Asian, and other Asian family and cultural backgrounds.",
+        "geographic_region": "West, including Pacific Coast, Mountain, Southwest, and other western communities ranging from major cities to remote areas.",
+        "residential_setting": "Urban resident, living in a city or densely settled metropolitan area with relatively close access to services, transit, workplaces, and cultural institutions.",
+        "household_income": "Household income from $50,000 to $99,999 a year, spanning financially constrained households and households with moderate discretionary resources depending on circumstances.",
+        "financial_situation": "Reports that family finances are about the same as four years ago, despite changes in prices, income, expenses, or household needs.",
+        "political_beliefs": "Progressive or liberal outlook: prioritizes civil rights, social inclusion, environmental protection, and public action to reduce inequality, while accepting variation on particular issues.",
+        "inflation_as_very_big_problem": "Views inflation as a very big problem, as reported in the supplied 2023 figure.",
+        "healthcare_affordability_as_very_big_problem": "Views healthcare affordability as a very big problem, as reported in the supplied 2024 figure.",
+        "abortion_legality_opinion": "Believes abortion should be legal in all cases, as reported in the supplied 2024 figure.",
+        "immigration_policy_opinion": "Supports a path to legal status for some undocumented immigrants, as reported in the supplied 2024 figure."
+      },
+      "quantity": 1
+    },
+    {
+      "id": 6,
+      "subpopulation_description": "Working-age White, non-Hispanic woman in the South with an upper-middle household income and a pragmatic, mixed political outlook.",
+      "sampled_values": {
+        "age": 29,
+        "gender_distribution_as_reported": "Female, as represented in the supplied population gender figures.",
+        "racial_and_ethnic_composition": "White, non-Hispanic, including people with varied European, Middle Eastern, North African, and other family heritages who identify within this reported category.",
+        "geographic_region": "South, including the Southeast, south-central states, and a wide range of coastal, metropolitan, suburban, and rural communities.",
+        "residential_setting": "Urban resident, living in a city or densely settled metropolitan area with relatively close access to services, transit, workplaces, and cultural institutions.",
+        "household_income": "Household income from $100,000 to $199,999 a year, with purchasing power strongly affected by local costs, family responsibilities, and savings or debt.",
+        "financial_situation": "Reports that family finances are worse than four years ago, with reduced purchasing power, higher bills, lost income, or increased debt.",
+        "political_beliefs": "Centrist or pragmatic outlook: favors a mixture of policy approaches and is willing to judge proposals case by case rather than follow a single ideological line.",
+        "inflation_as_very_big_problem": "Views inflation as a very big problem, as reported in the supplied 2023 figure.",
+        "healthcare_affordability_as_very_big_problem": "Views healthcare affordability as a very big problem, as reported in the supplied 2024 figure.",
+        "abortion_legality_opinion": "Believes abortion should be legal in all cases, as reported in the supplied 2024 figure.",
+        "immigration_policy_opinion": "Supports a path to legal status for some undocumented immigrants, as reported in the supplied 2024 figure."
+      },
+      "quantity": 1
+    },
+    {
+      "id": 7,
+      "subpopulation_description": "Latino man in his thirties in the West, with middle-range household income and a libertarian-leaning outlook.",
+      "sampled_values": {
+        "age": 34,
+        "gender_distribution_as_reported": "Male, as represented in the supplied population gender figures.",
+        "racial_and_ethnic_composition": "Hispanic or Latino, including people of any race with Mexican, Puerto Rican, Cuban, Central American, South American, or other Latino heritage.",
+        "geographic_region": "West, including Pacific Coast, Mountain, Southwest, and other western communities ranging from major cities to remote areas.",
+        "residential_setting": "Urban resident, living in a city or densely settled metropolitan area with relatively close access to services, transit, workplaces, and cultural institutions.",
+        "household_income": "Household income from $50,000 to $99,999 a year, spanning financially constrained households and households with moderate discretionary resources depending on circumstances.",
+        "financial_situation": "Reports that family finances are better than four years ago, through higher earnings, reduced debt, improved savings, or other gains.",
+        "political_beliefs": "Libertarian-leaning outlook: places strong emphasis on individual liberty, privacy, voluntary cooperation, and limits on government power.",
+        "inflation_as_very_big_problem": "Views inflation as a very big problem, as reported in the supplied 2023 figure.",
+        "healthcare_affordability_as_very_big_problem": "Does not classify healthcare affordability as a very big problem under that survey measure.",
+        "abortion_legality_opinion": "Believes abortion should be legal in most cases, as reported in the supplied 2024 figure.",
+        "immigration_policy_opinion": "Supports deportation as described in the supplied 2024 figure."
+      },
+      "quantity": 1
+    },
+    {
+      "id": 8,
+      "subpopulation_description": "White, non-Hispanic woman in middle age in the Midwest, with upper-middle household income and conservative beliefs.",
+      "sampled_values": {
+        "age": 39,
+        "gender_distribution_as_reported": "Female, as represented in the supplied population gender figures.",
+        "racial_and_ethnic_composition": "White, non-Hispanic, including people with varied European, Middle Eastern, North African, and other family heritages who identify within this reported category.",
+        "geographic_region": "Midwest, including Great Lakes, Plains, and inland communities with urban, suburban, small-town, and rural settings.",
+        "residential_setting": "Urban resident, living in a city or densely settled metropolitan area with relatively close access to services, transit, workplaces, and cultural institutions.",
+        "household_income": "Household income from $100,000 to $199,999 a year, with purchasing power strongly affected by local costs, family responsibilities, and savings or debt.",
+        "financial_situation": "Reports that family finances are about the same as four years ago, despite changes in prices, income, expenses, or household needs.",
+        "political_beliefs": "Conservative outlook: emphasizes continuity, personal responsibility, local community, public order, and caution about expanding government authority.",
+        "inflation_as_very_big_problem": "Does not classify inflation as a very big problem under that survey measure.",
+        "healthcare_affordability_as_very_big_problem": "Views healthcare affordability as a very big problem, as reported in the supplied 2024 figure.",
+        "abortion_legality_opinion": "Believes abortion should be legal in most cases, as reported in the supplied 2024 figure.",
+        "immigration_policy_opinion": "Supports a path to legal status for some undocumented immigrants, as reported in the supplied 2024 figure."
+      },
+      "quantity": 1
+    },
+    {
+      "id": 9,
+      "subpopulation_description": "Black man in his forties in the Northeast, in a lower-middle-income household and politically cross-pressured.",
+      "sampled_values": {
+        "age": 45,
+        "gender_distribution_as_reported": "Male, as represented in the supplied population gender figures.",
+        "racial_and_ethnic_composition": "Black or African American, including people with longstanding U.S. family roots and people with African, Caribbean, or other Black diasporic heritage.",
+        "geographic_region": "Northeast, including communities in New England and the Mid-Atlantic, from dense urban centers to small towns and rural areas.",
+        "residential_setting": "Urban resident, living in a city or densely settled metropolitan area with relatively close access to services, transit, workplaces, and cultural institutions.",
+        "household_income": "Household income from $25,000 to $49,999 a year, with financial flexibility varying considerably by household size, location, and debt.",
+        "financial_situation": "Reports that family finances are worse than four years ago, with reduced purchasing power, higher bills, lost income, or increased debt.",
+        "political_beliefs": "Cross-pressured or politically disengaged outlook: holds mixed views, distrusts party labels, or avoids making politics a central part of everyday identity.",
+        "inflation_as_very_big_problem": "Views inflation as a very big problem, as reported in the supplied 2023 figure.",
+        "healthcare_affordability_as_very_big_problem": "Views healthcare affordability as a very big problem, as reported in the supplied 2024 figure.",
+        "abortion_legality_opinion": "Believes abortion should be illegal in most cases, as reported in the supplied 2024 figure.",
+        "immigration_policy_opinion": "Supports deportation as described in the supplied 2024 figure."
+      },
+      "quantity": 1
+    },
+    {
+      "id": 10,
+      "subpopulation_description": "White, non-Hispanic woman in her early fifties in the South, with middle-range income and progressive beliefs.",
+      "sampled_values": {
+        "age": 51,
+        "gender_distribution_as_reported": "Female, as represented in the supplied population gender figures.",
+        "racial_and_ethnic_composition": "White, non-Hispanic, including people with varied European, Middle Eastern, North African, and other family heritages who identify within this reported category.",
+        "geographic_region": "South, including the Southeast, south-central states, and a wide range of coastal, metropolitan, suburban, and rural communities.",
+        "residential_setting": "Urban resident, living in a city or densely settled metropolitan area with relatively close access to services, transit, workplaces, and cultural institutions.",
+        "household_income": "Household income from $50,000 to $99,999 a year, spanning financially constrained households and households with moderate discretionary resources depending on circumstances.",
+        "financial_situation": "Reports that family finances are better than four years ago, through higher earnings, reduced debt, improved savings, or other gains.",
+        "political_beliefs": "Progressive or liberal outlook: prioritizes civil rights, social inclusion, environmental protection, and public action to reduce inequality, while accepting variation on particular issues.",
+        "inflation_as_very_big_problem": "Views inflation as a very big problem, as reported in the supplied 2023 figure.",
+        "healthcare_affordability_as_very_big_problem": "Does not classify healthcare affordability as a very big problem under that survey measure.",
+        "abortion_legality_opinion": "Believes abortion should be legal in all cases, as reported in the supplied 2024 figure.",
+        "immigration_policy_opinion": "Supports a path to legal status for some undocumented immigrants, as reported in the supplied 2024 figure."
+      },
+      "quantity": 1
+    },
+    {
+      "id": 11,
+      "subpopulation_description": "White, non-Hispanic man in his early fifties in the West, from a high-income household with conservative beliefs.",
+      "sampled_values": {
+        "age": 54,
+        "gender_distribution_as_reported": "Male, as represented in the supplied population gender figures.",
+        "racial_and_ethnic_composition": "White, non-Hispanic, including people with varied European, Middle Eastern, North African, and other family heritages who identify within this reported category.",
+        "geographic_region": "West, including Pacific Coast, Mountain, Southwest, and other western communities ranging from major cities to remote areas.",
+        "residential_setting": "Urban resident, living in a city or densely settled metropolitan area with relatively close access to services, transit, workplaces, and cultural institutions.",
+        "household_income": "Household income of $200,000 or more a year, ranging from comfortable high-income households to very affluent households with substantial resources.",
+        "financial_situation": "Reports that family finances are better than four years ago, through higher earnings, reduced debt, improved savings, or other gains.",
+        "political_beliefs": "Conservative outlook: emphasizes continuity, personal responsibility, local community, public order, and caution about expanding government authority.",
+        "inflation_as_very_big_problem": "Does not classify inflation as a very big problem under that survey measure.",
+        "healthcare_affordability_as_very_big_problem": "Views healthcare affordability as a very big problem, as reported in the supplied 2024 figure.",
+        "abortion_legality_opinion": "Believes abortion should be illegal in most cases, as reported in the supplied 2024 figure.",
+        "immigration_policy_opinion": "Supports deportation as described in the supplied 2024 figure."
+      },
+      "quantity": 1
+    },
+    {
+      "id": 12,
+      "subpopulation_description": "Latina in her late fifties in the South, living in a low-income household and holding progressive political beliefs.",
+      "sampled_values": {
+        "age": 58,
+        "gender_distribution_as_reported": "Female, as represented in the supplied population gender figures.",
+        "racial_and_ethnic_composition": "Hispanic or Latino, including people of any race with Mexican, Puerto Rican, Cuban, Central American, South American, or other Latino heritage.",
+        "geographic_region": "South, including the Southeast, south-central states, and a wide range of coastal, metropolitan, suburban, and rural communities.",
+        "residential_setting": "Rural resident, living in a sparsely populated area where travel distances, local services, work, and community life may differ substantially from metropolitan settings.",
+        "household_income": "Household income under $25,000 a year, often requiring careful prioritization of housing, food, healthcare, transportation, and other essentials.",
+        "financial_situation": "Reports that family finances are worse than four years ago, with reduced purchasing power, higher bills, lost income, or increased debt.",
+        "political_beliefs": "Progressive or liberal outlook: prioritizes civil rights, social inclusion, environmental protection, and public action to reduce inequality, while accepting variation on particular issues.",
+        "inflation_as_very_big_problem": "Views inflation as a very big problem, as reported in the supplied 2023 figure.",
+        "healthcare_affordability_as_very_big_problem": "Views healthcare affordability as a very big problem, as reported in the supplied 2024 figure.",
+        "abortion_legality_opinion": "Believes abortion should be legal in most cases, as reported in the supplied 2024 figure.",
+        "immigration_policy_opinion": "Supports a path to legal status for some undocumented immigrants, as reported in the supplied 2024 figure."
+      },
+      "quantity": 1
+    },
+    {
+      "id": 13,
+      "subpopulation_description": "White, non-Hispanic man in his early sixties in the Northeast, with middle-range household income and a pragmatic outlook.",
+      "sampled_values": {
+        "age": 63,
+        "gender_distribution_as_reported": "Male, as represented in the supplied population gender figures.",
+        "racial_and_ethnic_composition": "White, non-Hispanic, including people with varied European, Middle Eastern, North African, and other family heritages who identify within this reported category.",
+        "geographic_region": "Northeast, including communities in New England and the Mid-Atlantic, from dense urban centers to small towns and rural areas.",
+        "residential_setting": "Rural resident, living in a sparsely populated area where travel distances, local services, work, and community life may differ substantially from metropolitan settings.",
+        "household_income": "Household income from $50,000 to $99,999 a year, spanning financially constrained households and households with moderate discretionary resources depending on circumstances.",
+        "financial_situation": "Reports that family finances are about the same as four years ago, despite changes in prices, income, expenses, or household needs.",
+        "political_beliefs": "Centrist or pragmatic outlook: favors a mixture of policy approaches and is willing to judge proposals case by case rather than follow a single ideological line.",
+        "inflation_as_very_big_problem": "Does not classify inflation as a very big problem under that survey measure.",
+        "healthcare_affordability_as_very_big_problem": "Does not classify healthcare affordability as a very big problem under that survey measure.",
+        "abortion_legality_opinion": "Believes abortion should be illegal in all cases, as reported in the supplied 2024 figure.",
+        "immigration_policy_opinion": "Supports deportation as described in the supplied 2024 figure."
+      },
+      "quantity": 1
+    },
+    {
+      "id": 14,
+      "subpopulation_description": "White, non-Hispanic woman in her late sixties in the Midwest, with upper-middle household income and conservative beliefs.",
+      "sampled_values": {
+        "age": 68,
+        "gender_distribution_as_reported": "Female, as represented in the supplied population gender figures.",
+        "racial_and_ethnic_composition": "White, non-Hispanic, including people with varied European, Middle Eastern, North African, and other family heritages who identify within this reported category.",
+        "geographic_region": "Midwest, including Great Lakes, Plains, and inland communities with urban, suburban, small-town, and rural settings.",
+        "residential_setting": "Urban resident, living in a city or densely settled metropolitan area with relatively close access to services, transit, workplaces, and cultural institutions.",
+        "household_income": "Household income from $100,000 to $199,999 a year, with purchasing power strongly affected by local costs, family responsibilities, and savings or debt.",
+        "financial_situation": "Reports that family finances are better than four years ago, through higher earnings, reduced debt, improved savings, or other gains.",
+        "political_beliefs": "Conservative outlook: emphasizes continuity, personal responsibility, local community, public order, and caution about expanding government authority.",
+        "inflation_as_very_big_problem": "Views inflation as a very big problem, as reported in the supplied 2023 figure.",
+        "healthcare_affordability_as_very_big_problem": "Views healthcare affordability as a very big problem, as reported in the supplied 2024 figure.",
+        "abortion_legality_opinion": "Believes abortion should be illegal in most cases, as reported in the supplied 2024 figure.",
+        "immigration_policy_opinion": "Supports a path to legal status for some undocumented immigrants, as reported in the supplied 2024 figure."
+      },
+      "quantity": 1
+    },
+    {
+      "id": 15,
+      "subpopulation_description": "Older multiracial man in the West, living in a low-income household and politically cross-pressured.",
+      "sampled_values": {
+        "age": 77,
+        "gender_distribution_as_reported": "Male, as represented in the supplied population gender figures.",
+        "racial_and_ethnic_composition": "Two or more races, reflecting people whose family heritage or self-identification spans more than one racial category.",
+        "geographic_region": "West, including Pacific Coast, Mountain, Southwest, and other western communities ranging from major cities to remote areas.",
+        "residential_setting": "Urban resident, living in a city or densely settled metropolitan area with relatively close access to services, transit, workplaces, and cultural institutions.",
+        "household_income": "Household income under $25,000 a year, often requiring careful prioritization of housing, food, healthcare, transportation, and other essentials.",
+        "financial_situation": "Reports that family finances are worse than four years ago, with reduced purchasing power, higher bills, lost income, or increased debt.",
+        "political_beliefs": "Cross-pressured or politically disengaged outlook: holds mixed views, distrusts party labels, or avoids making politics a central part of everyday identity.",
+        "inflation_as_very_big_problem": "Views inflation as a very big problem, as reported in the supplied 2023 figure.",
+        "healthcare_affordability_as_very_big_problem": "Does not classify healthcare affordability as a very big problem under that survey measure.",
+        "abortion_legality_opinion": "Believes abortion should be legal in most cases, as reported in the supplied 2024 figure.",
+        "immigration_policy_opinion": "Supports deportation as described in the supplied 2024 figure."
+      },
+      "quantity": 1
+    }
+  ]
+}

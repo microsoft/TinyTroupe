@@ -1,0 +1,441 @@
+{
+  "status": "Full CF6 gazpacho completed and all 50 outputs reviewed; empirical compression persists. Comprehension/coherent-option source passed 449 core cases. Structural weighted-alternatives revision 4 integrated; three targeted planner cases and all 450 current core cases passed. Exact source delta and actual factory integration replay verified. Fresh full CF7 gazpacho running on final source with original cells and isolated API cache. Overall empirical-quality objective remains unresolved.",
+  "current_marginal_choices": {
+    "validation": "marginal-choices-validation.json",
+    "library_sha256": "3f5b80697765c367766a8291cc4a9a27aa8db7b9889ecb058bb2dede96c9d501",
+    "production_delta": "Only the exact tested revision-4 structural paragraph in the sampling-plan system template; README and one core live test updated.",
+    "candidate_reviews": [
+      "demographic-coverage-budget-r3/review.json",
+      "demographic-coverage-budget-r4/review.json"
+    ],
+    "finding": "Both new candidates match expected race/gender/region/settlement weights to floating-point precision, retain original age allocations and four endpoint guarantees, and permit older educational variation. Revision 4 additionally avoids independent credential-dependent occupation draws. Not a gazpacho calibration result.",
+    "targeted": {"passed": 3, "deselected": 73, "warnings": 1, "elapsed_seconds": 104.54},
+    "core": {
+      "shell_id": "marginal-choices-core",
+      "status": "passed",
+      "passed": 450,
+      "deselected": 440,
+      "warnings": 7,
+      "elapsed_seconds": 1407.24
+    },
+    "actual_factory_integration": {
+      "status": "passed",
+      "receipt": "marginal-choices-integration/receipt.json",
+      "new_returned_response_count": 0,
+      "scope": "Exact accepted original-input response replayed through integrated factory; not a new independent model call."
+    },
+    "revision_3_and_4_returned_usage_usd": "0.063865225",
+    "historical_scope": "Full CF6 and six-person comprehension survey predate this planner change; no new full survey claimed."
+  },
+  "fresh_final_source_notebook": {
+    "folder": "cf7-gaz",
+    "shell_id": "cf7-gaz",
+    "status": "running; kernel ready and original cells advancing",
+    "notebook": "Bottled Gazpacho Market Research 5 (with behavior correction).ipynb",
+    "library_sha256": "3f5b80697765c367766a8291cc4a9a27aa8db7b9889ecb058bb2dede96c9d501",
+    "source_code_sha256": "6718a7f35b576485f899ca46e52e16db57e7fba728be3e1f5cdd4ad8dc8e6c81",
+    "model": "gpt-6-luna",
+    "effort": "xhigh",
+    "simulation_cache_reused": false,
+    "api_cache": "New isolated cache; no earlier-run responses copied.",
+    "review_command_after_completion": "python review_cf6_gazpacho.py --folder cf7-gaz",
+    "scope": "Original N50, questionnaire, quality thresholds and source cells. New cohort is not a paired comparison or calibrated human-panel match. Read all public outputs before judging quality."
+  },
+  "final_bounded_repairs": {
+    "validation": "comprehension-options-validation.json",
+    "library_sha256": "ca9b09398b9dab603bc54a6fa729d7b27ce386dc80eeb3cff6e5117d51fa16f9",
+    "production_delta": "Three actor comprehension instructions and four coherent-option lines in the dimension-generation docstring. No questionnaire, quality threshold, model, effort or extraction-contract change.",
+    "targeted_live_cases_passed": 5,
+    "full_core": {
+      "shell_id": "comprehension-options-core",
+      "status": "passed",
+      "passed": 449,
+      "deselected": 440,
+      "warnings": 7,
+      "elapsed_seconds": 3203.1,
+      "source_lineage": "Exact captured source fingerprint verified after completion."
+    },
+    "six_person_pipeline": {
+      "receipt": "cf6-comprehension-screen/receipt.json",
+      "results": "cf6-comprehension-screen/results.json",
+      "finding": "Ages 0/2/3 are unscored and adult controls retain 2/3; age 4 still gives 2 and is not claimed repaired. Full correction/extraction settings retained.",
+      "returned_usage_usd": "0.032120345",
+      "source_drift_disclosure": "Command exited at final whole-library hash check because dimension docstring changed mid-run. Separate audit proves exactly that unrelated delta; no actor instruction changed and no model calls repeated."
+    },
+    "original_full_input_replication": {
+      "audit": "cf6-coherent-dimensions/audit.json",
+      "finding": "Exact original input and nonmessage options retained; only four declared system lines differ. Impulsive adoption and strong rejection now separately selectable.",
+      "returned_usage_usd": "0.01172534"
+    }
+  },
+  "current_sampling_integration": {
+    "validation": "sampling-coverage-integration-validation.json",
+    "library_sha256": "8c6a0a640111c4c219a1dfa06e8bcee99621fd03c1d45a0bf3871c50f28b8333",
+    "targeted_passed": 42,
+    "core_passed": 444,
+    "independent_production_plan": "integrated-coverage-plan/structural-audit.json",
+    "independent_plan_semantic_review": "integrated-coverage-plan/semantic-review.json",
+    "independent_plan_returned_usage_usd": "0.032352425",
+    "finding": "Fresh production plan guarantees all four predefined endpoints and preserves rounded age totals and full age support. Review also identified marginal distortion from fixed cultural allocations and an unsupported age-education collapse. These are not hidden behind the successful structural checks.",
+    "fresh_full_notebook": {
+      "folder": "cf6-gaz",
+      "shell_id": "cf6-gaz",
+      "status": "completed; all 50 outputs manually reviewed",
+      "simulation_cache_reused": false,
+      "review": "cf6-gaz-manual-quality-review.json",
+      "execution_audit": "cf6-gaz-execution-review.json",
+      "elapsed_seconds": 6404.86,
+      "counts": {"1": 5, "2": 31, "3": 13, "4": 0, "5": 0, "N/A": 1},
+      "mean": 2.163265306122449,
+      "returned_usage_usd": "0.921991735",
+      "finding": "Execution and extraction faithful, but no 4/5 ratings even among adults. New cohort is not a paired calibration comparison. Observed age117 is inside fresh generated0-120 bounds, not a reconstruction bug."
+    },
+    "next_prompt_test": {
+      "protocol": "demographic-coverage-budget-r2/protocol.json",
+      "shell_id": "demographic-coverage-budget-r2",
+      "status": "rejected; not integrated",
+      "production_changed": false,
+      "hypothesis": "Account for fixed allocations and renormalization in residual demographic budgets. Clarify nominal cultural categories are not ordinal extremes. Preserve the same prospective criteria, original input and frozen baseline; no survey-score tuning.",
+      "review": "demographic-coverage-budget-r2/review.json",
+      "returned_usage_usd": "0.03803005",
+      "finding": "Expected race-marginal error remained 1.819665272 people against the original maximum of 1.0. No second revision integrated. Await the frozen full notebook's end-to-end evidence rather than repeating near-identical arithmetic instructions.",
+      "first_revision": {
+        "review": "demographic-coverage-budget/review.json",
+        "status": "rejected; not integrated",
+        "returned_usage_usd": "0.037047925",
+        "finding": "Older educational support improved and all four endpoints survived, but expected race-marginal error remained 1.592430484 people against the original maximum of 1.0."
+      }
+    }
+  },
+  "prior_coverage_followup": {
+    "review": "realized-behavior-coverage-review.json",
+    "protocol_audit": "realized-behavior-coverage-audit.json",
+    "pipeline_audit": "realized-coverage-pipeline-audit.json",
+    "production_changed": false,
+    "finding": "After two insufficient or invalid boolean-format candidates, compact identifiers with a final coverage check guarantee all four predefined endpoints. The actual six-person survey screen nevertheless returns only 2/3 among adults; coverage is not a demonstrated calibration repair. Candidate not integrated.",
+    "additional_returned_responses": 49,
+    "additional_returned_usage_usd": "0.209980780",
+    "unreturned_timeout_cost": "Unknown and excluded."
+  },
+  "prior_example_followup": {
+    "review": "generator-example-ablation-review.json",
+    "protocol_audit": "generator-example-ablation-audit.json",
+    "production_changed": false,
+    "finding": "Removing unrelated worked biographies did not establish a gazpacho calibration fix in the corrected production-JSON-mode comparison. Candidate not adopted.",
+    "corrected_public_scores_retained_vs_removed": {
+      "Diego": [3, 3],
+      "Marco": [2, 2],
+      "Gabriel": [1, 2]
+    },
+    "additional_returned_usage_usd": "0.113233695",
+    "request_format_correction": "The earlier population-scope generator trial and initial example-ablation screen omitted production JSON mode. These are exploratory content diagnostics, not exact-production request replays. The real-factory core cases and the 434-pass core result are unaffected."
+  },
+  "crossed_cells": {
+    "luna_biographies_luna_pipeline": {
+      "counts": {
+        "2": 7,
+        "3": 1
+      },
+      "mean": 2.125,
+      "sample_sd": 0.3535533905932738,
+      "returned_usage_estimate": {
+        "unique_saved_api_responses_in_run_window": 32,
+        "responses_missing_usage": 0,
+        "tokens": {
+          "prompt": 304030,
+          "completion": 22021,
+          "cached": 32949,
+          "writes": 263688
+        },
+        "usd": "0.045040290",
+        "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+      }
+    },
+    "luna_biographies_mini_pipeline": {
+      "counts": {
+        "3": 3,
+        "2": 5
+      },
+      "mean": 2.375,
+      "sample_sd": 0.5175491695067657,
+      "returned_usage_estimate": {
+        "unique_saved_api_responses_in_run_window": 32,
+        "responses_missing_usage": 0,
+        "tokens": {
+          "prompt": 312309,
+          "completion": 58938,
+          "cached": 19712,
+          "writes": 0
+        },
+        "usd": "0.19151805",
+        "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+      }
+    },
+    "mini_biographies_luna_pipeline": {
+      "returned_usage_estimate": {
+        "unique_saved_api_responses_in_run_window": 32,
+        "responses_missing_usage": 0,
+        "tokens": {
+          "prompt": 240997,
+          "completion": 20082,
+          "cached": 8988,
+          "writes": 224727
+        },
+        "usd": "0.038949955",
+        "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+      },
+      "counts": {
+        "2": 8
+      },
+      "mean": 2,
+      "sample_sd": 0.0,
+      "results": [
+        {
+          "name": "Janet Louise Harwood",
+          "response": "2",
+          "justification": "Very unlikely to buy bottled gazpacho, though she might try a small bottle on a hot day if the ingredients looked good."
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "response": "2",
+          "justification": "He likes vegetable soups but usually makes them at home and would want to check the ingredient list and price. He might try it if it’s simple and reasonably priced, but it’s not something he’d be very likely to buy."
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "response": "2",
+          "justification": "Very unlikely to buy bottled gazpacho, though might try one if it were hot and the ingredients looked good; generally prefers familiar, hearty meals."
+        },
+        {
+          "name": "Evan McAllister",
+          "response": "2",
+          "justification": "He rated bottled gazpacho 2 out of 5, saying he might try it once but is very unlikely to buy it regularly."
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "response": "2",
+          "justification": "Very unlikely, but not impossible. She prefers familiar, home-cooked food and would perhaps try bottled cold soup once on a hot day if the price was reasonable."
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "response": "2",
+          "justification": "I’d be unlikely to buy bottled gazpacho, though I wouldn’t rule it out entirely. I like Mediterranean-style food, but cold blended soup isn’t something I usually choose, and I’d want to check the ingredients and flavor first."
+        },
+        {
+          "name": "Anthony James Holloway",
+          "response": "2",
+          "justification": "Cold blended soup isn't what he usually reaches for; he prefers hot, hearty meals. He might try it if inexpensive, but would not expect to buy it regularly."
+        },
+        {
+          "name": "Marjorie Keating",
+          "response": "2",
+          "justification": "I’m very unlikely to buy it. I prefer warm, familiar soups, and a cold blended vegetable drink doesn’t sound especially appealing. I might try a little if someone offered it, but I probably wouldn’t buy a bottle."
+        }
+      ]
+    },
+    "mini_biographies_mini_pipeline": {
+      "returned_usage_estimate": {
+        "unique_saved_api_responses_in_run_window": 32,
+        "responses_missing_usage": 0,
+        "tokens": {
+          "prompt": 251864,
+          "completion": 60580,
+          "cached": 24832,
+          "writes": 0
+        },
+        "usd": "0.17853880",
+        "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+      },
+      "counts": {
+        "4": 1,
+        "2": 3,
+        "3": 4
+      },
+      "mean": 2.75,
+      "sample_sd": 0.7071067811865476,
+      "results": [
+        {
+          "name": "Janet Louise Harwood",
+          "response": "4",
+          "justification": "My propensity is 4, because I like the idea of a ready-to-drink gazpacho as a convenient, vegetable-forward option — it fits my habit of keeping prepared soups on hand for low-energy days and I enjoy mild, savory breakfasts and lunches. I would buy it provided the bottle lists a low-sodium recipe, isn't overly spicy, and is reasonably priced (or from a local maker I trust). It's especially appealing in warmer months or as a light lunch with whole-grain crackers. If it were very high in salt or the flavor too sharp, I'd be less likely to repurchase, but I would certainly try it once."
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "response": "2",
+          "justification": "Very unlikely but not impossible. Reason: I value home-cooked soups and stews that I can reheat and control for ingredients; I’m skeptical of processed convenience items with long ingredient lists or preservatives. A bottled cold soup would only tempt me in hot weather if it came from a trusted local maker, had a short, recognisable ingredient list (tomatoes, cucumbers, peppers, olive oil, vinegar, salt), and was reasonably priced. Otherwise I’d prefer to make my own or buy from a deli that makes it fresh."
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "response": "2",
+          "justification": "My propensity is 2 — very unlikely, but not impossible. First, I'm a country fella who prefers warm, slow-cooked dishes and home-made staples; cold blended soup isn't part of my regular meals. Second, when I want something like that I'd sooner make a pitcher from garden tomatoes or buy it from a local vendor I trust than reach for a bottled product with mystery ingredients. Third, I might try a bottle once in the heat of summer out of curiosity, especially if it's local and the label is honest about ingredients and price, but I wouldn't buy it regularly. So: 2."
+        },
+        {
+          "name": "Evan McAllister",
+          "response": "3",
+          "justification": "I'd maybe buy ready-to-drink gazpacho but it depends. I like fresh veg-forward food and would try it on a hot day or when I'm short on time, especially if it's from a local maker, bottled in glass, reasonably priced, and tastes like real tomatoes/peppers (not overly sweet or canned). I usually prefer to make things at home, and Noah probably wouldn't eat it, so it wouldn't be a regular family staple — more of an occasional convenience or summer treat. If the flavor profile included a little heat or tang, that'd increase the chances."
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "response": "2",
+          "justification": "I prefer hot, familiar dishes and simple snacks I know how to trust; a bottled cold Spanish soup feels a bit unfamiliar and like a novelty to me. I worry about price, preservatives, and portion size. I might try one small bottle if it were cheap or Mimi recommended it on a hot day, but I probably would not buy it regularly. Mira, that’s honest — convenient could win me over sometimes, but not often."
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "response": "3",
+          "justification": "My propensity is 3, because while the flavors (tomato, cucumber, olive oil, lemon) line up well with what I like and it would be appealing in warmer months, Iu0002m cautious about ready-to-drink bottles. I would want a clear ingredient list, modest sodium, and reasonable price. If itu0002s sold refrigerated, clearly labeled, and priced like a light lunch or substantial snack, Iu0002d consider buying it occasionally (especially in summer). Iu0002m not an automatic buyer of novel packaged foods, so Iu0002d say u0002maybeu0002 — open to trying if the packaging and price look honest."
+        },
+        {
+          "name": "Anthony James Holloway",
+          "response": "3",
+          "justification": "My propensity is 3 — maybe I'd buy it. Here's why: I ain't against trying new, convenient foods, and a chilled gazpacho sounds all right on a hot day, but it's not the kind of filling, meat-centered thing my family usually eats. If y'all put it in a small, inexpensive bottle (say under a few dollars), labeled plainly with simple ingredients and sold chilled in the supermarket, I'd pick one up now and then for myself as a refreshing snack. I wouldn't buy it for a family dinner or as a regular staple unless the price and portion made sense. Things that'd make me more likely: a sampler, a sale, or a familiar brand doing a mild-flavored version. Things that'd make me less likely: high price, fancy packaging that makes it seem expensive, or a flavor that's too vinegary or spicy. Hope that helps — I can also give y'all my self-intro and top-10 interests if you still need that."
+        },
+        {
+          "name": "Marjorie Keating",
+          "response": "3",
+          "justification": "I’m cautious about new food products and I watch my salt, so I’d only try it if the flavor sounded mild and the label said low-sodium and simple ingredients. I’d be more likely to buy one in warm weather as a small, refreshing treat, especially if it was a single-serving bottle and I could sample it first or a neighbor recommended it. If it tasted too acidic, raw, or spicy, or if it was pricey for the size, I’d pass. In short — possible in summer under the right conditions, otherwise unlikely."
+        }
+      ]
+    }
+  },
+  "additional_crossed_returned_usage_usd": "0.390189505",
+  "limitations": [
+    "Eight identities, one generated biography per identity/condition; no population inference or precise causal effect estimate.",
+    "Input generation messages and supplied draws retained; names and ages verified, other trait compliance not exhaustively audited.",
+    "Backend changes include evaluation and extraction; Mini requested effort is not forwarded.",
+    "Original PickFu report now verifies 50 US-based respondents, completion July 5 2025, and matching public question/description. Exact targeting and representativeness remain unknown; no human outcome was used to choose panel or age weights."
+  ],
+  "production_changes_after_final_core_and_notebooks": true,
+  "post_cf4_stage": {
+    "status": "All three complete CF5 rollouts and 100-history extraction replay finished and reviewed. Additional generator-boundary repair validated; current source passed 434 core cases. Empirical gazpacho quality remains unresolved; earlier validation stages remain historical snapshots.",
+    "repairs": [
+      "Preserve plain actor instruction strings; continue serializing structured stimuli and resolving images.",
+      "Render genuine memory-omission metadata and suppress false notices for complete histories.",
+      "Use a local 100-event Investment Firm lookback; leave global retention defaults unchanged."
+    ],
+    "targeted_regressions_passed": 52,
+    "rejected_conditions": "Ten original-panel prompt/framing/season diagnostics; none justified production prompt adoption.",
+    "unchanged_eight_person_transport_panel": {
+      "counts": {"1": 1, "2": 5, "3": 2, "4": 0, "5": 0},
+      "mean": 2.125,
+      "interpretation": "Not an empirical calibration fix."
+    },
+    "synthetic_transport_controls": [4, 1],
+    "new_prompt_and_transport_trials_returned_usage_usd": "0.659406800",
+    "investment_retention_replay_returned_usage_usd": "0.005904725",
+    "cost_scope": "Saved responses in twenty-one completed bounded trials including one explicit low-effort diagnostic, plus the separately priced two-response Investment replay; not project spend or an invoice. Core tests and full confirmations excluded. The completed CF5 Investment notebook is priced separately.",
+    "core_regression": {
+      "status": "Passed",
+      "passed": 429,
+      "deselected": 440,
+      "warnings": 7,
+      "elapsed_seconds": 2413.37,
+      "library_sha256": "fca0c6b13bdbfb88a0856955384530f42bed3f2b8bee350bb23dccbe5d8375cd",
+      "library_still_matches": false,
+      "scope": "Full-rollout runtime before the final extraction-only prompt repair; see current_source_core below."
+    },
+    "extraction_stage_core": {
+      "status": "Passed",
+      "passed": 432,
+      "deselected": 440,
+      "warnings": 7,
+      "elapsed_seconds": 719.59,
+      "library_sha256": "88c05fcfc6d336a487c57b1bca665eccf983c073ab8fec035507ed88f3dbf97d"
+    },
+    "current_source_core": {
+      "status": "Passed",
+      "passed": 434,
+      "deselected": 440,
+      "warnings": 7,
+      "elapsed_seconds": 1558.97,
+      "library_sha256": "000fcfb488ab982f259f778def4269a13e6972f0113eb5046d7c0f45a6b6fbd8"
+    },
+    "situated_decision_candidate": {
+      "production_prompt_changed": false,
+      "mean": 2.5,
+      "counts": {"2": 4, "3": 4},
+      "interpretation": "Some purchase-versus-regular-purchase wording improved, but still no evidence of empirical calibration. Not accepted on a higher mean.",
+      "independent_holdout": {
+        "baseline_counts": {"2": 7, "3": 1},
+        "baseline_mean": 2.125,
+        "candidate_counts": {"2": 5, "3": 3},
+        "candidate_mean": 2.375,
+        "controls": [5, 1],
+        "conclusion": "Some decision-scope wording improved, but no evidence that the compressed upper tail was resolved. Not adopted."
+      }
+    },
+    "cf5_investment": {
+      "status": "Completed and execution/source/model/effort audited.",
+      "elapsed_seconds": 1215.22,
+      "public_utterances": 23,
+      "cf4_public_utterances": 11,
+      "actual_memory_record_counts": {"Mariana Costa": 59, "Rafael Almeida": 68, "Eduardo Nogueira": 63},
+      "document_consultation": "Mariana consulted the financial PDF; Rafael consulted both the financial PDF and the conference-call transcript.",
+      "retention_outcome": "Final customer summary accurately acknowledges previously supplied sales, cost, price, EBITDA and cash figures. No stale 7% figure or claim that these metrics were never supplied.",
+      "portfolio_grounding": "Actual actor-visible persona explicitly supplies approximately R$3.5m liquid investments and a meaningful but unspecified Vale holding; these were not fabricated in the discussion.",
+      "quality_caveat": "Conversation is longer than CF4, including redundant early summaries and deferred valuation work. Factual retention improved; overall conversational quality is mixed, not blanket success.",
+      "returned_usage_usd": "0.444084290"
+    },
+    "minimal_actor_trial": "Completed and audited, isolated only. Reduced the instruction layer from 23,350 to 5,795 characters while retaining identical I/O, persona payload, faculty/safety hooks and complete current-state/memory sections. Ratings 2,3,2,2,2,3,2,2; mean 2.25; synthetic controls 4/1. Compression was not resolved, and the variant was not adopted.",
+    "low_effort_diagnostic": "Completed and audited, isolated only. Same eight biographies, original stimuli and timestamp, with explicit low effort across actor, quality evaluation and extraction. All eight public ratings manually match extraction: 2,3,2,2,2,3,2,2; mean 2.25. Native actor reasoning tokens fell from 4,325 to 829 but compression persisted. Not adopted; production default remains xhigh. Returned-usage estimate $0.032385005 is included in the diagnostic subtotal.",
+    "cf5_parents": {
+      "status": "Completed, source/execution audited and all 50 public responses read.",
+      "first_choices": {"A": 0, "B": 31, "C": 10, "D": 0, "E": 9},
+      "quality": "No longer unanimous B, but narrower than CF4 and still repetitive; not empirical validation.",
+      "returned_usage_usd": "0.487036525"
+    },
+    "cf5_gazpacho": {
+      "status": "Completed, source/execution audited and all 50 public responses read.",
+      "counts": {"1": 4, "2": 37, "3": 6, "4": 0, "5": 0, "N/A": 3},
+      "mean": 2.0425531914893615,
+      "quality": "Empirical compression unresolved; no 4/5 ratings. This general-population cohort includes 13 minors and is not an eligibility-matched reproduction of the human panel.",
+      "returned_usage_usd": "0.483724630"
+    },
+    "final_extraction_repair": {
+      "status": "Integrated after three candidate iterations and validated on all 100 real survey histories.",
+      "changes": "Every field respects the requested evidence source; prefer the person's actual public clauses and preserve causal links and qualifications.",
+      "regressions_added_and_passed_in_core": 3,
+      "public_responses_unchanged": 100,
+      "response_type_changes": 0,
+      "verbatim_or_null_justifications": 90,
+      "additional_manual_reviews": 10,
+      "fixed_cases": "Wyatt's correct N/A explanation no longer quotes DONE as speech. Tiana's reason for ranking no-AI last is no longer reversed.",
+      "returned_usage_usd": "0.026659590",
+      "scope": "Extraction-only postprocessing replay, not another full simulation. Only this template differs from the complete-rollout implementation, verified by exact whole-library fingerprint reconstruction."
+    },
+    "investment_retention_replay": "Exact original persona, state, request and schema; reconstructed original memory window matched after normalizing template indentation and removing the new omission notice. Only genuine pre-response events 0-55 were used. Truncated window repeated the stale 7% figure and could not report the dropped metrics. Full window recovered sales, cost, EBITDA, cash flow and debt without inventing portfolio weights or valuation.",
+    "pending": [
+      "A defensible solution to gazpacho's persistent empirical-quality mismatch.",
+      "An agreed validation design and independent eligible human comparison data before adopting a new calibration or measurement mechanism."
+    ],
+    "current_report": "cf5-quality-report.html",
+    "current_manual_review": "cf5-manual-quality-review.json",
+    "current_validation_lineage": "population-scope-validation.json",
+    "extraction_stage_validation_lineage": "cf5-validation-lineage.json",
+    "current_returned_usage_audit": "cf5-returned-usage-audit.json",
+    "human_control_frame": "gazpacho-human-control-frame.json",
+    "diagnostic_summary": "reaction-experiment-summary.json"
+  },
+  "post_cf5_generator_stage": {
+    "status": "Implemented and validated; empirical quality objective remains unresolved.",
+    "repair": "Explicitly distinguish population planning instructions from the biography of one sampled person. Do not copy alternative-value catalogs into individual personas; retain eligibility and individual sampled traits.",
+    "observed_generator_replays": 3,
+    "exact_production_core_cases_added": 2,
+    "final_core_passed": 434,
+    "frozen_actor_replays": 6,
+    "actor_findings": "Diego remained 3, Marco 2, Gabriel 2 under catalog-only removal and separately regenerated biographies. No calibration improvement established.",
+    "correction_loop_audit": "53 actor responses for 50 CF5 gazpacho people. Only the three infants were regenerated; no adult rating was selected by a correction loop.",
+    "returned_diagnostic_responses": 11,
+    "returned_usage_usd": "0.041413675",
+    "cost_scope": "Three generator replays, six actor replays and two assertion-development diagnoses only. Excludes real-model regression/core-suite usage and any failed/unreturned charges; not an invoice.",
+    "source_lineage": "Only the generator paragraph changed after the validated 432-case implementation, verified by in-memory whole-library fingerprint reconstruction. No actor/runtime or extraction implementation changed.",
+    "full_notebook_scope": "The original three complete CF5 notebooks were not rerun under this later generator repair. No second 50-person study or matched-panel empirical validation is claimed.",
+    "research_design": "The updated quality report outlines controlled population/response comparisons and held-out product validation. Published SSR work is discussed with its same-study anchor-optimization caveat; no derived-score measurement mechanism was implemented."
+  },
+  "failed_purchase_clarification_integrated": false,
+  "source_reports": [
+    "cf4-quality-report.html",
+    "cf4-current-metrics.json",
+    "cf4-execution-audit.json",
+    "cf4-gaz-age-standardization.json",
+    "crossed-generator-summary.json"
+  ]
+}

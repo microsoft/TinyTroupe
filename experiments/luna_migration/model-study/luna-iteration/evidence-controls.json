@@ -1,0 +1,29 @@
+{
+  "order_seed": 281028,
+  "protocol": "Explicit synthetic regression fixtures, not additional historical cases. Modify the public TALK in one copied history while preserving its conflicting private THINK. Verify that the extractor follows public evidence rather than always outputting No or the missing-reason marker. A no-TALK fixture checks that a private intention is not a public answer.",
+  "imports": [{"path": "round1.json", "variants": ["public-evidence"]}],
+  "variants": [
+    {
+      "id": "public-yes-control", "parent": "public-evidence",
+      "hypothesis": "A public Yes with a reason overrides a conflicting private No.",
+      "cases": ["extraction-ricardo-original"],
+      "operations": [{"kind": "replace", "message": 1, "old": "> No[/]", "new": "> Yes, because I want help arranging a quiet trip with my partner.[/]", "max_matches": 1}]
+    },
+    {
+      "id": "public-no-reason-control", "parent": "public-evidence",
+      "hypothesis": "A stated public reason is retained rather than replaced by private rationale or the missing marker.",
+      "cases": ["extraction-jolene-original"],
+      "operations": [{"kind": "replace", "message": 1, "old": "> No[/]", "new": "> No, because I already booked next year's vacation.[/]", "max_matches": 1}]
+    },
+    {
+      "id": "private-only-control", "parent": "public-evidence",
+      "hypothesis": "No public answer must produce N/A, not the private No.",
+      "cases": ["extraction-ricardo-original"],
+      "operations": [{"kind": "replace", "message": 1, "old": "acts: [TALK]", "new": "acts: [THINK]", "max_matches": 1}]
+    }
+  ],
+  "selection": {
+    "extraction-ricardo-original": "public-yes-control",
+    "extraction-jolene-original": "public-no-reason-control"
+  }
+}

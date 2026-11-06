@@ -1,0 +1,29 @@
+{
+  "scope": "Fixed-state diagnostic, not yet a full notebook confirmation.",
+  "history": "Only original pre-response events 0-55, with no final response leakage.",
+  "original_window_reconstruction": "Matched after normalizing template indentation and removing the truthful new omission notice.",
+  "schema_preserved": "tinytroupe.agent.CognitiveActionsModel",
+  "model_effort": "gpt-6-luna/xhigh",
+  "truncated_window": {
+    "repeats_stale_7_percent_quarterly_decline": true,
+    "cannot_recover_dropped_source_metrics": true
+  },
+  "full_window": {
+    "does_not_repeat_stale_7_percent_quarterly_decline": true,
+    "acknowledges_sales_cost_ebitda_cash_and_debt": true,
+    "does_not_fabricate_portfolio_weights_or_verified_share_price": true,
+    "keeps_management_guidance_distinct_from_realized_results": true
+  },
+  "independent_pdf_checks": {
+    "source": "data\\grounding_examples\\finance\\Vale do Rio Doce (VALE 3) - Vale's Performance in 3Q24.pdf",
+    "page_9": "Fines realized price US$90.6/t, -14% y/y and -8% q/q. Total iron ore sales 81,838 thousand tonnes, including ROM, rounds to 81.84 Mt; +2% y/y. Pellet sales +18% y/y.",
+    "page_11": "C1 ex-third-party cash cost US$20.6/t.",
+    "page_1": "Proforma adjusted EBITDA US$3,741m, -21% y/y, rounds to US$3.74b.",
+    "pages_6_and_7": "Free cash flow US$179m and expanded net debt approximately US$16.5b.",
+    "production_caveat": "The indexed official company release dated October 15 2024 confirms rounded production of 91.0 Mt and +5% y/y. The precise 90.97 Mt / +5.5% values were retained from the genuine discussion; this audit has not independently verified that finer precision. Direct retrieval of the official webpage returned HTTP 403, so no access bypass was attempted.",
+    "official_production_release": "https://www.vale.com/check-out-the-production-and-sales-results-for-3q24"
+  },
+  "returned_usage_usd": "0.005904725",
+  "cost_basis": "Two saved returned responses at the recorded standard API list rates, not an invoice.",
+  "production_interpretation": "Retain the finite example's earlier source-backed discussion with a local 100-event lookback. No claim that prompts can reconstruct facts absent from model-visible memory."
+}

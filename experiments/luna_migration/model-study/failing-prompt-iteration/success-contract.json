@@ -1,0 +1,40 @@
+{
+  "objective": "Iterate the concrete failing task contracts until corrected outputs pass, then confirm beyond the tuned responses.",
+  "work_started_at": "2026-10-29T17:23:18.9454785-03:00",
+  "user_objective_received_at": "2026-10-29T16:04:44.988-03:00",
+  "elapsed_time_reporting": "Report actual execution since resumption separately from elapsed time since the user's request; no work is claimed during the intervening inactive interval.",
+  "loop": "Prepare auditable candidate; run real Luna/xhigh without hidden retries; apply mechanical gates; inspect semantic evidence; revise any failing contract; freeze candidate; run repeated original cases and additional preselected cases. Any failed confirmation used to tune becomes development evidence and must not be relabeled held out.",
+  "gates": {
+    "agent_action": [
+      "Original response schema and action/tool vocabulary preserved; turn ends with DONE.",
+      "On the translation failure, acknowledge missing source words without inventing their translation, and actually ask the attendant where to stand through an available TALK.",
+      "Do not merely suggest wording and then claim to be waiting for an unasked response.",
+      "Additional cases preserve supplied persona, latest stimulus, knowledge limits, choices and useful in-world action."
+    ],
+    "story_continuation": [
+      "At most 100 whitespace-delimited words, with sensible margin.",
+      "An explicit ending reaches a definite stopping point; not the same unresolved choice plus a moral.",
+      "May introduce authorized fictional environmental events and minor supporting characters.",
+      "Does not invent autonomous agents' personal histories, completed professional analysis or choices.",
+      "Open continuation progresses concretely and preserves chronology and given circumstances."
+    ],
+    "sampling_plan": [
+      "Original JSON shape, sequential IDs, directive bounds and exact total N.",
+      "No unknown dimensions, no shortened or invented categorical values, valid ordered numeric ranges.",
+      "Meaningful combinations compatible with age/work/education constraints; no unsupported demographic-personality stereotypes.",
+      "Useful coverage without claiming calibrated joint representativeness."
+    ],
+    "normalization": [
+      "At most the requested number of distinct labels, each 1-40 characters.",
+      "Every source occurrence, including duplicate strings, appears exactly once in reconstructed output.",
+      "Meaningful recurring semantic themes, with each sampled assignment fitting its theme; no universal or arbitrary-ID grouping.",
+      "Intermediate indexed schema and deterministic reconstruction are explicitly disclosed; not claimed as unchanged-output prompt-only success.",
+      "Test larger and smaller source lists without silently dropping or repairing model assignments."
+    ]
+  },
+  "scope": "Standalone study artifacts only. No commits, pushes, runtime prompt deployment or notebook changes. Persona diversity remains a separate unresolved scientific question; do not make uniform character distributions or desired decisions a passing condition.",
+  "normalization_design_change": "Separate the LLM's semantic task from mechanical copying. The LLM assigns all immutable source identifiers to themes under a strict keyed schema; deterministic code reconstructs the original public mapping. This is a reusable contract/adapter change, not a concealed prompt trick or a validated runtime integration.",
+  "sampling_design_change": "Categorical membership uses one boolean per supplied option, with explicit null for an unconstrained optional dimension. Deterministic reconstruction restores the exact original vocabulary and public plan shape. Semantic compatibility is reviewed separately; neither exact vocabulary nor schema validity implies plausible joint choices.",
+  "large_normalization_design_change": "A global-theme planning call sees every original item; bounded assignment calls share those frozen labels and scopes. Composition rejects missing or overlapping chunks and restores every exact occurrence. This is an explicit multicall workflow, not single-call prompt-only success.",
+  "sampling_semantic_refinement": "Membership v2 was rejected after mechanical success because some strata permitted infant hobbies or dropped the youngest ages. Membership v3 checks youngest admissible ages and compatibility, leaves unsuitable optional axes unconstrained, and retains full general-population age coverage. These are development-driven refinements, not retroactively untouched validation."
+}

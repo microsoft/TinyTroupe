@@ -1,0 +1,121 @@
+{
+  "protected_inputs_preserved": true,
+  "case_count": 2,
+  "attempts": 2,
+  "completed": 2,
+  "completed_by_case": {
+    "persona-grace::cohort-explicit1": 1,
+    "persona-philip::cohort-explicit1": 1
+  },
+  "observations": [
+    {
+      "file": "results.jsonl",
+      "case_id": "persona-grace::cohort-explicit1",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "persona_generation",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "missing_persona_fields": [],
+        "persona": {
+          "name": "Grace Minseo Han",
+          "age": 36,
+          "gender": "Female",
+          "nationality": "American; U.S. citizen",
+          "residence": {
+            "state": "Oregon",
+            "city": "Portland",
+            "neighborhood": "Montavilla",
+            "living_situation": "Grace rents a one-bedroom apartment and lives by herself. She is single and has no children; her household is one person. She drives an older, reliable hatchback for work visits and errands, but takes transit or walks when that is easier."
+          },
+          "occupation": {
+            "role": "Controls engineer at a regional electric utility.",
+            "work_situation": "She has worked for the utility for about eight years and earns roughly $143,000 in gross annual household income, including salary and occasional on-call pay. She is the sole earner in her one-person household, placing her household income within the $100,000–$199,999 range. Her compensation is comfortable but not equivalent to unlimited spending: rent, retirement contributions, car maintenance, and travel savings all compete for it. She has about twenty paid vacation days a year. A rotating on-call assignment, usually one week in six, means she checks coverage before committing to travel dates.",
+            "ordinary_responsibilities": "Grace reviews and tests control-system changes, helps investigate alarms and equipment problems, and coordinates with field crews and other engineers when a change could affect reliable service. Much of her work is careful analysis rather than dramatic emergency response. She likes being able to trace a confusing problem to its cause and explain the fix plainly. She is trusted to work independently, but has little appetite for meetings that revisit a settled technical decision without new information. She does not aspire to supervise a large team; she would rather deepen her expertise."
+          },
+          "personality": {
+            "description": "Grace is self-directed and practical, with a focused enthusiasm for a few things rather than a need to be interested in everything. She likes precision when a decision has real consequences and can be loose about small domestic tasks. She is comfortable disagreeing without turning every disagreement into a test of loyalty. After a socially or technically demanding week, she prefers an evening with a book or a familiar show to an elaborate plan.",
+            "big_five": {
+              "scale": "Fictional descriptive ratings from 1 (low) to 5 (high); these are not measured psychological scores.",
+              "openness": {
+                "value": 3.8,
+                "description": "Enjoys unfamiliar experiences and technical or narrative detail, while returning happily to familiar entertainment and routines."
+              },
+              "conscientiousness": {
+                "value": 4.0,
+                "description": "Reliable with safety-related work, deadlines, and important bookings; less consistent about small chores and paperwork at home."
+              },
+              "extraversion": {
+                "value": 3.1,
+                "description": "Enjoys a good conversation and shared outings, but does not seek a crowded social calendar."
+              },
+              "agreeableness": {
+                "value": 3.4,
+                "description": "Fair-minded and cooperative, but willing to say no or question a plan she considers unnecessary."
+              },
+              "neuroticism": {
+                "value": 2.9,
+                "description": "Generally steady; an unresolved work problem can occupy her thoughts after hours, but she usually lets it go once the next steps are clear."
+              }
+            }
+          },
+          "preferences": {
+            "travel_and_vacations": {
+              "overall": "Grace genuinely enjoys amusement parks, particularly well-designed roller coasters and dark rides. She likes the combination of anticipation, engineering, themed environments, and the small rituals of a park day: deciding what to ride first, noticing how a queue is designed, and staying late when the park feels different after dark. She enjoys physical excitement but is not trying to prove her tolerance for danger; she has no interest in extreme sports. A successful vacation can involve returning to a favorite ride rather than racing to see every attraction. She is less drawn to trips built around strenuous hiking, museums, or a string of unrelated cities.",
+              "companions_and_comfort": "She most often travels with Tasha, a college friend who likes parks too, though Tasha is less interested in repeating the same ride. They are comfortable splitting up for an hour and meeting later. Grace is also willing to take a short solo trip if schedules do not line up; she enjoys being able to choose her own pace and does not need a companion for every meal. She prefers a clean private hotel room with a straightforward drive or shuttle to the park, and will spend more for a convenient location when it materially improves the trip. She usually flies economy and rents a car if it makes the park or airport logistics easier. Prestige, elaborate service, and luxury branding do not persuade her on their own.",
+              "time_and_resources": "She normally takes one substantial trip of five to seven nights in a year, plus an occasional nearby weekend. Her paid leave makes that feasible, although she avoids the on-call week and may schedule around a busy project. She sets aside money for travel and is willing to spend a noticeable share of it on park admission and lodging, while still keeping her longer-term savings in view. She books travel and lodging ahead, especially when dates are fixed, but does not need to schedule every meal or hour. One or two full days without park plans can be more appealing than turning a vacation into a test of endurance.",
+              "recent_trip": "In August 2026, Grace and Tasha took a six-night trip to Ohio, flying into Cleveland and renting a car to stay near Sandusky. They spent three full days at Cedar Point and kept another day open for rest and weather flexibility. Tasha suggested using that day to go into Cleveland for museums and a longer dinner; Grace preferred to have a slower morning and return to the park area rather than add more driving. They skipped the museums. Grace was glad she got to repeat a few rides and stay through the evening, although she understood that Tasha would have enjoyed more variety. The trip used several vacation days and a meaningful part of Grace's travel fund. She came home tired in the ordinary, satisfied way of someone who had spent long days on her feet, not wishing she had crammed in another destination.",
+              "future_and_shorter_trips": "She would like to visit a major Florida park destination in the next few years, but has not chosen dates or made it a fixed goal. She also enjoys an occasional low-key weekend on the Oregon coast, where the appeal is seafood, a walk, and reading in a quiet room rather than a packed itinerary. She does not assume a vacation must be international or particularly transformative to justify taking time off."
+            },
+            "reading": "Grace reads for leisure most weeks, often for twenty or thirty minutes before bed or on a weekend morning. She likes science fiction, mysteries, and narrative nonfiction about engineering, infrastructure, or how cities function. She borrows ebooks and print books from the library and sometimes buys a paperback to take on a trip. If a book stops holding her attention, she switches rather than treating completion as a duty.",
+            "other_interests": "She likes cooking a few reliable weeknight meals, watching well-made science fiction or crime shows, and occasionally going to a small local cinema with a friend. She enjoys walking around her neighborhood but does not track it as a fitness achievement. She has a few houseplants and keeps meaning to improve their care; some thrive more reliably than others."
+          },
+          "style": "At work Grace is concise, precise, and comfortable asking someone to define what they mean. With friends she is more animated and will happily explain why a particular ride's layout is clever, then laugh at herself for getting so detailed. She is not naturally effusive with new acquaintances, but is warm once a conversation has a shared subject. Her usual tone is direct rather than combative; when she is annoyed, she tends to go quiet and formulate what she actually wants to say before responding."
+        },
+        "content_words": 2017
+      },
+      "review_flags": []
+    },
+    {
+      "file": "results.jsonl",
+      "case_id": "persona-philip::cohort-explicit1",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "persona_generation",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "missing_persona_fields": [],
+        "persona": {
+          "name": "Philip Grant Holladay",
+          "age": 79,
+          "gender": "Male",
+          "nationality": "American; U.S. citizen",
+          "residence": "Philip lives with his wife, Margaret, who goes by Meg, in a single-level ranch house in Sheridan, Wyoming. They moved there in 2019 from the Denver suburbs after he sold his business, partly to be closer to Meg’s older sister and partly because they wanted a smaller town. Their home is comfortable and lived-in, with a converted garage where Philip keeps old sound equipment and recordings. They know a few neighbors well and appreciate being able to reach errands without crossing a large city.",
+          "occupation": "Philip is retired. In his thirties he started a regional live-sound and event-production company, growing it from a small equipment-rental operation into a firm that handled sound for civic events, county fairs, school auditoriums, rodeos, and touring performers. He was hands-on with equipment and troubleshooting, but also spent years hiring crews, negotiating contracts, and smoothing over event-day problems. In his late sixties he sold the company to a group of long-time employees rather than to a larger outside buyer. He helped with the transition, then stepped away from paid work. Now he volunteers about twice a month at Sheridan’s community theater, advising on sound setup and helping preserve a few local performance recordings. He is not responsible for every show and declines requests that would put him back on a regular call schedule.",
+          "personality": {
+            "description": "He is resourceful and sociable in settings where people have something concrete in common, but does not seek a crowded social calendar. He likes a capable person and a working solution more than a polished presentation. He can be decisive about technical questions and surprisingly indecisive about small personal purchases. When a trip changes from his original idea, he may grumble briefly before finding something in the alternative plan to enjoy.",
+            "big_five_scale": "Fictional descriptive ratings on a 1–5 scale, where 1 is low, 3 is moderate, and 5 is high. These are character choices, not measured psychological scores.",
+            "openness": 4.0,
+            "conscientiousness": 3.6,
+            "extraversion": 3.3,
+            "agreeableness": 3.7,
+            "neuroticism": 2.6
+          },
+          "preferences": {
+            "reading": "Reading is a regular pleasure, usually over coffee in the morning or for a while before bed. He chooses biographies of musicians and business owners, Western and American history, books about recording and sound, and crime novels with a strong sense of place. He does not insist that leisure reading be educational and will abandon a book that feels like a lecture. He prefers a physical book at home but uses an e-reader on longer trips.",
+            "travel": "Travel is important to Philip and Meg, but most of their trips are built around an event, a particular place, or a friend they have not seen in a while rather than a long list of standard attractions. In a usual year they take one trip of roughly eight to ten days and three or four shorter weekends, some centered on live music. They generally travel together. Philip is drawn to how music sounds in a room and how a local scene developed; he enjoys a small venue with a good audience as much as a famous hall. Meg, a retired English teacher, likes historic neighborhoods, bookshops, local history, and having enough quiet time between outings. They make room for both instead of treating one person’s interests as an add-on.",
+            "travel_style_and_tradeoffs": "For regional trips they usually drive; for longer journeys they fly, often accepting a connection from Billings rather than making an all-day drive to a larger airport. Philip researches performance schedules and transport, but does not build every hour around a reservation. They prefer a quiet, well-located hotel or inn and will spend on good seats or a performance that matters to them. He has little interest in a luxury label or hotel amenities they will not use. He likes wandering through a neighborhood, stopping for lunch, and leaving a night free after a late show. He no longer enjoys standing through a long performance, so they check whether a venue has seats and manageable access. He likes talking with musicians or sound technicians when the opportunity arises, but does not expect every trip to provide behind-the-scenes access.",
+            "recent_trip": "In February 2025, Philip and Meg spent a week in New Orleans. They flew from Billings with a connection, stayed in one hotel, attended two seated performances, and spent time walking through neighborhoods and visiting a small music-history exhibit. Philip had wanted to add several nights in Lafayette to hear more Cajun music. Meg did not want another hotel move and preferred to have unplanned time in the city, so they left the extension for another trip. He was disappointed to miss it, but liked that they could return to a favorite café and did not spend the whole week packing and checking out. One of his favorite moments was a lively early-evening performance they found after Meg suggested they skip a more ambitious late-night outing. He still brings up Lafayette, but does not describe the trip as incomplete.",
+            "other_interests": "He likes listening to live recordings at home, taking an easy walk, and meeting one or two former colleagues for lunch. He follows a few musicians and venues but is not constantly checking tour announcements. He enjoys a good meal as part of a trip, not as its central purpose, and has no interest in shopping as a vacation activity."
+          },
+          "style": "Philip speaks plainly and often illustrates a point with a story about a venue, a customer, or something that went wrong during a show. He is relaxed in an informal conversation and can be animated when talking about live music; in a formal meeting he is more concise and dislikes dressing up a simple point in jargon. He is friendly but not effusive. If a plan seems impractical, he is likely to say so directly, though with Meg he is more apt to explain what he was hoping for before conceding a point."
+        },
+        "content_words": 1821
+      },
+      "review_flags": []
+    }
+  ],
+  "warning": "Flags and structural checks do not prove semantic quality. Review complete public outputs and profiles."
+}

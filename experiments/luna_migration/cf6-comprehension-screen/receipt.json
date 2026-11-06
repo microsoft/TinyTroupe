@@ -1,0 +1,30 @@
+{
+  "returned_responses": 27,
+  "returned_usage_estimate": {
+    "unique_saved_api_responses_in_run_window": 27,
+    "responses_missing_usage": 0,
+    "tokens": {
+      "prompt": 182041,
+      "completion": 24822,
+      "cached": 25072,
+      "writes": 150469
+    },
+    "usd": "0.032120345",
+    "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+  },
+  "original_command_exit": 1,
+  "failure": "Final whole-library fingerprint assertion, after all six pipeline results saved.",
+  "recovery": "No model calls repeated. In-memory removal of only the four-line dimension-generation docstring addition recovers the exact screen-start hash.",
+  "screen_start_library_sha256": "da9b18f188a7ce3e2d83e5b554375b49159839290fd144fc39fb7a66c5409c21",
+  "current_library_sha256": "ca9b09398b9dab603bc54a6fa729d7b27ce386dc80eeb3cff6e5117d51fa16f9",
+  "only_intervening_library_change": "factory\\tiny_person_factory.py",
+  "actor_instructions_unchanged_during_screen": true,
+  "new_comprehension_rule_present_in_every_saved_actor_request": true,
+  "scope": "Frozen biographies; dimension generation is never called in this screen. The docstring edit does not affect its actor/correction/extractor execution.",
+  "review": {
+    "age_0_2_3": "No purchase digit invented; actual original extractor returns N/A.",
+    "age_4": "Still gives a public 2. Not claimed repaired or used as an adult purchase judgment; no universal preschool age cutoff is imposed.",
+    "adults": "Original public ratings 2 and 3 remain available.",
+    "calibration": "Not tested; no distribution or high-score improvement claim."
+  }
+}

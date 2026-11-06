@@ -1,0 +1,15 @@
+{
+  "frozen_before_planning_calls": true,
+  "semantic_protocol": "contrast-protocol.json",
+  "transport_change": "Planning only: replace json_object with strict json_schema enforcing exactly four candidates and all five requested fields. Final-persona request transport, model, effort, token limits and original particulars are unchanged.",
+  "reason": "A second six-response contrast-plan-json batch again failed the offline required-field gate at Philip replicate 2. Prose skeletons alone are not a reliable contract. No selections or expansions were saved for that batch.",
+  "candidate_count": 4,
+  "required_candidate_fields": ["particulars", "life_course", "daily_life", "travel", "personality_and_voice"],
+  "selection_seed": 291028,
+  "expansion_instruction": "candidate-expansion.txt",
+  "repeats_per_source": 3,
+  "planned_api_calls": 12,
+  "acceptance": "Original semantic gates remain unchanged. Review final plans and expansions in full. Keep missing-field, transport and diversity failures visible.",
+  "stopping_rule": "No further semantic prompt revision after this final structured batch in the current continuation. Report remaining failures or limits rather than hiding them.",
+  "limitations": "Two-call coverage-seeking method; independent pipeline calls do not share previous drafts, but candidate alternatives and their frequencies are model-defined and not empirically calibrated."
+}

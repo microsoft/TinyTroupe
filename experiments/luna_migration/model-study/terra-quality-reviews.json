@@ -1,0 +1,106 @@
+{
+  "method": "Direct, unblinded qualitative review of all 20 paired responses, with exact inputs and one candidate sample per case. Structural/grounding checks are separate from subjective quality judgments. No aggregate preference score or statistical significance is claimed. Candidate effort is xhigh, with only model/effort overridden; no TinyTroupe runtime is used.",
+  "synthesis": "Terra improves concrete professional detail and broadens the brainstorm beyond Luna's near-identical evidence-linked documents. Both sampled children's rankings change substantially. It does not fix the two original extraction evidence violations; both models pass after the public-only prompt repair. All three sampled travel decisions remain No, and both generated personas retain cautious, midrange travel preferences. One gazpacho action sequence omits the required public TALK entirely. This is promising for ideation, not evidence that Terra is an across-the-board replacement or that cohort-level calibration is repaired.",
+  "cases": [
+    {
+      "case_id": "chat-galette",
+      "verdict": "Mixed; no clear gain",
+      "finding": "Terra says it cannot recall a cooking mishap, suggests rosemary/lemon focaccia, and asks about shared spaces. This is coherent and reciprocal, but less vivid than Luna's galette anecdote. In a fictional-person simulation, refusing to invent an unspecified anecdote is not automatically more realistic."
+    },
+    {
+      "case_id": "chat-design-tradeoff",
+      "verdict": "Modestly better specificity",
+      "finding": "Terra explains a windowed bedroom/study with a proper door and sockets, rather than mainly listing flexibility costs. Both remain professional, conversational and reciprocal. This is a qualitative single-response judgment, not measured realism."
+    },
+    {
+      "case_id": "interview-evidence-pilot",
+      "verdict": "Modestly better actionability",
+      "finding": "Terra adds a concrete verification-status hypothesis, proposed two-to-three-week discovery subject to capacity, accountable decision owners and an expand/revise/stop decision. It does not assert verified bank baselines or commit other leaders' resources. Both outputs are long and consultant-like, so extra detail is not automatically more natural."
+    },
+    {
+      "case_id": "brainstorm-no-link-safeguard",
+      "verdict": "Comparable, different useful safeguard",
+      "finding": "Luna explicitly says no link recorded does not mean no support or incorrect. Terra separates accepting a Track Changes edit from closing impact reviews, and says an incomplete map is not proof of compliance. Both handle uncertainty responsibly; Terra does not reproduce the exact unlinked-text distinction."
+    },
+    {
+      "case_id": "brainstorm-initial-lisa",
+      "verdict": "Modestly better role grounding",
+      "finding": "Terra proposes an evidence lab grounded in search-ranking tests plus a decision-rehearsal space. Luna already had an evidence-aware document plus a reader stress test; improvement is in mechanism and concrete professional grounding, not simply having two ideas."
+    },
+    {
+      "case_id": "brainstorm-initial-oscar",
+      "verdict": "Better breadth in this sample",
+      "finding": "Terra pairs a living design decision book with a resident stress-test for shopping, wheelchair access and changing needs. This adds a distinct experience-simulation mechanism to the evidence/requirements theme shared with Luna. It keeps scenarios as investigation prompts, not compliance proof."
+    },
+    {
+      "case_id": "brainstorm-initial-marcos",
+      "verdict": "Better breadth in this sample",
+      "finding": "Terra proposes a diagnostic reasoning lab and an evidence-to-patient applicability map. This is broader than Luna's traceable clinical documentation while preserving uncertainty and clinician judgment. These are speculative feature ideas, not demonstrated diagnostic or treatment capabilities."
+    },
+    {
+      "case_id": "extraction-ricardo-original",
+      "verdict": "Same evidence-grounding failure",
+      "finding": "The public answer is only No. Terra invents a public rationale about two children and affordable family travel, just as Luna does. Private context can explain a decision but cannot establish what the participant publicly justified."
+    },
+    {
+      "case_id": "extraction-ricardo-public-only",
+      "verdict": "Same correct repaired result",
+      "finding": "Both return exactly response No and justification No public justification provided. This supports the prompt repair, not Terra's superiority."
+    },
+    {
+      "case_id": "extraction-jolene-original",
+      "verdict": "Same evidence-grounding failure",
+      "finding": "Terra supplies scenic, comfortable, flexible travel with clear costs as a rationale despite the bare public No. This repeats Luna's public/private evidence error under the original instruction."
+    },
+    {
+      "case_id": "extraction-jolene-public-only",
+      "verdict": "Same correct repaired result",
+      "finding": "Both return exactly response No and justification No public justification provided. The extraction instruction, not the model replacement, repairs the observed failure."
+    },
+    {
+      "case_id": "travel-affordable-trip",
+      "verdict": "Same preference; more concrete wording",
+      "finding": "Both say No. Terra names the Smokies/Savannah and a $700-$1,200 trip budget while prioritizing an affordable trip with Morgan. Plausible specificity does not fix population diversity, and no purchase is inherently required."
+    },
+    {
+      "case_id": "travel-can-afford-luxury",
+      "verdict": "Same preference",
+      "finding": "Both say No despite ability to pay. Terra prefers a Great Lakes getaway with Megan and local activities over spa amenities. Three selected No decisions cannot show that a full Terra cohort would also be unanimous."
+    },
+    {
+      "case_id": "travel-modest-getaway",
+      "verdict": "Same preference",
+      "finding": "Both say No. Terra gives a coherent account of a modest trip with Elena, bills, schedules and pet-sitting. This remains an individual valid refusal, not independent evidence of group-level failure."
+    },
+    {
+      "case_id": "children-ranking-collapse-1",
+      "verdict": "Substantially different; calibration unproven",
+      "finding": "Luna ranks B,D,A,E,C; Terra ranks C,E,B,A,D, prioritizing the $10 illustrated app and an existing phone. This broadens the two-case choice pattern. Terra still wants parent controls and a trial with the child despite the stated independent-use/no-supervision proposition, so the ranking is not proof of unconditional acceptance or better empirical fidelity."
+    },
+    {
+      "case_id": "children-ranking-collapse-2",
+      "verdict": "Substantially different; calibration unproven",
+      "finding": "Luna ranks B,D,A,E,C; Terra ranks E,C,D,A,B and connects low cost, audio storytelling and design interests. It still proposes an initial supervised trial and later checks. Different rankings for two people are encouraging for diversity but cannot establish a full population distribution."
+    },
+    {
+      "case_id": "gazpacho-underdispersion-1",
+      "verdict": "Worse: missing public answer",
+      "finding": "Luna publicly answers 2. Terra privately thinks it would pick 2, then returns DONE with Waiting to give my answer, with no TALK action. The final stimulus explicitly requires THINK followed by TALK with the propensity score. API completion and schema validity therefore do not mean the survey task succeeded; do not extract a public score from private thought."
+    },
+    {
+      "case_id": "gazpacho-underdispersion-2",
+      "verdict": "Same score; more concise",
+      "finding": "Both publicly answer 2. Terra gives texture uncertainty and willingness to sample; Luna additionally repeats a long self-introduction. Concision helps the immediate response but does not demonstrate improved full-cohort dispersion."
+    },
+    {
+      "case_id": "persona-grace",
+      "verdict": "Mixed; no demonstrated diversity repair",
+      "finding": "Terra generates a 37-year-old single, childless woman in Seattle with about $148,000 income; Luna used a 38-year-old Sacramento analyst at $147,000. Both satisfy the visible primary demographic ranges. Terra adds ordinary contradictions such as an organized calendar but untidy laundry, yet retains financially cautious, midrange travel. Two personas cannot test the 117/150 practical-trait prevalence."
+    },
+    {
+      "case_id": "persona-philip",
+      "verdict": "Mixed; no demonstrated diversity repair",
+      "finding": "Terra generates an 81-year-old married, childless retired civil engineer in Fort Collins with $266,000 household income, within the supplied constraints. Luna generated an 82-year-old retired civil engineer in the same city. Terra adds nuanced interpersonal flaws, but both still favor planned, comfortable midrange travel rather than luxury. Surface wording variation does not establish a more diverse persona population."
+    }
+  ]
+}

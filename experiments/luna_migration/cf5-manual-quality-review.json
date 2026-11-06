@@ -1,0 +1,59 @@
+{
+  "status": "All three full rollouts and all 100 re-extractions reviewed. Additional scoped-generator repair passed the 434-case core suite; six frozen actor replays did not establish calibration improvement. Empirical gazpacho quality remains unresolved.",
+  "public_utterances_read": 123,
+  "full_rollout_source": "fca0c6b13bdbfb88a0856955384530f42bed3f2b8bee350bb23dccbe5d8375cd",
+  "investment": {
+    "verdict": "Improved factual retention; mixed conversational quality.",
+    "public_utterances": 23,
+    "previous_cf4_utterances": 11,
+    "retention": "Final customer summary retains previously supplied sales, prices, cost, EBITDA and cash figures. No stale 7% price-decline claim or final claim that these figures were never supplied.",
+    "sources": "Both professionals consult the financial release; the adviser also consults the conference-call transcript. Reported figures and management forecasts are generally distinguished. The R$3.5m liquid-portfolio disclosure is present in the actual persona.",
+    "limitations": "Early redundant summaries and repeated requests for inaccessible independent prices/data remain. No numerical valuation or allocation recommendation is justified by the supplied materials. More public utterances are not treated as an improvement."
+  },
+  "parents": {
+    "verdict": "Improved over the original unanimous refusal; narrower and more repetitive than CF4.",
+    "first_choices": {"A": 0, "B": 31, "C": 10, "D": 0, "E": 9},
+    "previous_cf4_first_choices": {"A": 1, "B": 20, "C": 16, "D": 1, "E": 12},
+    "all_50_public_rankings_match_original_and_repaired_extraction": true,
+    "household_eligibility": "All 50 complete generation biographies exactly match CF4. The earlier full-field review established a current qualifying child aged four/five for every profile; age/name and actual actor-visible biography matches were independently checked for CF5. The cohort includes one 15-year-old parent; this is not claimed to be a representative joint population distribution.",
+    "interpretation": "Many distinguish optional independent use from choosing to co-use a device; others decline until content/privacy details are known. Shared cost, privacy and screen-time themes remain strong. Variety alone is not empirical validation.",
+    "original_extraction_error": "Tiana's old explanation incorrectly attached refusal-to-leave-a-child-alone to ranking no-AI last. The final public-clause prompt preserves her actual openness-to-trying rationale and separate supervision qualification."
+  },
+  "gazpacho": {
+    "verdict": "Empirical compression unresolved; essentially the same problem as CF4.",
+    "counts": {"1": 4, "2": 37, "3": 6, "4": 0, "5": 0, "N/A": 3},
+    "all_47_numeric_public_answers_and_three_nonanswers_match_extraction": true,
+    "missing": "Hazel age 1, Wyatt age 1 and Clara age 0 provide no numerical rating; no score is imputed.",
+    "cohort": "50 biographies, including 13 minors. This general-US simulation is not an eligibility-matched reproduction of the 50 US-based PickFu respondents. Restricting prior comparisons to adults did not remove the compressed upper tail.",
+    "original_extraction_error": "Wyatt's correct N/A explanation improperly quoted an adult-language DONE message. Re-extraction grounds the explanation in his actual babble and absence of a public number.",
+    "limits": "Repetitive warm/familiar-food reasoning and purchase-versus-regular-purchase qualification remain. Preschool numerical answers are not treated as validated adult purchase judgments. No empirical-accuracy claim is made."
+  },
+  "postprocessing": {
+    "public_responses_semantically_unchanged": 100,
+    "response_type_changes": 0,
+    "automatic_verbatim_or_null_justifications": 90,
+    "additional_manual_justification_reviews": 10,
+    "manual_names": [
+      "Ryan Thomas Gallagher", "Rebecca Lynn Kessler", "Colin Patrick Brennan",
+      "Heather Anne Sullivan", "Aaliyah Renee Brooks", "Nisha Anjali Perera",
+      "Warren Ellis Gentry", "Gabriel Leon Sandoval", "Wyatt Thomas Miller", "Micah Brooks"
+    ],
+    "manual_findings": "Faithful omitted-clause summaries, paraphrases, extra quotation marks, or a public nonanswer explanation. No additional private/DONE evidence or reversal of stated reasons found in these ten.",
+    "scope": "A later extraction-only replay, not a second full simulation. Source lineage is recorded separately."
+  },
+  "population_scope_followup": {
+    "generator_cases": "Three observed catalog-bearing biographies returned without population catalogs; identity, age and the reviewed food/adoption preferences were preserved. Other sampled dimensions were not exhaustively audited.",
+    "regressions": "Two exact-production real-factory cases verify opposed food preferences, current parent eligibility and absence of population catalogs. Both passed, as did the full 434-case core suite.",
+    "actor_replays": "All six public replies were read directly: Diego remained 3, Marco 2 and Gabriel 2 under catalog-only removal and separately regenerated biographies.",
+    "correction_audit": "Only Hazel, Wyatt and Clara were regenerated in the complete CF5 gazpacho run; all are infants. Adult rating compression was already present before correction.",
+    "scope": "A later generation-prompt repair and bounded first-turn diagnostics, not another complete 50-person study or empirical validation.",
+    "lineage": "population-scope-validation.json"
+  },
+  "prompt_experiments": {
+    "completed_bounded_conditions": 21,
+    "lower_effort_adopted": false,
+    "minimal_actor_template_adopted": false,
+    "combined_situated_rules_adopted": false,
+    "interpretation": "Neither simplified actor instructions, new-reaction rules, decision-scope clarification nor the explicit low-effort diagnostic established a gazpacho calibration repair. Synthetic preference controls are not empirical observations."
+  }
+}

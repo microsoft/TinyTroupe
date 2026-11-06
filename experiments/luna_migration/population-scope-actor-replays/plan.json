@@ -1,0 +1,36 @@
+{
+  "created_at": "2026-11-02T21:28:57.188184+00:00",
+  "names": [
+    "Diego Andrés Quintana",
+    "Marco Antonio Salazar",
+    "Gabriel Leon Sandoval"
+  ],
+  "calls": 6,
+  "conditions": [
+    "catalog_only_removed",
+    "regenerated_biography"
+  ],
+  "constants": "Captured full actor instructions, chronological stimuli, time, response schema, model, effort, token limit and all non-persona messages.",
+  "catalog_only": "Only identified alternative-value catalogs/notes are removed. Selected individual descriptions and every other original persona field remain.",
+  "new_biographies": "Same sampled characteristics, new elaborations from the scoped-generator candidate.",
+  "acceptance": "Diagnostic only; no empirical calibration or population inference from six replays.",
+  "quality_audit": {
+    "actors": 50,
+    "actor_calls": 53,
+    "feedback_exposed": [
+      {
+        "name": "Hazel Marie Kessler",
+        "age": 1
+      },
+      {
+        "name": "Clara Whitaker",
+        "age": 0
+      },
+      {
+        "name": "Wyatt Thomas Miller",
+        "age": 1
+      }
+    ],
+    "finding": "Only three infants were regenerated. No adult rating was selected by a correction loop in the complete CF5 run, so disabling correction is not a supported adult-rating remedy."
+  }
+}

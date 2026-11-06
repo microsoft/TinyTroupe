@@ -1,0 +1,24 @@
+{
+  "created_at": "2026-11-02T22:59:01.858778+00:00",
+  "hypothesis": "Explicitly requested endpoints can disappear when only allowed as members of multi-option lists; actual coverage needs compatible singleton allocations, not a downstream rating target.",
+  "conditions": [
+    "concrete_contrast_coverage_v2"
+  ],
+  "revision": 2,
+  "comparison": "Revision 2 retains the first experiment's baseline; no baseline redraw.",
+  "constants": "Original 79 dimensions, original population description, sample size 50, bounds/count limits, optional fields, strict closed-vocabulary schema, model gpt-6-luna and effort xhigh.",
+  "candidate_paragraph": "\nCheck realized contrast coverage before returning the plan. For each behavioral\nfamily explicitly requested by the population specification, identify the opposing\nends in the supplied option meanings, including its stated extremes rather than\nsubstituting only moderate alternatives.\nWhen eligibility and sample size permit, give each requested end at least one\ncompatible directive that selects that option alone in that dimension. Quantities\ncan be one; other directives may retain mixed alternatives and supplied weights.\nCount only these singleton allocations as guaranteed coverage. An extreme allowed\nonly in a mixed list can disappear when the caller draws the actual people.\nReview the completed plan against those ends and revise missing allocations before\nreturning it, without overriding eligibility or reported demographic proportions.\nThis is illustrative contrast coverage, not an estimate of behavioral prevalence.\nDo not equalize demographic categories or prescribe downstream decisions or scores.\n",
+  "production_prompt_sha256": "36db9090c77858b032230cae07cccb26382157ffdcb890bc208481dc7b4695db",
+  "targeted_options": {
+    "culinary_tastes": [
+      "Prefers familiar, traditional home cooking, such as regional family recipes, straightforward sides, and meals tied to personal or community traditions.",
+      "Is adventurous about food, regularly tries unfamiliar cuisines, ingredients, and cooking techniques, and enjoys discussing how dishes reflect their cultural origins."
+    ],
+    "attitude_toward_new_products": [
+      "Is strongly resistant to changes in routines and products, viewing many new offerings as unnecessary, confusing, or designed to create avoidable costs.",
+      "Is an extreme novelty seeker who buys untested products impulsively and disregards reasonable warnings, costs, or safety information."
+    ]
+  },
+  "acceptance": "Actual guaranteed coverage of the four predefined requested contrast ends; valid counts and schema; preserved approximate supplied demographic proportions; age/group compatibility and subsequent manual joint-eligibility review. Do not select or redraw based on survey ratings.",
+  "production_changed": false
+}

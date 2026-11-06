@@ -1,0 +1,32 @@
+{
+  "reviewer": "Assistant full review of all six v2 candidate sets and all six v2 expansions; first-plan batch checked structurally and rejected before expansion.",
+  "first_plan": {
+    "completed_calls": 6,
+    "structural_failure": "Philip replicate 0 omitted personality_and_voice in every candidate.",
+    "action": "Preserved raw results. The validator stopped before saving selections or calling expansion. No weakened validation or manual profile repair."
+  },
+  "v2_plans": {
+    "completed_calls": 6,
+    "candidate_count": 24,
+    "structure": "All candidates contain the five required fields. Full review found original particulars explicit and broadly coherent.",
+    "grace": "Repeated state/age progressions and varied job titles did not produce strong experiential differences. Most candidates still prefer walkable cities, books, museums, unhurried time, advance arrangements and quiet social lives.",
+    "philip": "Some proposals introduce baseball, music or birding, but many preserve the same measured voice, comfortable cultural trips and low-key social life. The externally selected set remains more similar than the prior adaptive coverage results.",
+    "judgment": "Do not claim repaired diversity merely because the candidate lists contain four differently labeled lives."
+  },
+  "v2_expansions": [
+    {"case": "persona-grace::candidate-expansion-luna6-xhigh-0", "index": 0, "life": "Age 34, Seattle product accessibility specialist; $148,000; city/green-space travel.", "judgment": "Coherent full profile retaining original particulars and selected sketch; familiar technology-professional travel template."},
+    {"case": "persona-grace::candidate-expansion-luna6-xhigh-1", "index": 3, "life": "Age 53, Anchorage construction-supply operations coordinator; $118,000; changed landscape, local food and open time.", "judgment": "Coherent and faithful to sketch. Different circumstances, but very similar quiet travel and personality framing."},
+    {"case": "persona-grace::candidate-expansion-luna6-xhigh-2", "index": 2, "life": "Age 44, San Jose technical program manager sharing with mother; $181,000 household income; city museums and reading.", "judgment": "All original constraints explicit, household income correctly distinguished from salary; still close to earlier quiet city-travel template."},
+    {"case": "persona-philip::candidate-expansion-luna6-xhigh-0", "index": 0, "life": "Age 78, Colorado retired civil engineer; $262,000; scenic car/train travel.", "judgment": "Coherent, faithful to selected sketch and original constraints; repeats the earlier engineering-and-unhurried-travel archetype."},
+    {"case": "persona-philip::candidate-expansion-luna6-xhigh-1", "index": 2, "life": "Age 76, Idaho retired medical-device operations manager; at least $200,000; gardens, bookshops and settled cultural trips.", "judgment": "Coherent and faithful; volunteering adds context but travel motivations remain very similar."},
+    {"case": "persona-philip::candidate-expansion-luna6-xhigh-2", "index": 3, "life": "Age 89, Montana retired controller with girlfriend; over $200,000; visits, history and quiet scenic stays.", "judgment": "Coherent and faithful; partnership differs meaningfully but broad quiet cautious travel template persists."}
+  ],
+  "conclusion": "The two-stage mechanics worked after structural repair, but external selection alone was insufficient: the proposed alternatives were not contrasting enough. No selected output was redrawn or substituted.",
+  "transport_failure": {
+    "batch": "contrast-plan/results.jsonl",
+    "attempts": 6,
+    "error": "API 400: JSON-object response mode requires the word JSON in messages.",
+    "usage": "No usage or completions returned; exclude from measured cost rather than assigning a verified zero charge.",
+    "repair": "A separately labeled contrast-plan-json recipe adds explicit JSON wording; replay_body now checks this prerequisite before any API call."
+  }
+}

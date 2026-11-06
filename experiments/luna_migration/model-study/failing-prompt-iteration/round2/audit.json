@@ -1,0 +1,26 @@
+[
+  {
+    "case_id": "exec-chatcmpl-EcSEDbTD31QQYHRw2vsuCbxbTHSak::indexed-themes-v1-bounded-schema::r1",
+    "stage": "failure-development-round2",
+    "source_case_id": "exec-chatcmpl-EcSEDbTD31QQYHRw2vsuCbxbTHSak",
+    "variant": "indexed-themes-v1-bounded-schema",
+    "adapter": "indexed_normalization",
+    "repetition": 1,
+    "hypothesis": "Same semantic prompt; replace repeated enums with integer bounds to stay below the API's 1000-total-enum schema limit. Original rejected requests remain preserved.",
+    "original_request_sha256": "de7bb7c940a364f91b965b6dd54e14ffb5f0db7c1199530f2376bc7276e1dc72",
+    "instruction_sha256": "d6c6ddf3ef3edda09617b1a32b331fc7ba389694e124363ecca5925844bdf646",
+    "source_selection": "Previously reviewed cases are development, regardless of earlier split labels."
+  },
+  {
+    "case_id": "exec-chatcmpl-EcQHB8Uq23EuJYVQIjxMXf2k8eXPY::indexed-themes-v1-bounded-schema::r1",
+    "stage": "failure-development-round2",
+    "source_case_id": "exec-chatcmpl-EcQHB8Uq23EuJYVQIjxMXf2k8eXPY",
+    "variant": "indexed-themes-v1-bounded-schema",
+    "adapter": "indexed_normalization",
+    "repetition": 1,
+    "hypothesis": "Same semantic prompt; replace repeated enums with integer bounds to stay below the API's 1000-total-enum schema limit. Original rejected requests remain preserved.",
+    "original_request_sha256": "cb5cc7d43da55d14cbf8fd195191f669a2ca47793a41569b5db737a61a7515fc",
+    "instruction_sha256": "d6c6ddf3ef3edda09617b1a32b331fc7ba389694e124363ecca5925844bdf646",
+    "source_selection": "Previously reviewed cases are development, regardless of earlier split labels."
+  }
+]

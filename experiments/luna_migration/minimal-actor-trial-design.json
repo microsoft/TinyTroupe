@@ -1,0 +1,13 @@
+{
+  "hypothesis": "Remove competing layers of generic interpretation and exhaustive deliberation instructions, not just their introductory identity section. Keep action, output, faculty, safety, persona and complete current-state/memory contracts.",
+  "original_characters": 23350,
+  "candidate_characters": 5795,
+  "original_sha256": "9b6466728941e8c1e7bf44c063d2232bffa09c726e5d6bee90683c5ac670b108",
+  "candidate_sha256": "6cf2c6a3d2ae46ff14904ef72d9775acf1e10e762fc4edf2bb5e2aa9de2463ba",
+  "production_prompt_changed": false,
+  "original_stimuli_personas_model_effort_thresholds_retained": true,
+  "development_panel": "crossed-persona-mini-generation\\selection-mini.json",
+  "initial_datetime": "2026-11-02T16:20:19.182432",
+  "acceptance": "Natural persona-grounded response to the actual question; intact action contracts, no invented facts or history, preserved positive/negative controls. A higher mean or desired response distribution does not establish success. Independent held-out identities required before any production adoption.",
+  "different_from_prior_lean_trial": "Earlier lean trial changed persona interpretation and thought rules only; this replaces the entire general actor instruction layer and is sent through corrected plain-text transport."
+}

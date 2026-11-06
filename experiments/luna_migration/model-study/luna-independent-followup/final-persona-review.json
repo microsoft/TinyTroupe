@@ -1,0 +1,61 @@
+{
+  "method": "Assistant semantic review of complete final profiles and their complete source sketches, not blinded independent human ratings.",
+  "common_gates": {
+    "original_particulars": "All six explicitly retain name, allowed age, gender, nationality, ethnicity, residence, income, household status, political identification and leisure reading.",
+    "completeness": "All 17 mandatory full-record fields and all five Big Five values with a declared descriptive scale are present.",
+    "fidelity": "All six develop the frozen external selection without substituting a different candidate; no generation_conflict.",
+    "plausibility": "Work histories, ages, retirement resources, household arrangements, activities and health accommodations are broadly coherent. No consequential false geography, event calendar or precise service-price premise was identified.",
+    "between_profile_diversity": "Meaningful improvement over the neutral single-call batch, but not a demonstration of dependable or calibrated diversity."
+  },
+  "profiles": [
+    {
+      "case": "persona-grace::contrast-expansion-luna6-xhigh-0",
+      "selected_index_zero_based": 1,
+      "judgment": "Pass as an individual profile and faithful expansion.",
+      "life": "42, Oakland, senior software engineer, $178,000; animated cook and host who travels to learn regional food traditions.",
+      "evidence": "Cooking with friends, specific kitchen opinions and the Penang experience support a concrete motivation rather than generic quiet city travel. Korean/Chinese Asian heritage is explicit. Her generous but controlling hosting supplies a plausible tension.",
+      "big_five_O_C_E_A_N": [5, 4, 3, 4, 2]
+    },
+    {
+      "case": "persona-grace::contrast-expansion-luna6-xhigh-1",
+      "selected_index_zero_based": 0,
+      "judgment": "Pass as an individual profile and faithful expansion; overlaps with the next profile.",
+      "life": "29, Tacoma, GIS analyst, $132,000; shoreline naturalist who travels with a college friend to observe coastal habitats.",
+      "evidence": "Detailed tide-oriented observation, informal field notes and the Washington coast memory fit the selected sketch. Owned modest condo and income are plausible, without invented financing claims. Single/no children and Korean American ethnicity are explicit.",
+      "big_five_O_C_E_A_N": [4, 4, 2, 3, 2]
+    },
+    {
+      "case": "persona-grace::contrast-expansion-luna6-xhigh-2",
+      "selected_index_zero_based": 1,
+      "judgment": "Pass as an individual profile and faithful expansion; retained clustering is a limitation.",
+      "life": "42, Portland, geospatial analyst, $132,000; reserved birdwatcher focused on habitat and sustained observation.",
+      "evidence": "Bay wetlands trip, noncompetitive bird observation and limited social circle match the selected sketch. Original particulars are explicit. However, this is close to the Tacoma GIS naturalist in occupation, income, personality and travel style; it was not redrawn to improve appearances.",
+      "big_five_O_C_E_A_N": [4, 4, 2, 3, 3]
+    },
+    {
+      "case": "persona-philip::contrast-expansion-luna6-xhigh-0",
+      "selected_index_zero_based": 1,
+      "judgment": "Pass as an individual profile and faithful expansion.",
+      "life": "82, Fort Collins, retired food-service distribution manager, $246,000 household income, married to Ruth; sociable cook and food traveler.",
+      "evidence": "Long distribution career, retirement sources and Ruth's pension plausibly support the household. Maine chowder comparisons and hosting behavior establish food-learning and social motives. Blood-pressure treatment and knee stiffness inform pacing without erasing the interests.",
+      "big_five_O_C_E_A_N": [4, 4, 4, 3, 2]
+    },
+    {
+      "case": "persona-philip::contrast-expansion-luna6-xhigh-1",
+      "selected_index_zero_based": 1,
+      "judgment": "Pass as an individual profile and faithful expansion.",
+      "life": "83, Montana, retired mechanical engineer and consulting-firm owner, $225,000 household income, married to Ruth; vintage-car restorer.",
+      "evidence": "Mechanical diagnosis, workshop habits, direct teasing and specialist gatherings form a coherent life. Use of a newer vehicle for long trips and transport for the restored car preserve the plan's practical distinction. Ruth's independent interests remain present.",
+      "big_five_O_C_E_A_N": [4, 4, 3, 3, 2]
+    },
+    {
+      "case": "persona-philip::contrast-expansion-luna6-xhigh-2",
+      "selected_index_zero_based": 2,
+      "judgment": "Pass as an individual profile and faithful expansion.",
+      "life": "79, near Montrose, retired surveying-firm owner, at least $200,000 household income, married to Anne; laconic fly-fisher.",
+      "evidence": "Surveying background, land observation, Idaho river memory and a preference for concentration over competition align. Knee stiffness, access choices and a wading staff are credible accommodations. Retirement resources and no-children status remain explicit.",
+      "big_five_O_C_E_A_N": [3, 4, 2, 3, 2]
+    }
+  ],
+  "interpretation": "All six are acceptable fictional personas in this small pilot. The method broadens expressed activities and motives, especially for Philip, but still concentrates conscientiousness and orderly, comfortable lifestyles. No desired score spread or purchase answer was used as a pass criterion."
+}

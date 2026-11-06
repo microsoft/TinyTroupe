@@ -1,0 +1,40 @@
+{
+  "stage": "sampling-feasibility-v3-confirmation",
+  "corpora": [
+    "round4/sources.jsonl",
+    "final-confirmation/sources.jsonl",
+    "feasibility-fresh-sources.jsonl"
+  ],
+  "recipes": [
+    {
+      "id": "membership-plan-v3-confirm",
+      "adapter": "indexed_sampling",
+      "categorical_encoding": "membership",
+      "instruction_file": "sampling-membership-v3.txt",
+      "hypothesis": "Explicitly check the youngest allowed age and every selected combination, retain all population age bands, and use age-appropriate behavioral contrasts rather than infant hobby strata.",
+      "cases": [
+        "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR",
+        "exec-chatcmpl-EcNZrgB7NnHHQ32gLuD0kVWCH8bKw",
+        "exec-chatcmpl-EcPVXPdL4sj3j6kfDX47ef2fsDrvS",
+        "exec-chatcmpl-EcQoAeqqNKsUNJdJW4yPwzKCNo2mx",
+        "exec-chatcmpl-EdMnHggNcBaYKck4FEBp4D2YjA1I6",
+        "exec-chatcmpl-EcOxD2opspEiQDwf3tfIPzZqewtnr",
+        "exec-chatcmpl-EcPUnJ9jpREY6PPoDNYxBQdjCEh59"
+      ],
+      "repetitions": 3
+    },
+    {
+      "id": "membership-plan-v3-fresh",
+      "adapter": "indexed_sampling",
+      "categorical_encoding": "membership",
+      "instruction_file": "sampling-membership-v3.txt",
+      "hypothesis": "Explicitly check the youngest allowed age and every selected combination, retain all population age bands, and use age-appropriate behavioral contrasts rather than infant hobby strata.",
+      "cases": [
+        "exec-chatcmpl-EcM95l2RaExtvDUAVWUV79rG7iT9O",
+        "exec-chatcmpl-EcQTsBxDgrJUareJPI445eF2iniqG",
+        "exec-chatcmpl-EcLqTJWCF2AtJx2MhKHOHjUKz8HFq"
+      ],
+      "repetitions": 1
+    }
+  ]
+}

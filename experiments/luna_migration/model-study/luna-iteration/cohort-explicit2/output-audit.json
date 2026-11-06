@@ -1,0 +1,121 @@
+{
+  "protected_inputs_preserved": true,
+  "case_count": 2,
+  "attempts": 2,
+  "completed": 2,
+  "completed_by_case": {
+    "persona-grace::cohort-explicit2": 1,
+    "persona-philip::cohort-explicit2": 1
+  },
+  "observations": [
+    {
+      "file": "results.jsonl",
+      "case_id": "persona-grace::cohort-explicit2",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "persona_generation",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "missing_persona_fields": [],
+        "persona": {
+          "name": "Grace Minseo Han",
+          "age": 33,
+          "gender": "Female",
+          "nationality": "United States citizen",
+          "residence": {
+            "state": "California",
+            "city": "San Diego",
+            "neighborhood": "Clairemont Mesa",
+            "living_situation": "Grace rents one bedroom in a two-bedroom duplex with her longtime friend and former college classmate. They share a kitchen and living room but keep separate bedrooms, finances, and personal schedules; the arrangement is close and comfortable without being romantic. Grace is single, not married, and has no children. Her household consists of two adults and no children. She drives an older compact hatchback, useful for fieldwork and carrying dive equipment, but takes transit or walks when that is easier."
+          },
+          "occupation": {
+            "role": "Environmental scientist in a municipal stormwater and water-quality program.",
+            "work_situation": "Grace coordinates water-quality monitoring for creeks, storm drains, and coastal outfalls. She reviews lab results, arranges sampling schedules, tracks permit requirements, and writes reports that have to make sense both to technical staff and to public-works colleagues. She earns about $121,000 gross annually. Her schedule is usually Monday through Friday, with occasional early starts or a changed field day after heavy rain. She has around 17 paid vacation days a year, plus standard holidays.",
+            "ordinary_responsibilities": "She spends some days at a desk comparing data and following up on incomplete reports, and others in the field with sampling equipment and a city vehicle. She is careful about procedures because inconsistent samples can undermine a year's worth of monitoring. After several years in private consulting, she chose a municipal job with more predictable hours, even though it offered less variety and less chance of a quick salary jump. She likes seeing how a technical finding affects a real local decision, but dislikes having to explain the same requirement repeatedly when a project team has not read the guidance."
+          },
+          "personality": {
+            "description": "Grace is self-directed and observant, with a practical streak that coexists with a genuine appetite for experiences she finds absorbing. She is more willing to repeat an activity she loves than to sample something new just to say she did it. She values competence and personal boundaries, and can sound firmer than she intends when someone treats a preference as a rule everyone should follow. She is dependable with shared work and reservations but can let household tidying slide when she has had a long week.",
+            "big_five": {
+              "scale": "Fictional descriptive ratings from 1 (low) to 5 (high); these are not measured psychological scores.",
+              "openness": {
+                "value": 4.1,
+                "description": "Curious about unfamiliar environments, technical details, and other people's perspectives; she also enjoys revisiting familiar places."
+              },
+              "conscientiousness": {
+                "value": 3.9,
+                "description": "Careful about work procedures, dive safety, and important bookings, but inconsistent about small domestic chores."
+              },
+              "extraversion": {
+                "value": 3.2,
+                "description": "Enjoys a close group and lively conversation around a shared interest, while needing quiet time after work or a busy trip."
+              },
+              "agreeableness": {
+                "value": 3.5,
+                "description": "Usually considerate and cooperative, but willing to disagree when she thinks a request is unreasonable or a decision is being imposed."
+              },
+              "neuroticism": {
+                "value": 2.9,
+                "description": "Generally steady; uncertainty about work deadlines or travel logistics can make her fret briefly, but rarely dominates her mood."
+              }
+            }
+          },
+          "preferences": {
+            "travel_and_vacations": {
+              "overall": "Scuba diving is the activity that most often gives Grace a longer vacation its shape. She likes the quiet concentration of descending, adjusting to the water, and noticing the reef at its own pace. She is especially pleased by small details—shrimp in a crevice, a camouflaged fish, a change in the light—rather than treating a dive as a hunt for a dramatic sighting. She is an experienced recreational diver, not a technical diver, and is comfortable with ordinary guided boat dives and shore dives. She does not dive alone and will not follow a buddy into a cave or beyond the limits they agreed on. She enjoys a few dives on a good day, but not a schedule that treats every hour underwater as a productivity target.",
+              "lodging_and_pace": "She looks for a clean, straightforward guesthouse or small apartment with a place to rinse and store gear, a kitchen or easy breakfast option, and a short route to the water. She would rather spend money on a location that makes diving simple than on a showy room. A liveaboard has not appealed so far: she likes being able to come ashore, read, choose a meal, and take a day off without feeling she is wasting the trip. She prefers a stable base for most of a vacation. Moving between islands or hotels can be worthwhile, but only if the different place offers something she genuinely wants, not merely because it is nearby.",
+              "companions_and_planning": "Grace usually goes on dive vacations with one or two friends from a local dive club. Traveling with people who understand buddy checks and rest days is relaxing for her; she is happy to split up on land for an afternoon and meet again for dinner. She can travel alone, but would not make dives without a reliable buddy. She books flights, lodging, and any boat outings ahead, then leaves many meals and land activities open. Her ordinary work leave permits one trip of roughly a week most years, but rain-related sampling deadlines sometimes make her dates less flexible. She also takes occasional local dive weekends along the Southern California coast, which are enjoyable but not a substitute for a warm-water trip.",
+              "recent_trip": "In May 2025 Grace spent eight nights on Bonaire with three people from her dive club. The group rented a simple place with a gear-rinse area and a vehicle, and spent several days doing shore dives, with one boat day arranged in advance. Two friends wanted to add Curaçao for a few nights. Grace argued for staying put: she wanted repeated dives at different sites and did not want to give up a full day to another transfer and check-in. She did agree to the boat day, which gave the group a change of pace. One afternoon was windy enough that the water plan was abandoned; she read in the shade and enjoyed having no replacement activity booked. She came home satisfied with the time underwater, though she understood why her friends had wanted a second island. The trip used most of the leave she had set aside for that season and a meaningful part of her travel savings, so she has not immediately booked another international trip.",
+              "future_travel": "She is interested in a future trip to the Philippines or Belize, but is not committed to either destination and would choose based on the diving conditions, access, and whether a trusted friend could join. A non-diving city break can appeal too, particularly if it gives her time to read, eat well, and spend a few days without early starts. She visits her parents in Orange County several times a year, but thinks of those visits as family time rather than vacations. She does not need every trip to be a major expedition."
+            },
+            "reading": "Grace reads for pleasure several times a week, often before bed or with coffee on a weekend morning. She likes literary mysteries, contemporary fiction, and narrative nonfiction, including accessible writing about marine life and coastal environments. She borrows ebooks and print books from the public library, and likes having a paperback for a flight or a quiet hour between dives. She will abandon a book that feels like a chore rather than finishing it out of obligation. Reading is a regular leisure interest in its own right, not just something she does while traveling.",
+            "food_and_everyday_leisure": "She likes Korean food from home and also enjoys simple seafood meals and neighborhood restaurants. She cooks a few dependable dinners during the week, often making enough for leftovers, but does not want cooking to become another project after work. At home she may read, watch a mystery series, or catch up with her roommate over tea. She swims laps or does light strength work once or twice a week when her schedule cooperates, mostly because she likes feeling comfortable and capable in the water."
+          },
+          "style": "Grace speaks plainly and tends to give the useful context before offering an opinion. At work she is organized and matter-of-fact, especially when safety or data quality is involved; she translates jargon rather than using it to sound authoritative. With friends she is more teasing and animated, and she can get enthusiastic about a small creature she spotted underwater or a novel she has just finished. She is not a constant conversationalist by text and may leave a nonurgent message unanswered until after work. If a plan does not appeal to her, she is more likely to say, \"I think I'll sit this one out,\" than to invent an elaborate excuse."
+        },
+        "content_words": 2299
+      },
+      "review_flags": []
+    },
+    {
+      "file": "results.jsonl",
+      "case_id": "persona-philip::cohort-explicit2",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "persona_generation",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "missing_persona_fields": [],
+        "persona": {
+          "name": "Philip Grant Holladay",
+          "age": 80,
+          "gender": "Male",
+          "nationality": "American; a United States citizen.",
+          "residence": "Philip lives with his wife, Ruth, in a modest, single-level house in Helena, Montana. They have lived there since the early 1980s. The house is in an established neighborhood with straightforward access to downtown, the library, and local paths; its garage has a workbench and space for their bicycles. They value the scale of Helena and the nearby open country more than having a large property or a view. The house is paid off, but repairs, taxes, insurance, and the occasional larger maintenance job still affect their spending.",
+          "occupation": "Philip is retired from dentistry. After several years as an associate, he bought a small general dental practice in Helena in the early 1980s and ran it for more than three decades. He liked the continuity of seeing patients over many years and the practical work of solving a specific problem in front of him. Managing staff and paperwork became less appealing over time. He sold the practice to a younger dentist and retired at 68; he did not keep a consulting role or try to maintain a reduced clinical schedule. He volunteers twice a month at a local bicycle repair co-op, where he helps sort donated parts and handles simple repairs. He enjoys being useful there but declines requests that would turn volunteering into another job.",
+          "personality": {
+            "description": "Philip is capable, independent, and fond of having a concrete project. He likes a goal he can see progress toward, which is useful at the bike co-op and occasionally makes him too attached to the route he plotted. He is sociable in small groups with a shared activity, but prefers a few familiar people to a crowded calendar. He is affectionate with Ruth in practical, understated ways. He can be generous about spending on an experience that matters to him and surprisingly slow to replace a worn household item.",
+            "big_five_scale": "Fictional descriptive ratings on a 1–5 scale, where 1 = low, 3 = middle, and 5 = high. These are character choices, not measured psychological scores.",
+            "openness": 3.6,
+            "conscientiousness": 3.8,
+            "extraversion": 2.9,
+            "agreeableness": 3.5,
+            "neuroticism": 2.3
+          },
+          "preferences": {
+            "reading": "Philip enjoys reading for leisure and personal interest, usually with coffee in the morning or for twenty minutes before bed. He reads biographies, accessible science, Western and regional history, and detective novels. He likes a book that gives him something to think about without sounding like an assignment. He uses the public library, sometimes buys a paperback for a trip, and is content to abandon a book that has stopped holding his attention.",
+            "travel": "Travel is a shared pleasure, but Philip and Ruth do not expect to enjoy every day in exactly the same way. Most years they take a longer trip of about a week and several shorter breaks; some years the longer trip is skipped if home repairs or other expenses take priority. Philip particularly enjoys trips built around cycling on rail trails, paved greenways, and quiet rural routes. He likes a day with a clear endpoint and a sense of having gone somewhere under his own power, but is not a mountain biker and has no interest in technical single-track. A comfortable day for him is usually around 20–30 miles, with room for a long lunch or an unplanned stop. Their e-bikes make rolling terrain and headwinds manageable; he uses pedal assist when it makes the outing more enjoyable, not to race.",
+            "travel_companions_and_logistics": "He and Ruth usually travel together. She enjoys local history, small museums, architecture, and looking around a town; she is happy to ride but is more interested than he is in stopping along the way. On domestic cycling trips they generally drive and bring their bikes on a hitch rack. For a longer-distance trip they would rather rent bikes and pay for luggage transfer than spend vacation time dealing with bulky equipment. Philip looks at route distance, surface, and access to the start and finish; Ruth is more likely to choose the inn and identify somewhere pleasant for dinner. They prefer small inns or comfortable, unpretentious hotels with secure bike storage, a quiet room, and an easy walk to town. He will pay for a convenient location or a well-organized self-guided trip, but does not care about a hotel brand or elaborate service. A supported route with maps and baggage moved between overnight stops appeals to him more than a large group tour. They leave some time unplanned, though Philip sometimes puts more riding into the first version of an itinerary than Ruth wants.",
+            "recent_trip_and_tradeoff": "In September 2025, Philip and Ruth spent six nights in Idaho, riding sections of the Trail of the Coeur d'Alenes and staying in two small towns. He had mapped out enough riding to cover nearly the whole trail, with daily mileage that looked reasonable on paper. After a hot, windy stretch, Ruth wanted to spend an afternoon walking around Wallace rather than drive back to the trail for another segment. Philip agreed, though he was bothered for a while by leaving the route unfinished. They visited a mining-history exhibit she had picked out, lingered over dinner, and did not try to squeeze in an extra ride the next morning. He later said he would still like to return and finish the trail; he also remembers the relaxed afternoon as one of the better parts of that trip. For him, the compromise did not erase the satisfaction of riding, but he did have to let go of the mileage target before he could enjoy it.",
+            "other_interests": "At home he enjoys short bike rides, browsing a used-book shop, and meeting one or two friends for lunch. He follows local news and reads the newspaper but is not an avid online commenter. He is fond of a well-made breakfast and likes casual local restaurants when traveling; food is part of a good trip, not its organizing principle."
+          },
+          "style": "Philip speaks plainly, with a dry sense of humor and a tendency to ask what a plan means in practical terms: how long the drive is, whether the route is paved, or where they will leave the car. Around other cyclists he can become unexpectedly animated about trail surfaces and gradients. At home he is less formal and more willing to let a conversation wander. He sometimes overexplains a repair or a route when he is interested; Ruth will tell him when she has understood the point. He can be stubborn about mileage he has planned, but is not generally argumentative and does not need to win every small decision."
+        },
+        "content_words": 2063
+      },
+      "review_flags": []
+    }
+  ],
+  "warning": "Flags and structural checks do not prove semantic quality. Review complete public outputs and profiles."
+}

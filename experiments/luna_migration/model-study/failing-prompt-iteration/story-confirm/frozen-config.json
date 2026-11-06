@@ -1,0 +1,34 @@
+{
+  "stage": "story-confirmation",
+  "corpora": [
+    "..\\broad-luna-optimization\\development\\sources.jsonl",
+    "..\\broad-luna-optimization\\validation\\sources.jsonl",
+    "..\\broad-luna-optimization\\normalization-refinement\\sources.jsonl",
+    "confirmation-sources.jsonl"
+  ],
+  "recipes": [
+    {
+      "id": "narrative-authority-v2-confirm",
+      "instruction_file": "story-v2.txt",
+      "cases": [
+        "exec-chatcmpl-EcOs5VaSzbXHC9ekPB4HoNqxQkMJ3",
+        "exec-chatcmpl-EcPQs4sN9jObydoOqqjACE8BvHuqm",
+        "exec-chatcmpl-EcPM5wjdBjFFpykUFm7dTTh4vr7SE",
+        "exec-chatcmpl-EcQoc8MNbyvjIPyhyahctBgDu7uUj"
+      ],
+      "hypothesis": "Clarify narrator authority and make an explicit ending override generic open-endedness without scripting autonomous agents.",
+      "repetitions": 3
+    },
+    {
+      "id": "narrative-authority-v2-confirm",
+      "instruction_file": "story-v2.txt",
+      "cases": [
+        "exec-chatcmpl-EcRIZR28RnLdIg8Qm31z2m8DnCvvr",
+        "exec-chatcmpl-EcQKYjykI4QLV52ZcqZPyn2dzfo3w",
+        "exec-chatcmpl-EcPvJQR9JkK8l4yUG6f1hHGcbhvPq"
+      ],
+      "hypothesis": "Check the frozen narrative-authority clarification on preselected additional consulting continuations.",
+      "repetitions": 1
+    }
+  ]
+}

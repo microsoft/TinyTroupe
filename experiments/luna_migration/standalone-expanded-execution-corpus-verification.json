@@ -1,0 +1,22 @@
+{
+  "archive": "standalone-expanded-execution-corpus.zip",
+  "files": 45,
+  "bytes": 301652385,
+  "sha256": "811d9e0247d3aebb6a9a2c5bc25dd6e55337a3edfd4f5d2e0a79729adbe050f0",
+  "zip_integrity": true,
+  "all_file_hashes_verified": true,
+  "packaged_tests_passed": 57,
+  "packaged_dry_replays": {
+    "optimization": 480,
+    "validation": 160
+  },
+  "new_api_calls": 0,
+  "started_at": "2026-10-29T14:09:17.298000-03:00",
+  "finished_at": "2026-10-29T14:39:03.506429-03:00",
+  "wall_minutes_through_packaging": 29.77,
+  "corpus_cases": 8839,
+  "distinct_requests": 8811,
+  "original_diagnostic_cases_preserved": 20,
+  "additional_observations": 8819,
+  "remining_requires_original_local_caches": true
+}

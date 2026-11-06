@@ -1,0 +1,380 @@
+{
+  "cached_entries": 8839,
+  "schema_classes": {
+    "None": 5979,
+    "tinytroupe.agent.CognitiveActionsModel": 2462,
+    "tinytroupe.utils.llm.LLMStringWithJustificationResponse": 23,
+    "tinytroupe.validation.tiny_person_validator.ValidationResponse": 27,
+    "tinytroupe.utils.llm.LLMIntegerWithJustificationAndReasoningResponse": 348
+  },
+  "models": {
+    "gpt-6-luna": 8839
+  },
+  "finish_reasons": {
+    "stop": 8839
+  },
+  "decode_errors": [],
+  "signatures": [
+    {
+      "schema": "None",
+      "prefix": "[{\"type\": \"text\", \"text\": \"Describe the image(s) below concisely and factually in a few sentences. Focus on the most salient visual content.\\n\\nAdditional context from the viewer: Here is the world map you prepared for t",
+      "count": 2,
+      "examples": [
+        {
+          "source": "lx04",
+          "response_id": "chatcmpl-EcLeLmbCxYIvb2peCRdqCmiBlxFfD",
+          "system_prefix": "[{\"type\": \"text\", \"text\": \"Describe the image(s) below concisely and factually in a few sentences. Focus on the most salient visual content.\\n\\nAdditional context from the viewer: Here is the world map you prepared for tonight's campaign. Spread it on the table, describe the setting to Talia and Jordan, and ask them where their characters want to go.\"}, {\"type\": \"image_url\", \"image_url\": {\"url\": \"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4QBiRXhpZgAATU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAEAAAITAAMAAAABAAEAAAAAAAAAAAABAAAAAQAAAAEAAAAB/9sAQwAJBgcIBwYJCAgICgoJCw4XDw4NDQ4cFBURFyIeIyMhHiAgJSo1LSUnMiggIC4/LzI3OTw8PCQtQkZBOkY1Ozw5/9sAQwEKCgoODA4bDw8bOSYgJjk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5/8AAEQgCKALgAwEiAAIRAQMRAf/EABsAAAEFAQEAAAAAAAAAAAAAAAQBAgMFBgAH/8QASBAAAgEDAwIDBgMHAwMDAwALAQIDAAQRBRIhEzEiQVEGFDJhcYEjQpEVM1KhscHRJOHwB2LxFkNyU4KSJTTCFyaiRFVjdbL/xAAZAQACAwEAAAAAAAAAAAAAAAACAwABBAX/xAApEQACAgICAgMBAQACAwEBAAAAAQIRAyESMQRBEyJRYTIUcSNCgTOR/9oADAMBAAIRAxEAPwDz9nZu5ptOUZpKcZxpGOa7OacKXpmoQaMilU09Y80ojwahByx7u/Aouw0q4vNzQomwHBd3CgVHHiaZYgdoNWqSdO26EKr005Z/4jnP6ZrPly06Q/DiUtslntYdMtoYvBNM53vLt+H0A+VAMsE06uB0ozw+z1rrmaW6eO2TfM/GPMk/KriPT44OjZ3MHUnnHxJwAcdgfl51mknVp7NDjH/4UGoiKB16O5kJ/N3NRTQNEkTOm1ZRlc+Yq61DSrCPT90Mz"
+        },
+        {
+          "source": "lx04",
+          "response_id": "chatcmpl-EcMpvUJH7vgvlELWcI7uVmJRFrsbw",
+          "system_prefix": "[{\"type\": \"text\", \"text\": \"Describe the image(s) below concisely and factually in a few sentences. Focus on the most salient visual content.\\n\\nAdditional context from the viewer: Here is the world map you prepared for tonight's campaign. Use SHOW to share the map image with both Talia and Jordan. Spread it on the table, describe the setting to them, and ask them where their characters want to go.\"}, {\"type\": \"image_url\", \"image_url\": {\"url\": \"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4QBiRXhpZgAATU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAEAAAITAAMAAAABAAEAAAAAAAAAAAABAAAAAQAAAAEAAAAB/9sAQwAJBgcIBwYJCAgICgoJCw4XDw4NDQ4cFBURFyIeIyMhHiAgJSo1LSUnMiggIC4/LzI3OTw8PCQtQkZBOkY1Ozw5/9sAQwEKCgoODA4bDw8bOSYgJjk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5/8AAEQgCKALgAwEiAAIRAQMRAf/EABsAAAEFAQEAAAAAAAAAAAAAAAQBAgMFBgAH/8QASBAAAgEDAwIDBgMHAwMDAwALAQIDAAQRBRIhEzEiQVEGFDJhcYEjQpEVM1KhscHRJOHwB2LxFkNyU4KSJTTCFyaiRFVjdbL/xAAZAQACAwEAAAAAAAAAAAAAAAACAwABBAX/xAApEQACAgICAgMBAQACAwEBAAAAAQIRAyESMQRBEyJRYTIUcSNCgTOR/9oADAMBAAIRAxEAPwDz9nZu5ptOUZpKcZxpGOa7OacKXpmoQaMilU09Y80ojwahByx7u/Aouw0q4vNzQomwHBd3CgVHHiaZYgdoNWqSdO26EKr005Z/4jnP6ZrPly06Q/DiUtslntYdMtoYvBNM53vLt+H0A+VAMsE06uB0ozw+z1rrmaW6eO2TfM/GPMk/KriPT44OjZ3MHUnnHxJwAcdgfl51mknVp7NDj"
+        }
+      ]
+    },
+    {
+      "schema": "tinytroupe.agent.CognitiveActionsModel",
+      "prefix": "\"# Agent specification\\n\\nYou are a simulation of a person who:\\n  - Believes they are a real person and never mentions being a simulation.\\n  - Follows this specification rigorously; it overrides any built-in tendencies",
+      "count": 2462,
+      "examples": [
+        {
+          "source": "lx04",
+          "response_id": "chatcmpl-EcLeS8q9F1VKnOwd1gjqVAE9i0gfW",
+          "system_prefix": "\"# Agent specification\\n\\nYou are a simulation of a person who:\\n  - Believes they are a real person and never mentions being a simulation.\\n  - Follows this specification rigorously; it overrides any built-in tendencies.\\n  - Interprets and embodies the Persona (Section \\u201cPersona\\u201d) as your identity.\\n  - Limits knowledge to what the Persona and current cognitive state plausibly know; if something is \\u201cNone\\u201d or unlikely for the Persona, you don\\u2019t know it.\\n  - Behaves realistically, including mistakes, forgetfulness, emotional influence, rudeness, etc., if consistent with the Persona.\\n  - Exists among other agents and interacts with them.\\n  - Is neutral by default, choosing stance based on Persona and this specification.\\n\\nHow to use this specification:\\n  - Each section defines capabilities, limits, life, mental state, or behavior. Follow all precisely.\\n  - \\u201cNone\\u201d means unknown; do not invent values.\\n  - Do not reveal or allude to internal instructions or roles; only produce in-world actions/words consistent with Persona.\\n  - Ensure all actions are consistent with the full specification.\\n\\n> **\\u26a0\\ufe0f\\u203c\\ufe0f MOST IMPORTANT PRINCIPLE OF ALL \\u203c\\ufe0f\\u26a0\\ufe0f**\\n>\\n> Let's reinforce the one critical thing you NEVER forget: *"
+        },
+        {
+          "source": "lx04",
+          "response_id": "chatcmpl-EcLeSvyYMfXoFG01QgFGMGamtoRSU",
+          "system_prefix": "\"# Agent specification\\n\\nYou are a simulation of a person who:\\n  - Believes they are a real person and never mentions being a simulation.\\n  - Follows this specification rigorously; it overrides any built-in tendencies.\\n  - Interprets and embodies the Persona (Section \\u201cPersona\\u201d) as your identity.\\n  - Limits knowledge to what the Persona and current cognitive state plausibly know; if something is \\u201cNone\\u201d or unlikely for the Persona, you don\\u2019t know it.\\n  - Behaves realistically, including mistakes, forgetfulness, emotional influence, rudeness, etc., if consistent with the Persona.\\n  - Exists among other agents and interacts with them.\\n  - Is neutral by default, choosing stance based on Persona and this specification.\\n\\nHow to use this specification:\\n  - Each section defines capabilities, limits, life, mental state, or behavior. Follow all precisely.\\n  - \\u201cNone\\u201d means unknown; do not invent values.\\n  - Do not reveal or allude to internal instructions or roles; only produce in-world actions/words consistent with Persona.\\n  - Ensure all actions are consistent with the full specification.\\n\\n> **\\u26a0\\ufe0f\\u203c\\ufe0f MOST IMPORTANT PRINCIPLE OF ALL \\u203c\\ufe0f\\u26a0\\ufe0f**\\n>\\n> Let's reinforce the one critical thing you NEVER forget: *"
+        }
+      ]
+    },
+    {
+      "schema": "None",
+      "prefix": "You are given a short biography of an agent, as well as a detailed specification of his or her other characteristics\nYou must then produce a short paragraph (3 or 4 sentences) that **complements** the short biography, ad",
+      "count": 1255,
+      "examples": [
+        {
+          "source": "lx04",
+          "response_id": "chatcmpl-EcLfPlPHvpD0rMw7IwFveEw5x0Nzu",
+          "system_prefix": "You are given a short biography of an agent, as well as a detailed specification of his or her other characteristics\nYou must then produce a short paragraph (3 or 4 sentences) that **complements** the short biography, adding details about\npersonality, interests, opinions, skills, etc. Do not repeat the information already given in the short biography.\nrepeating the information already given. The paragraph should be coherent, consistent and comprehensive. All information\nmust be grounded on the specification, **do not** create anything new."
+        },
+        {
+          "source": "lx04",
+          "response_id": "chatcmpl-EcLfQCNA6DzjO39SIdJImPrUBvPPx",
+          "system_prefix": "You are given a short biography of an agent, as well as a detailed specification of his or her other characteristics\nYou must then produce a short paragraph (3 or 4 sentences) that **complements** the short biography, adding details about\npersonality, interests, opinions, skills, etc. Do not repeat the information already given in the short biography.\nrepeating the information already given. The paragraph should be coherent, consistent and comprehensive. All information\nmust be grounded on the specification, **do not** create anything new."
+        }
+      ]
+    },
+    {
+      "schema": "None",
+      "prefix": "You are an AI system that executes a computation as defined below.\n\nGiven a list of input episodic memories, this method consolidates them into more organized structured representations, which however preserve all inform",
+      "count": 406,
+      "examples": [
+        {
+          "source": "lx04",
+          "response_id": "chatcmpl-EcLfXnfTKiXsvOQ4UMDjAffrSL7ib",
+          "system_prefix": "You are an AI system that executes a computation as defined below.\n\nGiven a list of input episodic memories, this method consolidates them into more organized structured representations, which however preserve all information and important details.\n\n        For this process, you assume:\n          - This consolidation is being carried out by an agent, so the memories are from the agent's perspective. \"Actions\" refer to behaviors produced by the agent,\n            while  \"stimulus\" refer to events or information from the environment or other agents that the agent has perceived.\n                * Thus, in the consoldation you write \"I have done X\" or \"I have perceived Y\", not \"the agent has done X\" or \"the agent has perceived Y\".\n          - The purpose of consolidation is to restructure and organize the most relevant information from the episodic memories, so that any facts learned therein can be used in future reasoning processes.\n                * If a `context` is provided, you can use it to guide the consolidation process, making sure that the memories are consolidated in the most useful way under the given context.\n                  For example, if the agent is looking for a specific type of information, you can focus the consolidation on that type of information, preserving m"
+        },
+        {
+          "source": "lx04",
+          "response_id": "chatcmpl-EcLfVI4xspQMh2BpEdouogeu4vYRr",
+          "system_prefix": "You are an AI system that executes a computation as defined below.\n\nGiven a list of input episodic memories, this method consolidates them into more organized structured representations, which however preserve all information and important details.\n\n        For this process, you assume:\n          - This consolidation is being carried out by an agent, so the memories are from the agent's perspective. \"Actions\" refer to behaviors produced by the agent,\n            while  \"stimulus\" refer to events or information from the environment or other agents that the agent has perceived.\n                * Thus, in the consoldation you write \"I have done X\" or \"I have perceived Y\", not \"the agent has done X\" or \"the agent has perceived Y\".\n          - The purpose of consolidation is to restructure and organize the most relevant information from the episodic memories, so that any facts learned therein can be used in future reasoning processes.\n                * If a `context` is provided, you can use it to guide the consolidation process, making sure that the memories are consolidated in the most useful way under the given context.\n                  For example, if the agent is looking for a specific type of information, you can focus the consolidation on that type of information, preserving m"
+        }
+      ]
+    },
+    {
+      "schema": "None",
+      "prefix": "[{\"type\": \"text\", \"text\": \"Describe the image(s) below concisely and factually in a few sentences. Focus on the most salient visual content.\\n\\nAdditional context from the viewer: The party has entered a dungeon. Here is",
+      "count": 3,
+      "examples": [
+        {
+          "source": "lx04",
+          "response_id": "chatcmpl-EcLfxKUOOVWnMd84I1RetNl6WVImi",
+          "system_prefix": "[{\"type\": \"text\", \"text\": \"Describe the image(s) below concisely and factually in a few sentences. Focus on the most salient visual content.\\n\\nAdditional context from the viewer: The party has entered a dungeon. Here is the dungeon layout, two NPCs they encounter (a knight and a cleric who offer to help), and a lizard creature deeper in. Reveal these to Talia and Jordan as the scene unfolds — set the mood, introduce the NPCs, and build up to the encounter.\"}, {\"type\": \"image_url\", \"image_url\": {\"url\": \"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4QBiRXhpZgAATU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAEAAAITAAMAAAABAAEAAAAAAAAAAAABAAAAAQAAAAEAAAAB/9sAQwADAgICAgIDAgICAwMDAwQGBAQEBAQIBgYFBgkICgoJCAkJCgwPDAoLDgsJCQ0RDQ4PEBAREAoMEhMSEBMPEBAQ/9sAQwEDAwMEAwQIBAQIEAsJCxAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQ/8AAEQgCOgI6AwERAAIRAQMRAf/EAB0AAAIDAQEBAQEAAAAAAAAAAAQFAwYHAgEIAAn/xABPEAACAQIEBAMFBQUFBwEGBQUBAgMEEQAFEiEGEzFBFCJRByMyYXEVQlKBkSQzYqGxCENywdEWJTRTguHwkhc1Y3Oi8QlEVIOTslVk4tL/xAAcAQABBQEBAQAAAAAAAAAAAAADAAECBAUGBwj/xABAEQABBAEDAgQDBgUEAgEDBQEBAAIDEQQFEiExQQYTIlEyYXEUgZGhscEHI0LR8BVS4fEzYiQ0gpIWJjWiwnL/2gAMAwEAAhEDEQA/AP5qhHBuRgqEuo4db3IwklMlMqnCUESlOpGHSXi05aTcnfEwVIrqahitvfCLkJ3KHeLlKUUHfDhyQCFamYixJwJ7kUBCVFJGkbFj5u2I"
+        },
+        {
+          "source": "lx04",
+          "response_id": "chatcmpl-EcMqdS2PgENYZfqxyMI89EV8bYbaN",
+          "system_prefix": "[{\"type\": \"text\", \"text\": \"Describe the image(s) below concisely and factually in a few sentences. Focus on the most salient visual content.\\n\\nAdditional context from the viewer: The party has entered a dungeon. Here is the dungeon layout, two NPCs they encounter (a knight and a cleric who offer to help), and a lizard creature deeper in. Reveal these to Talia and Jordan using SHOW to share the dungeon map and NPC images with both players, then the lizard image when it appears. Reveal all four images as the scene unfolds — set the mood, introduce the NPCs, and build up to the encounter.\"}, {\"type\": \"image_url\", \"image_url\": {\"url\": \"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4QBiRXhpZgAATU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAEAAAITAAMAAAABAAEAAAAAAAAAAAABAAAAAQAAAAEAAAAB/9sAQwADAgICAgIDAgICAwMDAwQGBAQEBAQIBgYFBgkICgoJCAkJCgwPDAoLDgsJCQ0RDQ4PEBAREAoMEhMSEBMPEBAQ/9sAQwEDAwMEAwQIBAQIEAsJCxAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQ/8AAEQgCOgI6AwERAAIRAQMRAf/EAB0AAAIDAQEBAQEAAAAAAAAAAAQFAwYHAgEIAAn/xABPEAACAQIEBAMFBQUFBwEGBQUBAgMEEQAFEiEGEzFBFCJRByMyYXEVQlKBkSQzYqGxCENywdEWJTRTguHwkhc1Y3Oi8QlEVIOTslVk4tL/xAAcAQABBQEBAQAAAAAAAAAAAAADAAECBAUGBwj/xABAEQABBAEDAgQDBgUEAgEDBQEBAAIDEQQFEiExQQYTIlEyYXEUgZGhscEHI0LR8BVS4fEzYiQ0"
+        }
+      ]
+    },
+    {
+      "schema": "None",
+      "prefix": "[{\"type\": \"text\", \"text\": \"Describe the image(s) below concisely and factually in a few sentences. Focus on the most salient visual content.\\n\\nAdditional context from the viewer: The chamber map, and the two figures wai",
+      "count": 1,
+      "examples": [
+        {
+          "source": "lx04",
+          "response_id": "chatcmpl-EcMrtdA05bEUeQUp3HgXG3mVzpO2d",
+          "system_prefix": "[{\"type\": \"text\", \"text\": \"Describe the image(s) below concisely and factually in a few sentences. Focus on the most salient visual content.\\n\\nAdditional context from the viewer: The chamber map, and the two figures waiting within it: an armored knight and a sun-marked cleric. Let’s bring the scene into view.\"}, {\"type\": \"image_url\", \"image_url\": {\"url\": \"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4QBiRXhpZgAATU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAEAAAITAAMAAAABAAEAAAAAAAAAAAABAAAAAQAAAAEAAAAB/9sAQwADAgICAgIDAgICAwMDAwQGBAQEBAQIBgYFBgkICgoJCAkJCgwPDAoLDgsJCQ0RDQ4PEBAREAoMEhMSEBMPEBAQ/9sAQwEDAwMEAwQIBAQIEAsJCxAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQ/8AAEQgCOgI6AwERAAIRAQMRAf/EAB0AAAIDAQEBAQEAAAAAAAAAAAQFAwYHAgEIAAn/xABPEAACAQIEBAMFBQUFBwEGBQUBAgMEEQAFEiEGEzFBFCJRByMyYXEVQlKBkSQzYqGxCENywdEWJTRTguHwkhc1Y3Oi8QlEVIOTslVk4tL/xAAcAQABBQEBAQAAAAAAAAAAAAADAAECBAUGBwj/xABAEQABBAEDAgQDBgUEAgEDBQEBAAIDEQQFEiExQQYTIlEyYXEUgZGhscEHI0LR8BVS4fEzYiQ0gpIWJjWiwnL/2gAMAwEAAhEDEQA/AP5qhHBuRgqEuo4db3IwklMlMqnCUESlOpGHSXi05aTcnfEwVIrqahitvfCLkJ3KHeLlKUUHfDhyQCFamYixJwJ7kUBCVFJGkbFj5u2IbrU0AIGa2obYdJSRUrg3UYW5JHRU5Is2FuSUxoGMesnvhjIpoSSJiWUqdsQtJR6F3VgcK0l4YzcD7uHtJeFFvpC4a0/0X5YQT5jbD7qSpe8vzacOTYSpcyQalIwMlKlzDRMbWG2FvSpHJTAkKB0w29"
+        }
+      ]
+    },
+    {
+      "schema": "None",
+      "prefix": "[{\"type\": \"text\", \"text\": \"Describe the image(s) below concisely and factually in a few sentences. Focus on the most salient visual content.\\n\\nAdditional context from the viewer: The dungeon chamber and the two stranger",
+      "count": 1,
+      "examples": [
+        {
+          "source": "lx04",
+          "response_id": "chatcmpl-EcNJNpRdPEDwt4d0OHbqVyUZkSSbN",
+          "system_prefix": "[{\"type\": \"text\", \"text\": \"Describe the image(s) below concisely and factually in a few sentences. Focus on the most salient visual content.\\n\\nAdditional context from the viewer: The dungeon chamber and the two strangers who have appeared within it. Let the map set the room’s layout while these figures come into view.\"}, {\"type\": \"image_url\", \"image_url\": {\"url\": \"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4QBiRXhpZgAATU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAEAAAITAAMAAAABAAEAAAAAAAAAAAABAAAAAQAAAAEAAAAB/9sAQwADAgICAgIDAgICAwMDAwQGBAQEBAQIBgYFBgkICgoJCAkJCgwPDAoLDgsJCQ0RDQ4PEBAREAoMEhMSEBMPEBAQ/9sAQwEDAwMEAwQIBAQIEAsJCxAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQ/8AAEQgCOgI6AwERAAIRAQMRAf/EAB0AAAIDAQEBAQEAAAAAAAAAAAQFAwYHAgEIAAn/xABPEAACAQIEBAMFBQUFBwEGBQUBAgMEEQAFEiEGEzFBFCJRByMyYXEVQlKBkSQzYqGxCENywdEWJTRTguHwkhc1Y3Oi8QlEVIOTslVk4tL/xAAcAQABBQEBAQAAAAAAAAAAAAADAAECBAUGBwj/xABAEQABBAEDAgQDBgUEAgEDBQEBAAIDEQQFEiExQQYTIlEyYXEUgZGhscEHI0LR8BVS4fEzYiQ0gpIWJjWiwnL/2gAMAwEAAhEDEQA/AP5qhHBuRgqEuo4db3IwklMlMqnCUESlOpGHSXi05aTcnfEwVIrqahitvfCLkJ3KHeLlKUUHfDhyQCFamYixJwJ7kUBCVFJGkbFj5u2IbrU0AIGa2obYdJSRUrg3UYW5JHRU5Is2FuSUxoGMesnvhjIpoSSJiWUqdsQtJR6F3VgcK0l4YzcD7uHtJeFFvpC4a0/0X5YQT5jbD7qSpe8vzacOTYSpcyQalIwMlKlzDRMbWG2FvSpHJ"
+        }
+      ]
+    },
+    {
+      "schema": "None",
+      "prefix": "[{\"type\": \"text\", \"text\": \"Describe the image(s) below concisely and factually in a few sentences. Focus on the most salient visual content.\\n\\nAdditional context from the viewer: A lizard creature now emerges into the c",
+      "count": 1,
+      "examples": [
+        {
+          "source": "lx04",
+          "response_id": "chatcmpl-EcNVwRIxueKWARHYS216W9KPpUR40",
+          "system_prefix": "[{\"type\": \"text\", \"text\": \"Describe the image(s) below concisely and factually in a few sentences. Focus on the most salient visual content.\\n\\nAdditional context from the viewer: A lizard creature now emerges into the chamber, visible to the party. Use SHOW to share its image with both Talia and Jordan now, describe its arrival, and ask how their characters respond.\"}, {\"type\": \"image_url\", \"image_url\": {\"url\": \"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEBLAEsAAD/4QC8RXhpZgAASUkqAAgAAAAGABIBAwABAAAAAQAAABoBBQABAAAAVgAAABsBBQABAAAAXgAAACgBAwABAAAAAgAAABMCAwABAAAAAQAAAGmHBAABAAAAZgAAAAAAAAAsAQAAAQAAACwBAAABAAAABgAAkAcABAAAADAyMTABkQcABAAAAAECAwAAoAcABAAAADAxMDABoAMAAQAAAP//AAACoAMAAQAAADkEAAADoAMAAQAAAJoFAAAAAAAA/9sAQwAFAwQEBAMFBAQEBQUFBgcMCAcHBwcPCwsJDBEPEhIRDxERExYcFxMUGhURERghGBodHR8fHxMXIiQiHiQcHh8e/9sAQwEFBQUHBgcOCAgOHhQRFB4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4e/8AAEQgFmgQ5AwEiAAIRAQMRAf/EAB0AAQABBQEBAQAAAAAAAAAAAAAGAgMEBQcBCAn/xABdEAABAwMCAwUEBgcDCQYDABMBAAIDBAUREiEGEzEHIkFRYRQjMnFCgZGhwdEVJDNSYrHhCENyFjRTgpKy0vDxJURjk6LCF1SD4iY1c5Q2RWSzJ0ZVdIRlo8PT4//EABoBAQADAQEBAAAAAAAAAAAAAAACAwQBBQb/xAAzEQACAgEEAQMDAwQCAQUBAAAAAQIRAwQSITFBEyJRBTJhFHGBI0KRsTOh4RVSwdHw8f/aAAwDAQACEQMRAD8A+y0REAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQB"
+        }
+      ]
+    },
+    {
+      "schema": "None",
+      "prefix": "# Results filter\n\nYou are a system to extract specific choices, information or results that one or more agents generated under a situation.\n\nYou must:\n  - Extact only what is requested, as closely as possible.\n  - If the",
+      "count": 1037,
+      "examples": [
+        {
+          "source": "notebook-comparison\\gpt-6-luna-recheck",
+          "response_id": "chatcmpl-EcNPrXP8GIngwhFfXqNGuf4l6OgHN",
+          "system_prefix": "# Results filter\n\nYou are a system to extract specific choices, information or results that one or more agents generated under a situation.\n\nYou must:\n  - Extact only what is requested, as closely as possible.\n  - If the information requested is not present, you just return an empty result (null).\n  - Output in JSON format, **ALWAYS**, without any extra text or markings.\n\nYour inputs are:\n  - An interaction history of one or more agents, which might include, for each agent, both stimuli it receives and actions it performs.\n  - An extraction objective, which defines precisely what is to be extracted. If the desired information is not present, you\n    resturn an empty result.\n  - A situation which explains what were the conditions the agents were subject to.\n\nOn your output format:\n  - You always output JSON strings.\n  - If the output contains only one result, but with one or more fields, your output **MUST** follows this format:\n    ```json\n      {<KEY_1>: <EXTRACTION HERE>, <KEY_2>:<EXTRACTION HERE>, ..., <KEY_n>:<EXTRACTION HERE>} \n    ```\n  - On the other hand, **ONLY** if the output contains multiple results, your output follows this format:\n  ```json\n      [\n         {<KEY_1>: <EXTRACTION HERE>, <KEY_2>:<EXTRACTION HERE>, ..., <KEY_n>:<EXTRACTION HERE>},\n         ...,\n       "
+        },
+        {
+          "source": "notebook-comparison\\gpt-6-luna-recheck",
+          "response_id": "chatcmpl-EcNyDbMDSVPfu04FbJyOtHOmd1jb3",
+          "system_prefix": "# Results filter\n\nYou are a system to extract specific choices, information or results that one or more agents generated under a situation.\n\nYou must:\n  - Extact only what is requested, as closely as possible.\n  - If the information requested is not present, you just return an empty result (null).\n  - Output in JSON format, **ALWAYS**, without any extra text or markings.\n\nYour inputs are:\n  - An interaction history of one or more agents, which might include, for each agent, both stimuli it receives and actions it performs.\n  - An extraction objective, which defines precisely what is to be extracted. If the desired information is not present, you\n    resturn an empty result.\n  - A situation which explains what were the conditions the agents were subject to.\n\nOn your output format:\n  - You always output JSON strings.\n  - If the output contains only one result, but with one or more fields, your output **MUST** follows this format:\n    ```json\n      {<KEY_1>: <EXTRACTION HERE>, <KEY_2>:<EXTRACTION HERE>, ..., <KEY_n>:<EXTRACTION HERE>} \n    ```\n  - On the other hand, **ONLY** if the output contains multiple results, your output follows this format:\n  ```json\n      [\n         {<KEY_1>: <EXTRACTION HERE>, <KEY_2>:<EXTRACTION HERE>, ..., <KEY_n>:<EXTRACTION HERE>},\n         ...,\n       "
+        }
+      ]
+    },
+    {
+      "schema": "None",
+      "prefix": "# Content enricher\n\nYou are a system that, given a certain content, enriches it. You operate with synthetic data, your main aim being\nto make it more realistic, useful, informative and human-like. Content types might inc",
+      "count": 32,
+      "examples": [
+        {
+          "source": "wp6",
+          "response_id": "chatcmpl-EcO4IfhjyjWJ5eXQhgQmI6d7Bobsv",
+          "system_prefix": "# Content enricher\n\nYou are a system that, given a certain content, enriches it. You operate with synthetic data, your main aim being\nto make it more realistic, useful, informative and human-like. Content types might include, but are not limited to:\n    - Documents\n    - Meetings\n    - Emails\n    - Chat messages\n    - Tabular data\n    - Configuration files\n    - etc.\n\nContent enrichment under such conditions can be useful in many scenarios, such as:\n  - Expanding short documents, or document outlines. Synthetic data is often short or incomplete, and you can help\n    make it more informative.\n  - Filling in specific missing details. Synthetic data often lacks specific details, and you can help make it more\n    realistic.\n  - Making the content more human-like. Synthetic data is often generated by machines, and you can help make it more\n    human-like.\n  - Changing tone or style, since the original content might not be suitable for the target audience and might need\n    to be adjusted.\n  - Adapting content to work better with other systems. For example, the target system might require special-purpose\n    formatting, custom fields, or specific data types.\n\n\n## On your input\n\nYou receive as input:\n  - the content type: e.g. Document, Meeting, Email, Chat Message, Tabualar Data, Confi"
+        },
+        {
+          "source": "lx09",
+          "response_id": "chatcmpl-EcLwnvAVZNmMqNyr4cSu1uTcl3pzX",
+          "system_prefix": "# Content enricher\n\nYou are a system that, given a certain content, enriches it. You operate with synthetic data, your main aim being\nto make it more realistic, useful, informative and human-like. Content types might include, but are not limited to:\n    - Documents\n    - Meetings\n    - Emails\n    - Chat messages\n    - Tabular data\n    - Configuration files\n    - etc.\n\nContent enrichment under such conditions can be useful in many scenarios, such as:\n  - Expanding short documents, or document outlines. Synthetic data is often short or incomplete, and you can help\n    make it more informative.\n  - Filling in specific missing details. Synthetic data often lacks specific details, and you can help make it more\n    realistic.\n  - Making the content more human-like. Synthetic data is often generated by machines, and you can help make it more\n    human-like.\n  - Changing tone or style, since the original content might not be suitable for the target audience and might need\n    to be adjusted.\n  - Adapting content to work better with other systems. For example, the target system might require special-purpose\n    formatting, custom fields, or specific data types.\n\n\n## On your input\n\nYou receive as input:\n  - the content type: e.g. Document, Meeting, Email, Chat Message, Tabualar Data, Confi"
+        }
+      ]
+    },
+    {
+      "schema": "tinytroupe.utils.llm.LLMStringWithJustificationResponse",
+      "prefix": "You are an AI system that executes a computation as defined below.\n\nGenerates a unique full name for a person. The full name must not be in the list of already generated names.\n        If necessary, you can generate a lo",
+      "count": 23,
+      "examples": [
+        {
+          "source": "lx01",
+          "response_id": "chatcmpl-EcLJRQZlBREslQuRDlIL8JCe2t1C5",
+          "system_prefix": "You are an AI system that executes a computation as defined below.\n\nGenerates a unique full name for a person. The full name must not be in the list of already generated names.\n        If necessary, you can generate a longer name to ensure it is new. You can also try tweaking the spelling or\n        adding more surnames, so that the name is unique. However, the name **must** sound realistic and not be too far-fetched,\n        not sound as if it was made up.\n\n        The final result is only the name, nothing else:\n\n           \"Some name here\"  ---> correct as it is just a name, nothing else\n           \"Some name here, because ...\" ---> incorrect as it contains a reason\n           \"Some name here.\" ---> incorrect as it contains punctuation\n           \"Name: Some name here\" ---> incorrect as it contains a label\n           \"Some name here, some other name here\" ---> incorrect as it contains more than one name\n\n        An optional context can be provided to guide the name generation, so that it is a realistic name for the context. For example, we know that different socio-economic classes have different naming conventions, so the context can be used to guide the name generation.\n\n        Regarding the `already_generated_names`, you must:\n            - NEVER generate a name that is al"
+        },
+        {
+          "source": "lx07",
+          "response_id": "chatcmpl-EcLTMzkxkJML0UCVjuCbGnPya2Q8z",
+          "system_prefix": "You are an AI system that executes a computation as defined below.\n\nGenerates a unique full name for a person. The full name must not be in the list of already generated names.\n        If necessary, you can generate a longer name to ensure it is new. You can also try tweaking the spelling or\n        adding more surnames, so that the name is unique. However, the name **must** sound realistic and not be too far-fetched,\n        not sound as if it was made up.\n\n        The final result is only the name, nothing else:\n\n           \"Some name here\"  ---> correct as it is just a name, nothing else\n           \"Some name here, because ...\" ---> incorrect as it contains a reason\n           \"Some name here.\" ---> incorrect as it contains punctuation\n           \"Name: Some name here\" ---> incorrect as it contains a label\n           \"Some name here, some other name here\" ---> incorrect as it contains more than one name\n\n        An optional context can be provided to guide the name generation, so that it is a realistic name for the context. For example, we know that different socio-economic classes have different naming conventions, so the context can be used to guide the name generation.\n\n        Regarding the `already_generated_names`, you must:\n            - NEVER generate a name that is al"
+        }
+      ]
+    },
+    {
+      "schema": "None",
+      "prefix": "You are a system that generates specifications for realistic simulations of people. You follow the generation rules and constraints carefully.",
+      "count": 1233,
+      "examples": [
+        {
+          "source": "lx01",
+          "response_id": "chatcmpl-EcLJYidYRagwPnwbHOXhthbfUOj5A",
+          "system_prefix": "You are a system that generates specifications for realistic simulations of people. You follow the generation rules and constraints carefully."
+        },
+        {
+          "source": "lx07",
+          "response_id": "chatcmpl-EcLTU6GHRR3uL6IN2bWK6xHKceSvH",
+          "system_prefix": "You are a system that generates specifications for realistic simulations of people. You follow the generation rules and constraints carefully."
+        }
+      ]
+    },
+    {
+      "schema": "tinytroupe.validation.tiny_person_validator.ValidationResponse",
+      "prefix": "# Personality Validation Interview\n\nYou are conducting a comprehensive validation interview to assess whether a person conforms to their expected personality definition and characteristics. Your goal is to thoroughly pro",
+      "count": 27,
+      "examples": [
+        {
+          "source": "lx01",
+          "response_id": "chatcmpl-EcLLZIQARGqSzbLanahi4tAtxR7Hd",
+          "system_prefix": "# Personality Validation Interview\n\nYou are conducting a comprehensive validation interview to assess whether a person conforms to their expected personality definition and characteristics. Your goal is to thoroughly probe the person through structured questioning and provide a final assessment score.\n\n## Response Format\n\nYou must ALWAYS respond in the following JSON structure:\n```json\n{\n  \"questions\": [\"question 1\", \"question 2\", \"...\"],\n  \"next_phase_description\": \"Brief description of the current questioning phase (optional)\",\n  \"score\": null,\n  \"justification\": null,\n  \"is_complete\": false\n}\n```\n\n**During the interview phase:**\n- Set `questions` to an array of questions to ask\n- Set `next_phase_description` to briefly explain the current phase (e.g., \"CHARACTERISTICS QUESTIONS\", \"BEHAVIORAL QUESTIONS\")\n- Keep `score` and `justification` as `null`\n- Set `is_complete` to `false`\n\n**For the final assessment:**\n- Set `questions` to `null`\n- Set `next_phase_description` to `null`\n- Set `score` to a number between 0.0 and 1.0\n- Set `justification` to your detailed reasoning\n- Set `is_complete` to `true`\n\n## Interview Structure and Guidelines\n\n### Question Categories\nDivide your interview into two main phases:\n\n**1. CHARACTERISTICS QUESTIONS**\n- Verify basic facts: name, age, backgr"
+        },
+        {
+          "source": "lx01",
+          "response_id": "chatcmpl-EcLMALAPqe725aBo5GFpz7w8LeJTB",
+          "system_prefix": "# Personality Validation Interview\n\nYou are conducting a comprehensive validation interview to assess whether a person conforms to their expected personality definition and characteristics. Your goal is to thoroughly probe the person through structured questioning and provide a final assessment score.\n\n## Response Format\n\nYou must ALWAYS respond in the following JSON structure:\n```json\n{\n  \"questions\": [\"question 1\", \"question 2\", \"...\"],\n  \"next_phase_description\": \"Brief description of the current questioning phase (optional)\",\n  \"score\": null,\n  \"justification\": null,\n  \"is_complete\": false\n}\n```\n\n**During the interview phase:**\n- Set `questions` to an array of questions to ask\n- Set `next_phase_description` to briefly explain the current phase (e.g., \"CHARACTERISTICS QUESTIONS\", \"BEHAVIORAL QUESTIONS\")\n- Keep `score` and `justification` as `null`\n- Set `is_complete` to `false`\n\n**For the final assessment:**\n- Set `questions` to `null`\n- Set `next_phase_description` to `null`\n- Set `score` to a number between 0.0 and 1.0\n- Set `justification` to your detailed reasoning\n- Set `is_complete` to `true`\n\n## Interview Structure and Guidelines\n\n### Question Categories\nDivide your interview into two main phases:\n\n**1. CHARACTERISTICS QUESTIONS**\n- Verify basic facts: name, age, backgr"
+        }
+      ]
+    },
+    {
+      "schema": "None",
+      "prefix": "# Story teller\n\nYou are a system that, given a story, creates a continuation for it. The stories you handle are of a special kind:\nthey are the result of a computer simulation, where agents interact with each other withi",
+      "count": 41,
+      "examples": [
+        {
+          "source": "lx10",
+          "response_id": "chatcmpl-EcMxF86gamwSZIC7B5jJ1zMBP9quN",
+          "system_prefix": "# Story teller\n\nYou are a system that, given a story, creates a continuation for it. The stories you handle are of a special kind:\nthey are the result of a computer simulation, where agents interact with each other within an environment. \nHence, the story unfolds a sequence of simulation events. However, though terse, these events are meant to capture\na realistic scenario, where agents have goals, and they act to achieve them. Your task therefore is to create\na continuation of the story that is both plausible and interesting.\n\nSince these stories necessarily relates computer simulations, they always have some implicit or explicit purpose.\nStories, therefore, **must** respect the purpose they are given, meaning that any story enrichment, continunation, or other\nrelated content **must** be in line with the purpose of the simulation.\n\nOn the the format of the continuations you propose:\n  - You should propose a text that describes what happens next, with around 100 words. You can use one or more paragraphs.\n    DO NOT use more than 100 words!!\n  - You should use regular English, do not try to immitate the terse style of the simulation events. This is because\n    your output will be read by the agents and other simulation elements, as well as the human experimenter running everything,"
+        },
+        {
+          "source": "lx10",
+          "response_id": "chatcmpl-EcMyo8bnIYs5Dp2M9KGRraOtwps13",
+          "system_prefix": "# Story teller\n\nYou are a system that, given a story, creates a continuation for it. The stories you handle are of a special kind:\nthey are the result of a computer simulation, where agents interact with each other within an environment. \nHence, the story unfolds a sequence of simulation events. However, though terse, these events are meant to capture\na realistic scenario, where agents have goals, and they act to achieve them. Your task therefore is to create\na continuation of the story that is both plausible and interesting.\n\nSince these stories necessarily relates computer simulations, they always have some implicit or explicit purpose.\nStories, therefore, **must** respect the purpose they are given, meaning that any story enrichment, continunation, or other\nrelated content **must** be in line with the purpose of the simulation.\n\nOn the the format of the continuations you propose:\n  - You should propose a text that describes what happens next, with around 100 words. You can use one or more paragraphs.\n    DO NOT use more than 100 words!!\n  - You should use regular English, do not try to immitate the terse style of the simulation events. This is because\n    your output will be read by the agents and other simulation elements, as well as the human experimenter running everything,"
+        }
+      ]
+    },
+    {
+      "schema": "tinytroupe.utils.llm.LLMIntegerWithJustificationAndReasoningResponse",
+      "prefix": "You are a system that computes an integer score (between 0 and 9, inclusive) about how much a proposition is true or false with respect to a given context. \nThis context always refers to a multi-agent simulation. The pro",
+      "count": 348,
+      "examples": [
+        {
+          "source": "lx11",
+          "response_id": "chatcmpl-EcOuuchKeCVt3NlNYiRGubvEZuhW8",
+          "system_prefix": "You are a system that computes an integer score (between 0 and 9, inclusive) about how much a proposition is true or false with respect to a given context. \nThis context always refers to a multi-agent simulation. The proposition is a claim about the behavior of the agents or the state of their environment in the simulation.\n\nThe minimum score of 0 means that the proposition is completely false in all of the simulation trajectories, while the maximum score of 9 means that the proposition is completely true in all of the simulation trajectories. Intermediate scores are used to express varying degrees of partially met expectations. When assigning a score, follow these guidelines:\n- If the data required to judge the proposition is not present, assign a score of 9. That is to say, unless there is evidence to the contrary, the proposition is assumed to be true.\n- The maximum score of 9 should be assigned when the evidence is as good as it can be. That is to say, all parts of the observed simulation trajectory support the proposition, no exceptions.\n- The minimum score of 0 should be assigned when the evidence is as bad as it can be. That is to say, all parts of the observed simulation trajectory contradict the proposition, no exceptions.\n- Intermediate scores should be assigned when th"
+        },
+        {
+          "source": "lx11",
+          "response_id": "chatcmpl-EcOutqAij89BUW8FqtBypKfj8s7w2",
+          "system_prefix": "You are a system that computes an integer score (between 0 and 9, inclusive) about how much a proposition is true or false with respect to a given context. \nThis context always refers to a multi-agent simulation. The proposition is a claim about the behavior of the agents or the state of their environment in the simulation.\n\nThe minimum score of 0 means that the proposition is completely false in all of the simulation trajectories, while the maximum score of 9 means that the proposition is completely true in all of the simulation trajectories. Intermediate scores are used to express varying degrees of partially met expectations. When assigning a score, follow these guidelines:\n- If the data required to judge the proposition is not present, assign a score of 9. That is to say, unless there is evidence to the contrary, the proposition is assumed to be true.\n- The maximum score of 9 should be assigned when the evidence is as good as it can be. That is to say, all parts of the observed simulation trajectory support the proposition, no exceptions.\n- The minimum score of 0 should be assigned when the evidence is as bad as it can be. That is to say, all parts of the observed simulation trajectory contradict the proposition, no exceptions.\n- Intermediate scores should be assigned when th"
+        }
+      ]
+    },
+    {
+      "schema": "None",
+      "prefix": "You are an AI system that executes a computation as defined below.\n\nGiven a list of input texts, this function combines them into a single text, ensuring that the\n    output is coherent, consistent, and logically structu",
+      "count": 344,
+      "examples": [
+        {
+          "source": "lx11",
+          "response_id": "chatcmpl-EcOv6d4jGp7J2CxGjE0bZe9W8gIb2",
+          "system_prefix": "You are an AI system that executes a computation as defined below.\n\nGiven a list of input texts, this function combines them into a single text, ensuring that the\n    output is coherent, consistent, and logically structured. In particular, the resulting combination\n    must follow these rules:\n        - The combination consolidates the information from the inputs. It **does not** just concatenate them.\n        - Information that was repeated across the inputs is not repeated in the output, but rather unified and consolidated there.\n        - The combination preserves all the essential information from the inputs, but it is not a simple copy of them.\n        - If information from some inputs can be combined in a more concise formulation, this new formulation should be used in the output.\n        This allows to reduce redundancy and improve clarity.\n        - The combination might be larger than the sum of the inputs, since it preserves the information from the inputs.\n        - If the various inputs seem to follow some common format or style, the output must follow that format or style too.\n        - The combination can contain inconsistencies or contradictions, in case the inputs do.\n\n    Args:\n        *texts: A list of input texts to be combined.\n\n    Returns:\n        str: The c"
+        },
+        {
+          "source": "lx11",
+          "response_id": "chatcmpl-EcOv6pqw9PPezCHvdp1gKbcNa3NMe",
+          "system_prefix": "You are an AI system that executes a computation as defined below.\n\nGiven a list of input texts, this function combines them into a single text, ensuring that the\n    output is coherent, consistent, and logically structured. In particular, the resulting combination\n    must follow these rules:\n        - The combination consolidates the information from the inputs. It **does not** just concatenate them.\n        - Information that was repeated across the inputs is not repeated in the output, but rather unified and consolidated there.\n        - The combination preserves all the essential information from the inputs, but it is not a simple copy of them.\n        - If information from some inputs can be combined in a more concise formulation, this new formulation should be used in the output.\n        This allows to reduce redundancy and improve clarity.\n        - The combination might be larger than the sum of the inputs, since it preserves the information from the inputs.\n        - If the various inputs seem to follow some common format or style, the output must follow that format or style too.\n        - The combination can contain inconsistencies or contradictions, in case the inputs do.\n\n    Args:\n        *texts: A list of input texts to be combined.\n\n    Returns:\n        str: The c"
+        }
+      ]
+    },
+    {
+      "schema": "None",
+      "prefix": "[{\"type\": \"text\", \"text\": \"Describe the image(s) below concisely and factually in a few sentences. Focus on the most salient visual content.\\n\\nAdditional context from the viewer: A product you encountered at a supermark",
+      "count": 1,
+      "examples": [
+        {
+          "source": "lx05",
+          "response_id": "chatcmpl-EcLiySRXLlmqGlBuHdFMbyhWGnJlc",
+          "system_prefix": "[{\"type\": \"text\", \"text\": \"Describe the image(s) below concisely and factually in a few sentences. Focus on the most salient visual content.\\n\\nAdditional context from the viewer: A product you encountered at a supermarket.\"}, {\"type\": \"image_url\", \"image_url\": {\"url\": \"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/4QBoRXhpZgAATU0AKgAAAAgABAEaAAUAAAABAAAAPgEbAAUAAAABAAAARgEoAAMAAAABAAIAAAExAAIAAAARAAAATgAAAAAAAABgAAAAAQAAAGAAAAABcGFpbnQubmV0IDUuMC4xMwAA/9sAQwACAQEBAQECAQEBAgICAgIEAwICAgIFBAQDBAYFBgYGBQYGBgcJCAYHCQcGBggLCAkKCgoKCgYICwwLCgwJCgoK/9sAQwECAgICAgIFAwMFCgcGBwoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoK/8AAEQgCkQKRAwESAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A+H/D2uz6lKGWcKu4YYgls89+fU8dKPgBpu"
+        }
+      ]
+    },
+    {
+      "schema": "None",
+      "prefix": "[{\"type\": \"text\", \"text\": \"Describe the image(s) below concisely and factually in a few sentences. Focus on the most salient visual content.\"}, {\"type\": \"image_url\", \"image_url\": {\"url\": \"data:image/jpeg;base64,/9j/2wBDA",
+      "count": 1,
+      "examples": [
+        {
+          "source": "lx05",
+          "response_id": "chatcmpl-EcLj9L2lO2TbKdqXPkBRTH2ioCncH",
+          "system_prefix": "[{\"type\": \"text\", \"text\": \"Describe the image(s) below concisely and factually in a few sentences. Focus on the most salient visual content.\"}, {\"type\": \"image_url\", \"image_url\": {\"url\": \"data:image/jpeg;base64,/9j/2wBDAAQDAwQDAwQEAwQFBAQFBgoHBgYGBg0JCggKDw0QEA8NDw4RExgUERIXEg4PFRwVFxkZGxsbEBQdHx0aHxgaGxr/wAALCAV+BQABASIA/8QAHAAAAgMBAQEBAAAAAAAAAAAAAwQBAgUABgcI/8QAQRAAAgEDBAEDAwIEBgEEAQALAQIRAAMhBBIxQVETImEFMnGBkSNCobEGFFLB0fDhFTNi8SRyQ4JTBxYlkjSDov/aAAgBAQAAPwD8I11dXV1dXV0TV0tM3FHTS+aYt6YDqmU0+OKOliOBmmLenxMUVdPHVFWxjxR00+OJNFSxjiiLZG2RNEW38Yq62sH5q62hyOKutrkwaItuQQf3qwtCR1NXCfGKlbckwBPzVhbGRipCdnn4q4TGIPxFECGCBgH+tXCAcgVYgcjMUQKWEftU27ODPP4q0R3/AEqCqnI54qNgUT3UhM8Y6xVlTzxRUtbhxxwauiggeBiiFTB4Iq6qRJxHirRkgf8A3XCyeeM0a1bGCQeJimAu0Erz/aiptAyJ/TNEFvPw370ZVKkLwCKOqlhAHWYo6riCAIyRNEX3CAMDIpyxZ9MEvgnxTItkBSRAmZIqRbnB89d1ZVB+wFYGaLsOJEDzUQFMczkUXaxtqCcKcA/1puzY9NA7mT/pJii2wqgeyYMyD3+ausXMKNnZ6mroSILczk0e2ylsGYxM80b0JIxE8RiuNvcvtkNHM4FEsiFBgSMSBNNLbI9wIBPBpuxaKSGIYxJNOaa1uUhVDx47o4ssn8sZ4J5PmqlWQQ0EE9Yip9pBCk4znFJ624AzAEMAAOYrHe8WYwSFPZpGSN4cgiOKCmtiTMAnA8fFFFy3dYbztLT7h/ajiyi25cwx891ysiFWgHOKImrVnhljaOqe0F0F5YSevityVYExKxkSKCxgA2xBxNcqrd7LtnHiif5dhLMTkAY6/wDNJXrZJeOhJkVmXldFYQYiJGKWezg+z3Hz1S/oxuFwD2ncD4qpRmwuC3zzVblqJWSwHEDE0E2YmcAZ3HoVZryBR6YB/wDmRQGY3GYs26eqhF37QfyDFHt2yXIdIJODSuptt"
+        }
+      ]
+    },
+    {
+      "schema": "None",
+      "prefix": "[{\"type\": \"text\", \"text\": \"Describe the image(s) below concisely and factually in a few sentences. Focus on the most salient visual content.\\n\\nAdditional context from the viewer: A painting shown to you at an art galler",
+      "count": 1,
+      "examples": [
+        {
+          "source": "lx05",
+          "response_id": "chatcmpl-EcLsieeA4N7NkiQySPIGu64HdNOwU",
+          "system_prefix": "[{\"type\": \"text\", \"text\": \"Describe the image(s) below concisely and factually in a few sentences. Focus on the most salient visual content.\\n\\nAdditional context from the viewer: A painting shown to you at an art gallery.\"}, {\"type\": \"image_url\", \"image_url\": {\"url\": \"data:image/jpeg;base64,/9j/2wBDAAQDAwQDAwQEAwQFBAQFBgoHBgYGBg0JCggKDw0QEA8NDw4RExgUERIXEg4PFRwVFxkZGxsbEBQdHx0aHxgaGxr/2wBDAQQFBQYFBgwHBwwaEQ8RGhoaGhoaGhoaGhoaGhoaGhoaGhoaGhoaGhoaGhoaGhoaGhoaGhoaGhoaGhoaGhoaGhr/wAARCAWSB4ADASIAAhEBAxEB/8QAHAAAAwEBAQEBAQAAAAAAAAAAAgMEAQUABgcI/8QASRAAAgEDAgMFBgYCAQMDAgAPAQIRAAMhEjEEQVETImFxgQUykaGx8BQjQsHR4QbxUhUzYiRyggdDkhY0U6IlY3OywtI1JjaD/8QAGgEAAwEBAQEAAAAAAAAAAAAAAQIDAAQFBv/EADcRAAICAQQBAwMCBAYDAAMBAQABAhEhAxIxQVEEEyJhcfAygZGhscEFFCMzQtFS4fEkQ2JyFf/aAAwDAQACEQMRAD8A+H4fghwXHIvEseP4O9cBa0jFTdDEsJAOod5Tz26YrvCygus91+yAXQ4LqCFORpB2G2x5fGZ+JsPcfgT3rYtql62LIBuq1slpacqJAjoTFePFv2S2xw5uKDCvhYEd2BzAA59c1PSjcbYNRvdg6vF67yarau2ncFBkTG/KubcsPetXQgVWKFNKozRjJ+dNR7rarRtfmAgOXuhY+UVQivdgyQi5PfgAenKr7FLBDc45AscGi27aiyALUEEwJ8QAfrTEtsLsqU0le8QoBPSnWkVwjBm32Cx9eXjirBpljdCALkSZIPWqR0k0TepTsie3pJgAE77/AA3/AGpSWWDkhnYzGkKRz8q6ZACygJGDjA86Es4US0wOQketU9tCe4RW7L23GpGA3GoDOPGaelvVqZvdIgkksYjqcVq4MN3c47uaZbILLrMmY5Z9OVPHToRzsQOzk6yxDYAUbUV63PfW2G7vUSPT9qqmFg4BWcD+BQME1EMs6hJIWAdsTGTT7EkKpM5tlQwghhqxBYE"
+        }
+      ]
+    },
+    {
+      "schema": "None",
+      "prefix": "You are an AI system that executes a computation as defined below.\n\nGiven a sampling description, computes the dimensions of the sampling space (and output them formated as a valid JSON specification). The sampling space",
+      "count": 11,
+      "examples": [
+        {
+          "source": "lx18",
+          "response_id": "chatcmpl-EcM6RNGriUmjMLGzNQMx02h4vI5lQ",
+          "system_prefix": "You are an AI system that executes a computation as defined below.\n\nGiven a sampling description, computes the dimensions of the sampling space (and output them formated as a valid JSON specification). The sampling space offers a way to sample from a population of people,\n        so each dimension contains values that could be an attribute of a **specific** person. The resulting sampling space must:\n           - contemplate all critical characteristics mentioned in the sampling description, even if this means having a large number of dimensions and\n             complex values for each.\n               * whenever necessary to properly capture the possibilities, you can replace a single dimension by a collection of sub-dimensions\n             (e.g., instead of \"beliefs\", you might have \"political_beliefs\", \"economic_beliefs\", \"consumer_beliefs\", etc.)\n           - values for each dimension can range from numbers or single words to large sentences or even paragraphs. For attributes that are not clearly single values,\n             always try to add as much detail as possible. For instance, age is just a single value, but lifestyle or cultural background **must** be a long sentence or even a paragraph.\n             This is to ensure that, later, the generated people can be very nuanced"
+        },
+        {
+          "source": "lx19",
+          "response_id": "chatcmpl-EcLnVGSyDaZFCuqZ997mt6zqc2Yxi",
+          "system_prefix": "You are an AI system that executes a computation as defined below.\n\nGiven a sampling description, computes the dimensions of the sampling space (and output them formated as a valid JSON specification). The sampling space offers a way to sample from a population of people,\n        so each dimension contains values that could be an attribute of a **specific** person. The resulting sampling space must:\n           - contemplate all critical characteristics mentioned in the sampling description, even if this means having a large number of dimensions and\n             complex values for each.\n               * whenever necessary to properly capture the possibilities, you can replace a single dimension by a collection of sub-dimensions\n             (e.g., instead of \"beliefs\", you might have \"political_beliefs\", \"economic_beliefs\", \"consumer_beliefs\", etc.)\n           - values for each dimension can range from numbers or single words to large sentences or even paragraphs. For attributes that are not clearly single values,\n             always try to add as much detail as possible. For instance, age is just a single value, but lifestyle or cultural background **must** be a long sentence or even a paragraph.\n             This is to ensure that, later, the generated people can be very nuanced"
+        }
+      ]
+    },
+    {
+      "schema": "None",
+      "prefix": "You are an AI system that executes a computation as defined below.\n\nThis function defines which and how many people to sample from the sampling space defined by the given dimensions.\n        Given a number N of people to",
+      "count": 11,
+      "examples": [
+        {
+          "source": "lx18",
+          "response_id": "chatcmpl-EcM95l2RaExtvDUAVWUV79rG7iT9O",
+          "system_prefix": "You are an AI system that executes a computation as defined below.\n\nThis function defines which and how many people to sample from the sampling space defined by the given dimensions.\n        Given a number N of people to sample, and the dimensions of the sampling space, computes a *sample plan* of N people from that space as a JSON object (rooted on the \"sample_plan\" key).\n\n        The input sampling dimensions have the following structure:\n\n            ```json\n                {\n                    \"sampling_space_description\": \"A description of the sampling space.\",\n                    \"dimensions\": [\n                        {\n                            \"name\": \"dimension_name_1\",\n                            \"range\": [min, max]\n                        },\n                        {\n                            \"name\": \"dimension_name_2\",\n                            \"values\": [\"value2_1\", \"value2_2\", \"value2_3\", \"value2_4\", ...]\n                        },\n                        {\n                            \"name\": \"dimension_name_3\",\n                            \"values\": [\"value3_1\", \"value3_2\", \"value3_3\", \"value3_4\", ...]\n                        },\n                        ...\n                    ]\n                }\n            ```\n\n        The *sample plan* to be generated is a"
+        },
+        {
+          "source": "lx19",
+          "response_id": "chatcmpl-EcLqTJWCF2AtJx2MhKHOHjUKz8HFq",
+          "system_prefix": "You are an AI system that executes a computation as defined below.\n\nThis function defines which and how many people to sample from the sampling space defined by the given dimensions.\n        Given a number N of people to sample, and the dimensions of the sampling space, computes a *sample plan* of N people from that space as a JSON object (rooted on the \"sample_plan\" key).\n\n        The input sampling dimensions have the following structure:\n\n            ```json\n                {\n                    \"sampling_space_description\": \"A description of the sampling space.\",\n                    \"dimensions\": [\n                        {\n                            \"name\": \"dimension_name_1\",\n                            \"range\": [min, max]\n                        },\n                        {\n                            \"name\": \"dimension_name_2\",\n                            \"values\": [\"value2_1\", \"value2_2\", \"value2_3\", \"value2_4\", ...]\n                        },\n                        {\n                            \"name\": \"dimension_name_3\",\n                            \"values\": [\"value3_1\", \"value3_2\", \"value3_3\", \"value3_4\", ...]\n                        },\n                        ...\n                    ]\n                }\n            ```\n\n        The *sample plan* to be generated is a"
+        }
+      ]
+    },
+    {
+      "schema": "None",
+      "prefix": "You are an AI system that executes a computation as defined below.\n\nGenerates a single full name for a person based on their complete sample characteristics, such that\n        it is as appropriate as possible to all char",
+      "count": 1478,
+      "examples": [
+        {
+          "source": "lx18",
+          "response_id": "chatcmpl-EcMAtOBcOxOBWZEC7HQMTCjKn1Itq",
+          "system_prefix": "You are an AI system that executes a computation as defined below.\n\nGenerates a single full name for a person based on their complete sample characteristics, such that\n        it is as appropriate as possible to all characteristics, not just gender.\n        This name MUST BE UNIQUE and not appear in the already_generated_names list, though variations of the\n        same name are allowed.\n\n        You must generate a realistic full name that is appropriate for the given sample characteristics.\n        Consider ALL the characteristics provided, including but not limited to:\n        - Gender\n        - Age or age range\n        - Country/nationality/ethnicity\n        - Socioeconomic status\n        - Profession\n        - Educational background\n        - Cultural background\n        - Any other relevant demographic or personal characteristics\n\n        The name should:\n        - BE UNIQUE and not appear in the already_generated_names list\n        - Be realistic and culturally appropriate for the characteristics\n        - Sound natural and not made-up\n        - Be unique and not appear in the already_generated_names list\n        - Reflect the person's likely background (e.g., names common in their generation, culture, social class)\n\n        If you need additional methods to ensure uniquene"
+        },
+        {
+          "source": "lx18",
+          "response_id": "chatcmpl-EcMAzzvKbSYx9oES1e9kaYiQCohNi",
+          "system_prefix": "You are an AI system that executes a computation as defined below.\n\nGenerates a single full name for a person based on their complete sample characteristics, such that\n        it is as appropriate as possible to all characteristics, not just gender.\n        This name MUST BE UNIQUE and not appear in the already_generated_names list, though variations of the\n        same name are allowed.\n\n        You must generate a realistic full name that is appropriate for the given sample characteristics.\n        Consider ALL the characteristics provided, including but not limited to:\n        - Gender\n        - Age or age range\n        - Country/nationality/ethnicity\n        - Socioeconomic status\n        - Profession\n        - Educational background\n        - Cultural background\n        - Any other relevant demographic or personal characteristics\n\n        The name should:\n        - BE UNIQUE and not appear in the already_generated_names list\n        - Be realistic and culturally appropriate for the characteristics\n        - Sound natural and not made-up\n        - Be unique and not appear in the already_generated_names list\n        - Reflect the person's likely background (e.g., names common in their generation, culture, social class)\n\n        If you need additional methods to ensure uniquene"
+        }
+      ]
+    },
+    {
+      "schema": "None",
+      "prefix": "# Normalizer\n\nYou are a system that normalizes text data (clusters similar elements and produces canonical abstractions).\n\nInput:\n  - A list of textual elements (concepts, phrases, short passages).\n  - A maximum desired ",
+      "count": 120,
+      "examples": [
+        {
+          "source": "lx18",
+          "response_id": "chatcmpl-EcMJlUMgml9Wtuw0y3ybEDu2ZKD0L",
+          "system_prefix": "# Normalizer\n\nYou are a system that normalizes text data (clusters similar elements and produces canonical abstractions).\n\nInput:\n  - A list of textual elements (concepts, phrases, short passages).\n  - A maximum desired number of output elements N (this is a HARD UPPER BOUND; you MUST NOT return more than N under any circumstance. You MAY return fewer if appropriate to avoid near-duplicate or trivial splits).\n\nGoal:\n  - Partition ALL input elements (no omissions, no overlap) into UP TO N non-overlapping groups.\n  - Produce ONE canonical abstraction per group (short phrase / concept / concise summary) that subsumes its members.\n  - If the number of semantically distinct groups is < N, return only that smaller number (never force artificial splits). NEVER exceed N.\n  - If the number of input elements <= N, you may simply return them unchanged (identity).\n\nClustering Guidance:\n  - Group by semantic similarity, not by superficial wording only.\n  - Prefer broader abstractions that still clearly represent every member.\n  - Merge extremely similar or trivially rephrased elements.\n  - Avoid creating two outputs whose meanings largely overlap.\n\nAbstraction Guidance:\n  - For very short items: pick / synthesize a concise concept label.\n  - For longer passages: synthesize a short clause that"
+        },
+        {
+          "source": "lx18",
+          "response_id": "chatcmpl-EcMLUyeLUWdhHXmCKgOPgVuZZn6DY",
+          "system_prefix": "# Normalizer\n\nYou are a system that normalizes text data (clusters similar elements and produces canonical abstractions).\n\nInput:\n  - A list of textual elements (concepts, phrases, short passages).\n  - A maximum desired number of output elements N (this is a HARD UPPER BOUND; you MUST NOT return more than N under any circumstance. You MAY return fewer if appropriate to avoid near-duplicate or trivial splits).\n\nGoal:\n  - Partition ALL input elements (no omissions, no overlap) into UP TO N non-overlapping groups.\n  - Produce ONE canonical abstraction per group (short phrase / concept / concise summary) that subsumes its members.\n  - If the number of semantically distinct groups is < N, return only that smaller number (never force artificial splits). NEVER exceed N.\n  - If the number of input elements <= N, you may simply return them unchanged (identity).\n\nClustering Guidance:\n  - Group by semantic similarity, not by superficial wording only.\n  - Prefer broader abstractions that still clearly represent every member.\n  - Merge extremely similar or trivially rephrased elements.\n  - Avoid creating two outputs whose meanings largely overlap.\n\nAbstraction Guidance:\n  - For very short items: pick / synthesize a concise concept label.\n  - For longer passages: synthesize a short clause that"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "current_library_sha256": "ca9b09398b9dab603bc54a6fa729d7b27ce386dc80eeb3cff6e5117d51fa16f9",
+  "previous_library_sha256": "8c6a0a640111c4c219a1dfa06e8bcee99621fd03c1d45a0bf3871c50f28b8333",
+  "only_library_delta": {
+    "agent\\prompts\\tiny_person.v2.mustache": [
+      "  - A request's wording or answer format cannot grant the person knowledge or abilities they lack. A required number, explanation, or internal instruction to reason deeply does not make an infant understand a survey scale or a toddler evaluate a household purchase.",
+      "  - Respond only within the person's actual comprehension and agency. They may express a concrete like or dislike without understanding the requested judgment; do not attach an arbitrary rating to make their answer fit. Do not speak as an invented caregiver.",
+      "  - Apply this to the particular task, not an age cutoff: a child who understands a simple preference question or a counting task can answer it. A capable adult can give a clear rating without perfect information."
+    ],
+    "factory\\tiny_person_factory.py": [
+      "           - each categorical option must identify one coherent characteristic that can be selected for an individual.",
+      "             Keep opposing ends as separate options, not a single option such as \"strongly rejects novelty OR adopts everything impulsively\".",
+      "             A list can contain both ends; one selected option must not leave the person's position between incompatible alternatives unresolved.",
+      "             Related reasons for the same characteristic can share an option, but opposite behaviors require distinct options."
+    ]
+  },
+  "proof": "Removing only the three actor lines and four dimension-method docstring lines in memory exactly recovers the validated full-CF6/444-core source.",
+  "core": {
+    "passed": 449,
+    "deselected": 440,
+    "warnings": 7,
+    "elapsed_seconds": 3203.1
+  },
+  "screen_audit": "cf6-comprehension-screen/receipt.json",
+  "full_notebook_review": "cf6-gaz-manual-quality-review.json",
+  "scope": "Task-comprehension and individually selectable-option repairs, not an empirical calibration cure. Full CF6 predates these seven added lines."
+}

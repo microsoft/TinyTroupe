@@ -1,0 +1,11 @@
+{
+  "stage": "action-sampling-confirmation",
+  "corpora": ["..\\broad-luna-optimization\\development\\sources.jsonl", "..\\broad-luna-optimization\\validation\\sources.jsonl", "confirmation-sources.jsonl"],
+  "repetitions": 1,
+  "recipes": [
+    {"id":"action-execution-v2-confirm","instruction_file":"action-v2.txt","repetitions":3,"cases":["exec-chatcmpl-EcMyPpyhq9S5zw1U55xbUacS251EV"],"hypothesis":"Freeze the successful interaction-execution clarification and repeat the original failure."},
+    {"id":"action-execution-v2-confirm","instruction_file":"action-v2.txt","cases":["exec-chatcmpl-EcOYYZPYmzspk2IBYHEMMue73vQBq","exec-chatcmpl-EcOpIL36Q2dgJcoUbaIxIlNag6Qve","exec-chatcmpl-EcQKSqqy5GfE78PpkIkkNo8oVz0qu"],"hypothesis":"Test the frozen action clarification on the preselected additional source cases."},
+    {"id":"closed-vocabulary-v2-confirm","instruction_file":"sampling-v2.txt","repetitions":3,"cases":["exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR"],"hypothesis":"Freeze exact-vocabulary construction instructions and repeat the original failing plan."},
+    {"id":"closed-vocabulary-v2-confirm","instruction_file":"sampling-v2.txt","cases":["exec-chatcmpl-EcNZrgB7NnHHQ32gLuD0kVWCH8bKw","exec-chatcmpl-EcPVXPdL4sj3j6kfDX47ef2fsDrvS","exec-chatcmpl-EcQoAeqqNKsUNJdJW4yPwzKCNo2mx"],"hypothesis":"Test the same plan construction instruction on preselected additional spaces and sample sizes."}
+  ]
+}

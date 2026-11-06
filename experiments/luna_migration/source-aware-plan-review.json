@@ -1,0 +1,54 @@
+{
+  "gazpacho": {
+    "artifact": "concrete-gaz-plan-r4/sampling-plan.json",
+    "directives": 15,
+    "quantity": 50,
+    "selected_dimensions": 79,
+    "explicitly_requested_behavioral_families": 10,
+    "families_selected": 10,
+    "all_ten_options_retained_per_requested_family": true,
+    "age_counts": {
+      "0-14": 9,
+      "15-24": 7,
+      "25-54": 20,
+      "55-64": 6,
+      "65+": 8
+    },
+    "source_age_weights": {
+      "0-14": 0.186,
+      "15-24": 0.131,
+      "25-54": 0.394,
+      "55-64": 0.129,
+      "65+": 0.16
+    },
+    "geography": "Constrained region, left redundant state optional, avoiding independent conflicting state-region draws.",
+    "limitations": [
+      "Correct age totals and full behavioral vocabulary are not proof of empirical representativeness.",
+      "The 75-120 range still assumes uniform within-stratum age draws without finer source prevalence.",
+      "Not all supplied marginal distributions or relationships are validated. Five unemployed adults are concentrated in the 39-46 stratum, and education details can still impose unsupported cross-field combinations.",
+      "Observed all-option allowance is not a guarantee every option will occur in a realized fifty-person sample."
+    ]
+  },
+  "parents": {
+    "artifact": "concrete-kids-plan-r3/sampling-plan.json",
+    "directives": 12,
+    "quantity": 50,
+    "selected_dimensions": 15,
+    "age_band_quantities": {
+      "18-25": 3,
+      "25-35": 17,
+      "35-45": 18,
+      "45-55": 9,
+      "55-75": 3
+    },
+    "limitations": "The original source does not supply parental age prevalence. These allocations are model assumptions, not empirically estimated proportions; adjacent inclusive age bands overlap at their boundary values."
+  },
+  "next_validation": {
+    "reduced_actual_surveys": ["concrete-kids-r3", "concrete-gaz-r2"],
+    "full_notebooks": ["cf2-kids", "cf2-gaz"],
+    "core_suite": "source-handoff-core",
+    "source_policy": "Library is frozen after starting these full notebook runs; their run.json hashes are authoritative.",
+    "api_timeout_override_seconds": 600,
+    "source_implementation_unchanged_during_final_runs_required": true
+  }
+}

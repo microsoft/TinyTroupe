@@ -1,0 +1,39 @@
+{
+  "status": "Selected standalone procedures; not production deployment",
+  "fixed_input": {
+    "corpus": "confirmation/action-extraction-cases.jsonl",
+    "results": "confirmation/action-extraction-results.jsonl",
+    "case_count": 18,
+    "fresh_responses_per_case": 3,
+    "semantic_passes": 54
+  },
+  "adaptive_generation": {
+    "base_corpus": "selected-generation-base.jsonl",
+    "config": "selected-cohort-config.json",
+    "method": "Supply prior fictional drafts as explicit context to seek additional plausible lives; retain completed drafts including rejected outputs in the declared history.",
+    "cases": [
+      {
+        "source_case_id": "persona-grace",
+        "base_case_id": "persona-grace::explicit-particularities",
+        "source_corpus": "round5/selected.jsonl",
+        "protocol": "cohort-explicit-protocol.json",
+        "confirmation_cases": ["persona-grace::cohort-explicit1", "persona-grace::cohort-explicit2", "persona-grace::cohort-explicit3"],
+        "semantic_passes": 3
+      },
+      {
+        "source_case_id": "persona-philip",
+        "base_case_id": "persona-philip::external-fact-boundary",
+        "source_corpus": "round6/selected.jsonl",
+        "protocol": "cohort-grounded-protocol.json",
+        "confirmation_cases": ["persona-philip::cohort-grounded1", "persona-philip::cohort-grounded2", "persona-philip::cohort-grounded3"],
+        "semantic_passes": 3
+      }
+    ]
+  },
+  "limitations": [
+    "Generation confirmation uses sequential adaptive requests, not independent repeated inputs. Follow the named protocol histories for exact reproduction.",
+    "Do not replace population sampling with coverage seeking without explicitly changing the experimental interpretation.",
+    "Independent fixed-input persona diversity, population calibration and downstream notebook behavior remain unresolved or untested.",
+    "Case-level rankings and scores were accepted for coherence, not because their distributions were repaired."
+  ]
+}

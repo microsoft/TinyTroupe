@@ -1,0 +1,63 @@
+{
+  "baseline": {
+    "counts": {
+      "2": 7,
+      "3": 1
+    },
+    "mean": 2.125,
+    "sample_sd": 0.3535533905932738,
+    "returned_usage_estimate": {
+      "unique_saved_api_responses_in_run_window": 32,
+      "responses_missing_usage": 0,
+      "tokens": {
+        "prompt": 304030,
+        "completion": 22021,
+        "cached": 32949,
+        "writes": 263688
+      },
+      "usd": "0.045040290",
+      "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+    }
+  },
+  "clarified": {
+    "counts": {
+      "2": 5,
+      "3": 2,
+      "1": 1
+    },
+    "mean": 2.125,
+    "sample_sd": 0.6408699444616557,
+    "returned_usage_estimate": {
+      "unique_saved_api_responses_in_run_window": 32,
+      "responses_missing_usage": 0,
+      "tokens": {
+        "prompt": 304758,
+        "completion": 21603,
+        "cached": 8988,
+        "writes": 288377
+      },
+      "usd": "0.047677805",
+      "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+    }
+  },
+  "mini": {
+    "counts": {
+      "3": 3,
+      "2": 5
+    },
+    "mean": 2.375,
+    "sample_sd": 0.5175491695067657,
+    "returned_usage_estimate": {
+      "unique_saved_api_responses_in_run_window": 32,
+      "responses_missing_usage": 0,
+      "tokens": {
+        "prompt": 312309,
+        "completion": 58938,
+        "cached": 19712,
+        "writes": 0
+      },
+      "usd": "0.19151805",
+      "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+    }
+  }
+}

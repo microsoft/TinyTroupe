@@ -1,0 +1,20 @@
+{
+  "hypothesis": "Interest in a cold soup may depend on the simulation season. The human report was completed in July, whereas the recent simulations ran in November.",
+  "conditions": {
+    "summer": "2026-07-05T12:00:00",
+    "autumn": "2026-11-02T12:00:00"
+  },
+  "held_constant": [
+    "Same eight complete Mini-written biographies and supplied ages",
+    "Same calendar year and time of day",
+    "Original introduction, public rating question, and private thought",
+    "Unchanged production prompt, Luna xhigh effort, quality checks, and extraction"
+  ],
+  "biography_time_audit": "No explicit 2025-2027 event anchors found in these biographies. Explicit birth years 1950 and 1958 can be consistent with supplied ages 76 and 68 on both 2026 dates; no specific birth dates were supplied. The summer condition is not represented as the actual 2025 survey date.",
+  "limitations": [
+    "No weather conditions are invented or supplied.",
+    "This is a small counterfactual season diagnostic, not population calibration.",
+    "A difference cannot establish that date is the sole source of human-model disagreement.",
+    "If it does not materially address compression, do not integrate a date change as a quality fix."
+  ]
+}

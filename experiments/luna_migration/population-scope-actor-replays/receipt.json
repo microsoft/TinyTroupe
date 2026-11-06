@@ -1,0 +1,17 @@
+{
+  "returned_responses": 6,
+  "returned_usage_estimate": {
+    "unique_saved_api_responses_in_run_window": 6,
+    "responses_missing_usage": 0,
+    "tokens": {
+      "prompt": 89540,
+      "completion": 4753,
+      "cached": 0,
+      "writes": 89522
+    },
+    "usd": "0.013568550",
+    "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+  },
+  "generator_template_sha256": "3e93696bc2ed4e2990f17b72cb5627635d8a5891a9f38cc8268c67d8444db3a3",
+  "scope": "Frozen first-turn actor replays, not full simulations or empirical validation. The historical full-run quality audit is in plan.json; these raw candidates have not been through the action-quality correction pipeline."
+}

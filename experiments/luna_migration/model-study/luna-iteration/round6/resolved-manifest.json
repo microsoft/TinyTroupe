@@ -1,0 +1,86 @@
+{
+  "order_seed": 281032,
+  "protocol": "Repair a factual error in Philip's third explicit-constraint confirmation: a future total solar eclipse was placed in northern Spain in 2027, whereas NASA lists southern Spain. Preserve that failed output. Add a general external-fact boundary, not the correct eclipse answer, and confirm the affected source case with three new adaptive profiles. Grace's three successful explicit-constraint profiles retain their own frozen recipe.",
+  "imports": [
+    {
+      "path": "round5.json",
+      "variants": [
+        "life-first",
+        "life-course",
+        "explicit-particularities"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "life-first",
+      "hypothesis": "Replace exhaustive quotas and example biographies with a concise concrete-life specification, preserving demographics and required fields.",
+      "cases": [
+        "persona-grace",
+        "persona-philip"
+      ],
+      "operations": [
+        {
+          "kind": "regex",
+          "message": 1,
+          "pattern": "(?s)## Generation Rules.*\\Z",
+          "max_matches": 1,
+          "new": "## Generation Rules\n\nCreate one concrete, plausible life that meets the supplied particularities. This is a fictional individual, not a summary of a demographic category and not a model customer designed to produce a survey result.\n\nStart from everyday circumstances: where and with whom this person lives, what occupies their time, how money and responsibilities actually work, and the activities they choose when they have some freedom. Derive a few important preferences from that life. Do not start with a generic catalogue of sensible traits and decorate it with a name.\n\nHonor every fixed characteristic and allowed range. Unspecified characteristics are open choices, not missing data that must default to a midpoint or the most conventional occupation. A name, ethnicity, age or political label does not determine a whole personality. Do not turn plausibility into a claim that this individual represents the statistical average of their group; no population frequencies have been supplied.\n\nKeep local coherence without making every aspect of life express the same trait. People can behave differently in different settings. An actual preference may conflict with a competing wish or responsibility; describe what happens rather than making the person perfectly balanced in every sentence. Do not manufacture a flaw, unusual taste, virtue or extreme opinion merely to demonstrate diversity.\n\nMake requested areas specific enough to support later decisions. For travel, if relevant to the request, describe the experiences the person actually enjoys, companions, feasible time and resources, a characteristic recent trip or reason for not taking one, and meaningful compromises. Whether they favor expensive or inexpensive, active or restful, familiar or unfamiliar experiences must follow the person you create, not a desired purchase outcome. Do not give every person the same list of planning habits, cancellation concerns and dislikes of luxury branding.\n\nDescribe financial and practical circumstances consistently: household income is not discretionary spending; time, savings, obligations and shared costs can matter. Do not fabricate precise prices for real products. Newly invented biographical experiences are fictional details of the generated specification, not observations about real people.\n\nKeep the profile usable rather than exhaustive. Put each significant fact in the most appropriate field instead of restating it throughout the profile. A short coherent description is preferable to many synonymous bullet points. Aim for roughly 900-1500 words if that is sufficient; completeness and consistency matter more than reaching a length.\n\n## Output Format Rules\n\nReturn only a valid JSON object, without Markdown fences or explanatory text. Preserve every mandatory top-level field below. Strings, arrays and objects can be used for complex fields as appropriate; do not omit a field merely to shorten the profile.\n\n- \"name\": exactly the requested name when supplied.\n- \"age\": one age within the specified range.\n- \"gender\", \"nationality\", \"residence\": concrete values consistent with the requirements.\n- \"education\": educational background and its relevance to the person's life.\n- \"long_term_goals\": aspirations, including limits or competing priorities when relevant.\n- \"occupation\": role, work situation and ordinary responsibilities; retirement or nonemployment when appropriate.\n- \"style\": recognizable everyday speech and behavior, including changes with social context.\n- \"personality\": distinctive tendencies plus all five Big Five dimensions with explicit values and a stated scale. These are fictional descriptive choices, not measured psychological scores.\n- \"preferences\": specific likes, dislikes and the requested areas of interest.\n- \"beliefs\": convictions that matter to this person, without a quota or repetition.\n- \"skills\": plausible abilities and relevant limits.\n- \"behaviors\": ordinary habits and routines that could guide a simulation.\n- \"health\": relevant well-being and limitations, without adding diagnoses merely because of age or background.\n- \"relationships\": household, family and social connections consistent with all particularities.\n- \"other_facts\": a few useful experiences or facts not already expressed elsewhere.\n\nCheck that ages, dates, family structure, location, income, responsibilities and routines agree across the specification. Do not include an analysis or checklist in the output.\n"
+        }
+      ]
+    },
+    {
+      "id": "life-course",
+      "parent": "life-first",
+      "hypothesis": "A life-course and concrete-choice emphasis reduces uniform sensible-moderate characterization without prescribing tastes.",
+      "cases": [
+        "persona-grace",
+        "persona-philip"
+      ],
+      "operations": [
+        {
+          "kind": "append",
+          "message": 1,
+          "text": "\n\n## Build a life, not a model respondent\nBefore composing the fields, choose a particular life course compatible with the supplied constraints: how the person arrived at their present work and home, what currently matters to them, and a concrete choice they have made that reveals their priorities. Consider more than the first familiar demographic archetype. Let these choices give the profile its shape; do not attach the same generic lifestyle to a different occupation.\n\nWrite descriptive facts about what this person does, wants and spends time or money on, not advice about what would be sensible. Competence in one area does not imply perfect financial planning, gentle moderation, or careful research in every other area. A preference does not need to be immediately softened with a prudent qualification. If a past choice went badly, do not automatically add that the person learned the optimal lesson. Equally, do not add recklessness or a defect just to be different.\n\nMake a requested interest such as travel vivid through a desired experience and an actual decision: what mattered enough to choose, what they gave up, and how it felt. The same person can have different priorities across situations without being inconsistent. Avoid building the whole profile around minimizing cost and inconvenience unless that really follows from the life you chose. Leave the final purchase or survey decision open.",
+          "max_matches": 1
+        }
+      ]
+    },
+    {
+      "id": "explicit-particularities",
+      "parent": "life-course",
+      "hypothesis": "Treat the mandatory field list as a minimum, and explicitly represent every supplied particularity instead of relying on implications from a name or occupation.",
+      "cases": [
+        "persona-grace",
+        "persona-philip"
+      ],
+      "operations": [
+        {
+          "kind": "append",
+          "message": 1,
+          "max_matches": 1,
+          "text": "\n\n## Explicit coverage of the supplied particulars\nThe mandatory field list is a minimum, not a reason to leave out a supplied characteristic. State every supplied demographic, financial, household, political and interest requirement explicitly in the JSON, in an appropriate existing field or an additional clearly named field. In particular, include race_ethnicity when it was supplied; nationality and a person's name do not establish it. State the actual residence, gross household income or qualifying income range, partnership status, children status, political identification and requested leisure interest rather than leaving the reader to infer them from an occupation, lifestyle or name.\n\nBefore returning the specification, compare these explicit statements with the original particulars. Check that no required characteristic is missing and that the same fact is not contradicted elsewhere. Preserve all original constraints; do not make an unspecified characteristic compulsory."
+        }
+      ]
+    },
+    {
+      "id": "external-fact-boundary",
+      "parent": "explicit-particularities",
+      "hypothesis": "Separate inventable personal biography from externally fixed facts and avoid unnecessary unsupported event-calendar claims.",
+      "cases": [
+        "persona-philip"
+      ],
+      "operations": [
+        {
+          "kind": "append",
+          "message": 1,
+          "max_matches": 1,
+          "text": "\n\n## Fictional biography and real-world facts\nYou may invent this fictional person's experiences, relationships and desires. That freedom does not extend to inventing the geography, calendar, eligibility rules or capabilities of real-world places, institutions, events and services. A richly specific person does not require unsupported external facts.\n\nFor a future trip or activity, describe the experience the person wants and the practical trade-offs. Do not assign a specific year, date or host location to a real scheduled event unless those details were supplied in the input as verified facts. Leave such arrangements undecided rather than treating a plausible event calendar as known. Prior fictional drafts are not verified sources for external facts. Apply the same distinction to past biography: ordinary invented personal experiences are fine, but do not add unnecessary claims about an actual organization's program or a named event's schedule. Check any external premise on which a major preference depends; if the input does not establish it, remove that premise or express the interest without it."
+        }
+      ]
+    }
+  ],
+  "selection": {
+    "persona-philip": "external-fact-boundary"
+  }
+}

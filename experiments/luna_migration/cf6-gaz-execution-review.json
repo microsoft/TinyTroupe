@@ -1,0 +1,1014 @@
+{
+  "execution": {
+    "updated_at": "2026-11-03T13:21:51.786632+00:00",
+    "runs": [
+      {
+        "name": "Bottled Gazpacho Market Research 5 (with behavior correction)",
+        "folder": "cf6-gaz",
+        "status": "completed",
+        "elapsed_seconds": 6404.86,
+        "current_cell": 61,
+        "started_at": "2026-11-03T00:04:12.765682+00:00",
+        "library_sha256": "8c6a0a640111c4c219a1dfa06e8bcee99621fd03c1d45a0bf3871c50f28b8333",
+        "expected_model": true,
+        "library_matches": true,
+        "instrumentation_identified": true,
+        "source_matches": true,
+        "all_code_executed": true,
+        "errors": [],
+        "simulation_errors": [],
+        "tables": {
+          "df": {
+            "rows": 50,
+            "columns": [
+              "name",
+              "response",
+              "justification"
+            ]
+          },
+          "_23": {
+            "rows": 50,
+            "columns": [
+              "name",
+              "response",
+              "justification"
+            ]
+          },
+          "df_for_validation": {
+            "rows": 50,
+            "columns": [
+              "name",
+              "response",
+              "justification",
+              "Vote"
+            ]
+          }
+        },
+        "execution_audit_passed": true
+      }
+    ]
+  },
+  "metrics": {
+    "notebook": "Bottled Gazpacho Market Research 5 (with behavior correction).ipynb",
+    "folder": "C:\\Users\\pdasilva\\.copilot\\session-state\\50a4ee6c-8971-4a79-8b88-aa0da7641d9e\\files\\cf6-gaz",
+    "elapsed_seconds": 6404.86,
+    "model": "gpt-6-luna",
+    "effort": "xhigh",
+    "population": 50,
+    "public_talk_count": 49,
+    "agents_without_public_talk": [
+      "Lucía Reyes"
+    ],
+    "ages": {
+      "66": 1,
+      "14": 1,
+      "69": 2,
+      "0": 1,
+      "42": 3,
+      "46": 1,
+      "10": 1,
+      "17": 1,
+      "54": 2,
+      "3": 1,
+      "62": 2,
+      "4": 1,
+      "15": 2,
+      "35": 1,
+      "21": 1,
+      "28": 1,
+      "20": 2,
+      "61": 2,
+      "38": 2,
+      "27": 1,
+      "117": 1,
+      "53": 1,
+      "58": 1,
+      "40": 1,
+      "50": 1,
+      "8": 1,
+      "56": 1,
+      "34": 1,
+      "7": 1,
+      "2": 1,
+      "71": 1,
+      "31": 1,
+      "23": 1,
+      "47": 1,
+      "76": 1,
+      "52": 1,
+      "41": 1,
+      "43": 1,
+      "65": 1,
+      "12": 1,
+      "75": 1
+    },
+    "minors": 12,
+    "response_counts": {
+      "2": 31,
+      "3": 13,
+      "N/A": 1,
+      "1": 5
+    },
+    "response_checks": [
+      {
+        "name": "Terrence Calvin Booker",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Malik Jefferson",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Douglas Harlan Whitaker",
+        "extracted": "3",
+        "parsed_public": "3",
+        "matches": true
+      },
+      {
+        "name": "Lucía Reyes",
+        "extracted": "N/A",
+        "parsed_public": "N/A",
+        "matches": true
+      },
+      {
+        "name": "Shannon Leigh Whitlock",
+        "extracted": "1",
+        "parsed_public": "1",
+        "matches": true
+      },
+      {
+        "name": "Shane Everett Blevins",
+        "extracted": "3",
+        "parsed_public": "3",
+        "matches": true
+      },
+      {
+        "name": "Elliot Graham",
+        "extracted": "2",
+        "parsed_public": null,
+        "matches": null
+      },
+      {
+        "name": "Nolan Becker",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Kathleen Dwyer",
+        "extracted": "1",
+        "parsed_public": "1",
+        "matches": true
+      },
+      {
+        "name": "Lillian Mae Parker",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Curtis Wayne Maddox",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Martin Keegan",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Sadie Mae Holloway",
+        "extracted": "1",
+        "parsed_public": null,
+        "matches": null
+      },
+      {
+        "name": "Chloe Larson",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Thomas Gabriel Rourke",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Ethan Cole Harlan",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Samuel Whitcomb",
+        "extracted": "3",
+        "parsed_public": "3",
+        "matches": true
+      },
+      {
+        "name": "Gloria Denise Freeman",
+        "extracted": "2",
+        "parsed_public": null,
+        "matches": null
+      },
+      {
+        "name": "Colton Reeves",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Leonard Andre Whitfield",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Monique Denise Carter",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Gabriel Montalvo",
+        "extracted": "3",
+        "parsed_public": "3",
+        "matches": true
+      },
+      {
+        "name": "Walter Clifford Hastings",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "David Lin",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Camille Baptiste",
+        "extracted": "3",
+        "parsed_public": "3",
+        "matches": true
+      },
+      {
+        "name": "Javier Dominguez",
+        "extracted": "3",
+        "parsed_public": "3",
+        "matches": true
+      },
+      {
+        "name": "Maya Ellison",
+        "extracted": "3",
+        "parsed_public": "3",
+        "matches": true
+      },
+      {
+        "name": "Teresa Maribel Ortega",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Brianna Caldwell",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Erin McAllister",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Owen Bennett",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Paula Jean Sutter",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Danielle Renee Washington",
+        "extracted": "3",
+        "parsed_public": "3",
+        "matches": true
+      },
+      {
+        "name": "Wyatt Gaines",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Mateo Villanueva",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Loretta Jean Coleman",
+        "extracted": "3",
+        "parsed_public": "3",
+        "matches": true
+      },
+      {
+        "name": "Megan Hollis",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Aaliyah Brooks",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Debra Kessler",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Madison Pruitt",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Rafael Santiago",
+        "extracted": "3",
+        "parsed_public": "3",
+        "matches": true
+      },
+      {
+        "name": "Susan Elaine Mercer",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Gregory Callahan",
+        "extracted": "3",
+        "parsed_public": "3",
+        "matches": true
+      },
+      {
+        "name": "Gabriela Navarro",
+        "extracted": "3",
+        "parsed_public": "3",
+        "matches": true
+      },
+      {
+        "name": "Daniel Park",
+        "extracted": "3",
+        "parsed_public": "3",
+        "matches": true
+      },
+      {
+        "name": "Eric Donnelly",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Raymond Hensley",
+        "extracted": "1",
+        "parsed_public": "1",
+        "matches": true
+      },
+      {
+        "name": "Elena Morales",
+        "extracted": "2",
+        "parsed_public": null,
+        "matches": null
+      },
+      {
+        "name": "Caleb Whitaker",
+        "extracted": "1",
+        "parsed_public": "1",
+        "matches": true
+      },
+      {
+        "name": "Warren Ellison",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      }
+    ],
+    "usage_cost": {
+      "unique_saved_api_responses_in_run_window": 397,
+      "responses_missing_usage": 0,
+      "tokens": {
+        "prompt": 2955835,
+        "completion": 1150353,
+        "cached": 185546,
+        "writes": 2717235
+      },
+      "usd": "0.921991735",
+      "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+    },
+    "normalization_audit": {
+      "partitions": [
+        {
+          "labels": [
+            "Books, learning & public affairs",
+            "Entertainment, games & sports",
+            "Travel, outdoors & place exploration",
+            "Food, cooking & dining",
+            "Creative making & practical know-how",
+            "Family, social & community life"
+          ],
+          "source_count": 844,
+          "assignment_calls": 4,
+          "largest_batch": 240,
+          "sources_per_group": {
+            "Books, learning & public affairs": 151,
+            "Travel, outdoors & place exploration": 141,
+            "Entertainment, games & sports": 194,
+            "Creative making & practical know-how": 157,
+            "Food, cooking & dining": 84,
+            "Family, social & community life": 117
+          },
+          "samples": {
+            "Books, learning & public affairs": [
+              "Reading fiction in short stretches, especially mysteries, family sagas, and novels with recognizable, believable characters.",
+              "Nonfiction about American history, biographies, transportation, and how ordinary institutions work.",
+              "Checking local and national news, though he sometimes regrets how much time he spends on stories that leave him feeling powerless."
+            ],
+            "Entertainment, games & sports": [
+              "Watching basketball and football, especially when there is a family member nearby to discuss the game with.",
+              "Listening to older soul, gospel, R&B, and classic rock, alongside newer songs that catch his attention through family or streaming recommendations.",
+              "Having a quiet evening with a book, a television program, or a phone in his hand rather than going out simply to be seen."
+            ],
+            "Travel, outdoors & place exploration": [
+              "Walking on quiet roads or paved paths, usually at a pace that lets his knee warm up gradually.",
+              "Fishing at an easy-access lake or river spot where the outing matters more than catching a large fish.",
+              "Taking domestic road trips to visit relatives, attend a concert or local event, or see a place he has heard about."
+            ],
+            "Food, cooking & dining": [
+              "He enjoys cooking simple food with an adult because he likes being trusted with a real task and seeing the result immediately.",
+              "Trying food from different communities in Atlanta, usually at a casual restaurant or neighborhood festival.",
+              "Cooking filling dinners for her household, especially meals that can be reheated after an overnight shift."
+            ],
+            "Creative making & practical know-how": [
+              "Learning the useful features of new phones, televisions, navigation apps, and online services.",
+              "He likes making short edits of sports clips or family moments on a phone, though he usually keeps them private or sends them to a small group chat.",
+              "He is interested in sneakers and sports clothing, mainly noticing comfort, color, and whether an item seems too common at school."
+            ],
+            "Family, social & community life": [
+              "He enjoys family gatherings when there is a cousin or another kid close to his age and an activity beyond sitting at a table with adults.",
+              "Quiet meals with his sister or a friend.",
+              "Listening to family members talk about older relatives and the way Memphis neighborhoods have changed."
+            ]
+          }
+        },
+        {
+          "labels": [
+            "Workplace & Specialized Expertise",
+            "Home & Everyday Self-Management",
+            "Information, Digital & Creative Skills",
+            "Interpersonal & Emotional Skills",
+            "Mobility, Travel & Physical Activity",
+            "Foundational Development & Play"
+          ],
+          "source_count": 643,
+          "assignment_calls": 3,
+          "largest_batch": 240,
+          "sources_per_group": {
+            "Workplace & Specialized Expertise": 163,
+            "Information, Digital & Creative Skills": 111,
+            "Mobility, Travel & Physical Activity": 53,
+            "Home & Everyday Self-Management": 147,
+            "Interpersonal & Emotional Skills": 93,
+            "Foundational Development & Play": 76
+          },
+          "samples": {
+            "Workplace & Specialized Expertise": [
+              "Experienced at inventory tracking, checking quantities, reconciling records, and spotting discrepancies between paperwork and what is physically present.",
+              "Accurately reconciles business bank statements, card transactions, invoices, and receipts.",
+              "Recognizes common bookkeeping errors, duplicate payments, and missing documentation."
+            ],
+            "Home & Everyday Self-Management": [
+              "Good at practical household troubleshooting, such as resetting a router, replacing a simple part, or following a repair video, while knowing when a licensed professional is needed.",
+              "Able to make a simple meal and follow written cooking directions, although he does not enjoy elaborate preparation or cleanup.",
+              "He can keep track of sports gear and game accessories he cares about; he is less consistent with loose worksheets, chargers, and papers."
+            ],
+            "Information, Digital & Creative Skills": [
+              "Comfortable with everyday spreadsheets, email, online banking, document storage, and video calls, though he may need help with unfamiliar account settings.",
+              "Able to compare product specifications and prices when given time, and good at noticing when an advertisement leaves out an important limitation.",
+              "A patient reader when material interests him; he can summarize the main point of an article and ask sensible follow-up questions."
+            ],
+            "Interpersonal & Emotional Skills": [
+              "Can calm himself with prayer, measured breathing, a quiet walk, or writing a few thoughts down when he remembers to use those strategies before reaching his limit.",
+              "Socially perceptive in familiar settings; he notices when someone is uncomfortable, although he does not always know what to say in the moment.",
+              "He is good at noticing when a friend is being left out, though he does not always know how to intervene without making the situation more awkward."
+            ],
+            "Mobility, Travel & Physical Activity": [
+              "Competent at planning domestic road trips, estimating drive times, identifying rest stops, and keeping a flexible backup plan.",
+              "A capable and safety-conscious driver who prefers familiar routes at night and takes breaks on longer trips.",
+              "He can learn basketball drills by watching a demonstration and repeating the movement, and he has a decent sense of spacing during a casual game."
+            ],
+            "Foundational Development & Play": [
+              "He can prepare a few simple foods, such as a sandwich, cereal, scrambled eggs with adult permission, or a microwave meal, and knows to ask before using unfamiliar kitchen equipment.",
+              "Can briefly track a nearby face or slowly moving object with her eyes, though attention is short and inconsistent.",
+              "Recognizes familiar voices and may orient toward them when alert."
+            ]
+          }
+        },
+        {
+          "labels": [
+            "Politics, Elections & Institutions",
+            "Economic Life, Work & Public Services",
+            "Rights, Safety & Environmental Policy",
+            "Health & Personal Wellbeing",
+            "Relationships, Identity & EverydayValues",
+            "Technology, Privacy & Consumer Choices"
+          ],
+          "source_count": 1962,
+          "assignment_calls": 9,
+          "largest_batch": 240,
+          "sources_per_group": {
+            "Relationships, Identity & EverydayValues": 628,
+            "Politics, Elections & Institutions": 276,
+            "Economic Life, Work & Public Services": 490,
+            "Rights, Safety & Environmental Policy": 260,
+            "Technology, Privacy & Consumer Choices": 149,
+            "Health & Personal Wellbeing": 159
+          },
+          "samples": {
+            "Politics, Elections & Institutions": [
+              "The country would work better if elected officials negotiated on specific problems instead of performing outrage for their supporters.",
+              "He generally identifies as an independent and approaches politics issue by issue rather than voting from automatic party loyalty.",
+              "Compromise is often necessary, but he dislikes compromise being used as an excuse to avoid making a decision."
+            ],
+            "Economic Life, Work & Public Services": [
+              "Public investment in healthcare, education, infrastructure, housing, and childcare can make it easier for people to work and contribute.",
+              "He supports a meaningful public role in making healthcare accessible, while still wanting patients to be able to understand their options and costs.",
+              "A high household income on paper does not necessarily mean every person in that household has abundant personal spending money."
+            ],
+            "Rights, Safety & Environmental Policy": [
+              "On abortion, he believes it should be illegal in most cases, though he is uncomfortable pretending every circumstance is identical and thinks serious medical situations deserve careful attention.",
+              "He believes that racial discrimination has shaped opportunities in the United States and that people should be able to discuss it without being reduced to a symbol in an argument.",
+              "He supports a closer relationship between the United States and Israel, while believing that U.S"
+            ],
+            "Health & Personal Wellbeing": [
+              "Health matters, but pleasure and convenience matter too",
+              "he does not believe that a life made entirely of restrictions would be a successful life.",
+              "Walking and modest exercise are worthwhile even if they do not transform his body or solve every health problem."
+            ],
+            "Relationships, Identity & EverydayValues": [
+              "A person should be judged by whether they follow through, not just by how confidently they talk.",
+              "Being practical does not mean having no ideals",
+              "it means asking what a good idea would require in ordinary life."
+            ],
+            "Technology, Privacy & Consumer Choices": [
+              "He believes new technology is often genuinely useful, but a new model is not automatically better merely because it has been released.",
+              "Companies should explain subscriptions, privacy settings, and recurring charges plainly instead of hiding them in fine print.",
+              "Older people should not be assumed to be incapable of learning technology"
+            ]
+          }
+        },
+        {
+          "labels": [
+            "Food, cooking & dining",
+            "Relationships & communication",
+            "Practical goods, buying & work",
+            "Travel, outdoors & public places",
+            "Leisure, media & culture",
+            "Home routines, comfort & wellbeing"
+          ],
+          "source_count": 1039,
+          "assignment_calls": 5,
+          "largest_batch": 240,
+          "sources_per_group": {
+            "Leisure, media & culture": 102,
+            "Travel, outdoors & public places": 136,
+            "Food, cooking & dining": 254,
+            "Practical goods, buying & work": 202,
+            "Relationships & communication": 227,
+            "Home routines, comfort & wellbeing": 118
+          },
+          "samples": {
+            "Food, cooking & dining": [
+              "Small-town diners with familiar menus, generous portions, and staff who do not act annoyed when he asks a question.",
+              "Fried chicken, barbecue, biscuits, sweet rolls, and other rich foods he associates with comfort and family gatherings.",
+              "Cookies, especially chocolate chip or oatmeal-raisin, and keeping a snack nearby while reading or watching television."
+            ],
+            "Relationships & communication": [
+              "Conversation that can move naturally between sports, family memories, current events, and ordinary daily annoyances.",
+              "People who explain technology without pretending that every question is obvious.",
+              "He likes teachers who give clear instructions and do not embarrass students for asking a question."
+            ],
+            "Practical goods, buying & work": [
+              "Trying a new phone feature or streaming service when the setup is straightforward and someone can explain the confusing part.",
+              "A clear comparison of prices and features before buying a larger electronic device.",
+              "Being able to use a device across several household tasks, rather than buying something that does only one clever thing."
+            ],
+            "Travel, outdoors & public places": [
+              "Walking when the weather is mild and the road shoulder or path feels safe.",
+              "Fishing with a simple setup, a thermos, and enough time to sit without needing to make conversation constantly.",
+              "Family road trips with one or two planned stops and room to change the schedule if someone gets tired."
+            ],
+            "Leisure, media & culture": [
+              "Mystery novels that move at a steady pace and do not require him to keep track of a dozen implausible plot twists.",
+              "Biographies that include ordinary setbacks and workaday details rather than presenting the subject as perfect.",
+              "Printed books for longer reading, with an e-book as a convenient option when traveling."
+            ],
+            "Home routines, comfort & wellbeing": [
+              "Prayer and quiet breathing when he needs to slow down and stop answering every worry in his head.",
+              "He likes having a quiet corner at home where he can do homework or use his phone without being in the middle of the living room.",
+              "He likes a predictable plan for school mornings and a more flexible plan for weekends."
+            ]
+          }
+        },
+        {
+          "labels": [
+            "Respect, agency & social treatment",
+            "Purchases, costs & material waste",
+            "Digital & bureaucratic friction",
+            "Food, taste & eating norms",
+            "Sensory comfort & physical access",
+            "Time, plans & practical burdens"
+          ],
+          "source_count": 925,
+          "assignment_calls": 4,
+          "largest_batch": 240,
+          "sources_per_group": {
+            "Respect, agency & social treatment": 300,
+            "Purchases, costs & material waste": 144,
+            "Sensory comfort & physical access": 110,
+            "Food, taste & eating norms": 135,
+            "Digital & bureaucratic friction": 71,
+            "Time, plans & practical burdens": 165
+          },
+          "samples": {
+            "Respect, agency & social treatment": [
+              "Being told that he is confused or incapable before anyone has actually listened to what he is asking.",
+              "Political conversations in which people treat every disagreement as proof that the other person is evil or stupid.",
+              "People who make big promises and then do not call back."
+            ],
+            "Purchases, costs & material waste": [
+              "Salespeople who create urgency or imply that an older customer cannot understand a contract.",
+              "Unnecessary waste, especially when a useful appliance is replaced only because a newer model exists, even though he often buys new technology himself.",
+              "Aggressive salespeople who treat hesitation as a challenge to overcome."
+            ],
+            "Digital & bureaucratic friction": [
+              "Complicated phone setup that requires several passwords, verification codes, and menus with unclear labels.",
+              "Having a device or service changed automatically without knowing what will happen to his saved information.",
+              "He dislikes ads and videos that interrupt what he is watching repeatedly."
+            ],
+            "Food, taste & eating norms": [
+              "Food marketed as healthy when it is bland, expensive, and presented as morally superior to what he enjoys.",
+              "Being lectured about every snack or treat when he is already trying to make moderate choices.",
+              "Overly sweet sauces on savory food, even though he likes sweet snacks and desserts."
+            ],
+            "Sensory comfort & physical access": [
+              "Long stretches of loud, crowded socializing with no chance to step outside or sit somewhere quieter.",
+              "Roadside stops with dirty bathrooms and nowhere comfortable to sit.",
+              "He dislikes crowded stores when he is hungry or already tired from school."
+            ],
+            "Time, plans & practical burdens": [
+              "Being hurried while reading instructions or completing an online form.",
+              "Having his quiet time interrupted repeatedly for small requests that could have been gathered into one conversation.",
+              "He dislikes long, repetitive homework instructions that could have been written as a short checklist."
+            ]
+          }
+        },
+        {
+          "labels": [
+            "Personal routines & health",
+            "Work, school & commuting",
+            "Caregiving & household management",
+            "Planning & practical administration",
+            "Leisure, social & community life",
+            "Media, downtime & emotional coping"
+          ],
+          "source_count": 657,
+          "assignment_calls": 3,
+          "largest_batch": 240,
+          "sources_per_group": {
+            "Personal routines & health": 153,
+            "Media, downtime & emotional coping": 74,
+            "Caregiving & household management": 159,
+            "Leisure, social & community life": 83,
+            "Planning & practical administration": 68,
+            "Work, school & commuting": 120
+          },
+          "samples": {
+            "Personal routines & health": [
+              "Usually wakes between 8:30 and 9:30 a.m., later after a particularly restless night.",
+              "Makes coffee with cream and sugar and may eat a sweet pastry, toast, or another easy breakfast.",
+              "Takes prescribed medication and checks his blood pressure according to the routine he and his clinician agreed on."
+            ],
+            "Work, school & commuting": [
+              "Works from a small desk in the second bedroom of his condominium.",
+              "Handles client messages, account reconciliations, and payroll-related deadlines in blocks rather than working continuously.",
+              "Works fewer hours than he did in midlife, generally around 20 to 25 hours in a normal week, with heavier stretches at month-end."
+            ],
+            "Caregiving & household management": [
+              "Eats dinner with his sister and nephew when schedules overlap, though meals are not always at the same time.",
+              "He eats dinner with his household when schedules allow and enjoys conversation more when the meal feels relaxed rather than like a daily report card.",
+              "He helps with a small chore, such as clearing dishes, taking out light trash, or putting away groceries, though he may need a reminder."
+            ],
+            "Planning & practical administration": [
+              "Checks the weather and his calendar on a familiar phone rather than browsing news for long.",
+              "Starts by reviewing the paper list he made the previous afternoon.",
+              "Uses a weekend morning to catch up on personal paperwork he has avoided during the week."
+            ],
+            "Leisure, social & community life": [
+              "Often treats weekends as a chance to visit relatives, watch a game, fish, or take a short drive rather than following a fixed schedule.",
+              "Occasionally travels farther within the United States for family visits, events, or a vacation, preferring a route with familiar rest stops.",
+              "May go out for breakfast or lunch at a local diner and order something familiar and filling."
+            ],
+            "Media, downtime & emotional coping": [
+              "Checks the weather and messages on his phone before getting fully dressed.",
+              "Checks a news summary or reads online, then sometimes regrets following a heated political story too closely.",
+              "May pray, use a breathing exercise, or sit quietly when he feels his thoughts accelerating."
+            ]
+          }
+        },
+        {
+          "labels": [
+            "Communication and presentation",
+            "Mood and emotional regulation",
+            "Relationships and social conduct",
+            "Beliefs, curiosity, and judgment",
+            "Practical habits and self-direction",
+            "Early development and play"
+          ],
+          "source_count": 790,
+          "assignment_calls": 4,
+          "largest_batch": 240,
+          "sources_per_group": {
+            "Communication and presentation": 71,
+            "Mood and emotional regulation": 114,
+            "Practical habits and self-direction": 153,
+            "Relationships and social conduct": 222,
+            "Beliefs, curiosity, and judgment": 147,
+            "Early development and play": 83
+          },
+          "samples": {
+            "Communication and presentation": [
+              "Terrence tends to speak in a measured, conversational Midwestern American English, with a mild Missouri accent rather than a strongly marked regional dialect. His speech is direct but not polished for effect; he often begins with 'Well' or 'I mean,' pauses to find the exact word, and adds a practical example when he thinks an abstract point is being misunderstood. He does not use elaborate vocabulary to impress people, but he can be precise about dates, prices, routes, and how a process works. With strangers he is courteous and somewhat guarded. With family he is more teasing, more likely to complain, and less careful about hiding irritation. He often lets a silence sit instead of immediately filling it, especially when tired or emotionally overwhelmed. His humor is dry and sometimes self-deprecating, though a joke can come out sharper than intended when he feels criticized. He makes eye contact in short stretches, looks away while thinking, and taps a finger against his phone case when waiting. He dislikes being rushed through explanations, but can become impatient when someone repeats a point he believes he has already understood. He is not a theatrical storyteller; memories emerge as small concrete details, such as the weather on a trip, the exact kind of car someone drove, or what a meal cost. In unfamiliar settings he watches how other people behave before deciding how much of himself to show.",
+              "Malik speaks in a relaxed, contemporary Northern California teenage register. He tends to give a short answer first and add detail once he knows the other person is genuinely listening. With friends he uses casual slang now and then, but he does not perform a dialect or use the same voice with everyone; with teachers, relatives, and unfamiliar adults he is more measured and polite, especially when his mother is nearby. He often says things like “I get what you mean,” “that’s kind of the point,” or “wait, let me think” while sorting out an answer. When he is excited, his speech speeds up and he talks over the beginning of someone else’s sentence, then usually catches himself. When embarrassed, he grins, looks down, or pretends to be busy with his phone rather than explaining exactly what he feels. His humor is quick and mildly teasing, but he is careful around people he does not know well. He dislikes being addressed as if he were much younger, while still wanting adults to make clear plans and boundaries. In text messages he uses abbreviations, reaction images, and short replies; for a serious conversation he is more likely to talk in person than compose a long message.",
+              "He enjoys making friends laugh and sometimes makes a joke to escape an awkward or vulnerable moment."
+            ],
+            "Mood and emotional regulation": [
+              "He is emotionally worn down more often than he lets on; plans can feel like obligations before they feel like opportunities.",
+              "He worries readily about money, health, family friction, and national events, even when he recognizes that worrying does not solve them.",
+              "He can be irritable when tired, hungry, interrupted, or made to feel incompetent, and may answer curtly before later reconsidering his tone."
+            ],
+            "Relationships and social conduct": [
+              "He is more tender than his guarded manner suggests, especially toward close relatives, older neighbors, and people who are plainly struggling.",
+              "He values being treated as capable and dislikes being patronized because of his age or his educational background.",
+              "He is loyal to people who have shown up for him, but he can keep a mental record of disappointments for years."
+            ],
+            "Beliefs, curiosity, and judgment": [
+              "He is curious about devices and upgrades and enjoys figuring out what a new phone or service can do, though curiosity does not make him enthusiastic about every kind of change.",
+              "He is independent-minded but not reflexively oppositional; he will change his mind when someone explains a convincing reason.",
+              "He is curious when something connects to his own interests and can ask a surprisingly precise follow-up question."
+            ],
+            "Practical habits and self-direction": [
+              "He has a strong practical streak and prefers a concrete next step to an uplifting speech.",
+              "He is not consistently organized: bills and appointments are generally handled, while books, receipts, and small household items can collect in untidy piles.",
+              "He can be stubborn when he thinks an adult has misunderstood him, and may argue about the wording of a request rather than do it immediately."
+            ],
+            "Early development and play": [
+              "Lucía has no spoken language, accent, or conversational style. She communicates through crying, cooing, brief squeals, facial expressions, gaze, body movement, and changes in how readily she settles. Her signals are not always clear: a fussy spell may mean she is hungry, tired, overstimulated, uncomfortable, or simply ready to be held, and her caregivers sometimes need to try more than one response. When alert, she watches a familiar face closely and may answer a voice with a small smile or a string of vowel-like sounds. She can startle at a sudden noise and turn away when too much is happening. Her sounds should not be rendered as words, opinions, jokes, or adult-like intention; realistic simulation should rely on observable cues and let adults interpret them cautiously.",
+              "Often becomes visibly attentive when a familiar caregiver speaks close by.",
+              "Can be socially responsive, especially during calm face-to-face interaction, but does not engage on demand every time."
+            ]
+          }
+        },
+        {
+          "labels": [
+            "Health access and well-being challenges"
+          ],
+          "source_count": 1,
+          "assignment_calls": 1,
+          "largest_batch": 1,
+          "sources_per_group": {
+            "Health access and well-being challenges": 1
+          },
+          "samples": {
+            "Health access and well-being challenges": [
+              "Teresa has limited and inconsistent access to preventive care, in part because her self-employed income fluctuates and the cost of appointments, deductibles, transport, and time away from work adds up. She has been told at a routine visit that her blood pressure was elevated and was advised to monitor it and return for follow-up; she has not always managed to keep appointments on schedule. She sometimes has knee stiffness and lower-back discomfort, which make long periods of standing or sitting unpleasant. No specific psychiatric diagnosis is established here. She experiences substantial worry, low moods, irritability, and periods of feeling overwhelmed, especially during financial uncertainty and around anniversaries connected to her husband. She uses television and scrolling as temporary escape and sometimes withdraws rather than reaching out. Her sleep is frequently interrupted by the care needs of her seven-year-old son and by late work or rumination. She does little planned exercise, though ordinary errands and household tasks involve some movement. She tries to keep basic food in the house but relies on familiar, convenient meals when tired. Her son is covered through a child health program, while her own access to routine care is less secure."
+            ]
+          }
+        },
+        {
+          "labels": [
+            "Emotional well-being and coping",
+            "Relationships and social style",
+            "Practical agency and follow-through",
+            "Beliefs, values, and trust",
+            "Curiosity, creativity, and interests",
+            "Early development and regulation"
+          ],
+          "source_count": 746,
+          "assignment_calls": 4,
+          "largest_batch": 240,
+          "sources_per_group": {
+            "Emotional well-being and coping": 90,
+            "Practical agency and follow-through": 140,
+            "Relationships and social style": 281,
+            "Curiosity, creativity, and interests": 68,
+            "Beliefs, values, and trust": 114,
+            "Early development and regulation": 53
+          },
+          "samples": {
+            "Emotional well-being and coping": [
+              "He is emotionally worn down more often than he lets on; plans can feel like obligations before they feel like opportunities.",
+              "He worries readily about money, health, family friction, and national events, even when he recognizes that worrying does not solve them.",
+              "He can be irritable when tired, hungry, interrupted, or made to feel incompetent, and may answer curtly before later reconsidering his tone."
+            ],
+            "Relationships and social style": [
+              "He is more tender than his guarded manner suggests, especially toward close relatives, older neighbors, and people who are plainly struggling.",
+              "He values being treated as capable and dislikes being patronized because of his age or his educational background.",
+              "He has a dry sense of humor that helps him manage awkwardness, although the humor sometimes becomes a shield against more vulnerable conversation."
+            ],
+            "Practical agency and follow-through": [
+              "He has a strong practical streak and prefers a concrete next step to an uplifting speech.",
+              "He is not consistently organized: bills and appointments are generally handled, while books, receipts, and small household items can collect in untidy piles.",
+              "He is more responsible when a task has a clear deadline and visible steps than when an adult says only to “get organized.”"
+            ],
+            "Beliefs, values, and trust": [
+              "He is independent-minded but not reflexively oppositional; he will change his mind when someone explains a convincing reason.",
+              "He notices unfairness quickly, especially when a rule seems to be applied differently to different students.",
+              "Skeptical: he is wary of sales pitches, fashionable devices, and claims that a new system will make life effortless."
+            ],
+            "Curiosity, creativity, and interests": [
+              "He is curious about devices and upgrades and enjoys figuring out what a new phone or service can do, though curiosity does not make him enthusiastic about every kind of change.",
+              "He is curious when something connects to his own interests and can ask a surprisingly precise follow-up question.",
+              "He is competitive during games and sports, though a loss usually bothers him more in the moment than it does the next day."
+            ],
+            "Early development and regulation": [
+              "Often becomes visibly attentive when a familiar caregiver speaks close by.",
+              "Can be socially responsive, especially during calm face-to-face interaction, but does not engage on demand every time.",
+              "Sometimes smiles during familiar routines; the smile is an observable response, not proof of a particular thought."
+            ]
+          }
+        }
+      ],
+      "total_distinct_sources_across_partitions": 7607,
+      "all_source_ids_covered": true,
+      "all_assignment_batches_at_most_240": true,
+      "global_theme_definitions_unchanged": true
+    },
+    "occupation_titles": {
+      "Retired; no current occupation": 2,
+      "Student; not currently employed": 1,
+      "Self-employed bookkeeper and small-business accounting services provider": 1,
+      "Infant; not employed": 1,
+      "Hotel laundry and housekeeping associate": 1,
+      "Part-time food-preparation worker and prep cook": 1,
+      "Elementary-school student": 1,
+      "High-school student; no paid employment": 1,
+      "Regional Grants Compliance Officer": 1,
+      "Not employed; preschool-age child": 1,
+      "Part-time apartment maintenance worker and occasional event setup worker": 1,
+      "Self-employed plumbing and heating contractor": 1,
+      "Preschool student; not employed": 1,
+      "Student; no paid occupation": 1,
+      "Unpaid household manager and primary weekday caregiver; outside the labor force": 1,
+      "Unpaid primary caregiver; outside the labor force": 1,
+      "Software Systems Analyst": 1,
+      "Retired; no current paid occupation": 1,
+      "Community college student; currently outside the labor force": 1,
+      "On-call building-services porter and event setup attendant": 1,
+      "Part-time home health aide and personal care assistant": 1,
+      "Unpaid family caregiver; currently outside the labor force": 1,
+      "None": 1,
+      "Part-time library circulation assistant; occasional pet sitter": 1,
+      "Not currently employed; outside the labor force": 1,
+      "Senior analytical chemist and research scientist": 1,
+      "Self-employed photographer, editor, and local media contractor": 1,
+      "Full-time airline passenger-service agent": 1,
+      "Unpaid family caregiver; not currently in paid employment": 1,
+      "Elementary school student": 1,
+      "Senior Facilities Operations Coordinator": 1,
+      "Unpaid family caregiver and household support person; currently not employed": 1,
+      "Elementary-school student; no paid employment": 1,
+      "Not applicable; toddler": 1,
+      "Retired medical billing clerk and unpaid family caregiver": 1,
+      "Full-time library assistant and learning-program coordinator": 1,
+      "High school student; not employed": 1,
+      "Night-shift janitorial cleaner": 1,
+      "Unpaid family caregiver; outside the labor force": 1,
+      "Facilities operations coordinator": 1,
+      "Retired public librarian and unpaid family caregiver": 1,
+      "Maintenance Dispatch Coordinator": 1,
+      "Unpaid family caregiver; not currently employed and outside the labor force": 1,
+      "Outside the labor force; unpaid caregiver and homemaker": 1,
+      "Outside the labor force; unpaid family and household responsibilities": 1,
+      "Senior Field Operations and Estimating Manager": 1,
+      "Self-employed cleaning contractor and small-business owner": 1,
+      "Student": 1,
+      "Medical Records Quality and Release-of-Information Coordinator": 1
+    },
+    "common_personality_labels": [
+      [
+        "practical",
+        5
+      ],
+      [
+        "private",
+        5
+      ],
+      [
+        "observant",
+        4
+      ],
+      [
+        "persistent",
+        4
+      ],
+      [
+        "stubborn",
+        3
+      ],
+      [
+        "tradition-oriented",
+        3
+      ],
+      [
+        "proud",
+        3
+      ],
+      [
+        "imaginative",
+        3
+      ],
+      [
+        "socially selective",
+        3
+      ],
+      [
+        "culturally curious",
+        2
+      ],
+      [
+        "dryly humorous",
+        2
+      ],
+      [
+        "self-reliant",
+        2
+      ],
+      [
+        "cautious",
+        2
+      ],
+      [
+        "evidence-minded",
+        2
+      ],
+      [
+        "anxious under prolonged uncertainty",
+        2
+      ]
+    ],
+    "score_mean": 2.163265306122449,
+    "score_sample_sd": 0.5897364798333732
+  },
+  "public_response_counts": {
+    "2": 31,
+    "3": 13,
+    "N/A": 1,
+    "1": 5
+  },
+  "numeric_mean": 2.163265306122449,
+  "numeric_sample_sd": 0.5897364798333732,
+  "adult_numeric_counts": {
+    "2": 22,
+    "3": 13,
+    "1": 3
+  },
+  "adult_numeric_mean": 2.263157894736842,
+  "adult_numeric_sample_sd": 0.6010895749371725,
+  "exact_actor_visible_biography_matches": 50,
+  "exact_drawn_name_and_age_matches": 50,
+  "biography_normalization": "Only the documented country_of_residence=None default may be added to a generated biography; no fields are discarded.",
+  "sampling_response_ids": [
+    "chatcmpl-EfwVgLzAs6QYid7Hy4Rll8PS0rqCk"
+  ],
+  "verbatim_or_null_justifications": 49,
+  "manual_quality_review": "Pending; execution and increased variation are not quality approval.",
+  "scope": "A new independent full run, not the same cohort as CF5. Neither a higher mean nor additional 4/5 ratings alone establishes empirical calibration. Human-panel recruitment eligibility remains unknown."
+}

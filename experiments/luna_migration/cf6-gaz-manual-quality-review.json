@@ -1,0 +1,39 @@
+{
+  "status": "All 50 public responses and extraction rationales reviewed; response compression unresolved.",
+  "full_rollout_library_sha256": "8c6a0a640111c4c219a1dfa06e8bcee99621fd03c1d45a0bf3871c50f28b8333",
+  "execution": "Completed in 6404.86 seconds. Exact original source cells, Luna/xhigh, no reused simulation cache. No recorded cell or simulation errors; source fingerprint unchanged during execution.",
+  "counts": {"1": 5, "2": 31, "3": 13, "4": 0, "5": 0, "N/A": 1},
+  "mean": 2.163265306122449,
+  "sample_sd": 0.5897364798333732,
+  "adult_counts": {"1": 3, "2": 22, "3": 13, "4": 0, "5": 0},
+  "adult_mean": 2.263157894736842,
+  "extraction_review": {
+    "numeric_scores_match_public_speech": 49,
+    "actual_nonanswer_preserved": "Lucía Reyes, age 0, has no public speech; N/A and null justification correctly retained.",
+    "verbatim_or_null_justifications": 49,
+    "additional_manual_review": "Ethan Cole Harlan's justification adds quotation marks around an otherwise exact public substring. No rationale reversal or private-thought evidence found.",
+    "scope": "Faithful extraction does not establish that the simulated utterances are developmentally or empirically realistic."
+  },
+  "developmental_defects": [
+    "Mateo Villanueva, age 2, publicly prefixes a concrete food reaction with the requested rating 2 despite not making household purchases.",
+    "Lillian Mae Parker, age 3, also states a numerical purchase rating while saying a caregiver chooses food.",
+    "Sadie Mae Holloway, age 4, rates 1 while explicitly saying grown-ups buy groceries. This is not treated as an adult purchase-propensity judgment.",
+    "These are not extractor inventions: the digits occur in the actual TALK actions. The actor needs to preserve task comprehension when the questionnaire insists on a number."
+  ],
+  "upstream_dimension_defect": {
+    "dimension": "attitude_toward_new_products",
+    "observed_option": "Strongly rejects most new products and technologies, or adopts them impulsively without evaluating safety, usefulness, or affordability.",
+    "finding": "A single categorical option merges opposing ends. Selecting it cannot guarantee which end a generated person embodies. The earlier frozen 79-dimension vocabulary did not have this ambiguity; its successful coverage screen cannot stand in for inspecting newly generated vocabularies.",
+    "planned_repair_scope": "Make categorical options individually coherent and opposing ends separately selectable. Do not prescribe gazpacho ratings."
+  },
+  "age_outlier": {
+    "name": "Walter Clifford Hastings",
+    "age": 117,
+    "fresh_dimension_bounds": [0, 120],
+    "finding": "Biography and actor retain the exact drawn age. This is inside the fresh generated bounds, not a reconstruction violation. Uniform within-band sampling does not encode the rarity of extreme ages; this population is not claimed representative.",
+    "not_done": "No arbitrary maximum-age cutoff, age edit, or invented age-prevalence model."
+  },
+  "behavioral_quality": "Repeated unfamiliar-cold-food objections and regular-purchase qualifications remain. Adventurous-food traits can coexist with disliking this particular product, so their low scores alone are not persona violations. More 3s and a higher mean than CF5 do not establish improvement across different cohorts.",
+  "returned_usage_usd": "0.921991735",
+  "scientific_limit": "The human panel's exact recruitment eligibility and representativeness remain unknown. Adult-only simulation responses also lack 4/5 ratings. This run does not establish a validated empirical replacement."
+}

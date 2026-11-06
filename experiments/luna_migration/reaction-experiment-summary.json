@@ -1,0 +1,2247 @@
+{
+  "status": "Prompt variants not accepted. Actor transport and memory correctness repairs passed core regressions; full confirmations remain separate and empirical calibration unresolved.",
+  "production_prompt_sha256": "b81f5679e0f96fe277c7614a22bc17ab085bd4fb1ee95de434ae773567b63a58",
+  "experiments": {
+    "fixed-persona-gaz-new-reactions": {
+      "status": "Completed; qualitative acceptance not implied.",
+      "synthetic_controls": false,
+      "unchanged_persona_payloads": true,
+      "counts": {
+        "3": 2,
+        "2": 6
+      },
+      "mean": 2.25,
+      "sample_sd": 0.4629100498862757,
+      "responses": [
+        {
+          "name": "Janet Louise Harwood",
+          "response": "3",
+          "justification": "She might try it if reasonably priced and not too high in sodium, but usually prefers warm soup and is unsure it would become a regular purchase."
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "response": "2",
+          "justification": "He likes vegetables and soup but prefers making food at home and would want to check the ingredient list. He might try a bottle if it had a straightforward recipe and looked fresh, but is unlikely to buy it regularly."
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "response": "2",
+          "justification": "He is more accustomed to hot soup and familiar home cooking, so cold blended vegetables in a bottle do not naturally appeal to him. He is trying to eat more vegetables, but would want the flavor and price to make sense."
+        },
+        {
+          "name": "Evan McAllister",
+          "response": "2",
+          "justification": "He said his propensity to buy bottled gazpacho is 2 out of 5 because cold bottled soup isn’t a regular fit for him, though he might try one bottle if the ingredients and price were right."
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "response": "2",
+          "justification": "She said bottled cold vegetable soup is very unlikely to be something she would buy, though she might try a small one if it were inexpensive."
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "response": "3",
+          "justification": "I might try it once because I like vegetables and Mediterranean flavors, but I’m not sure I’d enjoy a cold blended soup from a bottle. I’d check the ingredients and price first."
+        },
+        {
+          "name": "Anthony James Holloway",
+          "response": "2",
+          "justification": "Very unlikely to buy it because cold blended vegetables aren't usually what he wants, and he would rather spend his money on something more filling. He might consider it if reasonably priced and available in a small bottle."
+        },
+        {
+          "name": "Marjorie Keating",
+          "response": "2",
+          "justification": "Very unlikely to buy it, though not completely opposed; she prefers familiar, mild foods and usually likes soup warm, but might try a bottle once if the price were reasonable."
+        }
+      ],
+      "public_extraction_checks": [
+        {
+          "name": "Janet Louise Harwood",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "extracted": "2",
+          "parsed_public": null,
+          "matches": null
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "extracted": "2",
+          "parsed_public": null,
+          "matches": null
+        },
+        {
+          "name": "Evan McAllister",
+          "extracted": "2",
+          "parsed_public": null,
+          "matches": null
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Anthony James Holloway",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Marjorie Keating",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        }
+      ],
+      "manual_public_review_required": [
+        "Stephen Michael Donnelly",
+        "Warren Ellis Gentry",
+        "Evan McAllister"
+      ],
+      "returned_usage_estimate": {
+        "unique_saved_api_responses_in_run_window": 32,
+        "responses_missing_usage": 0,
+        "tokens": {
+          "prompt": 243503,
+          "completion": 21089,
+          "cached": 10272,
+          "writes": 225745
+        },
+        "usd": "0.039613945",
+        "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+      },
+      "variant_sha256": "45780d66475e2d1eefc7f44b7f5df5307913dc204d480f3b2f9e29167fc9abe1",
+      "introduction_file": null,
+      "inner_monologue_file": null,
+      "requested_initial_datetime": null
+    },
+    "fixed-persona-gaz-persona-deliberation": {
+      "status": "Completed; qualitative acceptance not implied.",
+      "synthetic_controls": false,
+      "unchanged_persona_payloads": true,
+      "counts": {
+        "3": 3,
+        "2": 5
+      },
+      "mean": 2.375,
+      "sample_sd": 0.5175491695067657,
+      "responses": [
+        {
+          "name": "Janet Louise Harwood",
+          "response": "3",
+          "justification": "She might try a small bottle once, especially on a warm day. She likes convenient soups and vegetables, but usually reaches for warm soup and watches sodium and her reflux, so she would not expect to buy it regularly."
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "response": "3",
+          "justification": "He might buy it once to try; he enjoys vegetable soups but usually makes them at home and would check the ingredients, sodium, and price first."
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "response": "2",
+          "justification": "Very unlikely, though not impossible. He prefers traditional hot meals, and bottled cold vegetable soup doesn’t sound especially appealing; he might try a sample but probably wouldn’t buy it regularly."
+        },
+        {
+          "name": "Evan McAllister",
+          "response": "2",
+          "justification": "He might try it if it had a simple ingredient list and reasonable price, but bottled cold vegetable soup is not something he would normally reach for; he prefers cooking fresh at home."
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "response": "2",
+          "justification": "I usually want soup warm, and bottled cold vegetables aren’t something I reach for. If it were inexpensive on a hot day, maybe I’d try one, but I wouldn’t buy it regularly."
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "response": "3",
+          "justification": "She likes the idea of a convenient vegetable-based option, but cold blended soup isn’t a usual choice for her; she would check the ingredients and price before deciding whether to try it."
+        },
+        {
+          "name": "Anthony James Holloway",
+          "response": "2",
+          "justification": "Very unlikely to buy it; he might try a small bottle if it were cheap, but cold bottled gazpacho is not something he would usually choose or buy regularly."
+        },
+        {
+          "name": "Marjorie Keating",
+          "response": "2",
+          "justification": "Very unlikely to buy it because she prefers familiar warm soups and bottled cold vegetable soup doesn’t sound especially appealing; she might try a small amount if recommended."
+        }
+      ],
+      "public_extraction_checks": [
+        {
+          "name": "Janet Louise Harwood",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Evan McAllister",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "extracted": "3",
+          "parsed_public": null,
+          "matches": null
+        },
+        {
+          "name": "Anthony James Holloway",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Marjorie Keating",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        }
+      ],
+      "manual_public_review_required": [
+        "Erin Michelle Dalton"
+      ],
+      "returned_usage_estimate": {
+        "unique_saved_api_responses_in_run_window": 32,
+        "responses_missing_usage": 0,
+        "tokens": {
+          "prompt": 242125,
+          "completion": 19086,
+          "cached": 10272,
+          "writes": 224634
+        },
+        "usd": "0.038446870",
+        "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+      },
+      "variant_sha256": "fc300950a8a5fcd295e80ff1cea0183b91e733e07f8a5047ee594de11b8e592f",
+      "introduction_file": null,
+      "inner_monologue_file": null,
+      "requested_initial_datetime": null
+    },
+    "fixed-persona-gaz-reaction-repair": {
+      "status": "Completed; qualitative acceptance not implied.",
+      "synthetic_controls": false,
+      "unchanged_persona_payloads": true,
+      "counts": {
+        "2": 6,
+        "3": 2
+      },
+      "mean": 2.25,
+      "sample_sd": 0.4629100498862757,
+      "responses": [
+        {
+          "name": "Janet Louise Harwood",
+          "response": "2",
+          "justification": "I like the idea of a convenient vegetable soup in principle, but I generally prefer mine warm, so bottled gazpacho wouldn’t be a regular purchase for me. I might try it on a hot day, particularly if it were reasonably priced and clearly labeled."
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "response": "3",
+          "justification": "I’d maybe buy it. I like vegetable soups, but I usually make them at home, and I’d want to check the ingredients and price before making it a regular purchase."
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "response": "2",
+          "justification": "The idea doesn’t have much pull for him; he might try a bottle out of curiosity but wouldn’t expect to buy it regularly."
+        },
+        {
+          "name": "Evan McAllister",
+          "response": "2",
+          "justification": "It sounds interesting enough that I might try it once, but cold bottled soup isn’t something I’d usually reach for. I’d more likely make something fresh at home."
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "response": "2",
+          "justification": "I’m not used to cold blended soup, and I’d rather have something warm and familiar. Maybe I’d try a bottle once if it was convenient, but I’m very unlikely to buy it regularly."
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "response": "3",
+          "justification": "I might buy it, especially if the ingredients are simple and the flavor is mild. I like Mediterranean-style food, but ready-to-drink bottled soup is unfamiliar to me, so I’m not sure I’d make it a regular purchase."
+        },
+        {
+          "name": "Anthony James Holloway",
+          "response": "2",
+          "justification": "Cold blended vegetable soup isn’t something he’d usually buy, and he prefers a warmer, heartier meal. He might try a small bottle if it was inexpensive."
+        },
+        {
+          "name": "Marjorie Keating",
+          "response": "2",
+          "justification": "She rated it 2 out of 5, saying she is very unlikely to buy it because cold blended soup is unfamiliar and she generally prefers a warm, mild meal."
+        }
+      ],
+      "public_extraction_checks": [
+        {
+          "name": "Janet Louise Harwood",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "extracted": "2",
+          "parsed_public": null,
+          "matches": null
+        },
+        {
+          "name": "Evan McAllister",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Anthony James Holloway",
+          "extracted": "2",
+          "parsed_public": null,
+          "matches": null
+        },
+        {
+          "name": "Marjorie Keating",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        }
+      ],
+      "manual_public_review_required": [
+        "Warren Ellis Gentry",
+        "Anthony James Holloway"
+      ],
+      "returned_usage_estimate": {
+        "unique_saved_api_responses_in_run_window": 32,
+        "responses_missing_usage": 0,
+        "tokens": {
+          "prompt": 242623,
+          "completion": 22199,
+          "cached": 10272,
+          "writes": 225086
+        },
+        "usd": "0.040064470",
+        "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+      },
+      "variant_sha256": "b0fce0b00db032c44f019876aaf16bb655f0dc630f0133ba03f18bfba5066fcb",
+      "introduction_file": null,
+      "inner_monologue_file": null,
+      "requested_initial_datetime": null
+    },
+    "fixed-persona-gaz-control-baseline": {
+      "status": "Completed; qualitative acceptance not implied.",
+      "synthetic_controls": true,
+      "unchanged_persona_payloads": true,
+      "counts": {
+        "5": 1,
+        "1": 1
+      },
+      "mean": 3,
+      "sample_sd": 2.8284271247461903,
+      "responses": [
+        {
+          "name": "Janet Louise Harwood",
+          "response": "5",
+          "justification": "She said she would certainly consider buying it and already buys ready-to-drink bottled gazpacho, finding it convenient and refreshing."
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "response": "1",
+          "justification": "I strongly dislike cold blended vegetable soups, and bottling it for convenience wouldn’t change that."
+        }
+      ],
+      "public_extraction_checks": [
+        {
+          "name": "Janet Louise Harwood",
+          "extracted": "5",
+          "parsed_public": "5",
+          "matches": true
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "extracted": "1",
+          "parsed_public": "1",
+          "matches": true
+        }
+      ],
+      "manual_public_review_required": [],
+      "returned_usage_estimate": {
+        "unique_saved_api_responses_in_run_window": 8,
+        "responses_missing_usage": 0,
+        "tokens": {
+          "prompt": 58842,
+          "completion": 3580,
+          "cached": 2568,
+          "writes": 54426
+        },
+        "usd": "0.008803730",
+        "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+      },
+      "variant_sha256": null,
+      "introduction_file": null,
+      "inner_monologue_file": null,
+      "requested_initial_datetime": null,
+      "positive_control_passes": true,
+      "negative_control_passes": true
+    },
+    "fixed-persona-gaz-control-repair": {
+      "status": "Completed; qualitative acceptance not implied.",
+      "synthetic_controls": true,
+      "unchanged_persona_payloads": true,
+      "counts": {
+        "5": 1,
+        "1": 1
+      },
+      "mean": 3,
+      "sample_sd": 2.8284271247461903,
+      "responses": [
+        {
+          "name": "Janet Louise Harwood",
+          "response": "5",
+          "justification": "She says she would certainly buy it and already routinely buys single-serving bottled gazpacho and other chilled vegetable drinks."
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "response": "1",
+          "justification": "He would never buy it because he strongly dislikes cold blended vegetable soups."
+        }
+      ],
+      "public_extraction_checks": [
+        {
+          "name": "Janet Louise Harwood",
+          "extracted": "5",
+          "parsed_public": "5",
+          "matches": true
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "extracted": "1",
+          "parsed_public": "1",
+          "matches": true
+        }
+      ],
+      "manual_public_review_required": [],
+      "returned_usage_estimate": {
+        "unique_saved_api_responses_in_run_window": 8,
+        "responses_missing_usage": 0,
+        "tokens": {
+          "prompt": 59906,
+          "completion": 5240,
+          "cached": 2568,
+          "writes": 55450
+        },
+        "usd": "0.009765730",
+        "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+      },
+      "variant_sha256": "b0fce0b00db032c44f019876aaf16bb655f0dc630f0133ba03f18bfba5066fcb",
+      "introduction_file": null,
+      "inner_monologue_file": null,
+      "requested_initial_datetime": null,
+      "positive_control_passes": true,
+      "negative_control_passes": true
+    },
+    "fixed-persona-gaz-neutral-identity": {
+      "status": "Completed; qualitative acceptance not implied.",
+      "synthetic_controls": false,
+      "unchanged_persona_payloads": true,
+      "counts": {
+        "2": 5,
+        "3": 3
+      },
+      "mean": 2.375,
+      "sample_sd": 0.5175491695067657,
+      "responses": [
+        {
+          "name": "Janet Louise Harwood",
+          "response": "2",
+          "justification": "She is very unlikely to buy bottled gazpacho regularly because she prefers soup warm, though she might try it on a hot day if it were mild and reasonably low in sodium."
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "response": "3",
+          "justification": "I might try it if the ingredient list is simple and the price reasonable. I enjoy soup, but I usually prefer making it at home and am cautious about bottled convenience foods."
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "response": "2",
+          "justification": "I tend to prefer hot, familiar meals, and bottled cold vegetable soup isn’t something I’d normally reach for. I might try it once out of curiosity, but I wouldn’t expect to buy it regularly."
+        },
+        {
+          "name": "Evan McAllister",
+          "response": "3",
+          "justification": "He said he might buy it once to try, especially in hot weather, but prefers making meals at home with fresh ingredients and would check the ingredients and price before buying it regularly."
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "response": "2",
+          "justification": "She is very unlikely to buy bottled gazpacho because she prefers familiar warm meals and cold blended vegetables do not appeal to her. She might taste it if someone she trusts offered it, but would not seek it out."
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "response": "3",
+          "justification": "She might try bottled gazpacho because she likes vegetable-forward Mediterranean food, but it is not part of her regular routine; she would check the ingredients and price first."
+        },
+        {
+          "name": "Anthony James Holloway",
+          "response": "2",
+          "justification": "I’m very unlikely to buy it, though I might try a bottle if it was inexpensive. Cold blended vegetables just aren’t something I usually go for; I’d rather have a familiar soup or a filling meal."
+        },
+        {
+          "name": "Marjorie Keating",
+          "response": "2",
+          "justification": "Very unlikely to buy bottled gazpacho; cold blended vegetables aren’t her sort of thing, and she prefers familiar foods. She might consider it if it were inexpensive and she could try a little first."
+        }
+      ],
+      "public_extraction_checks": [
+        {
+          "name": "Janet Louise Harwood",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Evan McAllister",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "extracted": "2",
+          "parsed_public": null,
+          "matches": null
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "extracted": "3",
+          "parsed_public": null,
+          "matches": null
+        },
+        {
+          "name": "Anthony James Holloway",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Marjorie Keating",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        }
+      ],
+      "manual_public_review_required": [
+        "Rosa María Castañeda",
+        "Erin Michelle Dalton"
+      ],
+      "returned_usage_estimate": {
+        "unique_saved_api_responses_in_run_window": 32,
+        "responses_missing_usage": 0,
+        "tokens": {
+          "prompt": 237934,
+          "completion": 21748,
+          "cached": 10272,
+          "writes": 220483
+        },
+        "usd": "0.039254995",
+        "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+      },
+      "variant_sha256": "0ecd37ad217ffea6a5c102163bedfacb3dc3d64d2fbe121c831c6ce7dee00c95",
+      "introduction_file": null,
+      "inner_monologue_file": null,
+      "requested_initial_datetime": null
+    },
+    "fixed-persona-gaz-lean-interpretation": {
+      "status": "Completed; qualitative acceptance not implied.",
+      "synthetic_controls": false,
+      "unchanged_persona_payloads": true,
+      "counts": {
+        "3": 3,
+        "2": 5
+      },
+      "mean": 2.375,
+      "sample_sd": 0.5175491695067657,
+      "responses": [
+        {
+          "name": "Janet Louise Harwood",
+          "response": "3",
+          "justification": "Maybe I would buy it, but I’m not sure. I like convenient prepared soups, and a vegetable soup sounds promising, though cold blended soup isn’t something I usually reach for. I’d check the sodium and taste before making it a regular purchase."
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "response": "2",
+          "justification": "I’m very unlikely to buy it regularly. I prefer homemade soups, and I’d want to check the ingredient list on a ready-to-drink bottle. I might try it if the ingredients looked straightforward, but it isn’t an obvious fit for my usual meals."
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "response": "2",
+          "justification": "Very unlikely, but not impossible. He tends to choose familiar, hearty meals and says bottled cold blended soup is not something he would usually buy, though he might try it if offered a taste."
+        },
+        {
+          "name": "Evan McAllister",
+          "response": "3",
+          "justification": "He might try it once if it had good ingredients and wasn’t too expensive, but is unsure he would buy it regularly."
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "response": "2",
+          "justification": "Very unlikely, but not impossible. She usually prefers familiar, warm meals, and bottled cold soup does not sound like something she would buy often; if inexpensive, she might try it once."
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "response": "3",
+          "justification": "She might buy it, but is unsure. She likes vegetable-forward foods and sees the convenience, but bottled cold soup is unfamiliar and she would check the ingredients and nutrition label first."
+        },
+        {
+          "name": "Anthony James Holloway",
+          "response": "2",
+          "justification": "He rated bottled gazpacho 2 out of 5, saying he likes familiar, hearty food and cold blended vegetables aren’t something he’d usually reach for."
+        },
+        {
+          "name": "Marjorie Keating",
+          "response": "2",
+          "justification": "Very unlikely to buy it because she usually prefers warm, familiar soups; she might try it if she could sample it first."
+        }
+      ],
+      "public_extraction_checks": [
+        {
+          "name": "Janet Louise Harwood",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Evan McAllister",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Anthony James Holloway",
+          "extracted": "2",
+          "parsed_public": null,
+          "matches": null
+        },
+        {
+          "name": "Marjorie Keating",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        }
+      ],
+      "manual_public_review_required": [
+        "Anthony James Holloway"
+      ],
+      "returned_usage_estimate": {
+        "unique_saved_api_responses_in_run_window": 32,
+        "responses_missing_usage": 0,
+        "tokens": {
+          "prompt": 229947,
+          "completion": 23299,
+          "cached": 10272,
+          "writes": 212226
+        },
+        "usd": "0.039025370",
+        "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+      },
+      "variant_sha256": "3df1b9fee0a93fb0cc136d729f1d8f2779ae42c7df6d30b5e18b7b30183ce2c0",
+      "introduction_file": null,
+      "inner_monologue_file": null,
+      "requested_initial_datetime": null
+    },
+    "fixed-persona-gaz-natural-thought": {
+      "status": "Completed; qualitative acceptance not implied.",
+      "synthetic_controls": false,
+      "unchanged_persona_payloads": true,
+      "counts": {
+        "3": 2,
+        "2": 6
+      },
+      "mean": 2.25,
+      "sample_sd": 0.4629100498862757,
+      "responses": [
+        {
+          "name": "Janet Louise Harwood",
+          "response": "3",
+          "justification": "Maybe I’d buy it, especially on a warm day, but I generally prefer soup warm and would want to check the ingredients and sodium before making it a regular purchase."
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "response": "2",
+          "justification": "Very unlikely, though not impossible. He prefers homemade soup and tends to avoid packaged convenience foods, but might try it if the ingredients were simple and it seemed fresh."
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "response": "2",
+          "justification": "I’m more inclined to buy fresh vegetables or have soup warm. A cold, blended tomato soup in a bottle doesn’t sound like something I’d reach for often, though I might try a small one if it were handy."
+        },
+        {
+          "name": "Evan McAllister",
+          "response": "2",
+          "justification": "Very unlikely to buy bottled gazpacho, though he might try it once if it looked fresh and appealing. He generally prefers making meals at home and wouldn’t normally reach for cold bottled soup."
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "response": "2",
+          "justification": "She prefers warm, familiar home-cooked food, and bottled cold blended soup does not sound like something she would buy regularly. She might try it once if someone she trusts recommended it and the price was reasonable."
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "response": "3",
+          "justification": "I might buy it to try, especially if the ingredients are clear and the price is reasonable. I like Mediterranean-style flavors, though bottled cold soup isn’t something I usually reach for."
+        },
+        {
+          "name": "Anthony James Holloway",
+          "response": "2",
+          "justification": "I’m very unlikely to buy it, though I might try a small bottle if it was cheap. I tend to stick with familiar, filling foods, and cold soup just doesn’t sound like my usual thing."
+        },
+        {
+          "name": "Marjorie Keating",
+          "response": "2",
+          "justification": "Very unlikely, though not impossible. She likes tomatoes and vegetables, but doesn't usually eat cold soup from a bottle and would rather have soup warm; she might try a little if someone offered it."
+        }
+      ],
+      "public_extraction_checks": [
+        {
+          "name": "Janet Louise Harwood",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Evan McAllister",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "extracted": "2",
+          "parsed_public": null,
+          "matches": null
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Anthony James Holloway",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Marjorie Keating",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        }
+      ],
+      "manual_public_review_required": [
+        "Rosa María Castañeda"
+      ],
+      "returned_usage_estimate": {
+        "unique_saved_api_responses_in_run_window": 32,
+        "responses_missing_usage": 0,
+        "tokens": {
+          "prompt": 235845,
+          "completion": 19251,
+          "cached": 10272,
+          "writes": 218225
+        },
+        "usd": "0.037741145",
+        "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+      },
+      "variant_sha256": null,
+      "introduction_file": null,
+      "inner_monologue_file": "C:\\Users\\pdasilva\\.copilot\\session-state\\50a4ee6c-8971-4a79-8b88-aa0da7641d9e\\files\\natural-survey-thought.txt",
+      "requested_initial_datetime": null
+    },
+    "fixed-persona-gaz-neutral-introduction": {
+      "status": "Completed; qualitative acceptance not implied.",
+      "synthetic_controls": false,
+      "unchanged_persona_payloads": true,
+      "counts": {
+        "2": 6,
+        "3": 2
+      },
+      "mean": 2.25,
+      "sample_sd": 0.4629100498862757,
+      "responses": [
+        {
+          "name": "Janet Louise Harwood",
+          "response": "2",
+          "justification": "I like convenient soups and vegetables, but I usually prefer soup warm, and I’d want to check the sodium. I might try bottled gazpacho on a hot day, but it isn’t something I’d be very likely to buy."
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "response": "3",
+          "justification": "I might buy it if the ingredients were simple and the price reasonable. I like vegetable soups, but I generally prefer homemade, heartier meals and would want to check the label first."
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "response": "2",
+          "justification": "Cold blended soup isn’t something he’d usually buy, though he might try a bottle on a hot day if the ingredients looked good and the price was reasonable."
+        },
+        {
+          "name": "Evan McAllister",
+          "response": "2",
+          "justification": "He said he’d be pretty unlikely to buy bottled gazpacho regularly, though he might try it once if the ingredients looked good."
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "response": "2",
+          "justification": "She said she likes tomatoes and vegetables but does not usually buy cold blended soup in a bottle, and probably would not seek it out."
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "response": "3",
+          "justification": "I might try it if the ingredients and price looked reasonable, since tomatoes and vegetables fit how I try to eat. But I’m not sure bottled cold soup would become a regular purchase for me."
+        },
+        {
+          "name": "Anthony James Holloway",
+          "response": "2",
+          "justification": "Very unlikely to buy it; he prefers familiar, hearty meals and cold blended vegetables aren't really his thing, though he might try a small bottle once."
+        },
+        {
+          "name": "Marjorie Keating",
+          "response": "2",
+          "justification": "I’d be very unlikely to buy it. I prefer familiar soups served warm, and a cold blended vegetable drink doesn’t sound especially appealing to me. I might try a small bottle if it were reasonably priced on a hot day, but I wouldn’t make a habit of buying it."
+        }
+      ],
+      "public_extraction_checks": [
+        {
+          "name": "Janet Louise Harwood",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Evan McAllister",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Anthony James Holloway",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Marjorie Keating",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        }
+      ],
+      "manual_public_review_required": [],
+      "returned_usage_estimate": {
+        "unique_saved_api_responses_in_run_window": 32,
+        "responses_missing_usage": 0,
+        "tokens": {
+          "prompt": 240160,
+          "completion": 16880,
+          "cached": 10272,
+          "writes": 222562
+        },
+        "usd": "0.037095570",
+        "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+      },
+      "variant_sha256": null,
+      "introduction_file": "C:\\Users\\pdasilva\\.copilot\\session-state\\50a4ee6c-8971-4a79-8b88-aa0da7641d9e\\files\\neutral-survey-introduction.txt",
+      "inner_monologue_file": null,
+      "requested_initial_datetime": null
+    },
+    "fixed-persona-gaz-natural-framing": {
+      "status": "Completed; qualitative acceptance not implied.",
+      "synthetic_controls": false,
+      "unchanged_persona_payloads": true,
+      "counts": {
+        "3": 3,
+        "2": 5
+      },
+      "mean": 2.375,
+      "sample_sd": 0.5175491695067657,
+      "responses": [
+        {
+          "name": "Janet Louise Harwood",
+          "response": "3",
+          "justification": "Maybe she’d buy it: she likes tomatoes and finds the convenience appealing, but usually prefers warm soup and would want to check the sodium and taste first."
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "response": "3",
+          "justification": "He might try it, especially in warm weather, but usually makes soup at home and would check that the ingredients are simple."
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "response": "2",
+          "justification": "Very unlikely, though not impossible. He generally prefers a proper warm meal and bottled cold vegetable soup does not appeal much; he might try a small one on a hot day but would not make a habit of buying it."
+        },
+        {
+          "name": "Evan McAllister",
+          "response": "3",
+          "justification": "He might try it once if the ingredients look good, but bottled cold soup is not something he usually reaches for; he prefers cooking with fresh vegetables and seasoning things himself."
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "response": "2",
+          "justification": "I’m very unlikely to buy it. I prefer warm, familiar meals, and cold bottled soup doesn’t sound appealing to me. Maybe if it were inexpensive I’d try one, but probably not."
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "response": "2",
+          "justification": "I’m very unlikely to buy it, though I might try it once in warm weather. I like those ingredients, but bottled, cold blended soup isn’t something I usually reach for."
+        },
+        {
+          "name": "Anthony James Holloway",
+          "response": "2",
+          "justification": "He said he would be very unlikely to buy it because cold vegetable soup is not something he usually reaches for, though he might try a small bottle if reasonably priced."
+        },
+        {
+          "name": "Marjorie Keating",
+          "response": "2",
+          "justification": "She said she’d be very unlikely to buy it because she prefers warm soup and wouldn’t buy a bottle herself."
+        }
+      ],
+      "public_extraction_checks": [
+        {
+          "name": "Janet Louise Harwood",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Evan McAllister",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Anthony James Holloway",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Marjorie Keating",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        }
+      ],
+      "manual_public_review_required": [],
+      "returned_usage_estimate": {
+        "unique_saved_api_responses_in_run_window": 32,
+        "responses_missing_usage": 0,
+        "tokens": {
+          "prompt": 235164,
+          "completion": 15262,
+          "cached": 10272,
+          "writes": 217543
+        },
+        "usd": "0.035661495",
+        "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+      },
+      "variant_sha256": null,
+      "introduction_file": "C:\\Users\\pdasilva\\.copilot\\session-state\\50a4ee6c-8971-4a79-8b88-aa0da7641d9e\\files\\neutral-survey-introduction.txt",
+      "inner_monologue_file": "C:\\Users\\pdasilva\\.copilot\\session-state\\50a4ee6c-8971-4a79-8b88-aa0da7641d9e\\files\\natural-survey-thought.txt",
+      "requested_initial_datetime": null
+    },
+    "fixed-persona-gaz-summer": {
+      "status": "Completed; qualitative acceptance not implied.",
+      "synthetic_controls": false,
+      "unchanged_persona_payloads": true,
+      "counts": {
+        "3": 3,
+        "2": 5
+      },
+      "mean": 2.375,
+      "sample_sd": 0.5175491695067657,
+      "responses": [
+        {
+          "name": "Janet Louise Harwood",
+          "response": "3",
+          "justification": "I might try bottled gazpacho if it were reasonably priced and not too high in sodium. I do like convenient soups and vegetables, but I tend to prefer a warm soup, so I’m not sure I’d buy it regularly."
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "response": "2",
+          "justification": "He likes vegetable soups but generally prefers to make them at home and would want to check the ingredient list and price. He might try a bottle if it had simple ingredients and tasted good, especially in warm weather."
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "response": "2",
+          "justification": "Very unlikely, though not impossible. I tend toward familiar, hearty food, and bottled cold soup doesn’t much appeal to me. I might try it once if I saw it on a hot day, but I’d be unlikely to buy it regularly."
+        },
+        {
+          "name": "Evan McAllister",
+          "response": "3",
+          "justification": "He might buy a bottle once to try it, but is unsure he would reach for bottled cold soup regularly; he usually cooks at home and most days wants a warm meal."
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "response": "2",
+          "justification": "I prefer familiar, warm food, and bottled cold vegetable soup doesn’t sound like something I’d buy. Maybe I’d taste a little if someone offered it."
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "response": "3",
+          "justification": "I might try it if the ingredients were straightforward and the price was reasonable. I like mild, vegetable-forward foods, but bottled cold soup isn’t something I’d normally buy."
+        },
+        {
+          "name": "Anthony James Holloway",
+          "response": "2",
+          "justification": "He said he would be very unlikely to buy bottled gazpacho because he prefers familiar, hearty food, though he might try it if it were inexpensive and he could sample it first."
+        },
+        {
+          "name": "Marjorie Keating",
+          "response": "2",
+          "justification": "She said she is very unlikely to buy bottled gazpacho because she prefers warm, familiar soups and would be hesitant to spend money on a cold blended vegetable drink she hasn’t tried."
+        }
+      ],
+      "public_extraction_checks": [
+        {
+          "name": "Janet Louise Harwood",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Evan McAllister",
+          "extracted": "3",
+          "parsed_public": null,
+          "matches": null
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Anthony James Holloway",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Marjorie Keating",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        }
+      ],
+      "manual_public_review_required": [
+        "Evan McAllister"
+      ],
+      "returned_usage_estimate": {
+        "unique_saved_api_responses_in_run_window": 32,
+        "responses_missing_usage": 0,
+        "tokens": {
+          "prompt": 240096,
+          "completion": 18004,
+          "cached": 10272,
+          "writes": 222663
+        },
+        "usd": "0.037653695",
+        "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+      },
+      "variant_sha256": null,
+      "introduction_file": null,
+      "inner_monologue_file": null,
+      "requested_initial_datetime": "2026-07-05T12:00:00"
+    },
+    "fixed-persona-gaz-autumn": {
+      "status": "Completed; qualitative acceptance not implied.",
+      "synthetic_controls": false,
+      "unchanged_persona_payloads": true,
+      "counts": {
+        "3": 3,
+        "2": 5
+      },
+      "mean": 2.375,
+      "sample_sd": 0.5175491695067657,
+      "responses": [
+        {
+          "name": "Janet Louise Harwood",
+          "response": "3",
+          "justification": "I might try a bottle, especially in warm weather. I like convenient soups, but I usually prefer them warm, and I’d check the sodium before buying it regularly."
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "response": "3",
+          "justification": "I might try bottled gazpacho if the ingredients are simple and the price is reasonable. I enjoy soup, but I generally prefer making it at home and tend to check packaged-food labels carefully."
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "response": "2",
+          "justification": "Very unlikely, though not impossible. He prefers hearty soup served warm and wouldn’t naturally reach for bottled cold gazpacho, but might try it once if the price were reasonable."
+        },
+        {
+          "name": "Evan McAllister",
+          "response": "2",
+          "justification": "I’d be very unlikely to buy it, though not completely opposed. I mostly cook at home, and bottled cold vegetable soup isn’t something I’d normally reach for. If the ingredients looked good and the price was reasonable, I might try one once."
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "response": "2",
+          "justification": "Mostly eats familiar warm meals and wouldn’t usually reach for bottled cold vegetable soup; might try a small bottle once on a hot day, but wouldn’t buy it regularly."
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "response": "3",
+          "justification": "I might buy bottled gazpacho occasionally. I like Mediterranean-style foods and the convenience is appealing, but cold soup isn’t part of my usual routine. I’d want to check the ingredients and sodium first."
+        },
+        {
+          "name": "Anthony James Holloway",
+          "response": "2",
+          "justification": "I’d be very unlikely to buy it. I usually prefer familiar, filling meals, and cold vegetable soup doesn’t sound like my kind of thing. I might try it once if it was inexpensive or I could taste it first."
+        },
+        {
+          "name": "Marjorie Keating",
+          "response": "2",
+          "justification": "I’d be very unlikely to buy bottled gazpacho. I usually prefer familiar soups served warm, and I’m not sure I’d care for a cold blended one. I might try it if I had a chance to sample it, but I wouldn’t put it on my grocery list."
+        }
+      ],
+      "public_extraction_checks": [
+        {
+          "name": "Janet Louise Harwood",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Evan McAllister",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Anthony James Holloway",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Marjorie Keating",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        }
+      ],
+      "manual_public_review_required": [],
+      "returned_usage_estimate": {
+        "unique_saved_api_responses_in_run_window": 32,
+        "responses_missing_usage": 0,
+        "tokens": {
+          "prompt": 240030,
+          "completion": 17534,
+          "cached": 10272,
+          "writes": 222529
+        },
+        "usd": "0.037408745",
+        "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+      },
+      "variant_sha256": null,
+      "introduction_file": null,
+      "inner_monologue_file": null,
+      "requested_initial_datetime": "2026-11-02T12:00:00"
+    },
+    "fixed-persona-gaz-text-transport": {
+      "status": "Completed; qualitative acceptance not implied.",
+      "synthetic_controls": false,
+      "unchanged_persona_payloads": true,
+      "counts": {
+        "2": 5,
+        "3": 2,
+        "1": 1
+      },
+      "mean": 2.125,
+      "sample_sd": 0.6408699444616557,
+      "responses": [
+        {
+          "name": "Janet Louise Harwood",
+          "response": "2",
+          "justification": "Very unlikely to buy regularly because she generally prefers warm soups and cold blended vegetables aren’t her taste; she might try a bottle once if ingredients and sodium were clearly labeled."
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "response": "3",
+          "justification": "I might try it, especially if the ingredients are simple and it tastes fresh. I usually prefer homemade soup, so I’m not sure I’d buy bottled gazpacho regularly."
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "response": "2",
+          "justification": "He said purchasing bottled gazpacho was very unlikely but not impossible, since it isn’t something he would ordinarily reach for, though he might try a small bottle on a hot day if reasonably priced."
+        },
+        {
+          "name": "Evan McAllister",
+          "response": "2",
+          "justification": "He said he’d be unlikely to buy bottled gazpacho regularly, though he might try it once if the ingredients and price looked good."
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "response": "2",
+          "justification": "I usually go for familiar, warm meals, and bottled cold soup doesn’t sound like something I’d buy often. Maybe I’d try it once if it was reasonably priced."
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "response": "3",
+          "justification": "She likes Mediterranean flavors and the vegetables sound appealing, but bottled gazpacho isn’t something she usually buys. She might try it if the ingredients looked good and the price was reasonable."
+        },
+        {
+          "name": "Anthony James Holloway",
+          "response": "2",
+          "justification": "I’m not much for cold, blended vegetable soup and would usually pick something more familiar and filling, but might try a small bottle if it was reasonably priced."
+        },
+        {
+          "name": "Marjorie Keating",
+          "response": "1",
+          "justification": "She prefers warm, familiar soups and finds a cold blended vegetable drink unappealing; she would be wary of paying for a bottle she might not like."
+        }
+      ],
+      "public_extraction_checks": [
+        {
+          "name": "Janet Louise Harwood",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "extracted": "2",
+          "parsed_public": null,
+          "matches": null
+        },
+        {
+          "name": "Evan McAllister",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "extracted": "3",
+          "parsed_public": null,
+          "matches": null
+        },
+        {
+          "name": "Anthony James Holloway",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Marjorie Keating",
+          "extracted": "1",
+          "parsed_public": "1",
+          "matches": true
+        }
+      ],
+      "manual_public_review_required": [
+        "Warren Ellis Gentry",
+        "Erin Michelle Dalton"
+      ],
+      "returned_usage_estimate": {
+        "unique_saved_api_responses_in_run_window": 32,
+        "responses_missing_usage": 0,
+        "tokens": {
+          "prompt": 229710,
+          "completion": 20995,
+          "cached": 10272,
+          "writes": 212111
+        },
+        "usd": "0.037846795",
+        "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+      },
+      "variant_sha256": null,
+      "introduction_file": null,
+      "inner_monologue_file": null,
+      "requested_initial_datetime": null
+    },
+    "fixed-persona-gaz-text-controls": {
+      "status": "Completed; qualitative acceptance not implied.",
+      "synthetic_controls": true,
+      "unchanged_persona_payloads": true,
+      "counts": {
+        "4": 1,
+        "1": 1
+      },
+      "mean": 2.5,
+      "sample_sd": 2.1213203435596424,
+      "responses": [
+        {
+          "name": "Janet Louise Harwood",
+          "response": "4",
+          "justification": "She already enjoys buying bottled gazpacho and is very likely to purchase it, though she would compare the price and sodium content."
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "response": "1",
+          "justification": "I would never buy it. I really don’t care for cold blended vegetable soups, and putting it in a bottle doesn’t make it more appealing to me."
+        }
+      ],
+      "public_extraction_checks": [
+        {
+          "name": "Janet Louise Harwood",
+          "extracted": "4",
+          "parsed_public": "4",
+          "matches": true
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "extracted": "1",
+          "parsed_public": "1",
+          "matches": true
+        }
+      ],
+      "manual_public_review_required": [],
+      "returned_usage_estimate": {
+        "unique_saved_api_responses_in_run_window": 8,
+        "responses_missing_usage": 0,
+        "tokens": {
+          "prompt": 55893,
+          "completion": 3555,
+          "cached": 2568,
+          "writes": 51608
+        },
+        "usd": "0.008425880",
+        "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+      },
+      "variant_sha256": null,
+      "introduction_file": null,
+      "inner_monologue_file": null,
+      "requested_initial_datetime": null,
+      "positive_control_passes": true,
+      "negative_control_passes": true
+    },
+    "fixed-persona-gaz-situated-decisions": {
+      "status": "Completed; qualitative acceptance not implied.",
+      "synthetic_controls": false,
+      "unchanged_persona_payloads": true,
+      "counts": {
+        "3": 4,
+        "2": 4
+      },
+      "mean": 2.5,
+      "sample_sd": 0.5345224838248488,
+      "responses": [
+        {
+          "name": "Janet Louise Harwood",
+          "response": "3",
+          "justification": "She might try it for convenience on a warm day, but usually prefers soup warm and would check the sodium and ingredients."
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "response": "3",
+          "justification": "I like soup, and a vegetable gazpacho sounds appealing as a cold, quick option. But I usually make soup at home and am cautious about bottled convenience foods, so I’d check the ingredients and price first. I might try it, but I’m not sure."
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "response": "2",
+          "justification": "Very unlikely, though not impossible. He usually favors familiar cooked meals, and cold bottled vegetable soup doesn’t much appeal to him. He might try it if it were reasonably priced, but wouldn’t seek it out."
+        },
+        {
+          "name": "Evan McAllister",
+          "response": "3",
+          "justification": "He might try a bottle, especially on a hot day, but usually cooks at home and doesn’t buy much bottled convenience food."
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "response": "2",
+          "justification": "She said cold blended soup in a bottle isn’t what she usually reaches for and she prefers warm, familiar meals, though she might try a small one sometime."
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "response": "3",
+          "justification": "I’d be open to trying it, since the vegetable ingredients and Mediterranean style appeal to me, but a cold blended soup isn’t part of my usual routine. Price, taste, and the nutrition label would matter; I’m not sure it would become a regular buy."
+        },
+        {
+          "name": "Anthony James Holloway",
+          "response": "2",
+          "justification": "I usually stick to familiar, hearty meals, and cold blended vegetables don’t sound like something I’d reach for. I might try a bottle if it was reasonably priced, but I wouldn’t be very likely to buy it."
+        },
+        {
+          "name": "Marjorie Keating",
+          "response": "2",
+          "justification": "I’m very unlikely to buy it. I usually prefer warm, familiar foods, and a cold blended vegetable soup doesn’t sound especially appealing to me. I might try a small bottle once, but I wouldn’t expect to buy it regularly."
+        }
+      ],
+      "public_extraction_checks": [
+        {
+          "name": "Janet Louise Harwood",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Evan McAllister",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "extracted": "2",
+          "parsed_public": null,
+          "matches": null
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "extracted": "3",
+          "parsed_public": null,
+          "matches": null
+        },
+        {
+          "name": "Anthony James Holloway",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Marjorie Keating",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        }
+      ],
+      "manual_public_review_required": [
+        "Rosa María Castañeda",
+        "Erin Michelle Dalton"
+      ],
+      "returned_usage_estimate": {
+        "unique_saved_api_responses_in_run_window": 32,
+        "responses_missing_usage": 0,
+        "tokens": {
+          "prompt": 233540,
+          "completion": 23266,
+          "cached": 10272,
+          "writes": 215832
+        },
+        "usd": "0.039458320",
+        "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+      },
+      "variant_sha256": "9bd0ef4bf7ac8466e8205a8ea65d27051a60ae14569b97b6c8b52dfd02ae392a",
+      "introduction_file": null,
+      "inner_monologue_file": null,
+      "requested_initial_datetime": "2026-11-02T16:20:19.182432"
+    },
+    "fixed-persona-gaz-holdout-text": {
+      "status": "Completed; qualitative acceptance not implied.",
+      "synthetic_controls": false,
+      "unchanged_persona_payloads": true,
+      "counts": {
+        "2": 7,
+        "3": 1
+      },
+      "mean": 2.125,
+      "sample_sd": 0.3535533905932738,
+      "responses": [
+        {
+          "name": "Melissa Dawn Hensley",
+          "response": "2",
+          "justification": "She usually chooses familiar foods, and cold blended vegetables in a bottle isn’t something she’d normally reach for. She might try it if it was inexpensive and she could taste it first."
+        },
+        {
+          "name": "Teresa Maribel Navarro",
+          "response": "2",
+          "justification": "She said she is not very likely to buy bottled gazpacho because she usually prefers familiar, filling meals and cold blended vegetable soup is not something she would normally reach for. She might try it once if the price and ingredients were clear."
+        },
+        {
+          "name": "Avery Claire Maddox",
+          "response": "2",
+          "justification": "She likes familiar, filling meals more, and cold blended vegetable soup isn’t something she’d usually buy. She might try a small bottle if someone she trusts recommended it, but it’s pretty unlikely she’d pick it up on her own."
+        },
+        {
+          "name": "Nathaniel Scott Weber",
+          "response": "2",
+          "justification": "He usually prefers hot, filling, familiar meals, so cold blended soup is not something he is very likely to buy; he might try a small bottle if reasonably priced."
+        },
+        {
+          "name": "Ethan Cole Rutledge",
+          "response": "2",
+          "justification": "He said he’d be pretty unlikely to buy bottled gazpacho because he usually prefers warm, filling meals and is unsure he’d enjoy cold soup. He might try it if the ingredients were clearly vegan and it was reasonably priced."
+        },
+        {
+          "name": "Gregory Alan Whitfield",
+          "response": "2",
+          "justification": "Very unlikely to buy it; he prefers cooked vegetables and familiar meals, and cold blended soup doesn’t sound like something he’d normally reach for. He might try a small bottle if the price were reasonable."
+        },
+        {
+          "name": "Darius Coleman",
+          "response": "2",
+          "justification": "I’d be unlikely to buy it, since cold blended soup isn’t usually what I reach for. I might try it once if it were reasonably priced, though."
+        },
+        {
+          "name": "Justin Wade Pritchard",
+          "response": "3",
+          "justification": "It sounds plant-based and the flavors are familiar, but cold blended soup in a bottle isn’t something I normally reach for. I might try one if the ingredients look straightforward."
+        }
+      ],
+      "public_extraction_checks": [
+        {
+          "name": "Melissa Dawn Hensley",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Teresa Maribel Navarro",
+          "extracted": "2",
+          "parsed_public": null,
+          "matches": null
+        },
+        {
+          "name": "Avery Claire Maddox",
+          "extracted": "2",
+          "parsed_public": null,
+          "matches": null
+        },
+        {
+          "name": "Nathaniel Scott Weber",
+          "extracted": "2",
+          "parsed_public": null,
+          "matches": null
+        },
+        {
+          "name": "Ethan Cole Rutledge",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Gregory Alan Whitfield",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Darius Coleman",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Justin Wade Pritchard",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        }
+      ],
+      "manual_public_review_required": [
+        "Teresa Maribel Navarro",
+        "Avery Claire Maddox",
+        "Nathaniel Scott Weber"
+      ],
+      "returned_usage_estimate": {
+        "unique_saved_api_responses_in_run_window": 32,
+        "responses_missing_usage": 0,
+        "tokens": {
+          "prompt": 281155,
+          "completion": 23160,
+          "cached": 10272,
+          "writes": 263504
+        },
+        "usd": "0.045358620",
+        "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+      },
+      "variant_sha256": null,
+      "introduction_file": null,
+      "inner_monologue_file": null,
+      "requested_initial_datetime": "2026-11-02T16:20:19.182432"
+    },
+    "fixed-persona-gaz-holdout-situated": {
+      "status": "Completed; qualitative acceptance not implied.",
+      "synthetic_controls": false,
+      "unchanged_persona_payloads": true,
+      "counts": {
+        "2": 5,
+        "3": 3
+      },
+      "mean": 2.375,
+      "sample_sd": 0.5175491695067657,
+      "responses": [
+        {
+          "name": "Melissa Dawn Hensley",
+          "response": "2",
+          "justification": "Cold blended vegetables aren’t what she usually goes for, and she tends to stick with familiar foods. She might taste some if offered, but probably wouldn’t buy a bottle herself."
+        },
+        {
+          "name": "Teresa Maribel Navarro",
+          "response": "2",
+          "justification": "She said she is very unlikely to buy bottled gazpacho, though she might try it once if it were reasonably priced and tasted good."
+        },
+        {
+          "name": "Avery Claire Maddox",
+          "response": "3",
+          "justification": "I might try it if it’s reasonably priced, but I usually prefer familiar meals, and a cold bottled soup isn’t an obvious regular buy for me."
+        },
+        {
+          "name": "Nathaniel Scott Weber",
+          "response": "2",
+          "justification": "Very unlikely, but not impossible. Cold blended vegetable soup isn’t something I’d usually pick, especially when I’m trying not to waste grocery money. I might try a small bottle if it was priced reasonably."
+        },
+        {
+          "name": "Ethan Cole Rutledge",
+          "response": "2",
+          "justification": "He’d be unlikely to buy it because he usually prefers warm, filling food and wouldn’t normally pick up bottled cold soup. He might try it once if the ingredients were clear and it was reasonably priced."
+        },
+        {
+          "name": "Gregory Alan Whitfield",
+          "response": "2",
+          "justification": "He said he was very unlikely to buy it because cold blended vegetables as a drink does not sound like his kind of food, though he might try a small bottle if it was inexpensive."
+        },
+        {
+          "name": "Darius Coleman",
+          "response": "3",
+          "justification": "I don’t usually reach for cold blended soup, but I might try a bottle if it looked appealing and the price was reasonable."
+        },
+        {
+          "name": "Justin Wade Pritchard",
+          "response": "3",
+          "justification": "I might buy a bottle to try. I don’t usually go for cold soup, but it sounds like a convenient way to get some vegetables, assuming the ingredients are clearly vegan and the price is reasonable."
+        }
+      ],
+      "public_extraction_checks": [
+        {
+          "name": "Melissa Dawn Hensley",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Teresa Maribel Navarro",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Avery Claire Maddox",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Nathaniel Scott Weber",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Ethan Cole Rutledge",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Gregory Alan Whitfield",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Darius Coleman",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Justin Wade Pritchard",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        }
+      ],
+      "manual_public_review_required": [],
+      "returned_usage_estimate": {
+        "unique_saved_api_responses_in_run_window": 32,
+        "responses_missing_usage": 0,
+        "tokens": {
+          "prompt": 283897,
+          "completion": 23122,
+          "cached": 27379,
+          "writes": 249121
+        },
+        "usd": "0.043714615",
+        "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+      },
+      "variant_sha256": "9bd0ef4bf7ac8466e8205a8ea65d27051a60ae14569b97b6c8b52dfd02ae392a",
+      "introduction_file": null,
+      "inner_monologue_file": null,
+      "requested_initial_datetime": "2026-11-02T16:20:19.182432"
+    },
+    "fixed-persona-gaz-situated-controls": {
+      "status": "Completed; qualitative acceptance not implied.",
+      "synthetic_controls": true,
+      "unchanged_persona_payloads": true,
+      "counts": {
+        "5": 1,
+        "1": 1
+      },
+      "mean": 3,
+      "sample_sd": 2.8284271247461903,
+      "responses": [
+        {
+          "name": "Janet Louise Harwood",
+          "response": "5",
+          "justification": "I’d certainly consider buying it; I already enjoy bottled gazpacho for the convenience. I’d still check the price and sodium before choosing a brand."
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "response": "1",
+          "justification": "I would never buy it. I strongly dislike cold blended vegetable soups, so having gazpacho ready to drink at the supermarket wouldn’t appeal to me."
+        }
+      ],
+      "public_extraction_checks": [
+        {
+          "name": "Janet Louise Harwood",
+          "extracted": "5",
+          "parsed_public": "5",
+          "matches": true
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "extracted": "1",
+          "parsed_public": "1",
+          "matches": true
+        }
+      ],
+      "manual_public_review_required": [],
+      "returned_usage_estimate": {
+        "unique_saved_api_responses_in_run_window": 8,
+        "responses_missing_usage": 0,
+        "tokens": {
+          "prompt": 56846,
+          "completion": 4651,
+          "cached": 2568,
+          "writes": 52484
+        },
+        "usd": "0.009091080",
+        "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+      },
+      "variant_sha256": "9bd0ef4bf7ac8466e8205a8ea65d27051a60ae14569b97b6c8b52dfd02ae392a",
+      "introduction_file": null,
+      "inner_monologue_file": null,
+      "requested_initial_datetime": "2026-11-02T16:20:19.182432",
+      "positive_control_passes": true,
+      "negative_control_passes": true
+    },
+    "fixed-persona-gaz-minimal-actor": {
+      "status": "Completed; qualitative acceptance not implied.",
+      "synthetic_controls": false,
+      "unchanged_persona_payloads": true,
+      "counts": {
+        "2": 6,
+        "3": 2
+      },
+      "mean": 2.25,
+      "sample_sd": 0.4629100498862757,
+      "responses": [
+        {
+          "name": "Janet Louise Harwood",
+          "response": "2",
+          "justification": "She likes convenient soups but usually wants them warm, so she is not very likely to buy bottled cold gazpacho; she might try it if the ingredients and sodium looked good."
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "response": "3",
+          "justification": "I might try bottled gazpacho, especially if it has a short, straightforward ingredient list, but I usually prefer homemade soup or something heartier."
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "response": "2",
+          "justification": "Very unlikely to buy it, though might try a bottle once out of curiosity; cold blended soup isn’t something he’d usually reach for."
+        },
+        {
+          "name": "Evan McAllister",
+          "response": "2",
+          "justification": "Very unlikely, but not impossible. He likes fresh vegetables and thinks gazpacho could be refreshing in hot weather, but bottled cold soup isn’t something he’d normally buy; he might try it once if it looked good."
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "response": "2",
+          "justification": "I’m very unlikely to buy it. I prefer familiar, warm food, and cold vegetable soup in a bottle doesn’t sound like something I’d reach for. Maybe I’d try a taste if someone offered."
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "response": "3",
+          "justification": "I might try it if the ingredients looked good and the price was reasonable. I like vegetable-forward, Mediterranean-style foods, but I’m not sure I’d enjoy soup cold or make it a regular purchase."
+        },
+        {
+          "name": "Anthony James Holloway",
+          "response": "2",
+          "justification": "I’m very unlikely to buy it, though not completely ruled out. I usually go for more familiar, hearty meals, and cold blended vegetable soup doesn’t sound like something I’d reach for. I might try it once if the price was right."
+        },
+        {
+          "name": "Marjorie Keating",
+          "response": "2",
+          "justification": "I’m very unlikely to buy it. I usually prefer soup warm and stick to familiar foods, so a bottled cold vegetable soup doesn’t quite appeal to me. I might try a taste if someone offered it."
+        }
+      ],
+      "public_extraction_checks": [
+        {
+          "name": "Janet Louise Harwood",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Evan McAllister",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Anthony James Holloway",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Marjorie Keating",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        }
+      ],
+      "manual_public_review_required": [],
+      "returned_usage_estimate": {
+        "unique_saved_api_responses_in_run_window": 32,
+        "responses_missing_usage": 0,
+        "tokens": {
+          "prompt": 199411,
+          "completion": 21455,
+          "cached": 10272,
+          "writes": 181846
+        },
+        "usd": "0.034290270",
+        "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+      },
+      "variant_sha256": "8b23767b461348a076b31245c561ae768afed7517193731650cba7be70866a3b",
+      "introduction_file": null,
+      "inner_monologue_file": null,
+      "requested_initial_datetime": "2026-11-02T16:20:19.182432"
+    },
+    "fixed-persona-gaz-minimal-controls": {
+      "status": "Completed; qualitative acceptance not implied.",
+      "synthetic_controls": true,
+      "unchanged_persona_payloads": true,
+      "counts": {
+        "4": 1,
+        "1": 1
+      },
+      "mean": 2.5,
+      "sample_sd": 2.1213203435596424,
+      "responses": [
+        {
+          "name": "Janet Louise Harwood",
+          "response": "4",
+          "justification": "Very likely—I already like the convenience of bottled gazpacho, especially for an easy lunch. I’d still check the sodium, price, and brand, so I wouldn’t say certainly."
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "response": "1",
+          "justification": "I would never buy it. I find cold blended vegetable soups unappealing, and having it bottled at my local supermarket wouldn’t change that."
+        }
+      ],
+      "public_extraction_checks": [
+        {
+          "name": "Janet Louise Harwood",
+          "extracted": "4",
+          "parsed_public": "4",
+          "matches": true
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "extracted": "1",
+          "parsed_public": "1",
+          "matches": true
+        }
+      ],
+      "manual_public_review_required": [],
+      "returned_usage_estimate": {
+        "unique_saved_api_responses_in_run_window": 8,
+        "responses_missing_usage": 0,
+        "tokens": {
+          "prompt": 48459,
+          "completion": 5165,
+          "cached": 2568,
+          "writes": 44127
+        },
+        "usd": "0.008300455",
+        "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+      },
+      "variant_sha256": "8b23767b461348a076b31245c561ae768afed7517193731650cba7be70866a3b",
+      "introduction_file": null,
+      "inner_monologue_file": null,
+      "requested_initial_datetime": "2026-11-02T16:20:19.182432",
+      "positive_control_passes": true,
+      "negative_control_passes": true
+    },
+    "fixed-persona-gaz-low-effort": {
+      "status": "Completed; qualitative acceptance not implied.",
+      "synthetic_controls": false,
+      "unchanged_persona_payloads": true,
+      "counts": {
+        "2": 6,
+        "3": 2
+      },
+      "mean": 2.25,
+      "sample_sd": 0.4629100498862757,
+      "responses": [
+        {
+          "name": "Janet Louise Harwood",
+          "response": "2",
+          "justification": "I’m very unlikely to buy bottled gazpacho. I like tomatoes and vegetables, but cold soup isn’t much to my taste; I’d be more inclined to choose a warm prepared soup."
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "response": "3",
+          "justification": "He said he might buy bottled gazpacho for convenience, but usually prefers making soup at home and would check the ingredients, price, and freshness."
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "response": "2",
+          "justification": "Very unlikely to buy bottled gazpacho; favors familiar, hearty meals and cold blended tomato soup, though might try one bottle on a hot day if reasonably priced and fresh."
+        },
+        {
+          "name": "Evan McAllister",
+          "response": "2",
+          "justification": "Cold tomato soup isn’t something he usually buys, and he’d be unlikely to make it a regular purchase, though he might try a bottle if the price and ingredients looked right."
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "response": "2",
+          "justification": "I’m very unlikely to buy bottled gazpacho. I prefer warm, familiar food, and cold blended soup doesn’t sound like my usual thing. Maybe I’d try a small one on a hot day, but I wouldn’t buy it regularly."
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "response": "3",
+          "justification": "I might try bottled gazpacho if the ingredients looked good and the price was reasonable, but I’m not sure I’d purchase it regularly."
+        },
+        {
+          "name": "Anthony James Holloway",
+          "response": "2",
+          "justification": "I’m very unlikely to buy it; I usually go for familiar, filling food, though I might try it once if it was reasonably priced."
+        },
+        {
+          "name": "Marjorie Keating",
+          "response": "2",
+          "justification": "I’m very unlikely to buy it. I prefer soup warm, and a bottled cold vegetable soup sounds unfamiliar to me. I might reconsider if I could taste it first and the price was reasonable."
+        }
+      ],
+      "public_extraction_checks": [
+        {
+          "name": "Janet Louise Harwood",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Stephen Michael Donnelly",
+          "extracted": "3",
+          "parsed_public": null,
+          "matches": null
+        },
+        {
+          "name": "Warren Ellis Gentry",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Evan McAllister",
+          "extracted": "2",
+          "parsed_public": null,
+          "matches": null
+        },
+        {
+          "name": "Rosa María Castañeda",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Erin Michelle Dalton",
+          "extracted": "3",
+          "parsed_public": "3",
+          "matches": true
+        },
+        {
+          "name": "Anthony James Holloway",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        },
+        {
+          "name": "Marjorie Keating",
+          "extracted": "2",
+          "parsed_public": "2",
+          "matches": true
+        }
+      ],
+      "manual_public_review_required": [
+        "Stephen Michael Donnelly",
+        "Evan McAllister"
+      ],
+      "returned_usage_estimate": {
+        "unique_saved_api_responses_in_run_window": 32,
+        "responses_missing_usage": 0,
+        "tokens": {
+          "prompt": 229758,
+          "completion": 9755,
+          "cached": 8988,
+          "writes": 213625
+        },
+        "usd": "0.032385005",
+        "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+      },
+      "variant_sha256": null,
+      "introduction_file": null,
+      "inner_monologue_file": null,
+      "requested_initial_datetime": "2026-11-02T16:20:19.182432"
+    }
+  },
+  "limitations": [
+    "Single small panel, not a population calibration or a precise causal estimate.",
+    "Higher ratings alone do not establish better simulated behavior.",
+    "Synthetic preference controls are not empirical observations or unchanged participants.",
+    "Original rated question, quality thresholds, and model retained. Effort is xhigh except the explicitly labeled low-effort diagnostic, which changes actor, evaluation and extraction effort.",
+    "Introduction, private thought, and season changes are recorded experimental conditions.",
+    "Only saved returned usage is priced; failed unreturned requests remain unpriced."
+  ],
+  "new_trials_returned_usage_usd": "0.659406800"
+}

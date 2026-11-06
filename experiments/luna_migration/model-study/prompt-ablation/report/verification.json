@@ -1,0 +1,37 @@
+{
+  "verified_at": "2026-10-28T00:52:29.013094+00:00",
+  "attempts": 125,
+  "completed_observations": 124,
+  "completed_per_model": 62,
+  "distinct_cells_per_model": 50,
+  "timeout_attempts_without_usage": 1,
+  "exact_timeout_retry": true,
+  "exact_baselines": 20,
+  "only_message_changes_in_30_treatments": true,
+  "expected_repeat_coverage": true,
+  "json_valid_outputs": 124,
+  "strict_schema_valid_outputs": 92,
+  "persona_required_fields_present": 8,
+  "independent_costs_usd": {
+    "gpt-6-luna": "0.111551570",
+    "gpt-6.1-terra": "1.12276970"
+  },
+  "known_cost_total_usd": "1.234321270",
+  "timeout_cost": "Unknown; excluded from recorded-usage total, not assumed zero.",
+  "api_start_utc": "2026-10-28T00:24:49.965518+00:00",
+  "api_end_utc": "2026-10-28T00:50:00.138039+00:00",
+  "api_wall_clock_seconds": 1510.172521,
+  "tooling_tests_passed": 18,
+  "semantic_interpretation": "See quality-reviews.json; valid JSON does not imply good simulation. Baseline quality failures are deliberately preserved.",
+  "file_sha256": {
+    "luna-results.jsonl": "31be8fc61cfc07722e2e2044fa77ff83e98495034cd93599a1b7dadab5fd9a58",
+    "terra-results.jsonl": "c5352d3ad4fa0ab472ad27f1e8f14f8752f6160f095d3dd08920c231ca3a8a1c",
+    "luna-repeats.jsonl": "3b35861036694239ce9c747958ba98417f6f53a03a9b3b3f08f02de4c1324679",
+    "terra-repeats.jsonl": "3ae36167dec68a03b8840861209da8b0a908bc90f771ff11af1b5d04ccf8325d",
+    "terra-timeout-retry.jsonl": "f9c3a5e09a02c397865197ed4a96c4205b487265d1d773a856f01fc74cb50f65",
+    "cases.jsonl": "d16e40d3b787d8a150f2326e51c3c885050bdc50d302b3243eddc7d456cf0048",
+    "cases-reversed.jsonl": "7f63f191de080f2b4681537c7ed22448a8ff1073162216dd0430e4f8df32d53c",
+    "variant-audit.json": "0be846728f64cd464b54dea503661a76996de631833609bbf64f6896fb7e0db2",
+    "quality-reviews.json": "4e1b30847e71d03b9ef11c50c5291b44544aa3f702f6779131774975bfb90b96"
+  }
+}

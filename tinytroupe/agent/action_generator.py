@@ -122,7 +122,13 @@ class ActionGenerator(JsonSerializableRegistry):
 
         # clean up (remove unnecessary elements) and copy the list of current messages to avoid modifying the original ones
         current_messages = [
-            {"role": msg["role"], "content": json.dumps(msg["content"])}
+            {
+                "role": msg["role"],
+                "content": (
+                    msg["content"] if isinstance(msg["content"], str)
+                    else json.dumps(msg["content"])
+                ),
+            }
             for msg in current_messages
         ]
 

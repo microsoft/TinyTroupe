@@ -87,7 +87,7 @@ class ConfigManager:
             "BASE_URL", None
         )  # by default, we will not use a custom base URL
 
-        self._config["model"] = config["OpenAI"].get("MODEL", "gpt-4o")
+        self._config["model"] = config["OpenAI"].get("MODEL", "gpt-6-luna")
         self._config["embedding_model"] = config["OpenAI"].get(
             "EMBEDDING_MODEL", "text-embedding-3-small"
         )
@@ -96,7 +96,7 @@ class ConfigManager:
                 "AZURE_EMBEDDING_MODEL_API_VERSION", "2023-05-15"
             )
         self._config["reasoning_model"] = config["OpenAI"].get(
-            "REASONING_MODEL", "o3-mini"
+            "REASONING_MODEL", "gpt-6-luna"
         )
 
         # Vision model: used for image understanding. Falls back to MODEL if not set.
@@ -118,7 +118,7 @@ class ConfigManager:
             "PRESENCE_PENALTY", None
         )
         self._config["reasoning_effort"] = config["OpenAI"].get(
-            "REASONING_EFFORT", "high"
+            "REASONING_EFFORT", "xhigh"
         )
 
         self._config["num_ctx"] = int(config["OpenAI"].get("NUM_CTX", "32000"))

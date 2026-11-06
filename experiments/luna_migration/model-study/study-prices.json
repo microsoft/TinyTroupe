@@ -1,0 +1,30 @@
+{
+  "verified_at": "2026-10-27",
+  "sources": [
+    "https://developers.openai.com/api/docs/pricing",
+    "https://developers.openai.com/api/docs/models/gpt-6.1-terra",
+    "https://developers.openai.com/api/docs/guides/prompt-caching"
+  ],
+  "currency": "USD",
+  "basis": "Standard global API list prices, not an invoice. Cache writes replace ordinary input billing, not an additive surcharge. Default 30-minute write retention; no tools, batch, regional processing or special contract assumed.",
+  "models": {
+    "gpt-6.1-terra": {
+      "input": "1.00",
+      "cached_input": "0.05",
+      "cache_write": "1.25",
+      "output": "5.00",
+      "long_context_threshold": 272000,
+      "long_input_multiplier": "2",
+      "long_output_multiplier": "1.5"
+    },
+    "gpt-6-luna": {
+      "input": "0.10",
+      "cached_input": "0.01",
+      "cache_write": "0.125",
+      "output": "0.50",
+      "long_context_threshold": 272000,
+      "long_input_multiplier": "2",
+      "long_output_multiplier": "1.5"
+    }
+  }
+}

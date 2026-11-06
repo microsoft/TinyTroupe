@@ -1,18 +1,13 @@
-import textwrap
+import json
 from typing import List, Optional, Union
-
-import pandas as pd
 
 import tinytroupe.utils as utils
 from tinytroupe.clients import client
 from tinytroupe.extraction import logger
-from tinytroupe.utils.llm import LLMChat
 
 
 class Normalizer:
-    """
-    A mechanism to normalize passages, concepts and other textual elements.
-    """
+    """Partition text semantically while reconstructing exact source occurrences."""
 
     def __init__(
         self,
@@ -20,256 +15,177 @@ class Normalizer:
         n: int,
         verbose: bool = False,
         max_length: Optional[int] = None,
+        chunk_size: int = 240,
     ):
-        """
-        Normalizes the specified elements.
+        """Create up to n themes; large collections use frozen themes and bounded batches.
 
         Args:
-            elements (list): The elements to normalize.
-            n (int): The number of normalized elements to output.
-            verbose (bool, optional): Whether to print debug messages. Defaults to False.
-        Args:
-            elements (list): The elements to normalize.
-            n (int): The number of normalized elements to output.
-            verbose (bool, optional): Whether to print debug messages. Defaults to False.
-            max_length (int, optional): If provided, each normalized output element MUST NOT
-                exceed this many characters. The LLM will be instructed to produce concise
-                abstractions; as a safety net we also truncate/merge locally if still too long.
-        """
-        # ensure elements are unique
-        self.elements = list(set(elements))
+            elements: Original strings, including duplicate occurrences.
+            n: Positive upper bound on the number of semantic categories.
+            verbose: Whether to print progress counts.
+            max_length: Positive label-length ceiling, defaulting to 40 characters.
+            chunk_size: Maximum items per assignment call, between 1 and 240.
 
+        Invalid responses raise ValueError rather than rewriting, dropping or
+        assigning unmatched source text to an arbitrary fallback category.
+        """
+        if not isinstance(elements, list) or any(not isinstance(s, str) or not s for s in elements):
+            raise ValueError("elements must be a list of nonempty strings.")
+        if type(n) is not int or n < 1:
+            raise ValueError("n must be a positive integer.")
+        if max_length is not None and (type(max_length) is not int or max_length < 1):
+            raise ValueError("max_length must be a positive integer or None.")
+        if type(chunk_size) is not int or not 1 <= chunk_size <= 240:
+            raise ValueError("chunk_size must be an integer between 1 and 240.")
+        self.elements = list(elements)
         self.n = n
         self.verbose = verbose
         self.max_length = max_length
-
-        # a JSON-based structure, where each output element is a key to a list of input elements that were merged into it
-        self.normalized_elements = None
-        # a dict that maps each input element to its normalized output. This will be used as cache later.
+        self.chunk_size = chunk_size
         self.normalizing_map = {}
+        self.normalized_elements = {}
+        self._groups = []
+        unique = list(dict.fromkeys(elements))
+        if not unique:
+            return
 
-        rendering_configs = {"n": n, "elements": self.elements}
-        if max_length is not None:
-            rendering_configs["max_length"] = max_length
+        limit = min(n, len(unique))
+        label_schema = {"type": "string", "minLength": 1, "maxLength": max_length or 40}
+        logger.info(f"Partitioning {len(elements)} occurrences into up to {limit} themes.")
+        if len(unique) <= chunk_size:
+            schema = self._object_schema({
+                "labels": {"type": "array", "items": label_schema, "minItems": 1, "maxItems": limit},
+                "assignments": self._assignment_schema(len(unique), limit),
+            })
+            result = self._call("normalizer", {
+                "maximum_groups": limit, "max_length": max_length or 40,
+                "items": {str(i): s for i, s in enumerate(unique, 1)},
+            }, schema)
+            if not isinstance(result, dict) or set(result) != {"labels", "assignments"}:
+                raise ValueError("Normalizer requires labels and assignments.")
+            labels = result["labels"]
+            self._validate_labels(labels, limit)
+            self._groups = [{"label": label, "scope": label} for label in labels]
+            assignments = self._validate_assignments(result["assignments"], len(unique), len(labels))
+        else:
+            group_schema = self._object_schema({
+                "label": label_schema, "scope": {"type": "string", "minLength": 1},
+            })
+            result = self._call("normalizer.plan", {
+                "maximum_groups": limit, "max_length": max_length or 40,
+                "items": {str(i): s for i, s in enumerate(unique, 1)},
+            }, self._object_schema({
+                "groups": {"type": "array", "items": group_schema, "minItems": 1, "maxItems": limit},
+            }))
+            if not isinstance(result, dict) or set(result) != {"groups"} or not isinstance(result["groups"], list):
+                raise ValueError("Normalizer requires global group definitions.")
+            self._groups = result["groups"]
+            if any(not isinstance(g, dict) or set(g) != {"label", "scope"}
+                   or not isinstance(g["scope"], str) or not g["scope"].strip()
+                   for g in self._groups):
+                raise ValueError("Global themes require labels and nonempty scope boundaries.")
+            labels = [g["label"] for g in self._groups]
+            self._validate_labels(labels, limit)
+            assignments = self._assign(unique)
 
-        logger.info(
-            f"Computing up to {n} normalized elements from {len(self.elements)} originals (may return fewer if clusters merge)."
-        )
+        if set(assignments) != set(range(1, len(labels) + 1)):
+            raise ValueError("Normalizer returned an empty global category.")
+        self.normalizing_map = {s: labels[group - 1] for s, group in zip(unique, assignments)}
+        self.normalized_elements = {label: [] for label in labels}
+        for element in self.elements:
+            self.normalized_elements[self.normalizing_map[element]].append(element)
+        if self.verbose:
+            print(f"Normalized {len(elements)} occurrences into {len(labels)} categories.")
 
-        # Use LLMChat for robust structured JSON output
-        chat = LLMChat(
-            system_template_name="normalizer.system.mustache",
-            user_template_name="normalizer.user.mustache",
+    @staticmethod
+    def _object_schema(properties):
+        """Require exactly the supplied JSON object properties."""
+        return {"type": "object", "additionalProperties": False,
+                "properties": properties, "required": list(properties)}
+
+    @classmethod
+    def _assignment_schema(cls, count, groups):
+        """Use bounded integers rather than repeated enums that exceed API limits."""
+        return cls._object_schema({
+            str(i): {"type": "integer", "minimum": 1, "maximum": groups}
+            for i in range(1, count + 1)
+        })
+
+    def _call(self, template, payload, schema):
+        """Call the configured client with a strict intermediate JSON contract."""
+        messages = utils.compose_initial_LLM_messages_with_templates(
+            template + ".system.mustache", "normalizer.user.mustache",
             base_module_folder="extraction",
-            output_type=dict,  # Request structured dict output
-            enable_json_output_format=True,
-            enable_justification_step=False,
-            enable_reasoning_step=False
+            rendering_configs={"payload": json.dumps(payload, ensure_ascii=False)},
         )
-        
-        result = chat.call(**rendering_configs)
+        response = client().send_message(messages, response_format={
+            "type": "json_schema", "json_schema": {
+                "name": template.replace(".", "_"), "strict": True, "schema": schema,
+            },
+        })
+        if not response or not response.get("content"):
+            raise ValueError(f"{template} returned no content.")
+        return json.loads(response["content"])
 
-        debug_msg = f"Normalization result from LLMChat: {result}"
-        logger.debug(debug_msg)
-        if self.verbose:
-            print(debug_msg)
+    def _validate_labels(self, labels, limit):
+        """Reject ambiguous, empty or overlong categories without truncating them."""
+        if (not isinstance(labels, list) or not 1 <= len(labels) <= limit
+                or any(not isinstance(s, str) or not s.strip()
+                       or len(s) > (self.max_length or 40) for s in labels)
+                or len(set(labels)) != len(labels)):
+            raise ValueError("Normalizer requires distinct nonempty labels within the requested bounds.")
 
-        logger.debug(f"Raw LLM result: {result}")
-        logger.debug(f"Result type: {type(result)}")
-        if self.verbose:
-            print(f"Raw LLM result: {result}")
-            print(f"Result type: {type(result)}")
+    @staticmethod
+    def _validate_assignments(assignments, count, groups):
+        """Require every input ID exactly once and only existing integer group IDs."""
+        if (not isinstance(assignments, dict)
+                or set(assignments) != {str(i) for i in range(1, count + 1)}
+                or any(type(v) is not int or not 1 <= v <= groups for v in assignments.values())):
+            raise ValueError("Assignments must cover every item ID with a valid integer group.")
+        return [assignments[str(i)] for i in range(1, count + 1)]
 
-    # Normalize result structure to a dict[str, list[str]] mapping
-    # Expected format: {"canonical_label": [list, of, originals], ...}
-        mapping = {}
-        if isinstance(result, dict):
-            for k, v in result.items():
-                if isinstance(v, (list, set, tuple)):
-                    originals = [str(x) for x in v if x]
-                else:
-                    originals = [str(v)] if v else []
-                mapping[str(k)] = originals
-        else:
-            # Unknown structure: fall back to identity over provided elements
-            logger.warning(f"Normalizer received unexpected result format {type(result)}; falling back to identity mapping.")
-            mapping = {e: [e] for e in self.elements}
-        # Remove empties
-        mapping = {k: v for k, v in mapping.items() if k and v}
+    def _assign(self, elements):
+        """Assign bounded batches using the same immutable global theme definitions."""
+        assignments = []
+        for offset in range(0, len(elements), self.chunk_size):
+            batch = elements[offset:offset + self.chunk_size]
+            result = self._call("normalizer.assign", {
+                "groups": {str(i): g for i, g in enumerate(self._groups, 1)},
+                "items": {str(i): s for i, s in enumerate(batch, 1)},
+            }, self._object_schema({
+                "assignments": self._assignment_schema(len(batch), len(self._groups)),
+            }))
+            if not isinstance(result, dict) or set(result) != {"assignments"}:
+                raise ValueError("Normalizer requires an assignments object.")
+            assignments.extend(self._validate_assignments(
+                result["assignments"], len(batch), len(self._groups)))
+        return assignments
 
-        # Enforce HARD upper bound: never expose more than self.n categories
-        if len(mapping) > self.n:
-            logger.warning(
-                f"Normalizer produced {len(mapping)} categories exceeding the cap {self.n}; merging overflow into 'Other'."
-            )
-            # Sort keys by descending size of originals so we retain the largest/most meaningful clusters
-            sorted_keys = sorted(mapping.keys(), key=lambda k: len(mapping[k]), reverse=True)
-            keep = sorted_keys[: self.n - 1] if self.n > 1 else []
-            overflow = sorted_keys[len(keep):]
-            other_bucket: List[str] = []
-            for k in overflow:
-                other_bucket.extend(mapping[k])
-                del mapping[k]
-            if self.n == 1:
-                # Single bucket scenario: collapse everything into one abstraction
-                merged_label = keep[0] if keep else "Other"
-                if not keep:
-                    mapping = {merged_label: other_bucket}
-                else:
-                    # Add overflow items into the sole kept cluster
-                    mapping[merged_label].extend(other_bucket)
-            else:
-                mapping["Other"] = other_bucket
+    def normalize(self, element_or_elements: Union[str, List[str]]) -> Union[str, List[str]]:
+        """Map strings to themes, preserving order and caching validated assignments.
 
-        # Safety: if still somehow > n (edge race), truncate deterministically
-        if len(mapping) > self.n:
-            logger.warning(
-                f"Post-merge category count still {len(mapping)} > {self.n}; truncating extras."  # pragma: no cover
-            )
-            truncated = {}
-            for i, (k, v) in enumerate(sorted(mapping.items(), key=lambda kv: len(kv[1]), reverse=True)):
-                if i < self.n:
-                    truncated[k] = v
-            mapping = truncated
-
-        # Enforce maximum length locally (merge clusters whose canonical label is shortened)
-        def _shorten(label: str, max_len: int) -> str:
-            if len(label) <= max_len:
-                return label
-            # Prefer first sentence if it fits
-            first_sentence = label.split(".")[0].strip()
-            if 0 < len(first_sentence) <= max_len:
-                return first_sentence
-            # Use textwrap.shorten to keep whole words
-            return textwrap.shorten(label, width=max_len, placeholder="…")
-
-        if self.max_length is not None and self.max_length > 10:  # basic sanity
-            shortened: dict = {}
-            for k, originals in mapping.items():
-                new_k = _shorten(k, self.max_length)
-                # Merge if collision
-                if new_k not in shortened:
-                    shortened[new_k] = list(originals)
-                else:
-                    shortened[new_k].extend(originals)
-            mapping = shortened
-
-        self.normalized_elements = mapping
-        logger.debug(f"Final normalized mapping: {mapping}")
-        if self.verbose:
-            print(f"Final normalized mapping: {mapping}")
-
-    def normalize(
-        self, element_or_elements: Union[str, List[str]]
-    ) -> Union[str, List[str]]:
+        Source strings reuse their original partition assignments without a new
+        model call. New strings use bounded assignments to the frozen categories.
         """
-        Normalizes the specified element or elements.
-
-        This method uses a caching mechanism to improve performance. If an element has been normalized before,
-        its normalized form is stored in a cache (self.normalizing_map). When the same element needs to be
-        normalized again, the method will first check the cache and use the stored normalized form if available,
-        instead of normalizing the element again.
-
-        The order of elements in the output will be the same as in the input. This is ensured by processing
-        the elements in the order they appear in the input and appending the normalized elements to the output
-        list in the same order.
-
-        Args:
-            element_or_elements (Union[str, List[str]]): The element or elements to normalize.
-
-        Returns:
-            str: The normalized element if the input was a string.
-            list: The normalized elements if the input was a list, preserving the order of elements in the input.
-        """
-        if isinstance(element_or_elements, str):
-            denormalized_elements = [element_or_elements]
-        elif isinstance(element_or_elements, list):
-            denormalized_elements = element_or_elements
+        if isinstance(element_or_elements, str) and element_or_elements:
+            elements = [element_or_elements]
+        elif isinstance(element_or_elements, list) and all(isinstance(s, str) and s for s in element_or_elements):
+            elements = element_or_elements
         else:
-            raise ValueError(
-                "The element_or_elements must be either a string or a list."
-            )
+            raise ValueError("The element_or_elements must be either a string or a list of nonempty strings.")
+        missing = list(dict.fromkeys(s for s in elements if s not in self.normalizing_map))
+        if missing:
+            if not self._groups:
+                raise ValueError("Cannot normalize new elements without any source categories.")
+            assignments = self._assign(missing)
+            self.normalizing_map.update({
+                s: self._groups[group - 1]["label"] for s, group in zip(missing, assignments)
+            })
+        result = [self.normalizing_map[s] for s in elements]
+        return result[0] if isinstance(element_or_elements, str) else result
 
-        normalized_elements = []
-        elements_to_normalize = []
-        for element in denormalized_elements:
-            if element not in self.normalizing_map:
-                elements_to_normalize.append(element)
-
-        if elements_to_normalize:
-            # Convert the mapping to a list of categories for the applier template
-            categories_list = list(self.normalized_elements.keys())
-            rendering_configs = {
-                "categories": categories_list,
-                "elements": elements_to_normalize,
-            }
-            
-            logger.debug(f"Applier rendering configs: {rendering_configs}")
-            if self.verbose:
-                print(f"Applier rendering configs: {rendering_configs}")
-
-            # For now, use the manual template method for the applier due to LLMChat issues
-            # TODO: Debug and fix LLMChat template rendering for applier templates
-            logger.debug("Using manual template method for applier (LLMChat has template rendering issues)")
-            
-            messages = utils.compose_initial_LLM_messages_with_templates(
-                "normalizer.applier.system.mustache",
-                "normalizer.applier.user.mustache", 
-                base_module_folder="extraction",
-                rendering_configs=rendering_configs,
-            )
-
-            next_message = client().send_message(messages)
-            if next_message is None or "content" not in next_message:
-                logger.error("LLM returned None or invalid response for normalization applier")
-                # Fallback: map elements to first available category
-                normalized_elements_from_llm = [categories_list[0]] * len(elements_to_normalize) if categories_list else elements_to_normalize
-            else:
-                normalized_elements_from_llm = utils.extract_json(next_message["content"])
-            
-            debug_msg = f"Normalization applier result (manual): {normalized_elements_from_llm}"
-            logger.debug(debug_msg)
-            if self.verbose:
-                print(debug_msg)
-            
-            # Robust validation with fallbacks
-            if not isinstance(normalized_elements_from_llm, list):
-                logger.warning(f"Expected list from LLM, got {type(normalized_elements_from_llm)}. Using fallback.")
-                normalized_elements_from_llm = [categories_list[0]] * len(elements_to_normalize) if categories_list else elements_to_normalize
-            elif len(normalized_elements_from_llm) != len(elements_to_normalize):
-                logger.warning(f"LLM returned {len(normalized_elements_from_llm)} elements, expected {len(elements_to_normalize)}. Padding/truncating.")
-                # Pad or truncate to match expected length
-                if len(normalized_elements_from_llm) < len(elements_to_normalize):
-                    # Pad with first category
-                    default_cat = categories_list[0] if categories_list else elements_to_normalize[0]
-                    normalized_elements_from_llm.extend([default_cat] * (len(elements_to_normalize) - len(normalized_elements_from_llm)))
-                else:
-                    # Truncate
-                    normalized_elements_from_llm = normalized_elements_from_llm[:len(elements_to_normalize)]
-
-            for i, element in enumerate(elements_to_normalize):
-                normalized_element = normalized_elements_from_llm[i]
-                self.normalizing_map[element] = normalized_element
-
-        for element in denormalized_elements:
-            normalized_elements.append(self.normalizing_map[element])
-
-        # Return appropriate type based on input
-        if isinstance(element_or_elements, str):
-            return normalized_elements[0]  # Return single string for string input
-        else:
-            return normalized_elements  # Return list for list input
-
-    # --- Convenience API -------------------------------------------------
     def normalized_mapping(self) -> dict:
-        """Return the normalized elements mapping (canonical -> list(originals)).
-
-        Always returns a dict; if normalization somehow failed earlier and the
-        internal data isn't a dict, it coerces it into identity mapping.
-        """
-        if isinstance(self.normalized_elements, dict):
-            return self.normalized_elements
-        if isinstance(self.normalized_elements, list):
-            return {str(x): [str(x)] for x in self.normalized_elements if x}
-        # fallback identity
-        return {e: [e] for e in self.elements}
+        """Return the validated canonical-to-original mapping, without fallback categories."""
+        if not isinstance(self.normalized_elements, dict):
+            raise ValueError("The normalized mapping has been corrupted.")
+        return self.normalized_elements

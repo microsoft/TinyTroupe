@@ -1,0 +1,22 @@
+{
+  "status": "Fresh retry running; interrupted notebook archived by existing runner.",
+  "interrupted_run": {
+    "started_at": "2026-11-03T15:25:22.539975+00:00",
+    "last_saved_cell": 36,
+    "last_saved_elapsed_seconds": 10080.09,
+    "stage": "Population generation and survey interaction completed; extraction had started.",
+    "saved_response_progress_before_crash": "120 responses observed at 2026-11-03T16:18:57Z; later cache file length observed as 12477841 bytes after restart.",
+    "usable_response_cache_after_crash": false,
+    "evidence": "workspace/examples/tinytroupe.20261106_165100.log records JSON load failure at line1 column1 and zero loaded entries.",
+    "cost": "Unknown. Earlier in-process response counts and cache length are not a complete returned-usage ledger."
+  },
+  "retry": {
+    "shell_id": "cf7-gaz-recovery",
+    "folder": "cf7-gaz",
+    "library_sha256": "3f5b80697765c367766a8291cc4a9a27aa8db7b9889ecb058bb2dede96c9d501",
+    "notebook_code_sha256": "6718a7f35b576485f899ca46e52e16db57e7fba728be3e1f5cdd4ad8dc8e6c81",
+    "model": "gpt-6-luna",
+    "effort": "xhigh",
+    "scope": "A fresh retry, not replay of the damaged cache or a paired continuation of the interrupted population. Original notebook cells, N50, questionnaire and quality settings retained. Retry returned usage must exclude unknown interrupted-attempt charges."
+  }
+}

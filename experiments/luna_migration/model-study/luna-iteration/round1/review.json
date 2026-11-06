@@ -1,0 +1,25 @@
+{
+  "checkpoint": 1,
+  "decision": "Revise before confirmation.",
+  "completed": 20,
+  "strong_outputs": ["brainstorm-initial-lisa", "brainstorm-initial-marcos", "brainstorm-initial-oscar", "interview-evidence-pilot", "brainstorm-no-link-safeguard", "chat-design-tradeoff"],
+  "extraction": "All four correctly preserve public No and missing-public-justification marker.",
+  "ranking": "Both complete and evaluate independent use as offered. Different lower-order preferences emerged without forcing sentiment. Both still rank no AI first, which is not itself a failure.",
+  "failures": {
+    "gazpacho-underdispersion-1": "Public answer also revives an earlier top-10 interests introduction, violating current question's number-and-justification-only scope.",
+    "gazpacho-underdispersion-2": "Same superseded-introduction regression.",
+    "travel-affordable-trip": "Revives old introduction and ideal-vacation request in addition to the current product decision.",
+    "travel-can-afford-luxury": "Same superseded-introduction regression.",
+    "travel-modest-getaway": "Same superseded-introduction regression."
+  },
+  "weak_outputs": {
+    "chat-galette": "No fabricated anecdote, but 'a story I can honestly claim' and repeated absence disclaimers sound like model evidence handling rather than casual conversation.",
+    "persona-grace": "Coherent and shorter, but still a prudent, moderate professional with familiar travel preferences; not yet evidence of meaningful generation diversity.",
+    "persona-philip": "Again a Fort Collins retired civil engineer with broadly the same prudent travel archetype as earlier generations."
+  },
+  "next_hypotheses": [
+    "Select the latest active request, not all unanswered historical tasks.",
+    "Use established habits naturally instead of narrating memory provenance.",
+    "Ground generated personas in a specific life course and consequential choices, not uniformly sensible moderation."
+  ]
+}

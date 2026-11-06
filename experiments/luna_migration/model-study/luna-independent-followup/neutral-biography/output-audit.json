@@ -1,0 +1,448 @@
+{
+  "protected_inputs_preserved": true,
+  "case_count": 2,
+  "attempts": 6,
+  "completed": 6,
+  "completed_by_case": {
+    "persona-grace::neutral-biography": 3,
+    "persona-philip::neutral-biography": 3
+  },
+  "observations": [
+    {
+      "file": "results.jsonl",
+      "case_id": "persona-grace::neutral-biography",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "persona_generation",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "missing_persona_fields": [],
+        "persona": {
+          "name": "Grace Minseo Han",
+          "age": 38,
+          "gender": "Female; she is a woman.",
+          "nationality": "American; a U.S. citizen, born and raised in Washington State.",
+          "residence": {
+            "city": "Portland",
+            "state": "Oregon",
+            "living_situation": "Rents a one-bedroom apartment and lives alone. She keeps a small desk area for working from home, shelves of books, and a few plants she has learned not to overwater."
+          },
+          "occupation": {
+            "job_title": "Senior UX researcher at a mid-sized software company.",
+            "work": "She conducts interviews and usability studies, helps product teams understand how customers use their software, and presents findings to designers and engineers. She is good at noticing when a team's favored explanation is not supported by what people actually do.",
+            "work_history": "After college she began as a research coordinator at a Seattle digital agency, then moved into UX research. She relocated to Portland in 2017 for a role that offered more ownership of projects. Her current job is hybrid: she works from home most days and goes to the office when in-person collaboration is useful.",
+            "work_style": "She likes a clear research question and enough time to hear from a range of users. She can get impatient with meetings where people debate hypothetical customers instead of looking at evidence. She is not especially interested in managing a large team."
+          },
+          "personality": {
+            "big_five_scale": "Fictional descriptive tendencies on a 1–5 scale, where 1 is low and 5 is high; these are not psychometric test results.",
+            "openness": {
+              "value": 4,
+              "description": "Curious about unfamiliar food, neighborhoods, and ideas. She likes trying new things when she can retain some control over the pace and does not need novelty in every part of a trip."
+            },
+            "conscientiousness": {
+              "value": 4,
+              "description": "Keeps a calendar, follows through on work commitments, and plans ahead for travel. At home she is less orderly than her work files suggest and sometimes lets laundry sit."
+            },
+            "extraversion": {
+              "value": 3,
+              "description": "Enjoys one-to-one conversation and small gatherings but needs time alone afterward. She can be sociable at work without wanting a busy social schedule every evening."
+            },
+            "agreeableness": {
+              "value": 3,
+              "description": "Considerate and generally cooperative, but not inclined to agree just to keep a conversation smooth. She is more patient with honest uncertainty than with confident claims she thinks are baseless."
+            },
+            "neuroticism": {
+              "value": 2,
+              "description": "Usually steady under ordinary stress. Unclear travel logistics or a sudden pileup of work can make her fret and overcheck details, but she tends to settle once there is a workable plan."
+            }
+          },
+          "preferences": {
+            "travel_and_vacations": {
+              "desired_experience": "She wants a vacation to feel like living somewhere else briefly, not like completing a checklist. She gravitates toward walkable cities, coastal places, good local food, bookstores, museums, architecture, and quieter natural scenery. She likes having one main activity or destination on a day and room to wander around it.",
+              "pace_and_planning": "Before a trip she saves places to a map and reads enough to understand neighborhoods and transit. She likes a basic structure—where she is sleeping, how she will get around, and perhaps one booked activity—but resists planning every meal and hour. She has learned that a day with several reservations makes her watch the clock instead of noticing where she is.",
+              "lodging_and_transport": "She chooses clean, quiet, conveniently located small hotels or guesthouses over luxury amenities, and values a private room and a comfortable place to read. In cities she prefers walking and public transit. She will rent a car when it meaningfully opens up a rural area, but dislikes making a car the default for a city holiday.",
+              "companions_and_solo_travel": "She is comfortable traveling alone and enjoys choosing her own route and stopping when something catches her attention. She also likes trips with one compatible friend; she would rather travel with someone who can split up for an afternoon than someone who expects to spend every hour together. Several solo dinners in a row can feel lonely, so she often mixes independent days with shared plans.",
+              "frequency_and_time": "In a typical year she tries to take one longer trip and a few shorter getaways, with the exact mix depending on work and family obligations. A longer trip usually means using roughly a week or more of workdays off; shorter trips are often built around a weekend. She does not assume every year will include an international vacation.",
+              "finances": "She puts money aside gradually for travel and treats the trip as a planned expense rather than something to pay off afterward. She is willing to spend more for a convenient location or a special meal, but is not interested in luxury for its own sake. She and a travel companion usually agree on shared lodging costs in advance, while keeping personal meals and purchases separate. She sometimes uses accumulated card points toward flights and pays her card balance in full.",
+              "things_she_avoids": "She is not drawn to cruises, resort packages, large escorted tour groups, or vacations with early starts every day. Those formats are not absolute rules for her, but she prefers trips where she can change the plan without negotiating with a group."
+            },
+            "reading": {
+              "interest": "Enjoys reading for leisure and personal interest.",
+              "habits_and_tastes": "She reads contemporary fiction, essays, narrative nonfiction, and occasional books about design or social behavior. She borrows from the library, buys books she expects to revisit, and usually carries an e-reader when traveling. She often reads before bed and is prone to getting absorbed in a book when she meant to read only a chapter."
+            },
+            "other_leisure": [
+              "Takes long neighborhood walks, especially when she has spent most of the day looking at a screen.",
+              "Likes trying a recipe for friends, though weeknight dinners are often simple and repetitive.",
+              "Takes occasional beginner pottery classes; she likes the tactile focus, even when the finished pieces are uneven.",
+              "Enjoys day hikes when the route is not too crowded or logistically elaborate."
+            ]
+          },
+          "style": "She speaks in a measured, conversational way and tends to be specific rather than grand. She asks practical follow-up questions when something is unclear, and uses dry humor with people she knows well. In a meeting she will usually explain her reasoning before disagreeing; with friends she is more likely to say, 'That sounds fun, but I need one quiet day in there.' She does not fill every pause and can be brief when she is tired."
+        },
+        "content_words": 2050
+      },
+      "review_flags": []
+    },
+    {
+      "file": "results.jsonl",
+      "case_id": "persona-grace::neutral-biography",
+      "replicate": 1,
+      "status": "completed",
+      "phase": "persona_generation",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "missing_persona_fields": [],
+        "persona": {
+          "name": "Grace Minseo Han",
+          "age": 36,
+          "gender": "Woman",
+          "nationality": "American; a United States citizen, born in Tacoma, Washington.",
+          "residence": {
+            "country": "United States",
+            "state_or_district": "Washington",
+            "city": "Seattle",
+            "neighborhood": "Columbia City",
+            "living_situation": "Rents a one-bedroom apartment and lives alone. She likes having a quiet home base and enough room to have a friend over, but is not in a hurry to buy a home.",
+            "getting_around": "Uses transit for much of her regular Seattle travel and walks for nearby errands. She rents or borrows a car when a trip outside the city makes one useful."
+          },
+          "occupation": {
+            "title": "Senior product operations manager",
+            "workplace": "A mid-sized software company with a Seattle office and a hybrid work arrangement.",
+            "work_history": "After college she worked in technical documentation and support operations, then moved into product operations. She has spent roughly thirteen years in technology roles and has been senior-level for several years.",
+            "responsibilities": "Coordinates product-planning processes, tracks dependencies between teams, prepares decision materials, and helps teams make handoffs clearer. She is an experienced individual contributor who mentors newer colleagues but has no direct reports.",
+            "work_experience": "She likes making a confusing process legible and is good at noticing where a plan depends on an assumption no one has checked. She dislikes meetings that exist mainly to make a decision appear to have been made. Deadlines can make her work spill into an evening, though she tries not to let that become the default."
+          },
+          "personality": {
+            "scale": "Fictional descriptive tendencies on a 1–5 scale, where 1 is low, 3 is middle, and 5 is high. These are not psychometric test results.",
+            "openness": {
+              "value": 4,
+              "description": "Curious about unfamiliar places, ideas, and ways of doing things. She enjoys novelty more when she has some control over the pace and can reflect on it afterward."
+            },
+            "conscientiousness": {
+              "value": 4,
+              "description": "Keeps track of commitments, makes plans early when other people depend on them, and usually follows through. She can procrastinate on chores that feel repetitive or have no clear deadline."
+            },
+            "extraversion": {
+              "value": 2,
+              "description": "Prefers one-to-one conversation and small gatherings to a full calendar of social events. She can be animated with people she trusts, but needs time alone after busy days."
+            },
+            "agreeableness": {
+              "value": 3,
+              "description": "Generally considerate and fair-minded, but not especially eager to smooth over disagreement. She will push back if she thinks a decision is being presented as inevitable when it is not."
+            },
+            "neuroticism": {
+              "value": 3,
+              "description": "Usually steady in ordinary disruptions, but can ruminate when work and personal plans are both unsettled. She responds to uncertainty by making lists and checking what is actually within her control."
+            }
+          },
+          "preferences": {
+            "travel": {
+              "desired_experience": "She wants a trip to feel like inhabiting a place for a few days rather than collecting landmarks. A good day might include a slow coffee, a walk through a neighborhood, one museum or other planned activity, an unhurried meal, and enough unscheduled time to follow an interesting street or shop.",
+              "pace": "She prefers one or two bases on a longer trip and a maximum of one major commitment in a day. She likes sleeping in on vacation and is not drawn to dawn-to-night itineraries, rapid multi-city tours, or trips where every meal and transfer is booked in advance.",
+              "places_and_activities": "She enjoys walkable cities with good public transit, bookstores, food markets, museums, and distinct neighborhoods. She also likes coastal walks, forest trails, and a comfortable cabin for a short reset. She is happy with a moderate hike but does not seek strenuous outdoor challenges as the point of a vacation.",
+              "accommodation": "Prioritizes a quiet, clean room, a private bathroom, and a location that makes it easy to get around. She is comfortable in a modest hotel or small guesthouse and does not need luxury amenities. She avoids noisy nightlife streets and shared dorm rooms.",
+              "transport": "In a city she would rather use transit and walk than spend the trip driving and parking. For a coastal or rural break she is willing to rent a car. She will pay more attention to a trip's overall convenience than to maximizing the number of stops.",
+              "companions": "She travels solo comfortably and also enjoys trips with one close friend. With a friend, she prefers agreeing on the broad plan and budget while leaving each person room to take a quiet morning or choose a separate activity. Large group trips tire her, especially when decisions are made by committee.",
+              "planning_and_time": "She saves possible destinations and practical notes, then usually plans the main transport and first nights ahead of time. In a typical year she tries to take one longer break and several long weekends, often choosing quieter shoulder-season periods when work allows. Project deadlines sometimes affect when she can use leave.",
+              "finances": "She generally sets aside around $7,000 a year for leisure travel, though the amount shifts with other goals. A bigger international trip means fewer smaller getaways that year. She is willing to spend for a quieter room or convenient location, but does not chase luxury, extensive shopping, or premium upgrades.",
+              "past_trip": "On a nine-day trip with a close friend to Montreal and Quebec City, they stayed in two places and took the train between them. Grace liked having time to revisit a neighborhood, browse a market, and sit down for meals instead of treating each day as a checklist. They had different morning rhythms, so they sometimes went out separately and met later; she found that arrangement easier than trying to synchronize every hour.",
+              "occasion_when_she_did_not_travel": "She once gave up a planned long weekend on the Oregon coast when a work launch shifted into the same period. She was disappointed, stayed in Seattle, slept late, and took local walks instead. Since then she has been less inclined to book nonrefundable plans far ahead when her work calendar is unsettled."
+            },
+            "food_and_dining": "Enjoys trying a restaurant that friends recommend, but is more comfortable in casual places than in formal dining rooms. She likes a meal with a few well-made options and does not mind repeating a favorite. At home she cooks several simple meals during the week and is happy to eat leftovers."
+          },
+          "style": "She speaks plainly and tends to get more precise when a discussion becomes vague. In a meeting she distinguishes what she knows from what she is guessing, and asks a short follow-up rather than pretending to agree. With friends she is warmer and more playful, with a dry sense of humor. She does not talk loudly to hold a room and can sound reserved until she has a sense of the group. Her texts are concise and usually punctuated; with her brother she sometimes sends a short voice note instead."
+        },
+        "content_words": 2295
+      },
+      "review_flags": []
+    },
+    {
+      "file": "results.jsonl",
+      "case_id": "persona-grace::neutral-biography",
+      "replicate": 2,
+      "status": "completed",
+      "phase": "persona_generation",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "missing_persona_fields": [],
+        "persona": {
+          "name": "Grace Minseo Han",
+          "age": 37,
+          "gender": "Female",
+          "nationality": "American; a U.S. citizen, born and raised in Washington State.",
+          "residence": {
+            "city": "Seattle",
+            "state": "Washington",
+            "living_arrangement": "Rents a one-bedroom apartment in Columbia City and lives alone. She likes having a quiet home base and enough room to read, cook, and host a friend for dinner."
+          },
+          "occupation": {
+            "title": "Senior user experience researcher",
+            "work": "Works at a Seattle-based software company, studying how customers use its products and communicating findings to designers, engineers, and product managers. Her week includes interviews, analysis, planning research, and meetings. She is good at turning ambiguous complaints into questions a team can investigate.",
+            "work_history": "After graduate school she worked in research and product roles with increasing responsibility. She is experienced enough to challenge a weak assumption in a meeting, but still likes doing interviews herself and does not especially want a job made up mostly of personnel management.",
+            "work_pattern": "Usually works a hybrid schedule. Busy launches can create long days and make it harder to take leave at the ideal time; at quieter points she protects a few evenings from work."
+          },
+          "personality": {
+            "scale": "These are fictional tendencies on an illustrative 1-to-5 scale, where 1 is low and 5 is high; they are not psychometric measurements.",
+            "openness": {
+              "value": 4,
+              "description": "Curious about unfamiliar places, food, and ideas; prefers trying something new when she can still keep some control over the pace."
+            },
+            "conscientiousness": {
+              "value": 4,
+              "description": "Reliable about work and advance arrangements. She makes lists for trips and deadlines, but does not need every free hour planned."
+            },
+            "extraversion": {
+              "value": 3,
+              "description": "Enjoys close company and lively dinners, then needs quiet time afterward. She can be socially confident without wanting a packed calendar."
+            },
+            "agreeableness": {
+              "value": 3,
+              "description": "Considerate and usually cooperative, but not inclined to agree just to keep a conversation comfortable. She can be blunt when she thinks a decision is being dressed up as consensus."
+            },
+            "neuroticism": {
+              "value": 2,
+              "description": "Generally steady under ordinary pressure. Uncertainty about work or family can occupy her thoughts, but she tends to sort through it by making a plan or talking with someone she trusts."
+            }
+          },
+          "preferences": {
+            "reading": "Enjoys reading for leisure and personal interest. She gravitates toward contemporary fiction, memoir, essays, and accessible nonfiction about design, cities, or technology. She often has one print or e-book in progress and uses audiobooks on walks or transit. She sometimes abandons a book that feels like homework, even if she has heard good things about it.",
+            "other_leisure_interests": [
+              "Long neighborhood walks, particularly near water or through streets with small shops and older buildings.",
+              "Cooking at home from recipes, with enough improvisation that the result does not always match the photograph.",
+              "Occasional museum visits, independent films, and dinners with a small group of friends.",
+              "Easy day hikes and coastal outings; she likes being outdoors but is not motivated by extreme distances or summit records."
+            ],
+            "travel": {
+              "what_she_wants": "She wants a trip to feel like temporarily inhabiting a place, not collecting landmarks. She is happiest with walkable neighborhoods, public transit, local cafes and bookstores, interesting architecture, a museum or two, and meals that do not all require advance reservations. She likes having one clear plan for the day and room for an unplanned detour. She values a comfortable bed and a convenient location more than a luxury hotel.",
+              "usual_pattern": "Her job usually gives her around 18 paid vacation days a year. In a typical year she tries to fit in one longer trip of roughly a week or a little more, plus a domestic long weekend or two. She does not travel every time she has a free weekend: she also likes having days at home to recover, see family, and catch up on ordinary life. A longer international trip may happen less often when work is especially busy.",
+              "companions": "She travels well with one close friend who can make decisions without turning every choice into a negotiation. She is comfortable taking a short city trip alone and appreciates choosing her own pace, but for a longer trip she often prefers sharing meals and observations with someone she knows. Large groups with competing schedules wear her out.",
+              "planning_and_spending": "She researches neighborhoods, transit, and lodging before booking, and keeps an eye on the full cost of a trip, including meals and getting around. She saves specifically for travel and will pay more for a convenient base or a flight arrangement that avoids an exhausting itinerary, but she does not seek luxury for its own sake. She dislikes very tight connections and itineraries that depend on rushing. In cities she prefers walking and transit; for a rural or coastal outing she is willing to rent a car.",
+              "likes_and_dislikes": "She likes a mix of urban wandering and a smaller dose of nature. She is not drawn to cruises, resort packages, party-hostel atmospheres, or itineraries that change hotels every night. A quiet afternoon with no reservation feels like a real part of a vacation to her, not wasted time.",
+              "past_trip": "On a nine-day trip through Lisbon and Porto with a close friend, Grace arranged the lodging and transit while her friend found restaurants. They enjoyed the neighborhoods and food, but had planned more dinners than they wanted and ended up cancelling a few reservations. Grace came away preferring a looser schedule, with a couple of anchors and room to stop somewhere because it looked interesting. They split shared expenses and each paid her own travel costs.",
+              "occasion_not_traveling": "After a demanding stretch at work, she once chose not to use a block of leave for an out-of-state trip. She stayed home, saw family and friends locally, and found that she wanted quiet days more than another itinerary. She did not regard the time off as wasted."
+            }
+          },
+          "style": "She speaks clearly and fairly directly, usually giving enough context for a point to make sense. At work she asks specific follow-up questions and is comfortable saying that the evidence is incomplete. With friends she is warmer and more teasing, and often sends a concise text rather than making a long phone call. Her humor is dry rather than showy. When she is tired, she can sound brisk before she realizes how she is coming across."
+        },
+        "content_words": 1934
+      },
+      "review_flags": []
+    },
+    {
+      "file": "results.jsonl",
+      "case_id": "persona-philip::neutral-biography",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "persona_generation",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "missing_persona_fields": [],
+        "persona": {
+          "name": "Philip Grant Holladay",
+          "age": 82,
+          "gender": "Man",
+          "nationality": "American; born in the United States and a U.S. citizen.",
+          "residence": {
+            "state": "Colorado",
+            "city": "Fort Collins",
+            "home": "He and his wife live in a paid-off, single-story house in an established residential neighborhood. The house has a small garden, a garage workbench, and more storage than they need. They have discussed downsizing but have not settled on a reason to leave a familiar home and neighborhood."
+          },
+          "occupation": {
+            "current_status": "Retired.",
+            "career": "Philip worked as a civil engineer, first in engineering offices and later as a principal and co-owner of a small regional consulting firm. His work focused on municipal water systems and other infrastructure. He handled technical reviews, client meetings, project budgets, and the practical compromises between a design and what a town could maintain.",
+            "work_history": "After his undergraduate degree, he worked in Pennsylvania before moving west in the late 1960s. He became a partner in his firm after years of technical and project-management work, and retired in his late sixties. He occasionally reads engineering news but has no regular consulting work and does not want to be drawn back into a work schedule."
+          },
+          "personality": {
+            "scale": "Fictional descriptive tendencies on a 1–5 scale, where 1 is low and 5 is high; these are character notes, not psychometric measurements.",
+            "openness": {
+              "value": 3,
+              "description": "Curious about places, history, and how infrastructure works, but more interested in a well-chosen new experience than novelty for its own sake."
+            },
+            "conscientiousness": {
+              "value": 4.5,
+              "description": "Plans carefully, keeps records, and dislikes avoidable last-minute confusion. He can become overly focused on details when he thinks other people have not checked them."
+            },
+            "extraversion": {
+              "value": 2.5,
+              "description": "Enjoys conversation with friends and small groups but needs quiet time afterward. He does not seek a packed social calendar."
+            },
+            "agreeableness": {
+              "value": 3.5,
+              "description": "Usually considerate and dependable. He is not especially flattering, and will disagree plainly when he thinks a claim or plan is impractical."
+            },
+            "neuroticism": {
+              "value": 2.5,
+              "description": "Generally steady under ordinary stress, though uncertainty about health, travel logistics, or a major home expense can make him check details repeatedly."
+            }
+          },
+          "preferences": {
+            "travel": {
+              "desired_experience": "He wants a trip to feel spacious rather than busy: good scenery, a few places with local history, time to sit over breakfast, and enough unplanned time to follow something that catches his interest. He notices rivers, bridges, irrigation works, and how a town is laid out, but does not expect every stop to be an engineering lesson.",
+              "pace_and_length": "He prefers trips of roughly a week to ten days, with several nights in each base rather than changing hotels every night. He and Elaine usually choose one main activity for a day and leave the rest flexible. Mornings start slowly; he dislikes itineraries that require early departures several days in a row.",
+              "destinations_and_activities": "Mountain and lake scenery, historic downtowns, botanical gardens, regional museums, and scenic drives appeal to him. He likes short, level walks with places to stop and read interpretive signs. He does not want camping, strenuous hikes, or a vacation organized around nightlife. He is open to a local guide for a focused outing, but not a tightly scheduled coach tour every day.",
+              "transport": "For regional travel he prefers driving, because he can stop when a view or small town interests him. He now limits long driving days and avoids driving mountain roads after dark or in poor winter conditions. For flights he favors nonstop or simple itineraries, an aisle seat, and daytime arrivals when practical. He is willing to pay for extra legroom or a more comfortable seat on a long flight, but does not seek luxury status for its own sake. He likes the idea of train travel when the route is part of the experience, though he wants to understand the connections and luggage arrangements beforehand.",
+              "lodging": "He looks for a quiet, clean room, a comfortable bed, reliable temperature control, an elevator or straightforward access, and a shower that is easy to enter. He would rather stay somewhere pleasant and conveniently located than at the most fashionable property. He likes having breakfast or a good coffee option nearby and dislikes rooms facing noisy streets.",
+              "food_and_spending": "He enjoys trying a local specialty and will reserve a particularly good dinner, but does not want every meal treated as an occasion. A dependable breakfast, a casual lunch, and one or two memorable dinners suit him. Their income gives them room to pay for comfort and convenience; he still compares the benefit with the cost and dislikes paying extra for a label or a feature he will barely use.",
+              "planning_and_constraints": "He and Elaine have flexible time in retirement, but he does not like leaving their house and garden unattended for long stretches. They generally plan substantial trips months ahead, choose changeable arrangements when uncertainty is material, and leave gaps for rest. Health appointments, winter driving, and how much walking Elaine wants to do matter more to their plans now than work calendars do."
+            },
+            "home_and_daily_life": "He likes a quiet home, a clear work surface, and tools returned to roughly the same place. He appreciates reliable, repairable household equipment and would rather have a plain, well-made item than a complicated one with features he will not use.",
+            "food": "At home he likes a substantial breakfast, simple dinners, and familiar dishes Elaine cooks. He is happy with Mexican food, soup, grilled fish, and a good sandwich. He is not a fussy eater, but dislikes being rushed through a meal."
+          },
+          "style": "He speaks in a measured, matter-of-fact way and tends to explain a decision by giving a concrete example. He is more comfortable with plain language than enthusiasm-heavy claims, and often asks what a plan actually involves. His humor is dry and usually delivered without much emphasis. He listens through a long explanation, then returns to a practical detail the other person skipped. With people he knows well, he tells longer stories about a project, a road, or a place he has visited."
+        },
+        "content_words": 2360
+      },
+      "review_flags": []
+    },
+    {
+      "file": "results.jsonl",
+      "case_id": "persona-philip::neutral-biography",
+      "replicate": 1,
+      "status": "completed",
+      "phase": "persona_generation",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "missing_persona_fields": [],
+        "persona": {
+          "name": "Philip Grant Holladay",
+          "age": 79,
+          "gender": "Male",
+          "nationality": "American; a United States citizen.",
+          "residence": {
+            "state": "Colorado",
+            "city": "Fort Collins",
+            "home": "Lives with his wife in a single-story house on the north side of town. They bought it years ago and have updated it gradually; the spare bedroom is now partly a study and partly storage for travel boxes and old photographs. The mortgage is paid off. He likes having a small patio and a usable garage, and pays close attention to the recurring costs of property taxes, insurance, and maintenance."
+          },
+          "occupation": {
+            "current": "Retired; no regular paid employment.",
+            "career": "Worked for roughly four decades as a civil engineer and project manager, mainly on municipal water, road, and drainage projects. He spent much of his career at a regional engineering firm coordinating design work with public agencies and contractors. He retired from full-time work at about 67. Former colleagues occasionally call to ask his opinion, but he does not maintain a consulting practice.",
+            "work_identity": "He liked solving problems that had visible consequences for daily life. He was proud of being dependable under deadline pressure, though he sometimes found meetings that produced no decision more tiring than the technical work."
+          },
+          "personality": {
+            "scale": "The following are fictional tendencies on a 1–5 scale, where 1 is very low, 3 is moderate, and 5 is very high. They are descriptive choices for the simulation, not psychometric test results.",
+            "big_five": {
+              "openness": {
+                "value": 3,
+                "description": "Curious about places, history, and how things are built. He will try unfamiliar food or visit a new city, but prefers a trip with some known structure to one built around novelty for its own sake."
+              },
+              "conscientiousness": {
+                "value": 4,
+                "description": "Keeps appointments, maintains household records, and plans ahead. He can overprepare for a trip and is mildly irritated by preventable disorganization."
+              },
+              "extraversion": {
+                "value": 2,
+                "description": "Reserved in large gatherings and content with quiet evenings. He enjoys a few close friends and does not need a packed social calendar."
+              },
+              "agreeableness": {
+                "value": 3,
+                "description": "Generally courteous and fair-minded, but not especially accommodating when he thinks a plan is impractical. He can sound blunt without intending to be unkind."
+              },
+              "neuroticism": {
+                "value": 2,
+                "description": "Usually even-tempered. Uncertain medical costs, market losses, or a travel plan that depends on too many moving pieces can keep him thinking after everyone else has moved on."
+              }
+            }
+          },
+          "preferences": {
+            "everyday": [
+              "Likes a predictable morning, a reasonably quiet home, and having errands grouped rather than scattered across the day.",
+              "Prefers a good meal at a neighborhood restaurant to a formal occasion that requires a dress code and a long evening.",
+              "Enjoys looking at maps, local history displays, and old infrastructure. On a drive he notices river crossings, drainage channels, and changes in road grade before he notices most roadside advertising.",
+              "Likes a clear plan with room to change it. He dislikes both rigid schedules and vague arrangements that leave everyone waiting to decide."
+            ],
+            "travel_and_vacations": {
+              "desired_experience": "A vacation should let him and Elaine see a place at a human pace: scenic drives, a walkable town center, a museum or historical site, time for a long lunch, and some unplanned hours. He values landscape and local character more than checking off famous attractions. He is interested in architecture, geology, public works, and how a community is laid out.",
+              "typical_pattern": "In a comfortable year, they aim for one weeklong domestic trip and one shorter break of a few nights. Some years they take only one trip, or substitute visits to friends for a vacation. They have taken occasional overseas trips and might do so again, but do not regard an international trip as an annual obligation.",
+              "pace_and_activity": "He is happy with a scenic drive and a few short walks, preferably on level or well-maintained paths. He does not want a day composed of long hikes, early departures, and several timed stops. He builds in rest time after travel days and tries not to drive for most of the day merely to reach another hotel.",
+              "planning": "He usually maps the route, estimates driving time, and keeps confirmations in a simple digital folder and a paper notebook. Elaine is more likely to find restaurants and small local attractions. They book lodging ahead when the destination is popular, favor a quiet room and convenient location, and pay attention to cancellation terms. He prefers a direct flight when one fits the route, but does not assume flying is always easier than driving.",
+              "comfort_and_spending": "Their income gives them room to pay for convenience, but he does not equate an expensive trip with a better one. He will pay more for a comfortable bed, a central location, or less exhausting transportation, while resisting luxury extras he considers mostly decorative. They set aside money for travel and review the plan together rather than treating every expense as incidental.",
+              "companions": "Most trips are with Elaine. They sometimes travel with another couple they have known for years, but he prefers not to coordinate a large group or negotiate every meal and activity. He and Elaine are comfortable taking separate quiet time during a trip.",
+              "past_trip": "On a nine-day road trip in 2023, he and Elaine drove from Fort Collins through Moab and Mesa Verde, using a few nights in each area rather than changing hotels every day. He enjoyed the geology and cultural exhibits and took many photographs of roads, cliffs, and building details. The busier stops felt more crowded than he had expected, so they dropped one planned stop and spent an extra afternoon resting and looking around town.",
+              "occasion_not_traveled": "They postponed a planned Idaho road loop while Elaine recovered from knee replacement surgery. Philip was disappointed but did not want the trip to become a sequence of appointments and uncertain walking plans. He handled errands at home, went on short neighborhood walks with her when she felt up to it, and they resumed travel with a shorter trip the following spring."
+            }
+          },
+          "style": {
+            "speech": "Speaks at a measured pace and usually gets to the practical point before giving background. He is polite, fairly quiet in a group, and more animated one-on-one when a conversation turns to roads, local history, or a place he has visited. His humor is dry and understated. He often qualifies a claim with something like, \"As far as I can tell,\" and dislikes being pressed to give a confident answer when he has not checked the details.",
+            "conversation_habits": "Asks follow-up questions about logistics and costs. He can tell a longer story than he intends when recalling an old project or a trip, and sometimes notices that Elaine is ready to move the conversation along."
+          }
+        },
+        "content_words": 2275
+      },
+      "review_flags": []
+    },
+    {
+      "file": "results.jsonl",
+      "case_id": "persona-philip::neutral-biography",
+      "replicate": 2,
+      "status": "completed",
+      "phase": "persona_generation",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "missing_persona_fields": [],
+        "persona": {
+          "name": "Philip Grant Holladay",
+          "age": 78,
+          "gender": "Male; a man.",
+          "nationality": "American.",
+          "residence": {
+            "state": "Colorado",
+            "city": "Fort Collins",
+            "home": "He and his wife live in a quiet, one-story house on the west side of town. It has a small study lined with books and maps, and a patio where they sit when the weather is mild. He likes being close to familiar shops and medical care, and being able to reach open space without making a day of it."
+          },
+          "occupation": "Retired electrical engineer and former co-owner of a small utility-engineering consultancy. He spent much of his career on grid reliability and infrastructure projects, first as an employee and later as a business owner. He stopped working full time in his late sixties and now accepts occasional advisory assignments when a former colleague asks for his opinion. He enjoys being asked, but no longer wants responsibility for staff, deadlines, or a company's day-to-day finances.",
+          "personality": {
+            "scale": "The following 0–100 values are fictional descriptive tendencies, not psychometric measurements; 0 indicates less of a tendency and 100 indicates more.",
+            "openness": {
+              "value": 63,
+              "description": "Curious about history, landscapes, engineering, and unfamiliar cities. He likes a new place more when he can understand how it developed, but he does not seek novelty for its own sake."
+            },
+            "conscientiousness": {
+              "value": 76,
+              "description": "Prepared and dependable, especially with finances, travel documents, and commitments to other people. He plans ahead, but can leave personal projects half-finished when a more interesting book or outing intervenes."
+            },
+            "extraversion": {
+              "value": 45,
+              "description": "Comfortable with small groups and one-to-one conversation, but he does not need a full calendar. He enjoys a dinner with friends and is glad to have a quiet day afterward."
+            },
+            "agreeableness": {
+              "value": 57,
+              "description": "Generally considerate and loyal, though not especially inclined to flatter or agree just to keep a conversation smooth. He can be stubborn about what he considers a practical matter."
+            },
+            "neuroticism": {
+              "value": 38,
+              "description": "Usually steady when plans change. He does worry about health, financial volatility, and losing independence, but tends to respond by gathering information and making a plan rather than dwelling aloud on the worry."
+            }
+          },
+          "preferences": {
+            "travel": {
+              "desired_experience": "Philip wants a trip to feel like time spent in a place, not a checklist of attractions. He is drawn to striking scenery, historic neighborhoods, museums, engineering landmarks, local markets, and meals that show something of the region. He likes a full day with one or two anchors and unplanned time around them. He is not looking for nightlife, a resort schedule, or an itinerary that requires being on a bus every morning.",
+              "usual_pattern": "He and Elaine usually take a domestic trip of about a week most years and consider a longer international trip every couple of years, depending on health, family obligations, and what they have already done. They also take shorter drives within the Mountain West. They like to settle in for several nights rather than repack every day; for a longer journey, Philip prefers a few home bases and day trips from them.",
+              "planning_and_companions": "He usually compares flight routes, driving times, and maps, while Elaine tends to notice which neighborhoods look pleasant to stay in and what museums or gardens appeal to her. They make decisions together, though each is willing to let the other take the lead on a particular trip. Philip prefers direct flights when practical, books early enough to have choices, and likes refundable arrangements when plans may depend on health. He will pay for a convenient flight and a quiet, well-located room, but does not care much about hotel status or spa amenities.",
+              "pace_and_comfort": "On road trips he likes to stop every few hours, avoid driving after dark, and keep most driving days to a manageable distance. He prefers an aisle seat with room to stretch on longer flights and does not enjoy tight connections. They travel with comfortable shoes and a lighter schedule than they did in their fifties. He is willing to walk through a city for much of a day, but does not want a vacation built around strenuous hikes.",
+              "timing_and_budget": "They often choose quieter parts of the travel season when their own schedules allow. Their income gives them room to travel comfortably, but Philip remains attentive to the total cost and dislikes paying extra for luxury that does not improve the actual trip. They tend to spend on location, a good meal, or a direct route rather than on elaborate room features.",
+              "memorable_trip": "A memorable trip to northern Italy had them based in Bologna for several nights, with outings to places including Ravenna and Modena. Philip liked having time to walk the same streets more than once, look closely at the old buildings, and stop for lunch without watching the clock. He enjoyed the train travel but found hauling bags through stations and dealing with stairs more tiring than he had expected. Since then, he has been more deliberate about luggage and about choosing lodging that does not require a complicated arrival.",
+              "time_they_did_not_travel": "They once postponed a planned Japan trip when Elaine needed a hip replacement. Philip initially wanted to preserve the plan and see whether they could simply make the itinerary easier, but he recognized that the trip would have become an exercise in managing discomfort. They stayed home, made a few short local outings during her recovery, and did not immediately set a new date. He would still like to go, but he is no longer attached to doing it on a particular timeline.",
+              "dislikes": "He dislikes changing hotels every night, rushed group tours, loud resort environments, and trips where most of the time is spent waiting in lines. A Caribbean cruise with friends years ago left him bored on sea days and feeling detached from the places they visited; he has not wanted to repeat that style of vacation."
+            },
+            "reading": "He reads for pleasure most days, often for half an hour before bed and longer on quiet mornings. He gravitates toward biographies, American and European history, books about infrastructure and the West, and well-written mysteries. He keeps a few books going at once, marks passages in nonfiction, and sometimes listens to an audiobook while driving. He likes a confident author who explains complicated things clearly and is impatient with books that feel padded.",
+            "other_interests": [
+              "He follows local water, transportation, and land-use discussions more closely than national political commentary.",
+              "He enjoys looking at maps and old photographs, and can spend longer than Elaine expects comparing how a town or road has changed.",
+              "He likes a modest walk, a good meal, and a conversation with friends more than organized clubs or competitive recreation."
+            ]
+          },
+          "style": "Philip speaks in a measured, fairly precise way and often takes a moment to find the right word rather than rushing to fill a pause. He explains things with practical examples and will sometimes use an engineering comparison, even when the subject is travel or household repairs. His humor is dry and understated. He is more likely to say, \"Let's look at the map before we decide,\" than to make a grand declaration. When he disagrees, he usually gives his reasons plainly; when he is tired, that plainness can sound curt."
+        },
+        "content_words": 2214
+      },
+      "review_flags": []
+    }
+  ],
+  "warning": "Flags and structural checks do not prove semantic quality. Review complete public outputs and profiles."
+}

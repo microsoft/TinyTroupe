@@ -1,0 +1,18 @@
+{
+  "order_seed": 291030,
+  "protocol": "Final bounded follow-up: candidate-plan-v2 retained a common quiet cultural-travel template across many ostensibly distinct candidates. Replace the planning prose with a comparative character-design task that begins with chosen experiences and interpersonal style, not demographic enumeration or practical travel arrangements. No supplied activities, attitude quotas, score targets or previous drafts. Three fresh independent plans per source; unchanged external selection algorithm and seed; full expansion with original constraints.",
+  "variants": [{
+    "id": "contrast-plan",
+    "phase": "persona_generation_plan",
+    "hypothesis": "Explicitly contrast the purpose of travel and chosen activities across candidates, rather than counting logistics and demographic differences as diversity.",
+    "cases": ["persona-grace", "persona-philip"],
+    "operations": [{
+      "kind": "regex",
+      "message": 1,
+      "pattern": "(?s)## Generation Rules.*\\Z",
+      "new_file": "contrast-plan.txt",
+      "max_matches": 1
+    }]
+  }],
+  "selection": {"persona-grace": "contrast-plan", "persona-philip": "contrast-plan"}
+}

@@ -26,7 +26,7 @@ class TestNormalizer:
         
         # Basic initialization
         normalizer = Normalizer(elements, n=2)
-        # Note: elements get deduplicated with set(), so order may change
+        # Source order and duplicate occurrences are preserved.
         assert len(normalizer.elements) == len(elements)
         assert all(item in normalizer.elements for item in elements)
         assert normalizer.n == 2
@@ -39,16 +39,14 @@ class TestNormalizer:
         assert normalizer.verbose == True
         assert normalizer.max_length == 50
 
-    def test_normalizer_deduplication(self):
-        """Test that Normalizer removes duplicate elements."""
+    def test_normalizer_duplicate_occurrences(self):
+        """Duplicate strings retain their occurrences and share one semantic assignment."""
         elements = ["item1", "item2", "item1", "item3", "item2"]
         normalizer = Normalizer(elements, n=3)
         
-        # Should deduplicate to unique elements only
-        unique_elements = list(set(elements))
-        assert len(normalizer.elements) == len(unique_elements)
-        for item in unique_elements:
-            assert item in normalizer.elements
+        assert normalizer.elements == elements
+        from collections import Counter
+        assert Counter(s for group in normalizer.normalized_mapping().values() for s in group) == Counter(elements)
 
     # ==== CLUSTERING TESTS ====
 
@@ -277,12 +275,12 @@ class TestNormalizer:
         elements = ["item1", "item2", "item3", "item4"]
         normalizer = Normalizer(elements, n=2)
         
-        # First normalization should add to cache
+        # Source assignments are already cached by the partition.
         initial_cache_size = len(normalizer.normalizing_map)
         result1 = normalizer.normalize("item1")
         
         cache_after_first = len(normalizer.normalizing_map)
-        assert cache_after_first > initial_cache_size, "Cache should grow after first normalization"
+        assert cache_after_first == initial_cache_size, "Source elements should reuse their original assignments"
         
         # Second normalization of same element should use cache
         result2 = normalizer.normalize("item1")
@@ -412,19 +410,19 @@ class TestNormalizer:
 
     # ==== CONVENIENCE API TESTS ====
 
-    def test_normalized_mapping_fallback(self):
-        """Test that normalized_mapping() handles edge cases gracefully."""
+    def test_normalized_mapping_corruption(self):
+        """Corrupted state fails explicitly rather than inventing identity categories."""
         normalizer = Normalizer(["test"], n=1)
         
         # Corrupt the internal data to test fallback
         normalizer.normalized_elements = None
-        mapping = normalizer.normalized_mapping()
-        assert mapping == {"test": ["test"]}, "Should fallback to identity mapping"
+        with pytest.raises(ValueError, match="corrupted"):
+            normalizer.normalized_mapping()
         
         # Test with list format (edge case)
         normalizer.normalized_elements = ["item1", "item2"]
-        mapping = normalizer.normalized_mapping()
-        assert isinstance(mapping, dict)
+        with pytest.raises(ValueError, match="corrupted"):
+            normalizer.normalized_mapping()
 
     def test_debug_output(self):
         """Test that debug output works correctly with verbose mode."""

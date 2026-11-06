@@ -1,0 +1,19 @@
+{
+  "order_seed": 291029,
+  "protocol": "Repair a structural omission: Philip candidate-plan replicate 0 omitted personality_and_voice in every candidate. Preserve all six first-plan responses and do not weaken the required-field validator. Add an explicit machine-readable field checklist without biographical examples. Run six fresh planning calls, then the precommitted external draws and six expansions. No plans or drafts from the prior stage are used in these requests.",
+  "imports": [{"path": "candidate-plan.json", "variants": ["candidate-plan"]}],
+  "variants": [{
+    "id": "candidate-plan-v2",
+    "parent": "candidate-plan",
+    "phase": "persona_generation_plan",
+    "hypothesis": "An explicit output skeleton and final per-candidate completeness check prevent omission of the last required field.",
+    "cases": ["persona-grace", "persona-philip"],
+    "operations": [{
+      "kind": "append",
+      "message": 1,
+      "max_matches": 1,
+      "text": "\n\n## Required field completeness\nEach of the four objects in candidates must have exactly the following five keys, with nonempty text values:\n{\"particulars\": \"...\", \"life_course\": \"...\", \"daily_life\": \"...\", \"travel\": \"...\", \"personality_and_voice\": \"...\"}\nThe ellipses stand for your substantive text, not literal output. In particular, personality_and_voice is mandatory in every candidate, including the last one; personality detail embedded in daily_life does not replace this field. Before returning, check the candidate count, all five keys in each object, and the explicit original particulars in each particulars field. Output only the complete JSON object."
+    }]
+  }],
+  "selection": {"persona-grace": "candidate-plan-v2", "persona-philip": "candidate-plan-v2"}
+}

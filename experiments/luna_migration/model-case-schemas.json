@@ -1,0 +1,103 @@
+{
+  "tinytroupe.agent.CognitiveActionsModel": {
+    "type": "json_schema",
+    "json_schema": {
+      "schema": {
+        "$defs": {
+          "Action": {
+            "properties": {
+              "type": {
+                "title": "Type",
+                "type": "string"
+              },
+              "content": {
+                "title": "Content",
+                "type": "string"
+              },
+              "target": {
+                "title": "Target",
+                "type": "string"
+              },
+              "images": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Images"
+              }
+            },
+            "required": [
+              "type",
+              "content",
+              "target",
+              "images"
+            ],
+            "title": "Action",
+            "type": "object",
+            "additionalProperties": false
+          },
+          "CognitiveState": {
+            "properties": {
+              "goals": {
+                "title": "Goals",
+                "type": "string"
+              },
+              "context": {
+                "items": {
+                  "type": "string"
+                },
+                "title": "Context",
+                "type": "array"
+              },
+              "attention": {
+                "title": "Attention",
+                "type": "string"
+              },
+              "emotions": {
+                "title": "Emotions",
+                "type": "string"
+              }
+            },
+            "required": [
+              "goals",
+              "context",
+              "attention",
+              "emotions"
+            ],
+            "title": "CognitiveState",
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        "properties": {
+          "actions": {
+            "items": {
+              "$ref": "#/$defs/Action"
+            },
+            "title": "Actions",
+            "type": "array"
+          },
+          "cognitive_state": {
+            "$ref": "#/$defs/CognitiveState"
+          }
+        },
+        "required": [
+          "actions",
+          "cognitive_state"
+        ],
+        "title": "CognitiveActionsModel",
+        "type": "object",
+        "additionalProperties": false
+      },
+      "name": "CognitiveActionsModel",
+      "strict": true
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "reason": "The original six-call generator stage returned one syntactically invalid JSON response (stop, not truncation), aborting strict parsing.",
+  "handling": "Retain the failed raw response and cost. Do not repair, redraw, or replace it. Replay only the five complete biographies; report the missing candidate as an error rather than inferring its rating.",
+  "completed_generator_responses": 6,
+  "valid_biographies": 5,
+  "observed_generation_failures": 1,
+  "planned_actor_turns": 6,
+  "executed_actor_turns": 5,
+  "actor_outcomes_not_examined_before_this_amendment": true
+}

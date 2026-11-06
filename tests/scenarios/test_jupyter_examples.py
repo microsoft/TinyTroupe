@@ -1,3 +1,4 @@
+import ast
 import os
 import sys
 
@@ -41,6 +42,41 @@ def get_notebooks(folder):
         and not ".archival." in f
         and not ".final." in f
     ]
+
+
+@pytest.mark.core
+@pytest.mark.parametrize("notebook_path", get_notebooks(NOTEBOOK_FOLDER))
+def test_notebook_imports(monkeypatch, notebook_path):
+    """Every active example imports successfully with the current public API."""
+    notebook = nbformat.read(notebook_path, as_version=4)
+    import_cell = next(cell for cell in notebook.cells if cell.cell_type == "code")
+    monkeypatch.chdir(NOTEBOOK_FOLDER)
+    monkeypatch.setattr(sys, "path", sys.path.copy())
+    exec(compile(import_cell.source, notebook_path, "exec"), {})
+
+
+@pytest.mark.core
+@pytest.mark.parametrize("notebook_path", get_notebooks(NOTEBOOK_FOLDER))
+def test_notebook_factory_configuration(notebook_path):
+    """Factory population descriptions require a size; standalone context uses context=."""
+    notebook = nbformat.read(notebook_path, as_version=4)
+    for cell in notebook.cells:
+        if cell.cell_type != "code":
+            continue
+        for node in ast.walk(ast.parse(cell.source)):
+            if not (
+                isinstance(node, ast.Call)
+                and isinstance(node.func, ast.Name)
+                and node.func.id == "TinyPersonFactory"
+            ):
+                continue
+            keywords = {keyword.arg for keyword in node.keywords}
+            has_description = bool(node.args) or "sampling_space_description" in keywords
+            has_population_size = len(node.args) > 1 or "total_population_size" in keywords
+            assert not has_description or has_population_size, (
+                f"{notebook_path}: a standalone factory context must use context=; "
+                "sampling_space_description is only used with total_population_size."
+            )
 
 
 @pytest.mark.slow

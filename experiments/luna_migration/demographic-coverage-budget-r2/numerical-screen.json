@@ -1,0 +1,157 @@
+{
+  "baseline": {
+    "marginals": {
+      "race_and_ethnicity": {
+        "omitted_people": 0,
+        "expected_counts": {
+          "White, non-Hispanic or Latino, with family histories that may be multigenerational in the United States or connected to many European, Middle Eastern, or other backgrounds.": 28.695,
+          "Hispanic or Latino, including people with Mexican, Puerto Rican, Cuban, Central American, South American, or other Hispanic and Latino heritage, and people of any race.": 8.729999999999999,
+          "Black or African American, including multigenerational African American communities and people with African, Caribbean, or other Black diasporic backgrounds.": 5.445,
+          "Asian, including people with East Asian, South Asian, Southeast Asian, and other Asian heritages, with a wide range of languages and migration histories.": 3.1500000000000004,
+          "Two or more races, reflecting multiracial family histories and identities that may include any combination of racial or ethnic backgrounds.": 3.305,
+          "American Indian or Alaska Native, including people connected to diverse Indigenous nations, communities, and cultural traditions.": 0.5850000000000001,
+          "Native Hawaiian or Pacific Islander, including people with Native Hawaiian, Samoan, Chamorro, Tongan, or other Pacific Islander heritage.": 0.09000000000000002
+        },
+        "expected_total_variation_people": 2.0000000000000027
+      },
+      "gender": {
+        "omitted_people": 0,
+        "expected_counts": {
+          "Male, as represented in the supplied binary gender-distribution figures; individual identity, expression, and sex characteristics may vary.": 24.599999999999994,
+          "Female, as represented in the supplied binary gender-distribution figures; individual identity, expression, and sex characteristics may vary.": 25.400000000000006
+        },
+        "expected_total_variation_people": 7.105427357601002e-15
+      },
+      "geographic_region": {
+        "omitted_people": 0,
+        "expected_counts": {
+          "Northeast, including dense metropolitan areas, older industrial cities, small towns, coastal communities, and rural areas across the northeastern states.": 8.549999999999999,
+          "Midwest, including large cities, agricultural regions, smaller industrial communities, suburbs, and rural towns across the central and north-central states.": 10.400000000000002,
+          "South, including major metropolitan areas, small towns, rural communities, coastal regions, and rapidly growing suburbs across the southern states.": 19.15,
+          "West, including Pacific coastal cities, inland metropolitan areas, mountain communities, deserts, agricultural areas, and remote rural regions.": 11.900000000000002
+        },
+        "expected_total_variation_people": 3.552713678800501e-15
+      },
+      "settlement_type": {
+        "omitted_people": 0,
+        "expected_counts": {
+          "Urban resident living in a city or densely developed metropolitan area, with relatively close access to services, workplaces, public amenities, and varied communities.": 40.709999999999994,
+          "Rural resident living in a less densely populated community, where longer travel distances, local relationships, and access to services may shape daily life.": 9.29
+        },
+        "expected_total_variation_people": 0.7900000000000027
+      }
+    },
+    "age_counts": {
+      "Age 0–14, including infants, school-age children, and young teenagers, with everyday needs and activities substantially shaped by caregivers and developmental stage.": 9,
+      "Age 15–24, including older adolescents and young adults navigating education, early employment, independence, and changing family or social roles.": 7,
+      "Age 25–54, spanning early adulthood through midlife, with varied combinations of work, caregiving, family life, education, and community involvement.": 20,
+      "Age 55–64, often including people approaching retirement or making midlife career, health, and household transitions.": 6,
+      "Age 65 and older, including active older adults as well as people who may have significant health, mobility, caregiving, or support needs.": 8
+    },
+    "older_education_support": {
+      "Age 55–64, often including people approaching retirement or making midlife career, health, and household transitions.": [
+        "Has a high school diploma or equivalent, or has pursued some college, trade, technical, or other postsecondary education without earning a bachelor's degree; approximately 55% under the supplied totals."
+      ],
+      "Age 65 and older, including active older adults as well as people who may have significant health, mobility, caregiving, or support needs.": [
+        "Has a bachelor's degree or a higher qualification, including people with professional, master's, doctoral, or other advanced education; approximately 35% under the supplied totals."
+      ]
+    },
+    "guaranteed_contrasts": {
+      "culinary_tastes": {
+        "Prefers familiar, traditional home cooking, such as regional family recipes, straightforward sides, and meals tied to personal or community traditions.": 7,
+        "Is adventurous about food, regularly tries unfamiliar cuisines, ingredients, and cooking techniques, and enjoys discussing how dishes reflect their cultural origins.": 6
+      },
+      "attitude_toward_new_products": {
+        "Is strongly resistant to changes in routines and products, viewing many new offerings as unnecessary, confusing, or designed to create avoidable costs.": 1,
+        "Is an extreme novelty seeker who buys untested products impulsively and disregards reasonable warnings, costs, or safety information.": 2
+      }
+    },
+    "checks": {
+      "marginal_expected_counts": false,
+      "age_totals": true,
+      "older_education_support": false,
+      "all_four_predefined_singletons": true
+    },
+    "passed_numerical_screen": false,
+    "joint_semantic_review": "Pending; numerical screening alone is not adoption."
+  },
+  "candidate": {
+    "marginals": {
+      "race_and_ethnicity": {
+        "omitted_people": 0,
+        "expected_counts": {
+          "White, non-Hispanic or Latino, with family histories that may be multigenerational in the United States or connected to many European, Middle Eastern, or other backgrounds.": 27.28033472803347,
+          "Hispanic or Latino, including people with Mexican, Puerto Rican, Cuban, Central American, South American, or other Hispanic and Latino heritage, and people of any race.": 9.928870292887026,
+          "Black or African American, including multigenerational African American communities and people with African, Caribbean, or other Black diasporic backgrounds.": 6.569037656903768,
+          "Asian, including people with East Asian, South Asian, Southeast Asian, and other Asian heritages, with a wide range of languages and migration histories.": 4.221757322175734,
+          "Two or more races, reflecting multiracial family histories and identities that may include any combination of racial or ethnic backgrounds.": 1.0,
+          "American Indian or Alaska Native, including people connected to diverse Indigenous nations, communities, and cultural traditions.": 1.0
+        },
+        "expected_total_variation_people": 1.8196652719665274
+      },
+      "gender": {
+        "omitted_people": 0,
+        "expected_counts": {
+          "Male, as represented in the supplied binary gender-distribution figures; individual identity, expression, and sex characteristics may vary.": 24.60000000000002,
+          "Female, as represented in the supplied binary gender-distribution figures; individual identity, expression, and sex characteristics may vary.": 25.39999999999998
+        },
+        "expected_total_variation_people": 1.7763568394002505e-14
+      },
+      "geographic_region": {
+        "omitted_people": 0,
+        "expected_counts": {
+          "Northeast, including dense metropolitan areas, older industrial cities, small towns, coastal communities, and rural areas across the northeastern states.": 8.550000000000002,
+          "Midwest, including large cities, agricultural regions, smaller industrial communities, suburbs, and rural towns across the central and north-central states.": 10.400000000000006,
+          "South, including major metropolitan areas, small towns, rural communities, coastal regions, and rapidly growing suburbs across the southern states.": 19.149999999999984,
+          "West, including Pacific coastal cities, inland metropolitan areas, mountain communities, deserts, agricultural areas, and remote rural regions.": 11.89999999999999
+        },
+        "expected_total_variation_people": 1.509903313490213e-14
+      },
+      "settlement_type": {
+        "omitted_people": 0,
+        "expected_counts": {
+          "Urban resident living in a city or densely developed metropolitan area, with relatively close access to services, workplaces, public amenities, and varied communities.": 40.839999999999975,
+          "Rural resident living in a less densely populated community, where longer travel distances, local relationships, and access to services may shape daily life.": 9.159999999999998
+        },
+        "expected_total_variation_people": 0.6600000000000117
+      }
+    },
+    "age_counts": {
+      "Age 0–14, including infants, school-age children, and young teenagers, with everyday needs and activities substantially shaped by caregivers and developmental stage.": 9,
+      "Age 15–24, including older adolescents and young adults navigating education, early employment, independence, and changing family or social roles.": 7,
+      "Age 25–54, spanning early adulthood through midlife, with varied combinations of work, caregiving, family life, education, and community involvement.": 20,
+      "Age 55–64, often including people approaching retirement or making midlife career, health, and household transitions.": 6,
+      "Age 65 and older, including active older adults as well as people who may have significant health, mobility, caregiving, or support needs.": 8
+    },
+    "older_education_support": {
+      "Age 55–64, often including people approaching retirement or making midlife career, health, and household transitions.": [
+        "Has a bachelor's degree or a higher qualification, including people with professional, master's, doctoral, or other advanced education; approximately 35% under the supplied totals.",
+        "Has a high school diploma or equivalent, or has pursued some college, trade, technical, or other postsecondary education without earning a bachelor's degree; approximately 55% under the supplied totals.",
+        "Has not completed high school, representing approximately 10% of the supplied population figures; may include people with limited formal schooling, interrupted schooling, or literacy support needs."
+      ],
+      "Age 65 and older, including active older adults as well as people who may have significant health, mobility, caregiving, or support needs.": [
+        "Has a bachelor's degree or a higher qualification, including people with professional, master's, doctoral, or other advanced education; approximately 35% under the supplied totals.",
+        "Has a high school diploma or equivalent, or has pursued some college, trade, technical, or other postsecondary education without earning a bachelor's degree; approximately 55% under the supplied totals.",
+        "Has not completed high school, representing approximately 10% of the supplied population figures; may include people with limited formal schooling, interrupted schooling, or literacy support needs."
+      ]
+    },
+    "guaranteed_contrasts": {
+      "culinary_tastes": {
+        "Prefers familiar, traditional home cooking, such as regional family recipes, straightforward sides, and meals tied to personal or community traditions.": 1,
+        "Is adventurous about food, regularly tries unfamiliar cuisines, ingredients, and cooking techniques, and enjoys discussing how dishes reflect their cultural origins.": 1
+      },
+      "attitude_toward_new_products": {
+        "Is strongly resistant to changes in routines and products, viewing many new offerings as unnecessary, confusing, or designed to create avoidable costs.": 1,
+        "Is an extreme novelty seeker who buys untested products impulsively and disregards reasonable warnings, costs, or safety information.": 2
+      }
+    },
+    "checks": {
+      "marginal_expected_counts": false,
+      "age_totals": true,
+      "older_education_support": true,
+      "all_four_predefined_singletons": true
+    },
+    "passed_numerical_screen": false,
+    "joint_semantic_review": "Pending; numerical screening alone is not adoption."
+  }
+}

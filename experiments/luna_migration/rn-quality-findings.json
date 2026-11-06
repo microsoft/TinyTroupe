@@ -1,0 +1,116 @@
+{
+  "AI-enabled Children Story Telling Market Research 2": {
+    "verdict": "Essentially the same preference convergence; broader parent ages do not establish eligible or representative households",
+    "execution": "Completed the unchanged corrected 50-person survey, profiling, ranking extraction and empirical comparisons. Source/library audit passed.",
+    "public_outputs_read": 50,
+    "extraction_rationales_read": 50,
+    "ranking_matches": 50,
+    "missing_respondents": 0,
+    "first_choices": {"A": 0, "B": 50, "C": 0, "D": 0, "E": 0},
+    "prior_corrected_luna_first_choices": {"B": 50},
+    "historical_corrected_mini_first_choice_percent": {"A": 74, "B": 12, "C": 4, "D": 10, "E": 0},
+    "human_control_first_choice_percent": {"A": 32, "B": 14, "C": 24, "D": 18, "E": 12},
+    "borda": {"A": 37, "B": 200, "C": 28, "D": 123, "E": 112},
+    "normalization": {
+      "partitions": 9,
+      "distinct_sources_across_partitions": 8332,
+      "all_source_ids_covered": true,
+      "largest_assignment_batch": 240,
+      "global_theme_definitions_unchanged": true
+    },
+    "explicit_public_eligibility_failures": [
+      "Leslie Montgomery",
+      "Sharon McBride",
+      "Mark Ellison",
+      "Melissa Grant",
+      "Dana Whitfield",
+      "Judith Langley",
+      "Shannon McAllister"
+    ],
+    "findings": [
+      "All 50 public rankings and all 50 extracted rationales were read. Every extracted order exactly matches the corresponding public A-E permutation.",
+      "All 50 again rank B (no AI device) first, versus 14% of human controls; none of the preference-convergence problem is resolved in this rollout.",
+      "Budget and device-format trade-offs are coherent but nearly everyone uses the same unsupervised-AI, privacy, screen-time and parent-control structure.",
+      "Parent ages broaden from the prior 34-39 cluster to 18-66, but 45 of 50 profiles still have a Practical-labelled trait and healthcare/front-office roles remain common.",
+      "At least seven public answers explicitly state there is no young child at home or that the person's children are older. These are not eligible current parents of 4-5-year-olds, despite the target population and each sampling directive saying so.",
+      "All six figures were inspected. Thematic behavioral charts are readable, but geographic distribution still uses nationality rather than residence.",
+      "The structured sampling adapter validates the plan's shape but does not guarantee that generated personas satisfy household eligibility or produce representative population coverage.",
+      "Unanimous rejection is recorded as a model output, not changed to force enthusiasm or agreement with human controls; this rollout does not isolate a causal model or prompt effect."
+    ],
+    "decision": "Do not promote as a validated market simulation."
+  },
+  "Bottled Gazpacho Market Research 5 (with behavior correction)": {
+    "verdict": "Better profiling reliability, no improvement in behavioral or empirical fidelity; unsupported extraction detected",
+    "execution": "Completed the unchanged 50-person corrected study, profiling and empirical comparisons. Source/library audit passed.",
+    "public_outputs_read": 49,
+    "extraction_rationales_read": 50,
+    "prior_public_outputs": 50,
+    "normalization": {
+      "partitions": 8,
+      "distinct_sources_across_partitions": 8156,
+      "all_source_ids_covered": true,
+      "largest_assignment_batch": 240,
+      "global_theme_definitions_unchanged": true,
+      "result": "Readable thematic behavioral charts replace the prior timeout/raw-label/99.5%-Other failure."
+    },
+    "unsupported_extraction": {
+      "name": "Olivia Hayes",
+      "age": 4,
+      "actions": ["THINK", "DONE"],
+      "public_rating": null,
+      "extracted_rating": "2",
+      "finding": "Extractor turns an unscored private thought into a numeric public response. The corrected gazpacho variant still lacks the explicit public-TALK-only extraction requirement introduced previously in 5c.",
+      "handling": "Preserve the executed notebook unchanged, flag its 50-row statistics as containing an unsupported score, and report a separate 49-public-answer sensitivity analysis."
+    },
+    "public_only_results": {
+      "n": 49,
+      "counts": {"1": 3, "2": 37, "3": 9, "4": 0, "5": 0},
+      "mean": 2.122448979591837,
+      "sample_sd": 0.4844521416518049,
+      "welch_p": 0.0005986586347660527,
+      "ks_p": 0.0001783805133644325
+    },
+    "notebook_reported_results": {
+      "n": 50,
+      "counts": {"1": 3, "2": 38, "3": 9},
+      "mean": 2.12,
+      "sample_sd": 0.47979587496419046,
+      "includes_unsupported_score": true
+    },
+    "prior_corrected_luna_results": {"mean": 2.20, "sample_sd": 0.4040610178208843},
+    "historical_corrected_mini_results": {"mean": 2.62, "sample_sd": 0.70},
+    "human_control_results": {"mean": 2.86, "sample_sd": 1.3554124306434765},
+    "findings": [
+      "All 49 actual public numeric answers agree with their extracted scores on manual review; the fiftieth row has no public answer.",
+      "All three strong rejections come from three-year-old personas. There are still no 4 or 5 ratings.",
+      "Most replies repeat the same cold-soup unfamiliarity, reasonable-price and maybe-a-small-bottle language despite different people.",
+      "The 16 sampling directives use only six of 78 generated dimensions. None of the ten separately requested behavioral dimension families is selected; cooking_and_baking_interest is selected but culinary_tastes is not. enforce_usage_of_all_dimensions remains false.",
+      "The all-ages source population includes 13 minors and a 106-year-old, whereas the human control is adult; the sampling-frame mismatch remains.",
+      "All six figures were inspected. Behavioral categories are substantially more readable, and sample group memberships are plausible. This is not exhaustive semantic verification of all 8,156 strings; one label ends awkwardly in 'fricti'. Occupations retain raw-title fragmentation, and geographic distribution still charts nationality rather than residence.",
+      "The optional-dimension sampling workflow now validates and preserves selections but does not itself enforce representative coverage or prevent persona convergence."
+    ],
+    "decision": "Do not promote as a validated market simulation or a clean extraction example."
+  },
+  "Investment Firm": {
+    "verdict": "Essentially the same substantive failure: repeated summaries and closure loops",
+    "execution": "Completed the unchanged three-agent, twenty-step notebook. Source and library audit passed. Both professionals actually CONSULTed both Vale PDFs.",
+    "public_outputs_read": 52,
+    "prior_public_outputs": 62,
+    "findings": [
+      "The company analysis distinguishes Vale shipments from market-wide demand, management forecasts from observed results, and company analysis from portfolio suitability.",
+      "The analyst repeatedly reproduces the same labeled Q3 evidence summary rather than progressing the discussion; adviser and customer repeatedly exchange watch-list/no-trade closings.",
+      "The adviser actually delivers a written recap when requested instead of only promising it, but further nearly identical closing turns continue.",
+      "One analyst statement mislabels US$3.741 billion as Iron Ore Solutions EBITDA; the supplied PDF reports US$3.731 billion for that segment and US$3.741 billion company-wide. Later public speech correctly distinguishes them.",
+      "A changed generated cohort prevents attributing the different number of utterances or duration causally to the prompt repairs."
+    ],
+    "source_checks": {
+      "pdf": "data\\grounding_examples\\finance\\Vale do Rio Doce (VALE 3) - Vale's Performance in 3Q24.pdf",
+      "pages": [1, 8, 9, 30],
+      "segment_ebitda_usd_million": 3731,
+      "company_ebitda_usd_million": 3741,
+      "iron_ore_sales_mt": "81.838",
+      "china_sales_mt": "50.290"
+    },
+    "decision": "Do not promote as a good conversational example."
+  }
+}

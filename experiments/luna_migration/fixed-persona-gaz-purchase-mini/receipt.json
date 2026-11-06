@@ -1,0 +1,20 @@
+{
+  "model": "gpt-5-mini",
+  "requested_effort": "xhigh",
+  "effort_caveat": "The client does not forward this setting to GPT-5-mini; the comparison is not effort-controlled.",
+  "elapsed_seconds": 243.7029999999795,
+  "usage": {
+    "input_tokens": 312309,
+    "output_tokens": 58938,
+    "total_tokens": 371247,
+    "model_calls": 32,
+    "cached_calls": 0
+  },
+  "variant_sha256": null,
+  "parent_holdout": false,
+  "require_unsupervised_control": false,
+  "require_regular_purchases_control": false,
+  "source_run_prefix": "cf4-",
+  "gaz_random_adults": 8,
+  "scope": "Fixed-persona diagnostics, not representative population estimates. Backend changes include quality evaluation and extraction. Persona preferences and original quality thresholds were retained. Original survey wording was retained except in the explicitly recorded require_unsupervised_control or require_regular_purchases_control, which are not original-notebook results."
+}

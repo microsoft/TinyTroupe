@@ -1,0 +1,78 @@
+{
+  "calls": 2,
+  "unique_sources": 2,
+  "statuses": {
+    "completed": 2
+  },
+  "list_price_bounds_usd": [
+    "0.016416225",
+    "0.016416225"
+  ],
+  "calls_without_usage": 0,
+  "missing_write_usage": 0,
+  "semantic_success_not_automatically_inferred": true,
+  "records": [
+    {
+      "case_id": "exec-chatcmpl-EcQICCWrcBUBdFhSJy75dLdtm89S9::large-partition-v1-themes",
+      "phase": "normalization",
+      "stage": "large-partition-v1",
+      "source_case_id": "exec-chatcmpl-EcQICCWrcBUBdFhSJy75dLdtm89S9",
+      "variant": "large-partition-v1-themes",
+      "adapter": "normalization_pipeline",
+      "pipeline_step": "themes",
+      "status": "completed",
+      "elapsed_seconds": 51.328,
+      "content": "{\"groups\":{\"1\":{\"label\":\"Family, parenting & caregiving\",\"scope\":\"Raising children, family routines and boundaries, co-parenting, marriage, household labor, elder care, and support among relatives. Use this for family responsibilities and relationships; place heritage traditions or religious practice here only when family care itself is the main point.\"},\"2\":{\"label\":\"Work, money & economic security\",\"scope\":\"Jobs, wages, working conditions, care work as labor, childcare and schedules as constraints on work, household costs, budgeting, debt, saving, housing, and economic inequality or opportunity. Distinguish this from public programs and their administration (3), health-care access (4), and sharing family tasks (1).\"},\"3\":{\"label\":\"Public policy, institutions & civic life\",\"scope\":\"Government's role and limits, public services and their delivery, institutional accountability, local decision-making, political positions and compromise, civil liberties and equal treatment in law, public safety rules, and immigration policy. Use this for policy choices and civic structures; put medical care itself in (4) and cultural identity or religious belonging in (5).\"},\"4\":{\"label\":\"Health, wellbeing & safety\",\"scope\":\"Physical and mental health, medical evidence and care, patient dignity and privacy, reproductive care, access to treatment, violence prevention, firearm safety, and protection from other practical hazards; also basic wellbeing needs such as rest and stress. Distinguish care and safety concerns from the design of public programs or laws (3), and from general household finances (2).\"},\"5\":{\"label\":\"Faith, culture & belonging\",\"scope\":\"Religious identity and practice, prayer and faith communities, religious freedom, cultural and ethnic heritage, language, family histories, traditions, and the freedom to belong without proving authenticity. Distinguish cultural or spiritual belonging from legal civil-rights protections (3) and from family caregiving or household roles (1).\"},\"6\":{\"label\":\"Learning, judgment & personal conduct\",\"scope\":\"Reading, books, stories, libraries as places of learning, education and practical skills, curiosity, evidence and uncertainty, and changing one's mind; also personal responsibility, honesty, reliability, apologies, respect, and considerate disagreement. Use this for learning and general standards of conduct, rather than school or library funding (3), job credentials as economic opportunity (2), or conduct chiefly about family care (1).\"}}}",
+      "response_id": "chatcmpl-EeREZzNbwdwzFgE07lD3AhBkZt4R3",
+      "cost": {
+        "input_tokens": 49376,
+        "cached_input_tokens": 0,
+        "cache_write_tokens": 49373,
+        "output_tokens": 4376,
+        "reasoning_tokens": 3833,
+        "uncached_input_tokens": 3,
+        "input_usd": "3E-7",
+        "cached_input_usd": "0.00",
+        "cache_write_usd": "0.006171625",
+        "output_usd": "0.002188",
+        "total_usd": "0.008359925",
+        "long_context": false
+      },
+      "checks": {
+        "raw_output_characters": 2512,
+        "schema_valid": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcRoxhgRNdZDHXBrbVrSDLMthTHLM::large-partition-v1-themes",
+      "phase": "normalization",
+      "stage": "large-partition-v1",
+      "source_case_id": "exec-chatcmpl-EcRoxhgRNdZDHXBrbVrSDLMthTHLM",
+      "variant": "large-partition-v1-themes",
+      "adapter": "normalization_pipeline",
+      "pipeline_step": "themes",
+      "status": "completed",
+      "elapsed_seconds": 40.891,
+      "content": "{\"groups\":{\"1\":{\"label\":\"Economic security, work & costs\",\"scope\":\"Household economic pressures and material security: inflation, prices, income, wages, jobs and working conditions, saving, budgeting, debt, financial shocks, markets, and economic inequality. Use this for lived financial and work experience; healthcare-specific costs belong in group 2, while the design of public budgets and programs belongs in group 3.\"},\"2\":{\"label\":\"Healthcare, access & patient rights\",\"scope\":\"Health and medical care, including affordability and insurance, access and quality, patient dignity and informed choice, clinicians and care workers, prevention, mental health, addiction, and pregnancy-related decisions. Use this for care itself; general household finances belong in group 1, and government processes apart from health delivery belong in group 3.\"},\"3\":{\"label\":\"Government, democracy & public goods\",\"scope\":\"Civic participation, elections, parties, democratic norms, political cooperation, public institutions and administration, policy trade-offs, taxes and public spending, public programs, infrastructure and shared services, immigration, public safety, environmental policy, and civic information. Focus on collective rules and institutions, rather than personal relationships (group 4) or learning experiences (group 5).\"},\"4\":{\"label\":\"Relationships, dignity & boundaries\",\"scope\":\"How people treat and care for one another in families, friendships, marriages, workplaces, and neighborhoods: trust, kindness, promises, apologies, accountability, shared responsibilities, respect, privacy, and personal boundaries. Use this for interpersonal conduct; questions centered on identity or group belonging fit group 6, and formal public rules or institutions fit group 3.\"},\"5\":{\"label\":\"Learning, growth & everyday life\",\"scope\":\"Learning and education experiences, abilities and support, asking questions or for help, personal development and life choices, and ordinary activities such as rest, recreation, movement, practical skills, technology use, cooking, repairs, and caring for pets. Focus on individual learning and day-to-day agency, not public-system design (group 3) or the obligations of human relationships (group 4).\"},\"6\":{\"label\":\"Identity, faith & belonging\",\"scope\":\"Religious belief, doubt, practice and community; cultural, racial, ethnic, and language identity; heritage, representation, stereotyping, discrimination, grief, and personal meaning. Use this when identity, belief, or belonging is central; ordinary interpersonal behavior belongs in group 4, while civic or administrative mechanisms belong in group 3.\"}}}",
+      "response_id": "chatcmpl-EeREZ7nCIAfvZTIIdlQ7p7MlXvLbr",
+      "cost": {
+        "input_tokens": 50699,
+        "cached_input_tokens": 0,
+        "cache_write_tokens": 50696,
+        "output_tokens": 3438,
+        "reasoning_tokens": 2885,
+        "uncached_input_tokens": 3,
+        "input_usd": "3E-7",
+        "cached_input_usd": "0.00",
+        "cache_write_usd": "0.006337",
+        "output_usd": "0.001719",
+        "total_usd": "0.0080563",
+        "long_context": false
+      },
+      "checks": {
+        "raw_output_characters": 2644,
+        "schema_valid": true
+      }
+    }
+  ]
+}

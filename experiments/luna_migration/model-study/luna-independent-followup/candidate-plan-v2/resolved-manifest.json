@@ -1,0 +1,54 @@
+{
+  "order_seed": 291029,
+  "protocol": "Repair a structural omission: Philip candidate-plan replicate 0 omitted personality_and_voice in every candidate. Preserve all six first-plan responses and do not weaken the required-field validator. Add an explicit machine-readable field checklist without biographical examples. Run six fresh planning calls, then the precommitted external draws and six expansions. No plans or drafts from the prior stage are used in these requests.",
+  "imports": [
+    {
+      "path": "candidate-plan.json",
+      "variants": [
+        "candidate-plan"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "candidate-plan",
+      "phase": "persona_generation_plan",
+      "hypothesis": "Separating proposal generation from selection may prevent the model from repeatedly choosing its own familiar default when asked to consider alternatives internally.",
+      "cases": [
+        "persona-grace",
+        "persona-philip"
+      ],
+      "operations": [
+        {
+          "kind": "regex",
+          "message": 1,
+          "pattern": "(?s)## Generation Rules.*\\Z",
+          "max_matches": 1,
+          "new": "## Generation Rules\n\nThis request is the planning stage of a fictional-person generator. Instead of choosing a single default biography, describe four distinct possible individuals, each independently satisfying all the supplied particulars. An external random draw will select one of these four for a later full specification. Do not rank the possibilities, select a favorite, merge them, or give one a preferred survey response.\n\nEach possibility must be a coherent life, not a bundle of demographic stereotypes or a slogan. Make the differences consequential to everyday life, relationships and the requested interests. A different city or job title alone is not a different life. Do not make all four variations of one career-and-vacation template. They may share ordinary preferences without being copies of each other.\n\nDescribe people rather than advising them. Avoid manufacturing virtues, defects or unusual tastes to fill a quota. The supplied traits do not specify a whole psychological profile. There is no requested attitude toward prices, luxury, technology, risk or a future survey offer. Choose the open details freely, without treating one demographic category as having a single correct way to live.\n\nReturn only a JSON object with a \"candidates\" array containing exactly four objects. Each object must contain these fields:\n\n- \"particulars\": explicit name, age, gender, nationality, race_ethnicity, residence, gross household income, partnership status, children status, political identification and requested reading interest. Every original constraint must be satisfied by every candidate.\n- \"life_course\": a concise account of education, work or retirement, household and the experiences leading to the current situation.\n- \"daily_life\": social commitments, chosen activities and ordinary routines.\n- \"travel\": desired experiences, companions, feasible time and resources, and one concrete past choice or experience. Leave any later product decision open.\n- \"personality_and_voice\": recognizable tendencies, speech and behavior. Describe fictional choices, not measured psychological results.\n\nUse enough detail to distinguish the lives and check their coherence, roughly 200-300 words per candidate. These sketches are fictional alternatives, not facts about one shared person. The requested name is used in each alternative; it does not mean they share a biography.\n\nDo not invent external geography, scheduled-event dates or locations, precise current service prices or institutional rules. Personal experiences may be fictional; external facts are not. Keep future arrangements undecided when necessary.\n\nThis is a way to explore possibilities. Equal selection among these model-generated candidates does not imply equal real-world prevalence or a representative population sample.\n"
+        }
+      ]
+    },
+    {
+      "id": "candidate-plan-v2",
+      "parent": "candidate-plan",
+      "phase": "persona_generation_plan",
+      "hypothesis": "An explicit output skeleton and final per-candidate completeness check prevent omission of the last required field.",
+      "cases": [
+        "persona-grace",
+        "persona-philip"
+      ],
+      "operations": [
+        {
+          "kind": "append",
+          "message": 1,
+          "max_matches": 1,
+          "text": "\n\n## Required field completeness\nEach of the four objects in candidates must have exactly the following five keys, with nonempty text values:\n{\"particulars\": \"...\", \"life_course\": \"...\", \"daily_life\": \"...\", \"travel\": \"...\", \"personality_and_voice\": \"...\"}\nThe ellipses stand for your substantive text, not literal output. In particular, personality_and_voice is mandatory in every candidate, including the last one; personality detail embedded in daily_life does not replace this field. Before returning, check the candidate count, all five keys in each object, and the explicit original particulars in each particulars field. Output only the complete JSON object."
+        }
+      ]
+    }
+  ],
+  "selection": {
+    "persona-grace": "candidate-plan-v2",
+    "persona-philip": "candidate-plan-v2"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "model": "gpt-6-luna",
+  "requested_effort": "xhigh",
+  "effort_caveat": "The client does not forward this setting to GPT-5-mini; the comparison is not effort-controlled.",
+  "elapsed_seconds": 112.04700000002049,
+  "usage": {
+    "input_tokens": 138448,
+    "output_tokens": 13980,
+    "total_tokens": 152428,
+    "model_calls": 16,
+    "cached_calls": 0
+  },
+  "scope": "Four fixed-persona diagnostics, not representative population estimates. Backend changes include quality evaluation and extraction. No persona preferences, survey wording or original quality thresholds were altered."
+}

@@ -13,6 +13,7 @@ class TinyEnricher(JsonSerializableRegistry):
         self.context_cache = []
     
     def enrich_content(self, requirements: str, content:str, content_type:str =None, context_info:str ="", context_cache:list=None, verbose:bool=False):
+        """Return complete enriched content, preserving prose around embedded code blocks."""
 
         rendering_configs = {"requirements": requirements,
                              "content": content,
@@ -32,10 +33,9 @@ class TinyEnricher(JsonSerializableRegistry):
             print(debug_msg)
 
         if next_message is not None:
-            result = utils.extract_code_block(next_message["content"])
+            result = next_message["content"]
         else:
             result = None
 
         return result
     
-

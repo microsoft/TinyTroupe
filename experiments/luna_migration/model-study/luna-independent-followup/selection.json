@@ -1,0 +1,26 @@
+{
+  "status": "Promising independent two-stage alternative; not a complete drop-in diversity fix.",
+  "sources": ["persona-grace", "persona-philip"],
+  "planning_manifest": "contrast-structured.json",
+  "protocol": "structured-protocol.json",
+  "planning_corpus": "contrast-structured/selected.jsonl",
+  "planning_results": "contrast-structured/results.jsonl",
+  "expansion_base": "neutral-biography/selected.jsonl",
+  "expansion_corpus": "contrast-expansion/selected.jsonl",
+  "expansion_results": "contrast-expansion/results.jsonl",
+  "selection_audit": "contrast-expansion/selection-audit.json",
+  "full_reviews": ["structured-plan-review.json", "final-persona-review.json"],
+  "seed": 291028,
+  "selected_indices_zero_based": {
+    "persona-grace": [1, 0, 1],
+    "persona-philip": [1, 1, 2]
+  },
+  "other_18_cases": "Frozen at the preceding luna-iteration selection; no changes or additional confirmation claimed.",
+  "runtime_deployment": false,
+  "scientific_boundary": "No earlier-profile context and no content-based redraw, but coverage-seeking model proposals are not representative population samples.",
+  "unresolved": [
+    "Independent one-call persona diversity.",
+    "Dependable broad psychological coverage beyond this small two-stage pilot.",
+    "Population calibration and downstream multi-turn notebook behavior."
+  ]
+}

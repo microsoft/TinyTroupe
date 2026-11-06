@@ -1,0 +1,18 @@
+{
+  "status": "All unchanged numerical criteria passed; not integrated pending compatibility follow-up.",
+  "source_changed": false,
+  "baseline_redrawn": false,
+  "criterion_changed": false,
+  "request_and_structural_audit": "passed",
+  "findings": [
+    "All four predefined singleton endpoints are guaranteed: traditional food 6, adventurous food 10, strong product resistance 3, extreme novelty seeking 2.",
+    "Age totals remain 9/7/20/6/8, all integer ages 0-110 are covered, explicit residence is retained, and all 100 fixed draw seeds respect age labels.",
+    "Expected race, gender, region and settlement marginals match source proportions to floating-point precision; no people are omitted from those axes.",
+    "Both older-adult bands permit all three attainment options, and the optional learning-profile dimension is left unconstrained in those bands.",
+    "The candidate avoids fixed race-specific cultural allocations and preserves supplied weighted demographic alternatives rather than recalculating residual quotas.",
+    "Manual review of all 18 directives identified a remaining compatibility risk: several employed directives independently allow all educational attainments and occupations including clinical or other potentially credential-dependent work. Broad occupation descriptions can permit support roles, so this is not labeled a proven impossibility in every such pairing. It warrants an explicit compatibility guard before adoption.",
+    "The successful marginal screen is not comprehensive joint-demographic validity and does not address gazpacho ratings."
+  ],
+  "decision": "Keep production source unchanged. Test a generic credential/occupation compatibility guard with the same original numerical criteria; do not redraw this response or change its result.",
+  "returned_usage_usd": "0.035186675"
+}

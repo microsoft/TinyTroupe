@@ -65,4 +65,36 @@ def test_enrich_content():
     assert len(result) >= len(content_to_enrich) * 3, "The result should be at least 3 times larger than the original content."
 
 
-    
+@pytest.mark.core
+def test_enrich_document_with_embedded_code():
+    """Enrichment preserves document sections before and after an embedded code block."""
+    content = textwrap.dedent("""\
+        # Search Project
+
+        ## Overview
+        Analyze search relevance using a simple query example.
+
+        ## SQL Example
+        ```sql
+        SELECT 1;
+        ```
+
+        ## Next Steps
+        Describe evaluation and limitations.
+        """)
+    result = TinyEnricher().enrich_content(
+        requirements=(
+            "Expand the document with a paragraph in each prose section. Preserve the title, "
+            "all section headings, their order, and the fenced SQL example exactly. "
+            "Return the complete Markdown document without an enclosing code fence."
+        ),
+        content=content,
+        content_type="Document",
+    )
+
+    assert result is not None
+    assert "# Search Project" in result
+    assert "## SQL Example" in result
+    assert "SELECT 1;" in result
+    assert result.index("## Overview") < result.index("```sql") < result.index("## Next Steps")
+    assert len(result) > len(content)

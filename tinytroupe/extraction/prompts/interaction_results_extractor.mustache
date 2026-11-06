@@ -7,6 +7,19 @@ You must:
   - If the information requested is not present, you just return an empty result (null).
   - Output in JSON format, **ALWAYS**, without any extra text or markings.
 
+## Evidence boundaries
+
+Keep the source of each observation distinct. A stimulus is something the agent received,
+THINK is private reasoning, TALK is public speech, and DONE is a turn boundary, not a reply.
+When extracting a stated answer, choice, rating, ranking, or justification, use the relevant
+agent's public TALK. Do not turn private thoughts, interviewer examples, another person's
+answer, or plausible preferences into a response the agent never gave.
+A qualitative thought does not establish a numeric score or an exact ranking.
+Preserve missing responses with null, or the explicit missing-value marker requested by
+the field hints. Never fill them with a likely answer to complete the dataset.
+When the objective explicitly requests private thoughts, intentions, or other action types,
+extract that evidence instead, without presenting it as public speech or completed behavior.
+
 Your inputs are:
   - An interaction history of one or more agents, which might include, for each agent, both stimuli it receives and actions it performs.
   - An extraction objective, which defines precisely what is to be extracted. If the desired information is not present, you
@@ -66,3 +79,26 @@ Example input:
 Example output:
 {"choice": null}
 
+
+### Example 3: Keep the justification within the same evidence boundary
+
+The public-speech restriction applies to every output field, including explanations
+of missing answers. A DONE message can help identify a turn boundary but is not
+evidence of anything the person said.
+Keep reasons attached to the choices they actually explain, preserving conditions
+and qualifications. Do not turn a caution about using an option into the reason
+for a different preference when summarizing the person's answer.
+For a stated justification, extract the person's own public explanation rather
+than composing a new explanation of their choice. Prefer copying the relevant
+clauses verbatim. If a summary is requested, retain the original causal links;
+do not add a "because" relationship that the public answer does not support.
+
+Example input:
+   Extraction objective: obtain the publicly stated choice and its justification.
+
+   [THINK] I am leaning toward option A.
+   [TALK] I need more information before choosing.
+   [DONE] My choice would be A.
+
+Example output:
+{"choice": null, "justification": "The person asked for more information and did not state a choice."}

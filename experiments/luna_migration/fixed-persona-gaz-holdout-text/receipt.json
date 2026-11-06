@@ -1,0 +1,25 @@
+{
+  "model": "gpt-6-luna",
+  "requested_effort": "xhigh",
+  "effort_caveat": "The client does not forward this setting to GPT-5-mini; the comparison is not effort-controlled.",
+  "elapsed_seconds": 131.10899999993853,
+  "usage": {
+    "input_tokens": 281155,
+    "output_tokens": 23160,
+    "total_tokens": 304315,
+    "model_calls": 32,
+    "cached_calls": 0
+  },
+  "variant_sha256": null,
+  "parent_holdout": false,
+  "require_unsupervised_control": false,
+  "require_regular_purchases_control": false,
+  "source_run_prefix": "cf4-",
+  "gaz_random_adults": null,
+  "selection_file": "C:\\Users\\pdasilva\\.copilot\\session-state\\50a4ee6c-8971-4a79-8b88-aa0da7641d9e\\files\\situated-decision-holdout.json",
+  "introduction_file": null,
+  "inner_monologue_file": null,
+  "requested_initial_datetime": "2026-11-02T16:20:19.182432",
+  "synthetic_preference_controls": [],
+  "scope": "Fixed-persona diagnostics, not representative population estimates. Backend changes include quality evaluation and extraction. Persona preferences and original quality thresholds were retained. Original rating-question wording was retained except in the explicitly recorded require_unsupervised_control or require_regular_purchases_control, which are not original-notebook results. Introduction and private thought changes are recorded separately by their input files and the exact stimuli saved in each study result. Changed conditions are diagnostics, not unmodified-notebook results."
+}

@@ -1,0 +1,11 @@
+{
+  "stage": "failure-development-round1",
+  "corpora": ["..\\broad-luna-optimization\\development\\sources.jsonl", "..\\broad-luna-optimization\\validation\\sources.jsonl", "..\\broad-luna-optimization\\normalization-refinement\\sources.jsonl"],
+  "repetitions": 1,
+  "recipes": [
+    {"id":"action-execution-v2","instruction_file":"action-v2.txt","cases":["exec-chatcmpl-EcMyPpyhq9S5zw1U55xbUacS251EV"],"hypothesis":"Separate inability to translate missing speech from ability to ask the actual intended recipient a question now."},
+    {"id":"narrative-authority-v2","instruction_file":"story-v2.txt","cases":["exec-chatcmpl-EcOs5VaSzbXHC9ekPB4HoNqxQkMJ3","exec-chatcmpl-EcPQs4sN9jObydoOqqjACE8BvHuqm","exec-chatcmpl-EcPM5wjdBjFFpykUFm7dTTh4vr7SE","exec-chatcmpl-EcQoc8MNbyvjIPyhyahctBgDu7uUj"],"hypothesis":"Clarify narrator authority and make an explicit ending override generic open-endedness without scripting autonomous agents."},
+    {"id":"closed-vocabulary-v2","instruction_file":"sampling-v2.txt","cases":["exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR"],"hypothesis":"A short construction sequence with exact vocabulary lookup prevents invented dimensions and paraphrased options."},
+    {"id":"indexed-themes-v1","instruction_file":"normalization-indexed-v1.txt","adapter":"indexed_normalization","cases":["exec-chatcmpl-EcSEDbTD31QQYHRw2vsuCbxbTHSak","exec-chatcmpl-EcQHB8Uq23EuJYVQIjxMXf2k8eXPY"],"hypothesis":"Separate semantic assignment from mechanical copying through complete keyed assignments and exact deterministic reconstruction; explicitly changes the intermediate schema."}
+  ]
+}

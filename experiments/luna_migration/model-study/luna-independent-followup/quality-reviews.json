@@ -1,0 +1,27 @@
+{
+  "summary": "The final independent two-stage procedure produced six coherent full personas faithful to externally selected sketches, with more meaningful activity and motivational contrast than the single-call baseline. It is a promising alternative, not a complete one-call or population-diversity repair. The key semantic improvement was to design different chosen experiences and interpersonal styles before expanding biographies. Strict schema enforcement repaired recurrent missing planning fields. Grace still clustered in two nature-oriented GIS lives; Philip varied across cooking, vintage cars and fly-fishing. The earlier 18 action/extraction prompts remain frozen with their prior confirmation results, not newly rerun here.",
+  "case_reviews": [
+    {"case": "Previously confirmed 18 action/extraction cases", "status": "Unchanged; prior 54/54 confirmations", "evidence": "No new calls or prompt edits for these cases in this follow-up. Their previous semantic judgments and population-level limitations remain unchanged."},
+    {"case": "Neutral single-call biography: six outputs", "status": "Individual quality acceptable; diversity repair rejected", "evidence": "Grace repeated software professionals and quiet city travel. Philip repeated retired engineers in Fort Collins, all married to Elaine. Removing accumulated negative guidance was insufficient."},
+    {"case": "Initial candidate plans: six outputs", "status": "Batch rejected before expansion", "evidence": "Philip replicate 0 omitted personality_and_voice in every candidate. All raw responses and their costs were retained; the validator was not weakened."},
+    {"case": "Candidate-plan-v2 plus six expansions", "status": "Structure and individual profiles acceptable; contrast too weak", "evidence": "24 valid proposals and six faithful expansions still largely preserved measured voices, quiet cultural trips and prudent arrangements. Different jobs and states did not establish different motivations."},
+    {"case": "Contrast-plan: six attempts", "status": "API 400 errors; no usage returned", "evidence": "JSON-object mode required literal JSON wording in a message. The runner now checks this before calling the API. These errors are preserved and remain unpriced, not assumed free."},
+    {"case": "Contrast-plan-json: six outputs", "status": "Batch rejected before expansion", "evidence": "Philip replicate 2 again omitted personality_and_voice from all four candidates despite explicit prose and a field skeleton. No selections or expansions were saved for this batch."},
+    {"case": "Contrast-structured: six plans / 24 sketches", "status": "Structure and qualitative planning gates passed", "evidence": "Strict planning schema enforces four candidates and all five fields. Full review found contrasting plausible motivations within all six sets. The external seed was fixed beforehand and draws were not changed after review."},
+    {"case": "persona-grace: three final expansions", "status": "3/3 individual passes; residual clustering", "evidence": "Food-focused Oakland host, Tacoma shoreline naturalist, Portland birdwatcher. All particulars and selected sketches preserved. The latter two remain close in GIS occupation, income, temperament and nature-focused travel."},
+    {"case": "persona-philip: three final expansions", "status": "3/3 individual passes; broader motives in this pilot", "evidence": "Colorado former food-service distributor/cooking, Montana retired engineer/vintage cars, Colorado former surveyor/fly-fishing. All original particulars preserved, with realistic age-related accommodations and different social energy."}
+  ],
+  "limitations": [
+    "Two model calls per persona: model-written contrastive proposals, external uniform selection, then expansion. This is not a one-call prompt repair.",
+    "Independent pipelines receive no earlier pipeline's profiles. However, their candidate sets deliberately seek coverage and their alternatives are model-defined.",
+    "Uniform selection among four generated proposals does not imply representative population sampling, unbiased psychological diversity or calibrated survey outcomes.",
+    "Only three final profiles per source were observed. Recurring themes, high conscientiousness and broadly prudent lifestyles remain; Grace's two naturalist profiles are explicitly retained as clustering.",
+    "Strict JSON schema was introduced only for final planning. Original final-persona transport, model, effort, token limits, system message and demographic/context prefix remain unchanged.",
+    "The final experiment changes both semantic planning and its structural contract relative to earlier variants; it does not isolate a unique causal effect or provide a randomized comparative study.",
+    "Full semantic reviews are assistant judgments, not blinded independent human ratings. Structural validity is not semantic acceptance.",
+    "All failed attempts and rejected variants remain in the report. Historical original_response fields in corpora are provenance, not outputs of edited prompts.",
+    "42 completed responses comprise 24 planning outputs and 18 full biographies across all stages, not 42 final accepted personas. Six further attempts returned errors without usage.",
+    "No TinyTroupe runtime deployment, new notebook validation, new Terra comparison, or new test of the other 18 cases occurred here.",
+    "Costs use actual returned usage at saved list prices, not an invoice. Six error attempts have unknown charges; no zero-charge claim is made."
+  ]
+}

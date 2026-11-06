@@ -1,0 +1,20 @@
+{
+  "condition": "fixed-persona-gaz-low-effort",
+  "model": "gpt-6-luna",
+  "actual_request_effort": "low",
+  "repository_default_changed": false,
+  "all_eight_public_answers_manually_reviewed": true,
+  "all_eight_public_ratings_match_extraction": true,
+  "automatic_parser_unresolved_cases": {
+    "Stephen Michael Donnelly": "Public answer explicitly states bold 3 out of 5; extraction is 3.",
+    "Evan McAllister": "Public answer explicitly states bold 2 out of 5; extraction is 2."
+  },
+  "ratings": [2, 3, 2, 2, 2, 3, 2, 2],
+  "counts": {"2": 6, "3": 2},
+  "mean": 2.25,
+  "baseline_xhigh_actor_reasoning_tokens": 4325,
+  "low_effort_actor_reasoning_tokens": 829,
+  "returned_usage_usd": "0.032385005",
+  "conclusion": "Native reasoning effort genuinely decreased, but compressed ratings persisted. This is not a quality or empirical-calibration fix and was not adopted.",
+  "limitations": "One eight-person development panel, not a population estimate or a repeated-trial causal effect. Actor, quality evaluation and extraction all used low effort. Original biographies, stimuli, timestamp and numerical quality thresholds were preserved."
+}

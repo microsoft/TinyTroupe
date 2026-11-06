@@ -1,0 +1,18 @@
+{
+  "order_seed": 291027,
+  "protocol": "Explicit two-stage experimental procedure, not a drop-in one-call prompt. Three independent four-candidate plans per original source; an external seeded uniform draw selects one candidate per plan before any content is reviewed. Expand only that candidate with the neutral-biography final-record recipe. No previous run or rejected draft is fed into later independent trials. All plans and selections are retained. The candidate distribution is model-defined, not population-calibrated.",
+  "variants": [{
+    "id": "candidate-plan",
+    "phase": "persona_generation_plan",
+    "hypothesis": "Separating proposal generation from selection may prevent the model from repeatedly choosing its own familiar default when asked to consider alternatives internally.",
+    "cases": ["persona-grace", "persona-philip"],
+    "operations": [{
+      "kind": "regex",
+      "message": 1,
+      "pattern": "(?s)## Generation Rules.*\\Z",
+      "new_file": "candidate-plan.txt",
+      "max_matches": 1
+    }]
+  }],
+  "selection": {"persona-grace": "candidate-plan", "persona-philip": "candidate-plan"}
+}

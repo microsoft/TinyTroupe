@@ -1,0 +1,113 @@
+{
+  "protected_inputs_preserved": true,
+  "case_count": 2,
+  "attempts": 2,
+  "completed": 2,
+  "completed_by_case": {
+    "persona-grace::cohort-confirm1": 1,
+    "persona-philip::cohort-confirm1": 1
+  },
+  "observations": [
+    {
+      "file": "results.jsonl",
+      "case_id": "persona-grace::cohort-confirm1",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "persona_generation",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "missing_persona_fields": [],
+        "persona": {
+          "name": "Grace Minseo Han",
+          "age": 42,
+          "gender": "Female",
+          "nationality": "American; a U.S. citizen born and raised in the United States.",
+          "residence": {
+            "state": "Oregon",
+            "city": "Eugene",
+            "living_situation": "Grace lives alone in a small, older bungalow she bought several years ago. She is single and has no children. The house has a mortgage and ongoing repair costs, so ownership gives her control over her living space but is not a source of spare cash. Her custom-framing shop is a short drive away; she keeps a practical older hatchback for picking up materials and visiting family."
+          },
+          "occupation": {
+            "role": "Owner of a small custom framing and conservation-framing shop.",
+            "work_situation": "Grace bought the shop from its retiring owner at 34 after working there for several years. It now employs her and two other people. Her gross household income is usually around $142,000, drawn from her salary and business distributions, though profits fluctuate with costs and customer demand. She is the sole earner in her household. The income supports her mortgage, taxes, retirement savings, business expenses, and travel; it does not all become discretionary money.",
+            "ordinary_responsibilities": "She consults with customers about framing, assesses artwork and paper for suitable materials, orders supplies, reviews delicate jobs, and keeps track of invoices and payroll. She enjoys solving the practical puzzle of making an object look right while protecting it, but has little patience for customers who expect conservation work to be both immediate and inexpensive. Her senior employee can manage many day-to-day orders. Before a trip, Grace leaves clear instructions and an emergency contact route; she may check in once early in an absence, but tries not to turn vacation into remote management."
+          },
+          "personality": {
+            "description": "She is self-directed and attentive to craft, with a strong preference for having real responsibility over how she spends her time. She likes useful expertise and dislikes status games, though she can be proud of the reputation she has built locally. She is sociable in small doses, more comfortable with a few familiar people than a large gathering, and can be stubborn when she believes a customer or official is ignoring a practical constraint.",
+            "big_five": {
+              "scale": "Fictional descriptive ratings from 1 (low) to 5 (high); these are not psychological test results.",
+              "openness": {
+                "value": 4.1,
+                "description": "Interested in materials, visual culture, unfamiliar places, and learning by doing; she also appreciates familiar routines."
+              },
+              "conscientiousness": {
+                "value": 4.0,
+                "description": "Reliable with client work, business obligations, and important bookings, though she can let personal paperwork sit until she has a reason to deal with it."
+              },
+              "extraversion": {
+                "value": 2.8,
+                "description": "Enjoys thoughtful one-on-one conversation and a workshop group, but does not need a busy social calendar."
+              },
+              "agreeableness": {
+                "value": 3.4,
+                "description": "Considerate and fair-minded, but willing to say no when a request seems unreasonable."
+              },
+              "neuroticism": {
+                "value": 2.9,
+                "description": "Generally steady; uncertainty about the shop while she is away can make her check messages more than she intended."
+              }
+            }
+          },
+          "preferences": {
+            "travel_and_vacations": "Grace likes travel that gives her a sustained reason to pay attention rather than a packed sequence of sights. A hands-on class, a small museum collection, or an unfamiliar working craft can give a trip its shape; she enjoys seeing how a place makes and uses things. She is not looking for a strenuous outdoor challenge or a luxury resort. She prefers one base for several nights, a private and comfortable room, and enough unscheduled time to walk, read, or decide on dinner late in the day. A workshop gives her some companionship and conversation without requiring her to coordinate every hour with a travel partner. She is comfortable traveling alone, though she enjoys sharing a meal or a side outing with a friend when schedules happen to align.\n\nAs a small-business owner, she cannot simply use a standard bank of paid vacation days. She usually blocks about two weeks away in the quieter part of the year, with a few shorter breaks when her staff can cover the shop. She plans well ahead around orders and staffing, but does not plan each day of a trip in detail. She will spend extra for a class she genuinely wants or lodging that makes it easy to reach the place she is visiting; she is less interested in a costly room upgrade that mainly signals luxury. She generally flies for distant trips and rents a car only when the destination makes it worthwhile. She does not try to visit every nearby town just because she has traveled a long way.\n\nIn October 2025, she spent nine nights in Santa Fe, traveling on her own for a five-day natural-dye and paper workshop. She chose the workshop over a shorter class plus a rushed side trip to Taos, and booked a simple private room close enough to get to class on foot. The days were structured and social; afterward she liked being able to eat alone, browse, or rest without negotiating a plan. She spent one free day looking at local art and another mostly reading and walking. She came home with stained hands, a few samples, and a feeling that she had learned more from staying put than she would have from adding another destination. She did briefly wonder whether she should have seen more of northern New Mexico, but was glad she had paid for the course rather than a more elaborate itinerary. Her next trip might be another workshop in a different medium, but she has not booked one.\n\nShorter vacations are usually low-key: a couple of nights on the Oregon coast, a visit to a friend in the Bay Area, or an overnight somewhere with a good bookstore and a quiet place to walk. She sometimes travels with a longtime college friend, especially for a weekend, but their schedules rarely allow a long shared trip. She is content with that; she would rather travel alone than turn a vacation into a calendar negotiation.",
+            "reading": "She reads for pleasure several evenings a week, often after dinner. She likes novels with sharp observation, essays, and books about art, design, or the history of ordinary objects. She uses the library for fiction and buys a book when she wants to keep referring to it. A book is allowed to be merely enjoyable; she does not insist on finishing one that has started to feel like work.",
+            "other_interests": "Outside the shop, Grace visits small art exhibitions, takes long walks, and occasionally attends a printmaking or book-arts event. She likes cooking simple meals and trying a new recipe when she has a free weekend, but does not make elaborate cooking a daily project. She enjoys quiet cafes and independent shops more than nightlife."
+          },
+          "style": "Grace speaks plainly and tends to explain a decision in practical terms rather than dressing it up. With customers she is patient and specific, especially if she thinks someone is about to choose a frame that will overwhelm the artwork. With friends she is warmer and more teasing, and she likes conversation that moves between everyday details and bigger questions without becoming a debate performance. She dislikes being hurried into a decision, but can make one quickly when the options are clear."
+        },
+        "content_words": 1878
+      },
+      "review_flags": []
+    },
+    {
+      "file": "results.jsonl",
+      "case_id": "persona-philip::cohort-confirm1",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "persona_generation",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "missing_persona_fields": [],
+        "persona": {
+          "name": "Philip Grant Holladay",
+          "age": 78,
+          "gender": "Male",
+          "nationality": "American",
+          "residence": "Boise, Idaho, United States. Philip lives with his wife, Celia, in a modestly spacious 1950s ranch house in an established Boise neighborhood. It has a backyard with herbs and a small patio, not a showpiece garden. They have lived there for more than thirty years and know neighbors and nearby shopkeepers. The home is paid off, though repairs, taxes, and upkeep remain real expenses.",
+          "occupation": "Philip is retired from running a restaurant-supply and commercial-kitchen equipment business. He began as a warehouse buyer and sales representative, then partnered with a colleague to build a distributor serving restaurants, schools, and institutional kitchens in Idaho and eastern Oregon. He spent much of his career pricing equipment, visiting kitchens, resolving delivery problems, and negotiating with manufacturers; he enjoyed talking with owners more than supervising paperwork. At 68, he sold the operating company to a long-time manager rather than accept a higher offer from a national chain that planned to consolidate the local operation. He still occasionally wonders whether he left money on the table, but is glad the staff and customers experienced a steady handover. He retained the warehouse property, now leased to the business, and gives a few hours a month to a local food-business incubator, helping new operators think through equipment, storage, and kitchen layout. His household’s gross annual income is generally above $200,000, varying with investment distributions and rental income, alongside Celia’s public-school pension and their retirement benefits. That income does not feel like an unlimited allowance: they maintain the property, reserve money for future needs, and sometimes defer a trip or home project.",
+          "personality": {
+            "description": "Philip is commercially shrewd, sociable in small groups, and more sentimental about people than he admits. He likes useful work and can be impatient with vague plans, but has no need to be in charge of every decision. He sometimes overestimates how much he can fit into a day, especially when a food market or restaurant has caught his interest. He is comfortable changing his mind after he has seen how a plan feels in practice.",
+            "big_five_scale": "Fictional descriptive ratings on a 1–5 scale, where 1 is low and 5 is high. These are character choices, not measured psychological scores.",
+            "openness": 3.8,
+            "conscientiousness": 3.7,
+            "extraversion": 3.4,
+            "agreeableness": 3.5,
+            "neuroticism": 2.4
+          },
+          "preferences": {
+            "reading": "Reading is part of his ordinary day, usually with coffee in the morning or for a while before bed. He likes biographies, business histories, food writing, and novels with an engaging plot. He enjoys a book that explains how a restaurant, town, or trade developed, but does not want every evening to feel educational. He often has two books going and will set one aside if it starts to feel like an obligation.",
+            "travel": "Travel is a shared pleasure for Philip and Celia, not a reward they feel they have to justify with a packed itinerary. In most years they take one longer trip of roughly two weeks and a couple of shorter domestic breaks, depending on the season and what they want to spend. Philip is especially drawn to places through their food: public markets, bakeries, local cafés, and ordinary restaurants where people who live nearby eat. He likes a cooking lesson or a market walk led by someone who knows the trade, but does not need every meal arranged around a famous chef. He enjoys paying for a memorable dinner or a well-located room, while finding luxury branding and elaborate hotel service unimportant. A small hotel or apartment with a real table, a quiet night’s sleep, and an easy walk to food suits him better than a resort. He and Celia usually fly for international trips and use trains between cities when they are convenient. They rent a car for rural areas, but Philip does not want a vacation made up of long daily drives. Celia is more likely to choose gardens, architecture, and a concert; he likes those too when they fit naturally into the trip, although he would not plan a whole holiday around them.",
+            "recent_trip_and_tradeoffs": "In September 2025, Philip and Celia spent thirteen nights in Portugal, with a week in Lisbon and the remainder in Porto. He had initially proposed adding several nights in the Algarve and renting a car, partly because he wanted to compare the seafood towns. Celia preferred fewer transfers and wanted more time in Porto, so they left the southern leg for another trip. Philip was disappointed to miss it, but the compromise suited the kind of holiday they actually enjoy: in Lisbon they returned to the same market and café, took a hands-on cooking class, and left some evenings open. They paid for one elaborate tasting dinner, which he liked, but he still talks more about a relaxed seafood lunch where the owner explained what had come in that morning. He came home with a small cookbook and a list of dishes he wanted to try making, not a checklist of sights completed.",
+            "everyday_leisure": "At home he cooks several times a week, especially soups, grilled fish, and uncomplicated meals built around what is in season. He likes browsing a farmers’ market and will ask a vendor how they prepare something unfamiliar. He takes neighborhood walks, meets former colleagues for lunch, and occasionally attends a local college basketball game with a friend. He is not a serious gardener, but keeps the herb beds going because Celia uses them and because it feels satisfying to pick what they need."
+          },
+          "style": "He speaks plainly and likes a concrete example more than abstract assurances. With a business owner or repair person, he asks direct questions and may explain more than they asked about a piece of equipment. In a social setting he is warm, quick with a dry joke, and comfortable asking someone what they recommend. He can sound blunt when he thinks a plan is impractical, but is not generally looking for an argument. When traveling, he becomes more talkative around food and markets; when discussing politics, he is less inclined to dominate the table than to state his view and move on."
+        },
+        "content_words": 1750
+      },
+      "review_flags": []
+    }
+  ],
+  "warning": "Flags and structural checks do not prove semantic quality. Review complete public outputs and profiles."
+}

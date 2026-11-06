@@ -1,0 +1,1013 @@
+{
+  "prepared_requests_verified": 144,
+  "checks": [
+    {
+      "batch": "round1",
+      "case_id": "exec-chatcmpl-EcMyPpyhq9S5zw1U55xbUacS251EV::action-execution-v2::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round1",
+      "case_id": "exec-chatcmpl-EcOs5VaSzbXHC9ekPB4HoNqxQkMJ3::narrative-authority-v2::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round1",
+      "case_id": "exec-chatcmpl-EcPQs4sN9jObydoOqqjACE8BvHuqm::narrative-authority-v2::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round1",
+      "case_id": "exec-chatcmpl-EcPM5wjdBjFFpykUFm7dTTh4vr7SE::narrative-authority-v2::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round1",
+      "case_id": "exec-chatcmpl-EcQoc8MNbyvjIPyhyahctBgDu7uUj::narrative-authority-v2::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round1",
+      "case_id": "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR::closed-vocabulary-v2::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round1",
+      "case_id": "exec-chatcmpl-EcSEDbTD31QQYHRw2vsuCbxbTHSak::indexed-themes-v1::r1",
+      "adapter": "indexed_normalization",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round1",
+      "case_id": "exec-chatcmpl-EcQHB8Uq23EuJYVQIjxMXf2k8eXPY::indexed-themes-v1::r1",
+      "adapter": "indexed_normalization",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round2",
+      "case_id": "exec-chatcmpl-EcSEDbTD31QQYHRw2vsuCbxbTHSak::indexed-themes-v1-bounded-schema::r1",
+      "adapter": "indexed_normalization",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round2",
+      "case_id": "exec-chatcmpl-EcQHB8Uq23EuJYVQIjxMXf2k8eXPY::indexed-themes-v1-bounded-schema::r1",
+      "adapter": "indexed_normalization",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "action-sampling-confirm",
+      "case_id": "exec-chatcmpl-EcMyPpyhq9S5zw1U55xbUacS251EV::action-execution-v2-confirm::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "action-sampling-confirm",
+      "case_id": "exec-chatcmpl-EcMyPpyhq9S5zw1U55xbUacS251EV::action-execution-v2-confirm::r2",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "action-sampling-confirm",
+      "case_id": "exec-chatcmpl-EcMyPpyhq9S5zw1U55xbUacS251EV::action-execution-v2-confirm::r3",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "action-sampling-confirm",
+      "case_id": "exec-chatcmpl-EcOYYZPYmzspk2IBYHEMMue73vQBq::action-execution-v2-confirm::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "action-sampling-confirm",
+      "case_id": "exec-chatcmpl-EcOpIL36Q2dgJcoUbaIxIlNag6Qve::action-execution-v2-confirm::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "action-sampling-confirm",
+      "case_id": "exec-chatcmpl-EcQKSqqy5GfE78PpkIkkNo8oVz0qu::action-execution-v2-confirm::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "action-sampling-confirm",
+      "case_id": "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR::closed-vocabulary-v2-confirm::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "action-sampling-confirm",
+      "case_id": "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR::closed-vocabulary-v2-confirm::r2",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "action-sampling-confirm",
+      "case_id": "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR::closed-vocabulary-v2-confirm::r3",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "action-sampling-confirm",
+      "case_id": "exec-chatcmpl-EcNZrgB7NnHHQ32gLuD0kVWCH8bKw::closed-vocabulary-v2-confirm::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "action-sampling-confirm",
+      "case_id": "exec-chatcmpl-EcPVXPdL4sj3j6kfDX47ef2fsDrvS::closed-vocabulary-v2-confirm::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "action-sampling-confirm",
+      "case_id": "exec-chatcmpl-EcQoAeqqNKsUNJdJW4yPwzKCNo2mx::closed-vocabulary-v2-confirm::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "story-confirm",
+      "case_id": "exec-chatcmpl-EcOs5VaSzbXHC9ekPB4HoNqxQkMJ3::narrative-authority-v2-confirm::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "story-confirm",
+      "case_id": "exec-chatcmpl-EcOs5VaSzbXHC9ekPB4HoNqxQkMJ3::narrative-authority-v2-confirm::r2",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "story-confirm",
+      "case_id": "exec-chatcmpl-EcOs5VaSzbXHC9ekPB4HoNqxQkMJ3::narrative-authority-v2-confirm::r3",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "story-confirm",
+      "case_id": "exec-chatcmpl-EcPQs4sN9jObydoOqqjACE8BvHuqm::narrative-authority-v2-confirm::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "story-confirm",
+      "case_id": "exec-chatcmpl-EcPQs4sN9jObydoOqqjACE8BvHuqm::narrative-authority-v2-confirm::r2",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "story-confirm",
+      "case_id": "exec-chatcmpl-EcPQs4sN9jObydoOqqjACE8BvHuqm::narrative-authority-v2-confirm::r3",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "story-confirm",
+      "case_id": "exec-chatcmpl-EcPM5wjdBjFFpykUFm7dTTh4vr7SE::narrative-authority-v2-confirm::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "story-confirm",
+      "case_id": "exec-chatcmpl-EcPM5wjdBjFFpykUFm7dTTh4vr7SE::narrative-authority-v2-confirm::r2",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "story-confirm",
+      "case_id": "exec-chatcmpl-EcPM5wjdBjFFpykUFm7dTTh4vr7SE::narrative-authority-v2-confirm::r3",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "story-confirm",
+      "case_id": "exec-chatcmpl-EcQoc8MNbyvjIPyhyahctBgDu7uUj::narrative-authority-v2-confirm::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "story-confirm",
+      "case_id": "exec-chatcmpl-EcQoc8MNbyvjIPyhyahctBgDu7uUj::narrative-authority-v2-confirm::r2",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "story-confirm",
+      "case_id": "exec-chatcmpl-EcQoc8MNbyvjIPyhyahctBgDu7uUj::narrative-authority-v2-confirm::r3",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "story-confirm",
+      "case_id": "exec-chatcmpl-EcRIZR28RnLdIg8Qm31z2m8DnCvvr::narrative-authority-v2-confirm::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "story-confirm",
+      "case_id": "exec-chatcmpl-EcQKYjykI4QLV52ZcqZPyn2dzfo3w::narrative-authority-v2-confirm::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "story-confirm",
+      "case_id": "exec-chatcmpl-EcPvJQR9JkK8l4yUG6f1hHGcbhvPq::narrative-authority-v2-confirm::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "normalization-confirm",
+      "case_id": "exec-chatcmpl-EcSEDbTD31QQYHRw2vsuCbxbTHSak::indexed-themes-v1-confirm::r1",
+      "adapter": "indexed_normalization",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "normalization-confirm",
+      "case_id": "exec-chatcmpl-EcSEDbTD31QQYHRw2vsuCbxbTHSak::indexed-themes-v1-confirm::r2",
+      "adapter": "indexed_normalization",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "normalization-confirm",
+      "case_id": "exec-chatcmpl-EcSEDbTD31QQYHRw2vsuCbxbTHSak::indexed-themes-v1-confirm::r3",
+      "adapter": "indexed_normalization",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "normalization-confirm",
+      "case_id": "exec-chatcmpl-EcQHB8Uq23EuJYVQIjxMXf2k8eXPY::indexed-themes-v1-confirm::r1",
+      "adapter": "indexed_normalization",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "normalization-confirm",
+      "case_id": "exec-chatcmpl-EcQHB8Uq23EuJYVQIjxMXf2k8eXPY::indexed-themes-v1-confirm::r2",
+      "adapter": "indexed_normalization",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "normalization-confirm",
+      "case_id": "exec-chatcmpl-EcQHB8Uq23EuJYVQIjxMXf2k8eXPY::indexed-themes-v1-confirm::r3",
+      "adapter": "indexed_normalization",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "normalization-confirm",
+      "case_id": "exec-chatcmpl-EcOjpUwCzXHUzfr45T8Xg8fzZ8Mc7::indexed-themes-v1-confirm::r1",
+      "adapter": "indexed_normalization",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "normalization-confirm",
+      "case_id": "exec-chatcmpl-EcQ3Eb3OpSCnrLro5a7kpQyDRihIw::indexed-themes-v1-confirm::r1",
+      "adapter": "indexed_normalization",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "normalization-confirm",
+      "case_id": "exec-chatcmpl-EcQICCWrcBUBdFhSJy75dLdtm89S9::indexed-themes-v1-confirm::r1",
+      "adapter": "indexed_normalization",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round3",
+      "case_id": "exec-chatcmpl-EcOs5VaSzbXHC9ekPB4HoNqxQkMJ3::focused-transition-v3::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round3",
+      "case_id": "exec-chatcmpl-EcPQs4sN9jObydoOqqjACE8BvHuqm::focused-transition-v3::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round3",
+      "case_id": "exec-chatcmpl-EcPM5wjdBjFFpykUFm7dTTh4vr7SE::focused-transition-v3::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round3",
+      "case_id": "exec-chatcmpl-EcQoc8MNbyvjIPyhyahctBgDu7uUj::focused-transition-v3::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round3",
+      "case_id": "exec-chatcmpl-EcRIZR28RnLdIg8Qm31z2m8DnCvvr::focused-transition-v3::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round3",
+      "case_id": "exec-chatcmpl-EcQKYjykI4QLV52ZcqZPyn2dzfo3w::focused-transition-v3::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round3",
+      "case_id": "exec-chatcmpl-EcPvJQR9JkK8l4yUG6f1hHGcbhvPq::focused-transition-v3::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round3",
+      "case_id": "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR::indexed-plan-v1::r1",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round3",
+      "case_id": "exec-chatcmpl-EcNZrgB7NnHHQ32gLuD0kVWCH8bKw::indexed-plan-v1::r1",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round3",
+      "case_id": "exec-chatcmpl-EcPVXPdL4sj3j6kfDX47ef2fsDrvS::indexed-plan-v1::r1",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round3",
+      "case_id": "exec-chatcmpl-EcQoAeqqNKsUNJdJW4yPwzKCNo2mx::indexed-plan-v1::r1",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "large-plan",
+      "case_id": "exec-chatcmpl-EcQICCWrcBUBdFhSJy75dLdtm89S9::large-partition-v1-themes",
+      "adapter": "normalization_pipeline",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "large-plan",
+      "case_id": "exec-chatcmpl-EcRoxhgRNdZDHXBrbVrSDLMthTHLM::large-partition-v1-themes",
+      "adapter": "normalization_pipeline",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "large-chunks",
+      "case_id": "exec-chatcmpl-EcQICCWrcBUBdFhSJy75dLdtm89S9::large-partition-assignment-v1-chunk-1-240",
+      "adapter": "normalization_pipeline",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "large-chunks",
+      "case_id": "exec-chatcmpl-EcQICCWrcBUBdFhSJy75dLdtm89S9::large-partition-assignment-v1-chunk-241-480",
+      "adapter": "normalization_pipeline",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "large-chunks",
+      "case_id": "exec-chatcmpl-EcQICCWrcBUBdFhSJy75dLdtm89S9::large-partition-assignment-v1-chunk-481-720",
+      "adapter": "normalization_pipeline",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "large-chunks",
+      "case_id": "exec-chatcmpl-EcQICCWrcBUBdFhSJy75dLdtm89S9::large-partition-assignment-v1-chunk-721-960",
+      "adapter": "normalization_pipeline",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "large-chunks",
+      "case_id": "exec-chatcmpl-EcQICCWrcBUBdFhSJy75dLdtm89S9::large-partition-assignment-v1-chunk-961-1200",
+      "adapter": "normalization_pipeline",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "large-chunks",
+      "case_id": "exec-chatcmpl-EcQICCWrcBUBdFhSJy75dLdtm89S9::large-partition-assignment-v1-chunk-1201-1440",
+      "adapter": "normalization_pipeline",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "large-chunks",
+      "case_id": "exec-chatcmpl-EcQICCWrcBUBdFhSJy75dLdtm89S9::large-partition-assignment-v1-chunk-1441-1680",
+      "adapter": "normalization_pipeline",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "large-chunks",
+      "case_id": "exec-chatcmpl-EcQICCWrcBUBdFhSJy75dLdtm89S9::large-partition-assignment-v1-chunk-1681-1920",
+      "adapter": "normalization_pipeline",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "large-chunks",
+      "case_id": "exec-chatcmpl-EcQICCWrcBUBdFhSJy75dLdtm89S9::large-partition-assignment-v1-chunk-1921-2130",
+      "adapter": "normalization_pipeline",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "large-chunks",
+      "case_id": "exec-chatcmpl-EcRoxhgRNdZDHXBrbVrSDLMthTHLM::large-partition-assignment-v1-chunk-1-240",
+      "adapter": "normalization_pipeline",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "large-chunks",
+      "case_id": "exec-chatcmpl-EcRoxhgRNdZDHXBrbVrSDLMthTHLM::large-partition-assignment-v1-chunk-241-480",
+      "adapter": "normalization_pipeline",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "large-chunks",
+      "case_id": "exec-chatcmpl-EcRoxhgRNdZDHXBrbVrSDLMthTHLM::large-partition-assignment-v1-chunk-481-720",
+      "adapter": "normalization_pipeline",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "large-chunks",
+      "case_id": "exec-chatcmpl-EcRoxhgRNdZDHXBrbVrSDLMthTHLM::large-partition-assignment-v1-chunk-721-960",
+      "adapter": "normalization_pipeline",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "large-chunks",
+      "case_id": "exec-chatcmpl-EcRoxhgRNdZDHXBrbVrSDLMthTHLM::large-partition-assignment-v1-chunk-961-1200",
+      "adapter": "normalization_pipeline",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "large-chunks",
+      "case_id": "exec-chatcmpl-EcRoxhgRNdZDHXBrbVrSDLMthTHLM::large-partition-assignment-v1-chunk-1201-1440",
+      "adapter": "normalization_pipeline",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "large-chunks",
+      "case_id": "exec-chatcmpl-EcRoxhgRNdZDHXBrbVrSDLMthTHLM::large-partition-assignment-v1-chunk-1441-1680",
+      "adapter": "normalization_pipeline",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "large-chunks",
+      "case_id": "exec-chatcmpl-EcRoxhgRNdZDHXBrbVrSDLMthTHLM::large-partition-assignment-v1-chunk-1681-1920",
+      "adapter": "normalization_pipeline",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "large-chunks",
+      "case_id": "exec-chatcmpl-EcRoxhgRNdZDHXBrbVrSDLMthTHLM::large-partition-assignment-v1-chunk-1921-2127",
+      "adapter": "normalization_pipeline",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round4",
+      "case_id": "exec-chatcmpl-EcOs5VaSzbXHC9ekPB4HoNqxQkMJ3::focused-transition-v3-confirm::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round4",
+      "case_id": "exec-chatcmpl-EcOs5VaSzbXHC9ekPB4HoNqxQkMJ3::focused-transition-v3-confirm::r2",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round4",
+      "case_id": "exec-chatcmpl-EcOs5VaSzbXHC9ekPB4HoNqxQkMJ3::focused-transition-v3-confirm::r3",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round4",
+      "case_id": "exec-chatcmpl-EcPQs4sN9jObydoOqqjACE8BvHuqm::focused-transition-v3-confirm::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round4",
+      "case_id": "exec-chatcmpl-EcPQs4sN9jObydoOqqjACE8BvHuqm::focused-transition-v3-confirm::r2",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round4",
+      "case_id": "exec-chatcmpl-EcPQs4sN9jObydoOqqjACE8BvHuqm::focused-transition-v3-confirm::r3",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round4",
+      "case_id": "exec-chatcmpl-EcPM5wjdBjFFpykUFm7dTTh4vr7SE::focused-transition-v3-confirm::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round4",
+      "case_id": "exec-chatcmpl-EcPM5wjdBjFFpykUFm7dTTh4vr7SE::focused-transition-v3-confirm::r2",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round4",
+      "case_id": "exec-chatcmpl-EcPM5wjdBjFFpykUFm7dTTh4vr7SE::focused-transition-v3-confirm::r3",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round4",
+      "case_id": "exec-chatcmpl-EcQoc8MNbyvjIPyhyahctBgDu7uUj::focused-transition-v3-confirm::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round4",
+      "case_id": "exec-chatcmpl-EcQoc8MNbyvjIPyhyahctBgDu7uUj::focused-transition-v3-confirm::r2",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round4",
+      "case_id": "exec-chatcmpl-EcQoc8MNbyvjIPyhyahctBgDu7uUj::focused-transition-v3-confirm::r3",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round4",
+      "case_id": "exec-chatcmpl-EcRIZR28RnLdIg8Qm31z2m8DnCvvr::focused-transition-v3-confirm::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round4",
+      "case_id": "exec-chatcmpl-EcRIZR28RnLdIg8Qm31z2m8DnCvvr::focused-transition-v3-confirm::r2",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round4",
+      "case_id": "exec-chatcmpl-EcRIZR28RnLdIg8Qm31z2m8DnCvvr::focused-transition-v3-confirm::r3",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round4",
+      "case_id": "exec-chatcmpl-EcQKYjykI4QLV52ZcqZPyn2dzfo3w::focused-transition-v3-confirm::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round4",
+      "case_id": "exec-chatcmpl-EcQKYjykI4QLV52ZcqZPyn2dzfo3w::focused-transition-v3-confirm::r2",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round4",
+      "case_id": "exec-chatcmpl-EcQKYjykI4QLV52ZcqZPyn2dzfo3w::focused-transition-v3-confirm::r3",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round4",
+      "case_id": "exec-chatcmpl-EcPvJQR9JkK8l4yUG6f1hHGcbhvPq::focused-transition-v3-confirm::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round4",
+      "case_id": "exec-chatcmpl-EcPvJQR9JkK8l4yUG6f1hHGcbhvPq::focused-transition-v3-confirm::r2",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round4",
+      "case_id": "exec-chatcmpl-EcPvJQR9JkK8l4yUG6f1hHGcbhvPq::focused-transition-v3-confirm::r3",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round4",
+      "case_id": "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR::membership-plan-v2::r1",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round4",
+      "case_id": "exec-chatcmpl-EcNZrgB7NnHHQ32gLuD0kVWCH8bKw::membership-plan-v2::r1",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round4",
+      "case_id": "exec-chatcmpl-EcPVXPdL4sj3j6kfDX47ef2fsDrvS::membership-plan-v2::r1",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "round4",
+      "case_id": "exec-chatcmpl-EcQoAeqqNKsUNJdJW4yPwzKCNo2mx::membership-plan-v2::r1",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "final-confirmation",
+      "case_id": "exec-chatcmpl-EcPHAlRM1eYH3uyS4L7lioSu2IQkb::focused-transition-v3-fresh::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "final-confirmation",
+      "case_id": "exec-chatcmpl-EcPUazJhlcNPIeZyFpCOb7FiRYGIg::focused-transition-v3-fresh::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "final-confirmation",
+      "case_id": "exec-chatcmpl-EcPhm8qPWF8o7oeffJulXI7zoFr0G::focused-transition-v3-fresh::r1",
+      "adapter": "append_system",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "final-confirmation",
+      "case_id": "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR::membership-plan-v2-confirm::r1",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "final-confirmation",
+      "case_id": "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR::membership-plan-v2-confirm::r2",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "final-confirmation",
+      "case_id": "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR::membership-plan-v2-confirm::r3",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "final-confirmation",
+      "case_id": "exec-chatcmpl-EcNZrgB7NnHHQ32gLuD0kVWCH8bKw::membership-plan-v2-confirm::r1",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "final-confirmation",
+      "case_id": "exec-chatcmpl-EcNZrgB7NnHHQ32gLuD0kVWCH8bKw::membership-plan-v2-confirm::r2",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "final-confirmation",
+      "case_id": "exec-chatcmpl-EcNZrgB7NnHHQ32gLuD0kVWCH8bKw::membership-plan-v2-confirm::r3",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "final-confirmation",
+      "case_id": "exec-chatcmpl-EcPVXPdL4sj3j6kfDX47ef2fsDrvS::membership-plan-v2-confirm::r1",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "final-confirmation",
+      "case_id": "exec-chatcmpl-EcPVXPdL4sj3j6kfDX47ef2fsDrvS::membership-plan-v2-confirm::r2",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "final-confirmation",
+      "case_id": "exec-chatcmpl-EcPVXPdL4sj3j6kfDX47ef2fsDrvS::membership-plan-v2-confirm::r3",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "final-confirmation",
+      "case_id": "exec-chatcmpl-EcQoAeqqNKsUNJdJW4yPwzKCNo2mx::membership-plan-v2-confirm::r1",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "final-confirmation",
+      "case_id": "exec-chatcmpl-EcQoAeqqNKsUNJdJW4yPwzKCNo2mx::membership-plan-v2-confirm::r2",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "final-confirmation",
+      "case_id": "exec-chatcmpl-EcQoAeqqNKsUNJdJW4yPwzKCNo2mx::membership-plan-v2-confirm::r3",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "final-confirmation",
+      "case_id": "exec-chatcmpl-EdMnHggNcBaYKck4FEBp4D2YjA1I6::membership-plan-v2-fresh::r1",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "final-confirmation",
+      "case_id": "exec-chatcmpl-EcOxD2opspEiQDwf3tfIPzZqewtnr::membership-plan-v2-fresh::r1",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "final-confirmation",
+      "case_id": "exec-chatcmpl-EcPUnJ9jpREY6PPoDNYxBQdjCEh59::membership-plan-v2-fresh::r1",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "feasibility-v3",
+      "case_id": "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR::membership-plan-v3-confirm::r1",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "feasibility-v3",
+      "case_id": "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR::membership-plan-v3-confirm::r2",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "feasibility-v3",
+      "case_id": "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR::membership-plan-v3-confirm::r3",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "feasibility-v3",
+      "case_id": "exec-chatcmpl-EcNZrgB7NnHHQ32gLuD0kVWCH8bKw::membership-plan-v3-confirm::r1",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "feasibility-v3",
+      "case_id": "exec-chatcmpl-EcNZrgB7NnHHQ32gLuD0kVWCH8bKw::membership-plan-v3-confirm::r2",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "feasibility-v3",
+      "case_id": "exec-chatcmpl-EcNZrgB7NnHHQ32gLuD0kVWCH8bKw::membership-plan-v3-confirm::r3",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "feasibility-v3",
+      "case_id": "exec-chatcmpl-EcPVXPdL4sj3j6kfDX47ef2fsDrvS::membership-plan-v3-confirm::r1",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "feasibility-v3",
+      "case_id": "exec-chatcmpl-EcPVXPdL4sj3j6kfDX47ef2fsDrvS::membership-plan-v3-confirm::r2",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "feasibility-v3",
+      "case_id": "exec-chatcmpl-EcPVXPdL4sj3j6kfDX47ef2fsDrvS::membership-plan-v3-confirm::r3",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "feasibility-v3",
+      "case_id": "exec-chatcmpl-EcQoAeqqNKsUNJdJW4yPwzKCNo2mx::membership-plan-v3-confirm::r1",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "feasibility-v3",
+      "case_id": "exec-chatcmpl-EcQoAeqqNKsUNJdJW4yPwzKCNo2mx::membership-plan-v3-confirm::r2",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "feasibility-v3",
+      "case_id": "exec-chatcmpl-EcQoAeqqNKsUNJdJW4yPwzKCNo2mx::membership-plan-v3-confirm::r3",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "feasibility-v3",
+      "case_id": "exec-chatcmpl-EdMnHggNcBaYKck4FEBp4D2YjA1I6::membership-plan-v3-confirm::r1",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "feasibility-v3",
+      "case_id": "exec-chatcmpl-EdMnHggNcBaYKck4FEBp4D2YjA1I6::membership-plan-v3-confirm::r2",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "feasibility-v3",
+      "case_id": "exec-chatcmpl-EdMnHggNcBaYKck4FEBp4D2YjA1I6::membership-plan-v3-confirm::r3",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "feasibility-v3",
+      "case_id": "exec-chatcmpl-EcOxD2opspEiQDwf3tfIPzZqewtnr::membership-plan-v3-confirm::r1",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "feasibility-v3",
+      "case_id": "exec-chatcmpl-EcOxD2opspEiQDwf3tfIPzZqewtnr::membership-plan-v3-confirm::r2",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "feasibility-v3",
+      "case_id": "exec-chatcmpl-EcOxD2opspEiQDwf3tfIPzZqewtnr::membership-plan-v3-confirm::r3",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "feasibility-v3",
+      "case_id": "exec-chatcmpl-EcPUnJ9jpREY6PPoDNYxBQdjCEh59::membership-plan-v3-confirm::r1",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "feasibility-v3",
+      "case_id": "exec-chatcmpl-EcPUnJ9jpREY6PPoDNYxBQdjCEh59::membership-plan-v3-confirm::r2",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "feasibility-v3",
+      "case_id": "exec-chatcmpl-EcPUnJ9jpREY6PPoDNYxBQdjCEh59::membership-plan-v3-confirm::r3",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "feasibility-v3",
+      "case_id": "exec-chatcmpl-EcM95l2RaExtvDUAVWUV79rG7iT9O::membership-plan-v3-fresh::r1",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "feasibility-v3",
+      "case_id": "exec-chatcmpl-EcQTsBxDgrJUareJPI445eF2iniqG::membership-plan-v3-fresh::r1",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    },
+    {
+      "batch": "feasibility-v3",
+      "case_id": "exec-chatcmpl-EcLqTJWCF2AtJx2MhKHOHjUKz8HFq::membership-plan-v3-fresh::r1",
+      "adapter": "indexed_sampling",
+      "source_parameters_and_literal_evidence_preserved": true,
+      "historical_response_unchanged": true
+    }
+  ]
+}

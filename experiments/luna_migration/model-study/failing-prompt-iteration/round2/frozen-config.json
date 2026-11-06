@@ -1,0 +1,19 @@
+{
+  "stage": "failure-development-round2",
+  "corpora": [
+    "..\\broad-luna-optimization\\normalization-refinement\\sources.jsonl"
+  ],
+  "repetitions": 1,
+  "recipes": [
+    {
+      "id": "indexed-themes-v1-bounded-schema",
+      "instruction_file": "normalization-indexed-v1.txt",
+      "adapter": "indexed_normalization",
+      "cases": [
+        "exec-chatcmpl-EcSEDbTD31QQYHRw2vsuCbxbTHSak",
+        "exec-chatcmpl-EcQHB8Uq23EuJYVQIjxMXf2k8eXPY"
+      ],
+      "hypothesis": "Same semantic prompt; replace repeated enums with integer bounds to stay below the API's 1000-total-enum schema limit. Original rejected requests remain preserved."
+    }
+  ]
+}

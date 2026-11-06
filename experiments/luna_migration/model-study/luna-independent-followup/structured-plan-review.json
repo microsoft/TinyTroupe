@@ -1,0 +1,56 @@
+{
+  "scope": "Full assistant semantic review of all 24 sketches in six strict-schema planning responses, including the unselected candidates. This review does not certify the later expansions.",
+  "structural_outcome": "Six completed plans, four candidates each, all five requested fields present. The strict schema is an explicit planning-stage transport change.",
+  "semantic_outcome": "All 24 sketches preserve the original particulars and describe plausible, meaningfully contrasting activities and motives within their candidate sets. No externally checkable false calendar premise was identified. Future events and arrangements remain unscheduled.",
+  "plans": [
+    {
+      "source": "persona-grace",
+      "replicate": 0,
+      "alternatives": ["Seattle environmental analyst/backpacking", "Oakland software engineer/cooking and food travel", "Portland sound designer/live music and dancing", "Anchorage nonprofit communications/history and reading"],
+      "selected_index_zero_based": 1,
+      "review": "The alternatives differ in desired experiences, social energy and daily activities, not just destination labels. Ages, incomes, household and political particulars are explicit. Korean American heritage is an explicit ethnic identification, not an inference from the name."
+    },
+    {
+      "source": "persona-grace",
+      "replicate": 1,
+      "alternatives": ["Tacoma GIS analyst/coastal wildlife observation", "Oakland product operations/live music", "Portland imaging technologist/cooking", "Olympia software engineer/competitive chess"],
+      "selected_index_zero_based": 0,
+      "review": "Nature observation, live performance, food learning and chess competition are distinct motives. Interpersonal styles differ beyond levels of politeness. The healthcare occupation and chess alternative broaden the proposal pool without changing the original constraints."
+    },
+    {
+      "source": "persona-grace",
+      "replicate": 2,
+      "alternatives": ["Seattle product designer/ceramics", "Portland geospatial analyst/birdwatching", "Oakland technical sales/music and dancing", "Tacoma healthcare operations/family food traditions"],
+      "selected_index_zero_based": 1,
+      "review": "Craft learning, wildlife, musical participation and family connection are distinguishable. Being an aunt is compatible with having no children. The selected birdwatcher overlaps with replicate 1's selected naturalist; this real draw was retained without redrawing."
+    },
+    {
+      "source": "persona-philip",
+      "replicate": 0,
+      "alternatives": ["Idaho civil engineer/fishing and conservation", "Colorado food-service distributor/cooking", "Montana architect/building preservation", "Colorado communications engineer/astronomy"],
+      "selected_index_zero_based": 1,
+      "review": "Food learning, architecture, river engagement and astronomy produce different reasons to travel. Every candidate explicitly meets age, income, marriage, no-children, ethnicity, nationality and political constraints. A past eclipse is undated and supplies no false future location or calendar claim."
+    },
+    {
+      "source": "persona-philip",
+      "replicate": 1,
+      "alternatives": ["Colorado electrical engineer/astronomy", "Montana mechanical engineer/vintage cars", "Idaho former food-business owner/cooking", "Wyoming physician/birdwatching"],
+      "selected_index_zero_based": 1,
+      "review": "The selected car restorer seeks craftsmanship and fellow enthusiasts, not just scenic touring. Comfortable resources and cautious transport choices are credible at the specified age. The food candidate's kitchen/return-home explanation is slightly loose prose, not a consequential biographical contradiction."
+    },
+    {
+      "source": "persona-philip",
+      "replicate": 2,
+      "alternatives": ["Colorado structural engineer/wooden boats", "Montana food-service supplier/cooking", "Colorado former surveying-firm owner/fly-fishing", "Idaho attorney/choral singing"],
+      "selected_index_zero_based": 2,
+      "review": "Quiet fishing and theatrical choral participation are genuinely different social and leisure orientations. A partner's separate interests are compatible with shared travel. The selected surveyor's business proceeds and investments plausibly support the required income."
+    }
+  ],
+  "limitations": [
+    "Proposal themes recur across independent calls, especially food, outdoor observation, music and engineering. Rich alternatives are not proof of unbiased generation.",
+    "Most candidates still have financially comfortable, orderly lives and modest interpersonal flaws; no claim of broad psychological coverage.",
+    "The random draws chose two nature-oriented Grace profiles. The study did not select the loudest or most dissimilar profiles after seeing the results.",
+    "Equal selection among four model-written alternatives is not equal real-world prevalence.",
+    "This is assistant review, not blinded independent human assessment."
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "case_ids": ["persona-grace::explicit-particularities", "persona-philip::external-fact-boundary"],
+  "context_fields": ["age", "residence", "occupation", "preferences", "personality"],
+  "instruction_file": "cohort-instruction.txt",
+  "message": 1,
+  "purpose": "Generate plausible alternative fictional lives with prior-draft context using each source case's tested recipe. Deliberate coverage, not population sampling."
+}

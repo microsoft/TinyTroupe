@@ -1,0 +1,13 @@
+{
+  "created_at": "2026-11-02T21:20:16.865571+00:00",
+  "names": [
+    "Diego Andrés Quintana",
+    "Marco Antonio Salazar",
+    "Gabriel Leon Sandoval"
+  ],
+  "selection": "Three observed catalog-bearing biographies: food-adventurous early adopter, traditional-food early adopter, and a novelty-resistant adult.",
+  "intervention": "\nThe population description may also include instructions for constructing a sampling\nspace, such as defining dimensions and their possible values. Those instructions\nbelong to population planning, not this person's biography. Use the sampled values\nin Agent Particularities to describe this one person. Do not output population-wide\ncatalogs, alternative trait values, sampling plans, or demographic distributions as\npersona fields. Preserve eligibility and the person's actual traits; the possible\nvalues for other people are not additional traits of this person.\n",
+  "constants": "Original generator messages, individual sampled characteristics, eligibility, model, effort and output-token limit; only the planning-boundary paragraph changes.",
+  "outcomes": "Catalog removal and retained individual traits. Subsequent ratings, if tested, are not an acceptance criterion for this source-fidelity repair.",
+  "scope": "New biography elaborations, not unchanged-persona actor comparisons or empirical validation."
+}

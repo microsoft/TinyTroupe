@@ -2,6 +2,7 @@ import json
 import logging
 import os
 import tempfile
+from datetime import datetime
 from unittest.mock import Mock, patch
 
 import pytest
@@ -17,11 +18,75 @@ sys.path.insert(0, "..")
 from testing_utils import *
 
 from tinytroupe.environment import TinyWorld
+from tinytroupe.agent import TinyPerson
 from tinytroupe.examples import (
     create_lisa_the_data_scientist,
     create_oscar_the_architect,
 )
 from tinytroupe.extraction.results_extractor import ResultsExtractor
+
+
+@pytest.mark.core
+@pytest.mark.parametrize(
+    "public_reply,source,expected_response,expected_justification",
+    [
+        ("Mm... ba-ba.", "public", "N/A", None),
+        (
+            "My rating is 4 because it fits my routine.",
+            "public",
+            "4",
+            "My rating is 4 because it fits my routine.",
+        ),
+        (
+            "My rating is 4 because it fits my routine.",
+            "private",
+            "1",
+            "My rating is 1 because it is too expensive.",
+        ),
+    ],
+    ids=["public-nonanswer", "public-answer", "explicit-private"],
+)
+def test_results_extractor_justification_evidence_boundary(
+    setup, public_reply, source, expected_response, expected_justification
+):
+    """Real extraction preserves the requested source in both the rating and its evidence."""
+    agent = TinyPerson("Evidence Boundary Respondent")
+    actions = [
+        ("THINK", "My rating is 1 because it is too expensive."),
+        ("TALK", public_reply),
+        ("DONE", "My rating is 5 because it is convenient."),
+    ]
+    for action_type, content in actions:
+        agent.episodic_memory.store({
+            "role": "assistant",
+            "simulation_timestamp": datetime(2026, 1, 1, 12, 0),
+            "content": {
+                "action": {"type": action_type, "content": content, "target": ""},
+                "cognitive_state": {},
+            },
+        })
+    history = agent.pretty_current_interactions()
+    assert all(content in history for _, content in actions)
+    objective = (
+        "Extract the person's private THINK purchase rating, not their public answer."
+        if source == "private"
+        else "Extract the person's publicly stated TALK purchase rating."
+    )
+    result = ResultsExtractor().extract_results_from_agent(
+        agent,
+        extraction_objective=objective,
+        fields=["response", "justification"],
+        fields_hints={
+            "response": "Return a JSON string containing the explicit rating ('1' to '5') "
+                        "in the requested source, or 'N/A' if that source gives no rating.",
+            "justification": "Copy the complete content of the requested action type "
+                             "verbatim when it gives a purchase rating. Otherwise return null.",
+        },
+    )
+    assert result == {
+        "response": expected_response,
+        "justification": expected_justification,
+    }
 
 
 @pytest.mark.core

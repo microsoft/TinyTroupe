@@ -117,6 +117,37 @@ def test_export_docx(exporter):
 
 
 @pytest.mark.core
+@pytest.mark.skipif(os.name != "nt", reason="Windows extended-length path regression")
+def test_word_processor_long_windows_export_path(tmp_path):
+    """Long export paths preserve complete documents in all three output formats."""
+    from docx import Document
+    from tinytroupe.tools import TinyWordProcessor
+
+    exporter = ArtifactExporter(str(tmp_path / ("exported-artifacts-" * 5)))
+    title = ("Detailed project report " * 7).strip()
+    author = "Test Analyst"
+    content = "# Complete report\n\nAll important findings are preserved."
+    artifact_name = f"{title}.{author}"
+    assert len(os.path.abspath(os.path.join(
+        exporter.base_output_folder, "Document", f"{artifact_name}.json"
+    ))) > 260
+
+    TinyWordProcessor(exporter=exporter).write_document(title, content, author)
+
+    paths = {
+        fmt: exporter._compose_filepath(content, artifact_name, "Document", fmt)
+        for fmt in ("md", "json", "docx")
+    }
+    with open(paths["md"], encoding="utf-8") as stream:
+        assert stream.read() == content
+    with open(paths["json"], encoding="utf-8") as stream:
+        assert json.load(stream) == {"title": title, "content": content, "author": author}
+    assert "All important findings are preserved." in "\n".join(
+        paragraph.text for paragraph in Document(paths["docx"]).paragraphs
+    )
+
+
+@pytest.mark.core
 def test_normalizer():
     # Define the concepts to be normalized
     concepts = [
@@ -185,13 +216,14 @@ def test_normalizer():
         random.sample(concepts, 15),
     ]
 
-    assert (
-        len(normalizer.normalizing_map.keys()) == 0
-    ), "The normalizing map should be empty at the beginning."
+    assert set(normalizer.normalizing_map) == set(unique_concepts), (
+        "The validated partition should pre-cache every original concept."
+    )
     for bucket in random_concepts_buckets:
         init_cache_size = len(normalizer.normalizing_map.keys())
 
         normalized_concept = normalizer.normalize(bucket)
+        assert normalized_concept == [normalizer.normalizing_map[concept] for concept in bucket]
         assert (
             normalized_concept is not None
         ), "The normalized concept should not be None."
@@ -226,5 +258,5 @@ def test_normalizer():
             next_cache_size > 0
         ), "The cache size should be greater than 0 after normalizing a new concept."
         assert (
-            next_cache_size >= init_cache_size
-        ), "The cache size should not decrease after normalizing a new concept."
+            next_cache_size == init_cache_size
+        ), "Original concepts should reuse their partition assignments without changing the cache."

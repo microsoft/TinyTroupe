@@ -1,0 +1,35 @@
+{
+  "counts": {
+    "attempts": 48,
+    "completed": 42,
+    "unpriced_errors": 6
+  },
+  "unique_response_ids": 42,
+  "request_hashes_and_corpora_match": true,
+  "original_system_messages_and_two_message_shape_preserved": true,
+  "strict_plan_schemas_valid": true,
+  "final_persona_required_fields_present": true,
+  "independent_decimal_cost_usd": "0.146520925",
+  "stage_cost_usd": {
+    "independent-persona-development": "0.032073605",
+    "independent-candidate-planning": "0.017063375",
+    "independent-candidate-planning-repaired": "0.012967525",
+    "independent-selected-expansion": "0.022604050",
+    "contrast-motivation-planning-transport-repair": "0.019067455",
+    "contrast-structured-planning": "0.019101365",
+    "contrast-selected-expansion": "0.023643550",
+    "contrast-motivation-planning": "0"
+  },
+  "unpriced_error_charges": "Unknown; not asserted zero.",
+  "offline_tests_passed": 44,
+  "started_at": "2026-10-29T08:35:05-03:00",
+  "verified_at": "2026-10-29T09:34:34.986391-03:00",
+  "wall_minutes_through_verification": 59.5,
+  "summed_api_seconds": 3080.0,
+  "review_files": [
+    "structured-plan-review.json",
+    "final-persona-review.json",
+    "quality-reviews.json"
+  ],
+  "runtime_deployed": false
+}

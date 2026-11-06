@@ -1,0 +1,27 @@
+{
+  "schemas": [
+    {
+      "class": "tinytroupe.utils.llm.LLMStringWithJustificationResponse",
+      "source": "tinytroupe\\utils\\llm.py",
+      "line": 111,
+      "source_file_sha256": "dd68bfb9056762cb0b6618ab782f399c39858a63b57df9cbcfdfcf706a7610e7",
+      "method": "Compile the exact trusted local class declaration with its typing imports, then OpenAI SDK strict schema conversion; no TinyTroupe import or API call."
+    },
+    {
+      "class": "tinytroupe.utils.llm.LLMIntegerWithJustificationAndReasoningResponse",
+      "source": "tinytroupe\\utils\\llm.py",
+      "line": 156,
+      "source_file_sha256": "dd68bfb9056762cb0b6618ab782f399c39858a63b57df9cbcfdfcf706a7610e7",
+      "method": "Compile the exact trusted local class declaration with its typing imports, then OpenAI SDK strict schema conversion; no TinyTroupe import or API call."
+    },
+    {
+      "class": "tinytroupe.validation.tiny_person_validator.ValidationResponse",
+      "source": "tinytroupe\\validation\\tiny_person_validator.py",
+      "line": 17,
+      "source_file_sha256": "c869033fc9419d9367c15d0bd5e5f6d3a6731dcec98e9b4b3e612c613942fde2",
+      "method": "Compile the exact trusted local class declaration with its typing imports, then OpenAI SDK strict schema conversion; no TinyTroupe import or API call."
+    }
+  ],
+  "cognitive_actions_schema": "Reused previously exported model-case-schemas.json; exact schema checked against existing diagnostic requests.",
+  "limitation": "Reconstructed current-library schema, not a captured wire body."
+}

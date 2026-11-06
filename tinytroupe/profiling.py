@@ -15,10 +15,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-try:  # Normalizer lives under extraction
-    from .extraction.normalizer import Normalizer  # type: ignore
-except Exception:  # pragma: no cover - fallback (normalization will degrade gracefully)
-    Normalizer = None  # type: ignore
+from .extraction.normalizer import Normalizer
 
 try:  # Optional TinyPerson type
     from .agent import TinyPerson  # type: ignore
@@ -27,7 +24,10 @@ except Exception:  # pragma: no cover
 
 
 class Profiler:
-    """Population profiler with basic and advanced persona facet analysis."""
+    """Population profiler with basic and advanced persona facet analysis.
+
+    Preference facets read canonical ``preferences`` fields, with support for legacy flat fields.
+    """
 
     def __init__(
         self,
@@ -207,26 +207,16 @@ class Profiler:
 
         # -------------------------- helpers --------------------------
         def _extract_path(agent: Dict[str, Any], path: List[str]) -> Any:
-            # Simplified access: rely on TinyPerson.get (supports dot notation) when available.
-            joined = ".".join(path)
-            if hasattr(agent, "get") and callable(getattr(agent, "get")):
-                try:
-                    return agent.get(joined)
-                except Exception:
-                    pass
-            # Fallback for plain dict agents
-            cur: Any = agent
-            for seg in path:
-                if isinstance(cur, dict) and seg in cur:
-                    cur = cur[seg]
-                else:
-                    return None
-            return cur
+            return self._get_nested_attribute(agent, ".".join(path))
 
-        def _collect_list_per_agent(path: List[str]) -> List[List[str]]:
+        def _collect_list_per_agent(
+            path: List[str], fallback_path: Optional[List[str]] = None
+        ) -> List[List[str]]:
             data: List[List[str]] = []
             for ag in self.agents:
                 val = _extract_path(ag, path)
+                if val is None and fallback_path is not None:
+                    val = _extract_path(ag, fallback_path)
                 if isinstance(val, list):
                     data.append([str(x).strip() for x in val if x])
                 else:
@@ -255,50 +245,15 @@ class Profiler:
         def _normalize(
             name: str, raw_tokens: List[str], target_n: int
         ) -> Dict[str, List[str]]:
-            uniq = [r for r in {r for r in raw_tokens if r}]
+            uniq = list(dict.fromkeys(r for r in raw_tokens if r))
             if not uniq:
                 print(f"[DEBUG normalize:{name}] No tokens provided.")
                 return {}
             print(f"[DEBUG normalize:{name}] raw_tokens={len(raw_tokens)} uniq={len(uniq)} target_n={target_n}")
-            if Normalizer is None:
-                print(f"[DEBUG normalize:{name}] Normalizer unavailable; returning identity clusters.")
-                return {u: [u] for u in uniq}
-            try:
-                norm = Normalizer(uniq, n=target_n, verbose=False, max_length=self.persona_label_max_chars)  # type: ignore
-                mapping = norm.normalized_mapping()  # type: ignore[attr-defined]
-                print(f"[DEBUG normalize:{name}] clusters={len(mapping)}")
-                # Defensive guard: if an upstream change ever lets mapping exceed target_n, warn & trim locally.
-                if target_n and target_n > 0 and len(mapping) > target_n:
-                    warnings.warn(
-                        f"Normalizer returned {len(mapping)} clusters for '{name}' exceeding cap {target_n}; trimming locally.",
-                        RuntimeWarning,
-                    )
-                    # Keep largest clusters (by number of originals)
-                    ordered = sorted(mapping.items(), key=lambda kv: len(kv[1]), reverse=True)
-                    trimmed = dict(ordered[: target_n - 1]) if target_n > 1 else {}
-                    if target_n > 1:
-                        # Aggregate overflow originals under 'Other'
-                        overflow_originals: List[str] = []
-                        for _, originals in ordered[target_n - 1 :]:
-                            overflow_originals.extend(originals)
-                        if overflow_originals:
-                            trimmed["Other"] = overflow_originals
-                    else:
-                        # Single bucket scenario: collapse everything
-                        overflow_all: List[str] = []
-                        for _, originals in ordered:
-                            overflow_all.extend(originals)
-                        trimmed = {"Other": overflow_all}
-                    mapping = trimmed
-                    print(f"[DEBUG normalize:{name}] post-trim clusters={len(mapping)}")
-                return mapping
-            except Exception as e:  # pragma: no cover
-                warnings.warn(
-                    f"Normalization failed for {name}: {e}; using raw tokens.",
-                    RuntimeWarning,
-                )
-                print(f"[DEBUG normalize:{name}] Exception -> fallback identity mapping.")
-                return {u: [u] for u in uniq}
+            norm = Normalizer(uniq, n=target_n, verbose=False, max_length=self.persona_label_max_chars)
+            mapping = norm.normalized_mapping()
+            print(f"[DEBUG normalize:{name}] clusters={len(mapping)}")
+            return mapping
 
         def _distribution_df(
             mapping: Dict[str, List[str]],
@@ -533,7 +488,7 @@ class Profiler:
 
         # -------------------------- facets (debug instrumentation) --------------------------
         # 1. Interests
-        interests_per_agent = _collect_list_per_agent(["interests"])
+        interests_per_agent = _collect_list_per_agent(["preferences", "interests"], ["interests"])
         interests_tokens = [i for sub in interests_per_agent for i in sub]
         print(f"[DEBUG facet:interests] agents={len(interests_per_agent)} raw_tokens={len(interests_tokens)} sample={interests_tokens[:5]}")
         interests_map = _normalize("interests", interests_tokens, target_n=self.normalization_max_clusters)
@@ -587,8 +542,8 @@ class Profiler:
             print('[DEBUG facet:goals] categories=', results['goals']['category'].tolist())
 
         # 5. Likes / Dislikes sentiment (updated counting to real frequencies + debug)
-        likes_per_agent = _collect_list_per_agent(["likes"])
-        dislikes_per_agent = _collect_list_per_agent(["dislikes"])
+        likes_per_agent = _collect_list_per_agent(["preferences", "likes"], ["likes"])
+        dislikes_per_agent = _collect_list_per_agent(["preferences", "dislikes"], ["dislikes"])
         likes_tokens = [l for sub in likes_per_agent for l in sub]
         dislikes_tokens = [d for sub in dislikes_per_agent for d in sub]
         likes_map = _normalize("likes", likes_tokens, target_n=self.normalization_max_clusters)

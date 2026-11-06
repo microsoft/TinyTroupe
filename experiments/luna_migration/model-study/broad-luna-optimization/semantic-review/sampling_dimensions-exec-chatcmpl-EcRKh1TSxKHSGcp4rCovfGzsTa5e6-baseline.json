@@ -1,0 +1,834 @@
+{
+  "sampling_space_description": "A person-level sampling space for a representative sample of the United States population, spanning demographic, geographic, cultural, educational, economic, political, religious, occupational, personality, hobby, habit, and public-opinion differences. Proportions supplied in the input are retained where categories are usable as separate measures. Some reported survey interests and party affiliations overlap, and some supplied figures do not sum to 100%; those measures are represented separately or include a residual category rather than being treated as mutually exclusive. Where the input gives no national proportions, modeled proportions are explicitly illustrative rather than census estimates.",
+  "dimensions": [
+    {
+      "name": "age",
+      "range": [
+        0,
+        120
+      ]
+    },
+    {
+      "name": "age_group",
+      "values": {
+        "A child or young teenager aged 0–14.": 0.186,
+        "A teenager or young adult aged 15–24.": 0.131,
+        "An adult aged 25–54.": 0.394,
+        "An adult aged 55–64.": 0.129,
+        "An older adult aged 65 or above.": 0.16
+      }
+    },
+    {
+      "name": "gender_distribution_as_reported",
+      "values": {
+        "Male, as represented in the supplied population estimate.": 0.492,
+        "Female, as represented in the supplied population estimate.": 0.508
+      }
+    },
+    {
+      "name": "gender_identity",
+      "values": [
+        "Identifies as a man.",
+        "Identifies as a woman.",
+        "Identifies as nonbinary, genderqueer, or another gender identity.",
+        "Identifies with more than one gender or describes their gender in their own terms.",
+        "Does not identify with a gender label or prefers not to disclose."
+      ]
+    },
+    {
+      "name": "racial_and_ethnic_composition",
+      "values": {
+        "Non-Hispanic White.": 0.571,
+        "Hispanic or Latino, of any race.": 0.194,
+        "Black or African American, including people who identify with another group as well where applicable.": 0.121,
+        "Asian.": 0.07,
+        "Two or more races.": 0.029,
+        "American Indian or Alaska Native.": 0.013,
+        "Native Hawaiian or other Pacific Islander.": 0.002
+      }
+    },
+    {
+      "name": "cultural_background",
+      "values": {
+        "A non-Hispanic White American whose family heritage may include long-established U.S. roots or European, Middle Eastern, or other ancestries; cultural life varies widely by family, region, language, and community.": 0.571,
+        "A Hispanic or Latino American whose heritage may be Mexican, Puerto Rican, Cuban, Dominican, Salvadoran, Guatemalan, Colombian, or from another Latin American or Spanish-speaking community; family language and traditions may be Spanish, English, Indigenous languages, or a combination.": 0.194,
+        "A Black or African American whose family may have deep roots in the United States, Caribbean heritage, recent African immigrant heritage, or multiple Black diasporic backgrounds, with varied regional, linguistic, and religious traditions.": 0.121,
+        "An Asian American whose heritage may be East Asian, South Asian, Southeast Asian, or Central Asian, with family backgrounds such as Chinese, Indian, Filipino, Vietnamese, Korean, Japanese, Pakistani, Hmong, or many others.": 0.07,
+        "An American who identifies with two or more racial groups and may combine, for example, Black, White, Latino, Asian, Indigenous, or Pacific Islander family traditions in distinct ways.": 0.029,
+        "An American Indian or Alaska Native whose specific tribal nation, community, language, and relationship to land are individual and important; examples include Diné, Cherokee, Lakota, Yup'ik, and many other distinct peoples.": 0.013,
+        "A Native Hawaiian or other Pacific Islander whose heritage may include Native Hawaiian, Samoan, Chamorro, Tongan, Marshallese, Fijian, or other Pacific Island communities, each with distinct histories and traditions.": 0.002
+      }
+    },
+    {
+      "name": "cultural_heritage_examples",
+      "values": [
+        "A Mexican American family with generations in the Southwest, where Spanish and English, regional foodways, family gatherings, and local community traditions are all part of daily life.",
+        "A Puerto Rican American raised between island and mainland family connections, with relatives in more than one U.S. region and traditions shaped by both Puerto Rican and broader American life.",
+        "A Salvadoran American whose family maintains ties through language, food, remittances, faith or community networks, while children and grandchildren develop their own U.S. regional identities.",
+        "A Black American with multigenerational roots in the South, whose family history, church or community ties, music, and local traditions are important but not assumed to be shared by every Black American.",
+        "A Nigerian American household blending Nigerian regional or ethnic heritage, possibly including multiple languages, with the everyday culture of the U.S. city or suburb where the family lives.",
+        "A Chinese American whose family history may include several generations in the United States or more recent migration, with varying connections to Chinese languages, holidays, food traditions, and local community life.",
+        "An Indian American with family ties to one or more regions of India, potentially combining languages, religious traditions, and cuisines with a distinctly American upbringing.",
+        "A Filipino American whose family traditions may reflect Filipino languages, food, Catholic or other religious communities, and connections across generations and regions.",
+        "A Japanese American whose family background may include long-standing U.S. roots and a varied relationship to Japanese language, food, holidays, and community history.",
+        "A Korean American whose family may maintain Korean-language, food, holiday, or faith traditions to differing degrees while participating in local American culture.",
+        "A Jewish American with Ashkenazi, Sephardi, Mizrahi, or other Jewish family heritage, with observance ranging from secular cultural connection to religious practice.",
+        "An Arab American with family roots in Lebanon, Syria, Palestine, Egypt, Iraq, or another country, whose language, religion, and cultural practices vary considerably across families.",
+        "An American Indian person connected to a particular tribal nation or Alaska Native community, with identity and cultural connection shaped by that community's own history and contemporary life.",
+        "A Native Hawaiian, Samoan, Chamorro, or other Pacific Islander American whose family may maintain specific island community relationships and cultural practices alongside mainland U.S. experiences.",
+        "A multiracial American whose family combines distinct racial, ethnic, linguistic, and regional histories and who may identify differently in different social contexts."
+      ]
+    },
+    {
+      "name": "nativity_and_migration_background",
+      "values": [
+        "Born in the United States and raised in the same state or region as their parents.",
+        "Born in the United States to parents who moved from another country, growing up with some combination of family heritage and local U.S. culture.",
+        "Immigrated to the United States as a child and attended U.S. schools while retaining varying ties to a country of birth.",
+        "Immigrated to the United States as an adult for work, education, family, safety, or another reason.",
+        "Has family spread across several states or countries and maintains regular long-distance relationships.",
+        "Has a multigenerational family history in the United States but limited knowledge of specific ancestral origins.",
+        "Is a U.S. citizen, permanent resident, temporary resident, or otherwise has a distinct immigration status; status is not inferred from ethnicity or language."
+      ]
+    },
+    {
+      "name": "languages_and_language_use",
+      "values": [
+        "Uses English as their primary language and may know no other language.",
+        "Uses English and Spanish in different settings, with fluency ranging from conversational to fully bilingual.",
+        "Uses English alongside a heritage language such as Chinese, Tagalog, Vietnamese, Korean, Japanese, Hindi, Urdu, Arabic, French, or another language.",
+        "Uses an Indigenous language, a Pacific Island language, or a language maintained by a specific community, alongside English or another language.",
+        "Uses American Sign Language or another signed language as a primary or important communication language.",
+        "Speaks more than one language fluently and moves between languages according to family, work, school, or community context.",
+        "Has limited English proficiency or relies on translation or interpretation in some everyday settings."
+      ]
+    },
+    {
+      "name": "educational_attainment_high_school_threshold",
+      "values": {
+        "High school graduate or has completed a higher level of education, according to the supplied estimate.": 0.9,
+        "Has not completed high school, according to the supplied estimate.": 0.1
+      }
+    },
+    {
+      "name": "educational_attainment_bachelors_threshold",
+      "values": {
+        "Has a bachelor's degree or a higher degree, according to the supplied estimate.": 0.35,
+        "Has not completed a bachelor's degree; may have no credential, a high school diploma, vocational training, or some college.": 0.65
+      }
+    },
+    {
+      "name": "highest_education_or_training",
+      "values": [
+        "Currently in elementary, middle, or high school.",
+        "Did not complete high school and may have learned through work, family responsibilities, or informal study.",
+        "Completed high school or an equivalent credential.",
+        "Completed a trade, apprenticeship, or occupational certificate program.",
+        "Attended college but did not complete a degree.",
+        "Earned an associate degree or other two-year postsecondary credential.",
+        "Earned a bachelor's degree.",
+        "Earned a master's, professional, or doctoral degree.",
+        "Completed specialized military, employer-based, or continuing education."
+      ]
+    },
+    {
+      "name": "household_income",
+      "values": {
+        "Household income under $25,000 per year.": 0.172,
+        "Household income from $25,000 to $49,999 per year.": 0.223,
+        "Household income from $50,000 to $99,999 per year.": 0.293,
+        "Household income from $100,000 to $199,999 per year.": 0.235,
+        "Household income of $200,000 or more per year.": 0.077
+      }
+    },
+    {
+      "name": "financial_situation",
+      "values": [
+        "Experiences severe financial insecurity, with difficulty covering essentials such as housing, food, utilities, transportation, or medical costs.",
+        "Has a low income and little financial cushion; an unexpected bill could require borrowing or going without other necessities.",
+        "Covers basic needs but has limited savings and significant concern about debt, rent or mortgage costs, or future expenses.",
+        "Has a moderate and generally stable financial position but must budget carefully and make trade-offs for larger expenses.",
+        "Has comfortable income and some savings but remains exposed to costs such as housing, healthcare, education, or caregiving.",
+        "Has substantial assets, investments, or financial security and can absorb many unexpected expenses.",
+        "Is very wealthy, with extensive assets and considerable financial flexibility.",
+        "Has irregular or seasonal income, or relies on multiple jobs, public benefits, family support, or gig work to make ends meet."
+      ]
+    },
+    {
+      "name": "family_financial_situation_compared_with_four_years_ago",
+      "values": {
+        "Says their family's financial situation is worse than it was four years ago.": 0.47,
+        "Says their family's financial situation is about the same as it was four years ago.": 0.29,
+        "Says their family's financial situation is better than it was four years ago.": 0.24
+      }
+    },
+    {
+      "name": "inflation_hardship",
+      "values": {
+        "Experiences severe hardship from inflation.": 0.22,
+        "Experiences moderate hardship from inflation.": 0.53,
+        "Reports no inflation-related hardship.": 0.24,
+        "Residual for rounding or unreported responses in the supplied figures.": 0.01
+      }
+    },
+    {
+      "name": "financial_habits",
+      "values": [
+        "Saves regularly, keeps an emergency fund, and plans spending carefully.",
+        "Saves when possible but has limited capacity to build a financial cushion.",
+        "Has inadequate savings and would struggle to manage an unexpected expense, consistent with the general habit noted in the supplied information.",
+        "Often spends impulsively or makes unplanned purchases, consistent with the general habit noted in the supplied information.",
+        "Carries substantial credit-card, medical, student, auto, or other debt.",
+        "Uses credit cautiously and generally pays balances on time.",
+        "Relies on family, friends, public assistance, or community organizations during financial difficulties.",
+        "Has little debt and substantial savings, investments, or other financial resources."
+      ]
+    },
+    {
+      "name": "geographic_region",
+      "values": {
+        "Northeast, including states such as Maine, New York, Pennsylvania, and Massachusetts.": 0.171,
+        "Midwest, including states such as Ohio, Illinois, Michigan, and Minnesota.": 0.208,
+        "South, including states such as Texas, Georgia, North Carolina, and Mississippi.": 0.383,
+        "West, including states such as California, Arizona, Oregon, and Colorado.": 0.238
+      }
+    },
+    {
+      "name": "urban_or_rural_residence",
+      "values": {
+        "Lives in an urban area, as categorized in the supplied estimate.": 0.83,
+        "Lives in a rural area, as categorized in the supplied estimate.": 0.17
+      }
+    },
+    {
+      "name": "state_or_district_of_residence",
+      "values": [
+        "Alabama",
+        "Alaska",
+        "Arizona",
+        "Arkansas",
+        "California",
+        "Colorado",
+        "Connecticut",
+        "Delaware",
+        "District of Columbia",
+        "Florida",
+        "Georgia",
+        "Hawaii",
+        "Idaho",
+        "Illinois",
+        "Indiana",
+        "Iowa",
+        "Kansas",
+        "Kentucky",
+        "Louisiana",
+        "Maine",
+        "Maryland",
+        "Massachusetts",
+        "Michigan",
+        "Minnesota",
+        "Mississippi",
+        "Missouri",
+        "Montana",
+        "Nebraska",
+        "Nevada",
+        "New Hampshire",
+        "New Jersey",
+        "New Mexico",
+        "New York",
+        "North Carolina",
+        "North Dakota",
+        "Ohio",
+        "Oklahoma",
+        "Oregon",
+        "Pennsylvania",
+        "Rhode Island",
+        "South Carolina",
+        "South Dakota",
+        "Tennessee",
+        "Texas",
+        "Utah",
+        "Vermont",
+        "Virginia",
+        "Washington",
+        "West Virginia",
+        "Wisconsin",
+        "Wyoming"
+      ]
+    },
+    {
+      "name": "marital_status",
+      "values": {
+        "Never married.": 0.331,
+        "Married.": 0.482,
+        "Divorced.": 0.13,
+        "Widowed.": 0.057
+      }
+    },
+    {
+      "name": "household_and_family_context",
+      "values": [
+        "Lives alone and manages household responsibilities independently.",
+        "Lives with a spouse or partner, with or without children.",
+        "Lives with children or other dependents and is a primary or shared caregiver.",
+        "Lives in a multigenerational household with parents, adult children, relatives, or other family members.",
+        "Shares housing with roommates or unrelated adults.",
+        "Is a single parent or sole caregiver with substantial family responsibilities.",
+        "Is a young person living with parents or other guardians.",
+        "Lives in a chosen-family or communal household arrangement.",
+        "Has limited contact with relatives and relies mainly on friends or community networks."
+      ]
+    },
+    {
+      "name": "labor_force_participation_as_reported",
+      "values": {
+        "Participates in the labor force, using the supplied rate as a reference for the relevant population.": 0.617,
+        "Does not participate in the labor force, using the complement of the supplied rate.": 0.383
+      }
+    },
+    {
+      "name": "unemployment_among_labor_force_as_reported",
+      "values": {
+        "Unemployed, using the supplied unemployment rate among the relevant labor-force population.": 0.042,
+        "Employed, using the complement of the supplied unemployment rate.": 0.958
+      }
+    },
+    {
+      "name": "occupation_group",
+      "values": [
+        "Management: leads teams or organizations, sets priorities, and oversees operations; the supplied reference lists an annual wage of $137,750.",
+        "Business and financial operations: works in accounting, finance, analysis, human resources, or business operations; supplied annual wage $90,580.",
+        "Computer and mathematical occupations: works in software, data, computing, mathematics, or information systems; supplied annual wage $113,140.",
+        "Architecture and engineering: designs, builds, tests, or maintains structures, infrastructure, and engineered products; supplied annual wage $99,090.",
+        "Life and physical sciences: conducts scientific research, laboratory work, field work, or technical analysis; supplied annual wage $87,870.",
+        "Community and social service: provides counseling, social work, community support, or related services; supplied annual wage $58,980.",
+        "Legal occupations: works as an attorney, judge, paralegal, or legal support professional; supplied annual wage $133,820.",
+        "Education and library occupations: teaches, supports learning, or provides library and information services; supplied annual wage $66,400.",
+        "Arts and media: creates, performs, produces, edits, or communicates through arts, journalism, entertainment, or media; supplied annual wage $75,520.",
+        "Healthcare practitioner: provides clinical care as a physician, nurse, therapist, technician, or other healthcare professional; supplied annual wage $102,060.",
+        "Healthcare support: assists patients and clinical teams in caregiving, medical assistance, or related support roles; supplied annual wage $38,220.",
+        "Food preparation and serving: prepares, cooks, serves, or delivers food in restaurants, institutions, or other settings; supplied annual wage $34,490.",
+        "Construction and extraction: builds, repairs, installs, or extracts materials and resources; supplied annual wage $61,500.",
+        "Works in a different occupation, including production, transportation, sales, maintenance, personal care, agriculture, or protective services.",
+        "Is not currently employed, is seeking work, is retired, is a student, provides unpaid caregiving, or is otherwise outside paid employment."
+      ]
+    },
+    {
+      "name": "religious_affiliation",
+      "values": {
+        "Christian.": 0.63,
+        "Unaffiliated, including atheist, agnostic, or no particular religion.": 0.28,
+        "Jewish.": 0.02,
+        "Muslim.": 0.01,
+        "Buddhist.": 0.01,
+        "Hindu.": 0.01,
+        "Another religious affiliation.": 0.01,
+        "Residual for rounding, unspecified affiliation, or categories not resolved in the supplied figures.": 0.03
+      }
+    },
+    {
+      "name": "religious_or_spiritual_tradition",
+      "values": [
+        "Protestant Christian, including many denominations and levels of observance.",
+        "Catholic Christian, including people with a wide range of religious practice and cultural connection.",
+        "Mormon or Latter-day Saint.",
+        "Another Christian tradition, including Orthodox, evangelical, historically Black, or other churches.",
+        "Jewish, with religious observance and cultural identity varying widely.",
+        "Muslim, with diverse cultural backgrounds, communities, and levels of observance.",
+        "Buddhist, Hindu, or another non-Christian religious tradition.",
+        "Spiritual but not affiliated with a formal religious institution.",
+        "Atheist, agnostic, secular, or not religious.",
+        "Has more than one religious or cultural tradition in their family or personal life."
+      ]
+    },
+    {
+      "name": "personality_openness_to_experience",
+      "values": {
+        "Typically prefers familiarity, routine, and established ways of doing things; is less drawn to novelty or abstract exploration. Illustrative modeled share, not a measured national estimate.": 0.2,
+        "Shows a middle-range pattern, enjoying some new experiences while also valuing familiar routines. Illustrative modeled share, not a measured national estimate.": 0.6,
+        "Is strongly curious, imaginative, and eager to explore unfamiliar ideas, activities, or cultures. Illustrative modeled share, not a measured national estimate.": 0.2
+      }
+    },
+    {
+      "name": "personality_conscientiousness",
+      "values": {
+        "Is spontaneous or disorganized, has difficulty following plans, or tends to postpone obligations. Illustrative modeled share, not a measured national estimate.": 0.2,
+        "Usually handles responsibilities adequately but varies in planning, punctuality, and persistence according to circumstances. Illustrative modeled share, not a measured national estimate.": 0.6,
+        "Is highly organized, dependable, persistent, and careful about meeting commitments. Illustrative modeled share, not a measured national estimate.": 0.2
+      }
+    },
+    {
+      "name": "personality_extraversion",
+      "values": {
+        "Is strongly introverted, preferring solitude, quiet settings, and a small circle of close relationships. Illustrative modeled share, not a measured national estimate.": 0.2,
+        "Is ambiverted, enjoying social contact at times while also needing privacy and recovery time. Illustrative modeled share, not a measured national estimate.": 0.6,
+        "Is highly outgoing, energetic, and comfortable initiating social interaction or joining groups. Illustrative modeled share, not a measured national estimate.": 0.2
+      }
+    },
+    {
+      "name": "personality_agreeableness",
+      "values": {
+        "Is highly skeptical, blunt, competitive, or distrustful in disagreements and may prioritize personal interests. Illustrative modeled share, not a measured national estimate.": 0.2,
+        "Balances cooperation and empathy with directness, boundaries, and occasional disagreement. Illustrative modeled share, not a measured national estimate.": 0.6,
+        "Is notably compassionate, trusting, patient, and inclined to accommodate or help others. Illustrative modeled share, not a measured national estimate.": 0.2
+      }
+    },
+    {
+      "name": "personality_emotional_sensitivity",
+      "values": {
+        "Is generally emotionally steady and resilient, recovering relatively quickly from everyday stress. Illustrative modeled share, not a measured national estimate.": 0.2,
+        "Experiences ordinary fluctuations in worry and stress, with responses shaped by situation and support. Illustrative modeled share, not a measured national estimate.": 0.6,
+        "Is highly stress-sensitive, frequently worried or emotionally reactive, and may dwell on setbacks. Illustrative modeled share, not a measured national estimate.": 0.2
+      }
+    },
+    {
+      "name": "reported_regional_personality_context",
+      "values": [
+        "The supplied material associates higher openness with New York and California and lower openness with parts of the Midwest and South; these are broad source claims, not reliable predictions about an individual.",
+        "The supplied material associates conscientiousness with Kansas, Nebraska, Oklahoma, Missouri, Utah, Arizona, and Florida, and lower levels with Rhode Island, Hawaii, Maine, and Alaska; these claims should not be treated as individual traits.",
+        "The supplied material associates higher extraversion with the Midwest and Southeast and lower extraversion with the West Coast; an individual's personality may differ from any regional generalization.",
+        "The supplied material associates agreeableness with North Dakota, Minnesota, Mississippi, Utah, Wisconsin, Tennessee, North Carolina, Georgia, Oklahoma, and Nebraska, and lower levels with the Northeast; these are not individual-level estimates.",
+        "The supplied material associates higher neuroticism with New York and New Jersey and lower levels with Western states; this broad claim is not a diagnosis or dependable individual prediction.",
+        "No regional personality association is used; the person's traits are determined by their own experiences and characteristics."
+      ]
+    },
+    {
+      "name": "political_affiliation_democratic_identification",
+      "values": {
+        "Identifies with or leans toward the Democratic Party, as measured in the supplied estimate.": 0.451,
+        "Does not identify with or lean toward the Democratic Party, using the complement of the supplied estimate.": 0.549
+      }
+    },
+    {
+      "name": "political_affiliation_republican_identification",
+      "values": {
+        "Identifies with or leans toward the Republican Party, as measured in the supplied estimate.": 0.36,
+        "Does not identify with or lean toward the Republican Party, using the complement of the supplied estimate.": 0.64
+      }
+    },
+    {
+      "name": "political_affiliation_independent_identification",
+      "values": {
+        "Identifies as politically independent, as measured in the supplied estimate.": 0.43,
+        "Does not identify as politically independent, using the complement of the supplied estimate.": 0.57
+      }
+    },
+    {
+      "name": "political_beliefs",
+      "values": {
+        "Strongly progressive: prioritizes reducing inequality, expanding public services and civil rights protections, and addressing climate change through government action. Illustrative modeled share; not a supplied national estimate.": 0.18,
+        "Generally liberal or center-left: supports a social safety net and civil liberties while favoring pragmatic compromise on some issues. Illustrative modeled share; not a supplied national estimate.": 0.22,
+        "Centrist or politically mixed: combines views from different ideological traditions and prefers case-by-case policy judgments. Illustrative modeled share; not a supplied national estimate.": 0.2,
+        "Generally conservative or center-right: emphasizes personal responsibility, public order, local decision-making, and limits on some forms of government intervention. Illustrative modeled share; not a supplied national estimate.": 0.22,
+        "Strongly conservative: emphasizes traditional institutions, national sovereignty, limited federal authority, and conservative social or economic policy. Illustrative modeled share; not a supplied national estimate.": 0.12,
+        "Politically disengaged, uncertain, or unwilling to identify with a conventional ideological label. Illustrative modeled share; not a supplied national estimate.": 0.06
+      }
+    },
+    {
+      "name": "economic_beliefs",
+      "values": {
+        "Believes competitive markets, entrepreneurship, and limited regulation are usually the best routes to prosperity and innovation. Illustrative modeled share; not a supplied national estimate.": 0.2,
+        "Believes markets are useful but government should regulate abuses and provide a basic safety net and essential public services. Illustrative modeled share; not a supplied national estimate.": 0.3,
+        "Believes government should actively reduce economic inequality through public investment, labor protections, and social programs. Illustrative modeled share; not a supplied national estimate.": 0.2,
+        "Believes individual effort, education, and persistence are the primary routes to economic success, while recognizing that opportunities differ. Illustrative modeled share; not a supplied national estimate.": 0.15,
+        "Believes family resources, inherited wealth, social connections, discrimination, and luck substantially shape economic outcomes alongside individual effort. Illustrative modeled share; not a supplied national estimate.": 0.1,
+        "Has mixed, uncertain, or issue-by-issue views about markets, taxation, public spending, and economic regulation. Illustrative modeled share; not a supplied national estimate.": 0.05
+      }
+    },
+    {
+      "name": "preferences_and_tastes",
+      "values": {
+        "Prefers home-centered leisure such as cooking, baking, reading, crafts, gardening, or spending time with pets. Illustrative modeled primary preference, not a mutually exclusive survey estimate.": 0.2,
+        "Prefers active outdoor recreation such as walking, running, cycling, hiking, camping, fishing, or sports. Illustrative modeled primary preference, not a mutually exclusive survey estimate.": 0.18,
+        "Prefers entertainment and technology, including television, streaming, music, social media, or video games. Illustrative modeled primary preference, not a mutually exclusive survey estimate.": 0.2,
+        "Prefers social leisure such as visiting friends, board games, community events, or shared meals. Illustrative modeled primary preference, not a mutually exclusive survey estimate.": 0.15,
+        "Prefers travel, dining out, and exploring unfamiliar places or cuisines when time and money allow. Illustrative modeled primary preference, not a mutually exclusive survey estimate.": 0.12,
+        "Prefers shopping, collecting, or researching products and experiences. Illustrative modeled primary preference, not a mutually exclusive survey estimate.": 0.07,
+        "Has limited leisure time, few strong hobbies, or preferences that do not fit the listed categories. Illustrative modeled primary preference, not a mutually exclusive survey estimate.": 0.08
+      }
+    },
+    {
+      "name": "cooking_and_baking_interest",
+      "values": {
+        "Enjoys cooking or baking as an interest, as reported in the supplied estimate.": 0.41,
+        "Does not report cooking or baking as an interest, using the complement of the supplied estimate.": 0.59
+      }
+    },
+    {
+      "name": "reading_interest",
+      "values": {
+        "Enjoys reading, as reported in the supplied estimate.": 0.37,
+        "Does not report reading as an interest, using the complement of the supplied estimate.": 0.63
+      }
+    },
+    {
+      "name": "pets_interest",
+      "values": {
+        "Has an interest in pets, as reported in the supplied estimate.": 0.35,
+        "Does not report an interest in pets, using the complement of the supplied estimate.": 0.65
+      }
+    },
+    {
+      "name": "video_gaming_interest",
+      "values": {
+        "Enjoys video gaming, as reported in the supplied estimate.": 0.33,
+        "Does not report video gaming as an interest, using the complement of the supplied estimate.": 0.67
+      }
+    },
+    {
+      "name": "outdoor_activity_interest",
+      "values": {
+        "Enjoys outdoor activities, as reported in the supplied estimate.": 0.3,
+        "Does not report outdoor activities as an interest, using the complement of the supplied estimate.": 0.7
+      }
+    },
+    {
+      "name": "shopping_interest",
+      "values": {
+        "Reports shopping as an interest, as reported in the supplied estimate.": 0.3,
+        "Does not report shopping as an interest, using the complement of the supplied estimate.": 0.7
+      }
+    },
+    {
+      "name": "traveling_interest",
+      "values": {
+        "Enjoys traveling, as reported in the supplied estimate.": 0.29,
+        "Does not report traveling as an interest, using the complement of the supplied estimate.": 0.71
+      }
+    },
+    {
+      "name": "arts_crafts_and_diy_interest",
+      "values": {
+        "Enjoys arts, crafts, or do-it-yourself projects, as reported in the supplied estimate.": 0.25,
+        "Does not report arts, crafts, or do-it-yourself projects as an interest, using the complement of the supplied estimate.": 0.75
+      }
+    },
+    {
+      "name": "socializing_interest",
+      "values": {
+        "Reports socializing as an interest, as reported in the supplied estimate.": 0.26,
+        "Does not report socializing as an interest, using the complement of the supplied estimate.": 0.74
+      }
+    },
+    {
+      "name": "board_games_interest",
+      "values": {
+        "Enjoys board games, as reported in the supplied estimate.": 0.26,
+        "Does not report board games as an interest, using the complement of the supplied estimate.": 0.74
+      }
+    },
+    {
+      "name": "sports_and_recreation_preferences",
+      "values": [
+        "Usually prefers walking or casual movement for recreation.",
+        "Enjoys running, fitness training, or organized races.",
+        "Enjoys cycling for recreation, exercise, or transportation.",
+        "Enjoys playing or watching basketball.",
+        "Enjoys playing or watching American football.",
+        "Prefers hiking, camping, and spending time in natural settings.",
+        "Enjoys fishing or other water-based recreation.",
+        "Prefers another sport or recreational activity, or rarely participates in sports."
+      ]
+    },
+    {
+      "name": "entertainment_preferences",
+      "values": [
+        "Watches television or streaming series and films, often choosing familiar genres.",
+        "Enjoys music as a major part of daily life, including listening, attending concerts, or making music.",
+        "Prefers drama, documentary, or serious storytelling.",
+        "Prefers comedy, light entertainment, or humorous content.",
+        "Enjoys reality television or unscripted entertainment.",
+        "Uses a mix of television, streaming, social media, podcasts, and other digital media.",
+        "Has limited interest in screen-based entertainment and prefers other activities."
+      ]
+    },
+    {
+      "name": "technology_and_gaming_preferences",
+      "values": [
+        "Primarily uses a smartphone and plays casual mobile games.",
+        "Enjoys console gaming, either alone or with friends and family.",
+        "Enjoys PC gaming, including online multiplayer or strategy games.",
+        "Uses social media frequently for news, entertainment, communication, or community.",
+        "Uses digital technology mainly for work, school, or practical tasks and avoids much recreational screen use.",
+        "Has limited access to reliable devices or the internet, or prefers not to use digital platforms."
+      ]
+    },
+    {
+      "name": "reading_and_learning_preferences",
+      "values": [
+        "Prefers fiction, including literary, romance, mystery, science fiction, fantasy, or other genres.",
+        "Prefers nonfiction about history, science, biography, self-development, or practical subjects.",
+        "Reads news and current affairs regularly, through print, digital publications, or other sources.",
+        "Takes online courses or pursues structured learning outside formal schooling.",
+        "Reads occasionally or mainly for work, school, or practical needs.",
+        "Rarely reads books or long-form material, or prefers audio and video learning."
+      ]
+    },
+    {
+      "name": "travel_and_dining_preferences",
+      "values": [
+        "Enjoys domestic travel, including road trips, visiting relatives, or exploring U.S. destinations.",
+        "Enjoys international travel and learning about places outside the United States.",
+        "Enjoys dining out when affordable and values restaurants as a social experience.",
+        "Likes trying unfamiliar cuisines and cooking styles.",
+        "Prefers familiar food and local routines over adventurous dining or travel.",
+        "Would like to travel or dine out more but is limited by cost, time, disability, caregiving, or other constraints."
+      ]
+    },
+    {
+      "name": "physical_activity_and_wellness",
+      "values": [
+        "Is physically active most days through exercise, work, sports, or regular outdoor activity.",
+        "Gets some activity through walking or daily tasks but does little planned exercise.",
+        "Has low physical-activity engagement, consistent with the general pattern noted in the supplied material.",
+        "Would like to be more active but faces barriers such as health, disability, safety, time, cost, or access to facilities.",
+        "Has a highly sedentary routine, often because of work, health limitations, caregiving, or personal preference.",
+        "Uses activities such as meditation, stretching, or gentle movement to support wellbeing."
+      ]
+    },
+    {
+      "name": "snacking_and_food_habits",
+      "values": [
+        "Frequently snacks between meals, consistent with the general habit noted in the supplied material.",
+        "Usually eats at regular mealtimes and snacks infrequently.",
+        "Has irregular meal timing because of work schedules, school, caregiving, health, or finances.",
+        "Often chooses convenience foods because of limited time or resources.",
+        "Plans meals and prepares food at home regularly.",
+        "Has dietary needs, restrictions, or preferences related to health, religion, ethics, culture, or taste."
+      ]
+    },
+    {
+      "name": "favorite_snack_preference",
+      "values": {
+        "Prefers cookies as a favorite snack, as reported in the supplied estimate.": 0.59,
+        "Prefers a snack other than cookies, using the complement of the supplied estimate.": 0.41
+      }
+    },
+    {
+      "name": "sleep_patterns",
+      "values": [
+        "Usually gets sufficient, regular sleep and wakes feeling rested.",
+        "Often gets insufficient sleep, consistent with the widespread pattern noted in the supplied material.",
+        "Keeps late hours or regularly stays up late, consistent with the common pattern noted in the supplied material.",
+        "Works nights, rotating shifts, or irregular hours that disrupt a conventional sleep schedule.",
+        "Has difficulty sleeping because of stress, caregiving, housing, health, or environmental conditions.",
+        "Has a highly regular sleep routine and deliberately protects time for rest."
+      ]
+    },
+    {
+      "name": "stress_management_and_coping",
+      "values": [
+        "Manages stress through exercise, movement, or time outdoors.",
+        "Uses meditation, prayer, breathing exercises, or other reflective practices to cope with stress.",
+        "Relies on friends, relatives, faith communities, or other social support.",
+        "Copes through comfort eating, as listed among unhealthy coping patterns in the supplied material.",
+        "Copes through smoking or other potentially harmful substance use.",
+        "Copes by withdrawing or becoming inactive when overwhelmed.",
+        "Uses professional counseling, healthcare, peer support, or structured coping strategies.",
+        "Has few reliable coping resources and feels overwhelmed by ongoing stress."
+      ]
+    },
+    {
+      "name": "technology_use",
+      "values": [
+        "Has high daily screen time for work, entertainment, social media, or communication, consistent with the supplied general description.",
+        "Uses screens frequently for work or school but tries to limit recreational use.",
+        "Uses social media frequently to connect, follow news, or share content, consistent with the supplied general description.",
+        "Uses digital platforms selectively and rarely checks social media.",
+        "Has limited internet access, device access, digital confidence, or interest in online services.",
+        "Uses assistive technology or accessibility features as an important part of daily communication."
+      ]
+    },
+    {
+      "name": "public_concern_inflation",
+      "values": {
+        "Views inflation as a very big problem, as reported in the supplied estimate.": 0.7,
+        "Does not view inflation as a very big problem, using the complement of the supplied estimate.": 0.3
+      }
+    },
+    {
+      "name": "public_concern_healthcare_affordability",
+      "values": {
+        "Views healthcare affordability as a very big problem, as reported in the supplied estimate.": 0.57,
+        "Does not view healthcare affordability as a very big problem, using the complement of the supplied estimate.": 0.43
+      }
+    },
+    {
+      "name": "public_concern_drug_addiction",
+      "values": {
+        "Views drug addiction as a very big problem, as reported in the supplied estimate.": 0.55,
+        "Does not view drug addiction as a very big problem, using the complement of the supplied estimate.": 0.45
+      }
+    },
+    {
+      "name": "public_concern_federal_budget_deficit",
+      "values": {
+        "Views the federal budget deficit as a very big problem, as reported in the supplied estimate.": 0.53,
+        "Does not view the federal budget deficit as a very big problem, using the complement of the supplied estimate.": 0.47
+      }
+    },
+    {
+      "name": "public_concern_illegal_immigration",
+      "values": {
+        "Views illegal immigration as a very big problem, as reported in the supplied estimate.": 0.51,
+        "Does not view illegal immigration as a very big problem, using the complement of the supplied estimate.": 0.49
+      }
+    },
+    {
+      "name": "public_concern_gun_violence",
+      "values": {
+        "Views gun violence as a very big problem, as reported in the supplied estimate.": 0.49,
+        "Does not view gun violence as a very big problem, using the complement of the supplied estimate.": 0.51
+      }
+    },
+    {
+      "name": "public_concern_violent_crime",
+      "values": {
+        "Views violent crime as a very big problem, as reported in the supplied estimate.": 0.48,
+        "Does not view violent crime as a very big problem, using the complement of the supplied estimate.": 0.52
+      }
+    },
+    {
+      "name": "public_concern_moral_values",
+      "values": {
+        "Views the state of moral values as a very big problem, as reported in the supplied estimate.": 0.46,
+        "Does not view the state of moral values as a very big problem, using the complement of the supplied estimate.": 0.54
+      }
+    },
+    {
+      "name": "public_concern_partisan_cooperation",
+      "values": {
+        "Views lack of cooperation between political parties as a very big problem, as reported in the supplied estimate.": 0.65,
+        "Does not view lack of partisan cooperation as a very big problem, using the complement of the supplied estimate.": 0.35
+      }
+    },
+    {
+      "name": "climate_change_policy_priority_by_party",
+      "values": [
+        "A Democrat for whom climate change is a top policy priority; the supplied estimate reports 78% among Democrats.",
+        "A Democrat for whom climate change is not a top policy priority.",
+        "A Republican for whom climate change is a top policy priority; the supplied estimate reports 21% among Republicans.",
+        "A Republican for whom climate change is not a top policy priority.",
+        "An independent or other voter whose climate policy priorities vary; the supplied figures do not provide a corresponding rate."
+      ]
+    },
+    {
+      "name": "government_responsibility_for_healthcare",
+      "values": {
+        "Believes the government should provide healthcare, as reported in the supplied estimate.": 0.6,
+        "Does not believe the government should provide healthcare in the manner asked, using the complement of the supplied estimate.": 0.4
+      }
+    },
+    {
+      "name": "abortion_legality_opinion",
+      "values": {
+        "Believes abortion should be legal in all cases.": 0.33,
+        "Believes abortion should be legal in most cases.": 0.33,
+        "Believes abortion should be illegal in most cases.": 0.25,
+        "Believes abortion should be illegal in all cases.": 0.05,
+        "Residual for undecided, other responses, or rounding in the supplied figures.": 0.04
+      }
+    },
+    {
+      "name": "immigration_policy_opinion",
+      "values": {
+        "Supports a path to legal status for at least some undocumented immigrants, as reported in the supplied estimate.": 0.56,
+        "Supports deportation as the preferred approach, as reported in the supplied estimate.": 0.4,
+        "Residual for other, undecided, or unreported responses.": 0.04
+      }
+    },
+    {
+      "name": "economic_outlook",
+      "values": {
+        "Believes the country is on the wrong track, as reported in the supplied estimate.": 0.7,
+        "Does not believe the country is on the wrong track, using the complement of the supplied estimate.": 0.3
+      }
+    },
+    {
+      "name": "concern_about_economic_impact_of_pandemic_policies",
+      "values": {
+        "Is concerned about the economic impact, as reported in the supplied estimate.": 0.8,
+        "Is not concerned about the economic impact, using the complement of the supplied estimate.": 0.2
+      }
+    },
+    {
+      "name": "difficulty_affording_healthcare",
+      "values": {
+        "Reports difficulty affording healthcare, as reported in the supplied estimate.": 0.47,
+        "Does not report difficulty affording healthcare, using the complement of the supplied estimate.": 0.53
+      }
+    },
+    {
+      "name": "support_for_closing_gun_show_loophole",
+      "values": {
+        "Supports closing the gun-show loophole, as reported in the supplied estimate.": 0.83,
+        "Does not support closing the gun-show loophole, using the complement of the supplied estimate.": 0.17
+      }
+    },
+    {
+      "name": "support_for_red_flag_laws",
+      "values": {
+        "Supports red flag laws, as reported in the supplied estimate.": 0.72,
+        "Does not support red flag laws, using the complement of the supplied estimate.": 0.28
+      }
+    },
+    {
+      "name": "support_for_mental_health_funding",
+      "values": {
+        "Supports funding for mental health services as a gun-violence measure, as reported in the supplied estimate.": 0.89,
+        "Does not support this measure, using the complement of the supplied estimate.": 0.11
+      }
+    },
+    {
+      "name": "perception_of_democracy",
+      "values": {
+        "Believes democracy is very threatened, as reported in the supplied estimate.": 0.39,
+        "Believes democracy is somewhat threatened, as reported in the supplied estimate.": 0.34,
+        "Does not select either threatened category or gives another response, using the remaining share.": 0.27
+      }
+    },
+    {
+      "name": "confidence_in_election_fairness",
+      "values": {
+        "Very confident elections are fair.": 0.35,
+        "Somewhat confident elections are fair.": 0.32,
+        "Not very confident elections are fair.": 0.21,
+        "Not at all confident elections are fair.": 0.1,
+        "Residual for rounding or unreported responses.": 0.02
+      }
+    },
+    {
+      "name": "concern_about_post_election_violence",
+      "values": {
+        "Is concerned about post-election violence, as reported in the supplied estimate.": 0.7,
+        "Is not concerned about post-election violence, using the complement of the supplied estimate.": 0.3
+      }
+    },
+    {
+      "name": "perception_of_the_economy",
+      "values": {
+        "Rates the economy as poor.": 0.33,
+        "Rates the economy as not so good.": 0.35,
+        "Rates the economy as good.": 0.27,
+        "Rates the economy as excellent.": 0.05
+      }
+    },
+    {
+      "name": "support_for_israel",
+      "values": {
+        "Believes U.S. support for Israel is too strong.": 0.31,
+        "Believes U.S. support for Israel is about right.": 0.3,
+        "Believes U.S. support for Israel is not strong enough.": 0.31,
+        "Residual for other, undecided, or unreported responses.": 0.08
+      }
+    },
+    {
+      "name": "trust_in_supreme_court",
+      "values": {
+        "Approves of the Supreme Court, as reported in the supplied estimate.": 0.36,
+        "Disapproves of the Supreme Court, as reported in the supplied estimate.": 0.59,
+        "Residual for undecided, other, or unreported responses.": 0.05
+      }
+    }
+  ]
+}

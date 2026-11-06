@@ -1,0 +1,119 @@
+{
+  "protected_inputs_preserved": true,
+  "case_count": 2,
+  "attempts": 2,
+  "completed": 2,
+  "completed_by_case": {
+    "persona-grace::cohort-confirm3": 1,
+    "persona-philip::cohort-confirm3": 1
+  },
+  "observations": [
+    {
+      "file": "results.jsonl",
+      "case_id": "persona-grace::cohort-confirm3",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "persona_generation",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "missing_persona_fields": [],
+        "persona": {
+          "name": "Grace Minseo Han",
+          "age": 44,
+          "gender": "Woman (female).",
+          "nationality": "American; a U.S. citizen.",
+          "residence": {
+            "state": "California",
+            "city": "Long Beach",
+            "living_situation": "Grace lives alone in a modest two-bedroom condo she bought in her late thirties. She is single and has no children. A rescue cat, Momo, lives with her. Her mortgage and homeowners-association fees are steady but significant obligations; occasional building assessments make her cautious about treating homeownership as a source of spare money. She drives an older compact car to work because her shifts can start or end at awkward hours."
+          },
+          "occupation": {
+            "role": "Senior flight attendant for a major U.S. airline, based at Los Angeles International Airport.",
+            "work_situation": "Grace moved from hotel guest services into cabin crew work in her late twenties and has stayed in aviation for about sixteen years. With seniority, she can bid for a more predictable mix of trips than she could when she started, though her schedule still includes early departures, weekends, holidays, and occasional changes. Her gross annual household income is approximately $136,000, mostly her own wages and related work pay; she is the only earner in her household. Mortgage costs, condo fees, retirement contributions, transportation, and pet care all take a meaningful share of that income.",
+            "ordinary_responsibilities": "She checks safety equipment and cabin readiness, gives required briefings, helps passengers stow belongings, serves food and drinks, and responds to problems ranging from a missed connection to a genuinely frightening medical event. She is attentive to small signs that a passenger is confused or becoming upset. She likes the teamwork and the variety of people, but dislikes being treated as though service work means she should tolerate rudeness without limits. She is calm when a problem has a clear next step and can be firm when safety procedures are being ignored."
+          },
+          "personality": {
+            "description": "Grace is socially capable and self-reliant, but a job spent around strangers means she values stretches of time when nobody needs anything from her. She enjoys a familiar routine when it makes life easier and will try something new when the experience itself appeals, not because she wants to appear adventurous. She is dependable about commitments that affect other people; household paperwork and small repairs are more likely to be postponed until they become inconvenient. She can be generous with her time, then notice belatedly that she agreed to more than she wanted.",
+            "big_five": {
+              "scale": "Fictional descriptive ratings from 1 (low) to 5 (high); these are not measured psychological scores.",
+              "openness": {
+                "value": 3.5,
+                "description": "Enjoys new places, food, and stories, while preferring some familiarity and comfort in her downtime."
+              },
+              "conscientiousness": {
+                "value": 3.8,
+                "description": "Reliable about work procedures and important commitments; less consistent with minor home administration."
+              },
+              "extraversion": {
+                "value": 3.9,
+                "description": "Comfortable meeting people and lively in a group she likes, but needs quiet after several demanding workdays."
+              },
+              "agreeableness": {
+                "value": 3.5,
+                "description": "Considerate and cooperative, though willing to set a boundary when someone mistakes politeness for agreement."
+              },
+              "neuroticism": {
+                "value": 2.8,
+                "description": "Usually steady under ordinary pressure; uncertainty about work schedules or a family concern can occupy her thoughts for a while."
+              }
+            }
+          },
+          "preferences": {
+            "travel_and_vacations": {
+              "overall": "Grace likes vacations where the main transportation and lodging are settled and she can stop making decisions for a few days. Cruises suit her particularly well: she enjoys unpacking once, knowing where breakfast is, and having a choice between going ashore and staying aboard. A quiet stretch on deck with a book, an unhurried meal, and a familiar daily rhythm can feel more restorative to her than an ambitious itinerary. She likes seeing a new port, but does not measure a trip by how many attractions she can fit in. She is less interested in strenuous outdoor travel or changing hotels every night. A cruise is not her only idea of a holiday, but it is a format she genuinely enjoys rather than a compromise she merely tolerates.",
+              "companions_and_comfort": "Her older sister is her most frequent vacation companion. They are close, but do not need to spend every hour together; Grace is comfortable reading or relaxing while her sister goes to a show or walks around the ship. A longtime friend from her airline crew has joined them on one trip. Grace likes a private cabin and will sometimes pay extra for a feature she expects to use, such as a balcony where she can have coffee and read in the morning. She is not impressed by a room simply because it is branded as exclusive. She prefers one or two shore activities arranged in advance and leaves the rest open. She is happy to travel independently for a short break, but has little interest in planning a complicated solo route when she could be enjoying a settled base.",
+              "time_and_practicalities": "She has paid vacation time, but dates are shaped by the airline's bidding system, seniority, and the coverage available. She tends to protect one longer block of leave rather than take frequent short trips that make her feel she has only just unpacked before going back to work. Her staff travel privileges are useful for flexible personal trips, but standby travel is not what she wants to depend on when she has a fixed sailing date or a limited vacation window. Momo needs a sitter when she is away, and Grace prefers to arrange a reliable person rather than leave the cat with someone she barely knows. She and her sister usually split shared travel costs clearly; neither assumes the other will cover the whole trip.",
+              "recent_trip": "In April 2026, Grace took a seven-night Mexican Riviera cruise from Long Beach with her sister and a close friend from work. She chose a balcony cabin over spending the same discretionary money on a two-night hotel extension after the cruise, because she wanted unhurried mornings at sea and the convenience of returning home directly. They booked one food-focused excursion in Puerto Vallarta and explored another port at their own pace. One stop felt compressed and crowded, and Grace would have liked more time on land, but she did not regret keeping the trip simple. She most enjoyed the days when she could read outside, meet the others for dinner, and decide late whether to attend an evening show. She came home rested, though the trip used much of the travel money she had set aside for that season. She has not booked another cruise yet.",
+              "other_travel": "For shorter breaks, she likes an easy overnight somewhere along the Southern California coast or a visit to her sister in Orange County. She is interested in taking a long rail journey someday, but it remains a loose idea rather than a goal she is trying to force into her calendar. She does not need every vacation to be a major trip; a few days when she is not responsible for anyone else's schedule can be enough."
+            },
+            "reading": "Grace reads for pleasure several times a week, often in short stretches between work trips or before bed. She likes contemporary fiction, memoir, and narrative history, especially books with vivid people and an accessible sense of time and place. She borrows ebooks and audiobooks from the library and buys paperbacks for trips. If a book feels like an obligation, she moves on rather than insisting she finish it.",
+            "other_interests": "She enjoys trying restaurants with her sister, watching a well-made drama or light mystery at home, and having coffee with a friend on a day off. She likes neighborhood walks but does not track them as a fitness achievement. She sometimes goes to a local comedy show or live performance when a friend suggests one, though she is just as happy to stay in and read after a tiring trip."
+          },
+          "style": "In everyday conversation Grace is warm, quick with dry humor, and fairly direct. She tends to ask a practical question before offering an opinion, especially when someone is venting. At work she is polished and reassuring without sounding overly formal; with friends she is more teasing and expressive. She does not use political labels as a shortcut for every conversation. If she thinks a plan is needlessly complicated, she will say so, but she is not interested in arguing just to prove she is independent."
+        },
+        "content_words": 2076
+      },
+      "review_flags": []
+    },
+    {
+      "file": "results.jsonl",
+      "case_id": "persona-philip::cohort-confirm3",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "persona_generation",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "missing_persona_fields": [],
+        "persona": {
+          "name": "Philip Grant Holladay",
+          "age": 78,
+          "gender": "Male",
+          "nationality": "American",
+          "residence": "Sheridan, Wyoming, United States. Philip lives with his wife, Anne, in a comfortable single-level house a short drive from downtown and a local golf course. They moved there in 2017 after his retirement, partly because Anne has a sister nearby and partly because they wanted a smaller town where familiar faces and everyday errands are close at hand. The house is paid off and has a modest yard; they hire help for heavier outdoor work rather than treat home maintenance as a hobby.",
+          "occupation": "Philip is retired from a long career in finance and operations at a regional agricultural supply cooperative. He started in accounting at a parts distributor in Omaha, then moved to Denver when he joined the cooperative. Over time he became its controller and later vice president of finance. His responsibilities included budgets, branch performance, supplier terms, payroll oversight, and explaining financial decisions to managers who cared more about serving customers than reading spreadsheets. He retired in 2016 at age 68 rather than accept a proposed relocation after a corporate restructuring. He now volunteers a few hours a month as treasurer for a local youth golf scholarship fund. He handles records and reimbursement questions, not coaching or fundraising speeches.",
+          "personality": {
+            "description": "Philip is dependable, financially practical, and more sociable than his reserved first impression suggests. He likes having a regular group and a reason to get out of the house, but does not want every day occupied. He can be competitive on a golf course and stubborn about a decision he has thought through, while remaining easygoing about many small domestic choices.",
+            "big_five_scale": "Fictional descriptive ratings on a 1–5 scale, where 1 is low, 3 is moderate, and 5 is high. These are character choices, not measured psychological scores.",
+            "openness": 3.2,
+            "conscientiousness": 4.1,
+            "extraversion": 3.1,
+            "agreeableness": 3.5,
+            "neuroticism": 2.4
+          },
+          "preferences": {
+            "reading": "He reads most days, often with coffee after breakfast and sometimes for a while before bed. His usual choices are biographies, business and political history, and well-plotted mysteries. He likes accounts that give a sense of how people made decisions under pressure, but does not want all his leisure reading to be instructive. He keeps a paperback by his chair and brings one on trips; if a book begins to feel like an assignment, he sets it aside.",
+            "travel": "Travel is a major pleasure, though Philip and Anne do not take every trip together. He usually makes one or two short golf trips a year with two former colleagues or friends, often four or five nights with a few rounds and relaxed dinners. These trips are as much about the company and the ritual of playing as about the course. He likes a course with a distinctive landscape and thoughtful design, but is not trying to play the most famous or difficult course available. He walks when the ground is manageable and uses a cart when the terrain or a full day’s activity makes that the sensible choice. He prefers one round a day, with an afternoon left open, rather than treating a trip like a golf marathon.\n\n    On shared vacations, Anne does not golf, and they make room for separate interests without considering that a failed couple’s trip. Philip is happy to spend part of a day on a course while she visits a garden, bookshop, or local friend; they enjoy meeting again for dinner and comparing notes. They favor comfortable, quiet lodging that is convenient to the activity they came for, but he does not care about hotel status or elaborate service. He will spend more for an experience that matters to him, such as a memorable course, but is content with a casual meal and ordinary accommodation the rest of the time. They usually drive for regional trips and fly for longer distances, accepting that travel from Sheridan can involve an extra connection or a drive to a larger airport. He dislikes consecutive long travel days and prefers a trip with a clear focus over a tightly packed tour.",
+            "recent_trip_and_tradeoffs": "In autumn 2025, Philip and Anne spent eight nights on the Oregon coast, with Bandon as the main reason for the trip. He had imagined playing three rounds; Anne was interested in the coastline and wanted time to visit a friend farther north. They settled on two rounds for him and left an unhurried day for exploring together. One morning’s weather made the course less inviting than he had hoped, and he briefly wished they had booked an extra tee time for another day. Instead, he and Anne took a coastal walk, had lunch in town, and spent the evening with her friend. He was glad they had not made the whole visit revolve around his scorecard, though he would still have enjoyed one more round. He thinks of the trip as a shared vacation with a golf centerpiece, not a golf package that Anne happened to accompany him on.",
+            "other_interests": "At home, he follows college football and professional baseball without letting either dictate the week. He enjoys a local theater performance if Anne chooses it and has become fond of the conversations they have afterward. He is not drawn to strenuous hiking, nightlife, cruises, or shopping as a vacation activity."
+          },
+          "style": "He speaks plainly, with a dry, understated humor that is easiest to hear among people he knows. In a meeting he is precise about dates and numbers; with friends he is more likely to tease someone about a missed putt than to offer a long explanation. He will say when he disagrees, but usually does not raise his voice or keep an argument alive once the practical decision has been made. He is courteous to service workers and appreciates competence more than ceremony. When a plan changes, he may first point out what it disrupts, then settle into the new arrangement."
+        },
+        "content_words": 1804
+      },
+      "review_flags": []
+    }
+  ],
+  "warning": "Flags and structural checks do not prove semantic quality. Review complete public outputs and profiles."
+}

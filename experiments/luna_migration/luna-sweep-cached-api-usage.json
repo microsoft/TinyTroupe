@@ -1,0 +1,414 @@
+{
+  "checked_at": "2026-10-24T11:17:32.358820+00:00",
+  "api_calls_for_this_audit": 0,
+  "elapsed_seconds": 13.91,
+  "scope": "Successful distinct Luna responses preserved in the twenty-five current-case API caches, including retained earlier attempts. Not final-run-only usage, not a complete billing ledger, and not an estimate of remaining usage. Exact service response IDs deduplicate copies across caches; failed requests and absent/discarded caches are not counted. No model pricing is assumed.",
+  "totals": {
+    "responses": 6835,
+    "prompt_tokens": 56279723,
+    "completion_tokens": 16200820,
+    "total_tokens": 72480543,
+    "reasoning_tokens": 6189104,
+    "cached_prompt_tokens": 1407505
+  },
+  "examples": [
+    {
+      "example": "DnD Adventure with Vision (image modality)",
+      "responses": 146,
+      "prompt_tokens": 1142693,
+      "completion_tokens": 144257,
+      "total_tokens": 1286950,
+      "reasoning_tokens": 87297,
+      "cached_prompt_tokens": 46080,
+      "models": {
+        "gpt-6-luna": 146
+      }
+    },
+    {
+      "example": "Simple Chat",
+      "responses": 42,
+      "prompt_tokens": 282649,
+      "completion_tokens": 30988,
+      "total_tokens": 313637,
+      "reasoning_tokens": 14730,
+      "cached_prompt_tokens": 12288,
+      "models": {
+        "gpt-6-luna": 42
+      }
+    },
+    {
+      "example": "Create Ad for Apartment",
+      "responses": 42,
+      "prompt_tokens": 292717,
+      "completion_tokens": 32158,
+      "total_tokens": 324875,
+      "reasoning_tokens": 12393,
+      "cached_prompt_tokens": 16379,
+      "models": {
+        "gpt-6-luna": 42
+      }
+    },
+    {
+      "example": "Product Brainstorming",
+      "responses": 90,
+      "prompt_tokens": 831305,
+      "completion_tokens": 104865,
+      "total_tokens": 936170,
+      "reasoning_tokens": 48227,
+      "cached_prompt_tokens": 31601,
+      "models": {
+        "gpt-6-luna": 90
+      }
+    },
+    {
+      "example": "Word Processor Tool Usage",
+      "responses": 5,
+      "prompt_tokens": 26325,
+      "completion_tokens": 7912,
+      "total_tokens": 34237,
+      "reasoning_tokens": 3377,
+      "cached_prompt_tokens": 1708,
+      "models": {
+        "gpt-6-luna": 5
+      }
+    },
+    {
+      "example": "Interview with Customer",
+      "responses": 24,
+      "prompt_tokens": 299494,
+      "completion_tokens": 41312,
+      "total_tokens": 340806,
+      "reasoning_tokens": 16674,
+      "cached_prompt_tokens": 53135,
+      "models": {
+        "gpt-6-luna": 24
+      }
+    },
+    {
+      "example": "Synthetic Data Generation",
+      "responses": 48,
+      "prompt_tokens": 497109,
+      "completion_tokens": 55874,
+      "total_tokens": 552983,
+      "reasoning_tokens": 14237,
+      "cached_prompt_tokens": 9216,
+      "models": {
+        "gpt-6-luna": 48
+      }
+    },
+    {
+      "example": "Synthetic Data Generation 1",
+      "responses": 60,
+      "prompt_tokens": 662358,
+      "completion_tokens": 69180,
+      "total_tokens": 731538,
+      "reasoning_tokens": 21380,
+      "cached_prompt_tokens": 12288,
+      "models": {
+        "gpt-6-luna": 60
+      }
+    },
+    {
+      "example": "Political Compass (customizing agents with fragments)",
+      "responses": 85,
+      "prompt_tokens": 712607,
+      "completion_tokens": 85726,
+      "total_tokens": 798333,
+      "reasoning_tokens": 44164,
+      "cached_prompt_tokens": 27648,
+      "models": {
+        "gpt-6-luna": 85
+      }
+    },
+    {
+      "example": "Creating and Validating Agents",
+      "responses": 55,
+      "prompt_tokens": 444803,
+      "completion_tokens": 84819,
+      "total_tokens": 529622,
+      "reasoning_tokens": 29858,
+      "cached_prompt_tokens": 74687,
+      "models": {
+        "gpt-6-luna": 55
+      }
+    },
+    {
+      "example": "Story telling (long narratives)",
+      "responses": 222,
+      "prompt_tokens": 2806709,
+      "completion_tokens": 262053,
+      "total_tokens": 3068762,
+      "reasoning_tokens": 142610,
+      "cached_prompt_tokens": 72192,
+      "models": {
+        "gpt-6-luna": 222
+      }
+    },
+    {
+      "example": "Product Brainstorming (with behavior correction)",
+      "responses": 76,
+      "prompt_tokens": 422126,
+      "completion_tokens": 77885,
+      "total_tokens": 500011,
+      "reasoning_tokens": 46718,
+      "cached_prompt_tokens": 37443,
+      "models": {
+        "gpt-6-luna": 76
+      }
+    },
+    {
+      "example": "Vision for Product, Diagnosis and Appreciation Feedback (image modality)",
+      "responses": 32,
+      "prompt_tokens": 231363,
+      "completion_tokens": 21424,
+      "total_tokens": 252787,
+      "reasoning_tokens": 9949,
+      "cached_prompt_tokens": 34816,
+      "models": {
+        "gpt-6-luna": 32
+      }
+    },
+    {
+      "example": "Synthetic Data Generation 2 (tool usage)",
+      "responses": 683,
+      "prompt_tokens": 7954716,
+      "completion_tokens": 1252347,
+      "total_tokens": 9207063,
+      "reasoning_tokens": 435818,
+      "cached_prompt_tokens": 262001,
+      "models": {
+        "gpt-6-luna": 683
+      }
+    },
+    {
+      "example": "Bottled Gazpacho Market Research 5b",
+      "responses": 257,
+      "prompt_tokens": 1466773,
+      "completion_tokens": 925580,
+      "total_tokens": 2392353,
+      "reasoning_tokens": 338163,
+      "cached_prompt_tokens": 37567,
+      "models": {
+        "gpt-6-luna": 257
+      }
+    },
+    {
+      "example": "Bottled Gazpacho Market Research 5c",
+      "responses": 265,
+      "prompt_tokens": 1500865,
+      "completion_tokens": 856170,
+      "total_tokens": 2357035,
+      "reasoning_tokens": 356609,
+      "cached_prompt_tokens": 14661,
+      "models": {
+        "gpt-6-luna": 265
+      }
+    },
+    {
+      "example": "Bottled Gazpacho Market Research 5",
+      "responses": 260,
+      "prompt_tokens": 1748469,
+      "completion_tokens": 651331,
+      "total_tokens": 2399800,
+      "reasoning_tokens": 201712,
+      "cached_prompt_tokens": 24728,
+      "models": {
+        "gpt-6-luna": 260
+      }
+    },
+    {
+      "example": "Bottled Gazpacho Market Research 5 (with behavior correction)",
+      "responses": 360,
+      "prompt_tokens": 2477291,
+      "completion_tokens": 862883,
+      "total_tokens": 3340174,
+      "reasoning_tokens": 299551,
+      "cached_prompt_tokens": 91933,
+      "models": {
+        "gpt-6-luna": 360
+      }
+    },
+    {
+      "example": "AI-enabled Children Story Telling Market Research",
+      "responses": 948,
+      "prompt_tokens": 6613586,
+      "completion_tokens": 2479115,
+      "total_tokens": 9092701,
+      "reasoning_tokens": 997227,
+      "cached_prompt_tokens": 207461,
+      "models": {
+        "gpt-6-luna": 948
+      }
+    },
+    {
+      "example": "AI-enabled Children Story Telling Market Research 2",
+      "responses": 718,
+      "prompt_tokens": 4707667,
+      "completion_tokens": 1620194,
+      "total_tokens": 6327861,
+      "reasoning_tokens": 700631,
+      "cached_prompt_tokens": 133708,
+      "models": {
+        "gpt-6-luna": 718
+      }
+    },
+    {
+      "example": "Investment Firm",
+      "responses": 364,
+      "prompt_tokens": 9138813,
+      "completion_tokens": 597950,
+      "total_tokens": 9736763,
+      "reasoning_tokens": 321097,
+      "cached_prompt_tokens": 164158,
+      "models": {
+        "gpt-6-luna": 364
+      }
+    },
+    {
+      "example": "Advertisement for TV",
+      "responses": 308,
+      "prompt_tokens": 1798899,
+      "completion_tokens": 679890,
+      "total_tokens": 2478789,
+      "reasoning_tokens": 203432,
+      "cached_prompt_tokens": 0,
+      "models": {
+        "gpt-6-luna": 308
+      }
+    },
+    {
+      "example": "Tendencia de Compra en eComerce Colombia (Spanish)",
+      "responses": 161,
+      "prompt_tokens": 1102830,
+      "completion_tokens": 484870,
+      "total_tokens": 1587700,
+      "reasoning_tokens": 171583,
+      "cached_prompt_tokens": 20933,
+      "models": {
+        "gpt-6-luna": 161
+      }
+    },
+    {
+      "example": "Online Advertisement for Travel",
+      "responses": 1096,
+      "prompt_tokens": 6987249,
+      "completion_tokens": 3280126,
+      "total_tokens": 10267375,
+      "reasoning_tokens": 1294466,
+      "cached_prompt_tokens": 20874,
+      "models": {
+        "gpt-6-luna": 1096
+      }
+    },
+    {
+      "example": "Travel Product Market Research",
+      "responses": 488,
+      "prompt_tokens": 2130307,
+      "completion_tokens": 1491911,
+      "total_tokens": 3622218,
+      "reasoning_tokens": 377201,
+      "cached_prompt_tokens": 0,
+      "models": {
+        "gpt-6-luna": 488
+      }
+    }
+  ],
+  "largest_responses": [
+    {
+      "example": "Investment Firm",
+      "created": 1792811153,
+      "prompt_tokens": 87357,
+      "completion_tokens": 8236,
+      "reasoning_tokens": 4361,
+      "total_tokens": 95593
+    },
+    {
+      "example": "Investment Firm",
+      "created": 1792818575,
+      "prompt_tokens": 88171,
+      "completion_tokens": 5213,
+      "reasoning_tokens": 3543,
+      "total_tokens": 93384
+    },
+    {
+      "example": "Investment Firm",
+      "created": 1792817779,
+      "prompt_tokens": 90112,
+      "completion_tokens": 2223,
+      "reasoning_tokens": 1417,
+      "total_tokens": 92335
+    },
+    {
+      "example": "Investment Firm",
+      "created": 1792817495,
+      "prompt_tokens": 89361,
+      "completion_tokens": 2829,
+      "reasoning_tokens": 1921,
+      "total_tokens": 92190
+    },
+    {
+      "example": "Investment Firm",
+      "created": 1792817360,
+      "prompt_tokens": 88172,
+      "completion_tokens": 3943,
+      "reasoning_tokens": 2922,
+      "total_tokens": 92115
+    },
+    {
+      "example": "Investment Firm",
+      "created": 1792817546,
+      "prompt_tokens": 89456,
+      "completion_tokens": 2565,
+      "reasoning_tokens": 1452,
+      "total_tokens": 92021
+    },
+    {
+      "example": "Investment Firm",
+      "created": 1792817653,
+      "prompt_tokens": 89690,
+      "completion_tokens": 2229,
+      "reasoning_tokens": 1277,
+      "total_tokens": 91919
+    },
+    {
+      "example": "Investment Firm",
+      "created": 1792817597,
+      "prompt_tokens": 89666,
+      "completion_tokens": 2149,
+      "reasoning_tokens": 1353,
+      "total_tokens": 91815
+    },
+    {
+      "example": "Investment Firm",
+      "created": 1792817898,
+      "prompt_tokens": 90227,
+      "completion_tokens": 1526,
+      "reasoning_tokens": 872,
+      "total_tokens": 91753
+    },
+    {
+      "example": "Investment Firm",
+      "created": 1792817697,
+      "prompt_tokens": 89966,
+      "completion_tokens": 1760,
+      "reasoning_tokens": 990,
+      "total_tokens": 91726
+    },
+    {
+      "example": "Investment Firm",
+      "created": 1792817427,
+      "prompt_tokens": 89231,
+      "completion_tokens": 2044,
+      "reasoning_tokens": 1308,
+      "total_tokens": 91275
+    },
+    {
+      "example": "Bottled Gazpacho Market Research 5 (with behavior correction)",
+      "created": 1792833169,
+      "prompt_tokens": 14924,
+      "completion_tokens": 75656,
+      "reasoning_tokens": 3132,
+      "total_tokens": 90580
+    }
+  ]
+}

@@ -103,8 +103,10 @@ class TinyStory:
         include_plot_twist: bool = False,
     ) -> str:
         """
-        Propose a continuation of the story.
+        Propose a continuation within the positive ``number_of_words`` ceiling.
         """
+        if type(number_of_words) is not int or number_of_words < 1:
+            raise ValueError("number_of_words must be a positive integer.")
 
         rendering_configs = {
             "purpose": self.purpose,
@@ -112,6 +114,8 @@ class TinyStory:
             "current_simulation_trace": self._current_story(),
             "number_of_words": number_of_words,
             "include_plot_twist": include_plot_twist,
+            "target_min_words": max(1, int(number_of_words * 0.65)),
+            "target_max_words": max(1, int(number_of_words * 0.8)),
         }
 
         messages = utils.compose_initial_LLM_messages_with_templates(
@@ -122,7 +126,11 @@ class TinyStory:
         )
         next_message = client().send_message(messages)
 
+        if not next_message or not isinstance(next_message.get("content"), str):
+            raise ValueError("Story continuation returned no text.")
         continuation = next_message["content"]
+        if not continuation.strip() or len(continuation.split()) > number_of_words:
+            raise ValueError("Story continuation is empty or exceeds number_of_words.")
 
         self.current_story += utils.dedent(
             f"""

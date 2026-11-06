@@ -1,0 +1,98 @@
+{
+  "rows": 30,
+  "choices": {
+    "2": 22,
+    "1": 8
+  },
+  "minors": [
+    {
+      "name": "María Antonia Echeverri",
+      "age": 11,
+      "response": "2",
+      "public_talks": 1,
+      "public_choice": "2",
+      "matches": true
+    },
+    {
+      "name": "Mateo Andrés Pachón",
+      "age": 11,
+      "response": "1",
+      "public_talks": 1,
+      "public_choice": "1",
+      "matches": true
+    },
+    {
+      "name": "Juliana Rosero",
+      "age": 11,
+      "response": "2",
+      "public_talks": 1,
+      "public_choice": "2",
+      "matches": true
+    },
+    {
+      "name": "Miguel Ángel Cely",
+      "age": 11,
+      "response": "1",
+      "public_talks": 1,
+      "public_choice": "1",
+      "matches": true
+    },
+    {
+      "name": "Salomé Narváez",
+      "age": 12,
+      "response": "2",
+      "public_talks": 1,
+      "public_choice": "2",
+      "matches": true
+    },
+    {
+      "name": "Emilia Cárdenas",
+      "age": 11,
+      "response": "2",
+      "public_talks": 1,
+      "public_choice": "2",
+      "matches": true
+    },
+    {
+      "name": "Nicolás Felipe Buitrago",
+      "age": 11,
+      "response": "1",
+      "public_talks": 1,
+      "public_choice": "1",
+      "matches": true
+    }
+  ],
+  "literal_pattern_misses": [
+    {
+      "name": "Paula Andrea Santamaría Duarte",
+      "age": 42,
+      "response": "2",
+      "public_talks": 1,
+      "public_choice": null,
+      "matches": false
+    },
+    {
+      "name": "José Manuel Rojas",
+      "age": 37,
+      "response": "1",
+      "public_talks": 1,
+      "public_choice": null,
+      "matches": false
+    }
+  ],
+  "manual_verifications": [
+    {
+      "name": "Paula Andrea Santamaría Duarte",
+      "public_prefix": "Opcción 2.",
+      "verified_choice": "2",
+      "reason": "Misspelling of Opción; numeral and stated preference are unambiguous."
+    },
+    {
+      "name": "José Manuel Rojas",
+      "public_prefix": "Opciu0000n 1.",
+      "verified_choice": "1",
+      "reason": "Malformed word; numeral and local-store preference are unambiguous."
+    }
+  ],
+  "actual_choice_mismatches_after_manual_review": 0
+}

@@ -1,0 +1,45 @@
+{
+  "order_seed": 291032,
+  "protocol": "Explicit planning-transport change after repeated required-field omissions despite prompt skeletons. Preserve all earlier responses. Enforce the already requested four-candidate/five-field output with a strict JSON schema. Final-persona requests retain their original JSON-object transport and all original particulars, model and effort. The schema contains no biographical examples or preference constraints.",
+  "imports": [{"path": "contrast-plan-json.json", "variants": ["contrast-plan", "contrast-plan-json"]}],
+  "variants": [{
+    "id": "contrast-structured",
+    "parent": "contrast-plan-json",
+    "phase": "persona_generation_plan",
+    "hypothesis": "Enforce the existing planning output contract structurally instead of relying on repeated prose reminders.",
+    "cases": ["persona-grace", "persona-philip"],
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "fictional_life_candidates",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["candidates"],
+          "properties": {
+            "candidates": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["particulars", "life_course", "daily_life", "travel", "personality_and_voice"],
+                "properties": {
+                  "particulars": {"type": "string"},
+                  "life_course": {"type": "string"},
+                  "daily_life": {"type": "string"},
+                  "travel": {"type": "string"},
+                  "personality_and_voice": {"type": "string"}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "operations": []
+  }],
+  "selection": {"persona-grace": "contrast-structured", "persona-philip": "contrast-structured"}
+}

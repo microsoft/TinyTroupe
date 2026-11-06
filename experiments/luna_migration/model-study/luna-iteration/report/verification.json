@@ -1,0 +1,29 @@
+{
+  "verified_at": "2026-10-28T12:11:33.122047-03:00",
+  "objective_started_at": "2026-10-28T10:37:36-03:00",
+  "elapsed_wall_seconds_at_verification": 5637.122047,
+  "summed_call_seconds": "6108.560",
+  "attempts": 136,
+  "unique_response_ids": 136,
+  "all_requests_match_indexed_corpora_and_hashes": true,
+  "all_calls_completed_with_usage": true,
+  "input_partition_tokens": {
+    "ordinary": 408,
+    "cached": 437982,
+    "write": 535402,
+    "completion": 458408
+  },
+  "independent_decimal_cost_usd": "0.300549870",
+  "stage_costs_usd": {
+    "development": "0.111337880",
+    "synthetic-controls": "0.000691900",
+    "fixed-input-confirmation": "0.03067270",
+    "adaptive-diversity-probe": "0.031836175",
+    "fixed-input-persona-test": "0.024984465",
+    "adaptive-confirmation-superseded": "0.037689050",
+    "adaptive-confirmation-explicit": "0.041906425",
+    "adaptive-confirmation-grounded": "0.021431275"
+  },
+  "semantic_review": "See quality-reviews.json and persona-development-review.json; structural validity is not semantic acceptance.",
+  "cost_basis": "Actual usage at saved list prices; not invoice reconciliation."
+}

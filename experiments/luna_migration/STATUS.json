@@ -1,0 +1,29 @@
+{
+  "state": "paused_by_user",
+  "as_of": "2026-11-06",
+  "active_experiment": false,
+  "current_library_sha256": "3f5b80697765c367766a8291cc4a9a27aa8db7b9889ecb058bb2dede96c9d501",
+  "production_core": {
+    "passed": 450,
+    "deselected": 440,
+    "warnings": 7,
+    "elapsed_seconds": 1407.24,
+    "scope": "Previously completed on exact current library source; not repeated for packaging."
+  },
+  "handoff_offline_checks": {
+    "model_study": {"passed": 93, "warnings": 1},
+    "notebook_and_cache_audits": {"passed": 10, "warnings": 2},
+    "bundled_manifest": "Verified 817 selected files and helper syntax without model calls."
+  },
+  "latest_notebook": {
+    "completed_final_source_survey": false,
+    "first_attempt": "Interrupted during extraction at cell36; API cache unreadable on restart.",
+    "retry": "Fresh attempt, stopped by user during generation cell17.",
+    "preserved_snapshot": "cf7-gaz/recovery-response-snapshot.json",
+    "preserved_returned_responses": 75,
+    "unknown_interrupted_attempt_cost": true
+  },
+  "scientific_status": "Concrete repairs verified; gazpacho empirical response compression unresolved.",
+  "historical_ledgers": "Earlier running statuses are historical and superseded by this paused status.",
+  "authorization": "The handoff commit does not authorize experiment resumption, pushing, or merging."
+}

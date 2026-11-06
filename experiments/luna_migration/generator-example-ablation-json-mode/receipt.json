@@ -1,0 +1,20 @@
+{
+  "status": "Twelve responses returned; semantic review remains required.",
+  "generator_responses": 6,
+  "observed_generation_failures": 0,
+  "generated_biographies": 6,
+  "actor_turns": 6,
+  "returned_usage_estimate": {
+    "unique_saved_api_responses_in_run_window": 12,
+    "responses_missing_usage": 0,
+    "tokens": {
+      "prompt": 145175,
+      "completion": 87895,
+      "cached": 58292,
+      "writes": 86847
+    },
+    "usd": "0.055389895",
+    "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+  },
+  "production_template_unchanged": true
+}

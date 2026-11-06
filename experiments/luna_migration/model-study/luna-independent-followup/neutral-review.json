@@ -1,0 +1,16 @@
+{
+  "reviewer": "Assistant full-output semantic review, not blinded independent human ratings.",
+  "conclusion": "Reject neutral-biography as a fix for independent-generation diversity. All six responses are usable individual biographies, but the same two lifestyle templates recur despite removing accumulated negative instructions and examples.",
+  "grace": [
+    {"replicate": 0, "age": 38, "residence": "Portland, Oregon", "occupation": "Senior UX researcher at a software company", "income": 147000, "travel": "Walkable cities, quiet lodging, books and museums; nine days Tokyo/Kyoto; dislikes cruises and resort packages.", "judgment": "Original particulars explicit; internally coherent. Same cautious technology-professional/city-travel pattern as earlier variants."},
+    {"replicate": 1, "age": 36, "residence": "Seattle, Washington", "occupation": "Senior product operations manager at a software company", "income": 148000, "travel": "One or two city bases, quiet rooms, museums and bookstores; nine days Montreal/Quebec City; avoids large groups and luxury.", "judgment": "Original particulars explicit; internally coherent. Changed destination and job title do not constitute a meaningfully different life."},
+    {"replicate": 2, "age": 37, "residence": "Seattle, Washington", "occupation": "Senior UX researcher at a software company", "income": 154000, "travel": "Neighborhood exploration, museums, transit and quiet time; nine days Lisbon/Porto; dislikes cruises and resorts.", "judgment": "Original particulars explicit; internally coherent. Repeats the first response's biography and priorities very closely."}
+  ],
+  "philip": [
+    {"replicate": 0, "age": 82, "residence": "Fort Collins, Colorado", "occupation": "Retired civil engineer and consulting-firm co-owner", "income": "Mid-$200,000s", "travel": "Scenic drives, local history, quiet comfortable lodging; Glacier-area trip and postponed Japan trip.", "judgment": "Original particulars explicit and broadly coherent; repeats engineer, wife Elaine, careful planning and restrained comfort preferences."},
+    {"replicate": 1, "age": 79, "residence": "Fort Collins, Colorado", "occupation": "Retired civil engineer and project manager", "income": 235000, "travel": "Slow scenic/history road trips, advance bookings and quiet rooms; Moab/Mesa Verde and postponed Idaho loop.", "judgment": "Original particulars explicit and broadly coherent; repeats the same household, career and travel priorities."},
+    {"replicate": 2, "age": 78, "residence": "Fort Collins, Colorado", "occupation": "Retired electrical engineer and consultancy co-owner", "income": 275000, "travel": "Historic neighborhoods, maps, comfortable routes and quiet rooms; Bologna-based trip and postponed Japan trip.", "judgment": "Original particulars explicit and coherent; another engineering-and-history-travel variation, again married to Elaine."}
+  ],
+  "causal_limit": "The failure shows that removing these accumulated instructions was insufficient in this probe. It does not identify a unique cause of the model's repeated archetypes.",
+  "next_procedure": "Separately labeled explicit candidate generation with precommitted external selection. No silent relabeling as a one-call fix."
+}

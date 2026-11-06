@@ -1,0 +1,65 @@
+{
+  "luna": {
+    "unique_saved_api_responses_in_run_window": 16,
+    "responses_missing_usage": 0,
+    "tokens": {
+      "prompt": 138448,
+      "completion": 13980,
+      "cached": 5136,
+      "writes": 129513
+    },
+    "usd": "0.023610385",
+    "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+  },
+  "mini": {
+    "unique_saved_api_responses_in_run_window": 16,
+    "responses_missing_usage": 0,
+    "tokens": {
+      "prompt": 142730,
+      "completion": 32023,
+      "cached": 2816,
+      "writes": 0
+    },
+    "usd": "0.09909490",
+    "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+  },
+  "luna-interpretation": {
+    "unique_saved_api_responses_in_run_window": 16,
+    "responses_missing_usage": 0,
+    "tokens": {
+      "prompt": 139234,
+      "completion": 13548,
+      "cached": 5136,
+      "writes": 130239
+    },
+    "usd": "0.023491135",
+    "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+  },
+  "luna-interpretation-holdout": {
+    "unique_saved_api_responses_in_run_window": 32,
+    "responses_missing_usage": 0,
+    "tokens": {
+      "prompt": 260232,
+      "completion": 37165,
+      "cached": 10272,
+      "writes": 242204
+    },
+    "usd": "0.049736320",
+    "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+  },
+  "luna-obligation-control": {
+    "unique_saved_api_responses_in_run_window": 8,
+    "responses_missing_usage": 0,
+    "tokens": {
+      "prompt": 65546,
+      "completion": 9471,
+      "cached": 2568,
+      "writes": 60960
+    },
+    "usd": "0.012582980",
+    "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+  },
+  "mini_pricing_source": "https://developers.openai.com/api/docs/models/gpt-5-mini",
+  "mini_pricing_verified_at": "2026-11-02",
+  "mini_pricing_caveat": "All observed prompts below long-context threshold; no cache-write tokens returned. No unverified cache-write tariff applied."
+}

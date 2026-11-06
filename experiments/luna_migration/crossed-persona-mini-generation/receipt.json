@@ -1,0 +1,70 @@
+{
+  "elapsed_seconds": 1294.625,
+  "cases": [
+    {
+      "name": "Janet Louise Harwood",
+      "source_request_sha256": "427851c19303bb1834a82cb2abf607025060664af36f78ee117e90a3fdbf03e1",
+      "source_model": "gpt-6-luna",
+      "generation_model": "gpt-5-mini",
+      "messages_unchanged": true,
+      "same_draws_name_and_age": true
+    },
+    {
+      "name": "Stephen Michael Donnelly",
+      "source_request_sha256": "f6223037b71ef5f6bbb841b7e29cfb913e359a8ae4798a61095eb6824a1017cf",
+      "source_model": "gpt-6-luna",
+      "generation_model": "gpt-5-mini",
+      "messages_unchanged": true,
+      "same_draws_name_and_age": true
+    },
+    {
+      "name": "Warren Ellis Gentry",
+      "source_request_sha256": "7368cf77a20448b26eddbfab0731aad96dec0096f2352184f0c3d2066ec78974",
+      "source_model": "gpt-6-luna",
+      "generation_model": "gpt-5-mini",
+      "messages_unchanged": true,
+      "same_draws_name_and_age": true
+    },
+    {
+      "name": "Evan McAllister",
+      "source_request_sha256": "330d4e9753a531ad0329fa39aaed7ae978c4f23013719f514857b02c971311f3",
+      "source_model": "gpt-6-luna",
+      "generation_model": "gpt-5-mini",
+      "messages_unchanged": true,
+      "same_draws_name_and_age": true
+    },
+    {
+      "name": "Rosa María Castañeda",
+      "source_request_sha256": "50ea18f62a0c89ca87d9bf7b135d6359b8ffe3e8d9395ed49d76409ffdd04642",
+      "source_model": "gpt-6-luna",
+      "generation_model": "gpt-5-mini",
+      "messages_unchanged": true,
+      "same_draws_name_and_age": true
+    },
+    {
+      "name": "Erin Michelle Dalton",
+      "source_request_sha256": "547a2428bb561f81d98eb68e94181fa3bb543d2f41b7a031d0e630ff903af40f",
+      "source_model": "gpt-6-luna",
+      "generation_model": "gpt-5-mini",
+      "messages_unchanged": true,
+      "same_draws_name_and_age": true
+    },
+    {
+      "name": "Anthony James Holloway",
+      "source_request_sha256": "947fedb9d705908ede81cef475bda88a6cb1ad40bacce433c466f10704b3448c",
+      "source_model": "gpt-6-luna",
+      "generation_model": "gpt-5-mini",
+      "messages_unchanged": true,
+      "same_draws_name_and_age": true
+    },
+    {
+      "name": "Marjorie Keating",
+      "source_request_sha256": "7fc7edef643feaa69555b41d29407b9e53433f95fd6728b7ddbf44b68b50749a",
+      "source_model": "gpt-6-luna",
+      "generation_model": "gpt-5-mini",
+      "messages_unchanged": true,
+      "same_draws_name_and_age": true
+    }
+  ],
+  "scope": "A bounded crossed-generator diagnostic, not population calibration. Eight original factory message lists, demographic/behavior draws, names and ages are preserved. Other biography details may differ. Backend-specific parameters follow the existing client; requested effort is not forwarded to Mini. No human outcome was supplied. One generated biography per condition does not establish a causal effect size or a representative joint population distribution."
+}

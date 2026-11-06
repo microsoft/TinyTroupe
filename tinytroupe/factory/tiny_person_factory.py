@@ -3,7 +3,6 @@ import copy
 import json
 import math
 import os
-import random
 import threading
 from typing import Dict, List, Union
 
@@ -16,6 +15,7 @@ from tinytroupe.clients import client
 from tinytroupe.control import transactional
 from tinytroupe.factory import logger
 
+from .sampling import restore_sampling_plan, sampling_plan_spec
 from .tiny_factory import TinyFactory
 
 # to protect from race conditions when generating agents in parallel
@@ -345,6 +345,7 @@ class TinyPersonFactory(TinyFactory):
             ).read(),
             {
                 "context": self.context_text,
+                "population_description": self.sampling_space_description,
                 "agent_particularities": agent_particularities,
                 # Note that we need to dump them to JSON strings, to ensure we get double quotes,
                 # and other formatting issues are avoided.
@@ -657,6 +658,8 @@ class TinyPersonFactory(TinyFactory):
                 N=n,
                 sampling_dimensions=sampling_dimensions,
                 enforce_usage_of_all_dimensions=self.enforce_usage_of_all_dimensions,
+                context=context,
+                population_description=description,
             ),
             # checks that the plan is a list, not an empty dictionary, a number or a string
             postcond_func=lambda result: isinstance(result["sample_plan"], list)
@@ -683,7 +686,7 @@ class TinyPersonFactory(TinyFactory):
         remaining_characteristics_sample = copy.deepcopy(
             utils.try_function(
                 lambda: self._flatten_sampling_plan(
-                    sampling_plan=sampling_plan
+                    sampling_plan=sampling_plan, sampling_dimensions=sampling_dimensions
                 ),
                 retries=15,
             )
@@ -804,6 +807,10 @@ class TinyPersonFactory(TinyFactory):
            - each dimension should consider a wide range of values, making sure to cover both POSITIVE and NEGATIVE possibilities (e.g., rich vs poor, likes sugar vs don't like sugar).
            - each dimension should always include extreme values, so that the sampling space can be used to generate people with extreme characteristics, such as very young or very old,
              very rich or very poor, very positive or very negative, etc.
+           - each categorical option must identify one coherent characteristic that can be selected for an individual.
+             Keep opposing ends as separate options, not a single option such as "strongly rejects novelty OR adopts everything impulsively".
+             A list can contain both ends; one selected option must not leave the person's position between incompatible alternatives unresolved.
+             Related reasons for the same characteristic can share an option, but opposite behaviors require distinct options.
            - include as many dimensions as possible to capture the richness of the population, even if this means having a large number of dimensions.
            - in principle, the original sampling description could be approximately rephrased in terms of the dimensions and values generated (i.e., the dimensions are rich enough
              to capture all relevant information). Howerver, this should not limit the range of values and dimensions used, but rather be a byproduct of the process. For instance,
@@ -996,11 +1003,6 @@ class TinyPersonFactory(TinyFactory):
         # the body of this method is handled by the @llm decorator.
 
     @transactional()
-    @utils.llm(
-        enable_json_output_format=True,
-        enable_justification_step=False,
-        enable_reasoning_step=False,
-    )
     def _compute_sample_plan(
         self,
         N: int,
@@ -1010,238 +1012,47 @@ class TinyPersonFactory(TinyFactory):
         max_sampling_directives: int = 50,
         enforce_usage_of_all_dimensions: bool = True,
         context: str = None,
-    ) -> List[Dict[str, any]]:
+        population_description: str = None,
+    ) -> dict:
         """
-        This function defines which and how many people to sample from the sampling space defined by the given dimensions.
-        Given a number N of people to sample, and the dimensions of the sampling space, computes a *sample plan* of N people from that space as a JSON object (rooted on the "sample_plan" key).
+        Construct exactly N samples through closed-vocabulary option membership.
 
-        The input sampling dimensions have the following structure:
-
-            ```json
-                {
-                    "sampling_space_description": "A description of the sampling space.",
-                    "dimensions": [
-                        {
-                            "name": "dimension_name_1",
-                            "range": [min, max]
-                        },
-                        {
-                            "name": "dimension_name_2",
-                            "values": ["value2_1", "value2_2", "value2_3", "value2_4", ...]
-                        },
-                        {
-                            "name": "dimension_name_3",
-                            "values": ["value3_1", "value3_2", "value3_3", "value3_4", ...]
-                        },
-                        ...
-                    ]
-                }
-            ```
-
-        The *sample plan* to be generated is a list of M *sampling directives*. Each *sampling directive* **always** consists of:
-          - "id": a unique identifier for the *sampling directive*, just an incrementing integer starting from 1.
-          - "subpopulation_description": a short description of the sub-population that this *sampling directive* represents, based on the sampling space description and the sampled values.
-                                         If possible, make it a recognizable and meaningful description of the sub-population,
-                                         such as "Young rebellious people from upper classes", "Old conservative boomers from rural areas", "Intellectual urban professionals with diverse and cosmopolitan cultural backgrounds", etc.
-          - "sampled_values": a map from of dimensions from the sampling space to concrete values, value ranges or value options.
-                              If `enforce_usage_of_all_dimensions` is True, then **all** dimensions must be represented in the sampled_values, in order to ensure it is a complete representation of the sampling space.
-          - "quantity": to how many elements with those values should be sampled in total (from 1 to max_quantity_per_sample_directive if specified).
-                        The sum of all of these quantities must be equal to N.
-
-        So your final output **MUST** follow this JSON object structure:
-
-            ```json
-            {"sample_plan":
-              [
-                {
-                    "id": 1,
-                    "subpopulation_description": "Some description here...",
-                    "sampled_values": {
-                        "dimension_name_1": [n_1_min, n_1_max],,
-                        "dimension_name_2": ["value2_1", "value2_2", "value2_3"],
-                        "dimension_name_3": ["value3_1", "value3_2", "value3_3", "value3_4", ...],
-                        ...
-                    },
-                    "quantity": quantity_1
-                },
-
-                {
-                    "id": 2,
-                    "subpopulation_description": "Some other description here...",
-                    "sampled_values": {
-                        "dimension_name_1": [n_1_min, n_1_max],
-                        "dimension_name_2": "value2_3",
-                        "dimension_name_3": ["value3_2", "value3_6", ],
-                        ...
-                    },
-                    "quantity": quantity_2
-                },
-                ...
-                {
-                    "id": M,
-                    "subpopulation_description": "Again some description here...",
-                    "sampled_values": {
-                        "dimension_name_1": n_value,
-                        "dimension_name_2": ["value2_1", "value2_2", "value2_7", "value2_17", ...],
-                        "dimension_name_3": ["value3_7", "value3_8", "value3_10", "value3_11"],
-                        ...
-                    },
-                    "quantity": quantity_M
-                },
-              ]
-            }
-            ```
-
-            where N = quantity_1 + quantity_2 + ... + quantity_M,
-                  quantity_i <= max_quantity_per_sample_directive (if specified),
-                  and M is the number of *sampling directives*, which can be as large as necessary to ensure
-                  that the total number of sampled people is equal to N.
-
-            Note:
-              - Concrete values are NOT in brackets, but rather just a single value or a range of values.
-              - Options are given in lists of strings separated by commas, e.g., ["value1", "value2", ...].
-              - Ranges are numberic and specified as a pair of numbers, e.g., [min, max].
-              - The selected values in the "sampled_values" map can be single values, ranges of values, or lists of values, selected from the options or range provided in the sampling dimensions.
-              - The root element in the output is the "sample_plan" key, which contains the list of *sampling directives*.
-
-
-        Rules and principles:
-          - The sampling plan is a collection of sub-populations captured by each *sampling directive*. Therefore, the various *sampling directives* must complement each other in order
-            to approximate the target population.
-          - Each *sampling directive* is a **combination** of values from the sampling dimensions that represent a specific segment of the target population. Its richness and variety must reflect the desired sub-population.
-          - The dimension sampled in each *sampling directive* can be a single value, a range of values, or a list of values. You can use ranges and lists to cover a wider range of possibilities
-            in a compact way, but you can also use single values if necessary. The items in list can be long or short, does not matter, both can be in lists. Some examples of good fortmatting:
-                * CORRECT example: ["Very rich", "Rich", "Middle class", "Poor"]
-                * CORRECT example: "Rich"
-                * WRONG example: ["Very rich or Rich or Middle class or Poor"]
-                * WRONG example: ["Rich"]
-          - **Always** try very hard to use a list of values (two or more values) or range of values (min - max), to make the sampling plan at once concise and rich. In doing so, make sure that each *sampling directive* is truly representative
-            of some segment of the target population, and not just a random collection of values.
-          - You MUST make M as large as necessary to contemplate the target population, ideally M >= min_sampling_directives (but M <= max_sampling_directives, if specified), to ensure a rich and varied sampling of the population.
-              * Note that this means the maximum *sampling directive* "id" (call it max_id) used in the *sampling plan* is such that: max_id >= min_sampling_directives; max_id <= max_sampling_directives (if specified).
-              * If the token limit would exceeded, then you can reduce M to make sure the output fits in the token limit.
-          - If `enforce_usage_of_all_dimensions` is True, then **all** dimensions must be represented in the sampled_values of **every** sampling directive, in order to ensure that **all** samples are complete and accurate points from the sampling space.
-          - If a context parameter is specified, you must use it to guide the sampling plan construction, so that the sampled population is consistent with it.
-          - The sampled population MUST be representative of the target population.
-          - The sampled population MUST be realistic.
-          - You can set the quantity of each *sampling directive* to 1 if necessary to ensure a varied and representative sampling.
-          - All values chosen from the sampling dimensions must be copied IN FULL in the "sampled_values" map, so that the sampled values are concrete and specific.
-            The sample plan is supposed to be self-contained, therefore it MUST have all details necessary to sample the people later, without needing to refer back to the sampling dimensions.
-          - You should include as many *sampling directives* as necessary to cover the sampling of N total people (the sum of all quantities). When in doubt,
-            **always** add more *sampling directives* (i.e., make M larger) up to max_sampling_directives (if specified), as this will ensure you cover the requested N people.
-          - In particular, make sure both POSITIVE and NEGATIVE possibilities of the various characteristics are covered (e.g., rich vs poor, likes sugar vs doesn't like sugar, enthusiastic vs apathetic).
-            This is to ensure any bias (towards positive or negative characteristics) is minimized, and the sampling space is rich enough to generate people with a wide range of characteristics.
-          - The sampling space description should be used to guide the sampling, so that the sampled population is consistent with it.
-          - You should ensure that the quantity of requested samples in each *sampling directive* is proportional to their presumed size in the target population.
-            That is to say, combinations of dimensions that are more common in the target population should be sampled more often. If you don't know, make a guess.
-          - If max_quantity_per_sample_directive is specified, you must ensure that no single *sampling directive* exceeds this quantity. This is to ensure we get more variation and not just a few large groups.
-          - You can rely on your built-in knowledge or make educated guesses about such quantities and proportions to ensure that the sample is representative of the population.
-              * Note that this means for any quantity_i: quantity_i >= 1; quantity_i <= max_quantity_per_sample_directive (if specified).
-          - The sum of all quantities in the output **must** be equal to N, the number of people to sample in total.
-          - You can always add extra *sampling directives* (up to max_sampling_directives if specified) to ensure the total of N people is reached.
-          - It is acceptable for the sampling plan to generate more than N people, but NEVER less than N. So if unsure generate MORE people, never less.
-
-        ## Example
-        Given the following INPUT sampling dimensions:
-
-        ```json
-        {
-            "sampling_space_description": "Young Western people of different liberal or intellectual professions."
-            "dimensions": [
-                {
-                    "name": "age",
-                    "range": [18, 30]
-                },
-                {
-                    "name": "profession",
-                    "values": ["Architect", "Financial Analyst", "Writer", "Art critic", "Lawyer", "Physician", "Accountant", ...]
-                },
-                {
-                    "name": "country",
-                    "values": ["USA", "Canada", "UK", "France", "Germany", "Italy", "Spain", "Portugal", "Netherlands", "Belgium", ...]
-                },
-
-                {
-                       "name": "personality_traits",
-                       "values": {
-                           "Maintains an unwavering optimism, always expecting positive outcomes even in the face of adversity and encouraging others to do the same.": 0.12,
-                           "Tends to be introspective and reserved, preferring solitary activities and deep reflection over social gatherings or group events.": 0.18,
-                           "Is highly ambitious, constantly setting challenging goals and pushing themselves to achieve more in both personal and professional spheres.": 0.15,
-                           "Approaches new experiences with caution, carefully weighing risks and benefits before making decisions or embracing change.": 0.20,
-                           "Often expects the worst in any situation, focusing on potential problems and rarely feeling hopeful about the future.": 0.08,
-                           "Frequently experiences a sense of sadness and melancholy, finding it difficult to enjoy activities that once brought happiness.": 0.06,
-                           "Is quick to notice flaws and shortcomings in themselves and others, tending toward a negative outlook on life.": 0.07,
-                           "Feels overwhelmed by setbacks, easily discouraged, and tends to dwell on failures rather than successes.": 0.05,
-                           <... many more ...>
-                       }
-                   }
-
-                (... more dimensions ...)
-
-                ]
-           }
-
-        An OUTPUT *sample plan* therefore is a JSON object with the *sample plan*, rooted in the "sample_plan" key, whose value is an array where each element is a dictionary with a *sampling directive*.
-        For example, an output based on the above dimensions could look like this:
-
-        ```json
-        {"sample_plan":
-            [
-                {
-                    "id": 1,
-                    "subpopulation_description": "Young Anglo-Saxon professionals with their stereotypical ambition and drive.",
-                    "sampled_values": {
-                        "age": [22, 30],
-                        "profession": ["Financial Analyst", "Lawyer", "Physician", "Accountant", ...],
-                        "country": ["USA", "UK", "Canada"],
-                        "personality_traits": ["Maintains an unwavering optimism, always expecting positive outcomes even in the face of adversity and encouraging others to do the same.",
-                                            "Approaches new experiences with caution, carefully weighing risks and benefits before making decisions or embracing change",
-                                            "Tends to be introspective and reserved, preferring solitary activities and deep reflection over social gatherings or group events.",
-                                            "Is quick to notice flaws and shortcomings in themselves and others, tending toward a negative outlook on life."]
-                    },
-                    "quantity": 10
-                },
-                {
-                    "id": 2,
-                    "subpopulation_description": "Young European professionals with a focus on creativity and innovation and their occasional existential crises.",
-                    "sampled_values": {
-                        "age": [21, 30],
-                        "profession": ["Architect", "Lawyer", "Writer", "Physician", "Art critic", ...],
-                        "country": ["France", "Germany", "Italy", "Spain"],
-                        "personality_traits": ["Often expects the worst in any situation, focusing on potential problems and rarely feeling hopeful about the future.",
-                            "Frequently experiences a sense of sadness and melancholy, finding it difficult to enjoy activities that once brought happiness.",
-                            "Is quick to notice flaws and shortcomings in themselves and others, tending toward a negative outlook on life.",
-                            "Feels overwhelmed by setbacks, easily discouraged, and tends to dwell on failures rather than successes.]"
-                    },
-                    "quantity": 5
-                },
-                ...
-            ]
-        }
-        ```
-
-
-        Args:
-            n (int): The number of elements to sample in total. This number will be distributed across the dimensions proportionally
-                to the presumed size the target population.
-            sampling_dimensions (dict): The dimensions of the sampling space.
-            enforce_usage_of_all_dimensions (bool, optional): If True, all dimensions must be represented in the sampled_values of every sampling directive, in order to ensure that all samples are complete and accurate points from the sampling space.
-                                                              Otherwise, the model can decide to do not use some dimensions in some sampling directives, if it deems it appropriate.
-            max_quantity_per_sample_directive (int, optional): The maximum quantity of samples that can be specified in a single sampling directive. This is to ensure that the sampling plan is diverse and not biased towards a few large groups.
-            min_sampling_directives (int, optional): The minimum number of sampling directives to generate. This is to ensure that the sampling plan is rich and varied.
-            max_sampling_directives (int, optional): The maximum number of sampling directives to generate. This is to ensure that the sampling plan is not overly complex and remains manageable.
-            context (str, optional): An optional context to guide the sampling plan generation, so that it is consistent with the context.
-
-        Returns:
-            list: A JSON object rooted on "sample_plan" key whose value is a LIST (i.e., a JSON array) with the *sample plan*, where each element is a dictionary with a *sampling directive*, as described above. Must fit in the output token limit.
+        The model selects numeric bounds and categorical option identifiers; the
+        caller restores complete original dimension names and option strings.
+        Invalid counts, bounds or selections raise ValueError, never silently
+        rewrite a plan. The public result remains ``{"sample_plan": [...]}``.
+        ``min_sampling_directives`` is capped at N for small populations.
+        The original population description preserves requirements that the
+        generated dimension summary may have omitted.
+        Marginal weights guide coverage but do not validate joint prevalence.
         """
-        # the body of this method is handled by the @llm decorator.
+        parameters = dict(
+            N=N, sampling_dimensions=sampling_dimensions,
+            max_quantity_per_sample_directive=max_quantity_per_sample_directive,
+            min_sampling_directives=min_sampling_directives,
+            max_sampling_directives=max_sampling_directives,
+            enforce_usage_of_all_dimensions=enforce_usage_of_all_dimensions,
+            context=context,
+            population_description=population_description,
+        )
+        payload, response_format = sampling_plan_spec(parameters)
+        messages = utils.compose_initial_LLM_messages_with_templates(
+            "sampling_plan.system.mustache", "sampling_plan.user.mustache",
+            base_module_folder="factory",
+            rendering_configs={"parameters": json.dumps(payload, ensure_ascii=False)},
+        )
+        response = client().send_message(messages, response_format=response_format)
+        if not response or not response.get("content"):
+            raise ValueError("Sampling plan generation returned no content.")
+        return restore_sampling_plan(parameters, json.loads(response["content"]))
 
     @transactional()
-    def _flatten_sampling_plan(self, sampling_plan: dict) -> list:
+    def _flatten_sampling_plan(self, sampling_plan: dict, sampling_dimensions: dict = None) -> list:
         """
-        Given a sample plan, flattens it into a list of samples in such a way that the number of times each sample appears
-        correspond to what was specified in the plan. The order is random to avoid bias.
+        Draw concrete characteristics within each directive and retain its eligibility description.
+        Integer ranges are inclusive uniform draws; other numeric ranges are continuous uniform
+        draws. Categorical alternatives use supplied weights conditioned on allowed options,
+        or equal weights when none are supplied. These assumptions do not establish joint prevalence.
 
         For example, an input sample plan could look like this:
 
@@ -1278,11 +1089,16 @@ class TinyPersonFactory(TinyFactory):
 
         Args:
             sampling_plan (dict): The sample plan to flatten.
+            sampling_dimensions (dict, optional): Original dimensions, including categorical weights.
 
         Returns:
             list: A list of samples, where each sample is a dictionary with the sampled values.
         """
         samples = []
+        dimensions = {
+            dimension["name"]: dimension
+            for dimension in (sampling_dimensions or self.sampling_dimensions or {}).get("dimensions", [])
+        }
         for sample in sampling_plan:
             if "quantity" not in sample:
                 logger.warning(
@@ -1296,11 +1112,40 @@ class TinyPersonFactory(TinyFactory):
                 # we need to copy the sample to avoid adding the original sample multiple times,
                 # which would cause problems later when we modify the individual flattened samples
                 cc_sample = copy.deepcopy(sample["sampled_values"])
+                for name, value in cc_sample.items():
+                    if not isinstance(value, list):
+                        continue
+                    if len(value) == 2 and all(type(bound) in (int, float) for bound in value):
+                        low, high = value
+                        if not all(math.isfinite(bound) for bound in value) or low > high:
+                            raise ValueError(f"Unordered sampling range for {name}: {value}")
+                        if all(type(bound) is int for bound in value):
+                            cc_sample[name] = self.randomizer.randint(low, high)
+                        else:
+                            cc_sample[name] = self.randomizer.uniform(low, high)
+                    elif value and all(isinstance(option, str) for option in value):
+                        weights = dimensions.get(name, {}).get("values")
+                        if isinstance(weights, dict):
+                            selected_weights = [weights[option] for option in value]
+                            if (any(type(weight) not in (int, float)
+                                    or not math.isfinite(weight) or weight < 0
+                                    for weight in selected_weights)
+                                    or sum(selected_weights) <= 0):
+                                raise ValueError(f"Invalid categorical sampling weights for {name}.")
+                            cc_sample[name] = self.randomizer.choices(
+                                value, weights=selected_weights, k=1
+                            )[0]
+                        else:
+                            cc_sample[name] = self.randomizer.choice(value)
+                    else:
+                        raise ValueError(f"Invalid sampling alternatives for {name}: {value}")
+                if "subpopulation_description" in sample:
+                    cc_sample["subpopulation_description"] = sample["subpopulation_description"]
 
                 samples.append(cc_sample)
 
         # randomize
-        random.shuffle(samples)  # inplace
+        self.randomizer.shuffle(samples)
         return samples
 
     @transactional()

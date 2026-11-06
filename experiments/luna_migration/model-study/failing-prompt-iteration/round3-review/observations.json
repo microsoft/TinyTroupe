@@ -1,0 +1,1123 @@
+{
+  "calls": 11,
+  "unique_sources": 11,
+  "statuses": {
+    "completed": 10,
+    "error": 1
+  },
+  "list_price_bounds_usd": [
+    "0.03654430",
+    "0.03654430"
+  ],
+  "calls_without_usage": 1,
+  "missing_write_usage": 0,
+  "semantic_success_not_automatically_inferred": true,
+  "records": [
+    {
+      "case_id": "exec-chatcmpl-EcOs5VaSzbXHC9ekPB4HoNqxQkMJ3::focused-transition-v3::r1",
+      "phase": "story_continuation",
+      "stage": "failure-development-round3",
+      "source_case_id": "exec-chatcmpl-EcOs5VaSzbXHC9ekPB4HoNqxQkMJ3",
+      "variant": "focused-transition-v3",
+      "adapter": "append_system",
+      "repetition": 1,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "073a72e473dc67f7f2d3495d99a208a7fa9cb96917e9846f9a968a354d10ab8c",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 34.328,
+      "content": "By dawn, civil defense and astronomers matched the fireball’s track to a meteor. Searchers found no debris or injuries, though the second heat alert remained unexplained and was logged for review. After a daylight shoreline check, the beach reopened; officials took over a guarded perimeter around Zog’s ship. The officer’s plain, cautious update had quieted the crowd. Zog’s first lesson in human culture was practical: trust grows when people share evidence, admit uncertainty, and cooperate.",
+      "response_id": "chatcmpl-EeRBj3lxmlcGl5Xi0vMgEFZac7lBy",
+      "cost": {
+        "input_tokens": 14948,
+        "cached_input_tokens": 14573,
+        "cache_write_tokens": 0,
+        "output_tokens": 2867,
+        "reasoning_tokens": 2729,
+        "uncached_input_tokens": 375,
+        "input_usd": "0.0000375",
+        "cached_input_usd": "0.00014573",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.0014335",
+        "total_usd": "0.00161673",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 494,
+        "output_words": 75,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcQoc8MNbyvjIPyhyahctBgDu7uUj::focused-transition-v3::r1",
+      "phase": "story_continuation",
+      "stage": "failure-development-round3",
+      "source_case_id": "exec-chatcmpl-EcQoc8MNbyvjIPyhyahctBgDu7uUj",
+      "variant": "focused-transition-v3",
+      "adapter": "append_system",
+      "repetition": 1,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "201423a61745e6756d7e73cf6b27a4199a09be058af9ea13432c75ca02e0cb1d",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 23.719,
+      "content": "Lisa closed Cedar Reach’s engagement with a report documenting its stated access problems, the assessment scope, and missing evidence; no findings were invented. Cedar Reach acknowledged receipt.\n\nMinutes later, North Estuary Flood Control District, a public agency managing levees and pumps, requested urgent help before storm season. Incomplete inspection records and aging gates strain a capital budget that cannot fund every repair. Lisa requested asset files, Oscar site plans, and Marcos began mapping maintenance approvals.",
+      "response_id": "chatcmpl-EeRCDpwLate4aijSBama05Jk5AGEt",
+      "cost": {
+        "input_tokens": 12094,
+        "cached_input_tokens": 11640,
+        "cache_write_tokens": 0,
+        "output_tokens": 2102,
+        "reasoning_tokens": 1983,
+        "uncached_input_tokens": 454,
+        "input_usd": "0.0000454",
+        "cached_input_usd": "0.0001164",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.001051",
+        "total_usd": "0.0012128",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 530,
+        "output_words": 75,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcPvJQR9JkK8l4yUG6f1hHGcbhvPq::focused-transition-v3::r1",
+      "phase": "story_continuation",
+      "stage": "failure-development-round3",
+      "source_case_id": "exec-chatcmpl-EcPvJQR9JkK8l4yUG6f1hHGcbhvPq",
+      "variant": "focused-transition-v3",
+      "adapter": "append_system",
+      "repetition": 1,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "b2335bd284d199ed3c6afdeeecffad6d90c9532d4252a796f1ba697b2c83c57f",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 12.203,
+      "content": "High Plains accepts Lisa’s framework, which records missing work-order, building, grant, and contractor evidence and makes no project ranking. The authority closes the engagement pending its reviews.\n\nImmediately, Wild Advice Partners receives a request from Hearthline Foods, a privately owned, 65-person maker of shelf-stable meals exporting to neighboring countries. A sudden border inspection rule has stranded shipments, while a packaging supplier threatens to raise prices. The team opens a rapid scope, requesting customs notices, contracts, shipment records, and cash-flow forecasts.",
+      "response_id": "chatcmpl-EeRCbgcmtIJcfXBJy17T7fihBGPBo",
+      "cost": {
+        "input_tokens": 13887,
+        "cached_input_tokens": 13433,
+        "cache_write_tokens": 0,
+        "output_tokens": 1144,
+        "reasoning_tokens": 1024,
+        "uncached_input_tokens": 454,
+        "input_usd": "0.0000454",
+        "cached_input_usd": "0.00013433",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.000572",
+        "total_usd": "0.00075173",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 591,
+        "output_words": 80,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcPVXPdL4sj3j6kfDX47ef2fsDrvS::indexed-plan-v1::r1",
+      "phase": "sampling_plan",
+      "stage": "failure-development-round3",
+      "source_case_id": "exec-chatcmpl-EcPVXPdL4sj3j6kfDX47ef2fsDrvS",
+      "variant": "indexed-plan-v1",
+      "adapter": "indexed_sampling",
+      "repetition": 1,
+      "hypothesis": "Separate semantic sampling choices from exact vocabulary reproduction through typed option identifiers, explicit null slots and validated deterministic reconstruction. Schema change is disclosed.",
+      "original_request_sha256": "10d5ccf2a878ca1821b2bb4a4572df3ca243de4fb57ef0f3a15bc6975f027048",
+      "instruction_sha256": "ff891711f69049a9a4f106d2e328ab995a602d8e16c364c203bd79482f9171af",
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "error",
+      "elapsed_seconds": 91.407,
+      "error": {
+        "type": "InternalServerError",
+        "message": "Error code: 520 - {'type': 'https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-520/', 'title': 'Error 520: Web server is returning an unknown error', 'status': 520, 'detail': 'The origin web server sent a response that Cloudflare could not parse. This may indicate the origin returned an empty response, malformed HTTP headers, or an otherwise invalid response.', 'instance': 'a524fe43cd8845a6', 'error_code': 520, 'error_name': 'unknown_origin_error', 'error_category': 'origin', 'ray_id': 'a524fe43cd8845a6', 'timestamp': '2026-10-29T20:41:35Z', 'zone': 'api.openai.com', 'cloudflare_error': True, 'retryable': True, 'retry_after': 60, 'owner_action_required': True, 'what_you_should_do': '**Wait and retry.** Back off for at least 60 seconds. If the error persists, the website operator should check the origin server error logs and submit them to Cloudflare support.', 'footer': 'This error was generated by Cloudflare on behalf of the website owner.'}"
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcPQs4sN9jObydoOqqjACE8BvHuqm::focused-transition-v3::r1",
+      "phase": "story_continuation",
+      "stage": "failure-development-round3",
+      "source_case_id": "exec-chatcmpl-EcPQs4sN9jObydoOqqjACE8BvHuqm",
+      "variant": "focused-transition-v3",
+      "adapter": "append_system",
+      "repetition": 1,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "286eb1a7439b00d4bb11e91443b1ab972baf7bd3519d2a8d8360af5e470ddd2b",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 31.938,
+      "content": "Closing time ended the demo. The representative collected the tablet and said the pilot terms would be sent for review; no enrollment was decided there. Julian’s correction changed the shift-swap story’s status: it could illustrate a possible trade-off, not testify to his life. The discussion left a firmer lesson than the polished anecdote: decisions depend on actual constraints, and trust depends on distinguishing what is known from what is hypothetical or uncertain.",
+      "response_id": "chatcmpl-EeRBjR0YHs9Sv1H7wrGkX5U1KMj1a",
+      "cost": {
+        "input_tokens": 15558,
+        "cached_input_tokens": 15183,
+        "cache_write_tokens": 0,
+        "output_tokens": 2607,
+        "reasoning_tokens": 2486,
+        "uncached_input_tokens": 375,
+        "input_usd": "0.0000375",
+        "cached_input_usd": "0.00015183",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.0013035",
+        "total_usd": "0.00149283",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 472,
+        "output_words": 72,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcRIZR28RnLdIg8Qm31z2m8DnCvvr::focused-transition-v3::r1",
+      "phase": "story_continuation",
+      "stage": "failure-development-round3",
+      "source_case_id": "exec-chatcmpl-EcRIZR28RnLdIg8Qm31z2m8DnCvvr",
+      "variant": "focused-transition-v3",
+      "adapter": "append_system",
+      "repetition": 1,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "e177881fbe352bade312b8fbd622e9c801868afe9faac6933824ffdd027ef7bf",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 23.312,
+      "content": "At the review cutoff, staffing, turnout, and site records remained outstanding. Lisa delivered a closeout report noting these limits; the Commission acknowledged receipt, and the engagement ended.\n\nMinutes later, privately owned Helix Cryogenic Systems, a manufacturer, sought help after a customer reported a possibly faulty pressure valve. Fragmented serial and service records could impede identifying affected units before a regulator’s deadline. Lisa requested incident and shipment logs; Marcos began mapping complaint handling, while Oscar began reviewing inspection-area layouts.",
+      "response_id": "chatcmpl-EeRCAsgl42DBcLeeY28AI36TdCuSU",
+      "cost": {
+        "input_tokens": 12160,
+        "cached_input_tokens": 11706,
+        "cache_write_tokens": 0,
+        "output_tokens": 2172,
+        "reasoning_tokens": 2044,
+        "uncached_input_tokens": 454,
+        "input_usd": "0.0000454",
+        "cached_input_usd": "0.00011706",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.001086",
+        "total_usd": "0.00124846",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 587,
+        "output_words": 78,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR::indexed-plan-v1::r1",
+      "phase": "sampling_plan",
+      "stage": "failure-development-round3",
+      "source_case_id": "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR",
+      "variant": "indexed-plan-v1",
+      "adapter": "indexed_sampling",
+      "repetition": 1,
+      "hypothesis": "Separate semantic sampling choices from exact vocabulary reproduction through typed option identifiers, explicit null slots and validated deterministic reconstruction. Schema change is disclosed.",
+      "original_request_sha256": "6cf9a126ec0c3b4f43550e6de58a40071bb11645f9a27e91e0851dce322c634c",
+      "instruction_sha256": "ff891711f69049a9a4f106d2e328ab995a602d8e16c364c203bd79482f9171af",
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 97.672,
+      "content": "{\"sample_plan\":[{\"id\":1,\"subpopulation_description\":\"Children aged 0–14 living with parents, guardians, relatives, or foster caregivers; span the listed sex, race and ethnicity, region, and residential-setting options, with varied reading, gaming, outdoor, social, screen-use, and activity patterns.\",\"quantity\":13,\"sampled_values\":{\"1\":[0,14],\"2\":1,\"3\":[1,2],\"4\":[1,2,3,4,5,6],\"5\":[1,2,3,4,5,6,7],\"6\":[1,2,3,4],\"7\":[1,2],\"8\":[1,2],\"9\":[1,2],\"10\":[1,2],\"11\":[1,2,3,4,5,6,7,8],\"12\":[1,2],\"13\":[8,9],\"14\":[1,2,3,4,4,4],\"15\":[1,2,3,4,5,6],\"16\":[1,2,3,4,5,6,7],\"17\":[1,2,1,2],\"18\":[1,2],\"19\":[1,2,1,2],\"20\":[1,2],\"21\":[1,2,3,4,5,6],\"22\":[1,2,3,4,5,6,7,8],\"23\":[1,2,3,4,5,1,2,3,4,5],\"24\":[1,2,3,4,5,6,7,8],\"25\":[1,2,3],\"26\":[1,2,3,4],\"27\":[1,2,3,4],\"28\":[1,2,3,4,5,6,7],\"29\":[1,2,3,4,5,6,7,8],\"30\":[1,2,3,4,5,6,7,8,9],\"31\":[1,2],\"32\":[1,2],\"33\":[1,2],\"34\":[1,2,3,4,5,6,7,8],\"35\":[1,2,3,4,5],\"36\":[1,2,3],\"37\":[1,2],\"38\":[1,2],\"39\":[1,2],\"40\":[1,2],\"41\":[1,2],\"42\":[1,2],\"43\":[1,2,3],\"44\":[1,2,3,4,5],\"45\":[1,2],\"46\":[1,2,3,4],\"47\":[1,2,3],\"48\":[1,2],\"49\":[1,2],\"50\":[1,2],\"51\":[1,2],\"52\":[1,2],\"53\":[1,2],\"54\":[1,2],\"55\":[1,2],\"56\":[1,2],\"57\":[1,2],\"58\":[1,2],\"59\":[1,2],\"60\":[1,2,3],\"61\":[1,2,3],\"62\":[1,2,3],\"63\":[1,2,3],\"64\":[1,2,3],\"65\":[1,2],\"66\":[1,2],\"67\":[1,2],\"68\":[1,2],\"69\":[1,2],\"70\":[1,2],\"71\":[1,2],\"72\":[1,2],\"73\":[1,2],\"74\":[1,2],\"75\":[1,2,3,4,5,6,7,8],\"76\":[1,2,3,4,5,6,7,8,9],\"77\":[1,2,3,4,5,6,7,8,9],\"78\":[1,2,3,4,5,6,7],\"79\":[1,2,3,4,5,6,7],\"80\":[1,2],\"81\":[1,2,3,4,5,6],\"82\":[1,2,3,4,5,6,7,8],\"83\":[1,2,3,4,5,6,7],\"84\":[1,2,3,4,5,6,7,8,9],\"85\":[1,2,3,4,5,6,7,8]}},{\"id\":2,\"subpopulation_description\":\"Teenagers and young adults aged 15–24, spanning school, training, work, and transitions; include varied sex, race and ethnicity, region, residential setting, and leisure and technology habits.\",\"quantity\":9,\"sampled_values\":{\"1\":[15,24],\"2\":2,\"3\":[1,2],\"4\":[1,2,3,4,5,6],\"5\":[1,2,3,4,5,6,7],\"6\":[1,2,3,4],\"7\":[1,2],\"8\":[1,2],\"9\":[1,2],\"10\":[1,2],\"11\":[1,2,3,4,5,6,7,8],\"12\":[1,2],\"13\":[1,2,3,4,5,6,7,8,9],\"14\":[1,2,3,4,4,4],\"15\":[1,2,3,4,5,6],\"16\":[1,2,3,4,5,6,7],\"17\":[1,2,1,2],\"18\":[1,2],\"19\":[1,2,1,2],\"20\":[1,2],\"21\":[1,2,3,4,5,6],\"22\":[1,2,3,4,5,6,7,8],\"23\":[1,2,3,4,5,1,2,3,4,5],\"24\":[1,2,3,4,5,6,7,8],\"25\":[1,2,3],\"26\":[1,2,3,4],\"27\":[1,2,3,4],\"28\":[1,2,3,4,5,6,7],\"29\":[1,2,3,4,5,6,7,8],\"30\":[1,2,3,4,5,6,7,8,9],\"31\":[1,2],\"32\":[1,2],\"33\":[1,2],\"34\":[1,2,3,4,5,6,7,8],\"35\":[1,2,3,4,5],\"36\":[1,2,3],\"37\":[1,2],\"38\":[1,2],\"39\":[1,2],\"40\":[1,2],\"41\":[1,2],\"42\":[1,2],\"43\":[1,2,3],\"44\":[1,2,3,4,5],\"45\":[1,2],\"46\":[1,2,3,4],\"47\":[1,2,3],\"48\":[1,2],\"49\":[1,2],\"50\":[1,2],\"51\":[1,2],\"52\":[1,2],\"53\":[1,2],\"54\":[1,2],\"55\":[1,2],\"56\":[1,2],\"57\":[1,2],\"58\":[1,2],\"59\":[1,2],\"60\":[1,2,3],\"61\":[1,2,3],\"62\":[1,2,3],\"63\":[1,2,3],\"64\":[1,2,3],\"65\":[1,2],\"66\":[1,2],\"67\":[1,2],\"68\":[1,2],\"69\":[1,2],\"70\":[1,2],\"71\":[1,2],\"72\":[1,2],\"73\":[1,2],\"74\":[1,2],\"75\":[1,2,3,4,5,6,7,8],\"76\":[1,2,3,4,5,6,7,8,9],\"77\":[1,2,3,4,5,6,7,8,9],\"78\":[1,2,3,4,5,6,7],\"79\":[1,2,3,4,5,6,7],\"80\":[1,2],\"81\":[1,2,3,4,5,6],\"82\":[1,2,3,4,5,6,7,8],\"83\":[1,2,3,4,5,6,7],\"84\":[1,2,3,4,5,6,7,8,9],\"85\":[1,2,3,4,5,6,7,8]}},{\"id\":3,\"subpopulation_description\":\"Adults aged 25–54 across varied household and work circumstances; span the listed sex, race and ethnicity, region, and residential settings, with diverse leisure and activity patterns.\",\"quantity\":28,\"sampled_values\":{\"1\":[25,54],\"2\":3,\"3\":[1,2],\"4\":[1,2,3,4,5,6],\"5\":[1,2,3,4,5,6,7],\"6\":[1,2,3,4],\"7\":[1,2],\"8\":[1,2],\"9\":[1,2],\"10\":[1,2],\"11\":[1,2,3,4,5,6,7,8],\"12\":[1,2],\"13\":[1,2,3,4,5,6,7,8,9],\"14\":[1,2,3,4,4,4],\"15\":[1,2,3,4,5,6],\"16\":[1,2,3,4,5,6,7],\"17\":[1,2,1,2],\"18\":[1,2],\"19\":[1,2,1,2],\"20\":[1,2],\"21\":[1,2,3,4,5,6],\"22\":[1,2,3,4,5,6,7,8],\"23\":[1,2,3,4,5,1,2,3,4,5],\"24\":[1,2,3,4,5,6,7,8],\"25\":[1,2,3],\"26\":[1,2,3,4],\"27\":[1,2,3,4],\"28\":[1,2,3,4,5,6,7],\"29\":[1,2,3,4,5,6,7,8],\"30\":[1,2,3,4,5,6,7,8,9],\"31\":[1,2],\"32\":[1,2],\"33\":[1,2],\"34\":[1,2,3,4,5,6,7,8],\"35\":[1,2,3,4,5],\"36\":[1,2,3],\"37\":[1,2],\"38\":[1,2],\"39\":[1,2],\"40\":[1,2],\"41\":[1,2],\"42\":[1,2],\"43\":[1,2,3],\"44\":[1,2,3,4,5],\"45\":[1,2],\"46\":[1,2,3,4],\"47\":[1,2,3],\"48\":[1,2],\"49\":[1,2],\"50\":[1,2],\"51\":[1,2],\"52\":[1,2],\"53\":[1,2],\"54\":[1,2],\"55\":[1,2],\"56\":[1,2],\"57\":[1,2],\"58\":[1,2],\"59\":[1,2],\"60\":[1,2,3],\"61\":[1,2,3],\"62\":[1,2,3],\"63\":[1,2,3],\"64\":[1,2,3],\"65\":[1,2],\"66\":[1,2],\"67\":[1,2],\"68\":[1,2],\"69\":[1,2],\"70\":[1,2],\"71\":[1,2],\"72\":[1,2],\"73\":[1,2],\"74\":[1,2],\"75\":[1,2,3,4,5,6,7,8],\"76\":[1,2,3,4,5,6,7,8,9],\"77\":[1,2,3,4,5,6,7,8,9],\"78\":[1,2,3,4,5,6,7],\"79\":[1,2,3,4,5,6,7],\"80\":[1,2],\"81\":[1,2,3,4,5,6],\"82\":[1,2,3,4,5,6,7,8],\"83\":[1,2,3,4,5,6,7],\"84\":[1,2,3,4,5,6,7,8,9],\"85\":[1,2,3,4,5,6,7,8]}},{\"id\":4,\"subpopulation_description\":\"Adults aged 55–64, including people continuing work, caregiving, or approaching retirement; span the listed sex, race and ethnicity, region, and residential settings, with varied interests and activity patterns.\",\"quantity\":9,\"sampled_values\":{\"1\":[55,64],\"2\":4,\"3\":[1,2],\"4\":[1,2,3,4,5,6],\"5\":[1,2,3,4,5,6,7],\"6\":[1,2,3,4],\"7\":[1,2],\"8\":[1,2],\"9\":[1,2],\"10\":[1,2],\"11\":[1,2,3,4,5,6,7,8],\"12\":[1,2],\"13\":[1,2,3,4,5,6,7,8,9],\"14\":[1,2,3,4,4,4],\"15\":[1,2,3,4,5,6],\"16\":[1,2,3,4,5,6,7],\"17\":[1,2,1,2],\"18\":[1,2],\"19\":[1,2,1,2],\"20\":[1,2],\"21\":[1,2,3,4,5,6],\"22\":[1,2,3,4,5,6,7,8],\"23\":[1,2,3,4,5,1,2,3,4,5],\"24\":[1,2,3,4,5,6,7,8],\"25\":[1,2,3],\"26\":[1,2,3,4],\"27\":[1,2,3,4],\"28\":[1,2,3,4,5,6,7],\"29\":[1,2,3,4,5,6,7,8],\"30\":[1,2,3,4,5,6,7,8,9],\"31\":[1,2],\"32\":[1,2],\"33\":[1,2],\"34\":[1,2,3,4,5,6,7,8],\"35\":[1,2,3,4,5],\"36\":[1,2,3],\"37\":[1,2],\"38\":[1,2],\"39\":[1,2],\"40\":[1,2],\"41\":[1,2],\"42\":[1,2],\"43\":[1,2,3],\"44\":[1,2,3,4,5],\"45\":[1,2],\"46\":[1,2,3,4],\"47\":[1,2,3],\"48\":[1,2],\"49\":[1,2],\"50\":[1,2],\"51\":[1,2],\"52\":[1,2],\"53\":[1,2],\"54\":[1,2],\"55\":[1,2],\"56\":[1,2],\"57\":[1,2],\"58\":[1,2],\"59\":[1,2],\"60\":[1,2,3],\"61\":[1,2,3],\"62\":[1,2,3],\"63\":[1,2,3],\"64\":[1,2,3],\"65\":[1,2],\"66\":[1,2],\"67\":[1,2],\"68\":[1,2],\"69\":[1,2],\"70\":[1,2],\"71\":[1,2],\"72\":[1,2],\"73\":[1,2],\"74\":[1,2],\"75\":[1,2,3,4,5,6,7,8],\"76\":[1,2,3,4,5,6,7,8,9],\"77\":[1,2,3,4,5,6,7,8,9],\"78\":[1,2,3,4,5,6,7],\"79\":[1,2,3,4,5,6,7],\"80\":[1,2],\"81\":[1,2,3,4,5,6],\"82\":[1,2,3,4,5,6,7,8],\"83\":[1,2,3,4,5,6,7],\"84\":[1,2,3,4,5,6,7,8,9],\"85\":[1,2,3,4,5,6,7,8]}},{\"id\":5,\"subpopulation_description\":\"Older adults aged 65 and above, with ages drawn across the supplied older-adult range; span the listed sex, race and ethnicity, region, and residential settings, with varied leisure, technology, and activity patterns.\",\"quantity\":11,\"sampled_values\":{\"1\":[65,115],\"2\":5,\"3\":[1,2],\"4\":[1,2,3,4,5,6],\"5\":[1,2,3,4,5,6,7],\"6\":[1,2,3,4],\"7\":[1,2],\"8\":[1,2],\"9\":[1,2],\"10\":[1,2],\"11\":[1,2,3,4,5,6,7,8],\"12\":[1,2],\"13\":[1,2,3,4,5,6,7,8,9],\"14\":[1,2,3,4,4,4],\"15\":[1,2,3,4,5,6],\"16\":[1,2,3,4,5,6,7],\"17\":[1,2,1,2],\"18\":[1,2],\"19\":[1,2,1,2],\"20\":[1,2],\"21\":[1,2,3,4,5,6],\"22\":[1,2,3,4,5,6,7,8],\"23\":[1,2,3,4,5,1,2,3,4,5],\"24\":[1,2,3,4,5,6,7,8],\"25\":[1,2,3],\"26\":[1,2,3,4],\"27\":[1,2,3,4],\"28\":[1,2,3,4,5,6,7],\"29\":[1,2,3,4,5,6,7,8],\"30\":[1,2,3,4,5,6,7,8,9],\"31\":[1,2],\"32\":[1,2],\"33\":[1,2],\"34\":[1,2,3,4,5,6,7,8],\"35\":[1,2,3,4,5],\"36\":[1,2,3],\"37\":[1,2],\"38\":[1,2],\"39\":[1,2],\"40\":[1,2],\"41\":[1,2],\"42\":[1,2],\"43\":[1,2,3],\"44\":[1,2,3,4,5],\"45\":[1,2],\"46\":[1,2,3,4],\"47\":[1,2,3],\"48\":[1,2],\"49\":[1,2],\"50\":[1,2],\"51\":[1,2],\"52\":[1,2],\"53\":[1,2],\"54\":[1,2],\"55\":[1,2],\"56\":[1,2],\"57\":[1,2],\"58\":[1,2],\"59\":[1,2],\"60\":[1,2,3],\"61\":[1,2,3],\"62\":[1,2,3],\"63\":[1,2,3],\"64\":[1,2,3],\"65\":[1,2],\"66\":[1,2],\"67\":[1,2],\"68\":[1,2],\"69\":[1,2],\"70\":[1,2],\"71\":[1,2],\"72\":[1,2],\"73\":[1,2],\"74\":[1,2],\"75\":[1,2,3,4,5,6,7,8],\"76\":[1,2,3,4,5,6,7,8,9],\"77\":[1,2,3,4,5,6,7,8,9],\"78\":[1,2,3,4,5,6,7],\"79\":[1,2,3,4,5,6,7],\"80\":[1,2],\"81\":[1,2,3,4,5,6],\"82\":[1,2,3,4,5,6,7,8],\"83\":[1,2,3,4,5,6,7],\"84\":[1,2,3,4,5,6,7,8,9],\"85\":[1,2,3,4,5,6,7,8]}}]}",
+      "response_id": "chatcmpl-EeRCXFLP7aLU4hIdpKhbQvz2RwX6B",
+      "cost": {
+        "input_tokens": 14485,
+        "cached_input_tokens": 0,
+        "cache_write_tokens": 14482,
+        "output_tokens": 13842,
+        "reasoning_tokens": 9216,
+        "uncached_input_tokens": 3,
+        "input_usd": "3E-7",
+        "cached_input_usd": "0.00",
+        "cache_write_usd": "0.00181025",
+        "output_usd": "0.006921",
+        "total_usd": "0.00873155",
+        "long_context": false
+      },
+      "checks": {
+        "raw_output_characters": 7716,
+        "reconstruction_valid": false,
+        "reconstruction_error": "Duplicate selected option identifiers."
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcQoAeqqNKsUNJdJW4yPwzKCNo2mx::indexed-plan-v1::r1",
+      "phase": "sampling_plan",
+      "stage": "failure-development-round3",
+      "source_case_id": "exec-chatcmpl-EcQoAeqqNKsUNJdJW4yPwzKCNo2mx",
+      "variant": "indexed-plan-v1",
+      "adapter": "indexed_sampling",
+      "repetition": 1,
+      "hypothesis": "Separate semantic sampling choices from exact vocabulary reproduction through typed option identifiers, explicit null slots and validated deterministic reconstruction. Schema change is disclosed.",
+      "original_request_sha256": "4c6a3f7ae7755252b50f7d00fa1d08c7cf60ea9ccce397cec695f0e8c7138abf",
+      "instruction_sha256": "ff891711f69049a9a4f106d2e328ab995a602d8e16c364c203bd79482f9171af",
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 116.469,
+      "content": "{\"sample_plan\":[{\"id\":1,\"subpopulation_description\":\"U.S. parents or guardians aged 18–75 who enjoy books and share books with a qualifying 4- or 5-year-old on 6–7 days per week, typically through a near-daily read-aloud routine.\",\"quantity\":10,\"sampled_values\":{\"1\":[18,75],\"2\":[4,5],\"3\":[48,71],\"4\":[1,2,3],\"5\":[1,2,3,4,5,6,7,8],\"6\":null,\"7\":[1,2],\"8\":[1,2,3,4],\"9\":[1,2,3,4],\"10\":[1,2,3],\"11\":[1,2,3,4,5],\"12\":[1,2,3,4,5,6],\"13\":[1,2,3,4],\"14\":[1,2,3,4],\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":[1,2,3,4,5,6,7],\"21\":[1,2,3,4,5,6],\"22\":[1,2,3,4,5,6,7],\"23\":[1,2,3,4,5,6,7],\"24\":[6,7],\"25\":[1,2],\"26\":[1,2,3,4,5],\"27\":[1,2,3,4,5],\"28\":null,\"29\":null}},{\"id\":2,\"subpopulation_description\":\"U.S. parents or guardians aged 18–75 who enjoy books and share books with a qualifying 4- or 5-year-old on 4–5 days per week through a regular shared-reading routine.\",\"quantity\":10,\"sampled_values\":{\"1\":[18,75],\"2\":[4,5],\"3\":[48,71],\"4\":[1,2,3],\"5\":[1,2,3,4,5,6,7,8],\"6\":null,\"7\":[1,2],\"8\":[1,2,3,4],\"9\":[1,2,3,4],\"10\":[1,2,3],\"11\":[1,2,3,4,5],\"12\":[1,2,3,4,5,6],\"13\":[1,2,3,4],\"14\":[1,2,3,4],\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":[1,2,3,4,5,6,7],\"21\":[1,2,3,4,5,6],\"22\":[1,2,3,4,5,6,7],\"23\":[1,2,3,4,5,6,7],\"24\":[4,5],\"25\":[1,2],\"26\":[1,2,3,4,5],\"27\":[1,2,3,4,5],\"28\":null,\"29\":null}},{\"id\":3,\"subpopulation_description\":\"U.S. parents or guardians aged 18–75 who enjoy books and share books with a qualifying 4- or 5-year-old on 2–3 days per week, using regular or more occasional routines.\",\"quantity\":10,\"sampled_values\":{\"1\":[18,75],\"2\":[4,5],\"3\":[48,71],\"4\":[1,2,3],\"5\":[1,2,3,4,5,6,7,8],\"6\":null,\"7\":[1,2],\"8\":[1,2,3,4],\"9\":[1,2,3,4],\"10\":[1,2,3],\"11\":[1,2,3,4,5],\"12\":[1,2,3,4,5,6],\"13\":[1,2,3,4],\"14\":[1,2,3,4],\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":[1,2,3,4,5,6,7],\"21\":[1,2,3,4,5,6],\"22\":[1,2,3,4,5,6,7],\"23\":[1,2,3,4,5,6,7],\"24\":[2,3],\"25\":[2,3],\"26\":[1,2,3,4,5],\"27\":[1,2,3,4,5],\"28\":null,\"29\":null}},{\"id\":4,\"subpopulation_description\":\"U.S. parents or guardians aged 18–75 who enjoy books and share books with a qualifying 4- or 5-year-old about once per week, including occasional, alternative, barrier-shaped, or adapted practices.\",\"quantity\":10,\"sampled_values\":{\"1\":[18,75],\"2\":[4,5],\"3\":[48,71],\"4\":[1,2,3],\"5\":[1,2,3,4,5,6,7,8],\"6\":null,\"7\":[1,2],\"8\":[1,2,3,4],\"9\":[1,2,3,4],\"10\":[1,2,3],\"11\":[1,2,3,4,5],\"12\":[1,2,3,4,5,6],\"13\":[1,2,3,4],\"14\":[1,2,3,4],\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":[1,2,3,4,5,6,7],\"21\":[1,2,3,4,5,6],\"22\":[1,2,3,4,5,6,7],\"23\":[1,2,3,4,5,6,7],\"24\":1,\"25\":[3,4,5,6],\"26\":[1,2,3,4,5],\"27\":[1,2,3,4,5],\"28\":null,\"29\":null}},{\"id\":5,\"subpopulation_description\":\"U.S. parents or guardians aged 18–75 who enjoy books but do not share books with a qualifying 4- or 5-year-old in a typical week; they may use alternatives, face barriers, or prefer adapted practices.\",\"quantity\":10,\"sampled_values\":{\"1\":[18,75],\"2\":[4,5],\"3\":[48,71],\"4\":[1,2,3],\"5\":[1,2,3,4,5,6,7,8],\"6\":null,\"7\":[1,2],\"8\":[1,2,3,4],\"9\":[1,2,3,4],\"10\":[1,2,3],\"11\":[1,2,3,4,5],\"12\":[1,2,3,4,5,6],\"13\":[1,2,3,4],\"14\":[1,2,3,4],\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":[1,2,3,4,5,6,7],\"21\":[1,2,3,4,5,6],\"22\":[1,2,3,4,5,6,7],\"23\":[1,2,3,4,5,6,7],\"24\":0,\"25\":[4,5,6],\"26\":[1,2,3,4,5],\"27\":[1,2,3,4,5],\"28\":null,\"29\":null}}]}",
+      "response_id": "chatcmpl-EeRE8QFfaS1dZPlh3ZsqNDZPQo2eM",
+      "cost": {
+        "input_tokens": 7007,
+        "cached_input_tokens": 0,
+        "cache_write_tokens": 7004,
+        "output_tokens": 12322,
+        "reasoning_tokens": 10596,
+        "uncached_input_tokens": 3,
+        "input_usd": "3E-7",
+        "cached_input_usd": "0.00",
+        "cache_write_usd": "0.0008755",
+        "output_usd": "0.006161",
+        "total_usd": "0.0070368",
+        "long_context": false
+      },
+      "reconstructed": {
+        "sample_plan": [
+          {
+            "id": 1,
+            "subpopulation_description": "U.S. parents or guardians aged 18–75 who enjoy books and share books with a qualifying 4- or 5-year-old on 6–7 days per week, typically through a near-daily read-aloud routine.",
+            "quantity": 10,
+            "sampled_values": {
+              "parent_age_years": [
+                18,
+                75
+              ],
+              "age_of_qualifying_child_years": [
+                4,
+                5
+              ],
+              "age_of_qualifying_child_months": [
+                48,
+                71
+              ],
+              "parent_gender_identity": [
+                "Identifies as a woman, whether cisgender or transgender, and is a mother or other parent of a child aged 4 or 5.",
+                "Identifies as a man, whether cisgender or transgender, and is a father or other parent of a child aged 4 or 5.",
+                "Identifies as nonbinary, genderqueer, or another gender, or describes their gender in a way not captured by woman or man."
+              ],
+              "race_ethnicity_and_heritage": [
+                "Non-Hispanic White, with family heritage that may include, among many others, German, Irish, English, Italian, Polish, French, Scandinavian, Slavic, or multiple European ancestries; family traditions and degree of connection to heritage vary widely.",
+                "Hispanic or Latino, including people with Mexican, Puerto Rican, Cuban, Dominican, Salvadoran, Guatemalan, Colombian, Venezuelan, or other Central American, South American, Caribbean, or Spanish heritage; may identify with any race and may be English-dominant, Spanish-dominant, or bilingual.",
+                "Non-Hispanic Black or African American, including descendants of families established in the United States over many generations and people with recent or multigenerational African, Caribbean, or Afro-Latin heritage; cultural and regional identities vary widely.",
+                "Asian or Asian American, including people with Chinese, Indian, Filipino, Vietnamese, Korean, Japanese, Pakistani, Bangladeshi, Hmong, or other South, East, or Southeast Asian heritage, with varied immigration histories and family languages.",
+                "Multiracial or multiethnic, with two or more racial, ethnic, or national heritages and family traditions that may combine or move between different cultural communities.",
+                "American Indian or Alaska Native, with tribal, Native Nation, or Alaska Native heritage and varied levels of connection to community, language, land, and cultural traditions.",
+                "Native Hawaiian or Pacific Islander, including Native Hawaiian, Samoan, Guamanian or Chamorro, Tongan, Fijian, or other Pacific Islander heritage and varied family ties to the islands and U.S. communities.",
+                "Another or not otherwise captured background, including Middle Eastern or North African heritage, or a racial or ethnic identity not represented by the categories above; identities and family histories are diverse."
+              ],
+              "parent_birthplace_and_migration_background": [
+                "Born in the United States, with family roots that may extend across several generations or include more recent immigration.",
+                "Born outside the United States and moved to the country as a child or adult, with a wide range of immigration, refugee, or other migration histories and varying ties to a country of origin."
+              ],
+              "primary_home_language": [
+                "English is the main language used at home, though the parent or other household members may also use another language.",
+                "Spanish is the main language used at home, with varying levels of English use by the parent and other household members.",
+                "Two or more languages are used regularly at home, such as English and Spanish or English and a heritage language, with fluency varying among family members.",
+                "A language other than English or Spanish is used most often at home, such as Chinese, Tagalog, Vietnamese, Arabic, French, Korean, or a Native or Pacific Island language."
+              ],
+              "us_region": [
+                "Northeast, including communities in New England and the Mid-Atlantic, from dense metropolitan areas to small towns and rural places.",
+                "Midwest, including Great Lakes, Great Plains, and inland communities, from large cities to agricultural and rural areas.",
+                "South, including the Southeast, south-central states, and varied urban, suburban, small-town, and rural communities.",
+                "West, including Pacific Coast, Mountain, and Southwest communities, with substantial variation in population density, climate, and local culture."
+              ],
+              "community_type": [
+                "Lives in a large or dense urban area with relatively close access to libraries, schools, public transit, and a wide range of services, though housing and resources may be costly or unevenly distributed.",
+                "Lives in a suburban community, often with a mix of residential areas, schools, shops, and car-dependent or transit-connected travel.",
+                "Lives in a small town, rural area, or geographically remote community, where services and book access may require longer travel or rely on schools, bookmobiles, or online resources."
+              ],
+              "parent_educational_attainment": [
+                "Did not complete high school or an equivalent credential, with educational experiences that may have been interrupted by work, caregiving, health, or other circumstances.",
+                "Completed high school or an equivalent credential and may have pursued additional informal, vocational, or workplace learning.",
+                "Completed some college, a trade or technical program, or an associate degree, with a range of career and educational pathways.",
+                "Completed a bachelor's degree, with education in a wide variety of academic and professional fields.",
+                "Completed graduate or professional education, including a master's, doctoral, law, medical, or other advanced degree."
+              ],
+              "primary_employment_situation": [
+                "Works full time for an employer or in a business, balancing paid work with parenting and household responsibilities.",
+                "Works part time or on a variable schedule, potentially combining paid work with caregiving or other responsibilities.",
+                "Is currently seeking paid work or is between jobs, with circumstances ranging from a recent transition to prolonged unemployment.",
+                "Is primarily occupied with unpaid caregiving or household responsibilities, whether by choice, necessity, or limited access to suitable paid work.",
+                "Is primarily a student or in a period of job training or education while parenting a young child.",
+                "Is unable to work, retired, or primarily engaged in another situation not captured above."
+              ],
+              "household_family_structure": [
+                "Lives with a spouse, and the spouse or partner shares the household and parenting responsibilities to some degree.",
+                "Lives with an unmarried partner who shares the household and may share parenting responsibilities.",
+                "Is the only parent or guardian living in the household with the child, with support from relatives, friends, institutions, or other sources varying widely.",
+                "Has a separated, divorced, shared-custody, multigenerational, or other household arrangement that does not fit the categories above."
+              ],
+              "number_of_children_in_parent_household": [
+                "One child in the household, including the qualifying child aged 4 or 5.",
+                "Two children in the household, potentially with siblings at different developmental stages.",
+                "Three children in the household, with a wider range of caregiving and household demands.",
+                "Four or more children in the household, including larger families and households with children of varied ages."
+              ],
+              "preferences_and_tastes": [
+                "Enjoys fiction such as literary novels, romance, mystery, fantasy, or science fiction and often chooses books as a preferred form of relaxation.",
+                "Prefers nonfiction, memoir, history, science, practical guides, or current affairs, and enjoys reading to learn about real people, ideas, or skills.",
+                "Enjoys reading a varied mix of books and other media, choosing titles according to mood, recommendations, or current interests rather than sticking to one genre.",
+                "Likes books but tends to read in short, occasional periods; values audiobooks, short chapters, or other convenient formats alongside family and work activities.",
+                "Enjoys reading along with outdoor recreation, cooking, crafts, music, or other hands-on interests, and chooses books that complement those activities.",
+                "Often prefers social, visual, or screen-based entertainment and has limited leisure time, but still enjoys selected books and finds reading worthwhile.",
+                "Has narrow or intense reading interests, or sometimes chooses emotionally difficult, challenging, or unconventional books; may read avidly or withdraw from reading during stressful periods."
+              ],
+              "enjoyment_of_reading_books": [
+                "Enjoys reading very avidly, often choosing books in preference to other leisure activities and regularly seeking out new authors or topics.",
+                "Reads for pleasure several times a week and considers books an important source of entertainment, learning, comfort, or reflection.",
+                "Enjoys books and reads when time and circumstances permit, though work, caregiving, or other responsibilities make reading irregular.",
+                "Enjoys reading in particular situations, such as holidays, before bed, during commutes, or when a favorite genre or subject is available.",
+                "Has a modest but genuine interest in books and reads occasionally, often preferring accessible, short, recommended, or especially engaging titles.",
+                "Enjoys books despite substantial barriers such as limited time, fatigue, disability, limited access, or a preference for audio and other accessible formats."
+              ],
+              "preferred_reading_genre_or_style": [
+                "Usually gravitates toward contemporary or literary fiction, novels, short stories, and character-focused narratives.",
+                "Usually gravitates toward mystery, thriller, suspense, horror, or crime stories with a strong plot and sense of discovery.",
+                "Usually gravitates toward fantasy, science fiction, speculative fiction, adventure, or imaginative worlds.",
+                "Usually gravitates toward nonfiction such as history, biography, science, psychology, memoir, or current affairs.",
+                "Usually gravitates toward romance, family stories, humor, or emotionally engaging popular fiction.",
+                "Usually gravitates toward practical books, cookbooks, self-help, faith-related reading, crafts, or books connected to work and everyday interests.",
+                "Has varied or changing tastes, reads across genres, or does not have one clear preferred style."
+              ],
+              "preferred_book_format": [
+                "Prefers printed paperbacks or hardcovers and enjoys browsing physical books in libraries, bookstores, or at home.",
+                "Often reads ebooks on a phone, tablet, e-reader, or computer because digital books are portable and convenient.",
+                "Enjoys audiobooks, which make it possible to read while commuting, doing chores, exercising, or resting.",
+                "Uses a mixture of print, digital, and audio formats depending on the book, accessibility needs, cost, and available time.",
+                "Prefers large-print, dyslexia-friendly, screen-reader-compatible, or other accessible formats when those make reading more comfortable.",
+                "Borrows books from public libraries, school or workplace libraries, friends, or family rather than purchasing most titles.",
+                "Usually purchases books, subscribes to a reading service, or maintains a personal collection, while also using libraries or borrowed books."
+              ],
+              "parent_child_shared_reading_frequency_days_per_week": [
+                6,
+                7
+              ],
+              "parent_child_reading_practice": [
+                "Reads aloud with the child most days, allowing the child to choose books, ask questions, and revisit favorite stories.",
+                "Shares books several times each week, often as part of a bedtime, after-school, or weekend routine."
+              ],
+              "home_access_to_books": [
+                "Has a substantial home collection of children's and adult books, regularly adds new titles, and can readily find books suited to the child's interests.",
+                "Keeps a modest selection of books at home and supplements it with library borrowing, school resources, or gifts.",
+                "Relies mainly on public libraries, school libraries, community programs, or borrowed books because purchasing and storing books is difficult or unnecessary.",
+                "Has dependable digital or audio access to books but relatively few physical books at home.",
+                "Has limited and inconsistent access to appealing books because of transportation, cost, disability access, language availability, local service limitations, or housing instability."
+              ],
+              "childs_interest_in_books": [
+                "The child often asks to be read to, chooses books independently, and enjoys looking at pictures, repeating phrases, or discussing stories.",
+                "The child enjoys familiar books and shared reading but has changing attention and prefers brief, interactive sessions.",
+                "The child's interest depends on subject, format, mood, or time of day, and engagement is strongest with personally appealing topics.",
+                "The child is beginning to show interest in books but more often chooses active play, music, screens, or other activities.",
+                "The child has low or inconsistent interest in books, or needs adapted formats, additional support, or more time to engage with stories."
+              ]
+            }
+          },
+          {
+            "id": 2,
+            "subpopulation_description": "U.S. parents or guardians aged 18–75 who enjoy books and share books with a qualifying 4- or 5-year-old on 4–5 days per week through a regular shared-reading routine.",
+            "quantity": 10,
+            "sampled_values": {
+              "parent_age_years": [
+                18,
+                75
+              ],
+              "age_of_qualifying_child_years": [
+                4,
+                5
+              ],
+              "age_of_qualifying_child_months": [
+                48,
+                71
+              ],
+              "parent_gender_identity": [
+                "Identifies as a woman, whether cisgender or transgender, and is a mother or other parent of a child aged 4 or 5.",
+                "Identifies as a man, whether cisgender or transgender, and is a father or other parent of a child aged 4 or 5.",
+                "Identifies as nonbinary, genderqueer, or another gender, or describes their gender in a way not captured by woman or man."
+              ],
+              "race_ethnicity_and_heritage": [
+                "Non-Hispanic White, with family heritage that may include, among many others, German, Irish, English, Italian, Polish, French, Scandinavian, Slavic, or multiple European ancestries; family traditions and degree of connection to heritage vary widely.",
+                "Hispanic or Latino, including people with Mexican, Puerto Rican, Cuban, Dominican, Salvadoran, Guatemalan, Colombian, Venezuelan, or other Central American, South American, Caribbean, or Spanish heritage; may identify with any race and may be English-dominant, Spanish-dominant, or bilingual.",
+                "Non-Hispanic Black or African American, including descendants of families established in the United States over many generations and people with recent or multigenerational African, Caribbean, or Afro-Latin heritage; cultural and regional identities vary widely.",
+                "Asian or Asian American, including people with Chinese, Indian, Filipino, Vietnamese, Korean, Japanese, Pakistani, Bangladeshi, Hmong, or other South, East, or Southeast Asian heritage, with varied immigration histories and family languages.",
+                "Multiracial or multiethnic, with two or more racial, ethnic, or national heritages and family traditions that may combine or move between different cultural communities.",
+                "American Indian or Alaska Native, with tribal, Native Nation, or Alaska Native heritage and varied levels of connection to community, language, land, and cultural traditions.",
+                "Native Hawaiian or Pacific Islander, including Native Hawaiian, Samoan, Guamanian or Chamorro, Tongan, Fijian, or other Pacific Islander heritage and varied family ties to the islands and U.S. communities.",
+                "Another or not otherwise captured background, including Middle Eastern or North African heritage, or a racial or ethnic identity not represented by the categories above; identities and family histories are diverse."
+              ],
+              "parent_birthplace_and_migration_background": [
+                "Born in the United States, with family roots that may extend across several generations or include more recent immigration.",
+                "Born outside the United States and moved to the country as a child or adult, with a wide range of immigration, refugee, or other migration histories and varying ties to a country of origin."
+              ],
+              "primary_home_language": [
+                "English is the main language used at home, though the parent or other household members may also use another language.",
+                "Spanish is the main language used at home, with varying levels of English use by the parent and other household members.",
+                "Two or more languages are used regularly at home, such as English and Spanish or English and a heritage language, with fluency varying among family members.",
+                "A language other than English or Spanish is used most often at home, such as Chinese, Tagalog, Vietnamese, Arabic, French, Korean, or a Native or Pacific Island language."
+              ],
+              "us_region": [
+                "Northeast, including communities in New England and the Mid-Atlantic, from dense metropolitan areas to small towns and rural places.",
+                "Midwest, including Great Lakes, Great Plains, and inland communities, from large cities to agricultural and rural areas.",
+                "South, including the Southeast, south-central states, and varied urban, suburban, small-town, and rural communities.",
+                "West, including Pacific Coast, Mountain, and Southwest communities, with substantial variation in population density, climate, and local culture."
+              ],
+              "community_type": [
+                "Lives in a large or dense urban area with relatively close access to libraries, schools, public transit, and a wide range of services, though housing and resources may be costly or unevenly distributed.",
+                "Lives in a suburban community, often with a mix of residential areas, schools, shops, and car-dependent or transit-connected travel.",
+                "Lives in a small town, rural area, or geographically remote community, where services and book access may require longer travel or rely on schools, bookmobiles, or online resources."
+              ],
+              "parent_educational_attainment": [
+                "Did not complete high school or an equivalent credential, with educational experiences that may have been interrupted by work, caregiving, health, or other circumstances.",
+                "Completed high school or an equivalent credential and may have pursued additional informal, vocational, or workplace learning.",
+                "Completed some college, a trade or technical program, or an associate degree, with a range of career and educational pathways.",
+                "Completed a bachelor's degree, with education in a wide variety of academic and professional fields.",
+                "Completed graduate or professional education, including a master's, doctoral, law, medical, or other advanced degree."
+              ],
+              "primary_employment_situation": [
+                "Works full time for an employer or in a business, balancing paid work with parenting and household responsibilities.",
+                "Works part time or on a variable schedule, potentially combining paid work with caregiving or other responsibilities.",
+                "Is currently seeking paid work or is between jobs, with circumstances ranging from a recent transition to prolonged unemployment.",
+                "Is primarily occupied with unpaid caregiving or household responsibilities, whether by choice, necessity, or limited access to suitable paid work.",
+                "Is primarily a student or in a period of job training or education while parenting a young child.",
+                "Is unable to work, retired, or primarily engaged in another situation not captured above."
+              ],
+              "household_family_structure": [
+                "Lives with a spouse, and the spouse or partner shares the household and parenting responsibilities to some degree.",
+                "Lives with an unmarried partner who shares the household and may share parenting responsibilities.",
+                "Is the only parent or guardian living in the household with the child, with support from relatives, friends, institutions, or other sources varying widely.",
+                "Has a separated, divorced, shared-custody, multigenerational, or other household arrangement that does not fit the categories above."
+              ],
+              "number_of_children_in_parent_household": [
+                "One child in the household, including the qualifying child aged 4 or 5.",
+                "Two children in the household, potentially with siblings at different developmental stages.",
+                "Three children in the household, with a wider range of caregiving and household demands.",
+                "Four or more children in the household, including larger families and households with children of varied ages."
+              ],
+              "preferences_and_tastes": [
+                "Enjoys fiction such as literary novels, romance, mystery, fantasy, or science fiction and often chooses books as a preferred form of relaxation.",
+                "Prefers nonfiction, memoir, history, science, practical guides, or current affairs, and enjoys reading to learn about real people, ideas, or skills.",
+                "Enjoys reading a varied mix of books and other media, choosing titles according to mood, recommendations, or current interests rather than sticking to one genre.",
+                "Likes books but tends to read in short, occasional periods; values audiobooks, short chapters, or other convenient formats alongside family and work activities.",
+                "Enjoys reading along with outdoor recreation, cooking, crafts, music, or other hands-on interests, and chooses books that complement those activities.",
+                "Often prefers social, visual, or screen-based entertainment and has limited leisure time, but still enjoys selected books and finds reading worthwhile.",
+                "Has narrow or intense reading interests, or sometimes chooses emotionally difficult, challenging, or unconventional books; may read avidly or withdraw from reading during stressful periods."
+              ],
+              "enjoyment_of_reading_books": [
+                "Enjoys reading very avidly, often choosing books in preference to other leisure activities and regularly seeking out new authors or topics.",
+                "Reads for pleasure several times a week and considers books an important source of entertainment, learning, comfort, or reflection.",
+                "Enjoys books and reads when time and circumstances permit, though work, caregiving, or other responsibilities make reading irregular.",
+                "Enjoys reading in particular situations, such as holidays, before bed, during commutes, or when a favorite genre or subject is available.",
+                "Has a modest but genuine interest in books and reads occasionally, often preferring accessible, short, recommended, or especially engaging titles.",
+                "Enjoys books despite substantial barriers such as limited time, fatigue, disability, limited access, or a preference for audio and other accessible formats."
+              ],
+              "preferred_reading_genre_or_style": [
+                "Usually gravitates toward contemporary or literary fiction, novels, short stories, and character-focused narratives.",
+                "Usually gravitates toward mystery, thriller, suspense, horror, or crime stories with a strong plot and sense of discovery.",
+                "Usually gravitates toward fantasy, science fiction, speculative fiction, adventure, or imaginative worlds.",
+                "Usually gravitates toward nonfiction such as history, biography, science, psychology, memoir, or current affairs.",
+                "Usually gravitates toward romance, family stories, humor, or emotionally engaging popular fiction.",
+                "Usually gravitates toward practical books, cookbooks, self-help, faith-related reading, crafts, or books connected to work and everyday interests.",
+                "Has varied or changing tastes, reads across genres, or does not have one clear preferred style."
+              ],
+              "preferred_book_format": [
+                "Prefers printed paperbacks or hardcovers and enjoys browsing physical books in libraries, bookstores, or at home.",
+                "Often reads ebooks on a phone, tablet, e-reader, or computer because digital books are portable and convenient.",
+                "Enjoys audiobooks, which make it possible to read while commuting, doing chores, exercising, or resting.",
+                "Uses a mixture of print, digital, and audio formats depending on the book, accessibility needs, cost, and available time.",
+                "Prefers large-print, dyslexia-friendly, screen-reader-compatible, or other accessible formats when those make reading more comfortable.",
+                "Borrows books from public libraries, school or workplace libraries, friends, or family rather than purchasing most titles.",
+                "Usually purchases books, subscribes to a reading service, or maintains a personal collection, while also using libraries or borrowed books."
+              ],
+              "parent_child_shared_reading_frequency_days_per_week": [
+                4,
+                5
+              ],
+              "parent_child_reading_practice": [
+                "Reads aloud with the child most days, allowing the child to choose books, ask questions, and revisit favorite stories.",
+                "Shares books several times each week, often as part of a bedtime, after-school, or weekend routine."
+              ],
+              "home_access_to_books": [
+                "Has a substantial home collection of children's and adult books, regularly adds new titles, and can readily find books suited to the child's interests.",
+                "Keeps a modest selection of books at home and supplements it with library borrowing, school resources, or gifts.",
+                "Relies mainly on public libraries, school libraries, community programs, or borrowed books because purchasing and storing books is difficult or unnecessary.",
+                "Has dependable digital or audio access to books but relatively few physical books at home.",
+                "Has limited and inconsistent access to appealing books because of transportation, cost, disability access, language availability, local service limitations, or housing instability."
+              ],
+              "childs_interest_in_books": [
+                "The child often asks to be read to, chooses books independently, and enjoys looking at pictures, repeating phrases, or discussing stories.",
+                "The child enjoys familiar books and shared reading but has changing attention and prefers brief, interactive sessions.",
+                "The child's interest depends on subject, format, mood, or time of day, and engagement is strongest with personally appealing topics.",
+                "The child is beginning to show interest in books but more often chooses active play, music, screens, or other activities.",
+                "The child has low or inconsistent interest in books, or needs adapted formats, additional support, or more time to engage with stories."
+              ]
+            }
+          },
+          {
+            "id": 3,
+            "subpopulation_description": "U.S. parents or guardians aged 18–75 who enjoy books and share books with a qualifying 4- or 5-year-old on 2–3 days per week, using regular or more occasional routines.",
+            "quantity": 10,
+            "sampled_values": {
+              "parent_age_years": [
+                18,
+                75
+              ],
+              "age_of_qualifying_child_years": [
+                4,
+                5
+              ],
+              "age_of_qualifying_child_months": [
+                48,
+                71
+              ],
+              "parent_gender_identity": [
+                "Identifies as a woman, whether cisgender or transgender, and is a mother or other parent of a child aged 4 or 5.",
+                "Identifies as a man, whether cisgender or transgender, and is a father or other parent of a child aged 4 or 5.",
+                "Identifies as nonbinary, genderqueer, or another gender, or describes their gender in a way not captured by woman or man."
+              ],
+              "race_ethnicity_and_heritage": [
+                "Non-Hispanic White, with family heritage that may include, among many others, German, Irish, English, Italian, Polish, French, Scandinavian, Slavic, or multiple European ancestries; family traditions and degree of connection to heritage vary widely.",
+                "Hispanic or Latino, including people with Mexican, Puerto Rican, Cuban, Dominican, Salvadoran, Guatemalan, Colombian, Venezuelan, or other Central American, South American, Caribbean, or Spanish heritage; may identify with any race and may be English-dominant, Spanish-dominant, or bilingual.",
+                "Non-Hispanic Black or African American, including descendants of families established in the United States over many generations and people with recent or multigenerational African, Caribbean, or Afro-Latin heritage; cultural and regional identities vary widely.",
+                "Asian or Asian American, including people with Chinese, Indian, Filipino, Vietnamese, Korean, Japanese, Pakistani, Bangladeshi, Hmong, or other South, East, or Southeast Asian heritage, with varied immigration histories and family languages.",
+                "Multiracial or multiethnic, with two or more racial, ethnic, or national heritages and family traditions that may combine or move between different cultural communities.",
+                "American Indian or Alaska Native, with tribal, Native Nation, or Alaska Native heritage and varied levels of connection to community, language, land, and cultural traditions.",
+                "Native Hawaiian or Pacific Islander, including Native Hawaiian, Samoan, Guamanian or Chamorro, Tongan, Fijian, or other Pacific Islander heritage and varied family ties to the islands and U.S. communities.",
+                "Another or not otherwise captured background, including Middle Eastern or North African heritage, or a racial or ethnic identity not represented by the categories above; identities and family histories are diverse."
+              ],
+              "parent_birthplace_and_migration_background": [
+                "Born in the United States, with family roots that may extend across several generations or include more recent immigration.",
+                "Born outside the United States and moved to the country as a child or adult, with a wide range of immigration, refugee, or other migration histories and varying ties to a country of origin."
+              ],
+              "primary_home_language": [
+                "English is the main language used at home, though the parent or other household members may also use another language.",
+                "Spanish is the main language used at home, with varying levels of English use by the parent and other household members.",
+                "Two or more languages are used regularly at home, such as English and Spanish or English and a heritage language, with fluency varying among family members.",
+                "A language other than English or Spanish is used most often at home, such as Chinese, Tagalog, Vietnamese, Arabic, French, Korean, or a Native or Pacific Island language."
+              ],
+              "us_region": [
+                "Northeast, including communities in New England and the Mid-Atlantic, from dense metropolitan areas to small towns and rural places.",
+                "Midwest, including Great Lakes, Great Plains, and inland communities, from large cities to agricultural and rural areas.",
+                "South, including the Southeast, south-central states, and varied urban, suburban, small-town, and rural communities.",
+                "West, including Pacific Coast, Mountain, and Southwest communities, with substantial variation in population density, climate, and local culture."
+              ],
+              "community_type": [
+                "Lives in a large or dense urban area with relatively close access to libraries, schools, public transit, and a wide range of services, though housing and resources may be costly or unevenly distributed.",
+                "Lives in a suburban community, often with a mix of residential areas, schools, shops, and car-dependent or transit-connected travel.",
+                "Lives in a small town, rural area, or geographically remote community, where services and book access may require longer travel or rely on schools, bookmobiles, or online resources."
+              ],
+              "parent_educational_attainment": [
+                "Did not complete high school or an equivalent credential, with educational experiences that may have been interrupted by work, caregiving, health, or other circumstances.",
+                "Completed high school or an equivalent credential and may have pursued additional informal, vocational, or workplace learning.",
+                "Completed some college, a trade or technical program, or an associate degree, with a range of career and educational pathways.",
+                "Completed a bachelor's degree, with education in a wide variety of academic and professional fields.",
+                "Completed graduate or professional education, including a master's, doctoral, law, medical, or other advanced degree."
+              ],
+              "primary_employment_situation": [
+                "Works full time for an employer or in a business, balancing paid work with parenting and household responsibilities.",
+                "Works part time or on a variable schedule, potentially combining paid work with caregiving or other responsibilities.",
+                "Is currently seeking paid work or is between jobs, with circumstances ranging from a recent transition to prolonged unemployment.",
+                "Is primarily occupied with unpaid caregiving or household responsibilities, whether by choice, necessity, or limited access to suitable paid work.",
+                "Is primarily a student or in a period of job training or education while parenting a young child.",
+                "Is unable to work, retired, or primarily engaged in another situation not captured above."
+              ],
+              "household_family_structure": [
+                "Lives with a spouse, and the spouse or partner shares the household and parenting responsibilities to some degree.",
+                "Lives with an unmarried partner who shares the household and may share parenting responsibilities.",
+                "Is the only parent or guardian living in the household with the child, with support from relatives, friends, institutions, or other sources varying widely.",
+                "Has a separated, divorced, shared-custody, multigenerational, or other household arrangement that does not fit the categories above."
+              ],
+              "number_of_children_in_parent_household": [
+                "One child in the household, including the qualifying child aged 4 or 5.",
+                "Two children in the household, potentially with siblings at different developmental stages.",
+                "Three children in the household, with a wider range of caregiving and household demands.",
+                "Four or more children in the household, including larger families and households with children of varied ages."
+              ],
+              "preferences_and_tastes": [
+                "Enjoys fiction such as literary novels, romance, mystery, fantasy, or science fiction and often chooses books as a preferred form of relaxation.",
+                "Prefers nonfiction, memoir, history, science, practical guides, or current affairs, and enjoys reading to learn about real people, ideas, or skills.",
+                "Enjoys reading a varied mix of books and other media, choosing titles according to mood, recommendations, or current interests rather than sticking to one genre.",
+                "Likes books but tends to read in short, occasional periods; values audiobooks, short chapters, or other convenient formats alongside family and work activities.",
+                "Enjoys reading along with outdoor recreation, cooking, crafts, music, or other hands-on interests, and chooses books that complement those activities.",
+                "Often prefers social, visual, or screen-based entertainment and has limited leisure time, but still enjoys selected books and finds reading worthwhile.",
+                "Has narrow or intense reading interests, or sometimes chooses emotionally difficult, challenging, or unconventional books; may read avidly or withdraw from reading during stressful periods."
+              ],
+              "enjoyment_of_reading_books": [
+                "Enjoys reading very avidly, often choosing books in preference to other leisure activities and regularly seeking out new authors or topics.",
+                "Reads for pleasure several times a week and considers books an important source of entertainment, learning, comfort, or reflection.",
+                "Enjoys books and reads when time and circumstances permit, though work, caregiving, or other responsibilities make reading irregular.",
+                "Enjoys reading in particular situations, such as holidays, before bed, during commutes, or when a favorite genre or subject is available.",
+                "Has a modest but genuine interest in books and reads occasionally, often preferring accessible, short, recommended, or especially engaging titles.",
+                "Enjoys books despite substantial barriers such as limited time, fatigue, disability, limited access, or a preference for audio and other accessible formats."
+              ],
+              "preferred_reading_genre_or_style": [
+                "Usually gravitates toward contemporary or literary fiction, novels, short stories, and character-focused narratives.",
+                "Usually gravitates toward mystery, thriller, suspense, horror, or crime stories with a strong plot and sense of discovery.",
+                "Usually gravitates toward fantasy, science fiction, speculative fiction, adventure, or imaginative worlds.",
+                "Usually gravitates toward nonfiction such as history, biography, science, psychology, memoir, or current affairs.",
+                "Usually gravitates toward romance, family stories, humor, or emotionally engaging popular fiction.",
+                "Usually gravitates toward practical books, cookbooks, self-help, faith-related reading, crafts, or books connected to work and everyday interests.",
+                "Has varied or changing tastes, reads across genres, or does not have one clear preferred style."
+              ],
+              "preferred_book_format": [
+                "Prefers printed paperbacks or hardcovers and enjoys browsing physical books in libraries, bookstores, or at home.",
+                "Often reads ebooks on a phone, tablet, e-reader, or computer because digital books are portable and convenient.",
+                "Enjoys audiobooks, which make it possible to read while commuting, doing chores, exercising, or resting.",
+                "Uses a mixture of print, digital, and audio formats depending on the book, accessibility needs, cost, and available time.",
+                "Prefers large-print, dyslexia-friendly, screen-reader-compatible, or other accessible formats when those make reading more comfortable.",
+                "Borrows books from public libraries, school or workplace libraries, friends, or family rather than purchasing most titles.",
+                "Usually purchases books, subscribes to a reading service, or maintains a personal collection, while also using libraries or borrowed books."
+              ],
+              "parent_child_shared_reading_frequency_days_per_week": [
+                2,
+                3
+              ],
+              "parent_child_reading_practice": [
+                "Shares books several times each week, often as part of a bedtime, after-school, or weekend routine.",
+                "Reads with the child occasionally when time and energy allow, without a consistent daily schedule."
+              ],
+              "home_access_to_books": [
+                "Has a substantial home collection of children's and adult books, regularly adds new titles, and can readily find books suited to the child's interests.",
+                "Keeps a modest selection of books at home and supplements it with library borrowing, school resources, or gifts.",
+                "Relies mainly on public libraries, school libraries, community programs, or borrowed books because purchasing and storing books is difficult or unnecessary.",
+                "Has dependable digital or audio access to books but relatively few physical books at home.",
+                "Has limited and inconsistent access to appealing books because of transportation, cost, disability access, language availability, local service limitations, or housing instability."
+              ],
+              "childs_interest_in_books": [
+                "The child often asks to be read to, chooses books independently, and enjoys looking at pictures, repeating phrases, or discussing stories.",
+                "The child enjoys familiar books and shared reading but has changing attention and prefers brief, interactive sessions.",
+                "The child's interest depends on subject, format, mood, or time of day, and engagement is strongest with personally appealing topics.",
+                "The child is beginning to show interest in books but more often chooses active play, music, screens, or other activities.",
+                "The child has low or inconsistent interest in books, or needs adapted formats, additional support, or more time to engage with stories."
+              ]
+            }
+          },
+          {
+            "id": 4,
+            "subpopulation_description": "U.S. parents or guardians aged 18–75 who enjoy books and share books with a qualifying 4- or 5-year-old about once per week, including occasional, alternative, barrier-shaped, or adapted practices.",
+            "quantity": 10,
+            "sampled_values": {
+              "parent_age_years": [
+                18,
+                75
+              ],
+              "age_of_qualifying_child_years": [
+                4,
+                5
+              ],
+              "age_of_qualifying_child_months": [
+                48,
+                71
+              ],
+              "parent_gender_identity": [
+                "Identifies as a woman, whether cisgender or transgender, and is a mother or other parent of a child aged 4 or 5.",
+                "Identifies as a man, whether cisgender or transgender, and is a father or other parent of a child aged 4 or 5.",
+                "Identifies as nonbinary, genderqueer, or another gender, or describes their gender in a way not captured by woman or man."
+              ],
+              "race_ethnicity_and_heritage": [
+                "Non-Hispanic White, with family heritage that may include, among many others, German, Irish, English, Italian, Polish, French, Scandinavian, Slavic, or multiple European ancestries; family traditions and degree of connection to heritage vary widely.",
+                "Hispanic or Latino, including people with Mexican, Puerto Rican, Cuban, Dominican, Salvadoran, Guatemalan, Colombian, Venezuelan, or other Central American, South American, Caribbean, or Spanish heritage; may identify with any race and may be English-dominant, Spanish-dominant, or bilingual.",
+                "Non-Hispanic Black or African American, including descendants of families established in the United States over many generations and people with recent or multigenerational African, Caribbean, or Afro-Latin heritage; cultural and regional identities vary widely.",
+                "Asian or Asian American, including people with Chinese, Indian, Filipino, Vietnamese, Korean, Japanese, Pakistani, Bangladeshi, Hmong, or other South, East, or Southeast Asian heritage, with varied immigration histories and family languages.",
+                "Multiracial or multiethnic, with two or more racial, ethnic, or national heritages and family traditions that may combine or move between different cultural communities.",
+                "American Indian or Alaska Native, with tribal, Native Nation, or Alaska Native heritage and varied levels of connection to community, language, land, and cultural traditions.",
+                "Native Hawaiian or Pacific Islander, including Native Hawaiian, Samoan, Guamanian or Chamorro, Tongan, Fijian, or other Pacific Islander heritage and varied family ties to the islands and U.S. communities.",
+                "Another or not otherwise captured background, including Middle Eastern or North African heritage, or a racial or ethnic identity not represented by the categories above; identities and family histories are diverse."
+              ],
+              "parent_birthplace_and_migration_background": [
+                "Born in the United States, with family roots that may extend across several generations or include more recent immigration.",
+                "Born outside the United States and moved to the country as a child or adult, with a wide range of immigration, refugee, or other migration histories and varying ties to a country of origin."
+              ],
+              "primary_home_language": [
+                "English is the main language used at home, though the parent or other household members may also use another language.",
+                "Spanish is the main language used at home, with varying levels of English use by the parent and other household members.",
+                "Two or more languages are used regularly at home, such as English and Spanish or English and a heritage language, with fluency varying among family members.",
+                "A language other than English or Spanish is used most often at home, such as Chinese, Tagalog, Vietnamese, Arabic, French, Korean, or a Native or Pacific Island language."
+              ],
+              "us_region": [
+                "Northeast, including communities in New England and the Mid-Atlantic, from dense metropolitan areas to small towns and rural places.",
+                "Midwest, including Great Lakes, Great Plains, and inland communities, from large cities to agricultural and rural areas.",
+                "South, including the Southeast, south-central states, and varied urban, suburban, small-town, and rural communities.",
+                "West, including Pacific Coast, Mountain, and Southwest communities, with substantial variation in population density, climate, and local culture."
+              ],
+              "community_type": [
+                "Lives in a large or dense urban area with relatively close access to libraries, schools, public transit, and a wide range of services, though housing and resources may be costly or unevenly distributed.",
+                "Lives in a suburban community, often with a mix of residential areas, schools, shops, and car-dependent or transit-connected travel.",
+                "Lives in a small town, rural area, or geographically remote community, where services and book access may require longer travel or rely on schools, bookmobiles, or online resources."
+              ],
+              "parent_educational_attainment": [
+                "Did not complete high school or an equivalent credential, with educational experiences that may have been interrupted by work, caregiving, health, or other circumstances.",
+                "Completed high school or an equivalent credential and may have pursued additional informal, vocational, or workplace learning.",
+                "Completed some college, a trade or technical program, or an associate degree, with a range of career and educational pathways.",
+                "Completed a bachelor's degree, with education in a wide variety of academic and professional fields.",
+                "Completed graduate or professional education, including a master's, doctoral, law, medical, or other advanced degree."
+              ],
+              "primary_employment_situation": [
+                "Works full time for an employer or in a business, balancing paid work with parenting and household responsibilities.",
+                "Works part time or on a variable schedule, potentially combining paid work with caregiving or other responsibilities.",
+                "Is currently seeking paid work or is between jobs, with circumstances ranging from a recent transition to prolonged unemployment.",
+                "Is primarily occupied with unpaid caregiving or household responsibilities, whether by choice, necessity, or limited access to suitable paid work.",
+                "Is primarily a student or in a period of job training or education while parenting a young child.",
+                "Is unable to work, retired, or primarily engaged in another situation not captured above."
+              ],
+              "household_family_structure": [
+                "Lives with a spouse, and the spouse or partner shares the household and parenting responsibilities to some degree.",
+                "Lives with an unmarried partner who shares the household and may share parenting responsibilities.",
+                "Is the only parent or guardian living in the household with the child, with support from relatives, friends, institutions, or other sources varying widely.",
+                "Has a separated, divorced, shared-custody, multigenerational, or other household arrangement that does not fit the categories above."
+              ],
+              "number_of_children_in_parent_household": [
+                "One child in the household, including the qualifying child aged 4 or 5.",
+                "Two children in the household, potentially with siblings at different developmental stages.",
+                "Three children in the household, with a wider range of caregiving and household demands.",
+                "Four or more children in the household, including larger families and households with children of varied ages."
+              ],
+              "preferences_and_tastes": [
+                "Enjoys fiction such as literary novels, romance, mystery, fantasy, or science fiction and often chooses books as a preferred form of relaxation.",
+                "Prefers nonfiction, memoir, history, science, practical guides, or current affairs, and enjoys reading to learn about real people, ideas, or skills.",
+                "Enjoys reading a varied mix of books and other media, choosing titles according to mood, recommendations, or current interests rather than sticking to one genre.",
+                "Likes books but tends to read in short, occasional periods; values audiobooks, short chapters, or other convenient formats alongside family and work activities.",
+                "Enjoys reading along with outdoor recreation, cooking, crafts, music, or other hands-on interests, and chooses books that complement those activities.",
+                "Often prefers social, visual, or screen-based entertainment and has limited leisure time, but still enjoys selected books and finds reading worthwhile.",
+                "Has narrow or intense reading interests, or sometimes chooses emotionally difficult, challenging, or unconventional books; may read avidly or withdraw from reading during stressful periods."
+              ],
+              "enjoyment_of_reading_books": [
+                "Enjoys reading very avidly, often choosing books in preference to other leisure activities and regularly seeking out new authors or topics.",
+                "Reads for pleasure several times a week and considers books an important source of entertainment, learning, comfort, or reflection.",
+                "Enjoys books and reads when time and circumstances permit, though work, caregiving, or other responsibilities make reading irregular.",
+                "Enjoys reading in particular situations, such as holidays, before bed, during commutes, or when a favorite genre or subject is available.",
+                "Has a modest but genuine interest in books and reads occasionally, often preferring accessible, short, recommended, or especially engaging titles.",
+                "Enjoys books despite substantial barriers such as limited time, fatigue, disability, limited access, or a preference for audio and other accessible formats."
+              ],
+              "preferred_reading_genre_or_style": [
+                "Usually gravitates toward contemporary or literary fiction, novels, short stories, and character-focused narratives.",
+                "Usually gravitates toward mystery, thriller, suspense, horror, or crime stories with a strong plot and sense of discovery.",
+                "Usually gravitates toward fantasy, science fiction, speculative fiction, adventure, or imaginative worlds.",
+                "Usually gravitates toward nonfiction such as history, biography, science, psychology, memoir, or current affairs.",
+                "Usually gravitates toward romance, family stories, humor, or emotionally engaging popular fiction.",
+                "Usually gravitates toward practical books, cookbooks, self-help, faith-related reading, crafts, or books connected to work and everyday interests.",
+                "Has varied or changing tastes, reads across genres, or does not have one clear preferred style."
+              ],
+              "preferred_book_format": [
+                "Prefers printed paperbacks or hardcovers and enjoys browsing physical books in libraries, bookstores, or at home.",
+                "Often reads ebooks on a phone, tablet, e-reader, or computer because digital books are portable and convenient.",
+                "Enjoys audiobooks, which make it possible to read while commuting, doing chores, exercising, or resting.",
+                "Uses a mixture of print, digital, and audio formats depending on the book, accessibility needs, cost, and available time.",
+                "Prefers large-print, dyslexia-friendly, screen-reader-compatible, or other accessible formats when those make reading more comfortable.",
+                "Borrows books from public libraries, school or workplace libraries, friends, or family rather than purchasing most titles.",
+                "Usually purchases books, subscribes to a reading service, or maintains a personal collection, while also using libraries or borrowed books."
+              ],
+              "parent_child_shared_reading_frequency_days_per_week": 1,
+              "parent_child_reading_practice": [
+                "Reads with the child occasionally when time and energy allow, without a consistent daily schedule.",
+                "Uses audiobooks, picture books, library programs, or storytelling as alternatives or supplements to reading aloud.",
+                "Would like to read with the child more often but faces barriers such as work schedules, fatigue, limited access to books, language differences, or competing care needs.",
+                "Shares books in a way shaped by accessibility or developmental needs, such as tactile books, large print, communication supports, or short and repeated reading sessions."
+              ],
+              "home_access_to_books": [
+                "Has a substantial home collection of children's and adult books, regularly adds new titles, and can readily find books suited to the child's interests.",
+                "Keeps a modest selection of books at home and supplements it with library borrowing, school resources, or gifts.",
+                "Relies mainly on public libraries, school libraries, community programs, or borrowed books because purchasing and storing books is difficult or unnecessary.",
+                "Has dependable digital or audio access to books but relatively few physical books at home.",
+                "Has limited and inconsistent access to appealing books because of transportation, cost, disability access, language availability, local service limitations, or housing instability."
+              ],
+              "childs_interest_in_books": [
+                "The child often asks to be read to, chooses books independently, and enjoys looking at pictures, repeating phrases, or discussing stories.",
+                "The child enjoys familiar books and shared reading but has changing attention and prefers brief, interactive sessions.",
+                "The child's interest depends on subject, format, mood, or time of day, and engagement is strongest with personally appealing topics.",
+                "The child is beginning to show interest in books but more often chooses active play, music, screens, or other activities.",
+                "The child has low or inconsistent interest in books, or needs adapted formats, additional support, or more time to engage with stories."
+              ]
+            }
+          },
+          {
+            "id": 5,
+            "subpopulation_description": "U.S. parents or guardians aged 18–75 who enjoy books but do not share books with a qualifying 4- or 5-year-old in a typical week; they may use alternatives, face barriers, or prefer adapted practices.",
+            "quantity": 10,
+            "sampled_values": {
+              "parent_age_years": [
+                18,
+                75
+              ],
+              "age_of_qualifying_child_years": [
+                4,
+                5
+              ],
+              "age_of_qualifying_child_months": [
+                48,
+                71
+              ],
+              "parent_gender_identity": [
+                "Identifies as a woman, whether cisgender or transgender, and is a mother or other parent of a child aged 4 or 5.",
+                "Identifies as a man, whether cisgender or transgender, and is a father or other parent of a child aged 4 or 5.",
+                "Identifies as nonbinary, genderqueer, or another gender, or describes their gender in a way not captured by woman or man."
+              ],
+              "race_ethnicity_and_heritage": [
+                "Non-Hispanic White, with family heritage that may include, among many others, German, Irish, English, Italian, Polish, French, Scandinavian, Slavic, or multiple European ancestries; family traditions and degree of connection to heritage vary widely.",
+                "Hispanic or Latino, including people with Mexican, Puerto Rican, Cuban, Dominican, Salvadoran, Guatemalan, Colombian, Venezuelan, or other Central American, South American, Caribbean, or Spanish heritage; may identify with any race and may be English-dominant, Spanish-dominant, or bilingual.",
+                "Non-Hispanic Black or African American, including descendants of families established in the United States over many generations and people with recent or multigenerational African, Caribbean, or Afro-Latin heritage; cultural and regional identities vary widely.",
+                "Asian or Asian American, including people with Chinese, Indian, Filipino, Vietnamese, Korean, Japanese, Pakistani, Bangladeshi, Hmong, or other South, East, or Southeast Asian heritage, with varied immigration histories and family languages.",
+                "Multiracial or multiethnic, with two or more racial, ethnic, or national heritages and family traditions that may combine or move between different cultural communities.",
+                "American Indian or Alaska Native, with tribal, Native Nation, or Alaska Native heritage and varied levels of connection to community, language, land, and cultural traditions.",
+                "Native Hawaiian or Pacific Islander, including Native Hawaiian, Samoan, Guamanian or Chamorro, Tongan, Fijian, or other Pacific Islander heritage and varied family ties to the islands and U.S. communities.",
+                "Another or not otherwise captured background, including Middle Eastern or North African heritage, or a racial or ethnic identity not represented by the categories above; identities and family histories are diverse."
+              ],
+              "parent_birthplace_and_migration_background": [
+                "Born in the United States, with family roots that may extend across several generations or include more recent immigration.",
+                "Born outside the United States and moved to the country as a child or adult, with a wide range of immigration, refugee, or other migration histories and varying ties to a country of origin."
+              ],
+              "primary_home_language": [
+                "English is the main language used at home, though the parent or other household members may also use another language.",
+                "Spanish is the main language used at home, with varying levels of English use by the parent and other household members.",
+                "Two or more languages are used regularly at home, such as English and Spanish or English and a heritage language, with fluency varying among family members.",
+                "A language other than English or Spanish is used most often at home, such as Chinese, Tagalog, Vietnamese, Arabic, French, Korean, or a Native or Pacific Island language."
+              ],
+              "us_region": [
+                "Northeast, including communities in New England and the Mid-Atlantic, from dense metropolitan areas to small towns and rural places.",
+                "Midwest, including Great Lakes, Great Plains, and inland communities, from large cities to agricultural and rural areas.",
+                "South, including the Southeast, south-central states, and varied urban, suburban, small-town, and rural communities.",
+                "West, including Pacific Coast, Mountain, and Southwest communities, with substantial variation in population density, climate, and local culture."
+              ],
+              "community_type": [
+                "Lives in a large or dense urban area with relatively close access to libraries, schools, public transit, and a wide range of services, though housing and resources may be costly or unevenly distributed.",
+                "Lives in a suburban community, often with a mix of residential areas, schools, shops, and car-dependent or transit-connected travel.",
+                "Lives in a small town, rural area, or geographically remote community, where services and book access may require longer travel or rely on schools, bookmobiles, or online resources."
+              ],
+              "parent_educational_attainment": [
+                "Did not complete high school or an equivalent credential, with educational experiences that may have been interrupted by work, caregiving, health, or other circumstances.",
+                "Completed high school or an equivalent credential and may have pursued additional informal, vocational, or workplace learning.",
+                "Completed some college, a trade or technical program, or an associate degree, with a range of career and educational pathways.",
+                "Completed a bachelor's degree, with education in a wide variety of academic and professional fields.",
+                "Completed graduate or professional education, including a master's, doctoral, law, medical, or other advanced degree."
+              ],
+              "primary_employment_situation": [
+                "Works full time for an employer or in a business, balancing paid work with parenting and household responsibilities.",
+                "Works part time or on a variable schedule, potentially combining paid work with caregiving or other responsibilities.",
+                "Is currently seeking paid work or is between jobs, with circumstances ranging from a recent transition to prolonged unemployment.",
+                "Is primarily occupied with unpaid caregiving or household responsibilities, whether by choice, necessity, or limited access to suitable paid work.",
+                "Is primarily a student or in a period of job training or education while parenting a young child.",
+                "Is unable to work, retired, or primarily engaged in another situation not captured above."
+              ],
+              "household_family_structure": [
+                "Lives with a spouse, and the spouse or partner shares the household and parenting responsibilities to some degree.",
+                "Lives with an unmarried partner who shares the household and may share parenting responsibilities.",
+                "Is the only parent or guardian living in the household with the child, with support from relatives, friends, institutions, or other sources varying widely.",
+                "Has a separated, divorced, shared-custody, multigenerational, or other household arrangement that does not fit the categories above."
+              ],
+              "number_of_children_in_parent_household": [
+                "One child in the household, including the qualifying child aged 4 or 5.",
+                "Two children in the household, potentially with siblings at different developmental stages.",
+                "Three children in the household, with a wider range of caregiving and household demands.",
+                "Four or more children in the household, including larger families and households with children of varied ages."
+              ],
+              "preferences_and_tastes": [
+                "Enjoys fiction such as literary novels, romance, mystery, fantasy, or science fiction and often chooses books as a preferred form of relaxation.",
+                "Prefers nonfiction, memoir, history, science, practical guides, or current affairs, and enjoys reading to learn about real people, ideas, or skills.",
+                "Enjoys reading a varied mix of books and other media, choosing titles according to mood, recommendations, or current interests rather than sticking to one genre.",
+                "Likes books but tends to read in short, occasional periods; values audiobooks, short chapters, or other convenient formats alongside family and work activities.",
+                "Enjoys reading along with outdoor recreation, cooking, crafts, music, or other hands-on interests, and chooses books that complement those activities.",
+                "Often prefers social, visual, or screen-based entertainment and has limited leisure time, but still enjoys selected books and finds reading worthwhile.",
+                "Has narrow or intense reading interests, or sometimes chooses emotionally difficult, challenging, or unconventional books; may read avidly or withdraw from reading during stressful periods."
+              ],
+              "enjoyment_of_reading_books": [
+                "Enjoys reading very avidly, often choosing books in preference to other leisure activities and regularly seeking out new authors or topics.",
+                "Reads for pleasure several times a week and considers books an important source of entertainment, learning, comfort, or reflection.",
+                "Enjoys books and reads when time and circumstances permit, though work, caregiving, or other responsibilities make reading irregular.",
+                "Enjoys reading in particular situations, such as holidays, before bed, during commutes, or when a favorite genre or subject is available.",
+                "Has a modest but genuine interest in books and reads occasionally, often preferring accessible, short, recommended, or especially engaging titles.",
+                "Enjoys books despite substantial barriers such as limited time, fatigue, disability, limited access, or a preference for audio and other accessible formats."
+              ],
+              "preferred_reading_genre_or_style": [
+                "Usually gravitates toward contemporary or literary fiction, novels, short stories, and character-focused narratives.",
+                "Usually gravitates toward mystery, thriller, suspense, horror, or crime stories with a strong plot and sense of discovery.",
+                "Usually gravitates toward fantasy, science fiction, speculative fiction, adventure, or imaginative worlds.",
+                "Usually gravitates toward nonfiction such as history, biography, science, psychology, memoir, or current affairs.",
+                "Usually gravitates toward romance, family stories, humor, or emotionally engaging popular fiction.",
+                "Usually gravitates toward practical books, cookbooks, self-help, faith-related reading, crafts, or books connected to work and everyday interests.",
+                "Has varied or changing tastes, reads across genres, or does not have one clear preferred style."
+              ],
+              "preferred_book_format": [
+                "Prefers printed paperbacks or hardcovers and enjoys browsing physical books in libraries, bookstores, or at home.",
+                "Often reads ebooks on a phone, tablet, e-reader, or computer because digital books are portable and convenient.",
+                "Enjoys audiobooks, which make it possible to read while commuting, doing chores, exercising, or resting.",
+                "Uses a mixture of print, digital, and audio formats depending on the book, accessibility needs, cost, and available time.",
+                "Prefers large-print, dyslexia-friendly, screen-reader-compatible, or other accessible formats when those make reading more comfortable.",
+                "Borrows books from public libraries, school or workplace libraries, friends, or family rather than purchasing most titles.",
+                "Usually purchases books, subscribes to a reading service, or maintains a personal collection, while also using libraries or borrowed books."
+              ],
+              "parent_child_shared_reading_frequency_days_per_week": 0,
+              "parent_child_reading_practice": [
+                "Uses audiobooks, picture books, library programs, or storytelling as alternatives or supplements to reading aloud.",
+                "Would like to read with the child more often but faces barriers such as work schedules, fatigue, limited access to books, language differences, or competing care needs.",
+                "Shares books in a way shaped by accessibility or developmental needs, such as tactile books, large print, communication supports, or short and repeated reading sessions."
+              ],
+              "home_access_to_books": [
+                "Has a substantial home collection of children's and adult books, regularly adds new titles, and can readily find books suited to the child's interests.",
+                "Keeps a modest selection of books at home and supplements it with library borrowing, school resources, or gifts.",
+                "Relies mainly on public libraries, school libraries, community programs, or borrowed books because purchasing and storing books is difficult or unnecessary.",
+                "Has dependable digital or audio access to books but relatively few physical books at home.",
+                "Has limited and inconsistent access to appealing books because of transportation, cost, disability access, language availability, local service limitations, or housing instability."
+              ],
+              "childs_interest_in_books": [
+                "The child often asks to be read to, chooses books independently, and enjoys looking at pictures, repeating phrases, or discussing stories.",
+                "The child enjoys familiar books and shared reading but has changing attention and prefers brief, interactive sessions.",
+                "The child's interest depends on subject, format, mood, or time of day, and engagement is strongest with personally appealing topics.",
+                "The child is beginning to show interest in books but more often chooses active play, music, screens, or other activities.",
+                "The child has low or inconsistent interest in books, or needs adapted formats, additional support, or more time to engage with stories."
+              ]
+            }
+          }
+        ]
+      },
+      "checks": {
+        "output_characters": 63967,
+        "output_words": 8718,
+        "json_valid": true,
+        "directive_count": 5,
+        "quantities": [
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "positive_integer_quantities": true,
+        "expected_total": 50,
+        "actual_total": 50,
+        "exact_total": true,
+        "sequential_directive_ids": true,
+        "unknown_dimensions": [],
+        "invalid_or_rewritten_sampled_values": [],
+        "reconstruction_valid": true,
+        "assignment_schema_valid": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcPM5wjdBjFFpykUFm7dTTh4vr7SE::focused-transition-v3::r1",
+      "phase": "story_continuation",
+      "stage": "failure-development-round3",
+      "source_case_id": "exec-chatcmpl-EcPM5wjdBjFFpykUFm7dTTh4vr7SE",
+      "variant": "focused-transition-v3",
+      "adapter": "append_system",
+      "repetition": 1,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "cbd03ddc75bc8ae057b8f95840850fbfe9ab281b59b1e3d77d6d1d69e69119a6",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 25.14,
+      "content": "Julian framed an example as hypothetical, not a rule: a worker offered an extra shift may need the pay, but a relative’s last-minute cancellation could leave them responsible for collecting a child. A neighbor might help, a coworker might trade hours, or they might turn down the wages; every option carries a cost. Just then, a bus-service alert appeared on a nearby passenger’s phone. Their commute had become another constraint, and the choice was still unresolved.",
+      "response_id": "chatcmpl-EeRBjHdZNGgiD80edrX7Mdh6Q55vq",
+      "cost": {
+        "input_tokens": 8227,
+        "cached_input_tokens": 7860,
+        "cache_write_tokens": 0,
+        "output_tokens": 1792,
+        "reasoning_tokens": 1671,
+        "uncached_input_tokens": 367,
+        "input_usd": "0.0000367",
+        "cached_input_usd": "0.0000786",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.000896",
+        "total_usd": "0.0010113",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 468,
+        "output_words": 76,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcQKYjykI4QLV52ZcqZPyn2dzfo3w::focused-transition-v3::r1",
+      "phase": "story_continuation",
+      "stage": "failure-development-round3",
+      "source_case_id": "exec-chatcmpl-EcQKYjykI4QLV52ZcqZPyn2dzfo3w",
+      "variant": "focused-transition-v3",
+      "adapter": "append_system",
+      "repetition": 1,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "51964c31c4509debfda552da1112294c3b7e754255a2e3fd7618777675975695",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 8.422,
+      "content": "Lisa sends Cairn & Vale its preliminary report, noting that missing vendor, policy, and client records prevent tool approval or a pilot recommendation. The firm accepts the bounded deliverable, and the engagement closes. Immediately, Eastbank Public Schools, a 12,000-student district, requests help: its meal distributor is entering bankruptcy weeks before term, threatening affordable lunches and allergy-safe service under tight public budgets. The team requests supplier, menu, inventory, contract, and dietary-compliance records, then begins mapping meal-service dependencies and urgent decisions.",
+      "response_id": "chatcmpl-EeRC3HVBPChWKeQTfdbrKEsHUFMGT",
+      "cost": {
+        "input_tokens": 15169,
+        "cached_input_tokens": 14715,
+        "cache_write_tokens": 0,
+        "output_tokens": 615,
+        "reasoning_tokens": 497,
+        "uncached_input_tokens": 454,
+        "input_usd": "0.0000454",
+        "cached_input_usd": "0.00014715",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.0003075",
+        "total_usd": "0.00050005",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 602,
+        "output_words": 79,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcNZrgB7NnHHQ32gLuD0kVWCH8bKw::indexed-plan-v1::r1",
+      "phase": "sampling_plan",
+      "stage": "failure-development-round3",
+      "source_case_id": "exec-chatcmpl-EcNZrgB7NnHHQ32gLuD0kVWCH8bKw",
+      "variant": "indexed-plan-v1",
+      "adapter": "indexed_sampling",
+      "repetition": 1,
+      "hypothesis": "Separate semantic sampling choices from exact vocabulary reproduction through typed option identifiers, explicit null slots and validated deterministic reconstruction. Schema change is disclosed.",
+      "original_request_sha256": "edc96eb566fc36c7bb965267560a0c316df0c79e6baba4b63bc83a9b30f9957a",
+      "instruction_sha256": "ff891711f69049a9a4f106d2e328ab995a602d8e16c364c203bd79482f9171af",
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 200.094,
+      "content": "{\"sample_plan\":[{\"id\":1,\"subpopulation_description\":\"Children and adolescents aged 0–14, spanning childhood through early teens, with varied reported gender, racial and ethnic backgrounds, regions, urban or rural settings, and household income.\",\"quantity\":5,\"sampled_values\":{\"1\":[0,14],\"2\":1,\"3\":[1,2],\"4\":[1,2,3,4,5,6,6],\"5\":[1,2,3,4,5,6,7],\"6\":[1,2,3,4],\"7\":[1,2,3,4],\"8\":2,\"9\":2,\"10\":[1,2,3,4,5] ,\"11\":[1,2],\"12\":[1,2,3,4] ,\"13\":[1,2,2],\"14\":[1,2,3,4],\"15\":[1,2,3,4,5,6,7],\"16\":[1,2,3,4],\"17\":[1,2],\"18\":[1,2,1,2],\"19\":[1,2,3,4,5,6,7,8,9,10,11,12,13],\"20\":[1,2,3,4,5,6,7,8,9,10,11,12,13],\"21\":[1,2,3,4,5,6,7,8],\"22\":[1,2,3,4,5],\"23\":[1,2,3],\"24\":[1,2,3],\"25\":[1,2,3],\"26\":[1,2,3],\"27\":[1,2,3],\"28\":[1,2,3,4,5],\"29\":[1,2,3],\"30\":[1,2,3,4],\"31\":[1,2,3,4,5],\"32\":[1,2,3,4,5,6],\"33\":[1,2],\"34\":[1,2],\"35\":[1,2],\"36\":[1,2],\"37\":[1,2],\"38\":[1,2],\"39\":[1,2],\"40\":[1,2],\"41\":[1,2],\"42\":[1,2],\"43\":[1,2,3,4,5,6],\"44\":[1,2,3,4,5,6,7,8],\"45\":[1,2],\"46\":[1,2,3,4,5,6,7,8,9],\"47\":[1,2,3,4,5,6,7],\"48\":[1,2,3,4,5,6,7],\"49\":[1,2,3,4,5,6],\"50\":[1,2,3,4,5,6,7],\"51\":[1,2,3,4,5,6],\"52\":[1,2],\"53\":[1,2],\"54\":[1,2],\"55\":[1,2],\"56\":[1,2],\"57\":[1,2],\"58\":[1,2],\"59\":[1,2],\"60\":[1,2],\"61\":[1,2],\"62\":[1,2],\"63\":[1,2],\"64\":[1,2],\"65\":[1,2,3,4,5],\"66\":[1,2],\"67\":[1,2],\"68\":[1,2],\"69\":[1,2],\"70\":[1,2,3,4,5,6],\"71\":[1,2,3],\"72\":[1,2,3,4,5],\"73\":[1,2],\"74\":[1,2,3,4],\"75\":[1,2,3],\"76\":[1,2,3,4],\"77\":[1,2,3,4],\"78\":[1,2,3]}},{\"id\":2,\"subpopulation_description\":\"Older adolescents and young adults aged 15–24, spanning varied schooling and household circumstances, leisure interests, and digital-use patterns.\",\"quantity\":4,\"sampled_values\":{\"1\":[15,24],\"2\":2,\"3\":[1,2],\"4\":[1,2,3,4,5,6],\"5\":[1,2,3,4,5,6,7],\"6\":[1,2,3,4,5,6,7],\"7\":[1,2,3,4,5,6,7,8,9,10,11,12],\"8\":[1,2],\"9\":2,\"10\":[1,2,3,4,5],\"11\":[1,2,3,4,5],\"12\":[1,2,3,4,5,6,7,8],\"13\":[1,2],\"14\":[1,2,3,4],\"15\":[1,2,3,4,5,6,7],\"16\":[1,2,3,4],\"17\":[1,2],\"18\":[1,2],\"19\":[1,2,3,4,5,6,7,8,9,10,11,12,13],\"20\":[1,2,3,4,5,6,7,8,9,10,11,12,13],\"21\":[1,2,3,4,5,6,7,8],\"22\":[1,2,3,4,5],\"23\":[1,2,3],\"24\":[1,2,3],\"25\":[1,2,3],\"26\":[1,2,3],\"27\":[1,2,3],\"28\":[1,2,3,4,5],\"29\":[1,2,3],\"30\":[1,2,3,4],\"31\":[1,2,3,4,5],\"32\":[1,2,3,4,5,6],\"33\":[1,2],\"34\":[1,2],\"35\":[1,2],\"36\":[1,2],\"37\":[1,2],\"38\":[1,2],\"39\":[1,2],\"40\":[1,2],\"41\":[1,2],\"42\":[1,2],\"43\":[1,2,3,4,5,6],\"44\":[1,2,3,4,5,6,7,8],\"45\":[1,2],\"46\":[1,2,3,4,5,6,7,8,9],\"47\":[1,2,3,4,5,6,7],\"48\":[1,2,3,4,5,6,7],\"49\":[1,2,3,4,5,6],\"50\":[1,2,3,4,5,6,7],\"51\":[1,2,3,4,5,6],\"52\":[1,2],\"53\":[1,2],\"54\":[1,2],\"55\":[1,2],\"56\":[1,2],\"57\":[1,2],\"58\":[1,2],\"59\":[1,2],\"60\":[1,2],\"61\":[1,2],\"62\":[1,2],\"63\":[1,2],\"64\":[1,2],\"65\":[1,2,3,4,5],\"66\":[1,2],\"67\":[1,2],\"68\":[1,2],\"69\":[1,2],\"70\":[1,2,3,4,5,6],\"71\":[1,2,3],\"72\":[1,2,3,4,5],\"73\":[1,2],\"74\":[1,2,3,4],\"75\":[1,2,3],\"76\":[1,2,3,4],\"77\":[1,2,3,4],\"78\":[1,2,3]}},{\"id\":3,\"subpopulation_description\":\"Adults aged 25–39 with varied reported gender, racial and ethnic backgrounds, regions, settings, and household incomes, alongside a range of leisure, financial, and public-opinion views.\",\"quantity\":6,\"sampled_values\":{\"1\":[25,39],\"2\":3,\"3\":[1,2],\"4\":[1,2,3,4,5,6],\"5\":[1,2,3,4,5,6,7],\"6\":[1,2,3,4,5,6,7],\"7\":[1,2,3,4,5,6,7,8,9,10,11,12],\"8\":1,\"9\":[1,2],\"10\":[1,2,3,4,5],\"11\":[1,2,3,4,5],\"12\":[1,2,3,4,5,6,7,8],\"13\":[1,2],\"14\":[1,2,3,4],\"15\":[1,2,3,4,5,6,7],\"16\":[1,2,3,4],\"17\":[1,2],\"18\":[1,2],\"19\":[1,2,3,4,5,6,7,8,9,10,11,12,13],\"20\":[1,2,3,4,5,6,7,8,9,10,11,12,13],\"21\":[1,2,3,4,5,6,7,8],\"22\":[1,2,3,4,5],\"23\":[1,2,3],\"24\":[1,2,3],\"25\":[1,2,3],\"26\":[1,2,3],\"27\":[1,2,3],\"28\":[1,2,3,4,5],\"29\":[1,2,3],\"30\":[1,2,3,4],\"31\":[1,2,3,4,5],\"32\":[1,2,3,4,5,6],\"33\":[1,2],\"34\":[1,2],\"35\":[1,2],\"36\":[1,2],\"37\":[1,2],\"38\":[1,2],\"39\":[1,2],\"40\":[1,2],\"41\":[1,2],\"42\":[1,2],\"43\":[1,2,3,4,5,6],\"44\":[1,2,3,4,5,6,7,8],\"45\":[1,2],\"46\":[1,2,3,4,5,6,7,8,9],\"47\":[1,2,3,4,5,6,7],\"48\":[1,2,3,4,5,6,7],\"49\":[1,2,3,4,5,6],\"50\":[1,2,3,4,5,6,7],\"51\":[1,2,3,4,5,6],\"52\":[1,2],\"53\":[1,2],\"54\":[1,2],\"55\":[1,2],\"56\":[1,2],\"57\":[1,2],\"58\":[1,2],\"59\":[1,2],\"60\":[1,2],\"61\":[1,2],\"62\":[1,2],\"63\":[1,2],\"64\":[1,2],\"65\":[1,2,3,4,5],\"66\":[1,2],\"67\":[1,2],\"68\":[1,2],\"69\":[1,2],\"70\":[1,2,3,4,5,6],\"71\":[1,2,3],\"72\":[1,2,3,4,5],\"73\":[1,2],\"74\":[1,2,3,4],\"75\":[1,2,3],\"76\":[1,2,3,4],\"77\":[1,2,3,4],\"78\":[1,2,3]}},{\"id\":4,\"subpopulation_description\":\"Adults aged 40–54 across varied demographic and household-income categories, with diverse outdoor, social, health, stress-management, and public-opinion profiles.\",\"quantity\":6,\"sampled_values\":{\"1\":[40,54],\"2\":3,\"3\":[1,2],\"4\":[1,2,3,4,5,6],\"5\":[1,2,3,4,5,6,7],\"6\":[1,2,3,4,5,6,7],\"7\":[1,2,3,4,5,6,7,8,9,10,11,12],\"8\":1,\"9\":[1,2],\"10\":[1,2,3,4,5],\"11\":[1,2,3,4,5],\"12\":[1,2,3,4,5,6,7,8],\"13\":[1,2],\"14\":[1,2,3,4],\"15\":[1,2,3,4,5,6,7],\"16\":[1,2,3,4],\"17\":[1,2],\"18\":[1,2],\"19\":[1,2,3,4,5,6,7,8,9,10,11,12,13],\"20\":[1,2,3,4,5,6,7,8,9,10,11,12,13],\"21\":[1,2,3,4,5,6,7,8],\"22\":[1,2,3,4,5],\"23\":[1,2,3],\"24\":[1,2,3],\"25\":[1,2,3],\"26\":[1,2,3],\"27\":[1,2,3],\"28\":[1,2,3,4,5],\"29\":[1,2,3],\"30\":[1,2,3,4],\"31\":[1,2,3,4,5],\"32\":[1,2,3,4,5,6],\"33\":[1,2],\"34\":[1,2],\"35\":[1,2],\"36\":[1,2],\"37\":[1,2],\"38\":[1,2],\"39\":[1,2],\"40\":[1,2],\"41\":[1,2],\"42\":[1,2],\"43\":[1,2,3,4,5,6],\"44\":[1,2,3,4,5,6,7,8],\"45\":[1,2],\"46\":[1,2,3,4,5,6,7,8,9],\"47\":[1,2,3,4,5,6,7],\"48\":[1,2,3,4,5,6,7],\"49\":[1,2,3,4,5,6],\"50\":[1,2,3,4,5,6,7],\"51\":[1,2,3,4,5,6],\"52\":[1,2],\"53\":[1,2],\"54\":[1,2],\"55\":[1,2],\"56\":[1,2],\"57\":[1,2],\"58\":[1,2],\"59\":[1,2],\"60\":[1,2],\"61\":[1,2],\"62\":[1,2],\"63\":[1,2],\"64\":[1,2],\"65\":[1,2,3,4,5],\"66\":[1,2],\"67\":[1,2],\"68\":[1,2],\"69\":[1,2],\"70\":[1,2,3,4,5,6],\"71\":[1,2,3],\"72\":[1,2,3,4,5],\"73\":[1,2],\"74\":[1,2,3,4],\"75\":[1,2,3],\"76\":[1,2,3,4],\"77\":[1,2,3,4],\"78\":[1,2,3]}},{\"id\":5,\"subpopulation_description\":\"Adults aged 55–64 across varied demographic, educational, and household-income categories, with differing labor-force participation, interests, health routines, and public-opinion views.\",\"quantity\":4,\"sampled_values\":{\"1\":[55,64],\"2\":4,\"3\":[1,2],\"4\":[1,2,3,4,5,6],\"5\":[1,2,3,4,5,6,7],\"6\":[1,2,3,4,5,6,7],\"7\":[1,2,3,4,5,6,7,8,9,10,11,12],\"8\":1,\"9\":[1,2],\"10\":[1,2,3,4,5],\"11\":[1,2,3,4,5],\"12\":[1,2,3,4,5,6,7,8],\"13\":[1,2],\"14\":[1,2,3,4],\"15\":[1,2,3,4,5,6,7],\"16\":[1,2,3,4],\"17\":[1,2],\"18\":[1,2],\"19\":[1,2,3,4,5,6,7,8,9,10,11,12,13],\"20\":[1,2,3,4,5,6,7,8,9,10,11,12,13],\"21\":[1,2,3,4,5,6,7,8],\"22\":[1,2,3,4,5],\"23\":[1,2,3],\"24\":[1,2,3],\"25\":[1,2,3],\"26\":[1,2,3],\"27\":[1,2,3],\"28\":[1,2,3,4,5],\"29\":[1,2,3],\"30\":[1,2,3,4],\"31\":[1,2,3,4,5],\"32\":[1,2,3,4,5,6],\"33\":[1,2],\"34\":[1,2],\"35\":[1,2],\"36\":[1,2],\"37\":[1,2],\"38\":[1,2],\"39\":[1,2],\"40\":[1,2],\"41\":[1,2],\"42\":[1,2],\"43\":[1,2,3,4,5,6],\"44\":[1,2,3,4,5,6,7,8],\"45\":[1,2],\"46\":[1,2,3,4,5,6,7,8,9],\"47\":[1,2,3,4,5,6,7],\"48\":[1,2,3,4,5,6,7],\"49\":[1,2,3,4,5,6],\"50\":[1,2,3,4,5,6,7],\"51\":[1,2,3,4,5,6],\"52\":[1,2],\"53\":[1,2],\"54\":[1,2],\"55\":[1,2],\"56\":[1,2],\"57\":[1,2],\"58\":[1,2],\"59\":[1,2],\"60\":[1,2],\"61\":[1,2],\"62\":[1,2],\"63\":[1,2],\"64\":[1,2],\"65\":[1,2,3,4,5],\"66\":[1,2],\"67\":[1,2],\"68\":[1,2],\"69\":[1,2],\"70\":[1,2,3,4,5,6],\"71\":[1,2,3],\"72\":[1,2,3,4,5],\"73\":[1,2],\"74\":[1,2,3,4],\"75\":[1,2,3],\"76\":[1,2,3,4],\"77\":[1,2,3,4],\"78\":[1,2,3]}},{\"id\":6,\"subpopulation_description\":\"Older adults aged 65 and above across varied demographic, educational, and household-income categories, with varied interests, health routines, technology use, and public-opinion views.\",\"quantity\":5,\"sampled_values\":{\"1\":[65,110],\"2\":5,\"3\":[1,2],\"4\":[1,2,3,4,5,6],\"5\":[1,2,3,4,5,6,7],\"6\":[1,2,3,4,5,6,7],\"7\":[1,2,3,4,5,6,7,8,9,10,11,12],\"8\":1,\"9\":[1,2],\"10\":[1,2,3,4,5],\"11\":[1,2,3,4,5],\"12\":[1,2,3,4,5,6,7,8],\"13\":[1,2],\"14\":[1,2,3,4],\"15\":[1,2,3,4,5,6,7],\"16\":[1,2,3,4],\"17\":[1,2],\"18\":[1,2],\"19\":[1,2,3,4,5,6,7,8,9,10,11,12,13],\"20\":[1,2,3,4,5,6,7,8,9,10,11,12,13],\"21\":[1,2,3,4,5,6,7,8],\"22\":[1,2,3,4,5],\"23\":[1,2,3],\"24\":[1,2,3],\"25\":[1,2,3],\"26\":[1,2,3],\"27\":[1,2,3],\"28\":[1,2,3,4,5],\"29\":[1,2,3],\"30\":[1,2,3,4],\"31\":[1,2,3,4,5],\"32\":[1,2,3,4,5,6],\"33\":[1,2],\"34\":[1,2],\"35\":[1,2],\"36\":[1,2],\"37\":[1,2],\"38\":[1,2],\"39\":[1,2],\"40\":[1,2],\"41\":[1,2],\"42\":[1,2],\"43\":[1,2,3,4,5,6],\"44\":[1,2,3,4,5,6,7,8],\"45\":[1,2],\"46\":[1,2,3,4,5,6,7,8,9],\"47\":[1,2,3,5,6,7],\"48\":[1,2,3,4,5,6,7],\"49\":[1,2,3,4,5],\"50\":[1,2,3,4,5,6,7],\"51\":[1,2,3,4,5,6],\"52\":[1,2],\"53\":[1,2],\"54\":[1,2],\"55\":[1,2],\"56\":[1,2],\"57\":[1,2],\"58\":[1,2],\"59\":[1,2],\"60\":[1,2],\"61\":[1,2],\"62\":[1,2],\"63\":[1,2],\"64\":[1,2],\"65\":[1,2,3,4,5],\"66\":[1,2],\"67\":[1,2],\"68\":[1,2],\"69\":[1,2],\"70\":[1,2,3,4,5,6],\"71\":[1,2,3],\"72\":[1,2,3,4,5],\"73\":[1,2],\"74\":[1,2,3,4],\"75\":[1,2,3],\"76\":[1,2,3,4],\"77\":[1,2,3,4],\"78\":[1,2,3]}}]}",
+      "response_id": "chatcmpl-EeRCCrq8bjTC9QK0ETy26IuweG32k",
+      "cost": {
+        "input_tokens": 13821,
+        "cached_input_tokens": 0,
+        "cache_write_tokens": 13818,
+        "output_tokens": 22429,
+        "reasoning_tokens": 17322,
+        "uncached_input_tokens": 3,
+        "input_usd": "3E-7",
+        "cached_input_usd": "0.00",
+        "cache_write_usd": "0.00172725",
+        "output_usd": "0.0112145",
+        "total_usd": "0.01294205",
+        "long_context": false
+      },
+      "checks": {
+        "raw_output_characters": 8428,
+        "reconstruction_valid": false,
+        "reconstruction_error": "Duplicate selected option identifiers."
+      }
+    }
+  ]
+}

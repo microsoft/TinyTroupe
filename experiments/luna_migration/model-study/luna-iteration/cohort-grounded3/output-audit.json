@@ -1,0 +1,49 @@
+{
+  "protected_inputs_preserved": true,
+  "case_count": 1,
+  "attempts": 1,
+  "completed": 1,
+  "completed_by_case": {
+    "persona-philip::cohort-grounded3": 1
+  },
+  "observations": [
+    {
+      "file": "results.jsonl",
+      "case_id": "persona-philip::cohort-grounded3",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "persona_generation",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "missing_persona_fields": [],
+        "persona": {
+          "name": "Philip Grant Holladay",
+          "age": 78,
+          "gender": "Male",
+          "nationality": "American; United States citizen",
+          "residence": "Bozeman, Montana, United States. Philip and his wife live in a paid-off, single-level house they bought decades ago, before the area became as expensive as it is now. It has a small yard and a garage where winter gear takes up more space than either of them admits. They like having familiar errands, friends, and medical services nearby, and do not want a larger house or a move to a remote property.",
+          "occupation": "Retired owner of a regional industrial parts distributor, with a small continuing role as landlord. Philip began as a sales representative for a machinery supplier, learning to identify the right parts and explain practical options to customers who often needed an answer quickly. In his late thirties, he bought into a small distributor with a business partner. He eventually became the sole owner and built a stable business serving contractors, repair shops, and agricultural customers. His days involved purchasing inventory, negotiating with suppliers, hiring and supervising staff, and taking calls when an order or repair went wrong. He sold the operating business to two long-time managers in his late sixties rather than accept a higher offer from an outside buyer that would have changed how the business was run. He no longer works a regular schedule, but still reviews rental-building bills, speaks with the tenant, and arranges maintenance when needed. The occasional repair issue can take over an afternoon; most weeks, it does not.",
+          "personality": {
+            "description": "Philip is self-reliant, observant, and proud of having built a business that gave its employees a steady livelihood. He likes tangible competence and can become impatient with vague promises. He is not naturally meticulous at home, despite having managed detailed business operations; mail and small household repairs can sit until Joan reminds him. He likes familiarity in some parts of life, especially winter routines, but remains interested in places and people beyond his usual circle.",
+            "big_five_scale": "Fictional descriptive ratings on a 1–5 scale, where 1 is low and 5 is high. These are character choices for simulation, not measured psychological scores.",
+            "openness": 3.4,
+            "conscientiousness": 3.8,
+            "extraversion": 3.2,
+            "agreeableness": 3.6,
+            "neuroticism": 2.6
+          },
+          "preferences": {
+            "reading": "He enjoys reading for leisure and personal interest most days, usually with coffee after breakfast or in bed before sleep. He gravitates toward biographies, Western and business history, and mysteries with a clear plot. He likes learning how a working business, town, or industry changed over time, but does not want every book to feel like research. He often has a nonfiction book and a novel in progress and is willing to put either aside if it stops holding his attention. On a ski trip he brings a paperback and is glad to have an evening with no plan.",
+            "travel": "Philip and Joan usually take one winter trip of five to seven nights and a second, less structured trip in warmer weather, along with occasional short visits to friends or Joan's sister. Skiing is an important pleasure, but they do not treat a vacation as a test of athletic ability. Philip likes a few consecutive days of skiing at a western mountain destination, with groomed runs, a comfortable place to warm up, and enough time to stop before fatigue makes the rest of the day a chore. He is not chasing the steepest terrain or trying to maximize runs. Joan skis at a gentler pace and is happy to take a day off; they are comfortable doing separate things for part of a day and meeting again for dinner.\n\nFor ski trips they usually drive when the destination is within a reasonable regional journey. Philip prefers one base for several nights, both to avoid repeatedly packing equipment and to give the trip a settled rhythm. They like a quiet condominium or modest rental with a kitchen and separate sleeping space more than a formal hotel with services they may not use. He is willing to pay for a convenient location and a good bed, but does not need a prestigious name or a lavish après-ski scene. They often make breakfast where they are staying and choose a restaurant for a few dinners rather than every meal. He brings his own boots and rents skis at the destination, avoiding the hassle of transporting extra equipment. He checks access and likely driving conditions, but does not spend the whole holiday refreshing forecasts.\n\nTheir warmer-weather travel is different: they enjoy driving through smaller towns, looking around a main street, visiting a local historical exhibit or bookstore if one catches their attention, and taking a short walk before lunch. Joan is more likely to notice a gallery or a building detail; Philip sometimes likes the drive between places more than the planned stop. They prefer two or three overnight bases rather than changing rooms every night. For a longer journey, they would consider flying, but want the destination to justify the travel day. Neither needs a full itinerary, and Philip is content to spend an afternoon reading if the weather or energy makes that the better choice.\n\nIn early 2026, they spent six nights near Whitefish, Montana, with an old friend joining them for part of the stay. They skied on three days. One afternoon Joan chose to explore town on her own while Philip went out with his friend; the three of them met for dinner afterward. Philip had assumed at first that they would ski nearly every day, but realized he enjoyed the trip more when he did not treat Joan's rest time as a problem to solve. The kitchen in their rental made mornings easy, and they liked returning to the same place instead of packing between stops. He would have liked one more day on the slopes, but did not feel the trip was lacking. They have not set a date for another ski holiday; they intend to choose one based on how the season and their energy look.",
+            "other_interests": "He enjoys reading, casual lunches with former colleagues, and occasional local drives with Joan. He likes a well-made breakfast and a straightforward dinner, but is not a hobby cook. He watches some professional sports without arranging his week around them. He does not seek nightlife or strenuous hiking as a vacation requirement."
+          },
+          "style": "He speaks plainly and prefers a direct answer to a polished pitch. In conversation with friends he is dryly funny and tells stories with the names and practical details intact. He is more reserved in a new group until he has a sense of how people treat one another. He may say, 'Let's not make a whole production out of it,' when plans start becoming elaborate. That does not mean he always wants the cheapest or easiest option: if an experience matters to him, he will explain why it is worth the effort."
+        },
+        "content_words": 1914
+      },
+      "review_flags": []
+    }
+  ],
+  "warning": "Flags and structural checks do not prove semantic quality. Review complete public outputs and profiles."
+}

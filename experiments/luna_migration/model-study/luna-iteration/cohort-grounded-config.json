@@ -1,0 +1,7 @@
+{
+  "case_ids": ["persona-philip::external-fact-boundary"],
+  "context_fields": ["age", "residence", "occupation", "preferences", "personality"],
+  "instruction_file": "cohort-instruction.txt",
+  "message": 1,
+  "purpose": "Explore plausible alternatives with explicit particularities and a boundary between invented biography and externally fixed facts. Diversity-seeking, not population sampling."
+}

@@ -1,0 +1,24 @@
+{
+  "status": "Bounded semantic review complete; structural and predefined contrast checks passed.",
+  "reviewed_directives": 18,
+  "population": 50,
+  "review_basis": "Read every directive's full constrained values and description. Full-vocabulary alternatives were explicitly identified, not removed from the actual plan.",
+  "findings": [
+    "Every directive explicitly selects U.S. residence. Numeric ages and age-category labels agree, and integer age support covers 0 through 110.",
+    "The 0-4 and 5-9 bands leave leisure interests unconstrained and select nonemployment. Older children have age-appropriate permitted interests rather than adult employment or advanced qualifications.",
+    "The one actively unemployed adult selects a nonemployed occupation; other explicit occupations and advanced qualifications occur only in adult bands.",
+    "The explicitly White and multiracial cultural-background selections agree with their race categories. The urban and rural lifestyle descriptions have matching settlement selections. State is not independently constrained against a conflicting region.",
+    "All four prospectively defined food/adoption endpoints have compatible singleton allocations and survive all 100 fixed sampling seeds.",
+    "Novelty-seeking and a selective diet coexist in one directive. Novelty-seeking does not require liking this particular food; no gazpacho rating is implied by this plan."
+  ],
+  "limitations": [
+    "Coverage constraints induce illustrative joint combinations; their prevalence is not established by the supplied marginal figures.",
+    "The multiracial cultural-profile allocation adds two fixed people to otherwise weighted race draws. Across 100 seeds, the multiracial mean is 3.34 of 50 rather than the source-weight expectation of 1.45. This is a demographic distortion, not evidence of representativeness.",
+    "All eight older-adult allocations select bachelor's-or-higher attainment. The supplied marginals do not establish that age-education relationship.",
+    "Uniform draws over age 65-110 preserve supplied support but do not establish a realistic within-band age distribution.",
+    "The supplied demographic description identifies itself as GPT-4o-synthesized. Matching its rounded age totals is not empirical census validation.",
+    "This is one fresh model plan, not a reliability estimate over independent model replications or a full survey-calibration result."
+  ],
+  "returned_usage_estimate_usd": "0.032352425",
+  "cost_scope": "One returned response at saved standard rates; unreturned timeout charges, if any, remain unknown and excluded."
+}

@@ -1,0 +1,27 @@
+{
+  "order_seed": 291026,
+  "protocol": "Independent fixed-input follow-up. Replace the accumulated, heavily qualified generation guidance with a concise descriptive biographical record. Keep the original system message, demographic/context prefix, output transport, effort and token budget unchanged. No prior drafts, randomness tokens, curated occupations, taste examples or desired survey answers. Three fresh responses per source, all retained and reviewed. This is a qualitative diagnostic probe, not representative population sampling.",
+  "variants": [
+    {
+      "id": "neutral-biography",
+      "hypothesis": "Accumulated negative examples and repeated practical-tradeoff instructions may anchor cautious, balanced biographies. A neutral descriptive specification may reduce that anchoring without instructing the model to produce the opposite personality.",
+      "cases": [
+        "persona-grace",
+        "persona-philip"
+      ],
+      "operations": [
+        {
+          "kind": "regex",
+          "message": 1,
+          "pattern": "(?s)## Generation Rules.*\\Z",
+          "max_matches": 1,
+          "new": "## Generation Rules\n\nWrite a fictional biographical record for one individual who meets the supplied particulars. Record how this person lives, not how a person ought to live. This is material for a simulation, not a recommendation, advertisement, role model or survey answer.\n\nThe particulars constrain this individual but leave much of the life unwritten. Invent those open details. Choose them for this individual rather than treating a name or demographic category as a ready-made biography. Do not claim that a plausible individual represents the statistical average of a population.\n\nGive the record a recognizable personal point of view. Say what attracts this person's attention, which activities they actually choose, how they relate to particular people, and what they spend their free time doing. Connect preferences to concrete circumstances or experiences when that adds information. Consistency means that facts can coexist; it does not mean that every action expresses one trait or that every choice must be justified as optimal.\n\nFor the requested travel detail, describe the experience this person wants, how travel fits into their actual life, and a past trip or an occasion when they did not travel. Include enough about companions, time and finances to understand the choices. Do not decide how they would answer an unseen product offer or market-research question.\n\nWrite direct descriptive statements. A fact does not need a qualifying counterargument or a lesson afterward. Include a tension or change of mind when it belongs to the life, not to complete a rhetorical pattern. Leave out generic advice and repeated explanations.\n\n## Required JSON record\n\nReturn only one valid JSON object, without Markdown or analysis. Include all of these fields:\n\n- name\n- age\n- gender\n- nationality\n- residence\n- education\n- long_term_goals\n- occupation\n- style\n- personality\n- preferences\n- beliefs\n- skills\n- behaviors\n- health\n- relationships\n- other_facts\n\nUse strings, arrays or objects as appropriate. In personality, give all five Big Five dimensions with explicit values and a stated scale, describing fictional tendencies rather than claiming psychometric measurement. Style should describe this individual's speech, not the narrator's prose.\n\nThe field list is a minimum. Explicitly record every supplied particularity, adding clearly named fields where needed: race_ethnicity, gross household income, partnership and children status, political identification, and requested leisure interests. Do not leave a required characteristic to be inferred from the name or occupation. Preserve the exact supplied name.\n\nKeep the account detailed enough for subsequent simulation, especially in the requested area. Avoid duplicating facts across sections. Check that the age, education, work history, household, income and activities can all belong to the same person.\n\nPersonal biography is fictional; external geography and real-world event calendars are not. Do not invent dates or locations for real scheduled events, or unsupported institutional rules, to make the biography specific. Future arrangements can remain undecided. Do not invent precise current prices for real services.\n"
+        }
+      ]
+    }
+  ],
+  "selection": {
+    "persona-grace": "neutral-biography",
+    "persona-philip": "neutral-biography"
+  }
+}

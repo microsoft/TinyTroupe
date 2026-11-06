@@ -1,0 +1,103 @@
+{
+  "status": "Coverage candidate works structurally, but the end-to-end screen does not resolve response compression.",
+  "production_changed": false,
+  "protocol_audit": "realized-behavior-coverage-audit.json",
+  "pipeline_audit": "realized-coverage-pipeline-audit.json",
+  "conditions": [
+    {
+      "condition": "Fresh production baseline",
+      "valid_plan": "Structurally valid",
+      "guaranteed_endpoints": "0/4",
+      "finding": "Extreme novelty-seeking absent in 64/100 sampling seeds; traditional tastes absent in 1/100 and strong resistance in 2/100."
+    },
+    {
+      "condition": "First singleton-coverage clarification",
+      "valid_plan": "Structurally valid",
+      "guaranteed_endpoints": "3/4",
+      "finding": "Traditional, adventurous and resistant endpoints guaranteed; extreme novelty-seeking still absent in 37/100 seeds. Rejected against the predefined requirement."
+    },
+    {
+      "condition": "Completed-plan self-audit clarification",
+      "valid_plan": "Rejected by unchanged production validator",
+      "guaranteed_endpoints": "Not assessed on an invalid plan",
+      "finding": "One timeout, then a returned plan with all-false political-belief membership in directive 5. Retained without repair or replacement."
+    },
+    {
+      "condition": "Same self-audit, compact identifier lists",
+      "valid_plan": "Structurally valid experimental representation",
+      "guaranteed_endpoints": "4/4",
+      "finding": "26 directives, 50 people, age totals 9/7/20/6/8; no incompatible age pairs. All four endpoints survive all 100 fixed seeds."
+    }
+  ],
+  "pipeline": {
+    "people": 6,
+    "returned_responses": 45,
+    "selection": "Prospectively select one distinct person per contrast endpoint, the youngest remaining draw, and the first remaining adult in fixed shuffled order; no rating-based selection.",
+    "rows": [
+      {
+        "name": "Elena Marquez",
+        "age": 33,
+        "role": "Traditional culinary tastes",
+        "response": "3",
+        "review": "Traditional foods and early product adoption survive generation. Public answer might try a bottle but shifts to uncertainty about regular buying."
+      },
+      {
+        "name": "Rafael Ignacio Cárdenas",
+        "age": 65,
+        "role": "Adventurous culinary tastes",
+        "response": "3",
+        "review": "Adventurous food preferences and extravagant consumption remain explicit. Answer cites bottled freshness and regular purchasing; no high score."
+      },
+      {
+        "name": "Terrence Malik Johnson",
+        "age": 49,
+        "role": "Strong resistance to new products",
+        "response": "2",
+        "review": "Mild, familiar tastes and resistance remain explicit. Cautious public answer is coherent with those traits; no forced endpoint rating."
+      },
+      {
+        "name": "Megan Kathleen Doyle",
+        "age": 32,
+        "role": "Extreme novelty-seeking",
+        "response": "3",
+        "review": "Extreme impulsivity survives both preferences and personality; the actor still expresses conditional curiosity and doubts about repeat purchasing. This does not prove she ought to rate this particular food 5."
+      },
+      {
+        "name": "Harper Louise Whitaker",
+        "age": 1,
+        "role": "Youngest remaining sampled person",
+        "response": "N/A",
+        "review": "Age-appropriate public babble, no fabricated numeric answer; extraction keeps justification null."
+      },
+      {
+        "name": "Darius Antoine Brooks",
+        "age": 37,
+        "role": "First remaining sampled adult",
+        "response": "3",
+        "review": "Vegetarian and ethically minded preferences remain visible. Answer considers a trial but is unsure about regular buying."
+      }
+    ],
+    "verdict": "The real pipeline completed and all five numeric ratings and justifications are grounded in public speech. The four targeted trait contrasts survive biography generation, but the five adult answers are still only 2 or 3 (four 3s and one 2). Coverage alone is not a demonstrated response-compression fix. The panel was deliberately contrast-selected and cannot estimate a population mean or establish improvement over the earlier 50-person survey.",
+    "generator_json_mode": "Production JSON-object mode verified for all six biographies.",
+    "normalization": "All generated fields are retained unchanged; TinyPerson adds its default country_of_residence=None field.",
+    "quality_settings": "Original gazpacho threshold 5, up to 5 attempts, regeneration enabled, explicit reasoning step disabled."
+  },
+  "costs": [
+    {"scope": "Baseline and first coverage candidate: 2 returned plans", "usd": "0.053505975"},
+    {"scope": "Self-audit revision: 1 invalid returned plan after timeout", "usd": "0.031468580"},
+    {"scope": "Compact-format candidate: 1 returned plan", "usd": "0.037028425"},
+    {"scope": "Six-person actual generation/survey/extraction screen: 45 returned responses", "usd": "0.087977800"}
+  ],
+  "additional_returned_usage_subtotal_usd": "0.209980780",
+  "cost_basis": "49 saved returned responses at saved Luna list rates. The unreturned timeout cost is unknown and excluded. Not an invoice or project-wide spending.",
+  "limitations": [
+    "One returned plan per condition; 100 sampling seeds are not 100 independent model plans.",
+    "The compact condition changes representation and necessary format instructions relative to the second candidate, not its semantic requirements or input population.",
+    "The retry omitted explicit stream=False in its saved key; the API default is nonstreaming. All other non-message options match the baseline.",
+    "Numeric age compatibility and the four targeted contrasts are audited; no exhaustive joint-distribution or all-field persona-compliance claim is made.",
+    "Behavioral singleton quotas are illustrative coverage, not measured prevalence. The supplied demographic file is explicitly GPT-4o-synthesized.",
+    "No additional full notebook rollout or core suite was run in this follow-up, and no production source changed. The previous 434-core source fingerprint remains the production lineage.",
+    "Compact visible output was shorter in this comparison, but total completion usage was higher because of reasoning tokens; no cost or latency improvement is established.",
+    "No candidate was adopted based on obtaining a higher score. Overall empirical quality remains unresolved."
+  ]
+}

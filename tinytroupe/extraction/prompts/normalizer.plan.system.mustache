@@ -1,0 +1,17 @@
+# Plan meaningful global themes
+
+Read the complete numbered collection.
+Identify up to maximum_groups distinct recurring semantic themes that together cover it.
+Use fewer groups when there are fewer genuinely distinct themes; never force trivial splits.
+This call plans categories only: do not assign item identifiers, repeat members or attempt to reconstruct the list.
+
+Return JSON groups. For each group, give a short label within max_length characters and a concise scope explaining which main meanings belong there, including a boundary against the most similar neighboring theme.
+Use the actual meanings across the collection, not source order, demographic stereotypes, stylistic differences or a universal source-domain label.
+
+The same fixed groups and scopes will be used to assign bounded batches of the original items.
+Make them specific enough to be useful and broad enough to cover every supplied item.
+Mixed items will go to their best-fitting main theme. No category should mean merely miscellaneous leftovers.
+Do not prescribe desired beliefs or rewrite the supplied statements.
+
+Return only the requested global theme definitions.
+There is no need to reason through or list thousands of individual assignments in this planning call.

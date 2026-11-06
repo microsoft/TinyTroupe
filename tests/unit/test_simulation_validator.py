@@ -4,6 +4,7 @@ Tests for the simulation validation mechanism.
 
 import sys
 import os
+import pytest
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 from tinytroupe.validation import SimulationExperimentEmpiricalValidator, SimulationExperimentDataset, validate_simulation_experiment_empirically
@@ -1759,6 +1760,42 @@ def test_ranking_data():
     print("✅ Ranking data tests passed")
 
 
+@pytest.mark.core
+def test_whole_number_float_rankings_preserve_missing_values():
+    """Nullable numeric columns must not fail the ranking validator."""
+    dataset = SimulationExperimentDataset(
+        name="Nullable rankings",
+        key_results={"rank": [1.0, 3.0, None, 3.0]},
+        data_types={"rank": "ranking"},
+    )
+    assert dataset.key_results["rank"] == [1.0, 3.0, None, 3.0]
+    assert dataset.ranking_info["rank"]["rank_values"] == [1.0, 3.0]
+
+
+@pytest.mark.core
+@pytest.mark.parametrize("value", [1.5, float("nan"), float("inf")])
+def test_nonintegral_rankings_fail_explicitly(value):
+    """Fractional and nonfinite positions cannot be truncated into valid ranks."""
+    with pytest.raises(ValueError, match="whole-number positions"):
+        SimulationExperimentDataset(
+            name="Invalid rankings",
+            key_results={"rank": [1, value]},
+            data_types={"rank": "ranking"},
+        )
+
+
+@pytest.mark.core
+@pytest.mark.parametrize("value", [0.0, -1.0])
+def test_nonpositive_float_rankings_fail_explicitly(value):
+    """Accepting float storage must preserve the positive-position constraint."""
+    with pytest.raises(ValueError, match="should start from 1"):
+        SimulationExperimentDataset(
+            name="Invalid rankings",
+            key_results={"rank": [1.0, value]},
+            data_types={"rank": "ranking"},
+        )
+
+
 def test_count_data():
     """Test count data handling."""
     print("Testing count data...")
@@ -2773,4 +2810,3 @@ def test_csv_reading_explicit_data_types():
         
     finally:
         os.unlink(csv_file_path)
-

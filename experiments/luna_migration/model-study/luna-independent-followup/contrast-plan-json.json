@@ -1,0 +1,20 @@
+{
+  "order_seed": 291031,
+  "protocol": "Transport-prerequisite repair only. The six contrast-plan requests were rejected by the API because JSON-object mode requires the word JSON in the messages. No completions or usage were returned. Preserve those attempts. Add the missing explicit JSON wording; otherwise keep the contrast hypothesis, seed, original inputs and transport unchanged.",
+  "imports": [{"path": "contrast-plan.json", "variants": ["contrast-plan"]}],
+  "variants": [{
+    "id": "contrast-plan-json",
+    "parent": "contrast-plan",
+    "phase": "persona_generation_plan",
+    "hypothesis": "Same comparative character-design hypothesis; explicitly name JSON to satisfy the API prerequisite.",
+    "cases": ["persona-grace", "persona-philip"],
+    "operations": [{
+      "kind": "replace",
+      "message": 1,
+      "old": "Return only {\"candidates\": [...]}",
+      "new": "Return only the JSON object {\"candidates\": [...]}",
+      "max_matches": 1
+    }]
+  }],
+  "selection": {"persona-grace": "contrast-plan-json", "persona-philip": "contrast-plan-json"}
+}

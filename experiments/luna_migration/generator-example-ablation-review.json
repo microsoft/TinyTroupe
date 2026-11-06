@@ -1,0 +1,55 @@
+{
+  "status": "Candidate not adopted; empirical response compression remains unresolved.",
+  "protocol_audit": "generator-example-ablation-audit.json",
+  "production_changed": false,
+  "hypothesis": "Unrelated worked biographies may anchor generated food preferences because one dislikes cold foods and another likes warm soup.",
+  "intervention": "Remove the unrelated worked biographies and replace only their output-format cross-reference with a description of allowed JSON structures. Preserve population eligibility, sampled characteristics, required fields and all actor inputs apart from the new biography.",
+  "corrected_screen": {
+    "people": 3,
+    "generated_biographies": 6,
+    "raw_actor_turns": 6,
+    "response_format": {
+      "type": "json_object"
+    },
+    "model": "gpt-6-luna",
+    "reasoning_effort": "xhigh",
+    "all_returned_json_valid": true,
+    "names_and_ages_preserved": true,
+    "no_top_level_planning_catalog_fields_observed": true,
+    "manual_public_scores": {
+      "Diego Andrés Quintana": {
+        "examples_retained": 3,
+        "examples_removed": 3
+      },
+      "Marco Antonio Salazar": {
+        "examples_retained": 2,
+        "examples_removed": 2
+      },
+      "Gabriel Leon Sandoval": {
+        "examples_retained": 1,
+        "examples_removed": 2
+      }
+    },
+    "semantic_review": "All six public replies and the corresponding culinary elaborations were read. Both arms retained the sampled adventurous, traditional or mild/familiar food preferences. The replies remained cautious about bottled gazpacho. Gabriel's 1-to-2 shift alone is not evidence of improved calibration.",
+    "returned_usage_usd": "0.055389895"
+  },
+  "earlier_harness_mismatch": {
+    "generator_responses": 6,
+    "valid_biographies": 5,
+    "raw_actor_turns": 5,
+    "observed_malformed_json": 1,
+    "cause_of_protocol_mismatch": "The replay harness omitted the factory's response_format=json_object setting in both generator arms.",
+    "interpretation": "The malformed response occurred outside the production request contract; it is not evidence that the production factory regressed. The failed output and cost were retained without repairing or redrawing it. The comparison was rerun in a separate folder after correcting the harness.",
+    "returned_usage_usd": "0.057843800"
+  },
+  "additional_returned_usage_usd": "0.113233695",
+  "cost_scope": "Twenty-three saved returned responses across these two screens, including the malformed response. Saved list rates and returned usage, not invoices or project-wide spending.",
+  "retrospective_population_scope_caveat": "The earlier three population-scope generator replays also omitted production JSON mode. They remain exploratory content checks. The two real-factory core cases and the completed 434-case production suite independently exercised production JSON mode and remain valid.",
+  "limitations": [
+    "One new stochastic biography per condition per person; not a precise causal effect estimate.",
+    "Regenerating biographies permits new life details, so these are not unchanged-persona comparisons.",
+    "This is not a new complete notebook rollout, a quality-corrected trajectory, a representative population sample or a held-out human comparison.",
+    "A higher mean or a change from 1 to 2 is not a success criterion.",
+    "These results do not prove that worked examples have no effect; they do not establish removal as a solution."
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "status": "Frozen before confirmation calls",
+  "corpus": "round5/selected.jsonl",
+  "config": "cohort-explicit-config.json",
+  "initial_history": [
+    "round2/results.jsonl", "round2/persona-repeats.jsonl",
+    "cohort-probe/results.jsonl", "cohort-step2/results.jsonl", "cohort-step3/results.jsonl",
+    "cohort-confirm1/results.jsonl", "cohort-confirm2/results.jsonl", "cohort-confirm3/results.jsonl"
+  ],
+  "steps": ["cohort-explicit1", "cohort-explicit2", "cohort-explicit3"],
+  "acceptance": "Three fresh sequential candidates per source constraint, preserving all earlier drafts in context. Each must explicitly satisfy every original characteristic and all mandatory fields, have a coherent life, and be meaningfully different from the earlier lives. No opinion or taste targets.",
+  "reason_for_new_confirmation": "The first adaptive confirmation exposed an omitted ethnicity in Grace's first profile. Do not repair that output manually or count it as a pass. Add a general explicit-characteristic rule and rerun the stateful procedure.",
+  "limitations": "Adaptive confirmation is not fixed-input replication and does not resolve independent-generation diversity or statistically representative population sampling. All earlier observations remain in the report and costs."
+}

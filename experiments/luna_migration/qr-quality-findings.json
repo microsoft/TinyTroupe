@@ -1,0 +1,83 @@
+{
+  "reviewed_at": "2026-11-02T09:10:00-03:00",
+  "complete": false,
+  "full_reruns": {
+    "Investment Firm": {
+      "execution_audit_passed": true,
+      "public_utterances": 16,
+      "previous_public_utterances": 52,
+      "review": "The closing acknowledgment loops no longer persist. Both professionals give substantial sourced analysis, the adviser delivers a written brief, and the customer revises an earlier mistaken claim that no figures were presented. Some early stale-evidence claims remain; fewer utterances alone is not a general quality guarantee."
+    },
+    "AI-enabled Children Story Telling Market Research 2": {
+      "execution_audit_passed": true,
+      "public_answers": 50,
+      "extracted_rankings_match": 50,
+      "no_ai_first": 50,
+      "parent_age_range": [34, 39],
+      "review": "Eligibility is stated in the biographies and public responses, but demographic and occupational convergence persists. Plan age ranges were copied unchanged to persona generation; the model chose the same middle ages rather than receiving actual random draws. Broader product-format rankings do not cure unanimous first-choice rejection."
+    },
+    "Bottled Gazpacho Market Research 5 (with behavior correction)": {
+      "execution_audit_passed": true,
+      "public_answers": 50,
+      "extracted_counts": {"1": 1, "2": 44, "3": 5},
+      "mean": 2.08,
+      "sample_standard_deviation": 0.3404678653660853,
+      "review": "No silent person received an invented score in this rerun. Individual numeric extraction was faithful, but response diversity remains poor. The planner still omitted the explicitly requested behavioral dimension families."
+    }
+  },
+  "next_experiments": [
+    "Draw numeric values and categorical alternatives deterministically before persona generation, rather than delegating selections to the language model.",
+    "Retest behavioral coverage with the original captured sampling spaces and a more explicit sampling-plan contract.",
+    "Use unchanged survey questions and quality safeguards in twelve-person end-to-end diagnostics before another full population rerun."
+  ],
+  "concrete_sampling_diagnostics": {
+    "parent_old_plan": {
+      "count": 12,
+      "exact_age_matches": 12,
+      "public_rankings_match": 12,
+      "first_choices": {"B": 11, "D": 1},
+      "known_cost_usd": "0.153214315"
+    },
+    "gazpacho_old_plan": {
+      "count": 12,
+      "exact_age_matches": 12,
+      "scores": {"2": 11, "3": 1},
+      "known_cost_usd": "0.198261955"
+    },
+    "parent_new_coverage_plan": {
+      "count": 12,
+      "exact_age_matches": 12,
+      "first_choices": {"B": 12},
+      "selected_dimensions": 19,
+      "previous_selected_dimensions": 9,
+      "known_cost_usd": "0.157009630"
+    },
+    "limitations": "Reduced diagnostics used artificial participant names; some biographies replaced those names. They establish exact age draws but are not accepted as complete notebook validation or repaired empirical calibration.",
+    "gazpacho_new_coverage_plan": {
+      "status": "Rejected before population generation",
+      "selected_dimensions": 57,
+      "requested_behavioral_families_selected": 7,
+      "requested_behavioral_families_total": 10,
+      "errors": [
+        "Two 240-second API deadlines were exceeded; the same experimental contract completed with an explicit 600-second deadline.",
+        "Equal-sized age bands gave ages 100 through 120 ten percent of the sample, contrary to the supplied marginal age distribution.",
+        "Some independently drawn state and region alternatives could conflict."
+      ],
+      "next_repair": "Pass the experimenter's original population specification to planning, not only the model's lossy generated summary; clarify marginal allocation and compatibility under independent draws."
+    }
+  },
+  "interrupted_final_attempt": {
+    "folder": "cf-kids",
+    "status": "Stopped deliberately during population setup, not a completed final run",
+    "reason": "The expanded gazpacho plan review exposed missing original-source planning constraints. Preserve this attempt and do not claim a frozen-source final validation."
+  },
+  "core_suite": {
+    "passed": 365,
+    "failed": 0,
+    "focused_checks_passed": 59,
+    "log": "source-handoff-core.log",
+    "prior_failure": "test_see's evaluator rejected a plausible reference to warm light, colour and horizon; the revised assertion supplies the actual visual stimulus and judges grounding rather than keyword identity."
+  },
+  "known_returned_usage_cost_usd_full_reruns": "2.465858235",
+  "pricing_caveat": "Returned-usage estimate at saved list rates, not an invoice; excludes unobserved failed-request usage."
+}

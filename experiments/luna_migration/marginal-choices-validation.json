@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "current_library_sha256": "3f5b80697765c367766a8291cc4a9a27aa8db7b9889ecb058bb2dede96c9d501",
+  "previous_library_sha256": "ca9b09398b9dab603bc54a6fa729d7b27ce386dc80eeb3cff6e5117d51fa16f9",
+  "only_library_delta": "factory\\prompts\\sampling_plan.system.mustache",
+  "proof": "Removing the exact tested revision-4 paragraph in memory reconstructs the preceding source that passed 449 core cases. No actor, extractor, questionnaire, model, effort or threshold changed.",
+  "candidate_screen": "demographic-coverage-budget-r4/numerical-screen.json",
+  "candidate_request_audit": "demographic-coverage-budget-r4/structural-audit.json",
+  "core": {
+    "passed": 450,
+    "deselected": 440,
+    "warnings": 7,
+    "elapsed_seconds": 1407.24
+  },
+  "scope": "Marginal-preserving sampling repair, not a gazpacho calibration result. Both the full CF6 survey and six-person comprehension screen predate this change."
+}

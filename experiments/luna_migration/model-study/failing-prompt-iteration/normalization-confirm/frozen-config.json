@@ -1,0 +1,32 @@
+{
+  "stage": "normalization-confirmation",
+  "corpora": [
+    "..\\broad-luna-optimization\\normalization-refinement\\sources.jsonl",
+    "confirmation-sources.jsonl"
+  ],
+  "recipes": [
+    {
+      "id": "indexed-themes-v1-confirm",
+      "instruction_file": "normalization-indexed-v1.txt",
+      "adapter": "indexed_normalization",
+      "cases": [
+        "exec-chatcmpl-EcSEDbTD31QQYHRw2vsuCbxbTHSak",
+        "exec-chatcmpl-EcQHB8Uq23EuJYVQIjxMXf2k8eXPY"
+      ],
+      "hypothesis": "Same semantic prompt; replace repeated enums with integer bounds to stay below the API's 1000-total-enum schema limit. Original rejected requests remain preserved.",
+      "repetitions": 3
+    },
+    {
+      "id": "indexed-themes-v1-confirm",
+      "instruction_file": "normalization-indexed-v1.txt",
+      "adapter": "indexed_normalization",
+      "cases": [
+        "exec-chatcmpl-EcOjpUwCzXHUzfr45T8Xg8fzZ8Mc7",
+        "exec-chatcmpl-EcQ3Eb3OpSCnrLro5a7kpQyDRihIw",
+        "exec-chatcmpl-EcQICCWrcBUBdFhSJy75dLdtm89S9"
+      ],
+      "hypothesis": "Check the frozen indexed grouping contract on preselected min/median/max unused lists, including 2130 occurrences.",
+      "repetitions": 1
+    }
+  ]
+}

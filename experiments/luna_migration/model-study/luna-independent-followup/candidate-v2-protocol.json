@@ -1,0 +1,14 @@
+{
+  "frozen_before_planning_calls": true,
+  "supersedes_for_expansion": "candidate-protocol.json",
+  "preserved_failure": "candidate-plan/results.jsonl: persona-philip::candidate-plan replicate 0 lacks personality_and_voice in all four candidates. The strict offline validator rejected the batch before selections or expansion calls.",
+  "repair": "candidate-plan-v2.json adds an explicit five-key text-valued skeleton and completeness check. Do not repair responses or relax the validator. All six earlier plans remain in cost totals and reports.",
+  "candidate_count": 4,
+  "required_candidate_fields": ["particulars", "life_course", "daily_life", "travel", "personality_and_voice"],
+  "selection_seed": 291028,
+  "expansion_instruction": "candidate-expansion.txt",
+  "repeats_per_source": 3,
+  "planned_api_calls": 12,
+  "method": "Fresh independent proposal sets; the unchanged selection algorithm and precommitted seed choose one per plan, followed by full-record expansion. No previous profile history and no content-based redraw.",
+  "limitations": "Two calls per profile, exploration rather than calibrated population sampling. A successful observed batch is not evidence that missing fields can never recur."
+}

@@ -1,0 +1,257 @@
+
+!!!!
+DISCLAIMER: TinyTroupe relies on Artificial Intelligence (AI) models to generate content. 
+The AI models are not perfect and may produce inappropriate or inaccurate results. 
+For any serious or consequential use, please review the generated content before using it.
+!!!!
+
+Looking for default config on: C:\Users\pdasilva\repos\TinyTroupe and personal repos\TinyTroupe\tinytroupe\utils\..\config.ini
+Found custom config on: C:\Users\pdasilva\repos\TinyTroupe and personal repos\TinyTroupe\config.ini
+TinyTroupe version: 0.8.0
+Current date and time (local): 2026-11-03 11:54:58
+Current date and time (UTC):   2026-11-03 14:54:58
+
+=================================
+Current TinyTroupe configuration 
+=================================
+[OpenAI]
+api_type = openai
+azure_api_version = 2024-12-01-preview
+model = gpt-6-luna
+reasoning_model = gpt-6-luna
+vision_detail = auto
+embedding_model = text-embedding-3-small
+azure_embedding_model_api_version = 2023-05-15
+max_completion_tokens = 128000
+timeout = 240
+max_attempts = 2
+waiting_time = 0
+exponential_backoff_factor = 5
+max_concurrent_model_calls = 4
+reasoning_effort = xhigh
+cache_api_calls = False
+cache_file_name = openai_api_cache.json
+max_content_display_length = 4000
+
+[Simulation]
+parallel_agent_generation = True
+parallel_agent_actions = True
+rai_harmful_content_prevention = True
+rai_copyright_infringement_prevention = True
+
+[Cognition]
+enable_memory_consolidation = True
+enable_continuous_contextual_semantic_memory_retrieval = True
+min_episode_length = 10
+max_episode_length = 15
+episodic_memory_fixed_prefix_length = 10
+episodic_memory_lookback_length = 20
+
+[ActionGenerator]
+max_attempts = 2
+enable_quality_checks = False
+enable_regeneration = True
+enable_direct_correction = False
+enable_quality_check_for_persona_adherence = True
+enable_quality_check_for_selfconsistency = False
+enable_quality_check_for_fluency = False
+enable_quality_check_for_suitability = False
+enable_quality_check_for_similarity = False
+continue_on_failure = True
+quality_threshold = 5
+
+[WebGrounding]
+enforce_security = True
+allowed_hosts = microsoft.com,www.microsoft.com,google.com,www.google.com,wikipedia.org,www.wikipedia.org,en.wikipedia.org,python.org,www.python.org,docs.python.org
+allow_localhost = False
+allow_private_networks = False
+
+[Logging]
+loglevel = DEBUG
+loglevel_console = INFO
+loglevel_file = DEBUG
+log_include_thread_id = True
+
+2026-11-03 11:55:36,353 - MainThread(65896) - numexpr.utils - INFO - NumExpr defaulting to 8 threads.
+2026-11-03 11:56:15,148 - MainThread(65896) - tinytroupe - INFO - API cache file location: C:\Users\pdasilva\repos\TinyTroupe and personal repos\TinyTroupe\openai_api_cache.json (exists: True)
+2026-11-03 11:56:18,026 - MainThread(65896) - tinytroupe - INFO - API cache loaded with 1930 entries.
+2026-11-03 11:56:18,027 - MainThread(65896) - tinytroupe - INFO - API cache file location: C:\Users\pdasilva\repos\TinyTroupe and personal repos\TinyTroupe\openai_api_cache.json (exists: True)
+2026-11-03 11:56:21,416 - MainThread(65896) - tinytroupe - INFO - API cache loaded with 1930 entries.
+2026-11-03 11:56:21,417 - MainThread(65896) - tinytroupe - INFO - API cache file location: C:\Users\pdasilva\repos\TinyTroupe and personal repos\TinyTroupe\openai_api_cache.json (exists: True)
+2026-11-03 11:56:24,122 - MainThread(65896) - tinytroupe - INFO - API cache loaded with 1930 entries.
+API caching ENABLED with file: openai_api_cache.json
+============================= test session starts =============================
+platform win32 -- Python 3.10.13, pytest-7.4.0, pluggy-1.0.0
+rootdir: C:\Users\pdasilva\repos\TinyTroupe and personal repos\TinyTroupe
+configfile: pyproject.toml
+plugins: anyio-3.5.0, cov-6.0.0, html-4.1.1, metadata-3.1.1, timeout-2.4.0
+Test case: test_sampling_identifier_round_trip
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_sampling_rejects_invalid_identifiers
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_sampling_identifier_order_does_not_change_public_option_order
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_sampling_rejects_invalid_numeric_ranges
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_sampling_rejects_invalid_counts
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_sampling_optional_and_required_dimensions
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_sampling_small_population_and_infeasible_limits
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_flattened_sampling_preserves_population_description
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_sampling_initialization_preserves_original_population
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_flattened_sampling_draws_concrete_values
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_flattened_sampling_honors_conditional_weights
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_flattened_singleton_contrasts_survive_random_draws
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_flattened_sampling_rejects_invalid_weights
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_flattened_sampling_rejects_invalid_alternatives
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_person_generation_receives_original_population
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_normalizer_reconstructs_duplicates_and_reuses_source_assignments
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_normalizer_rejects_invalid_partitions
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_normalizer_chunks_share_frozen_definitions
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_story_focus_preserves_literal_requirements
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_story_rejects_overlong_output_without_appending
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_runtime_available_action_live
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_runtime_rating_requires_public_evidence_live
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_runtime_answer_format_does_not_grant_comprehension_live
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_runtime_capable_numerical_answers_remain_available_live
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_runtime_private_extraction_remains_available_live
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_runtime_sampling_dimensions_separate_opposing_ends_live
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_runtime_population_eligibility_live
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_runtime_persona_excludes_population_catalogs_live
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_runtime_infant_generation_preserves_age_live
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_runtime_capabilities_are_not_obligations_live
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_runtime_closed_conversation_waits_then_reopens_live
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_runtime_sampling_plan_live
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_runtime_sampling_contrast_coverage_live
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_runtime_behavioral_contrasts_preserve_marginals_live
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_runtime_normalization_live
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_runtime_chunked_normalization_live
+  - refresh_cache: False
+  - use_cache: True
+
+Test case: test_runtime_story_ending_live
+  - refresh_cache: False
+  - use_cache: True
+
+collected 76 items / 73 deselected / 3 selected
+
+tests\unit\test_prompt_repairs.py 2026-11-03 11:56:42,729 - MainThread(65896) - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+.2026-11-03 11:57:28,630 - MainThread(65896) - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+.2026-11-03 11:57:47,910 - MainThread(65896) - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+.
+
+============================== warnings summary ===============================
+..\..\..\AppData\Local\anaconda3\envs\py310\lib\site-packages\_pytest\config\__init__.py:1373
+  C:\Users\pdasilva\AppData\Local\anaconda3\envs\py310\lib\site-packages\_pytest\config\__init__.py:1373: PytestConfigWarning: Unknown config option: timeout_exit
+  
+    self._warn_or_fail_if_strict(f"Unknown config option: {key}\n")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: C:\Users\pdasilva\repos\TinyTroupe and personal repos\TinyTroupe\test-results.xml -
+
+---------- coverage: platform win32, python 3.10.13-final-0 ----------
+Coverage HTML written to dir htmlcov
+Coverage XML written to file coverage.xml
+
+- Generated html report: file:///C:/Users/pdasilva/repos/TinyTroupe%20and%20personal%20repos/TinyTroupe/test-report.html -
+=========== 3 passed, 73 deselected, 1 warning in 104.54s (0:01:44) ===========

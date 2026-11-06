@@ -1,0 +1,349 @@
+{
+  "directives": 12,
+  "categorical_allocations": {
+    "age_distribution": {
+      "unconstrained": 0,
+      "options": [
+        {
+          "value": "Age 0–14, including infants, school-age children, and young teenagers, with everyday needs and activities substantially shaped by caregivers and developmental stage.",
+          "weight": 0.186,
+          "expected": 9.0,
+          "guaranteed": 9,
+          "observed_cf5": 9
+        },
+        {
+          "value": "Age 15–24, including older adolescents and young adults navigating education, early employment, independence, and changing family or social roles.",
+          "weight": 0.131,
+          "expected": 7.0,
+          "guaranteed": 7,
+          "observed_cf5": 7
+        },
+        {
+          "value": "Age 25–54, spanning early adulthood through midlife, with varied combinations of work, caregiving, family life, education, and community involvement.",
+          "weight": 0.394,
+          "expected": 20.0,
+          "guaranteed": 20,
+          "observed_cf5": 20
+        },
+        {
+          "value": "Age 55–64, often including people approaching retirement or making midlife career, health, and household transitions.",
+          "weight": 0.129,
+          "expected": 6.0,
+          "guaranteed": 6,
+          "observed_cf5": 6
+        },
+        {
+          "value": "Age 65 and older, including active older adults as well as people who may have significant health, mobility, caregiving, or support needs.",
+          "weight": 0.16,
+          "expected": 8.0,
+          "guaranteed": 8,
+          "observed_cf5": 8
+        }
+      ]
+    },
+    "gender": {
+      "unconstrained": 0,
+      "options": [
+        {
+          "value": "Male, as represented in the supplied binary gender-distribution figures; individual identity, expression, and sex characteristics may vary.",
+          "weight": 0.492,
+          "expected": 24.600000000000005,
+          "guaranteed": 0,
+          "observed_cf5": 29
+        },
+        {
+          "value": "Female, as represented in the supplied binary gender-distribution figures; individual identity, expression, and sex characteristics may vary.",
+          "weight": 0.508,
+          "expected": 25.399999999999995,
+          "guaranteed": 0,
+          "observed_cf5": 21
+        }
+      ]
+    },
+    "race_and_ethnicity": {
+      "unconstrained": 0,
+      "options": [
+        {
+          "value": "White, non-Hispanic or Latino, with family histories that may be multigenerational in the United States or connected to many European, Middle Eastern, or other backgrounds.",
+          "weight": 0.571,
+          "expected": 28.550000000000004,
+          "guaranteed": 0,
+          "observed_cf5": 29
+        },
+        {
+          "value": "Hispanic or Latino, including people with Mexican, Puerto Rican, Cuban, Central American, South American, or other Hispanic and Latino heritage, and people of any race.",
+          "weight": 0.194,
+          "expected": 9.700000000000001,
+          "guaranteed": 0,
+          "observed_cf5": 11
+        },
+        {
+          "value": "Black or African American, including multigenerational African American communities and people with African, Caribbean, or other Black diasporic backgrounds.",
+          "weight": 0.121,
+          "expected": 6.050000000000001,
+          "guaranteed": 0,
+          "observed_cf5": 4
+        },
+        {
+          "value": "Asian, including people with East Asian, South Asian, Southeast Asian, and other Asian heritages, with a wide range of languages and migration histories.",
+          "weight": 0.07,
+          "expected": 3.5000000000000004,
+          "guaranteed": 0,
+          "observed_cf5": 2
+        },
+        {
+          "value": "Two or more races, reflecting multiracial family histories and identities that may include any combination of racial or ethnic backgrounds.",
+          "weight": 0.029,
+          "expected": 1.45,
+          "guaranteed": 0,
+          "observed_cf5": 4
+        },
+        {
+          "value": "American Indian or Alaska Native, including people connected to diverse Indigenous nations, communities, and cultural traditions.",
+          "weight": 0.013,
+          "expected": 0.65,
+          "guaranteed": 0,
+          "observed_cf5": 0
+        },
+        {
+          "value": "Native Hawaiian or Pacific Islander, including people with Native Hawaiian, Samoan, Chamorro, Tongan, or other Pacific Islander heritage.",
+          "weight": 0.002,
+          "expected": 0.1,
+          "guaranteed": 0,
+          "observed_cf5": 0
+        }
+      ]
+    },
+    "geographic_region": {
+      "unconstrained": 0,
+      "options": [
+        {
+          "value": "Northeast, including dense metropolitan areas, older industrial cities, small towns, coastal communities, and rural areas across the northeastern states.",
+          "weight": 0.171,
+          "expected": 8.550000000000002,
+          "guaranteed": 0,
+          "observed_cf5": 5
+        },
+        {
+          "value": "Midwest, including large cities, agricultural regions, smaller industrial communities, suburbs, and rural towns across the central and north-central states.",
+          "weight": 0.208,
+          "expected": 10.4,
+          "guaranteed": 0,
+          "observed_cf5": 14
+        },
+        {
+          "value": "South, including major metropolitan areas, small towns, rural communities, coastal regions, and rapidly growing suburbs across the southern states.",
+          "weight": 0.383,
+          "expected": 19.149999999999995,
+          "guaranteed": 0,
+          "observed_cf5": 21
+        },
+        {
+          "value": "West, including Pacific coastal cities, inland metropolitan areas, mountain communities, deserts, agricultural areas, and remote rural regions.",
+          "weight": 0.238,
+          "expected": 11.899999999999997,
+          "guaranteed": 0,
+          "observed_cf5": 10
+        }
+      ]
+    },
+    "settlement_type": {
+      "unconstrained": 0,
+      "options": [
+        {
+          "value": "Urban resident living in a city or densely developed metropolitan area, with relatively close access to services, workplaces, public amenities, and varied communities.",
+          "weight": 0.83,
+          "expected": 41.49999999999999,
+          "guaranteed": 0,
+          "observed_cf5": 43
+        },
+        {
+          "value": "Rural resident living in a less densely populated community, where longer travel distances, local relationships, and access to services may shape daily life.",
+          "weight": 0.17,
+          "expected": 8.499999999999998,
+          "guaranteed": 0,
+          "observed_cf5": 7
+        }
+      ]
+    },
+    "culinary_tastes": {
+      "unconstrained": 5,
+      "options": [
+        {
+          "value": "Prefers familiar, traditional home cooking, such as regional family recipes, straightforward sides, and meals tied to personal or community traditions.",
+          "weight": 1,
+          "expected": 7.036904761904762,
+          "guaranteed": 0,
+          "observed_cf5": 12
+        },
+        {
+          "value": "Enjoys bold heat and strongly seasoned food, seeking hot peppers, spice blends, and cuisines where intense flavor is central to the meal.",
+          "weight": 1,
+          "expected": 5.503571428571429,
+          "guaranteed": 0,
+          "observed_cf5": 2
+        },
+        {
+          "value": "Prefers mild, simple flavors and may avoid hot spices, strong aromas, unfamiliar textures, or complicated combinations because they feel unpleasant or overwhelming.",
+          "weight": 1,
+          "expected": 6.386904761904762,
+          "guaranteed": 0,
+          "observed_cf5": 7
+        },
+        {
+          "value": "Follows a vegetarian diet for ethical, religious, environmental, health, or personal reasons and seeks satisfying meals centered on vegetables, grains, beans, or dairy.",
+          "weight": 1,
+          "expected": 4.072619047619048,
+          "guaranteed": 0,
+          "observed_cf5": 4
+        },
+        {
+          "value": "Follows a fully plant-based diet, checking ingredients carefully and choosing meals that avoid meat, fish, dairy, eggs, and other animal products.",
+          "weight": 1,
+          "expected": 3.0583333333333336,
+          "guaranteed": 0,
+          "observed_cf5": 2
+        },
+        {
+          "value": "Enjoys meat-centered meals, values familiar preparations such as grilling or roasting, and may see meat as an important source of flavor, tradition, or nourishment.",
+          "weight": 1,
+          "expected": 7.636904761904762,
+          "guaranteed": 0,
+          "observed_cf5": 8
+        },
+        {
+          "value": "Is adventurous about food, regularly tries unfamiliar cuisines, ingredients, and cooking techniques, and enjoys discussing how dishes reflect their cultural origins.",
+          "weight": 1,
+          "expected": 3.7892857142857146,
+          "guaranteed": 0,
+          "observed_cf5": 3
+        },
+        {
+          "value": "Prefers convenient prepared meals, snacks, or takeout because of limited time, energy, cooking facilities, confidence, or interest in preparing food.",
+          "weight": 1,
+          "expected": 2.928571428571429,
+          "guaranteed": 0,
+          "observed_cf5": 3
+        },
+        {
+          "value": "Enjoys baking and making desserts, from simple cookies and breads to elaborate pastries, and often shares homemade food with friends or family.",
+          "weight": 1,
+          "expected": 1.9142857142857144,
+          "guaranteed": 0,
+          "observed_cf5": 1
+        },
+        {
+          "value": "Has a restrictive or highly selective diet due to allergies, illness, sensory sensitivities, religious rules, or strong dislikes and may find eating out difficult.",
+          "weight": 1,
+          "expected": 2.672619047619048,
+          "guaranteed": 0,
+          "observed_cf5": 3
+        }
+      ]
+    },
+    "attitude_toward_new_products": {
+      "unconstrained": 9,
+      "options": [
+        {
+          "value": "Eagerly tests new products early, enjoys emerging technology and novel services, and tolerates occasional defects or inconvenience for the experience.",
+          "weight": 1,
+          "expected": 2.4,
+          "guaranteed": 0,
+          "observed_cf5": 4
+        },
+        {
+          "value": "Is curious about new offerings but usually waits for credible reviews, clear pricing, and evidence that the product solves a genuine need.",
+          "weight": 1,
+          "expected": 6.953571428571428,
+          "guaranteed": 0,
+          "observed_cf5": 3
+        },
+        {
+          "value": "Tries unfamiliar products when recommended by a trusted friend, relative, professional, or community member who understands their needs.",
+          "weight": 1,
+          "expected": 4.286904761904762,
+          "guaranteed": 0,
+          "observed_cf5": 6
+        },
+        {
+          "value": "Adopts new products gradually, keeping familiar options available until the newer alternative has demonstrated reliability over time.",
+          "weight": 1,
+          "expected": 5.386904761904763,
+          "guaranteed": 0,
+          "observed_cf5": 13
+        },
+        {
+          "value": "Is cautious about product claims, checks safety, privacy, durability, and return policies, and avoids purchasing based only on marketing or hype.",
+          "weight": 1,
+          "expected": 6.953571428571428,
+          "guaranteed": 0,
+          "observed_cf5": 4
+        },
+        {
+          "value": "Prefers established brands and familiar products because consistency and predictability matter more than novelty or small possible improvements.",
+          "weight": 1,
+          "expected": 3.720238095238095,
+          "guaranteed": 0,
+          "observed_cf5": 3
+        },
+        {
+          "value": "Is strongly resistant to changes in routines and products, viewing many new offerings as unnecessary, confusing, or designed to create avoidable costs.",
+          "weight": 1,
+          "expected": 3.720238095238095,
+          "guaranteed": 0,
+          "observed_cf5": 6
+        },
+        {
+          "value": "Is enthusiastic about environmentally preferable, repairable, accessible, or ethically produced products even when adoption requires learning a new routine.",
+          "weight": 1,
+          "expected": 3.8583333333333334,
+          "guaranteed": 0,
+          "observed_cf5": 0
+        },
+        {
+          "value": "Avoids digital products and services when possible because of privacy concerns, accessibility barriers, limited connectivity, or low confidence using technology.",
+          "weight": 1,
+          "expected": 3.720238095238095,
+          "guaranteed": 0,
+          "observed_cf5": 2
+        },
+        {
+          "value": "Is an extreme novelty seeker who buys untested products impulsively and disregards reasonable warnings, costs, or safety information.",
+          "weight": 1,
+          "expected": 0.0,
+          "guaranteed": 0,
+          "observed_cf5": 0
+        }
+      ]
+    }
+  },
+  "targeted_coverage_over_100_seeds": {
+    "culinary_tastes": {
+      "Prefers familiar, traditional home cooking, such as regional family recipes, straightforward sides, and meals tied to personal or community traditions.": {
+        "minimum": 2,
+        "maximum": 12,
+        "seeds_without_value": 0
+      },
+      "Is adventurous about food, regularly tries unfamiliar cuisines, ingredients, and cooking techniques, and enjoys discussing how dishes reflect their cultural origins.": {
+        "minimum": 0,
+        "maximum": 8,
+        "seeds_without_value": 2
+      }
+    },
+    "attitude_toward_new_products": {
+      "Is strongly resistant to changes in routines and products, viewing many new offerings as unnecessary, confusing, or designed to create avoidable costs.": {
+        "minimum": 0,
+        "maximum": 10,
+        "seeds_without_value": 2
+      },
+      "Is an extreme novelty seeker who buys untested products impulsively and disregards reasonable warnings, costs, or safety information.": {
+        "minimum": 0,
+        "maximum": 0,
+        "seeds_without_value": 100
+      }
+    }
+  },
+  "inconsistent_numeric_age_vs_age_group": 0,
+  "unconstrained_numeric_age_or_age_group": 0,
+  "scope": "A stratified illustrative coverage audit, not a population calibration. A permitted option is not a guaranteed realized observation."
+}

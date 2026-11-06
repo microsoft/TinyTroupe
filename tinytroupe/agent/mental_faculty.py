@@ -319,15 +319,20 @@ class FilesAndWebGroundingFaculty(TinyMentalFaculty):
             target_name = action["content"]
 
             results = []
-            results.append(
+            results.extend(
                 self.local_files_grounding_connector.retrieve_by_name(target_name)
             )
-            results.append(self.web_grounding_connector.retrieve_by_name(target_name))
+            results.extend(self.web_grounding_connector.retrieve_by_name(target_name))
 
             if len(results) > 0:
                 agent.think(f"I have read the following document: \n{results}")
             else:
-                agent.think(f"I can't find any document with the name '{target_name}'.")
+                logger.warning("Cannot consult document %r: no matching content was retrieved.", target_name)
+                agent.think(
+                    f"I can't find any document with the name '{target_name}'. "
+                    'Use LIST_DOCUMENTS to check the available names, put the exact name in "content", '
+                    'and leave "target" empty.'
+                )
 
             return True
 
@@ -353,7 +358,9 @@ class FilesAndWebGroundingFaculty(TinyMentalFaculty):
             - LIST_DOCUMENTS: you can list the names of the documents you have access to, so that you can decide which to access, if any, to accomplish your goals. Documents is a generic term and includes any 
                 kind of "packaged" information you can access, such as emails, files, chat messages, calendar events, etc. It also includes, in particular, web pages.
                 The order of in which the documents are listed is not relevant.
-            - CONSULT: you can retrieve and consult a specific document, so that you can access its content and accomplish your goals. To do so, you specify the name of the document you want to consult.
+            - CONSULT: you can retrieve and consult a specific document, so that you can access its content and accomplish your goals.
+                Set "content" to the exact document name returned by LIST_DOCUMENTS and set "target" to "".
+                Do not put a question in "content" or the document name in "target".
             """
 
         return textwrap.dedent(prompt)

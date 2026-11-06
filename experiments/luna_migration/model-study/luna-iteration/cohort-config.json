@@ -1,0 +1,7 @@
+{
+  "case_ids": ["persona-grace::life-course", "persona-philip::life-course"],
+  "context_fields": ["age", "residence", "occupation", "preferences", "personality"],
+  "instruction_file": "cohort-instruction.txt",
+  "message": 1,
+  "purpose": "Explore plausible alternatives to previously generated drafts while preserving all original constraints. This is explicitly diversity-seeking, not population sampling."
+}

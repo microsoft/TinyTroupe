@@ -1,0 +1,21 @@
+{
+  "status": "Frozen before confirmation calls",
+  "method": "Keep the exact life-course generation rules and cohort-instruction.txt fixed. For each of the two source constraints generate three further profiles sequentially. Every new prompt includes all previous completed profiles for that source, using the same configured context fields. Do not select or omit completed drafts based on taste.",
+  "initial_history": [
+    "round2/results.jsonl",
+    "round2/persona-repeats.jsonl",
+    "cohort-probe/results.jsonl",
+    "cohort-step2/results.jsonl",
+    "cohort-step3/results.jsonl"
+  ],
+  "steps": ["cohort-confirm1", "cohort-confirm2", "cohort-confirm3"],
+  "acceptance": [
+    "All six API responses complete with valid JSON and the 17 required fields.",
+    "All original fixed characteristics, household constraints and demographic ranges remain satisfied.",
+    "Each life is internally coherent, with specific usable preferences, plausible finances and consistent dates.",
+    "Across each three-profile confirmation sequence, lives differ meaningfully in commitments, motives and discretionary choices, not only jobs, cities or wording.",
+    "No target opinion, purchase answer, ranking, taste or Big Five distribution is imposed."
+  ],
+  "protocol_deviation": "The original plan called for three fresh fixed-input responses for all 20 cases. That remains the standard for the 18 action/extraction cases and the separate round4 persona test. Cohort generation changes the unit to a stateful procedure: these six observations are adaptive confirmation of that alternative procedure, NOT fixed-input confirmation or proof that independent generation was repaired.",
+  "claim_boundary": "If only the adaptive method works, report a conditional alternative for the two persona cases, not an unconditional 20/20 success. This is deliberate coverage rather than statistically representative random population sampling. Do not deploy this changed procedure to TinyTroupe in this task."
+}

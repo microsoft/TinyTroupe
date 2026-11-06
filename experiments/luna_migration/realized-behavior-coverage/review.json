@@ -1,0 +1,39 @@
+{
+  "status": "First candidate rejected; testing an explicit final singleton-coverage check.",
+  "production_changed": false,
+  "acceptance_defined_before_calls": "Four predefined contrast ends must have guaranteed realized coverage, with coherent eligibility and demographic allocations.",
+  "baseline_seeds_without_predefined_endpoints": {
+    "traditional_culinary": 1,
+    "adventurous_culinary": 0,
+    "strong_new_product_resistance": 2,
+    "extreme_novelty_seeking": 64
+  },
+  "candidate_seeds_without_predefined_endpoints": {
+    "traditional_culinary": 0,
+    "adventurous_culinary": 0,
+    "strong_new_product_resistance": 0,
+    "extreme_novelty_seeking": 37
+  },
+  "candidate_guarantees": {
+    "traditional_culinary": 3,
+    "adventurous_culinary": 3,
+    "strong_new_product_resistance": 3,
+    "extreme_novelty_seeking": 0
+  },
+  "age_band_allocations": {
+    "baseline": [10, 5, 20, 5, 10],
+    "candidate": [9, 7, 20, 6, 8],
+    "supplied_weights_times_50": [9.3, 6.55, 19.7, 6.45, 8.0]
+  },
+  "candidate_age_pair_errors_in_5000_draws": 0,
+  "candidate_unconstrained_age_pairs_in_5000_draws": 0,
+  "limitations": [
+    "One returned plan per condition; 100 deterministic sampling seeds are not 100 independent model plans.",
+    "The candidate fails the predefined coverage requirement, so no complete joint-semantic acceptance or production adoption is claimed.",
+    "Behavioral extremes have no measured prevalence in the supplied source; singleton quotas are illustrative coverage, not representative-population estimates.",
+    "The source demographic file is synthesized from GPT-4o, not authoritative census microdata.",
+    "No purchase response was generated, selected, or used to select these contrast ends."
+  ],
+  "returned_usage_estimate_usd": "0.053505975",
+  "cost_basis": "Two saved returned responses at saved list rates; not an invoice or project total."
+}

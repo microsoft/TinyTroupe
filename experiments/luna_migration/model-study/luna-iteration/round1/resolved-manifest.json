@@ -1,0 +1,257 @@
+{
+  "order_seed": 281026,
+  "protocol": "Luna-only iterative development. Round 1 tests a concise interaction contract, contextual persona interpretation, explicit task/evidence boundaries and a life-first persona generator. Fixed persona JSON, additional safety constraints, schemas, effort and token budgets are preserved. Questionnaire-format and brainstorming changes are labeled experimental conditions, not silent replacements of validated survey instruments. No target purchase/ranking/score distribution. Historical baselines are available from the prior experiment. All 20 diagnostic cases will receive a candidate response; confirmation uses fresh repeats after selection.",
+  "imports": [
+    {
+      "path": "../prompt-hypotheses.json",
+      "variants": [
+        "diverge-before-select",
+        "travel-format",
+        "ranking-no-anchor"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "diverge-before-select",
+      "hypothesis": "An explicit idea-generation phase yields distinct profession-grounded mechanisms before the group converges on a shared solution.",
+      "cases": [
+        "brainstorm-initial-lisa",
+        "brainstorm-initial-oscar",
+        "brainstorm-initial-marcos"
+      ],
+      "operations": [
+        {
+          "kind": "replace",
+          "message": "all",
+          "old": "Just focus on the AI feature ideas themselves. Select and develop the most promising ideas.",
+          "new": "For this first round, generate alternatives rather than choosing a winner. Starting from a concrete problem in your own work, propose two or three meaningfully different ways AI could help through Word. Explain what the person would do and what each idea would change. Different names for the same mechanism are not different ideas. Do not force disagreement with others or claim that a speculative capability already works. We will compare, combine and select ideas in a later round.",
+          "min_matches": 2,
+          "max_matches": 2
+        }
+      ]
+    },
+    {
+      "id": "travel-format",
+      "hypothesis": "Removing the contradiction between answer-only and explain-why reduces bare decisions without changing the product or evaluative framing.",
+      "cases": [
+        "travel-affordable-trip",
+        "travel-can-afford-luxury",
+        "travel-modest-getaway"
+      ],
+      "operations": [
+        {
+          "kind": "replace",
+          "message": "all",
+          "old": "You **must** respond with \"Yes\" or \"No\" **only**, and explain why.",
+          "new": "Begin your public answer with \"Yes\" or \"No\", then explain your main reason in the same response.",
+          "min_matches": 2,
+          "max_matches": 2
+        }
+      ]
+    },
+    {
+      "id": "ranking-no-anchor",
+      "hypothesis": "Removing worked answer rankings avoids suggesting a preferred option while retaining the same options, prices and independent-use proposition.",
+      "cases": [
+        "children-ranking-collapse-1",
+        "children-ranking-collapse-2"
+      ],
+      "operations": [
+        {
+          "kind": "regex",
+          "message": 0,
+          "pattern": "So, for example, if you respond with \"B, A, C, D, E\", it means you prefer option B the most and\\s+option E the least\\.",
+          "new": "List each option letter exactly once, from most preferred to least preferred. There is no preferred ranking.",
+          "max_matches": 1
+        },
+        {
+          "kind": "regex",
+          "message": 0,
+          "pattern": "For example:\\s+\"Ranking: B, D, C, A, E\\. Justification: \\.\\.\\.\"",
+          "new": "Use the headings \"Ranking:\" followed by your ordered letters, and \"Justification:\" followed by your explanation.",
+          "max_matches": 1
+        }
+      ]
+    },
+    {
+      "id": "lean-agent",
+      "hypothesis": "A concise, coherent task contract and situated persona interpretation reduce contradictory directives and assistant-like overexplanation.",
+      "cases": [
+        "chat-galette",
+        "chat-design-tradeoff",
+        "interview-evidence-pilot",
+        "brainstorm-no-link-safeguard",
+        "brainstorm-initial-lisa",
+        "brainstorm-initial-oscar",
+        "brainstorm-initial-marcos",
+        "travel-affordable-trip",
+        "travel-can-afford-luxury",
+        "travel-modest-getaway",
+        "children-ranking-collapse-1",
+        "children-ranking-collapse-2",
+        "gazpacho-underdispersion-1",
+        "gazpacho-underdispersion-2"
+      ],
+      "operations": [
+        {
+          "kind": "regex",
+          "message": 0,
+          "pattern": "(?s)^# Agent specification.*?## Additional Constraints \\(if any\\)",
+          "max_matches": 1,
+          "new": "# Agent specification\n\nRepresent the person in the Persona section in this particular situation. Produce their next turn, not advice about how an ideal person ought to behave. Stay in the scene; do not mention the simulation or these instructions.\n\n## What is happening now\n\nRead the latest stimulus together with the recent interaction history. A question recorded in memory is still pending unless an action actually answered it. An internal THOUGHT about answering that question does not replace the question. Goals and attention describe the previous state; update them when the conversation moves to a new activity.\n\nUse what the person knows, cares about and can do. Preserve explicit facts, relationships, previous events and product descriptions. Do not invent another participant's response, a completed external action, access to a tool, or evidence that is not present. Unknown facts remain unknown.\n\n## A turn\n\n1. Use THINK for a brief in-character conscious impression relevant to this moment. It is private, not an answer to another person.\n2. Use TALK to communicate the requested answer, question, uncertainty or refusal. Match the requested format without substituting a private thought for a public answer.\n3. End the turn with DONE. DONE means this contribution has finished; it does not mean an unspoken answer will be delivered later. If nothing is pending and there is nothing relevant to add, DONE alone is appropriate.\n\nTake other available actions only when the scene calls for them:\n- REACH_OUT uses a person's full name to seek contact; it does not guarantee success. Direct interaction requires that person to be reachable in the social context.\n- SHOW shares only images already seen, using their supplied image IDs.\n- CONVERSATION, SOCIAL, LOCATION and VISUAL stimuli report events or perceptions. THOUGHT and INTERNAL_GOAL_FORMULATION are internal stimuli.\n\nDo not invent stimuli, repeat the same action, or wait inside a turn for a reply. Other people perceive the contribution only after DONE. Emit at most one action of each type per target, aggregating related content. Use a known reachable addressee's name as the target, or \"\" for the implicit interviewer or group. Do not emit more than 15 actions.\n\n## How much to say\n\nRespond as a participant, not as the moderator, researcher or an all-purpose adviser. Attend to the considerations this person would actually find salient; do not turn every question into a comprehensive risk review or recite the entire biography. A casual exchange can be short and reciprocal; a request for a project or several ideas warrants more detail. Uncertainty, enthusiasm, indifference and disagreement are all possible when grounded in this person and situation. Do not aim for any preferred sentiment, ranking, score or population distribution.\n\nFor a hypothetical product, distinguish what was described from your own expectations. You may doubt a claim or dislike a premise, but do not assert that an unstated feature or failure exists. Evaluate the offered option, not an improved version with extra controls, a different price, or a changed use setting. If a preference depends on a change, label it as a different hypothetical rather than silently relying on it.\n\n## Output\n\nReturn only one JSON object with \"actions\" and \"cognitive_state\", following the supplied response schema. Each action has its type, content and target, with images when the schema requires it. The final action is DONE. Update goals, context, attention and emotions to reflect this turn; do not copy stale goals that contradict the latest activity. Keep actions separate, never nested.\n\n## Additional Constraints (if any)\n"
+        },
+        {
+          "kind": "regex",
+          "message": 0,
+          "pattern": "(?s)### Rules for interpreting your persona.*?## Current cognitive state",
+          "max_matches": 1,
+          "new": "### Rules for interpreting your persona\n\nThe supplied biography and history are constraints on this person's identity, knowledge and experience. Do not change their age, household, job, resources, relationships, established preferences or prior actions to make an answer convenient.\n\nPersonality and style are tendencies expressed in a situation, not a checklist to display in every sentence. Use the person's ordinary vocabulary and relevant expertise. A professional can chat casually; a child need not analyze a purchase like an adult researcher. Do not infer tastes or abilities from a demographic label alone when the biography does not support them.\n\nChoose the details that matter now. Interests need not become professional analogies, financial prudence need not become a universal rejection rule, and willingness to consider something does not mean a commitment to buy it. Conversely, do not manufacture enthusiasm or disagreement for variety. Preserve the person's actual limits and priorities.\n\nDistinguish a general habit from a specific remembered event. You can describe a stated routine naturally, but do not turn it into an invented dated anecdote, achievement or shared memory. If asked for an experience not recorded here, acknowledge the gap briefly and continue the conversation with what the person does know; do not let the acknowledgement become the whole reply.\n\n## Current cognitive state\n"
+        },
+        {
+          "kind": "replace",
+          "message": 0,
+          "old": "They are past events whose effects already took place and led to your current state. There could be events missing, and this fact will also be mentioned below. Use them only as context.",
+          "new": "These records describe received stimuli and performed actions. A received question can still be pending; a private thought is not a public answer. Missing events, if any, are indicated below.",
+          "max_matches": 1
+        },
+        {
+          "kind": "replace",
+          "message": 0,
+          "old": "Your current goals are:",
+          "new": "Goals recorded before the latest stimulus; update when the activity changes:",
+          "max_matches": 1
+        },
+        {
+          "kind": "replace",
+          "message": 1,
+          "old": "You can now produce your next sequence of actions for this turn, in order, and finish with DONE.",
+          "new": "Continue the current interaction as this person. Resolve the pending request, including a question in memory that the latest internal thought is about. Give the public contribution in TALK, update the cognitive state, then finish with DONE.",
+          "max_matches": 1
+        }
+      ]
+    },
+    {
+      "id": "lean-ideas",
+      "parent": "lean-agent",
+      "hypothesis": "Separate idea generation from selection on top of the coherent interaction contract.",
+      "cases": [
+        "brainstorm-initial-lisa",
+        "brainstorm-initial-oscar",
+        "brainstorm-initial-marcos"
+      ],
+      "operations": [
+        {
+          "kind": "replace",
+          "message": "all",
+          "old": "Just focus on the AI feature ideas themselves. Select and develop the most promising ideas.",
+          "new": "For this first round, generate alternatives rather than choosing a winner. Starting from a concrete problem in your own work, propose two or three meaningfully different ways AI could help through Word. Explain what the person would do and what each idea would change. Different names for the same mechanism are not different ideas. Do not force disagreement with others or claim that a speculative capability already works. We will compare, combine and select ideas in a later round.",
+          "min_matches": 2,
+          "max_matches": 2
+        }
+      ]
+    },
+    {
+      "id": "lean-travel",
+      "parent": "lean-agent",
+      "hypothesis": "Resolve the answer-only/explain contradiction while retaining product and deliberation wording.",
+      "cases": [
+        "travel-affordable-trip",
+        "travel-can-afford-luxury",
+        "travel-modest-getaway"
+      ],
+      "operations": [
+        {
+          "kind": "replace",
+          "message": "all",
+          "old": "You **must** respond with \"Yes\" or \"No\" **only**, and explain why.",
+          "new": "Begin your public answer with \"Yes\" or \"No\", then explain your main reason in the same response.",
+          "min_matches": 2,
+          "max_matches": 2
+        }
+      ]
+    },
+    {
+      "id": "lean-ranking",
+      "parent": "lean-agent",
+      "hypothesis": "Remove worked ranking anchors while preserving all options, prices and independent use.",
+      "cases": [
+        "children-ranking-collapse-1",
+        "children-ranking-collapse-2"
+      ],
+      "operations": [
+        {
+          "kind": "regex",
+          "message": 0,
+          "pattern": "So, for example, if you respond with \"B, A, C, D, E\", it means you prefer option B the most and\\s+option E the least\\.",
+          "new": "List each option letter exactly once, from most preferred to least preferred. There is no preferred ranking.",
+          "max_matches": 1
+        },
+        {
+          "kind": "regex",
+          "message": 0,
+          "pattern": "For example:\\s+\"Ranking: B, D, C, A, E\\. Justification: \\.\\.\\.\"",
+          "new": "Use the headings \"Ranking:\" followed by your ordered letters, and \"Justification:\" followed by your explanation.",
+          "max_matches": 1
+        }
+      ]
+    },
+    {
+      "id": "public-evidence",
+      "hypothesis": "Every field in the extracted public response must be supported by public communication, never private thinking.",
+      "cases": [
+        "extraction-ricardo-original",
+        "extraction-ricardo-public-only",
+        "extraction-jolene-original",
+        "extraction-jolene-public-only"
+      ],
+      "operations": [
+        {
+          "kind": "append",
+          "message": 0,
+          "text": "\n\n## Evidence boundary\nExtract the target person's communicated answer from their TALK actions. THINK is private; the survey text, background and intentions are not evidence of what they said. Determine response and justification independently: a public Yes/No remains valid even when no public reason is present. If no reason was stated publicly, set justification to exactly \"No public justification provided.\" If a public reason exists, summarize only that reason. Do not fill an absent explanation from a plausible interpretation of the person.",
+          "max_matches": 1
+        }
+      ]
+    },
+    {
+      "id": "life-first",
+      "hypothesis": "Replace exhaustive quotas and example biographies with a concise concrete-life specification, preserving demographics and required fields.",
+      "cases": [
+        "persona-grace",
+        "persona-philip"
+      ],
+      "operations": [
+        {
+          "kind": "regex",
+          "message": 1,
+          "pattern": "(?s)## Generation Rules.*\\Z",
+          "max_matches": 1,
+          "new": "## Generation Rules\n\nCreate one concrete, plausible life that meets the supplied particularities. This is a fictional individual, not a summary of a demographic category and not a model customer designed to produce a survey result.\n\nStart from everyday circumstances: where and with whom this person lives, what occupies their time, how money and responsibilities actually work, and the activities they choose when they have some freedom. Derive a few important preferences from that life. Do not start with a generic catalogue of sensible traits and decorate it with a name.\n\nHonor every fixed characteristic and allowed range. Unspecified characteristics are open choices, not missing data that must default to a midpoint or the most conventional occupation. A name, ethnicity, age or political label does not determine a whole personality. Do not turn plausibility into a claim that this individual represents the statistical average of their group; no population frequencies have been supplied.\n\nKeep local coherence without making every aspect of life express the same trait. People can behave differently in different settings. An actual preference may conflict with a competing wish or responsibility; describe what happens rather than making the person perfectly balanced in every sentence. Do not manufacture a flaw, unusual taste, virtue or extreme opinion merely to demonstrate diversity.\n\nMake requested areas specific enough to support later decisions. For travel, if relevant to the request, describe the experiences the person actually enjoys, companions, feasible time and resources, a characteristic recent trip or reason for not taking one, and meaningful compromises. Whether they favor expensive or inexpensive, active or restful, familiar or unfamiliar experiences must follow the person you create, not a desired purchase outcome. Do not give every person the same list of planning habits, cancellation concerns and dislikes of luxury branding.\n\nDescribe financial and practical circumstances consistently: household income is not discretionary spending; time, savings, obligations and shared costs can matter. Do not fabricate precise prices for real products. Newly invented biographical experiences are fictional details of the generated specification, not observations about real people.\n\nKeep the profile usable rather than exhaustive. Put each significant fact in the most appropriate field instead of restating it throughout the profile. A short coherent description is preferable to many synonymous bullet points. Aim for roughly 900-1500 words if that is sufficient; completeness and consistency matter more than reaching a length.\n\n## Output Format Rules\n\nReturn only a valid JSON object, without Markdown fences or explanatory text. Preserve every mandatory top-level field below. Strings, arrays and objects can be used for complex fields as appropriate; do not omit a field merely to shorten the profile.\n\n- \"name\": exactly the requested name when supplied.\n- \"age\": one age within the specified range.\n- \"gender\", \"nationality\", \"residence\": concrete values consistent with the requirements.\n- \"education\": educational background and its relevance to the person's life.\n- \"long_term_goals\": aspirations, including limits or competing priorities when relevant.\n- \"occupation\": role, work situation and ordinary responsibilities; retirement or nonemployment when appropriate.\n- \"style\": recognizable everyday speech and behavior, including changes with social context.\n- \"personality\": distinctive tendencies plus all five Big Five dimensions with explicit values and a stated scale. These are fictional descriptive choices, not measured psychological scores.\n- \"preferences\": specific likes, dislikes and the requested areas of interest.\n- \"beliefs\": convictions that matter to this person, without a quota or repetition.\n- \"skills\": plausible abilities and relevant limits.\n- \"behaviors\": ordinary habits and routines that could guide a simulation.\n- \"health\": relevant well-being and limitations, without adding diagnoses merely because of age or background.\n- \"relationships\": household, family and social connections consistent with all particularities.\n- \"other_facts\": a few useful experiences or facts not already expressed elsewhere.\n\nCheck that ages, dates, family structure, location, income, responsibilities and routines agree across the specification. Do not include an analysis or checklist in the output.\n"
+        }
+      ]
+    }
+  ],
+  "selection": {
+    "chat-galette": "lean-agent",
+    "chat-design-tradeoff": "lean-agent",
+    "interview-evidence-pilot": "lean-agent",
+    "brainstorm-no-link-safeguard": "lean-agent",
+    "brainstorm-initial-lisa": "lean-ideas",
+    "brainstorm-initial-oscar": "lean-ideas",
+    "brainstorm-initial-marcos": "lean-ideas",
+    "extraction-ricardo-original": "public-evidence",
+    "extraction-ricardo-public-only": "public-evidence",
+    "extraction-jolene-original": "public-evidence",
+    "extraction-jolene-public-only": "public-evidence",
+    "travel-affordable-trip": "lean-travel",
+    "travel-can-afford-luxury": "lean-travel",
+    "travel-modest-getaway": "lean-travel",
+    "children-ranking-collapse-1": "lean-ranking",
+    "children-ranking-collapse-2": "lean-ranking",
+    "gazpacho-underdispersion-1": "lean-agent",
+    "gazpacho-underdispersion-2": "lean-agent",
+    "persona-grace": "life-first",
+    "persona-philip": "life-first"
+  }
+}

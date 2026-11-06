@@ -1,0 +1,13 @@
+{
+  "frozen_before_planning_calls": true,
+  "reason_for_revision": "Full review of the six v2 plans found valid structure and constraints but weak motivational contrast. Most candidates still prioritize quiet unhurried city/history trips, measured voices and practical moderation; differing age/state/job labels do not establish the targeted diversity.",
+  "candidate_count": 4,
+  "required_candidate_fields": ["particulars", "life_course", "daily_life", "travel", "personality_and_voice"],
+  "selection_seed": 291028,
+  "expansion_instruction": "candidate-expansion.txt",
+  "repeats_per_source": 3,
+  "planned_api_calls": 12,
+  "acceptance": "Full original constraints, coherent final biographies, preservation of selected sketch, and meaningful variation in desired experiences or organizing social commitments. No content-based redraws. Shared ordinary preferences and repeated random selections are allowed; superficial demographic changes alone do not pass.",
+  "stopping_rule": "After this bounded batch, preserve the best verified procedure and report remaining limitations. Do not keep changing prose indefinitely or relabel unresolved sampling/calibration as solved.",
+  "limitations": "Two calls per profile, deliberately contrasting proposals, uncalibrated model-defined distribution. Independent pipelines share no history, but are not representative population samples."
+}

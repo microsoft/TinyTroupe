@@ -338,26 +338,23 @@ class SimulationExperimentDataset(BaseModel):
             }
     
     def _validate_ranking_data(self, metric_name: str, metric_data):
-        """Validate ranking data structure."""
+        """Validate positive whole-number ranks, including floats from nullable columns."""
         valid_data = self._get_valid_numeric_data(metric_data)
         
         if not valid_data:
             return
+
+        for value in valid_data:
+            is_whole_number = isinstance(value, int) or value.is_integer()
+            if not is_whole_number:
+                raise ValueError(f"Ranking data for metric '{metric_name}' must contain whole-number positions, found: {value}")
         
         unique_ranks = set(valid_data)
         min_rank = min(unique_ranks)
-        max_rank = max(unique_ranks)
         
         # Check for reasonable ranking structure
         if min_rank < 1:
             raise ValueError(f"Ranking data for metric '{metric_name}' should start from 1, found minimum: {min_rank}")
-        
-        # Check for gaps in ranking (warning, not error)
-        expected_ranks = set(range(min_rank, max_rank + 1))
-        missing_ranks = expected_ranks - unique_ranks
-        if missing_ranks:
-            # This is often okay in ranking data (tied ranks, incomplete rankings)
-            pass
     
     def _get_valid_numeric_data(self, data) -> List[Union[int, float]]:
         """Get valid numeric data from a metric, handling both single values and lists."""

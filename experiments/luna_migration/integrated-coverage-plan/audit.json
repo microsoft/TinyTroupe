@@ -1,0 +1,50 @@
+{
+  "library_sha256": "8c6a0a640111c4c219a1dfa06e8bcee99621fd03c1d45a0bf3871c50f28b8333",
+  "directives": 18,
+  "population": 50,
+  "guaranteed_predefined_contrasts": {
+    "culinary_tastes": {
+      "Prefers familiar, traditional home cooking, such as regional family recipes, straightforward sides, and meals tied to personal or community traditions.": 7,
+      "Is adventurous about food, regularly tries unfamiliar cuisines, ingredients, and cooking techniques, and enjoys discussing how dishes reflect their cultural origins.": 6
+    },
+    "attitude_toward_new_products": {
+      "Is strongly resistant to changes in routines and products, viewing many new offerings as unnecessary, confusing, or designed to create avoidable costs.": 1,
+      "Is an extreme novelty seeker who buys untested products impulsively and disregards reasonable warnings, costs, or safety information.": 2
+    }
+  },
+  "all_four_predefined_contrasts_guaranteed": true,
+  "coverage_over_100_seeds": {
+    "culinary_tastes": {
+      "Prefers familiar, traditional home cooking, such as regional family recipes, straightforward sides, and meals tied to personal or community traditions.": {
+        "minimum": 7,
+        "maximum": 7,
+        "seeds_without_value": 0
+      },
+      "Is adventurous about food, regularly tries unfamiliar cuisines, ingredients, and cooking techniques, and enjoys discussing how dishes reflect their cultural origins.": {
+        "minimum": 6,
+        "maximum": 6,
+        "seeds_without_value": 0
+      }
+    },
+    "attitude_toward_new_products": {
+      "Is strongly resistant to changes in routines and products, viewing many new offerings as unnecessary, confusing, or designed to create avoidable costs.": {
+        "minimum": 1,
+        "maximum": 1,
+        "seeds_without_value": 0
+      },
+      "Is an extreme novelty seeker who buys untested products impulsively and disregards reasonable warnings, costs, or safety information.": {
+        "minimum": 2,
+        "maximum": 2,
+        "seeds_without_value": 0
+      }
+    }
+  },
+  "age_distribution_singleton_allocations": {
+    "Age 0–14, including infants, school-age children, and young teenagers, with everyday needs and activities substantially shaped by caregivers and developmental stage.": 9,
+    "Age 15–24, including older adolescents and young adults navigating education, early employment, independence, and changing family or social roles.": 7,
+    "Age 25–54, spanning early adulthood through midlife, with varied combinations of work, caregiving, family life, education, and community involvement.": 20,
+    "Age 55–64, often including people approaching retirement or making midlife career, health, and household transitions.": 6,
+    "Age 65 and older, including active older adults as well as people who may have significant health, mobility, caregiving, or support needs.": 8
+  },
+  "semantic_review": "Pending; counts and guaranteed endpoints do not establish joint fidelity."
+}

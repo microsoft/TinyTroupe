@@ -1,0 +1,8 @@
+{
+  "stage": "failure-development-round3",
+  "corpora": ["..\\broad-luna-optimization\\development\\sources.jsonl", "..\\broad-luna-optimization\\validation\\sources.jsonl", "confirmation-sources.jsonl"],
+  "recipes": [
+    {"id":"focused-transition-v3","instruction_file":"story-v3.txt","focus_user_prefix_before":"Please propose a continuation","cases":["exec-chatcmpl-EcOs5VaSzbXHC9ekPB4HoNqxQkMJ3","exec-chatcmpl-EcPQs4sN9jObydoOqqjACE8BvHuqm","exec-chatcmpl-EcPM5wjdBjFFpykUFm7dTTh4vr7SE","exec-chatcmpl-EcQoc8MNbyvjIPyhyahctBgDu7uUj","exec-chatcmpl-EcRIZR28RnLdIg8Qm31z2m8DnCvvr","exec-chatcmpl-EcQKYjykI4QLV52ZcqZPyn2dzfo3w","exec-chatcmpl-EcPvJQR9JkK8l4yUG6f1hHGcbhvPq"],"hypothesis":"Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions."},
+    {"id":"indexed-plan-v1","instruction_file":"sampling-indexed-v1.txt","adapter":"indexed_sampling","cases":["exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR","exec-chatcmpl-EcNZrgB7NnHHQ32gLuD0kVWCH8bKw","exec-chatcmpl-EcPVXPdL4sj3j6kfDX47ef2fsDrvS","exec-chatcmpl-EcQoAeqqNKsUNJdJW4yPwzKCNo2mx"],"hypothesis":"Separate semantic sampling choices from exact vocabulary reproduction through typed option identifiers, explicit null slots and validated deterministic reconstruction. Schema change is disclosed."}
+  ]
+}

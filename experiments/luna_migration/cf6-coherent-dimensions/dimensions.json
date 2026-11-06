@@ -1,0 +1,800 @@
+{
+  "sampling_space_description": "A representative sampling space for people living in the United States, spanning the full age range and varied geographic, socioeconomic, educational, occupational, racial, ethnic, religious, political, and lifestyle backgrounds. Percentages supplied in the demographic data are preserved where categories are mutually exclusive. The supplied party-affiliation figures overlap and the Christian subcategory figures do not reconcile with the reported Christian total; party figures are therefore normalized for a mutually exclusive sampler, and Christian traditions are normalized conditionally. Detailed personality, political-belief, economic-belief, preference, and cultural-background profiles without source proportions use explicitly illustrative sampling weights rather than claimed population estimates. Subgroup splits within broad cultural categories are illustrative; their broad racial and ethnic totals match the supplied figures.",
+  "dimensions": [
+    {
+      "name": "country",
+      "values": [
+        "United States of America"
+      ]
+    },
+    {
+      "name": "population_size_reference",
+      "values": [
+        "The demographic description refers to a U.S. population of approximately 331 million people; this is a population-level reference rather than an individual attribute."
+      ]
+    },
+    {
+      "name": "age",
+      "range": [
+        0,
+        110
+      ]
+    },
+    {
+      "name": "age_band",
+      "values": {
+        "A child aged 0–14, including children at different stages of early childhood, elementary school, and adolescence.": 0.186,
+        "A young person aged 15–24, spanning secondary or postsecondary education, early employment, and the transition toward independent adulthood.": 0.131,
+        "An adult aged 25–54, encompassing early, middle, and later working-age adulthood and a wide range of family and career circumstances.": 0.394,
+        "An adult aged 55–64, often approaching retirement while potentially continuing paid work, caregiving, or other responsibilities.": 0.129,
+        "An older adult aged 65 or above, including people who are active in work or community life as well as people needing substantial support.": 0.16
+      }
+    },
+    {
+      "name": "reported_gender_category",
+      "values": {
+        "Male, matching the male category used in the supplied gender distribution.": 0.492,
+        "Female, matching the female category used in the supplied gender distribution.": 0.508
+      }
+    },
+    {
+      "name": "racial_and_ethnic_identity",
+      "values": {
+        "White, non-Hispanic, with varied family histories and regional identities across the United States.": 0.571,
+        "Hispanic or Latino, with family origins that may include Mexico, Puerto Rico, Cuba, Central America, South America, or other Hispanic and Latino communities.": 0.194,
+        "Black or African American, including people with long-established U.S. family histories and people or families with more recent African or Caribbean heritage.": 0.121,
+        "Asian, including people with heritage connected to East Asia, Southeast Asia, South Asia, or other Asian communities.": 0.07,
+        "Two or more races, reflecting multiracial identities and family backgrounds.": 0.029,
+        "American Indian or Alaska Native, including people connected to diverse Indigenous nations, communities, and heritages.": 0.013,
+        "Native Hawaiian or Pacific Islander, including people with Native Hawaiian, Samoan, Guamanian, Chamorro, or other Pacific Islander heritage.": 0.002
+      }
+    },
+    {
+      "name": "cultural_background",
+      "values": {
+        "A non-Hispanic White person with a family background that may include Irish, Italian, Polish, Scandinavian, or several other European heritages, shaped by a particular U.S. region and community. The assigned weight is an illustrative subdivision of the source's 57.1% broad category.": 0.2,
+        "A non-Hispanic White person with German, Central European, Eastern European, or neighboring European family heritage, whose traditions may be maintained closely or blended into broader U.S. culture. The assigned weight is an illustrative subdivision of the source's 57.1% broad category.": 0.15,
+        "A non-Hispanic White person with English, Scottish, Welsh, French, or related family heritage, whose cultural practices may reflect local, rural, suburban, or urban U.S. upbringing. The assigned weight is an illustrative subdivision of the source's 57.1% broad category.": 0.12,
+        "A non-Hispanic White person with a distinct regional or mixed European-American background, such as Appalachian, New England, Gulf Coast, or other local community influences. The assigned weight is an illustrative subdivision of the source's 57.1% broad category.": 0.101,
+        "A Mexican American or other person of Mexican heritage whose household may combine Mexican regional traditions, Spanish language or bilingualism, and contemporary U.S. experiences. The assigned weight is an illustrative subdivision of the source's 19.4% Hispanic or Latino category.": 0.1,
+        "A person with Puerto Rican, Cuban, Central American, South American, or another Hispanic or Latino heritage, with cultural ties shaped by family, language, migration history, and local community. The assigned weight is an illustrative subdivision of the source's 19.4% Hispanic or Latino category.": 0.094,
+        "A Black or African American person whose cultural background may include longstanding U.S. family roots, regional traditions, and distinctive community, religious, artistic, or civic connections.": 0.121,
+        "An Asian American person with heritage connected to East Asia, Southeast Asia, South Asia, or multiple Asian communities, with family traditions ranging from strongly maintained to extensively blended.": 0.07,
+        "A multiracial person who identifies with two or more racial backgrounds and may navigate several family traditions, communities, or cultural identities.": 0.029,
+        "An American Indian or Alaska Native person with connections to an Indigenous nation or community, with traditions and identity varying greatly among peoples and individuals.": 0.013,
+        "A Native Hawaiian or Pacific Islander person whose family and community ties may connect to Hawaiʻi, Samoa, Guam, the Mariana Islands, or other Pacific Island communities.": 0.002
+      }
+    },
+    {
+      "name": "urban_rural_residence",
+      "values": {
+        "Lives in an urban area, such as a large city, dense central neighborhood, or closely connected metropolitan district.": 0.83,
+        "Lives in a rural area, such as a small settlement, remote community, agricultural region, or sparsely populated area.": 0.17
+      }
+    },
+    {
+      "name": "geographic_region",
+      "values": {
+        "Northeast, including dense metropolitan areas, smaller cities, postindustrial communities, coastal towns, and rural areas.": 0.171,
+        "Midwest, including major cities, small towns, agricultural communities, and varied Great Lakes and plains environments.": 0.208,
+        "South, including large metropolitan regions, smaller cities, rural areas, and communities with diverse histories and cultural traditions.": 0.383,
+        "West, including Pacific coastal cities, inland metropolitan areas, mountain communities, desert regions, and rural areas.": 0.238
+      }
+    },
+    {
+      "name": "community_context",
+      "values": [
+        "Lives in a very dense central-city neighborhood, relying on nearby shops, public transportation, and a wide range of community services.",
+        "Lives in a large metropolitan suburb with residential neighborhoods, schools, shopping centers, and regular travel into a nearby city.",
+        "Lives in a smaller city where local institutions and businesses are accessible and residents may have overlapping social networks.",
+        "Lives in a small town where work, school, recreation, and local relationships are closely connected to the surrounding area.",
+        "Lives in a rural agricultural community where transportation, seasonal work, and distance from services shape daily routines.",
+        "Lives in a remote or sparsely populated area where access to health care, broadband, transportation, or shopping may be limited.",
+        "Lives in a coastal community whose routines and local economy are influenced by beaches, ports, tourism, or marine industries.",
+        "Lives in a mountain, desert, or other distinctive natural environment where climate and distance shape recreation and daily life.",
+        "Lives in a community with a substantial immigrant population and multilingual businesses, institutions, and neighborhood networks.",
+        "Lives in a community organized around a college, military installation, industrial employer, or other major local institution.",
+        "Lives in an Indigenous community or near an Indigenous nation, with local ties and services that vary widely by community.",
+        "Lives in a rapidly changing neighborhood where new development, housing costs, and population turnover affect community life."
+      ]
+    },
+    {
+      "name": "state_or_territory_context",
+      "values": [
+        "Lives in a Northeastern state such as Maine, Massachusetts, New York, Pennsylvania, or Vermont, with local experiences shaped by its particular city, town, or rural community.",
+        "Lives in a Midwestern state such as Illinois, Michigan, Minnesota, Ohio, or Wisconsin, with experiences shaped by metropolitan, industrial, agricultural, or lakeside communities.",
+        "Lives in a Southern state such as Alabama, Florida, Georgia, Kentucky, Louisiana, North Carolina, Tennessee, Texas, or Virginia, with substantial variation between communities.",
+        "Lives in a Western state such as Alaska, Arizona, California, Colorado, Hawaii, Nevada, Oregon, Utah, or Washington, with urban, rural, coastal, mountain, and desert settings.",
+        "Lives in a U.S. territory or another U.S.-affiliated community, where applicable, with local circumstances that differ from those of the fifty states.",
+        "Lives in the District of Columbia or another highly urbanized federal or metropolitan setting, where applicable.",
+        "Lives in a state capital or regional hub, where public-sector employment, education, health care, and services may be prominent.",
+        "Lives in a community near a national border, where cross-border trade, language, family connections, or travel may be part of daily life.",
+        "Lives in a region with a high cost of housing and transportation, making budgeting and access to services important parts of everyday life.",
+        "Lives in a region with a lower population density, where driving and long distances may be central to work, shopping, and health care."
+      ]
+    },
+    {
+      "name": "educational_attainment",
+      "values": {
+        "Has not completed high school or an equivalent credential; this category represents 10% below the supplied high-school-or-higher rate and applies to the reported attainment measure, not to children who have not yet reached school-leaving age.": 0.1,
+        "Has completed high school or an equivalent credential, or has some college or other postsecondary study, but does not hold a bachelor's degree; derived as 55% from the supplied 90% high-school-or-higher and 35% bachelor's-or-higher figures.": 0.55,
+        "Holds a bachelor's degree or a higher degree, including people with graduate or professional education; reported as 35% in the supplied data.": 0.35
+      }
+    },
+    {
+      "name": "education_and_learning_profile",
+      "values": [
+        "Has very limited formal schooling and needs substantial support with reading, writing, or everyday written information; this is described respectfully and does not imply anything about intelligence or spoken-language ability.",
+        "Has limited literacy or numeracy and relies on trusted people, oral explanations, or accessible materials to handle complex forms and written instructions.",
+        "Is still a young child who has not yet begun formal schooling or is at an early stage of learning basic literacy and numeracy.",
+        "Attends school and is building foundational skills, with learning shaped by family, school resources, language, health, and personal interests.",
+        "Completed high school or an equivalent credential and developed practical knowledge through work, family responsibilities, or community life.",
+        "Completed some college, vocational coursework, or professional training without completing a bachelor's degree.",
+        "Earned an associate degree or technical credential and applies specialized practical skills in a workplace or community setting.",
+        "Earned a bachelor's degree and uses academic, professional, or applied knowledge in work or civic life.",
+        "Earned a master's, doctoral, or professional degree and has advanced expertise in a specialized field.",
+        "Is a highly accomplished scientist, scholar, engineer, clinician, or other expert who contributes advanced research or specialized knowledge.",
+        "Is a lifelong learner who pursues books, community classes, online courses, practical experiments, or cultural learning outside formal education.",
+        "Has interrupted or returned to education because of work, caregiving, finances, health, military service, migration, or other life circumstances."
+      ]
+    },
+    {
+      "name": "household_income",
+      "values": {
+        "Household income under $25,000 per year, often requiring careful trade-offs among housing, food, transportation, health care, and other essentials.": 0.172,
+        "Household income from $25,000 to $49,999 per year, with financial circumstances varying substantially by household size, location, debt, and support needs.": 0.223,
+        "Household income from $50,000 to $99,999 per year, spanning a broad range of modest and middle-income household circumstances.": 0.293,
+        "Household income from $100,000 to $199,999 per year, with purchasing power and financial security shaped by local costs, dependents, and debt.": 0.235,
+        "Household income of $200,000 or more per year, including households with differing levels of wealth, expenses, and financial obligations.": 0.077
+      }
+    },
+    {
+      "name": "financial_situation",
+      "values": {
+        "Lives in a household with very limited resources and little financial cushion, making unexpected bills or loss of income especially difficult to absorb.": 0.172,
+        "Lives in a household that covers some routine costs but faces regular budget pressure and limited ability to save.": 0.223,
+        "Lives in a household with moderate resources, while balancing expenses, savings, debt, and local cost of living.": 0.293,
+        "Lives in a household with relatively high income but potentially substantial housing, education, health care, caregiving, or debt costs.": 0.235,
+        "Lives in a household with very high income, with circumstances that may range from comfortable but highly committed finances to substantial discretionary resources.": 0.077
+      }
+    },
+    {
+      "name": "marital_status",
+      "values": {
+        "Has never married, with varied relationships, household arrangements, and family responsibilities.": 0.331,
+        "Is married, with household and family circumstances that may include dependents, shared finances, or separate finances.": 0.482,
+        "Is divorced, with a range of possible co-parenting, financial, and household circumstances.": 0.13,
+        "Is widowed, with circumstances shaped by the loss of a spouse and potentially changing social or financial support.": 0.057
+      }
+    },
+    {
+      "name": "labor_force_participation",
+      "values": {
+        "Is in the labor force, meaning employed or actively seeking work; the supplied participation rate is 61.7% of the population measure.": 0.617,
+        "Is not in the labor force, which may reflect schooling, retirement, caregiving, disability, discouragement, or other personal circumstances.": 0.383
+      }
+    },
+    {
+      "name": "employment_status",
+      "values": {
+        "Is employed, including people working in paid employment or other employment arrangements; this is 95.8% of the labor force when calculated from the supplied 4.2% unemployment rate.": 0.958,
+        "Is unemployed and actively seeking work, corresponding to the supplied unemployment rate of 4.2% of the labor force.": 0.042
+      }
+    },
+    {
+      "name": "occupation_among_listed_employment_categories",
+      "values": {
+        "Works in management, coordinating teams or organizations, setting priorities, or overseeing operations; the supplied employment count is 10.5 million and annual wage reference is $137,750.": 0.1314,
+        "Works in business or finance, such as accounting, analysis, advising, or business operations; the supplied employment count is 10.1 million and annual wage reference is $90,580.": 0.1264,
+        "Works in computing or mathematics, such as software, data, information technology, or quantitative analysis; the supplied employment count is 5.2 million and annual wage reference is $113,140.": 0.0651,
+        "Works in architecture or engineering, designing, planning, testing, or maintaining buildings, systems, and infrastructure; the supplied employment count is 2.5 million and annual wage reference is $99,090.": 0.0313,
+        "Works in life or physical sciences, conducting research, testing, fieldwork, or technical analysis; the supplied employment count is 1.4 million and annual wage reference is $87,870.": 0.0175,
+        "Works in community or social service, supporting individuals and communities through counseling, outreach, or related services; the supplied employment count is 2.4 million and annual wage reference is $58,980.": 0.03,
+        "Works in a legal occupation, providing legal services, research, advocacy, or support; the supplied employment count is 1.2 million and annual wage reference is $133,820.": 0.015,
+        "Works in education or libraries, teaching, supporting learners, managing learning resources, or providing related services; the supplied employment count is 8.7 million and annual wage reference is $66,400.": 0.1089,
+        "Works in arts or media, creating, performing, producing, reporting, or distributing creative or informational content; the supplied employment count is 2.1 million and annual wage reference is $75,520.": 0.0263,
+        "Works as a health care practitioner, providing clinical care or other professional health services; the supplied employment count is 9.3 million and annual wage reference is $102,060.": 0.1164,
+        "Works in health care support, assisting patients or practitioners in clinical and care settings; the supplied employment count is 7.1 million and annual wage reference is $38,220.": 0.0889,
+        "Works in food preparation or service, preparing food or serving customers in restaurants, institutions, or other settings; the supplied employment count is 13.2 million and annual wage reference is $34,490.": 0.1652,
+        "Works in construction or extraction, building, repairing, maintaining, or extracting materials and resources; the supplied employment count is 6.2 million and annual wage reference is $61,500.": 0.0776
+      }
+    },
+    {
+      "name": "religious_affiliation",
+      "values": {
+        "Identifies as Christian, including a wide variety of denominations, congregations, levels of observance, and personal beliefs.": 0.63,
+        "Identifies as Jewish, with religious, cultural, ethnic, or community connections that vary by individual.": 0.02,
+        "Identifies as Muslim, with varied traditions, levels of observance, and family or community backgrounds.": 0.01,
+        "Identifies as Buddhist, with varied traditions and levels of religious or philosophical practice.": 0.01,
+        "Identifies as Hindu, with varied regional, family, and devotional traditions.": 0.01,
+        "Identifies with another religion or spiritual tradition not separately listed in the supplied figures.": 0.01,
+        "Is religiously unaffiliated, including atheist, agnostic, spiritual-but-not-religious, and other unaffiliated identities.": 0.28,
+        "Falls into an unspecified or unaccounted-for category needed to reconcile the supplied totals, which sum to 97%.": 0.03
+      }
+    },
+    {
+      "name": "christian_tradition_given_christian_identity",
+      "values": {
+        "Identifies with a Protestant Christian tradition, with practices ranging from active congregational participation to a primarily cultural identity.": 0.4925,
+        "Identifies as Catholic, with varied personal observance, family traditions, and community ties.": 0.3284,
+        "Identifies as Mormon or Latter-day Saint, with varied levels of observance and community involvement.": 0.0149,
+        "Identifies with another Christian tradition, including a range of denominations and independent congregations.": 0.1642
+      }
+    },
+    {
+      "name": "personality_trait_profile",
+      "values": {
+        "Is curious and open to new ideas, enjoys exploring unfamiliar subjects, and readily considers perspectives that differ from their own.": 0.12,
+        "Is dependable and conscientious, plans ahead, follows through on commitments, and values order and careful work.": 0.12,
+        "Is sociable and energetic, enjoys conversation and group activities, and often feels comfortable taking initiative in social settings.": 0.11,
+        "Is warm and cooperative, tries to understand others, and generally prefers considerate communication and mutual support.": 0.11,
+        "Is emotionally steady and resilient, usually recovering from setbacks without prolonged worry or discouragement.": 0.1,
+        "Has a flexible, moderate temperament, balancing curiosity with caution and sociability with a need for private time.": 0.1,
+        "Is spontaneous and less structured, often preferring to respond in the moment rather than follow a detailed plan.": 0.1,
+        "Is reserved and introspective, preferring a small number of close relationships and quiet time over frequent social events.": 0.08,
+        "Is strongly independent and skeptical of others' suggestions, sometimes coming across as blunt, competitive, or difficult to persuade.": 0.08,
+        "Is often pessimistic or easily unsettled by uncertainty, focusing on possible problems and finding setbacks difficult to move past.": 0.08
+      }
+    },
+    {
+      "name": "political_affiliation",
+      "values": {
+        "Identifies with or leans toward the Democratic Party. The supplied figure is 45.1%; the sampler weight is normalized because the reported party figures overlap.": 0.3634,
+        "Identifies with or leans toward the Republican Party. The supplied figure is 36.0%; the sampler weight is normalized because the reported party figures overlap.": 0.2901,
+        "Identifies as an Independent or does not identify with either major party. The supplied figure is 43%; the sampler weight is normalized because the reported party figures overlap.": 0.3465
+      }
+    },
+    {
+      "name": "political_belief_profile",
+      "values": {
+        "Favors progressive policies, emphasizing civil rights, broader social protections, access to health care and education, and reducing economic inequality.": 0.18,
+        "Favors conservative policies, emphasizing tradition, personal responsibility, public order, and limiting the scope of government in many areas.": 0.18,
+        "Takes a centrist or pragmatic approach, evaluating policies individually and preferring compromise when it seems workable.": 0.18,
+        "Favors libertarian principles, emphasizing individual liberty, privacy, civil liberties, and limited government intervention in personal and economic life.": 0.12,
+        "Has populist views, distrusts powerful institutions or elites, and favors policies they believe will protect ordinary people from concentrated power.": 0.1,
+        "Places environmental protection and climate action among their highest priorities, while differing in views about regulation and economic trade-offs.": 0.1,
+        "Favors democratic-socialist or strongly social-democratic policies, including robust public services, labor protections, and a smaller role for private wealth in essential services.": 0.08,
+        "Is politically disengaged or uncertain, follows public issues infrequently, and may not feel represented by established political choices.": 0.06
+      }
+    },
+    {
+      "name": "economic_beliefs",
+      "values": {
+        "Believes competitive markets and entrepreneurship generally create prosperity, while supporting clear rules against fraud and unfair competition.": 0.2,
+        "Believes public programs and progressive taxation are necessary to reduce hardship and provide fair access to health care, education, and opportunity.": 0.2,
+        "Believes workers need stronger bargaining power, reliable wages, and protections from unsafe conditions or exploitative employers.": 0.16,
+        "Emphasizes fiscal restraint, lower public spending, and limits on public debt, while expecting individuals and families to plan responsibly.": 0.15,
+        "Favors economic liberty and minimal regulation, believing individuals and businesses should make most decisions without government direction.": 0.12,
+        "Believes small businesses and local employers deserve support because they create jobs and sustain community economic life.": 0.1,
+        "Is skeptical of both corporate and government promises, believing economic outcomes are strongly affected by unequal power and unpredictable circumstances.": 0.07
+      }
+    },
+    {
+      "name": "reported_hobby_participation",
+      "values": [
+        "Enjoys cooking or baking as a hobby; reported participation is 41%.",
+        "Enjoys reading for pleasure or information; reported participation is 37%.",
+        "Keeps, cares for, or spends substantial leisure time with pets; reported participation is 35%.",
+        "Plays video games on a console, computer, or mobile device; reported participation is 33%.",
+        "Enjoys outdoor activities; reported participation is 30%.",
+        "Spends leisure time shopping; reported participation is 30%.",
+        "Enjoys traveling for leisure; reported participation is 29%.",
+        "Enjoys arts, crafts, or do-it-yourself projects; reported participation is 25%.",
+        "Enjoys socializing with friends, relatives, or community members; reported participation is 26%.",
+        "Enjoys board games or related tabletop games; reported participation is 26%."
+      ]
+    },
+    {
+      "name": "preferences_and_tastes",
+      "values": {
+        "Usually prefers reading, television, streaming, or other quiet activities at home, and values familiar comforts and a manageable pace.": 0.16,
+        "Enjoys cooking or baking and takes pleasure in familiar recipes, experimentation, sharing food, or preparing meals for others.": 0.15,
+        "Prefers outdoor recreation such as walking, hiking, camping, fishing, or spending time in parks and natural settings.": 0.14,
+        "Enjoys social activities, dining out, gatherings, or shared entertainment and often prefers experiences involving other people.": 0.13,
+        "Enjoys digital entertainment, video games, online communities, or technology-centered hobbies.": 0.12,
+        "Enjoys creative projects such as music, visual art, crafts, home improvement, writing, or hands-on making.": 0.1,
+        "Prefers sports, exercise, or active recreation, either as a participant, spectator, or both.": 0.1,
+        "Enjoys shopping, travel, trying new restaurants, or other leisure experiences that involve exploring products or places.": 0.1
+      }
+    },
+    {
+      "name": "general_attitude",
+      "values": [
+        "Is consistently optimistic, expects that problems can be addressed, and actively encourages other people when circumstances are difficult.",
+        "Is generally positive but realistic, noticing risks and disappointments while still expecting that effort or support can improve outcomes.",
+        "Is curious and open-minded, willing to revise an opinion when presented with credible evidence or a perspective they had not considered.",
+        "Is cautious and measured, reserving judgment until they have enough information and preferring not to make decisions impulsively.",
+        "Is neutral or pragmatic, concentrating on immediate responsibilities rather than viewing situations as especially hopeful or bleak.",
+        "Is skeptical of unfamiliar claims and institutions, often requiring strong evidence before accepting a new idea.",
+        "Is inclined to expect setbacks, focusing on obstacles and believing positive outcomes are less likely than others suggest.",
+        "Is strongly closed-minded about a particular set of views, rarely considering alternatives and preferring familiar explanations.",
+        "Is frequently discouraged and negative, having difficulty seeing a path forward when problems accumulate or plans fail.",
+        "Is deeply pessimistic about the future and may feel that personal effort or collective action is unlikely to change difficult circumstances."
+      ]
+    },
+    {
+      "name": "culinary_tastes",
+      "values": [
+        "Prefers mild, plain foods with familiar flavors and little heat, seasoning, or variation.",
+        "Enjoys traditional family dishes and familiar regional foods, valuing comfort, continuity, and recipes passed between generations.",
+        "Enjoys strongly seasoned and spicy dishes, seeking hot peppers, bold sauces, and intense flavors.",
+        "Enjoys exploring global cuisines and is willing to try unfamiliar ingredients, cooking methods, or flavor combinations.",
+        "Prefers a vegetarian diet and chooses meals centered on vegetables, grains, legumes, or plant-based alternatives.",
+        "Follows a fully vegan diet, avoiding animal products in food and often paying attention to ingredients and preparation.",
+        "Prefers meat-centered meals and considers meat, poultry, or fish an important part of everyday eating.",
+        "Enjoys seafood and regional dishes connected to coasts, lakes, family heritage, or local food traditions.",
+        "Prefers simple, inexpensive meals and prioritizes convenience, fullness, and predictable costs over culinary novelty.",
+        "Enjoys elaborate cooking, specialty ingredients, restaurant dining, and carefully planned meals as a source of pleasure.",
+        "Has medically necessary dietary restrictions or food sensitivities that shape food choices and require careful ingredient checking.",
+        "Frequently chooses sweet, salty, or rich comfort foods and may prioritize immediate enjoyment over nutritional goals."
+      ]
+    },
+    {
+      "name": "shopping_habits",
+      "values": [
+        "Shops only when necessary, carefully comparing prices and delaying nonessential purchases to protect a tight budget.",
+        "Plans shopping trips around a list, watches for discounts, and generally avoids unplanned purchases.",
+        "Shops regularly in physical stores, preferring to inspect products directly and ask staff questions when needed.",
+        "Uses online shopping frequently for convenience, selection, reviews, and delivery to the home.",
+        "Uses both online and in-store shopping, choosing the method based on urgency, product type, price, or convenience.",
+        "Buys many routine goods in bulk or at warehouse retailers to reduce the per-item cost and avoid repeated trips.",
+        "Often makes impulse purchases in response to promotions, attractive displays, social media, or momentary enthusiasm.",
+        "Enjoys premium brands and higher-priced products, prioritizing design, service, status, or perceived quality over low cost.",
+        "Prefers secondhand, repairable, or reused goods and shops thrift stores, resale platforms, or community exchanges.",
+        "Avoids shopping unless it is unavoidable, finding crowded stores, browsing, or purchase decisions stressful or tiring.",
+        "Regularly researches major purchases, compares specifications and reviews, and waits for a favorable price before buying.",
+        "Shops extravagantly and spontaneously, making large discretionary purchases even when doing so may strain the budget."
+      ]
+    },
+    {
+      "name": "health_consciousness",
+      "values": [
+        "Prioritizes preventive health, routine checkups, sleep, exercise, and balanced meals, and makes lifestyle choices with long-term well-being in mind.",
+        "Makes a sustained effort to eat nutritious food and remain active but adapts routines to work, caregiving, finances, or health limitations.",
+        "Focuses on health mainly when a clinician recommends a change or when a particular symptom or condition becomes difficult to ignore.",
+        "Has limited access, time, energy, money, or safe local facilities for health-focused routines, despite wanting to feel better.",
+        "Prefers conventional foods and established medical advice, making health changes cautiously and with attention to practicality.",
+        "Seeks organic or minimally processed foods when affordable and considers environmental impact as well as personal health.",
+        "Enjoys exercise and active recreation and deliberately schedules physical activity as a central part of everyday life.",
+        "Has a sedentary routine and little regular physical activity, perhaps because of work demands, disability, fatigue, or personal preference.",
+        "Often chooses indulgent foods, tobacco, alcohol, or other habits despite understanding possible health risks.",
+        "Has a chronic illness, disability, or other ongoing health condition that requires regular treatment, adaptation, or support.",
+        "Takes an extreme or highly restrictive approach to diet, exercise, or wellness and may struggle to balance health goals with everyday needs.",
+        "Is skeptical of some health claims and products, prefers evidence-based guidance, and avoids unnecessary supplements or treatments."
+      ]
+    },
+    {
+      "name": "attitude_toward_new_products",
+      "values": [
+        "Eagerly tries new products early, enjoys novelty, and is willing to tolerate occasional defects or disappointment.",
+        "Is adventurous about products in favored categories, such as food, technology, cosmetics, games, or home goods.",
+        "Will consider a new product after seeing credible reviews, recommendations, or evidence that it offers a clear benefit.",
+        "Usually waits until a new product is established, widely available, and supported by dependable customer service.",
+        "Prefers proven brands and familiar products, believing reliability matters more than novelty or fashionable features.",
+        "Is skeptical of marketing claims and carefully checks ingredients, privacy terms, safety, durability, and total cost.",
+        "Avoids new products when current belongings still work, preferring repair, reuse, or keeping a stable routine.",
+        "Is enthusiastic about innovative technology but cautious about products that collect personal data or require subscriptions.",
+        "Is impulsive about trends and may buy newly advertised products before comparing alternatives or considering the cost.",
+        "Strongly rejects most unfamiliar products, finds changes inconvenient, and prefers long-standing habits and brands.",
+        "Tries new food and household products but avoids experimenting with major financial, medical, or technology decisions.",
+        "Actively seeks sustainable, accessible, or ethically sourced new products when their claims can be verified."
+      ]
+    },
+    {
+      "name": "cultural_influences",
+      "values": [
+        "Is strongly rooted in local community traditions, dialect, food, and relationships, and prefers familiar local institutions.",
+        "Combines local identity with contemporary U.S. popular culture, drawing comfortably on both neighborhood customs and national media.",
+        "Maintains family traditions across generations while adapting practices to changing schedules, relationships, and circumstances.",
+        "Is influenced by several cultural communities through family heritage, migration, friendship, religion, or neighborhood life.",
+        "Regularly engages with global music, food, film, news, and online communities and feels comfortable across cultural settings.",
+        "Prefers contemporary culture and new social norms, with less attachment to inherited customs or traditional institutions.",
+        "Strongly values heritage languages, religious practices, ceremonies, or cultural organizations and works to pass them on.",
+        "Has a largely homogeneous cultural environment and limited routine contact with people from different backgrounds.",
+        "Has a highly diverse social network and routinely adapts communication and customs across cultural contexts.",
+        "Is curious about unfamiliar cultures but approaches them cautiously, seeking guidance and avoiding assumptions or disrespect.",
+        "Feels caught between different generations or cultural expectations and is still working out which traditions feel personally meaningful.",
+        "Is indifferent or resistant to cultural change and prefers social practices and community identities to remain as familiar as possible."
+      ]
+    },
+    {
+      "name": "travel_habits",
+      "values": [
+        "Travels frequently for work or leisure, plans trips well in advance, and is comfortable navigating unfamiliar destinations.",
+        "Takes occasional domestic trips to visit relatives, attend events, or explore places within the United States.",
+        "Enjoys international travel and seeks out unfamiliar languages, cuisines, landscapes, and cultural experiences.",
+        "Prefers short, familiar trips close to home and plans around predictable transportation, lodging, and activities.",
+        "Is an adventurous traveler who welcomes flexible itineraries, outdoor challenges, and unexpected changes along the way.",
+        "Travels cautiously, choosing familiar routes, dependable services, accessible facilities, and detailed contingency plans.",
+        "Rarely travels because of cost, health, caregiving, work, documentation, or personal preference, and feels most comfortable at home.",
+        "Enjoys camping, road trips, national parks, or outdoor destinations and is willing to trade comfort for time in nature.",
+        "Prefers resort, cruise, or organized group travel where transportation and daily activities are largely arranged in advance.",
+        "Travels primarily to see family or maintain cultural ties, rather than to pursue sightseeing or recreation.",
+        "Avoids air travel or long journeys because of anxiety, environmental concerns, disability, finances, or practical barriers.",
+        "Travels spontaneously and sometimes makes last-minute plans without extensive research or budgeting."
+      ]
+    },
+    {
+      "name": "lifestyle",
+      "values": [
+        "Lives an active lifestyle with regular walking, exercise, or outdoor recreation and deliberately makes movement part of daily routines.",
+        "Has a moderately active routine shaped by commuting, household tasks, work, and occasional planned exercise.",
+        "Has a sedentary lifestyle with long periods of sitting and little regular exercise, whether by choice or because of constraints.",
+        "Lives in a dense urban setting and relies on public transport, walking, shared services, or compact living arrangements.",
+        "Lives in a suburban setting and balances home, work, shopping, family activities, and car or transit travel.",
+        "Lives in a rural setting where outdoor space may be plentiful but driving and distance are important parts of daily life.",
+        "Prefers a minimalist lifestyle, keeps possessions limited, and values simplicity, low expenses, and reduced clutter.",
+        "Enjoys a comfortable or extravagant lifestyle, spending substantially on travel, dining, hobbies, home design, or premium goods.",
+        "Has a highly structured routine organized around work, family duties, appointments, and carefully scheduled leisure time.",
+        "Has an irregular or unpredictable routine shaped by shift work, multiple jobs, caregiving, health, or changing responsibilities.",
+        "Centers daily life on family, neighbors, religious organizations, or community participation and gives substantial time to others.",
+        "Lives relatively independently and privately, keeping social commitments limited and choosing solitary or home-based recreation."
+      ]
+    },
+    {
+      "name": "recreation_and_media_interests",
+      "values": [
+        "Enjoys walking, running, cycling, basketball, football, hiking, camping, fishing, or other sports and recreation, with the particular activity shaped by ability and access.",
+        "Enjoys television, streaming services, music, drama, comedy, or reality programming, from occasional viewing to daily entertainment.",
+        "Enjoys console, mobile, or computer gaming, or participates in online social communities and other technology-centered activities.",
+        "Enjoys fiction, nonfiction, news, or online courses and uses reading or learning for entertainment, information, or personal growth.",
+        "Enjoys domestic or international travel, dining out, or trying new cuisines, with the level of activity shaped by budget and opportunity.",
+        "Enjoys board games, cards, puzzles, or tabletop role-playing with family, friends, or community groups.",
+        "Enjoys pets, gardening, home projects, crafts, music, or other creative and hands-on activities.",
+        "Has few established hobbies or limited time and energy for leisure, and may spend free time resting or handling essential tasks."
+      ]
+    },
+    {
+      "name": "physical_activity_habit",
+      "values": [
+        "Has low engagement in physical activity, consistent with the qualitative description in the supplied data.",
+        "Gets occasional activity through walking, errands, work, or household tasks but does not follow a regular exercise routine.",
+        "Exercises regularly at a moderate level through walking, cycling, fitness classes, or home workouts.",
+        "Is highly active through frequent sports, strenuous work, endurance training, or outdoor recreation.",
+        "Has limited mobility or a health condition that makes movement difficult and adapts activity to personal capacity.",
+        "Is largely sedentary and has very little physical activity because of preference, fatigue, work demands, or access barriers."
+      ]
+    },
+    {
+      "name": "snacking_and_snack_preference",
+      "values": {
+        "Frequently snacks and prefers cookies as a favorite snack, matching the supplied report that cookies are preferred by 59%.": 0.59,
+        "Frequently snacks but prefers a different snack, such as fruit, chips, nuts, crackers, candy, or another option.": 0.41
+      }
+    },
+    {
+      "name": "saving_and_spending_habits",
+      "values": [
+        "Saves consistently, keeps an emergency reserve where possible, and considers long-term goals before making discretionary purchases.",
+        "Tries to save regularly but has difficulty maintaining savings when housing, food, health care, or family expenses rise.",
+        "Has inadequate savings and little financial cushion, consistent with the qualitative concern in the supplied data.",
+        "Often spends impulsively, especially on convenience, promotions, entertainment, or small purchases that add up over time.",
+        "Plans purchases carefully, tracks expenses, and avoids carrying debt whenever possible.",
+        "Relies on credit or borrowing to cover routine expenses and may have difficulty reducing outstanding balances.",
+        "Spends freely when money is available and gives greater priority to immediate comfort or enjoyment than to long-term saving.",
+        "Is exceptionally frugal, postponing even useful purchases and avoiding nearly all discretionary spending."
+      ]
+    },
+    {
+      "name": "sleep_and_late_night_habits",
+      "values": [
+        "Regularly gets sufficient sleep and keeps a fairly consistent schedule that supports daytime functioning.",
+        "Often gets insufficient sleep because of work, caregiving, stress, health, or household responsibilities, consistent with the supplied description that insufficient sleep is widespread.",
+        "Frequently stays up late for entertainment, work, social media, gaming, or personal time, consistent with the supplied description that late-night habits are common.",
+        "Works nights or rotating shifts, so sleep occurs at unusual hours and may be interrupted or difficult to regularize.",
+        "Has persistent trouble falling or staying asleep and feels tired or less alert during the day.",
+        "Sleeps for long periods or follows an irregular sleep schedule because of health, mood, fatigue, or other personal circumstances."
+      ]
+    },
+    {
+      "name": "stress_management",
+      "values": [
+        "Manages stress through exercise, walking, or other physical activity that provides a constructive outlet.",
+        "Uses meditation, prayer, breathing exercises, or quiet reflection to cope with pressure.",
+        "Seeks help from friends, relatives, peers, or community members when stress becomes difficult to manage.",
+        "Uses comfort eating or frequent snacking to soothe stress, even when they would prefer to develop other coping strategies.",
+        "Smokes or uses nicotine as a stress response, despite awareness of possible health risks.",
+        "Responds to stress with inactivity, withdrawal, or avoidance and may find it hard to restart daily routines.",
+        "Uses professional counseling, medical care, support groups, or other structured assistance to manage ongoing stress.",
+        "Copes by working excessively, staying constantly busy, or avoiding time to reflect on difficult feelings.",
+        "Uses alcohol or other substances to cope with stress, which may create additional health or relationship problems.",
+        "Has few reliable coping resources and feels overwhelmed when several financial, family, work, or health problems occur together."
+      ]
+    },
+    {
+      "name": "technology_and_screen_use",
+      "values": [
+        "Uses screens heavily for work, entertainment, communication, and daily tasks, consistent with the supplied description of high screen time.",
+        "Uses social media frequently to keep up with friends, relatives, news, hobbies, or community discussion.",
+        "Uses technology regularly but sets deliberate limits on notifications, social media, or evening screen time.",
+        "Uses digital tools only when needed and prefers face-to-face conversations, paper materials, or offline entertainment.",
+        "Has limited access to reliable devices, broadband, or digital skills, which can restrict participation in online services.",
+        "Is deeply engaged with gaming, online communities, or digital creative work and spends much of their leisure time connected.",
+        "Avoids social media or online platforms because of privacy, misinformation, harassment, or personal preference.",
+        "Has very high, difficult-to-control screen use that interferes with sleep, relationships, school, or other responsibilities."
+      ]
+    },
+    {
+      "name": "cooking_and_baking_interest",
+      "values": {
+        "Enjoys cooking or baking as a hobby, matching the reported 41% participation rate.": 0.41,
+        "Does not identify cooking or baking as a hobby, while possibly still preparing food as a necessity.": 0.59
+      }
+    },
+    {
+      "name": "reading_interest",
+      "values": {
+        "Enjoys reading as a hobby, matching the reported 37% participation rate.": 0.37,
+        "Does not identify reading as a hobby, while possibly reading for work, school, or daily tasks.": 0.63
+      }
+    },
+    {
+      "name": "pets_interest",
+      "values": {
+        "Keeps pets or spends substantial leisure time with animals, matching the reported 35% participation rate.": 0.35,
+        "Does not keep pets or identify pet care as a hobby, though they may still enjoy occasional contact with animals.": 0.65
+      }
+    },
+    {
+      "name": "video_gaming_interest",
+      "values": {
+        "Plays video games as a hobby, matching the reported 33% participation rate.": 0.33,
+        "Does not play video games as a hobby, although they may use other forms of digital entertainment.": 0.67
+      }
+    },
+    {
+      "name": "outdoor_activity_interest",
+      "values": {
+        "Enjoys outdoor activities as a hobby, matching the reported 30% participation rate.": 0.3,
+        "Does not regularly pursue outdoor activities as a hobby, whether because of preference, access, health, or other circumstances.": 0.7
+      }
+    },
+    {
+      "name": "shopping_as_leisure_interest",
+      "values": {
+        "Enjoys shopping as a leisure activity, matching the reported 30% participation rate.": 0.3,
+        "Does not identify shopping as a leisure activity and usually shops for practical needs.": 0.7
+      }
+    },
+    {
+      "name": "traveling_as_hobby",
+      "values": {
+        "Enjoys traveling as a leisure activity, matching the reported 29% participation rate.": 0.29,
+        "Does not regularly travel as a leisure hobby, whether because of preference, finances, health, or limited opportunity.": 0.71
+      }
+    },
+    {
+      "name": "arts_crafts_and_diy_interest",
+      "values": {
+        "Enjoys arts, crafts, or do-it-yourself projects as a hobby, matching the reported 25% participation rate.": 0.25,
+        "Does not regularly pursue arts, crafts, or do-it-yourself activities as a hobby.": 0.75
+      }
+    },
+    {
+      "name": "socializing_as_leisure_interest",
+      "values": {
+        "Enjoys socializing as a leisure activity, matching the reported 26% participation rate.": 0.26,
+        "Does not identify socializing as a prominent leisure activity and may prefer solitary or quieter recreation.": 0.74
+      }
+    },
+    {
+      "name": "board_games_interest",
+      "values": {
+        "Enjoys board games or tabletop games as a hobby, matching the reported 26% participation rate.": 0.26,
+        "Does not regularly play board games or tabletop games as a hobby.": 0.74
+      }
+    },
+    {
+      "name": "inflation_as_major_problem",
+      "values": {
+        "Views inflation as a very big problem, as reported by 70% in the supplied 2023 data.": 0.7,
+        "Does not describe inflation as a very big problem, although it may still affect household decisions.": 0.3
+      }
+    },
+    {
+      "name": "healthcare_affordability_as_major_problem",
+      "values": {
+        "Views health care affordability as a very big problem, as reported by 57% in the supplied 2024 data.": 0.57,
+        "Does not describe health care affordability as a very big problem, while possibly having other concerns about care.": 0.43
+      }
+    },
+    {
+      "name": "drug_addiction_as_major_problem",
+      "values": {
+        "Views drug addiction as a very big problem, as reported by 55% in the supplied 2024 data.": 0.55,
+        "Does not describe drug addiction as a very big problem, while possibly recognizing it as a community or health concern.": 0.45
+      }
+    },
+    {
+      "name": "federal_budget_deficit_as_major_problem",
+      "values": {
+        "Views the federal budget deficit as a very big problem, as reported by 53% in the supplied 2024 data.": 0.53,
+        "Does not describe the federal budget deficit as a very big problem or gives it lower priority than other issues.": 0.47
+      }
+    },
+    {
+      "name": "illegal_immigration_as_major_problem",
+      "values": {
+        "Views illegal immigration as a very big problem, as reported by 51% in the supplied 2024 data.": 0.51,
+        "Does not describe illegal immigration as a very big problem or gives it lower priority than other issues.": 0.49
+      }
+    },
+    {
+      "name": "gun_violence_as_major_problem",
+      "values": {
+        "Views gun violence as a very big problem, as reported by 49% in the supplied 2024 data.": 0.49,
+        "Does not describe gun violence as a very big problem or gives it lower priority than other issues.": 0.51
+      }
+    },
+    {
+      "name": "violent_crime_as_major_problem",
+      "values": {
+        "Views violent crime as a very big problem, as reported by 48% in the supplied 2024 data.": 0.48,
+        "Does not describe violent crime as a very big problem or gives it lower priority than other issues.": 0.52
+      }
+    },
+    {
+      "name": "moral_values_as_major_problem",
+      "values": {
+        "Views the state of moral values as a very big problem, as reported by 46% in the supplied 2024 data.": 0.46,
+        "Does not describe the state of moral values as a very big problem or gives it lower priority than other issues.": 0.54
+      }
+    },
+    {
+      "name": "partisan_cooperation_as_major_problem",
+      "values": {
+        "Views the lack of cooperation between political parties as a very big problem, as reported by 65% in the supplied 2023 data.": 0.65,
+        "Does not describe partisan cooperation as a very big problem or gives other issues greater priority.": 0.35
+      }
+    },
+    {
+      "name": "climate_change_top_policy_priority_among_democrats",
+      "values": {
+        "Considers climate change a top policy priority; the supplied figure is 78% among Democrats.": 0.78,
+        "Does not rank climate change as a top policy priority; the supplied figure is the remaining 22% among Democrats.": 0.22
+      }
+    },
+    {
+      "name": "climate_change_top_policy_priority_among_republicans",
+      "values": {
+        "Considers climate change a top policy priority; the supplied figure is 21% among Republicans.": 0.21,
+        "Does not rank climate change as a top policy priority; the supplied figure is the remaining 79% among Republicans.": 0.79
+      }
+    },
+    {
+      "name": "government_responsibility_for_healthcare",
+      "values": {
+        "Believes the government should provide health care, matching the reported 60% in the supplied 2018 data.": 0.6,
+        "Does not believe the government should provide health care as described, or prefers a different division of public and private responsibility.": 0.4
+      }
+    },
+    {
+      "name": "abortion_legality",
+      "values": {
+        "Believes abortion should be legal in all cases, matching the reported 33% in the supplied 2024 data.": 0.33,
+        "Believes abortion should be legal in most cases, matching the reported 33% in the supplied 2024 data.": 0.33,
+        "Believes abortion should be illegal in most cases, matching the reported 25% in the supplied 2024 data.": 0.25,
+        "Believes abortion should be illegal in all cases, matching the reported 5% in the supplied 2024 data.": 0.05,
+        "Gave no response or falls into an unspecified category needed to account for the remaining 4% of the supplied responses.": 0.04
+      }
+    },
+    {
+      "name": "immigration_policy_preference",
+      "values": {
+        "Supports a path to legal status for some undocumented immigrants, matching the reported 56% in the supplied 2024 data.": 0.56,
+        "Supports deportation as the preferred policy, matching the reported 40% in the supplied 2024 data.": 0.4,
+        "Expresses another view, is uncertain, or falls into an unspecified category accounting for the remaining 4%.": 0.04
+      }
+    },
+    {
+      "name": "economic_outlook_for_country",
+      "values": {
+        "Believes the country is on the wrong track, matching the reported 70% in the supplied 2024 data.": 0.7,
+        "Does not believe the country is on the wrong track or gives a different assessment, accounting for the remaining 30%.": 0.3
+      }
+    },
+    {
+      "name": "economic_impact_concern_in_pandemic_policy_context",
+      "values": {
+        "Is concerned about economic impact in the supplied pandemic-policy opinion measure, matching the reported 80%.": 0.8,
+        "Is not concerned about economic impact in that measure, accounting for the remaining 20%.": 0.2
+      }
+    },
+    {
+      "name": "difficulty_affording_healthcare",
+      "values": {
+        "Reports difficulty affording health care, matching the reported 47% in the supplied 2022 survey.": 0.47,
+        "Does not report difficulty affording health care, accounting for the remaining 53%.": 0.53
+      }
+    },
+    {
+      "name": "support_for_closing_gun_show_loophole",
+      "values": {
+        "Supports closing the gun-show loophole, matching the reported 83% in the supplied 2019 measure.": 0.83,
+        "Does not support the measure or expresses another view, accounting for the remaining 17%.": 0.17
+      }
+    },
+    {
+      "name": "support_for_red_flag_laws",
+      "values": {
+        "Supports red-flag laws, matching the reported 72% in the supplied 2019 measure.": 0.72,
+        "Does not support the measure or expresses another view, accounting for the remaining 28%.": 0.28
+      }
+    },
+    {
+      "name": "support_for_mental_health_funding",
+      "values": {
+        "Supports funding for mental health services as a response to gun violence, matching the reported 89% in the supplied 2019 measure.": 0.89,
+        "Does not support the measure or expresses another view, accounting for the remaining 11%.": 0.11
+      }
+    },
+    {
+      "name": "perception_of_democracy_as_threatened",
+      "values": {
+        "Believes democracy is very threatened, matching the reported 39% in the supplied 2024 data.": 0.39,
+        "Believes democracy is somewhat threatened, matching the reported 34% in the supplied 2024 data.": 0.34,
+        "Believes democracy is not threatened to that degree, is uncertain, or gave another response, accounting for the remaining 27%.": 0.27
+      }
+    },
+    {
+      "name": "confidence_in_election_fairness",
+      "values": {
+        "Is very confident that elections are fair, matching the reported 35% in the supplied 2024 data.": 0.35,
+        "Is somewhat confident that elections are fair, matching the reported 32% in the supplied 2024 data.": 0.32,
+        "Is not very confident that elections are fair, matching the reported 21% in the supplied 2024 data.": 0.21,
+        "Is not at all confident that elections are fair, matching the reported 10% in the supplied 2024 data.": 0.1,
+        "Gave no response or falls into an unspecified category accounting for the remaining 2%.": 0.02
+      }
+    },
+    {
+      "name": "concern_about_post_election_violence",
+      "values": {
+        "Is concerned about post-election violence, matching the reported 70% in the supplied 2024 data.": 0.7,
+        "Is not concerned about post-election violence, accounting for the remaining 30%.": 0.3
+      }
+    },
+    {
+      "name": "perception_of_economy",
+      "values": {
+        "Rates the economy as poor, matching the reported 33% in the supplied 2024 data.": 0.33,
+        "Rates the economy as not so good, matching the reported 35% in the supplied 2024 data.": 0.35,
+        "Rates the economy as good, matching the reported 27% in the supplied 2024 data.": 0.27,
+        "Rates the economy as excellent, matching the reported 5% in the supplied 2024 data.": 0.05
+      }
+    },
+    {
+      "name": "family_financial_change_over_four_years",
+      "values": {
+        "Believes their family's financial situation is worse than it was four years ago, matching the reported 47% in the supplied 2024 data.": 0.47,
+        "Believes their family's financial situation is about the same as it was four years ago, matching the reported 29% in the supplied 2024 data.": 0.29,
+        "Believes their family's financial situation is better than it was four years ago, matching the reported 24% in the supplied 2024 data.": 0.24
+      }
+    },
+    {
+      "name": "inflation_hardship",
+      "values": {
+        "Experiences severe hardship because of inflation, matching the reported 22% in the supplied 2024 data.": 0.22,
+        "Experiences moderate hardship because of inflation, matching the reported 53% in the supplied 2024 data.": 0.53,
+        "Reports no hardship from inflation, matching the reported 24% in the supplied 2024 data.": 0.24,
+        "Falls into an unspecified or unreported category accounting for the remaining 1%.": 0.01
+      }
+    },
+    {
+      "name": "view_of_us_support_for_israel",
+      "values": {
+        "Believes U.S. support for Israel is too strong, matching the reported 31% in the supplied 2024 data.": 0.31,
+        "Believes U.S. support for Israel is about right, matching the reported 30% in the supplied 2024 data.": 0.3,
+        "Believes U.S. support for Israel is not strong enough, matching the reported 31% in the supplied 2024 data.": 0.31,
+        "Is uncertain, gave another response, or falls into an unspecified category accounting for the remaining 8%.": 0.08
+      }
+    },
+    {
+      "name": "trust_in_supreme_court",
+      "values": {
+        "Approves of the Supreme Court, matching the reported 36% in the supplied 2024 data.": 0.36,
+        "Disapproves of the Supreme Court, matching the reported 59% in the supplied 2024 data.": 0.59,
+        "Is uncertain or gave no response, accounting for the remaining 5%.": 0.05
+      }
+    }
+  ]
+}

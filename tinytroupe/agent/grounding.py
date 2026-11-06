@@ -7,6 +7,7 @@ from llama_index.core.vector_stores import SimpleVectorStore
 from tinytroupe.utils.web import fetch_web_page
 import tempfile
 import os
+from pathlib import Path
 
 
 #######################################################################################################################
@@ -339,17 +340,24 @@ class LocalFilesGroundingConnector(BaseSemanticGroundingConnector):
 
     def add_folder(self, folder_path:str) -> None:
         """
-        Adds a path to a folder with files used for grounding.
+        Indexes visible files directly inside a folder, including under hidden ancestors.
         """
 
         if folder_path not in self.loaded_folders_paths:
-            self._mark_folder_as_loaded(folder_path)
+            # Filter relative to the requested folder, not hidden ancestors such as .copilot.
+            input_files = [
+                str(path) for path in sorted(Path(folder_path).iterdir())
+                if path.is_file() and not path.name.startswith(".")
+            ]
+            if not input_files:
+                raise ValueError(f"No files found in {folder_path}.")
 
             # for PDF files, please note that the document will be split into pages: https://github.com/run-llama/llama_index/issues/15903
-            new_files = SimpleDirectoryReader(folder_path).load_data()
+            new_files = SimpleDirectoryReader(input_files=input_files).load_data()
             BaseSemanticGroundingConnector._set_internal_id_to_documents(new_files, "file_name")
 
             self.add_documents(new_files)
+            self._mark_folder_as_loaded(folder_path)
     
     def add_file_path(self, file_path:str) -> None:
         """

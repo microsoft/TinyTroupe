@@ -11,6 +11,25 @@ The general context is the following: {{context}}.
 No general context was specified. 
 {{/context}}
 
+{{#population_description}}
+## Target population
+
+{{{population_description}}}
+
+This defines who belongs in the population, not just the topic of the simulation.
+The person must actually satisfy its eligibility conditions now. Reflect them explicitly in the
+relevant biography fields, including household relationships and ages when specified.
+An unconstrained field in the sampled characteristics does not remove a population requirement.
+Do not substitute someone who could answer hypothetically for an eligible member.
+
+The population description may also include instructions for constructing a sampling
+space, such as defining dimensions and their possible values. Those instructions
+belong to population planning, not this person's biography. Use the sampled values
+in Agent Particularities to describe this one person. Do not output population-wide
+catalogs, alternative trait values, sampling plans, or demographic distributions as
+persona fields. Preserve eligibility and the person's actual traits; the possible
+values for other people are not additional traits of this person.
+{{/population_description}}
 
 ## Agent Particularities
 {{#agent_particularities}}
@@ -31,6 +50,10 @@ context (if any).
 ## Generation Rules
 
 To generate the requested agents, you **must** to follow these directives:
+  - Preserve the supplied age, including zero for an infant. Do not make someone older to fit the examples or the requested amount of detail.
+  - Keep every field appropriate to that developmental stage. For an infant, describe care, needs, and observable habits rather than inventing employment, schooling, articulated beliefs, or independent purchasing decisions. State when a field is not yet applicable; minimum detail counts do not override age or realism.
+  - Distinguish the person's life from the experimenter's purpose. Being recruited for market research does not make someone a researcher, product evaluator, or expert in research ethics. Do not turn the study's topic into their occupation, skills, personality, or settled opinions unless explicitly requested.
+  - Construct one coherent everyday life before elaborating its details. Derive preferences, beliefs and habits from that life rather than repeating the same prudent, practical, privacy-conscious profile. There is no preferred attitude or survey response; preserve any explicitly supplied traits.
   - If a general context is provided, you must ensure the generated agent has relevant details that will allow the a realistic simulation of a real person in that context. To do so, you should include nunanced details that could be relevant for the simulation in that context.
   - Given the agent particularities, please, be creative and deep to generate details about the person for each of the fields in the response. Sample from a wide range of reasonable possibilities. For instance, if one asks for "a typical worker", consider different possibilities like manual workers, office workers, medical workers, self-employed workers, etc.
   - You must add as much details as possible, but make sure they are consistent with the context and agent particularities. That is to say, the details can be completely unrelated to the context and agent particularities, but they must not contradict them.
@@ -108,4 +131,3 @@ In particular, in your output, make sure you include much more detail than in th
 {{^other_examples}}
 No other examples available.
 {{/other_examples}}
-

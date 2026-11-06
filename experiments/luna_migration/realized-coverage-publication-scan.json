@@ -1,0 +1,52 @@
+{
+  "status": "passed",
+  "source_fingerprint_unchanged": "000fcfb488ab982f259f778def4269a13e6972f0113eb5046d7c0f45a6b6fbd8",
+  "returned_responses": 49,
+  "additional_returned_usage_usd": "0.209980780",
+  "files": [
+    {
+      "file": "cf5-quality-report.html",
+      "sha256": "287f5876544d606d96fa3b0a093029ee615269719830b7c6636232c5ea764ef8",
+      "bytes": 22987,
+      "checks": {
+        "api_key": 0,
+        "github_token": 0,
+        "bearer_credential": 0,
+        "private_link": 0
+      }
+    },
+    {
+      "file": "realized-behavior-coverage-review.json",
+      "sha256": "0d0601cf730bfcf9541845c6180cb6c05b856ec802e7314959d31f0ae9056188",
+      "bytes": 6539,
+      "checks": {
+        "api_key": 0,
+        "github_token": 0,
+        "bearer_credential": 0,
+        "private_link": 0
+      }
+    },
+    {
+      "file": "realized-behavior-coverage-audit.json",
+      "sha256": "6b08168ce5b9f47498249baffe8edcda6713c07fb7de928a39787c83c5b9638f",
+      "bytes": 22972,
+      "checks": {
+        "api_key": 0,
+        "github_token": 0,
+        "bearer_credential": 0,
+        "private_link": 0
+      }
+    },
+    {
+      "file": "realized-coverage-pipeline-audit.json",
+      "sha256": "277636b81a06f6106605bf55f2b245c4db1e1e5008795ac7c050c63f037966db",
+      "bytes": 23185,
+      "checks": {
+        "api_key": 0,
+        "github_token": 0,
+        "bearer_credential": 0,
+        "private_link": 0
+      }
+    }
+  ]
+}

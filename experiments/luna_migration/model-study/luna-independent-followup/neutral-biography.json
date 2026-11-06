@@ -1,0 +1,20 @@
+{
+  "order_seed": 291026,
+  "protocol": "Independent fixed-input follow-up. Replace the accumulated, heavily qualified generation guidance with a concise descriptive biographical record. Keep the original system message, demographic/context prefix, output transport, effort and token budget unchanged. No prior drafts, randomness tokens, curated occupations, taste examples or desired survey answers. Three fresh responses per source, all retained and reviewed. This is a qualitative diagnostic probe, not representative population sampling.",
+  "variants": [{
+    "id": "neutral-biography",
+    "hypothesis": "Accumulated negative examples and repeated practical-tradeoff instructions may anchor cautious, balanced biographies. A neutral descriptive specification may reduce that anchoring without instructing the model to produce the opposite personality.",
+    "cases": ["persona-grace", "persona-philip"],
+    "operations": [{
+      "kind": "regex",
+      "message": 1,
+      "pattern": "(?s)## Generation Rules.*\\Z",
+      "new_file": "neutral-biography.txt",
+      "max_matches": 1
+    }]
+  }],
+  "selection": {
+    "persona-grace": "neutral-biography",
+    "persona-philip": "neutral-biography"
+  }
+}

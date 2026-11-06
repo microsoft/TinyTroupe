@@ -1,0 +1,1089 @@
+{
+  "protected_inputs_preserved": true,
+  "case_count": 18,
+  "attempts": 54,
+  "completed": 54,
+  "completed_by_case": {
+    "extraction-ricardo-original::public-evidence": 3,
+    "gazpacho-underdispersion-1::current-turn": 3,
+    "extraction-jolene-public-only::public-evidence": 3,
+    "travel-modest-getaway::current-travel": 3,
+    "interview-evidence-pilot::current-turn": 3,
+    "children-ranking-collapse-1::current-ranking": 3,
+    "travel-can-afford-luxury::current-travel": 3,
+    "children-ranking-collapse-2::current-ranking": 3,
+    "chat-design-tradeoff::current-turn": 3,
+    "brainstorm-initial-marcos::current-ideas": 3,
+    "brainstorm-no-link-safeguard::current-turn": 3,
+    "brainstorm-initial-oscar::current-ideas": 3,
+    "chat-galette::current-turn": 3,
+    "extraction-jolene-original::public-evidence": 3,
+    "extraction-ricardo-public-only::public-evidence": 3,
+    "travel-affordable-trip::current-travel": 3,
+    "gazpacho-underdispersion-2::current-turn": 3,
+    "brainstorm-initial-lisa::current-ideas": 3
+  },
+  "observations": [
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "extraction-ricardo-original::public-evidence",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "extraction",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "extracted": {
+          "response": "No",
+          "justification": "No public justification provided."
+        },
+        "content_words": 4,
+        "expected_original_extraction": true
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "extraction-ricardo-original::public-evidence",
+      "replicate": 1,
+      "status": "completed",
+      "phase": "extraction",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "extracted": {
+          "response": "No",
+          "justification": "No public justification provided."
+        },
+        "content_words": 4,
+        "expected_original_extraction": true
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "extraction-ricardo-original::public-evidence",
+      "replicate": 2,
+      "status": "completed",
+      "phase": "extraction",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "extracted": {
+          "response": "No",
+          "justification": "No public justification provided."
+        },
+        "content_words": 4,
+        "expected_original_extraction": true
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "gazpacho-underdispersion-1::current-turn",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 46,
+        "public_text": "2. I’d be very unlikely to want it. Cold blended vegetables in a bottle sounds kind of weird to me, and I like foods better when they aren’t all mixed together. Maybe I’d taste a little if my mom got some, but I wouldn’t choose it.",
+        "first_public_number_1_to_5": 2,
+        "content_words": 106,
+        "leading_score": true
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "gazpacho-underdispersion-1::current-turn",
+      "replicate": 1,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 30,
+        "public_text": "2. I probably wouldn't ask my mom to buy it because cold blended vegetables don't sound very yummy to me. Maybe I'd try a little taste if she had some.",
+        "first_public_number_1_to_5": 2,
+        "content_words": 122,
+        "leading_score": true
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "gazpacho-underdispersion-1::current-turn",
+      "replicate": 2,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 29,
+        "public_text": "2. I probably wouldn't ask to buy cold blended vegetables in a bottle. It sounds a little strange, though maybe I'd try a sip if my mom offered it.",
+        "first_public_number_1_to_5": 2,
+        "content_words": 90,
+        "leading_score": true
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "extraction-jolene-public-only::public-evidence",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "extraction",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "extracted": {
+          "response": "No",
+          "justification": "No public justification provided."
+        },
+        "content_words": 4,
+        "expected_original_extraction": true
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "extraction-jolene-public-only::public-evidence",
+      "replicate": 1,
+      "status": "completed",
+      "phase": "extraction",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "extracted": {
+          "response": "No",
+          "justification": "No public justification provided."
+        },
+        "content_words": 4,
+        "expected_original_extraction": true
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "extraction-jolene-public-only::public-evidence",
+      "replicate": 2,
+      "status": "completed",
+      "phase": "extraction",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "extracted": {
+          "response": "No",
+          "justification": "No public justification provided."
+        },
+        "content_words": 4,
+        "expected_original_extraction": true
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "travel-modest-getaway::current-travel",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 49,
+        "public_text": "No. Quiet sounds good, and help avoiding bad reviews would be useful, but WanderLux is centered on luxury beachfront and spa vacations. With our budget, I’d rather plan a comfortable, more affordable trip—maybe a road trip from San Antonio—than pay for a kind of vacation we wouldn’t normally choose.",
+        "decision": "no",
+        "public_reason_present": true,
+        "content_words": 153
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "travel-modest-getaway::current-travel",
+      "replicate": 1,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 62,
+        "public_text": "No. A calm beachfront getaway sounds appealing, but if it’s our one vacation next year, I’d most likely choose a modest coastal road trip or another affordable stay instead of planning around a luxury or spa vacation. I’d need to know the service’s total cost before considering it, and staying within budget matters more to us than making the trip feel upscale.",
+        "decision": "no",
+        "public_reason_present": true,
+        "content_words": 173
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "travel-modest-getaway::current-travel",
+      "replicate": 2,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 76,
+        "public_text": "No. If I only had one vacation next year, I’d probably plan a modest road trip with Elena—maybe somewhere by the water—with a clean, comfortable place to stay and room to relax. Quiet is appealing, but a luxury beachfront or spa trip isn’t really what we’d prioritize, and we’d want the total cost to stay manageable. Avoiding bad reviews is useful, but it wouldn’t be enough on its own to make me choose a luxury-focused service.",
+        "decision": "no",
+        "public_reason_present": true,
+        "content_words": 170
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "interview-evidence-pilot::current-turn",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 310,
+        "public_text": "I’d frame this as an end-to-end journey pilot, not a broad operating-model redesign. The aim would be to improve one customer task and test whether clearer ownership and earlier agreement on shared dependencies help us deliver that improvement more reliably.\n\nFirst, we’d choose the journey from evidence rather than start with a feature someone has named. I’d look at where customers abandon, complain, or contact us for help, and compare that with the likely effort and dependencies involved. Frontline input would help us understand the actual workarounds. I wouldn’t pick account opening—or any other journey—until we’ve seen that evidence.\n\nFor the selected journey, we’d map the real path across digital channels, service or branches, and the relevant technology and control teams. We’d name an accountable owner for the customer outcome, identify owners for critical dependencies, and make unresolved decisions, capacity needs, and escalation routes explicit. That should give us a credible critical path, rather than a date based on only the product team’s work.\n\nThen we’d agree a small, safe change that addresses a specific point of friction, without assuming it requires a full platform rebuild. Before release, we’d establish the baseline and agree what would count as improvement: for example, completion and abandonment, repeat calls or complaints, relevant fraud and service effects, and differences across customer groups. The relevant service, risk, compliance, and technology owners would help set rollout and rollback conditions.\n\nI’d want a fixed decision point at the end: expand, adjust, or stop based on the results—and capture what we learned about ownership and dependencies. A useful first piece of consulting support would be a short, time-boxed discovery to select the journey, validate the data and owners, and produce a project charter and credible plan. We can set the delivery timeline once the critical-path owners have tested it; I wouldn’t want to promise that before they have.",
+        "content_words": 494
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "interview-evidence-pilot::current-turn",
+      "replicate": 1,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 318,
+        "public_text": "I’d frame it as a single-journey pilot—not a broad “agility transformation.” The hypothesis would be: choose one frequent, high-friction customer task that crosses product, shared technology and operations, then improve completion without increasing avoidable fraud or service burden.\n\nI wouldn’t choose the task by intuition. I’d compare candidate journeys in my portfolio using funnel completion and abandonment, repeat calls or complaints, handoffs between channels or teams, operational effort, and relevant fraud signals. I’d add customer and frontline evidence to understand where the journey actually breaks. The precise task should come from that evidence; I don’t want to assume today which one is worst.\n\nI’d propose a four-week discovery and feasibility phase, assuming the relevant owners can commit time. The team would map the real journey, including exceptions; establish a baseline and agree how to measure customer effort; identify one bounded change worth testing; and document the technology, risk and service dependencies. At the end, we should have a go/no-go decision, a named accountable owner for the customer outcome, named dependency owners, and a credible delivery plan—not just a list of recommendations. I would not promise a production date until the platform owner and operational teams have assessed the critical path.\n\nIf we proceed, I’d want a small, reversible release with agreed eligibility, customer communication, fraud and security controls, prepared support, monitoring and rollback criteria. Before launch, we’d set success thresholds against the baseline. I’d look at successful completion and abandonment by relevant customer groups, repeat contacts and complaints, service effort, and fraud—not just the overall completion rate. Expansion would depend on the full picture, not a headline number.\n\nI’d use an existing decision forum rather than create another committee. The consultant’s useful role would be to help us map the journey and dependencies, establish a sound baseline, and make the options and trade-offs clear, while our leaders retain ownership and build the capability to run the work themselves.",
+        "content_words": 449
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "interview-evidence-pilot::current-turn",
+      "replicate": 2,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 309,
+        "public_text": "I’d frame it as a single-journey pilot, not a broad transformation programme. The aim would be to make one important customer task easier end to end, while keeping risk and service outcomes within agreed limits.\n\nFirst, I’d use a short shaping phase—roughly two weeks—to choose the journey based on evidence: where customers abandon, call back, complain, or rely on a branch workaround, and where we can measure the effect of a change. Account opening or a common card-service task could be candidates, but I wouldn’t pick one without seeing the data and hearing from customers and frontline teams.\n\nFor that journey, we’d map what customers actually do across channels and teams, establish a baseline, and name an accountable product owner plus the technology, operations, risk, and service owners for the critical dependencies. We should also identify what capacity is needed and what would have to move to make room for it. At the end of this phase, I’d want a clear recommendation: the problem to solve, a small change we can test, the owners and dependencies, and a credible delivery plan—or a specific reason not to proceed yet.\n\nIf we proceed, we’d define a bounded, reversible release and agree the eligible customers, customer communications, support preparation, monitoring, rollback criteria, and a decision date before launch. We’d measure completion and abandonment across relevant customer groups, repeat calls and complaints, suspected fraud and false positives, and the operational impact—not just the overall conversion rate. Then we’d decide whether to scale, adjust, or stop based on those results.\n\nThe consultant’s role could be to help us run the journey mapping, establish a reliable baseline, and facilitate the ownership and trade-off decisions. The bank’s leaders would still own the decisions and delivery. I’d want the project to produce one tested customer improvement and a practical pattern we can reuse, not another governance layer.",
+        "content_words": 450
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "children-ranking-collapse-1::current-ranking",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 86,
+        "public_text": "Ranking: B, E, D, C, A\n\nJustification: For a child that young, I wouldn’t choose a storyteller meant to be used independently without supervision. If I were picking among the devices, E would be the easiest to try for $10, and it’s audio-only. D is simple and has no screen, but costs as much as a low-end phone or tablet. I’d put C ahead of A because it’s the cheaper way to get illustrations; A combines the screen with the higher price of a separate device.",
+        "ranking": [
+          "B",
+          "E",
+          "D",
+          "C",
+          "A"
+        ],
+        "ranking_is_permutation": true,
+        "content_words": 185
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "children-ranking-collapse-1::current-ranking",
+      "replicate": 1,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 141,
+        "public_text": "Ranking: B, D, E, A, C\n\nJustification: For a 3- to 5-year-old, I’d rather not use an AI storyteller that the child can access on their own without supervision. I’d want to hear how it responds and see how my child does with it first. If I were choosing one, I’d lean toward the audio-only dedicated device because it keeps the phone or tablet out of the picture and avoids a screen. But at the price of a low-end phone or tablet, that’s a lot for one job. The audio-only app is inexpensive, though I wouldn’t love giving a young child access to our existing device whenever they want. Of the image options, I’d put the dedicated device ahead of the app for that same reason; the images might be engaging, but a screen isn’t a big selling point for me.",
+        "ranking": [
+          "B",
+          "D",
+          "E",
+          "A",
+          "C"
+        ],
+        "ranking_is_permutation": true,
+        "first_public_number_1_to_5": 3,
+        "content_words": 250
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "children-ranking-collapse-1::current-ranking",
+      "replicate": 2,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 104,
+        "public_text": "Ranking: B, D, A, E, C\n\nJustification: For a child that young, I wouldn’t choose an AI storyteller they can use independently with no parent supervision. I’d rather tell or read stories together. If I did consider one, the dedicated audio-only device is the closest fit: it only does stories and avoids adding a screen. The dedicated device with illustrations comes next, since it’s still limited to stories. The apps are cheaper, but I’m less keen on putting something a young child can open any time on a phone or tablet we already use; between those, I’d choose audio-only over adding more screen time.",
+        "ranking": [
+          "B",
+          "D",
+          "A",
+          "E",
+          "C"
+        ],
+        "ranking_is_permutation": true,
+        "content_words": 200
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "travel-can-afford-luxury::current-travel",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 46,
+        "public_text": "No. The quiet-stay and trustworthy-review angle appeals to me, but for my one vacation I’d rather have a mix of scenery, walking around, and local food than a trip centered on luxury beachfront and spa destinations. I’d also want to compare the cost with other options.",
+        "decision": "no",
+        "public_reason_present": true,
+        "content_words": 150
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "travel-can-afford-luxury::current-travel",
+      "replicate": 1,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 54,
+        "public_text": "No. For my one vacation next year, I’d be more likely to choose a trip that mixes a walkable town, good local food, and some trails or sightseeing. A quiet beachfront stay could be nice, but luxury and spa destinations aren’t really what I’d plan the whole trip around, especially if they cost more.",
+        "decision": "no",
+        "public_reason_present": true,
+        "content_words": 172
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "travel-can-afford-luxury::current-travel",
+      "replicate": 2,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 68,
+        "public_text": "No — I’d probably plan the trip ourselves. Megan and I usually look for a mix of good food, walks, and places to explore, and this service sounds focused on luxury beachfront and spa getaways. We could afford a nicer trip, but I’d rather spend on the parts that fit us than pay for a style of vacation we don’t usually choose. Avoiding fake reviews is appealing, though.",
+        "decision": "no",
+        "public_reason_present": true,
+        "content_words": 197
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "children-ranking-collapse-2::current-ranking",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 104,
+        "public_text": "Ranking: B, D, A, E, C\n\nJustification: For Mira’s age, I wouldn’t buy one on the assumption that she can use an AI storyteller completely on her own. I like the idea of imaginative stories, but I’d want to be involved rather than make that the default. If I were choosing among the devices, D would be my pick: it’s dedicated to stories and audio-only. A is similar, and the illustrations could be fun, but I’d rather skip the screen. The apps are cheaper, but I’m less keen on her having open-ended access through an existing phone or tablet; between those, I’d prefer audio-only.",
+        "ranking": [
+          "B",
+          "D",
+          "A",
+          "E",
+          "C"
+        ],
+        "ranking_is_permutation": true,
+        "content_words": 193
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "children-ranking-collapse-2::current-ranking",
+      "replicate": 1,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 135,
+        "public_text": "Ranking: B, D, A, E, C\n\nJustification: I love making up stories with Mira, but I wouldn’t choose an AI storyteller that she can use independently at this age, especially one she can ask for anything she imagines. I’d rather share stories with her than have this be an unsupervised activity. If I had to choose among the devices, D appeals most: it’s dedicated to storytelling and audio-only, so it doesn’t add another screen or put her on my phone or tablet. A would be next; the illustrations could make stories fun, but I’d still have the same concern about independent use. The apps are less appealing to me because they’re available on an existing phone or tablet, even though they’re much cheaper. Between those, I’d put the audio-only app ahead of the illustrated one.",
+        "ranking": [
+          "B",
+          "D",
+          "A",
+          "E",
+          "C"
+        ],
+        "ranking_is_permutation": true,
+        "content_words": 257
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "children-ranking-collapse-2::current-ranking",
+      "replicate": 2,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 110,
+        "public_text": "Ranking: B, D, A, E, C\n\nJustification: I like the idea of imaginative stories, but for a five-year-old I’m not comfortable with this exact setup where she can talk to the storyteller on her own with no parent supervision. So I’d choose none of these as described. Of the devices, D is my next choice: it’s single-purpose and audio-only, though the price of a low-end smartphone or tablet feels steep for that. A is similar, but I’d rather keep story time off another screen. The apps cost less, but I’m less keen on giving her anytime access to the phone or tablet; between them, I’d prefer audio-only E over C.",
+        "ranking": [
+          "B",
+          "D",
+          "A",
+          "E",
+          "C"
+        ],
+        "ranking_is_permutation": true,
+        "content_words": 179
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "chat-design-tradeoff::current-turn",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 69,
+        "public_text": "Probably affordability, because it sets limits around the others rather than being a separate feature. I don’t want to treat privacy or good daylight as luxuries; the challenge is to provide both without relying on extra area or costly, bespoke solutions. Flexibility is tricky too, but it can often come from a simple, well-planned layout. In your work, is the toughest trade-off relevance versus keeping the default experience simple?",
+        "content_words": 222
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "chat-design-tradeoff::current-turn",
+      "replicate": 1,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 95,
+        "public_text": "If I have to choose one, I’d say affordability—it puts pressure on all the others. Flexibility can ask for extra space or adaptable partitions; privacy can pull against an open plan; and good daylight depends on how the rooms meet the façade. I try to protect the basics of privacy and daylight, then look for flexibility in how a compact space is used. It’s a bit like your search example: a good default should work well for many people without pretending everyone is the same. What’s the trickiest part of that balance in your work?",
+        "content_words": 247
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "chat-design-tradeoff::current-turn",
+      "replicate": 2,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 78,
+        "public_text": "I’d say flexibility is the hardest to balance, especially with affordability. It’s easy to call a layout adaptable, but making it work for different needs without adding awkward compromises or cost takes care. Privacy can also be tight when space is limited, so I’m usually looking for simple changes in how rooms connect rather than a long menu of options. Your comparison with search fits: a good default should serve many people without making every choice feel complicated.",
+        "content_words": 221
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "brainstorm-initial-marcos::current-ideas",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 281,
+        "public_text": "A concrete problem in my work is reconstructing how symptoms change over time from visit notes, test reports, and family observations. Important details can be scattered, and the trajectory often matters as much as any one finding. A few different directions for Word:\n\n1. **An editable case-evolution map.** I could bring a case narrative and related notes into Word and ask AI to arrange symptoms, examinations, and test results along a timeline, with each item linked to where it came from. It could flag apparent contradictions or gaps for me to check, and let me compare how different interpretations fit the sequence. That would make the changing course of a case easier to inspect than a static block of prose—not hand the diagnosis to the AI.\n\n2. **A living, shared care document.** During a visit, the clinician and patient or family could record the patient’s priorities and agreed goals in Word. AI could shape that into an editable plan where they add meaningful changes in symptoms or daily function between visits; the next visit could begin by looking at what changed relative to those goals. That would shift the document from a one-time handout toward a record of how the plan meets the person’s life over time.\n\n3. **An evidence-linked clinical draft.** When I draft a clinic protocol or patient explanation, I could ask Word to create a review layer that connects clinical claims to relevant studies or guidance, and points out where sources disagree or may be out of date. I would inspect and judge those sources myself. That would make drafting a more direct bridge between research and clinical material, rather than leaving evidence checks separate from the document.",
+        "first_public_number_1_to_5": 1,
+        "content_words": 396
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "brainstorm-initial-marcos::current-ideas",
+      "replicate": 1,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 244,
+        "public_text": "A concrete problem for me is that neurological symptoms can be subtle and evolve over time, while the record has to capture what we know separately from what remains uncertain. I’d explore three quite different directions:\n\n1. **An uncertainty-aware clinical canvas.** During a visit, I enter rough findings and Word helps organize them while keeping patient-reported symptoms, observed findings, and my interpretations distinct. It could flag conflicting details or missing information and suggest clarifying questions for me to choose from. The change would be a working note that makes uncertainty visible instead of smoothing it away into polished prose; it wouldn’t make the diagnosis for me.\n\n2. **A source-linked course-of-illness map.** For a patient with a long or changing history, I bring earlier notes and test reports into a Word case document. AI lays out symptom changes, tests, and treatment changes over time, with each item linked back to its source so I can check or correct it. That would change the work from hunting through scattered records to reviewing the clinical course in one place—not merely reading a shorter version of the records.\n\n3. **A shared patient-and-family care document.** After a consultation, I select what we’ve agreed, what is still uncertain, and the next steps. Word helps shape that into an editable document in clear, patient-specific language, with prompts for questions or teach-back. That could make the written plan part of the conversation, rather than leaving families to interpret a technical note later.",
+        "first_public_number_1_to_5": 1,
+        "content_words": 331
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "brainstorm-initial-marcos::current-ideas",
+      "replicate": 2,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 250,
+        "public_text": "A concrete problem in my work is that a patient’s story, test results, and treatment history can be scattered across notes, while the pattern changes over time. Three different possibilities come to mind:\n\n1. **A navigable case timeline.** I could bring the relevant notes and test reports into a Word case document, and ask AI to arrange symptoms, examinations, tests, and treatments along a timeline, with each item linked back to its source. I could correct the timeline or ask questions about it. That would make it easier to see how the story developed without relying on a pile of separate documents.\n\n2. **A note that preserves uncertainty.** As I draft an encounter note, AI could distinguish what the patient reported, what I observed, and what I’m considering, then ask me focused questions when the draft contains an unclear date or an apparent contradiction. I would answer or leave the point unresolved before it drafts the note. The aim would be to make documentation more complete without turning a tentative possibility into a definite diagnosis.\n\n3. **A patient-and-family discussion document.** I could start with the diagnosis and care plan I’ve confirmed, then work with AI in Word to build an individualized, interactive explanation for the patient and family. They could explore the parts they find confusing and add questions in the document; I could review it with them and see what still needs discussion. That would make the document part of the conversation, rather than just a handout after it.",
+        "first_public_number_1_to_5": 1,
+        "content_words": 362
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "brainstorm-no-link-safeguard::current-turn",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 75,
+        "public_text": "That gives the idea a clear home in Word without pulling people away from the page. For an apartment brief, I’d make the impact chain distinguish a layout choice directly linked to a changed accessibility requirement from downstream area and cost assumptions, and show why each was surfaced. Then a “still valid” decision with its rationale is tied to that document version, so a later reviewer can see what was checked and on what basis.",
+        "content_words": 205
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "brainstorm-no-link-safeguard::current-turn",
+      "replicate": 1,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 109,
+        "public_text": "That’s a clear Word workflow. I’d make each link easy to inspect in both directions: from a requirement to the layout and cost assumptions it may affect, and from an affected passage back to the exact source version and why it was linked. In an apartment brief, I could review the direct layout impacts first, then follow any downstream area or cost assumptions, compare the relevant versions, and record my decision on each item. Showing uncertain links separately from direct dependencies would help keep the pane useful rather than turning it into a wall of warnings. Word can suggest links, but the author should be able to confirm them.",
+        "content_words": 259
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "brainstorm-no-link-safeguard::current-turn",
+      "replicate": 2,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 72,
+        "public_text": "That’s a strong Word workflow. I’d add one practical safeguard for an apartment brief: keep the links selective, and distinguish author-confirmed connections from AI-suggested ones. If an accessibility requirement changes, I could see the exact regulation and the directly affected layout choice, then the downstream area and cost assumptions—with each link’s source version visible. That keeps the map inspectable without making every sentence a node or implying an uncertain connection is established.",
+        "content_words": 198
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "brainstorm-initial-oscar::current-ideas",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 205,
+        "public_text": "A concrete problem in my work is turning varied customer needs into standard apartment configurations without losing sight of cost, quality, or local requirements. Three different Word ideas:\n\n1. **Brief-to-configuration workspace:** I’d bring a customer brief and our standard configuration options into a Word document. The AI would surface unclear or conflicting needs, ask focused follow-up questions, and help shape them into a prioritized configuration brief. That could make the handoff from what a customer wants to what our team needs to design much clearer.\n\n2. **Design trade-off sandbox:** While drafting a specification, I’d ask “what if” questions—such as what changes if we reduce a particular finish cost, or prioritize storage over another feature. Word could explore alternative versions against project cost, quality, and environmental criteria, showing the consequences side by side. That would make trade-offs easier to examine before settling on a configuration, rather than only editing the prose.\n\n3. **Regulatory traceability map:** I’d include relevant code references alongside a project specification. Word could connect each requirement to the part of the specification that addresses it, and flag requirements with no clear evidence or wording that may conflict. That would help us spot review gaps earlier; it would support professional checking, not replace it.",
+        "first_public_number_1_to_5": 1,
+        "content_words": 306
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "brainstorm-initial-oscar::current-ideas",
+      "replicate": 1,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 217,
+        "public_text": "A concrete pain point in my work is turning a client’s sometimes vague or conflicting wishes into a clear brief for a standard apartment configuration. Three different Word ideas come to mind:\n\n1. **A brief that interviews you.** I’d give Word rough meeting notes or a client’s written request. It would ask targeted follow-up questions, then produce an editable requirements brief that separates must-haves from preferences and shows what is still ambiguous. That could catch mismatched expectations before we start configuring an apartment.\n\n2. **A traceable constraint map.** I’d bring together the project brief, relevant code excerpts, specifications, and cost assumptions. Word could link each requirement to its source and flag where two documents appear to conflict—or where changing a specification might affect other stated requirements. That would make it easier to check consistency without treating the AI as the authority on regulatory compliance.\n\n3. **A design trade-off workbench.** I’d state the constraints and provide the cost or performance assumptions we’re using, then ask Word to lay out several concept-level configuration or material choices side by side. It could explain the likely trade-offs in space, function, quality, cost, and environmental impact, while marking unsupported figures or unknowns rather than presenting guesses as facts. That would help us explore alternatives without prematurely presenting one as a finished design.",
+        "first_public_number_1_to_5": 1,
+        "content_words": 349
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "brainstorm-initial-oscar::current-ideas",
+      "replicate": 2,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 249,
+        "public_text": "A concrete problem in my work is turning varied customer needs into standard apartment specifications that are functional, cost-conscious, and compliant. Three different directions for Word:\n\n1. **Requirements-to-evidence map:** I put the project brief, draft specification, and relevant regulation excerpts in Word. AI links each requirement to the clauses or design references that address it, and flags contradictions or requirements that seem to have no supporting detail as I revise. That would make gaps and the reasoning behind decisions easier to see, rather than relying on someone to remember every requirement. It could point me to evidence to review, not certify compliance.\n\n2. **Trade-off sandbox:** I enter the non-negotiable constraints and priorities for an apartment, along with project cost, material, and energy information. Word generates meaningfully different specification packages and shows how their trade-offs change as I adjust priorities. That changes a static document into a space for exploring alternatives—so we can see what a lower-cost choice might mean for quality or environmental performance without pretending there’s one automatic right answer.\n\n3. **Occupant walkthrough stress test:** I provide a proposed configuration and specific customer needs, then ask AI to walk through everyday scenarios and point out where the standard design may not fit those needs. I could revise the needs or compare configurations and see what changes. This could reveal usability conflicts that a cost table or compliance checklist misses; the scenarios would need to be clearly marked as hypotheses to check with real customers, not evidence about them.",
+        "first_public_number_1_to_5": 1,
+        "content_words": 363
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "chat-galette::current-turn",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 71,
+        "public_text": "I especially enjoy taking a familiar baking recipe and changing one thing at a time—a flavor twist or a small adjustment to the texture. When it works, it feels new but still balanced; changing too many things at once can make it a bit of a mystery what went wrong. What part of *The Dispossessed* stayed with you most—the imagined society itself, or how its values shape everyday life and place?",
+        "content_words": 185
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "chat-galette::current-turn",
+      "replicate": 1,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 79,
+        "public_text": "I tend to enjoy giving a familiar bake a small twist—changing the flavor with citrus or spice rather than reworking the whole recipe. That’s often a nice balance: something a little different, but not fussy. Baking is less forgiving than dinner, though, so it’s a good reminder that improvising too much can throw off the texture. In The Dispossessed, did the way the communities were built and arranged stand out to you, or was it mostly the social ideas?",
+        "content_words": 164
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "chat-galette::current-turn",
+      "replicate": 2,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 69,
+        "public_text": "My weekend experiments tend to be little tweaks to a familiar recipe—trying a new flavour combination or changing one thing at a time. Those are usually the most satisfying; if I change too many things at once, it starts feeling like an experiment in the more literal sense. I like that iterative part, though. What about *The Dispossessed* has most influenced how you think about the places people live?",
+        "content_words": 195
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "extraction-jolene-original::public-evidence",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "extraction",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "extracted": {
+          "response": "No",
+          "justification": "No public justification provided."
+        },
+        "content_words": 4,
+        "expected_original_extraction": true
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "extraction-jolene-original::public-evidence",
+      "replicate": 1,
+      "status": "completed",
+      "phase": "extraction",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "extracted": {
+          "response": "No",
+          "justification": "No public justification provided."
+        },
+        "content_words": 4,
+        "expected_original_extraction": true
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "extraction-jolene-original::public-evidence",
+      "replicate": 2,
+      "status": "completed",
+      "phase": "extraction",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "extracted": {
+          "response": "No",
+          "justification": "No public justification provided."
+        },
+        "content_words": 4,
+        "expected_original_extraction": true
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "extraction-ricardo-public-only::public-evidence",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "extraction",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "extracted": {
+          "response": "No",
+          "justification": "No public justification provided."
+        },
+        "content_words": 4,
+        "expected_original_extraction": true
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "extraction-ricardo-public-only::public-evidence",
+      "replicate": 1,
+      "status": "completed",
+      "phase": "extraction",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "extracted": {
+          "response": "No",
+          "justification": "No public justification provided."
+        },
+        "content_words": 4,
+        "expected_original_extraction": true
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "extraction-ricardo-public-only::public-evidence",
+      "replicate": 2,
+      "status": "completed",
+      "phase": "extraction",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "extracted": {
+          "response": "No",
+          "justification": "No public justification provided."
+        },
+        "content_words": 4,
+        "expected_original_extraction": true
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "travel-affordable-trip::current-travel",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 53,
+        "public_text": "No. For one vacation next year, I’d be more likely to plan an affordable couple of nights somewhere we can drive to, with good food, time outdoors, and room to relax. WanderLux’s luxury beachfront and spa focus doesn’t sound like the best fit for what I’d want or what I’d want to spend.",
+        "decision": "no",
+        "public_reason_present": true,
+        "content_words": 133
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "travel-affordable-trip::current-travel",
+      "replicate": 1,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 71,
+        "public_text": "No. If we only had one vacation, I’d be more likely to plan a simple beach weekend or another easy trip with Morgan and keep the cost controlled. I like relaxing near the water, and reliable reviews would be useful, but I’d expect a luxury spa trip could be a stretch for our budget and it isn’t what I’d prioritize. An adults-only setting isn’t much of a selling point for me.",
+        "decision": "no",
+        "public_reason_present": true,
+        "content_words": 148
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "travel-affordable-trip::current-travel",
+      "replicate": 2,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 48,
+        "public_text": "No. A quiet beachfront stay sounds nice, and help avoiding bad reviews would be useful, but since WanderLux is focused on luxury vacations, I’d more likely choose a simpler, affordable getaway with Morgan—something we can drive to, enjoy good local food, and keep flexible without stretching our budget.",
+        "decision": "no",
+        "public_reason_present": true,
+        "content_words": 141
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "gazpacho-underdispersion-2::current-turn",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 34,
+        "public_text": "2 — I’m very unlikely, though not completely against trying it. I don’t know how it tastes, and I’d probably stick with food I already know I like rather than spend money on it.",
+        "first_public_number_1_to_5": 2,
+        "content_words": 117,
+        "leading_score": true
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "gazpacho-underdispersion-2::current-turn",
+      "replicate": 1,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 37,
+        "public_text": "2 — I’d be very unlikely to buy it, though not completely opposed. A cold, drinkable vegetable soup doesn’t sound that appealing to me, and I’d probably spend my money on something I already know I like.",
+        "first_public_number_1_to_5": 2,
+        "content_words": 109,
+        "leading_score": true
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "gazpacho-underdispersion-2::current-turn",
+      "replicate": 2,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 44,
+        "public_text": "2 — I’m very unlikely to buy it, though I wouldn’t rule out trying it once. The idea doesn’t sound especially appealing to me; I’m not sure I’d enjoy drinking cold blended vegetables, and I’d probably stick with food I already know I like.",
+        "first_public_number_1_to_5": 2,
+        "content_words": 107,
+        "leading_score": true
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "brainstorm-initial-lisa::current-ideas",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 231,
+        "public_text": "One concrete problem in my work is that a query can look straightforward but mean different things to different people, making relevance hard to evaluate. Here are three possible directions for Word:\n\n1. **Query intent atlas:** I’d put a set of privacy-approved query examples and evaluation notes into a Word document. AI could lay out plausible interpretations for each query and show where those interpretations lead to different judgments of a useful result. That would turn an ambiguous-query list into a map of where user needs conflict, rather than treating each query as having one obvious meaning.\n\n2. **Ranking-change test designer:** I’d describe a proposed search-ranking change and the behavior it is meant to improve. Word could turn that description into a set of contrasting evaluation scenarios—including edge cases where the change might hurt—and a structured test plan. The shift would be from a proposal that sounds convincing in prose to one with explicit cases we can use to assess it.\n\n3. **Evidence-linked findings document:** As I draft a report, Word could connect each conclusion to the approved, preferably aggregated evidence behind it, and surface when findings differ across time or groups—or when the evidence doesn’t support a confident conclusion. That would make it easier to distinguish a real relevance improvement from a result that depends on a narrow or biased slice of the data, while keeping privacy constraints in view.",
+        "first_public_number_1_to_5": 1,
+        "content_words": 303
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "brainstorm-initial-lisa::current-ideas",
+      "replicate": 1,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 221,
+        "public_text": "A concrete problem in my search work is that relevance can be hard to measure consistently: queries are ambiguous, and evidence about a change can be scattered across examples and reviewer notes. Three different ways Word might help:\n\n1. **A relevance evidence map.** I’d write up a search-quality issue and add approved, privacy-safe query/result examples and feedback. Word’s AI could link the claims in my document to supporting examples, flag counterexamples, and point out where the evidence seems thin. That would make it easier to inspect how a conclusion follows from the cases, rather than piecing it together from scattered notes.\n\n2. **An ambiguity stress test.** I’d describe a proposed change to query understanding or ranking and provide a bounded set of approved examples. AI could suggest plausible alternative intents and edge cases for me to review and label. That could broaden testing beyond the examples we happened to think of first and reveal where a change might behave differently than intended.\n\n3. **A reviewer-disagreement workspace.** In a shared evaluation document, reviewers could record their judgments and reasons for difficult cases. AI could surface recurring patterns in the disagreements and pose questions about which relevance criteria are unclear, without deciding whose judgment is correct. The goal would be to make inconsistent interpretations visible and help the team clarify its evaluation rubric.",
+        "first_public_number_1_to_5": 1,
+        "content_words": 300
+      },
+      "review_flags": []
+    },
+    {
+      "file": "action-extraction-results.jsonl",
+      "case_id": "brainstorm-initial-lisa::current-ideas",
+      "replicate": 2,
+      "status": "completed",
+      "phase": "agent_action",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": true,
+        "public_answer_present": true,
+        "talk_count": 1,
+        "ends_with_done": true,
+        "public_words": 234,
+        "public_text": "A concrete problem in my search work is that relevance judgments can be inconsistent: a query may have several plausible intents, and different reviewers may apply the criteria differently. A few Word ideas:\n\n1. **A living relevance-spec workspace.** I’d describe a search task and draft the criteria in Word, then ask the AI to find ambiguous wording, identify places where the criteria could lead to conflicting judgments, and help record the decisions reviewers make. This could turn a static guidance document into a clearer shared reference, reducing disagreements that otherwise stay hidden.\n\n2. **A counterfactual query-case studio.** I’d describe a search scenario and the kinds of intent that might be missed, and the AI would propose varied, difficult query-and-result examples for us to inspect and edit. We could use the approved examples as evaluation cases. That would help us probe gaps in a test set beyond the familiar queries we already tend to examine; generated cases would be candidates, not ground truth.\n\n3. **An evidence-linked experiment report.** While writing a report in Word, I’d connect the relevant approved aggregate results or analysis excerpts to the claims I’m making. The AI could keep a claim-to-evidence map and flag conclusions that seem stronger than the cited results, or caveats and subgroup coverage that the draft doesn’t address. That would make it easier to write reports people can scrutinize without losing track of where conclusions came from.",
+        "first_public_number_1_to_5": 1,
+        "content_words": 327
+      },
+      "review_flags": []
+    }
+  ],
+  "warning": "Flags and structural checks do not prove semantic quality. Review complete public outputs and profiles."
+}

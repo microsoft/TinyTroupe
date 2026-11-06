@@ -342,6 +342,30 @@ class TestEpisodicMemory:
         assert recent[-2]["content"] == "test6"
         assert recent[-3]["content"] == "test5"
 
+    @pytest.mark.core
+    @pytest.mark.parametrize("count", [0, 1, 2, 5, 6, 9])
+    @pytest.mark.parametrize("include_omission_info", [False, True])
+    @pytest.mark.parametrize("prefix, lookback", [(2, 3), (0, 3), (2, 0), (0, 0)])
+    def test_recent_omission_info_only_marks_actual_gaps(self, setup, count, include_omission_info,
+                                                       prefix, lookback):
+        """A complete working-memory window must not claim events were omitted."""
+        memory = EpisodicMemory(fixed_prefix_length=prefix, lookback_length=lookback)
+        entries = [{"content": f"test{i}", "type": "stimulus"} for i in range(count)]
+        for entry in entries:
+            memory.store(entry)
+        memory.commit_episode()
+
+        recent = memory.retrieve_recent(include_omission_info=include_omission_info)
+
+        if count <= prefix + lookback:
+            assert recent == entries
+        else:
+            marker = [EpisodicMemory.MEMORY_BLOCK_OMISSION_INFO] if include_omission_info else []
+            suffix = entries[-lookback:] if lookback else []
+            assert recent == entries[:prefix] + marker + suffix
+        recent.clear()
+        assert memory.retrieve_all() == entries
+
     def test_retrieve_with_first_and_last_n(self, setup):
         """Test retrieve method with both first_n and last_n parameters"""
         memory = EpisodicMemory()
@@ -468,6 +492,25 @@ class TestSemanticMemory:
         assert processed["content"] == "Just a string"
         assert processed["type"] == "information"
         assert processed["simulation_timestamp"] is None
+
+    @pytest.mark.core
+    @pytest.mark.parametrize(
+        "memory_type",
+        [None, "action", "stimulus", "feedback", "consolidated", "reflection", "image_description"],
+    )
+    def test_preprocess_optional_metadata(self, setup, memory_type):
+        """Missing optional metadata uses the engram's documented defaults."""
+        memory = SemanticMemory()
+        value = {"content": "The client needs a faster account-opening process."}
+        if memory_type is not None:
+            value["type"] = memory_type
+
+        processed = memory._preprocess_value_for_storage(value)
+
+        assert processed["type"] == (memory_type or "information")
+        assert processed["simulation_timestamp"] is None
+        assert value["content"] in processed["content"]
+        assert "simulation_timestamp" not in value
 
     @patch("tinytroupe.agent.memory.logger")
     def test_store(self, mock_logger, setup):

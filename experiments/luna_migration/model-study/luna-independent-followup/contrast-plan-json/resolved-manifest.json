@@ -1,0 +1,55 @@
+{
+  "order_seed": 291031,
+  "protocol": "Transport-prerequisite repair only. The six contrast-plan requests were rejected by the API because JSON-object mode requires the word JSON in the messages. No completions or usage were returned. Preserve those attempts. Add the missing explicit JSON wording; otherwise keep the contrast hypothesis, seed, original inputs and transport unchanged.",
+  "imports": [
+    {
+      "path": "contrast-plan.json",
+      "variants": [
+        "contrast-plan"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "contrast-plan",
+      "phase": "persona_generation_plan",
+      "hypothesis": "Explicitly contrast the purpose of travel and chosen activities across candidates, rather than counting logistics and demographic differences as diversity.",
+      "cases": [
+        "persona-grace",
+        "persona-philip"
+      ],
+      "operations": [
+        {
+          "kind": "regex",
+          "message": 1,
+          "pattern": "(?s)## Generation Rules.*\\Z",
+          "max_matches": 1,
+          "new": "## Generation Rules\n\nThis is a character-design planning task, not the final full specification. Write four contrasting, plausible fictional lives that all meet the supplied particulars. An external random draw, not your judgment of the best person, will choose one for later expansion.\n\n## Design from chosen experiences\n\nBegin with four different answers to: what does this person want to spend their free time actually doing, and with whom? Make each answer concrete enough to distinguish the person from the other three. Then build a compatible life course, work situation, relationships and resources around that answer. No specific activity, personality, attitude or purchase choice is preferred.\n\nThe differences must matter to later behavior. Changing age, state, occupation or the name of a destination while preserving the same priorities does not satisfy this task. Do not organize the four slots as a tour of the allowed states or age range. Those constraints can overlap across candidates; the chosen experiences and personal motives should not be interchangeable.\n\nFor travel, distinguish the reason to go from the arrangements that make it possible. A pace, room, transport method, budget or preference for flexibility is not by itself a reason to take a trip. State what the person hopes to experience or participate in, why it attracts them, and a past choice illustrating that interest. Include practical arrangements afterward. Do not turn every desire into an explanation of how to minimize cost, effort or inconvenience.\n\nFor social life and voice, give each person a recognizable way of engaging with others. Do not copy a polite, measured narrator into every character. An individual may be inconsistent across situations without being incoherent. Describe the person, not a lesson in how one ought to behave. A positive or negative trait does not need an opposite trait added immediately to balance the paragraph.\n\nBefore returning, compare all four sketches. If the main travel motivation, ordinary chosen activity and interpersonal style could be exchanged without changing the lives, revise the sketches, not just their labels. The aim is distinct believable alternatives, not statistical representativeness or maximal extremity.\n\n## Constraints and output\n\nEach candidate must explicitly satisfy every original particularity: exact name, allowed age, gender, nationality, race_ethnicity, permitted residence, gross household income, partnership and children status, political identification and requested reading interest. The four names are the same requested label; the lives are alternatives, not shared memories.\n\nReturn only {\"candidates\": [...]} with exactly four objects. Every object must have exactly these five keys with nonempty substantive text values:\n{\"particulars\": \"...\", \"life_course\": \"...\", \"daily_life\": \"...\", \"travel\": \"...\", \"personality_and_voice\": \"...\"}\n\nThe ellipses stand for your text, not literal output. Use roughly 200-300 words per candidate, enough to check facts and distinguish the lives. Check all five keys in every object, including personality_and_voice.\n\nInvent personal biography, not external geography, event calendars, institutional rules or precise current service prices. Leave future arrangements undecided when facts are not supplied. Preserve coherent chronology, household finances and feasible activities. Do not answer an unseen market-research question.\n\nThese are deliberately contrasting model-generated possibilities. Equal selection among them does not imply equal real-world prevalence.\n"
+        }
+      ]
+    },
+    {
+      "id": "contrast-plan-json",
+      "parent": "contrast-plan",
+      "phase": "persona_generation_plan",
+      "hypothesis": "Same comparative character-design hypothesis; explicitly name JSON to satisfy the API prerequisite.",
+      "cases": [
+        "persona-grace",
+        "persona-philip"
+      ],
+      "operations": [
+        {
+          "kind": "replace",
+          "message": 1,
+          "old": "Return only {\"candidates\": [...]}",
+          "new": "Return only the JSON object {\"candidates\": [...]}",
+          "max_matches": 1
+        }
+      ]
+    }
+  ],
+  "selection": {
+    "persona-grace": "contrast-plan-json",
+    "persona-philip": "contrast-plan-json"
+  }
+}

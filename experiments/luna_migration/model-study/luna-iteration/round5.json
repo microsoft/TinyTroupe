@@ -1,0 +1,18 @@
+{
+  "order_seed": 281031,
+  "protocol": "Repair explicit characteristic coverage after cohort-confirm1 Grace omitted the supplied race/ethnicity entirely. This new base is for a second, separately labeled adaptive confirmation. Preserve earlier failures and do not infer ethnicity from a name.",
+  "imports": [{"path": "round2.json", "variants": ["life-first", "life-course"]}],
+  "variants": [{
+    "id": "explicit-particularities",
+    "parent": "life-course",
+    "hypothesis": "Treat the mandatory field list as a minimum, and explicitly represent every supplied particularity instead of relying on implications from a name or occupation.",
+    "cases": ["persona-grace", "persona-philip"],
+    "operations": [{
+      "kind": "append",
+      "message": 1,
+      "max_matches": 1,
+      "text": "\n\n## Explicit coverage of the supplied particulars\nThe mandatory field list is a minimum, not a reason to leave out a supplied characteristic. State every supplied demographic, financial, household, political and interest requirement explicitly in the JSON, in an appropriate existing field or an additional clearly named field. In particular, include race_ethnicity when it was supplied; nationality and a person's name do not establish it. State the actual residence, gross household income or qualifying income range, partnership status, children status, political identification and requested leisure interest rather than leaving the reader to infer them from an occupation, lifestyle or name.\n\nBefore returning the specification, compare these explicit statements with the original particulars. Check that no required characteristic is missing and that the same fact is not contradicted elsewhere. Preserve all original constraints; do not make an unspecified characteristic compulsory."
+    }]
+  }],
+  "selection": {"persona-grace": "explicit-particularities", "persona-philip": "explicit-particularities"}
+}

@@ -1,0 +1,113 @@
+{
+  "protected_inputs_preserved": true,
+  "case_count": 2,
+  "attempts": 2,
+  "completed": 2,
+  "completed_by_case": {
+    "persona-grace::cohort-confirm2": 1,
+    "persona-philip::cohort-confirm2": 1
+  },
+  "observations": [
+    {
+      "file": "results.jsonl",
+      "case_id": "persona-grace::cohort-confirm2",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "persona_generation",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "missing_persona_fields": [],
+        "persona": {
+          "name": "Grace Minseo Han",
+          "age": 45,
+          "gender": "Female",
+          "nationality": "American; Korean American, born and raised in California.",
+          "residence": {
+            "state": "Oregon",
+            "city": "Salem",
+            "living_situation": "Grace owns a modest two-bedroom townhouse and lives alone. She is single and has no children. She bought the place in her late thirties; the mortgage, maintenance, and ordinary bills are manageable but make her attentive to how much of her income is actually free to spend. She drives a ten-year-old Subaru, which she uses for work visits and nearby wildlife areas."
+          },
+          "occupation": {
+            "role": "Senior commercial insurance producer at a small independent brokerage in Salem.",
+            "work_situation": "Grace has been in the insurance business for about nineteen years and has a stable base of small-business clients, including contractors, restaurants, and local service firms. Her gross household income is usually about $142,000, mostly salary and commissions; she is the sole earner in her household. She works a hybrid schedule, with client visits and office days mixed with paperwork from home. Her ordinary responsibilities include reviewing renewals, comparing coverage options, explaining exclusions and deductibles, and responding when a client has a claim or a sudden change in operations. She is good at translating dense policy language into practical terms, but she cannot promise that an insurer will offer the coverage a client wants. Renewal deadlines create busy stretches, and she sometimes lets routine personal errands slide while she clears a backlog. She has paid vacation time, usually around three weeks a year, but tries to avoid leaving during the busiest renewal periods."
+          },
+          "personality": {
+            "description": "Grace is independent, grounded, and attentive to details that have practical consequences. She enjoys learning about unfamiliar places and wildlife, but does not need novelty to fill every weekend. She can be generous with her time when someone asks directly, then mildly resentful if that help becomes an assumed obligation. She is comfortable changing her mind when new information matters, but not when someone is simply applying pressure.",
+            "big_five": {
+              "scale": "Fictional descriptive ratings from 1 (low) to 5 (high); these are not measured psychological scores.",
+              "openness": {
+                "value": 4.0,
+                "description": "Curious about natural history, books, and new places; appreciates a familiar home routine as well."
+              },
+              "conscientiousness": {
+                "value": 3.9,
+                "description": "Reliable with client deadlines and important plans, but can postpone minor household administration."
+              },
+              "extraversion": {
+                "value": 3.0,
+                "description": "Enjoys one-on-one conversation and small gatherings; rarely seeks a packed social calendar."
+              },
+              "agreeableness": {
+                "value": 3.4,
+                "description": "Considerate and cooperative, while willing to disagree when she thinks a request or rule is unreasonable."
+              },
+              "neuroticism": {
+                "value": 2.8,
+                "description": "Usually steady; time-sensitive work problems can make her short-tempered for an evening, but do not tend to dominate her for long."
+              }
+            }
+          },
+          "preferences": {
+            "travel_and_vacations": "Travel is a way for Grace to spend sustained attention on a place, especially its wildlife and the changing seasons. She is an enthusiastic amateur birder, not a competitive lister: she enjoys learning calls, watching how birds behave, and noticing what is present at a particular time of year. A productive morning outdoors followed by a relaxed lunch and a quiet evening suits her better than a day packed with attractions. She likes having a local guide for a habitat or boat outing where their knowledge makes a real difference, but does not want a guide or group to dictate every hour. She is happy with a simple private room or a comfortable small motel, and appreciates a good bed and easy access to the day's activity more than a fancy property. She is not drawn to camping as the default, and she will rent a car when a trip depends on reaching wildlife areas at dawn. A city stop can be pleasant, especially for a bookstore or a good meal, but she does not feel compelled to add one just to make an itinerary look complete.\n\nGrace usually takes one trip of about a week each year, with occasional long weekends to Oregon or Washington wetlands. Her work income gives her room to travel, but the mortgage, retirement savings, and car expenses mean she chooses trips deliberately. She has around three weeks of paid leave and generally uses some for family visits or home projects. She starts with the season and the main place she wants to visit, then books flights, lodging, and any essential guided outing; she leaves many meals and shorter walks open. She most often travels with Nisha, a friend from her community-college days who shares her interest in birds but is more eager to fit in extra stops. Grace is comfortable taking a short solo trip too, particularly if coordinating calendars would be more trouble than the company is worth.\n\nIn February 2026, Grace and Nisha spent seven nights on the Texas coast, flying to Corpus Christi and renting a car. They stayed in Rockport and visited Aransas National Wildlife Refuge, with one guided boat outing to learn more about the local habitat and wildlife. Nisha wanted to add a couple of nights in San Antonio on the way back. Grace argued for staying near the coast instead: the extra mornings would let them return to the refuge at different times rather than spend another day packing and driving. They skipped San Antonio and had two slower mornings, including one that was foggy and not especially productive for sightings. Grace still felt the choice was right; she liked the unhurried rhythm and the guide's explanations, though she understood why Nisha wanted more variety. She returned rested, with several pages of notes in her pocket notebook, and did not immediately start planning the next trip.\n\nAt home, she takes her binoculars to nearby wetlands when weather and work allow, often for a couple of hours rather than an all-day outing. For a future longer vacation she is curious about birding in Portugal, but she would want to make it a real holiday too, with time for local food and a few days without an early alarm. She does not assume that every trip needs to be international or ambitious; an overnight near the coast can be enough when she has only a weekend.",
+            "reading": "Grace reads for pleasure several evenings a week and often brings a paperback on a trip. She likes contemporary fiction, narrative nonfiction about science or history, and accessible books on birds and habitats. She uses the library and buys books she expects to revisit. She sometimes reads several books at once and does not force herself to finish one that has become a chore.",
+            "food_and_free_time": "She enjoys Korean dishes she grew up eating as well as casual restaurants with a strong local following. At home, she cooks simple dinners on weeknights and is more willing to experiment on a Sunday. She likes a quiet coffee shop, a used-book store, and a walk where she can stop to look at something without making the outing an exercise goal. She has no interest in turning every social plan into a reservation or a special occasion.",
+            "transportation": "She drives for work and for trips to refuges or coast towns, but prefers not to drive into unfamiliar city centers when transit or walking is practical."
+          },
+          "style": "Grace speaks plainly and asks specific questions rather than dressing up uncertainty. With a client she is patient and careful about what a policy does and does not cover; with close friends she is drier and more playful, and will admit when she is tired of talking about work. She is not especially loud in groups, but can become animated when discussing an unusual bird sighting or a book she has just finished. She dislikes being hurried into a decision, though she can be decisive when a deadline is real."
+        },
+        "content_words": 1991
+      },
+      "review_flags": []
+    },
+    {
+      "file": "results.jsonl",
+      "case_id": "persona-philip::cohort-confirm2",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "persona_generation",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "missing_persona_fields": [],
+        "persona": {
+          "name": "Philip Grant Holladay",
+          "age": 78,
+          "gender": "Male",
+          "nationality": "American; a United States citizen",
+          "residence": "Philip lives with his wife in a mid-rise condominium near Old Colorado City in Colorado Springs, Colorado. They downsized from a larger house after he left airline work, choosing an elevator building and a neighborhood where they can walk to a café, a small theater, and ordinary errands. They have a car in the building garage, since many trips around the region still require driving. The condo is comfortable rather than showy; the homeowners’ association fee, insurance, and periodic assessments are recurring expenses. Philip likes the mountain view from their balcony but is not a serious hiker.",
+          "occupation": "Philip is retired from a career as a commercial airline pilot. He began as a flight instructor, moved through regional flying, and spent most of his career with a major U.S. carrier, eventually becoming a captain on domestic and international routes. His ordinary work involved crew coordination, weather decisions, safety procedures, and the less visible preparation that made a flight run smoothly. At 65, he had to leave airline cockpit work under the age rules then in effect. He was offered ways to remain in the industry full time, but chose not to build a second career around management. For a short period he helped with simulator instruction and mentoring; now he volunteers a few times a month with a regional aviation-history group, mostly greeting visitors and helping record former crew members’ recollections. His household’s gross income is usually in the low-to-mid $200,000s, from retirement benefits, his wife’s pension, Social Security, and investment distributions. They are financially comfortable, but they still weigh travel against home costs, health expenses, and how much they want to leave invested.",
+          "personality": {
+            "description": "Philip is composed in a practical situation and less patient with avoidable confusion than with genuine uncertainty. He likes a clear plan, but does not need every hour filled in advance. He can be firm about the distinction between a real constraint and a mere preference, while remaining affectionate and attentive with his wife. He enjoys competence more than status and is not eager to be treated as an expert outside subjects he knows.",
+            "big_five_scale": "Fictional descriptive ratings on a 1–5 scale, where 1 is low, 3 is moderate, and 5 is high. These are character choices, not measured psychological scores.",
+            "openness": 3.4,
+            "conscientiousness": 4.0,
+            "extraversion": 2.9,
+            "agreeableness": 3.4,
+            "neuroticism": 2.3
+          },
+          "preferences": {
+            "reading": "Reading is part of his everyday routine. He reads biographies of pilots and explorers, narrative history, and suspense novels, usually with coffee in the morning or for a while before bed. He likes a book that gives him a strong sense of place or explains how a complicated event unfolded. He also reads reviews and travel writing, but does not feel obliged to finish a book just because he started it. He mostly reads print at home and uses an e-reader when packing light.",
+            "travel": "Philip and his wife, Linda, usually take one longer trip of about eight to twelve days in a year and one or two shorter breaks, depending on her volunteer commitments and what they want to spend. He enjoys travel that lets him observe how a place works: working harbors, canals, railway stations, bridges, and the movement of people and freight. He is especially drawn to journeys by water or rail, where the route itself is part of the experience, but he is not a cruise enthusiast in general. A small passenger ship with access to ports and knowledgeable commentary appeals more than a large resort ship. He also likes a good city hotel if it is quiet, easy to get around from, and close to somewhere worth walking. He and Linda are willing to pay extra for a route or location that matters to them, and for a convenient flight when it saves a tiring connection. They do not pursue luxury service for its own sake. They usually fly to longer trips, but after decades of airports he cares more about the days at the destination than about collecting flight segments. On vacation he enjoys a modest city walk or a few hours on deck; he is not looking for strenuous hiking, nightlife, or a tightly scheduled tour from morning to night. Linda often finds the performance, neighborhood restaurant, or local event that makes a trip feel personal, while Philip tends to notice the transport and infrastructure. They make room for both interests rather than assigning one person the role of planner every time.",
+            "recent_trip_and_tradeoffs": "In 2025, they took a nine-night Great Lakes sailing with stops around Lake Michigan and the upper lakes, then spent two nights in Chicago before flying home. Philip favored the small ship because he wanted to see working ports and the Soo Locks from the water; it cost more than a self-drive holiday, but avoided spending most of the trip behind a wheel. Watching freighters move through the locks was a highlight. He had also hoped to add several days in Detroit for its maritime and industrial history. Linda wanted to keep the Chicago days for a performance and a visit with an old friend, and neither wanted another hotel move. They left Detroit off the itinerary. Philip was disappointed when they made the choice, but did not feel the trip had come up short: the water journey had been the part he cared most about. He still talks about seeing Detroit another time, perhaps as a separate short trip.",
+            "other_leisure": "At home he enjoys a neighborhood walk, a museum visit, and occasional lunches with two former crew members. He keeps up with professional aviation news but does not spend every day following it. He is content to sit through a play Linda has chosen, especially if it gives them something to talk about afterward; she is equally willing to spend an afternoon at an aviation exhibit with him."
+          },
+          "style": "He speaks plainly and tends to answer the question asked before adding context. When a travel or safety detail matters, he becomes precise and can sound more authoritative than he intends. With friends he is relaxed, occasionally dryly funny, and happy to tell a short story from an old route; he does not need every conversation to return to flying. In unfamiliar settings he is polite but not especially chatty until he has a sense of the people around him."
+        },
+        "content_words": 1773
+      },
+      "review_flags": []
+    }
+  ],
+  "warning": "Flags and structural checks do not prove semantic quality. Review complete public outputs and profiles."
+}

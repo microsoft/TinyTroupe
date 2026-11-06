@@ -1,0 +1,54 @@
+{
+  "full_rollout_library_sha256": "fca0c6b13bdbfb88a0856955384530f42bed3f2b8bee350bb23dccbe5d8375cd",
+  "full_rollouts_core_passed": 429,
+  "current_library_sha256": "88c05fcfc6d336a487c57b1bca665eccf983c073ab8fec035507ed88f3dbf97d",
+  "only_library_file_changed_since_rollouts": "extraction\\prompts\\interaction_results_extractor.mustache",
+  "prior_template_sha256": "2be35c17504f24793528839b06836adc0de720d09d02cba306af376c6e4ce92e",
+  "proof": "Replacing only the extraction template bytes, in memory, exactly reproduces the saved whole-library fingerprint. No workspace files were temporarily reverted.",
+  "current_source_core": {
+    "status": "Passed",
+    "passed": 432,
+    "deselected": 440,
+    "warnings": 7,
+    "elapsed_seconds": 719.59,
+    "library_sha256": "88c05fcfc6d336a487c57b1bca665eccf983c073ab8fec035507ed88f3dbf97d"
+  },
+  "postprocessing_replay": {
+    "started_at": "2026-11-02T20:52:55.435266+00:00",
+    "elapsed_seconds": 97.45299999997951,
+    "library_sha256": "88c05fcfc6d336a487c57b1bca665eccf983c073ab8fec035507ed88f3dbf97d",
+    "template_sha256": "e48265ec04ce4467abc2f0e38dbf2f578e2a9ec067f7623e05e0f21f3d2a47b5",
+    "model": "gpt-6-luna",
+    "effort": "xhigh",
+    "public_responses_semantically_unchanged": 100,
+    "response_type_changes": [],
+    "scope": "Postprocessing replay of 100 real complete-study histories. Only extraction system instructions changed; original user/history messages and response schemas retained. This is not a new simulation rollout or a full notebook rerun under the later source hash.",
+    "returned_usage_estimate": {
+      "unique_saved_api_responses_in_run_window": 100,
+      "responses_missing_usage": 0,
+      "tokens": {
+        "prompt": 246375,
+        "completion": 16433,
+        "cached": 107359,
+        "writes": 138716
+      },
+      "usd": "0.026659590",
+      "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced.",
+      "ownership": "All 100 responses in the new isolated replay cache."
+    },
+    "prior_in_process_estimate": {
+      "unique_saved_api_responses_in_run_window": 94,
+      "responses_missing_usage": 0,
+      "tokens": {
+        "prompt": 232920,
+        "completion": 15741,
+        "cached": 100867,
+        "writes": 131771
+      },
+      "usd": "0.025378745",
+      "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+    },
+    "pricing_note": "The earlier in-process snapshot priced 94 saved responses. After process completion the isolated cache contains 100; the corrected estimate includes all 100 without rerunning or resampling any response."
+  },
+  "scope": "Full notebooks ran on the prior runtime. Only final extraction instructions changed afterward. The later core suite and 100-history postprocessing replay validate that change separately; they are not represented as a new full simulation rollout."
+}

@@ -1,0 +1,122 @@
+{
+  "status": "completed_with_quality_rejections",
+  "resumed_at": "2026-10-26T21:26:00+00:00",
+  "restoration_evidence": "luna-api-restored-credit-check.json",
+  "active_shell_ids": [],
+  "restoration_startup_repairs": "First Children1 and Travel Product attempts failed before any notebook cells: kernel readiness exceeded nbclient's 60-second default on this shared Windows host. A minimal real kernel succeeded in 50.08 seconds. Runner now allows 300 seconds for readiness without changing cell or API timeouts. TravelAd was stopped before simulation to fix a duplicated demo title assignment and missing cohort assignment; both complete extraction loops now have end-to-end deterministic regression coverage, with all 33 focused notebook tests passing.",
+  "historical_blocked_at": "2026-10-24T07:29:04-03:00",
+  "historical_credit_block_reason": "Before the user restored credits, the configured account returned HTTP 429, error code credit_balance_exhausted, error type insufficient_quota. This block is resolved.",
+  "diagnosis_evidence": "luna-api-rate-limit-diagnosis.json",
+  "latest_availability_recheck": {
+    "checked_at": "2026-10-24T08:08:22.451882-03:00",
+    "evidence": "luna-api-availability-delayed-recheck.json",
+    "http_status": 429,
+    "error_code": "credit_balance_exhausted",
+    "error_type": "insufficient_quota",
+    "max_retries": 0,
+    "result": "Still blocked after a twenty-minute wait without API traffic; no full runs restarted. No further automatic availability probes are planned without a resource-restoration signal."
+  },
+  "generation_probe_evidence": "luna-api-availability-probe.json",
+  "completed_quality_decisions": 25,
+  "promoted_notebooks": 15,
+  "rejected_complete_executions": 10,
+  "completed_execution_audits": 25,
+  "final_execution_audit": "luna-sweep-execution-audit.json",
+  "final_preservation_check": "luna-sweep-final-preservation-check.json",
+  "final_report": "luna-sweep-quality-report.html",
+  "restored_credit_completed_reviews": {
+    "lx13": {
+      "started_at": "2026-10-26T21:38:50.805136+00:00",
+      "elapsed_seconds": 6187.47,
+      "decision": "accept_with_caveats",
+      "execution_audit_passed": true,
+      "promoted": true,
+      "finding": "All 103 public answers and 100 cohort extractions reviewed; IDs match, exact titles, votes53/16/22/9. Seven travel axes now guide sampling; ages27-73, no minors. Useful differentiated preferences but repeated cautious inquiry language remains."
+    },
+    "lx15": {
+      "started_at": "2026-10-27T00:43:51.024653+00:00",
+      "elapsed_seconds": 3558.89,
+      "decision": "reject",
+      "execution_audit_passed": true,
+      "finding": "All 150 final public decisions and extracted rationales reviewed, with all three 50-person groups unanimously No. Same personas, new public utterances, identical collapsed choices. Private-thought justification inference repaired and verified with two real bare-answer replays plus one genuine-public-reason control; 34 focused tests passed. No promotion."
+    },
+    "lx20": {
+      "started_at": "2026-10-26T21:35:24.617343+00:00",
+      "elapsed_seconds": 4639.2,
+      "decision": "reject",
+      "execution_audit_passed": true,
+      "finding": "All 50 rankings exactly match public answers; 49/50 B-first versus human 14%, severe empirical mismatch and repeated reasoning. All 50 rationales/profiles and six figures reviewed; no promotion."
+    }
+  },
+  "library_sha256": "49b7e758768e1233ee3ea9d3738abcc57105bee662e7aacbc71950ee9484d7d8",
+  "model": "gpt-6-luna",
+  "reasoning_effort": "xhigh",
+  "automatic_restart_allowed": false,
+  "offline_preservation_check": "luna-sweep-offline-preservation-check.json",
+  "offline_resource_audit": {
+    "evidence": "luna-sweep-cached-api-usage.json",
+    "table": "luna-sweep-cached-api-usage.csv",
+    "api_requests_for_audit": 0,
+    "distinct_successful_cached_luna_responses": 6835,
+    "total_tokens": 72480543,
+    "prompt_tokens": 56279723,
+    "completion_tokens": 16200820,
+    "reasoning_tokens_included_in_completion": 6189104,
+    "scope": "Retained current-case caches include earlier attempts, not just final executions. Cross-cache response copies are counted once; per-row attribution is to the first associated case cache. This is not a complete billing ledger, a dollar estimate, or a forecast of remaining usage."
+  },
+  "historical_offline_continuation": "Before credit restoration, verified fourteen promotions and all three paused caches without API calls. Recovered 103 public travel-ad answers, diagnosed twenty minors and repaired sampling criteria wiring. Those pending validation steps have now been completed.",
+  "next_action": "No automatic reruns remain. All 25 active notebooks completed at their original sizes and passed current-source/library/model/effort execution auditing; all 25 substantive reviews are final. Fifteen acceptable executions are saved in repository notebooks; ten rejected complete executions and diagnostics remain preserved separately. The final HTML/CSV table records each comparison and limitation. Persona/preference convergence, empirical mismatch, conversational stagnation, some profiler failures and language artifacts remain research limitations, not reasons to force favorable outputs. A future behavioral/sampling redesign needs a separately agreed experiment.",
+  "final_replay_resource_note": "The final Product study uses three original sampling-plan transactions (1,282,375 bytes) streamed from its intact 9.3 GB completed control trace, avoiding a large shared-host memory load. Every source cell and all 150 extractions then executed, with unchanged persona traits and original study conditions. A redundant 8.64 GB partial copy from an abandoned attempt was removed; the original complete trace, all API responses, notebook attempts, receipts and final evidence remain intact. Resource totals recorded below predate these restored-credit runs and are not final billing totals.",
+  "stopped_runs": [],
+  "historical_stopped_runs": [
+    {
+      "case": "lx20",
+      "notebook": "AI-enabled Children Story Telling Market Research.ipynb",
+      "population": 50,
+      "started_at": "2026-10-24T09:00:29.249550+00:00",
+      "elapsed_seconds": 5255.48,
+      "timeout_seconds": 6000,
+      "current_cell": 31,
+      "cache_bytes": 43518809,
+      "partial_notebook_saved": true
+    },
+    {
+      "case": "lx13",
+      "notebook": "Online Advertisement for Travel.ipynb",
+      "population": 100,
+      "demonstration_agents": 3,
+      "started_at": "2026-10-24T08:38:46.016094+00:00",
+      "elapsed_seconds": 6558.55,
+      "timeout_seconds": 12000,
+      "current_cell": 19,
+      "cache_bytes": 48129239,
+      "partial_notebook_saved": true,
+      "source_changed_after_stop": true,
+      "pending_repairs": [
+        "Deterministic exact-headline lookup from extracted ad ID",
+        "Original seven audience criteria passed as sampling_space_description as well as context, with population size 100"
+      ],
+      "public_answers_recovered_and_reviewed": 103,
+      "public_cohort_votes_before_sampling_repair": {
+        "1": 21,
+        "2": 23,
+        "3": 54,
+        "4": 2
+      },
+      "warning": "These are pre-sampling-repair public answers, not a final execution of the latest source. Full extraction and sampling repair validation remain pending."
+    },
+    {
+      "case": "lx15",
+      "notebook": "Travel Product Market Research.ipynb",
+      "population": 150,
+      "started_at": "2026-10-24T08:22:36.406422+00:00",
+      "elapsed_seconds": 7528.00,
+      "timeout_seconds": 18000,
+      "current_cell": 26,
+      "cache_bytes": 17501471,
+      "partial_notebook_saved": true
+    }
+  ],
+  "historical_credit_shutdown": "Only three verified owned kernels were stopped during the credit block; runners saved partial notebooks, receipts and transcripts. Their DeadKernelError receipts reflect deliberate stops, not notebook defects. Later full successful executions supersede them.",
+  "final_shutdown": "All restored-credit notebook runners completed and their kernels were shut down by the runner. No notebook or helper process remains active for this task."
+}

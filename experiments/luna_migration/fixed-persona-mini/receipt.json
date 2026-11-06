@@ -1,0 +1,14 @@
+{
+  "model": "gpt-5-mini",
+  "requested_effort": "xhigh",
+  "effort_caveat": "The client does not forward this setting to GPT-5-mini; the comparison is not effort-controlled.",
+  "elapsed_seconds": 230.89100000006147,
+  "usage": {
+    "input_tokens": 142730,
+    "output_tokens": 32023,
+    "total_tokens": 174753,
+    "model_calls": 16,
+    "cached_calls": 0
+  },
+  "scope": "Four fixed-persona diagnostics, not representative population estimates. Backend changes include quality evaluation and extraction. No persona preferences, survey wording or original quality thresholds were altered."
+}

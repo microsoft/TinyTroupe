@@ -1,0 +1,18 @@
+{
+  "order_seed": 281030,
+  "protocol": "Fixed-input persona test, three fresh responses per source constraint. Unlike the cohort alternative, this prompt supplies no previous drafts. Freeze this candidate before all six calls. Judge hard constraints, life coherence and meaningful between-response diversity; do not select a favorite sample and discard others. This is not a calibrated population sampler.",
+  "imports": [{"path": "round2.json", "variants": ["life-first", "life-course"]}],
+  "variants": [{
+    "id": "divergent-life",
+    "parent": "life-course",
+    "hypothesis": "Explicitly consider distinct complete life possibilities before choosing one, rather than polishing the first demographic archetype.",
+    "cases": ["persona-grace", "persona-philip"],
+    "operations": [{
+      "kind": "append",
+      "message": 1,
+      "max_matches": 1,
+      "text": "\n\n## Explore possibilities before choosing this individual\nBefore writing the final specification, consider four genuinely different plausible lives that meet all of the supplied constraints. Each possibility should have a different organizing commitment or desired experience, not merely a different occupation or location. Think through what a week looks like, whom the person spends discretionary time with, and what they willingly give up something else to do. Each possibility must be coherent on its own and compatible with the specified income, household and other particulars.\n\nSelect one possibility to develop into the final individual. Do not select by which person seems most sensible, agreeable, moderate, safe as a commercial prospect, or easy for a reader to approve of. There is no preferred candidate or survey outcome. Do not merge the possibilities into a balanced average, reverse every conventional preference, or make anyone implausible for the sake of novelty. A person can be ordinary without sharing the same priorities as every other ordinary person.\n\nKeep this exploratory work out of the response. Return only the one selected person's complete JSON specification in the required format. Do not claim that this procedure supplies demographic frequencies or statistical representativeness."
+    }]
+  }],
+  "selection": {"persona-grace": "divergent-life", "persona-philip": "divergent-life"}
+}

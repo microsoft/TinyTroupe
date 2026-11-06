@@ -1,0 +1,36 @@
+{
+  "source": "cf4-gaz\\population-generation-evidence.json",
+  "source_sha256": "72d672c33335d2a41f2955bac8286467f6db6f2675cb58854d27ca359b0ad21c",
+  "seed": 20261104,
+  "eligibility": "Age 18+; not in the eight-person development panel.",
+  "eligible_count": 29,
+  "selection_size": 8,
+  "selected_names": [
+    "Melissa Dawn Hensley",
+    "Teresa Maribel Navarro",
+    "Avery Claire Maddox",
+    "Nathaniel Scott Weber",
+    "Ethan Cole Rutledge",
+    "Gregory Alan Whitfield",
+    "Darius Coleman",
+    "Justin Wade Pritchard"
+  ],
+  "excluded_development_names": [
+    "Anthony James Holloway",
+    "Erin Michelle Dalton",
+    "Evan McAllister",
+    "Janet Louise Harwood",
+    "Marjorie Keating",
+    "Rosa María Castañeda",
+    "Stephen Michael Donnelly",
+    "Warren Ellis Gentry"
+  ],
+  "selection_used_no_outcomes": true,
+  "original_persona_payloads_unchanged": true,
+  "conditions": [
+    "plain-transport production prompt",
+    "plain-transport situated decision rules"
+  ],
+  "fixed_initial_datetime": "2026-11-02T16:20:19.182432",
+  "limitations": "Small fixed-biography diagnostic, not population calibration. Adult selection does not establish the original PickFu eligibility criteria."
+}

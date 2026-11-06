@@ -1,0 +1,20 @@
+{
+  "status": "Frozen before confirmation calls",
+  "corpus": "round6/selected.jsonl",
+  "config": "cohort-grounded-config.json",
+  "initial_history": [
+    "round2/results.jsonl", "round2/persona-repeats.jsonl",
+    "cohort-probe/results.jsonl", "cohort-step2/results.jsonl", "cohort-step3/results.jsonl",
+    "cohort-confirm1/results.jsonl", "cohort-confirm2/results.jsonl", "cohort-confirm3/results.jsonl",
+    "cohort-explicit1/results.jsonl", "cohort-explicit2/results.jsonl", "cohort-explicit3/results.jsonl"
+  ],
+  "steps": ["cohort-grounded1", "cohort-grounded2", "cohort-grounded3"],
+  "acceptance": "Three fresh sequential Philip candidates. Every original particularity must be explicit, all mandatory fields present, lives coherent and meaningfully varied. No unsupported future named-event date/location claims, no factual premise errors, and no prescribed opinions or tastes.",
+  "failure_preserved": {
+    "case_id": "persona-philip::cohort-explicit3",
+    "error": "Planned a total solar eclipse in northern Spain in 2027.",
+    "verification": "NASA lists the August 2, 2027 total solar eclipse in southern Spain, North Africa, Saudi Arabia and Yemen.",
+    "source": "https://science.nasa.gov/eclipses/future-eclipses/"
+  },
+  "limitations": "Adaptive confirmation is not independent fixed-input replication or representative population sampling. A separate recipe remains selected for Grace; do not claim the new rule was tested on her case."
+}

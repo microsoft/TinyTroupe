@@ -1,37 +1,22 @@
-# Normalizer
+# Semantic partition by item identifier
 
-You are a system that normalizes text data (clusters similar elements and produces canonical abstractions).
+Read the actual meaning of each numbered item and partition the entire collection into useful recurring themes, up to maximum_groups.
+Return the required JSON object with:
+- labels: an array of short, distinct theme labels, each within max_length characters. Group identifiers are their one-based positions.
+- assignments: for EVERY source item identifier, the integer identifier of its single best-fitting group.
 
-Input:
-  - A list of textual elements (concepts, phrases, short passages).
-  - A maximum desired number of output elements N (this is a HARD UPPER BOUND; you MUST NOT return more than N under any circumstance. You MAY return fewer if appropriate to avoid near-duplicate or trivial splits).
+Use fewer groups when there are fewer genuinely distinct themes. Never exceed maximum_groups or force trivial splits.
+The identifiers preserve source text. They are references, not ranks or content.
+Do not group by identifier order, prose style, source person, punctuation or a common domain such as "personality."
+Distinguish meaningful themes present across the collection. Let the themes emerge from the items rather than imposing demographic stereotypes.
+A theme can combine compatible related concepts when the group limit requires it. Use every group for at least one item.
 
-Goal:
-  - Partition ALL input elements (no omissions, no overlap) into UP TO N non-overlapping groups.
-  - Produce ONE canonical abstraction per group (short phrase / concept / concise summary) that subsumes its members.
-  - If the number of semantically distinct groups is < N, return only that smaller number (never force artificial splits). NEVER exceed N.
-  - If the number of input elements <= N, you may simply return them unchanged (identity).
+Read each item as a whole; assign it according to its main substantive meaning.
+Mixed items go to the most fitting theme, not multiple groups.
+Use the same thematic distinction consistently throughout the collection.
+The deterministic caller reconstructs the complete, unchanged original strings, including duplicate occurrences.
+You therefore must NOT repeat or rewrite any source text in the output.
 
-Clustering Guidance:
-  - Group by semantic similarity, not by superficial wording only.
-  - Prefer broader abstractions that still clearly represent every member.
-  - Merge extremely similar or trivially rephrased elements.
-  - Avoid creating two outputs whose meanings largely overlap.
-
-Abstraction Guidance:
-  - For very short items: pick / synthesize a concise concept label.
-  - For longer passages: synthesize a short clause that preserves the shared gist.
-
-Output Format:
-  - JSON object where each key is a canonical string and each value is an array of original input elements that belong to that cluster.
-  - Example: {"Canonical Category 1": ["original item 1", "original item 2"], "Canonical Category 2": ["original item 3"]}
-  - Order does NOT matter.
-  - DO NOT include explanations, numbering, or additional structure—just the JSON object.
-  - Return at most N key-value pairs. RETURNING MORE THAN N ITEMS IS A SPECIFICATION VIOLATION – DO NOT DO IT.
-{{#max_length}}
-  - EACH OUTPUT ELEMENT STRING MUST BE AT MOST {{max_length}} CHARACTERS LONG.
-  - If necessary, abstract or summarize so that it fits within {{max_length}} characters while preserving the semantic gist.
-  - Prefer concise noun phrases or short clauses, avoid long enumerations.
-  - Do NOT number the outputs or add quotes beyond standard JSON quoting.
-{{/max_length}}
-  
+Check that the labels genuinely distinguish their assigned members.
+Do not use a universal category that erases the differences, and do not fill a last category with leftovers unrelated to its label.
+Return only schema-conforming JSON.

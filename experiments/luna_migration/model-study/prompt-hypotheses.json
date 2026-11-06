@@ -1,0 +1,188 @@
+{
+  "order_seed": 271021,
+  "protocol": "Exploratory paired ablations: 20 fresh baseline calls plus 30 prompt variants on each of gpt-6-luna and gpt-6.1-terra, both xhigh with unchanged token budgets. Seeded shuffled order for Luna, reversed for Terra. One initial sample per cell. Preselected reliability subset (gazpacho-underdispersion-1 baseline and task-contract, plus the four extraction cases baseline) receives two further samples per model, for three total and 124 planned calls. No preferred sentiments or population distributions. Exact original personas, safety constraints, schemas and product premises remain fixed except the persona-generation treatment, which changes elaboration directives without changing demographic constraints. Travel neutral wording compares to travel-format, not raw baseline. Existing public-only extraction pairs supply the evidence-boundary intervention; no duplicate variant is needed. Family-level treatments are separate, not an all-in-one optimized prompt. Qualitative review is unblinded. All questionnaire wording variants are distinct experimental conditions; none are silently substituted for the empirical study instrument.",
+  "variants": [
+    {
+      "id": "task-contract",
+      "hypothesis": "Explicit pending-task and completion semantics reduce missing public responses and stale-goal interference without prescribing the answer.",
+      "cases": ["chat-galette", "chat-design-tradeoff", "interview-evidence-pilot", "brainstorm-no-link-safeguard", "brainstorm-initial-lisa", "brainstorm-initial-oscar", "brainstorm-initial-marcos", "travel-affordable-trip", "travel-can-afford-luxury", "travel-modest-getaway", "children-ranking-collapse-1", "children-ranking-collapse-2", "gazpacho-underdispersion-1", "gazpacho-underdispersion-2"],
+      "operations": [
+        {
+          "kind": "replace", "message": 0,
+          "old": "They are past events whose effects already took place and led to your current state. There could be events missing, and this fact will also be mentioned below. Use them only as context.",
+          "new": "These records describe events already received or performed. A received question can still be unanswered: its presence in memory does not mean you have replied. Use the records to distinguish completed actions from pending requests. Missing events, if any, are indicated below.",
+          "max_matches": 1
+        },
+        {
+          "kind": "replace", "message": 0,
+          "old": "Your current goals are:",
+          "new": "Goals recorded before the latest stimulus (update them if the activity has changed):",
+          "max_matches": 1
+        },
+        {
+          "kind": "replace", "message": 0,
+          "old": "Emergency stop: if your next action would be unrealistic/repetitive/low-quality, issue DONE instead.",
+          "new": "If a proposed action would be repetitive or implausible, choose a simpler appropriate action. If you have an unanswered question to address, give a public answer or explicitly state your uncertainty or refusal; do not silently skip it.",
+          "max_matches": 1
+        },
+        {
+          "kind": "replace", "message": 0,
+          "old": "Other DONE cases: nothing relevant to add; waiting for response/event; unsure what to do.",
+          "new": "Use DONE when your current contribution is complete or no action is pending. Being uncertain about an answer does not itself mean you are waiting for a new question.",
+          "max_matches": 1
+        },
+        {
+          "kind": "replace", "message": 1,
+          "old": "You can now produce your next sequence of actions for this turn, in order, and finish with DONE.",
+          "new": "Current turn: respond to the latest interaction as the person described. If the latest stimulus is an internal thought about an unanswered question in memory, that question remains the current task. An earlier goal such as introducing yourself or withholding solutions does not prevent you from moving to the newly requested activity. Communicate your response in TALK; THINK is private and does not answer another person. Finish with DONE after your contribution. Use relevant personal circumstances without aiming for any preferred choice, score, or agreement.",
+          "max_matches": 1
+        }
+      ]
+    },
+    {
+      "id": "contextual-style",
+      "hypothesis": "Context-sensitive characterization reduces persona exhibition and excessive explanation without removing identity constraints.",
+      "cases": ["chat-galette", "chat-design-tradeoff", "interview-evidence-pilot"],
+      "operations": [
+        {
+          "kind": "replace", "message": 0,
+          "old": "Your actions should not only be consistent with your persona, but also demonstrate and make these persona characteristics evident. That is to say, anyone interacting with you should be able to infer your persona characteristics from your actions and words.",
+          "new": "Keep actions consistent with the persona, but express only the characteristics relevant to the situation. You do not need to demonstrate your biography or personality in every response.",
+          "max_matches": 1
+        },
+        {
+          "kind": "replace", "message": 0,
+          "old": "YOU OVER-EMPHASIZE THE STYLE in how you speak and think, to make it clear that you are embodying the persona.",
+          "new": "Use the person's style naturally, adapting its intensity and level of detail to the relationship and situation rather than exaggerating it.",
+          "max_matches": 1
+        },
+        {
+          "kind": "replace", "message": 0,
+          "old": "your personality traits influence ALL of your actions. Everything you do **must** be transformed by them in some way.",
+          "new": "your personality traits are tendencies expressed in context, not requirements to display every trait on every turn.",
+          "max_matches": 1
+        }
+      ]
+    },
+    {
+      "id": "diverge-before-select",
+      "hypothesis": "An explicit idea-generation phase yields distinct profession-grounded mechanisms before the group converges on a shared solution.",
+      "cases": ["brainstorm-initial-lisa", "brainstorm-initial-oscar", "brainstorm-initial-marcos"],
+      "operations": [
+        {
+          "kind": "replace", "message": "all",
+          "old": "Just focus on the AI feature ideas themselves. Select and develop the most promising ideas.",
+          "new": "For this first round, generate alternatives rather than choosing a winner. Starting from a concrete problem in your own work, propose two or three meaningfully different ways AI could help through Word. Explain what the person would do and what each idea would change. Different names for the same mechanism are not different ideas. Do not force disagreement with others or claim that a speculative capability already works. We will compare, combine and select ideas in a later round.",
+          "min_matches": 2, "max_matches": 2
+        }
+      ]
+    },
+    {
+      "id": "travel-format",
+      "hypothesis": "Removing the contradiction between answer-only and explain-why reduces bare decisions without changing the product or evaluative framing.",
+      "cases": ["travel-affordable-trip", "travel-can-afford-luxury", "travel-modest-getaway"],
+      "operations": [
+        {
+          "kind": "replace", "message": "all",
+          "old": "You **must** respond with \"Yes\" or \"No\" **only**, and explain why.",
+          "new": "Begin your public answer with \"Yes\" or \"No\", then explain your main reason in the same response.",
+          "min_matches": 2, "max_matches": 2
+        }
+      ]
+    },
+    {
+      "id": "travel-neutral",
+      "parent": "travel-format",
+      "hypothesis": "Neutral product and deliberation wording reduces one-sided prompting; a change in purchase rate is not by itself a success.",
+      "cases": ["travel-affordable-trip", "travel-can-afford-luxury", "travel-modest-getaway"],
+      "operations": [
+        {
+          "kind": "replace", "message": "all",
+          "old": "no kids running around or screaming in playgrounds - it is for classy, not messy, vacationing.",
+          "new": "children would not be part of the vacation experience.",
+          "min_matches": 2, "max_matches": 2
+        },
+        {
+          "kind": "replace", "message": "all",
+          "old": "Are you sure quiet luxury is what you want, instead of, say, adventure or fun and parties?",
+          "new": "How well does this service fit the kind of vacation you would want?",
+          "min_matches": 2, "max_matches": 2
+        },
+        {
+          "kind": "replace", "message": "all",
+          "old": "what would be OTHER vacation alternatives you might prefer instead.",
+          "new": "how this service compares with the other vacations you would realistically consider, including what you would gain and give up with each.",
+          "min_matches": 2, "max_matches": 2
+        }
+      ]
+    },
+    {
+      "id": "ranking-no-anchor",
+      "hypothesis": "Removing worked answer rankings avoids suggesting a preferred option while retaining the same options, prices and independent-use proposition.",
+      "cases": ["children-ranking-collapse-1", "children-ranking-collapse-2"],
+      "operations": [
+        {
+          "kind": "regex", "message": 0,
+          "pattern": "So, for example, if you respond with \"B, A, C, D, E\", it means you prefer option B the most and\\s+option E the least\\.",
+          "new": "List each option letter exactly once, from most preferred to least preferred. There is no preferred ranking.",
+          "max_matches": 1
+        },
+        {
+          "kind": "regex", "message": 0,
+          "pattern": "For example:\\s+\"Ranking: B, D, C, A, E\\. Justification: \\.\\.\\.\"",
+          "new": "Use the headings \"Ranking:\" followed by your ordered letters, and \"Justification:\" followed by your explanation.",
+          "max_matches": 1
+        }
+      ]
+    },
+    {
+      "id": "persona-relevance",
+      "hypothesis": "Replacing quantity quotas with relevant nonredundant characterization reduces verbose generic profiles without prescribing personalities or purchasing preferences.",
+      "cases": ["persona-grace", "persona-philip"],
+      "operations": [
+        {
+          "kind": "replace", "message": 1,
+          "old": "You must add as much details as possible, but make sure they are consistent with the context and agent particularities.",
+          "new": "Include enough distinct, relevant detail to make the person understandable and consistent with the context and agent particularities. Do not repeat the same preference or trait in different wording.",
+          "max_matches": 1
+        },
+        {
+          "kind": "replace", "message": 1,
+          "old": "We need A LOT of details here to be able to later produce a realistic simulation of the words and actions of the person.",
+          "new": "Describe a recognizable everyday voice and how it changes with context; a concise, concrete description is preferable to a catalogue of mannerisms.",
+          "max_matches": 1
+        },
+        {
+          "kind": "replace", "message": 1,
+          "old": "Include at least 10 traits, and also make sure you fill in the Big-5 personality traits",
+          "new": "Choose distinctive traits rather than meeting a numerical quota, and also fill in the Big-5 personality traits",
+          "max_matches": 1
+        },
+        {
+          "kind": "regex", "message": 1,
+          "pattern": "At least 20 details per area\\. Put more if\\s+you can\\.",
+          "new": "Use specific preferences that distinguish this person. Include important trade-offs and limits without trying to exhaust every possible detail.",
+          "max_matches": 1
+        },
+        {
+          "kind": "replace", "message": 1,
+          "old": "Include many many details here, at least 30, so that we can later produce",
+          "new": "Include the beliefs that matter to this person's outlook, without a numerical quota, so that we can later produce",
+          "max_matches": 1
+        },
+        {
+          "kind": "regex", "message": 1,
+          "pattern": "This is where you should go wild and add many facts, ad-hoc details, past stories,\\s+important memories, etc\\. Make this very long, at least 30 entries\\.",
+          "new": "Add distinctive experiences or ordinary details only when they contribute something not already expressed elsewhere. Keep them plausible and consistent; there is no length or entry quota.",
+          "max_matches": 1
+        },
+        {
+          "kind": "replace", "message": 1,
+          "old": "DO NOT SPARE space for complex fields, use as much as you need to create a truly realistic person, with a lot of nuances, details, and depth.",
+          "new": "Prioritize a coherent, distinctive person over an exhaustive specification. Do not make the person uniformly prudent, agreeable, adventurous or negative unless the supplied constraints warrant it. Preserve all required fields and demographic constraints; let preferences follow the individual rather than a desired survey outcome.",
+          "max_matches": 1
+        }
+      ]
+    }
+  ]
+}

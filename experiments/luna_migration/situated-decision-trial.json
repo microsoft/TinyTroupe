@@ -1,0 +1,20 @@
+{
+  "hypothesis": "Earlier isolated rules were all sent through the defective JSON-string-wrapped actor transport. Test their coherent combination using actual Markdown instructions, without changing production prompts.",
+  "condition": "New reactions + actual decision scope + persona-specific deliberation, combined verbatim from three previous isolated candidates.",
+  "baseline": "fixed-persona-gaz-text-transport",
+  "personas": "crossed-persona-mini-generation\\selection-mini.json",
+  "original_stimuli_retained": true,
+  "model": "gpt-6-luna",
+  "effort": "xhigh",
+  "quality_threshold": 5,
+  "world_datetime": "2026-11-02T16:20:19.182432",
+  "acceptance": [
+    "Public rating and extraction agree; no invented product facts or personal purchase history.",
+    "The rating addresses the stated purchase decision rather than being justified exclusively by unwillingness to buy regularly.",
+    "Explicit personal aversions and constraints remain effective; positive and negative synthetic controls must still pass before adoption.",
+    "A higher mean or the appearance of a 4/5 alone is not evidence of improvement.",
+    "No production prompt adoption on this panel alone; independent held-out cases and non-market regression checks are required."
+  ],
+  "not_a_population_calibration": true,
+  "production_prompt_changed": false
+}

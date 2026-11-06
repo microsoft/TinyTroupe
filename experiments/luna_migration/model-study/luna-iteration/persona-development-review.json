@@ -1,0 +1,63 @@
+{
+  "reviewer": "Assistant semantic review of saved outputs; not an independent blinded human evaluation.",
+  "fixed_input_trials": [
+    {"condition": "life-first", "finding": "Shorter profiles, but the same prudent software-professional and retired-engineer archetypes."},
+    {"condition": "life-course", "finding": "Three responses per source constraint remained very similar in occupations, places, trips and trait values."},
+    {"condition": "preferences-first", "finding": "Changing field construction order did not create substantial new lives; two responses per source constraint."},
+    {"condition": "episodes-first", "finding": "More concrete episodes, but little departure from the same archetypes; two responses per source constraint."},
+    {"condition": "divergent-life", "finding": "Three fresh fixed-input responses per source still returned software roles for Grace and engineering careers for Philip, with similar cautious city/history travel. Reject as a diversity fix."}
+  ],
+  "adaptive_development": {
+    "grace": [
+      "Sacramento emergency nurse; outdoor road trips and hiking.",
+      "Anchorage accounting manager; warm all-inclusive beach holidays.",
+      "Tacoma electrical maintenance technician; sports and music event trips."
+    ],
+    "philip": [
+      "Idaho former equipment-dealership owner; trailer travel and fishing.",
+      "Montana retired diplomat; small-group cultural trips.",
+      "Wyoming retired estate attorney; birding-focused travel."
+    ],
+    "judgment": "Meaningful diversity of desired experiences and daily commitments, not merely city or occupation swaps. The instruction explicitly supplies previous drafts and seeks coverage, not population frequencies."
+  },
+  "first_adaptive_confirmation": {
+    "grace": [
+      {"step": 1, "life": "Eugene framing-shop owner; solo craft-workshop travel.", "issue": "Supplied Asian ethnicity is not explicitly represented anywhere. Name is not sufficient evidence. Reject full constraint-coverage claim."},
+      {"step": 2, "life": "Salem insurance producer; birding trips.", "issue": null},
+      {"step": 3, "life": "Long Beach flight attendant; cruises and settled-base rest.", "issue": "Supplied Asian ethnicity is again omitted. Reject full constraint-coverage claim."}
+    ],
+    "philip": [
+      {"step": 1, "life": "Boise retired restaurant-equipment business owner; culinary travel.", "issue": null},
+      {"step": 2, "life": "Colorado Springs retired pilot; small-ship and rail journeys.", "issue": null},
+      {"step": 3, "life": "Sheridan retired finance executive; golf-centered trips.", "issue": null}
+    ],
+    "judgment": "Varied and coherent, but two omissions mean this is not a six-of-six success. Original outputs remain unedited."
+  },
+  "repair": "round5 adds a general rule to represent every supplied particularity explicitly, including race_ethnicity, and treats the mandatory field list as a minimum. A new six-response adaptive confirmation is separately labeled.",
+  "explicit_particularities_confirmation": {
+    "grace": [
+      {"step": 1, "life": "Age 36, Portland controls engineer; $143,000 household income; amusement-park travel.", "judgment": "Pass; all original constraints explicit."},
+      {"step": 2, "life": "Age 33, San Diego environmental scientist; $167,000 household income including a roommate; scuba travel.", "judgment": "Pass; single and childless is compatible with a nonromantic shared household."},
+      {"step": 3, "life": "Age 39, San Leandro dental hygienist; $151,000 household income including mother's pension; social-dance travel.", "judgment": "Pass; single and childless is compatible with sharing a home with a parent."}
+    ],
+    "philip": [
+      {"step": 1, "life": "Age 79, Sheridan retired sound-production business owner; $225,000 household income; live-music travel.", "judgment": "Acceptable on full semantic review."},
+      {"step": 2, "life": "Age 80, Helena retired dentist; $240,000 household income; e-bike trips.", "judgment": "Acceptable on full semantic review."},
+      {"step": 3, "life": "Retired radiologist; astronomy travel.", "judgment": "Reject: plans a total eclipse in northern Spain in 2027. NASA places the August 2, 2027 total eclipse in southern Spain, North Africa, Saudi Arabia and Yemen.", "source": "https://science.nasa.gov/eclipses/future-eclipses/"}
+    ],
+    "judgment": "Five acceptable outputs and one factual failure, not six-of-six. Grace's tested recipe is selected; Philip receives a general external-fact-boundary repair, not the correct eclipse answer."
+  },
+  "external_fact_boundary_confirmation": {
+    "philip": [
+      {"step": 1, "case_id": "persona-philip::cohort-grounded1", "life": "Age 77, Laramie retired commercial-printing owner; $230,000 household income; baseball-and-city travel.", "judgment": "Pass. White/non-Hispanic, married without children, moderately conservative and enjoys reading. Coherent business, rental-income and retirement history; Northeast game trip explicitly has no date or itinerary."},
+      {"step": 2, "case_id": "persona-philip::cohort-grounded2", "life": "Age 80, Durango retired commercial photographer; household income in low-to-mid $200,000s; recreational scuba travel.", "judgment": "Pass. All original constraints explicit; education and retirement chronology plausible. Mobility and energy limits coexist with experienced recreational diving. Caribbean destination and date undecided."},
+      {"step": 3, "case_id": "persona-philip::cohort-grounded3", "life": "Age 78, Bozeman retired industrial-parts distributor; $240,000 household income; moderate skiing trips.", "judgment": "Pass. All original constraints explicit; coherent marriage, business sale and retained-property income. Moderate skiing with rest is plausible, not assumed for all older adults. No future holiday date or event calendar asserted."}
+    ],
+    "judgment": "All three fresh profiles passed full qualitative review and structural/input audits. The new factual boundary was tested only for Philip. Distinct desired experiences are present, although business-owner backgrounds and cautious-spending prose still recur."
+  },
+  "remaining_caveats": [
+    "Even varied lives often retain prudent spending, moderate personality scores and a similar polished narrative voice.",
+    "This small qualitative set cannot establish a correctly distributed population or the absence of stereotypes.",
+    "Do not replace random population sampling with novelty-seeking coverage without naming the changed procedure."
+  ]
+}

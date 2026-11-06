@@ -1,0 +1,20 @@
+{
+  "status": "Screen completed with one observed JSON generation failure; five valid biographies and five actor turns require semantic review.",
+  "generator_responses": 6,
+  "observed_generation_failures": 1,
+  "generated_biographies": 5,
+  "actor_turns": 5,
+  "returned_usage_estimate": {
+    "unique_saved_api_responses_in_run_window": 11,
+    "responses_missing_usage": 0,
+    "tokens": {
+      "prompt": 129381,
+      "completion": 83344,
+      "cached": 0,
+      "writes": 129348
+    },
+    "usd": "0.057843800",
+    "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+  },
+  "production_template_unchanged": true
+}

@@ -1,0 +1,98 @@
+[
+  {
+    "case_id": "exec-chatcmpl-EcMyPpyhq9S5zw1U55xbUacS251EV::action-execution-v2::r1",
+    "stage": "failure-development-round1",
+    "source_case_id": "exec-chatcmpl-EcMyPpyhq9S5zw1U55xbUacS251EV",
+    "variant": "action-execution-v2",
+    "adapter": "append_system",
+    "repetition": 1,
+    "hypothesis": "Separate inability to translate missing speech from ability to ask the actual intended recipient a question now.",
+    "original_request_sha256": "da8ab2c7e57f4d2ea68fbe8ae6ffb68c0435b7b3d99a404e51998e063a13b957",
+    "instruction_sha256": "65dc975163422e13f0443586e20c5cc2bd42925f4638afee6981edacef6bdaa8",
+    "source_selection": "Previously reviewed cases are development, regardless of earlier split labels."
+  },
+  {
+    "case_id": "exec-chatcmpl-EcOs5VaSzbXHC9ekPB4HoNqxQkMJ3::narrative-authority-v2::r1",
+    "stage": "failure-development-round1",
+    "source_case_id": "exec-chatcmpl-EcOs5VaSzbXHC9ekPB4HoNqxQkMJ3",
+    "variant": "narrative-authority-v2",
+    "adapter": "append_system",
+    "repetition": 1,
+    "hypothesis": "Clarify narrator authority and make an explicit ending override generic open-endedness without scripting autonomous agents.",
+    "original_request_sha256": "073a72e473dc67f7f2d3495d99a208a7fa9cb96917e9846f9a968a354d10ab8c",
+    "instruction_sha256": "cf232b8c454960acebe61141a61dac01674f6064fcccdc22a0e9be9c735b659f",
+    "source_selection": "Previously reviewed cases are development, regardless of earlier split labels."
+  },
+  {
+    "case_id": "exec-chatcmpl-EcPQs4sN9jObydoOqqjACE8BvHuqm::narrative-authority-v2::r1",
+    "stage": "failure-development-round1",
+    "source_case_id": "exec-chatcmpl-EcPQs4sN9jObydoOqqjACE8BvHuqm",
+    "variant": "narrative-authority-v2",
+    "adapter": "append_system",
+    "repetition": 1,
+    "hypothesis": "Clarify narrator authority and make an explicit ending override generic open-endedness without scripting autonomous agents.",
+    "original_request_sha256": "286eb1a7439b00d4bb11e91443b1ab972baf7bd3519d2a8d8360af5e470ddd2b",
+    "instruction_sha256": "cf232b8c454960acebe61141a61dac01674f6064fcccdc22a0e9be9c735b659f",
+    "source_selection": "Previously reviewed cases are development, regardless of earlier split labels."
+  },
+  {
+    "case_id": "exec-chatcmpl-EcPM5wjdBjFFpykUFm7dTTh4vr7SE::narrative-authority-v2::r1",
+    "stage": "failure-development-round1",
+    "source_case_id": "exec-chatcmpl-EcPM5wjdBjFFpykUFm7dTTh4vr7SE",
+    "variant": "narrative-authority-v2",
+    "adapter": "append_system",
+    "repetition": 1,
+    "hypothesis": "Clarify narrator authority and make an explicit ending override generic open-endedness without scripting autonomous agents.",
+    "original_request_sha256": "cbd03ddc75bc8ae057b8f95840850fbfe9ab281b59b1e3d77d6d1d69e69119a6",
+    "instruction_sha256": "cf232b8c454960acebe61141a61dac01674f6064fcccdc22a0e9be9c735b659f",
+    "source_selection": "Previously reviewed cases are development, regardless of earlier split labels."
+  },
+  {
+    "case_id": "exec-chatcmpl-EcQoc8MNbyvjIPyhyahctBgDu7uUj::narrative-authority-v2::r1",
+    "stage": "failure-development-round1",
+    "source_case_id": "exec-chatcmpl-EcQoc8MNbyvjIPyhyahctBgDu7uUj",
+    "variant": "narrative-authority-v2",
+    "adapter": "append_system",
+    "repetition": 1,
+    "hypothesis": "Clarify narrator authority and make an explicit ending override generic open-endedness without scripting autonomous agents.",
+    "original_request_sha256": "201423a61745e6756d7e73cf6b27a4199a09be058af9ea13432c75ca02e0cb1d",
+    "instruction_sha256": "cf232b8c454960acebe61141a61dac01674f6064fcccdc22a0e9be9c735b659f",
+    "source_selection": "Previously reviewed cases are development, regardless of earlier split labels."
+  },
+  {
+    "case_id": "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR::closed-vocabulary-v2::r1",
+    "stage": "failure-development-round1",
+    "source_case_id": "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR",
+    "variant": "closed-vocabulary-v2",
+    "adapter": "append_system",
+    "repetition": 1,
+    "hypothesis": "A short construction sequence with exact vocabulary lookup prevents invented dimensions and paraphrased options.",
+    "original_request_sha256": "6cf9a126ec0c3b4f43550e6de58a40071bb11645f9a27e91e0851dce322c634c",
+    "instruction_sha256": "e111c86505ff88d0510e79d2e7c48357ffde9ed0dd3d8369b784ccc715fd63dc",
+    "source_selection": "Previously reviewed cases are development, regardless of earlier split labels."
+  },
+  {
+    "case_id": "exec-chatcmpl-EcSEDbTD31QQYHRw2vsuCbxbTHSak::indexed-themes-v1::r1",
+    "stage": "failure-development-round1",
+    "source_case_id": "exec-chatcmpl-EcSEDbTD31QQYHRw2vsuCbxbTHSak",
+    "variant": "indexed-themes-v1",
+    "adapter": "indexed_normalization",
+    "repetition": 1,
+    "hypothesis": "Separate semantic assignment from mechanical copying through complete keyed assignments and exact deterministic reconstruction; explicitly changes the intermediate schema.",
+    "original_request_sha256": "de7bb7c940a364f91b965b6dd54e14ffb5f0db7c1199530f2376bc7276e1dc72",
+    "instruction_sha256": "d6c6ddf3ef3edda09617b1a32b331fc7ba389694e124363ecca5925844bdf646",
+    "source_selection": "Previously reviewed cases are development, regardless of earlier split labels."
+  },
+  {
+    "case_id": "exec-chatcmpl-EcQHB8Uq23EuJYVQIjxMXf2k8eXPY::indexed-themes-v1::r1",
+    "stage": "failure-development-round1",
+    "source_case_id": "exec-chatcmpl-EcQHB8Uq23EuJYVQIjxMXf2k8eXPY",
+    "variant": "indexed-themes-v1",
+    "adapter": "indexed_normalization",
+    "repetition": 1,
+    "hypothesis": "Separate semantic assignment from mechanical copying through complete keyed assignments and exact deterministic reconstruction; explicitly changes the intermediate schema.",
+    "original_request_sha256": "cb5cc7d43da55d14cbf8fd195191f669a2ca47793a41569b5db737a61a7515fc",
+    "instruction_sha256": "d6c6ddf3ef3edda09617b1a32b331fc7ba389694e124363ecca5925844bdf646",
+    "source_selection": "Previously reviewed cases are development, regardless of earlier split labels."
+  }
+]

@@ -1,0 +1,128 @@
+# Construct a coherent sampling plan from a closed vocabulary
+
+The input contains the original purpose, population description, sample size N, constraints and complete dimension meanings.
+Dimension identifiers are the keys of sampling_dimensions.dimensions.
+Categorical option identifiers are local to their dimension. Numeric ranges remain numbers, not identifiers.
+
+Design complementary, meaningful sampling directives. For each directive, fill its sampled_values slots:
+- For a categorical dimension you constrain, return a nonempty list of its allowed option identifiers as integers. Select each identifier at most once.
+- For a numeric dimension, return a number or an ordered two-number range inside its supplied bounds.
+- Use null for an optional dimension left unconstrained. When all dimensions are required, none can be null.
+
+## Feasibility comes before adding coverage axes
+
+A directive permits every selected option throughout its stated numeric ranges.
+Check the youngest admissible age, not just a typical member of a broad age band.
+Do not assign independently pursued hobbies, reading, cooking, gaming, smartphone habits, adult employment, or advanced education to a band that includes infants.
+Leave such optional dimensions unconstrained for that band.
+If the task requires a relevant distinction among older children, first separate them from infants and very young children, without losing the younger population.
+
+For example, a band containing both infants and teenagers cannot truthfully be described as people who cook for pleasure.
+A child/caregiver band with leisure interests left open is coherent; the useful cooking-interest contrast can be placed in adult bands instead.
+Do not simply delete infants from a general-population plan to make a hobby axis easier.
+
+Check all other explicit combinations too: age against age-group labels, work against labor-force status, education against age, partner status against travel party, and numeric child ages against months.
+Multiple allowed values are alternatives within one dimension, but must remain compatible with the directive's other restrictions and description.
+Because the caller draws each constrained dimension independently, allowing several regions
+and several states does not ensure a valid state-region pair. Constrain one coherent pairing,
+or leave the redundant optional dimension unconstrained. Apply the same reasoning to other
+dimensions that describe the same underlying fact; the biography must not have to discard a draw.
+
+## Coverage and quantities
+
+Include useful demographic AND behavioral axes relevant to the purpose, using behavioral contrasts where they are appropriate.
+Across the plan, actually constrain the purpose-relevant behavioral families supplied in the
+dimension meanings. Merely generating a dimension or mentioning variety in prose does not
+give that distinction any coverage. Spread compatible contrasts across directives rather
+than leaving nearly every behavioral dimension null in favor of demographics and generic hobbies.
+When the population specification explicitly lists additional dimension families, use those
+families themselves: a generic hobby is not a substitute for a requested attitude, taste,
+habit, personality or lifestyle contrast. Cover their contrasting supplied options where
+feasible, not only the cautious or moderate option. Do not prescribe purchase decisions,
+survey scores or rankings; those must emerge later from the people and the scenario.
+The caller draws concrete values uniformly from your numeric ranges and uses conditional
+supplied categorical weights (or equal weights) among your selected options. Design ranges
+and allowed alternatives that remain coherent under those draws, not just at a typical value.
+
+Check realized contrast coverage before returning the plan. For each behavioral
+family explicitly requested by the population specification, identify the opposing
+ends in the supplied option meanings, including its stated extremes rather than
+substituting only moderate alternatives.
+When eligibility and sample size permit, give each requested end at least one
+compatible directive that selects that option alone in that dimension. Quantities
+can be one; other directives may retain mixed alternatives and supplied weights.
+Count only these singleton allocations as guaranteed coverage. An extreme allowed
+only in a mixed list can disappear when the caller draws the actual people.
+Review the completed plan against those ends and revise missing allocations before
+returning it, without overriding eligibility or reported demographic proportions.
+This is illustrative contrast coverage, not an estimate of behavioral prevalence.
+Do not equalize demographic categories or prescribe downstream decisions or scores.
+
+Population eligibility is mandatory in every directive, including when its corresponding
+dimension is optional. State it in each subpopulation description and select explicit
+eligibility values where the dimensions provide them.
+A compact plan is preferable to a long inventory.
+Use the original population description, not only the generated dimension summary, to identify
+mandatory eligibility, explicitly requested coverage families and reported demographic proportions.
+When reported marginal proportions are supplied, allocate approximately N times those proportions,
+allowing for integer rounding and other constraints. A per-directive quantity cap is not a reason
+to give every demographic band the same population share: split common groups across several
+directives instead. Covering a rare eligible age does not require giving it a separate equal-sized
+group, and illustrative coverage weights must not override reported demographic proportions.
+Do not silently narrow the target population, omit supplied age groups, or discard the youngest or oldest ages merely for convenience.
+For a full-population age-stratified plan, cover the supplied age range without gaps.
+
+
+## Preserve weighted demographic choices when defining behavioral contrasts
+
+When only marginal proportions are supplied, a behavioral contrast does not
+establish a different demographic distribution. Within a directive, retain
+the complete supplied weighted option set for each compatible nominal
+demographic dimension rather than selecting one category to make the profile
+distinctive. The caller can then draw from those original proportions in every
+behavioral group. Restrict a demographic option set only for a stated eligibility
+condition, an explicitly requested demographic stratum, or a genuine compatibility
+constraint; do not invent that restriction from a personality or taste.
+
+For example, contrasting adventurous and traditional tastes does not require
+assigning different races, genders or regions to those two groups. Each group can
+allow all supplied options with their original weights. This preserves expected
+marginal proportions without requiring residual demographic arithmetic after each
+behavioral allocation. It does not guarantee every rare demographic category
+appears in a small realized sample or establish measured joint prevalence.
+
+Where two optional dimensions encode the same demographic fact at different levels
+of detail, retain one weighted description and leave the redundant dimension
+unconstrained if independent draws would conflict. A full race list combined with
+independently drawn race-specific cultural profiles is not coherent. Do not fix a
+rare race merely to showcase a cultural profile. Cultural influences that do not
+imply a particular race can still be varied. Apply the same compatibility check
+to region and state, and to educational attainment and learning profiles.
+
+Keep required age strata and supplied age proportions. Within eligible adult
+bands, allow the supplied range of educational attainment unless another explicit
+restriction genuinely excludes an option. Do not assign everyone in an older band
+advanced education merely to produce a compact profile. An optional learning
+profile can remain unconstrained rather than contradicting an allowed attainment.
+Retain the requested behavioral singleton contrasts within these demographic
+choices; neither a demographic label nor a survey rating is a behavioral contrast.
+
+Compatibility still takes precedence over retaining full option sets. A job that
+requires a particular qualification cannot be drawn independently of attainment
+options that exclude that qualification. If the job dimension is optional, leave
+it unconstrained rather than assigning everyone a degree to accommodate a possible
+job. If both dimensions are required, use mutually compatible alternatives or
+separate compatible directives while respecting the supplied marginal budgets.
+
+Quantities must be positive integers summing to exactly N.
+IDs must be consecutive integers starting at 1.
+Respect every supplied directive-count and quantity limit. Check those numbers before returning.
+
+Do not bundle race, gender, finances, politics and personality into unsupported stereotypes.
+Supplied marginal weights can guide coverage but do not establish joint prevalence; do not claim empirical representativeness.
+
+The caller restores complete dimension names and option strings exactly.
+Interpret their full meanings rather than rewriting them.
+Return only schema-conforming JSON.
+Option identifiers and null are explicit intermediate representations.
+Deterministic reconstruction returns the original public plan shape without repairing invalid semantic choices.

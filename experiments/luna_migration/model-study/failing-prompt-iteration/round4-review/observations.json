@@ -1,0 +1,1411 @@
+{
+  "calls": 25,
+  "unique_sources": 11,
+  "statuses": {
+    "completed": 25
+  },
+  "list_price_bounds_usd": [
+    "0.046086900",
+    "0.046086900"
+  ],
+  "calls_without_usage": 0,
+  "missing_write_usage": 0,
+  "semantic_success_not_automatically_inferred": true,
+  "records": [
+    {
+      "case_id": "exec-chatcmpl-EcOs5VaSzbXHC9ekPB4HoNqxQkMJ3::focused-transition-v3-confirm::r1",
+      "phase": "story_continuation",
+      "stage": "failure-development-round4",
+      "source_case_id": "exec-chatcmpl-EcOs5VaSzbXHC9ekPB4HoNqxQkMJ3",
+      "variant": "focused-transition-v3-confirm",
+      "adapter": "append_system",
+      "repetition": 1,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "073a72e473dc67f7f2d3495d99a208a7fa9cb96917e9846f9a968a354d10ab8c",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "categorical_encoding": null,
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 34.359,
+      "content": "MaréData gave civil defense its raw timestamps. Responders compared them with reports from other beaches but could not confirm an impact. At dawn, coast guards found no debris, and no injuries had been reported. The officer lifted the shoreline cordon and thanked the witnesses. Officials left the fireball’s cause unverified. MaréData posted a cautious notice instead of broadcasting guesses, and the crowd dispersed. The night’s lesson was clear: honest uncertainty and patient cooperation protect people better than instant certainty.",
+      "response_id": "chatcmpl-EeRK21KKKI4It9cJ28Ifw0QUP06E0",
+      "cost": {
+        "input_tokens": 14948,
+        "cached_input_tokens": 14573,
+        "cache_write_tokens": 0,
+        "output_tokens": 2667,
+        "reasoning_tokens": 2534,
+        "uncached_input_tokens": 375,
+        "input_usd": "0.0000375",
+        "cached_input_usd": "0.00014573",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.0013335",
+        "total_usd": "0.00151673",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 537,
+        "output_words": 79,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcPQs4sN9jObydoOqqjACE8BvHuqm::focused-transition-v3-confirm::r1",
+      "phase": "story_continuation",
+      "stage": "failure-development-round4",
+      "source_case_id": "exec-chatcmpl-EcPQs4sN9jObydoOqqjACE8BvHuqm",
+      "variant": "focused-transition-v3-confirm",
+      "adapter": "append_system",
+      "repetition": 1,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "286eb1a7439b00d4bb11e91443b1ab972baf7bd3519d2a8d8360af5e470ddd2b",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "categorical_encoding": null,
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 42.188,
+      "content": "The representative closed the signup screen. She couldn’t say who would see the data, so she promised to relay the privacy questions to her team before Friday; she took no enrollments that afternoon. Questions about irregular shifts and smartphone access remained open. Zog noted that a calendar might reveal competing obligations, but could not decide whose need mattered most. The demo ended there. A useful lesson remained: tools can assist hard choices, but trust begins with honest limits.",
+      "response_id": "chatcmpl-EeRKTlKMmrNGJ6D6qxXHkE2zfHaSp",
+      "cost": {
+        "input_tokens": 15558,
+        "cached_input_tokens": 15183,
+        "cache_write_tokens": 0,
+        "output_tokens": 4392,
+        "reasoning_tokens": 4243,
+        "uncached_input_tokens": 375,
+        "input_usd": "0.0000375",
+        "cached_input_usd": "0.00015183",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.002196",
+        "total_usd": "0.00238533",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 494,
+        "output_words": 78,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcPM5wjdBjFFpykUFm7dTTh4vr7SE::focused-transition-v3-confirm::r1",
+      "phase": "story_continuation",
+      "stage": "failure-development-round4",
+      "source_case_id": "exec-chatcmpl-EcPM5wjdBjFFpykUFm7dTTh4vr7SE",
+      "variant": "focused-transition-v3-confirm",
+      "adapter": "append_system",
+      "repetition": 1,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "cbd03ddc75bc8ae057b8f95840850fbfe9ab281b59b1e3d77d6d1d69e69119a6",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "categorical_encoding": null,
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 16.828,
+      "content": "Julian offered a hypothetical, not a claim about Rio. A parent’s shift ends just before the after-school center closes; the bus is delayed, and a taxi would take money meant for groceries. The parent could call a relative, risk being late, or pay the fare, shifting the cost elsewhere. At the next table, Marisa said she had faced a similar choice that week. Then her phone buzzed: her child’s school was calling.",
+      "response_id": "chatcmpl-EeRLAVvFfpKsJ5gcjnPFZfMwWPLYH",
+      "cost": {
+        "input_tokens": 8227,
+        "cached_input_tokens": 7860,
+        "cache_write_tokens": 0,
+        "output_tokens": 1648,
+        "reasoning_tokens": 1535,
+        "uncached_input_tokens": 367,
+        "input_usd": "0.0000367",
+        "cached_input_usd": "0.0000786",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.000824",
+        "total_usd": "0.0009393",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 413,
+        "output_words": 72,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcQoc8MNbyvjIPyhyahctBgDu7uUj::focused-transition-v3-confirm::r1",
+      "phase": "story_continuation",
+      "stage": "failure-development-round4",
+      "source_case_id": "exec-chatcmpl-EcQoc8MNbyvjIPyhyahctBgDu7uUj",
+      "variant": "focused-transition-v3-confirm",
+      "adapter": "append_system",
+      "repetition": 1,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "201423a61745e6756d7e73cf6b27a4199a09be058af9ea13432c75ca02e0cb1d",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "categorical_encoding": null,
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 13.703,
+      "content": "The team submitted Cedar Reach’s interim report and closed the engagement, noting that missing scheduling, workflow, and room-use evidence prevented confirmed findings or quantified benefits. Minutes later, North Coast Port Authority, a public agency operating a container terminal, requested urgent help: storm-surge exposure and an aging quay threaten its insurance renewal, while limited capital and shipping tenants’ reliability demands constrain its choices. Lisa requested asset, outage, and capital-plan records; Oscar began scoping an infrastructure review, and Marcos sought terminal operating data.",
+      "response_id": "chatcmpl-EeRLRgHxISWaSAS926fSXULlIwnEf",
+      "cost": {
+        "input_tokens": 12094,
+        "cached_input_tokens": 11640,
+        "cache_write_tokens": 0,
+        "output_tokens": 1303,
+        "reasoning_tokens": 1177,
+        "uncached_input_tokens": 454,
+        "input_usd": "0.0000454",
+        "cached_input_usd": "0.0001164",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.0006515",
+        "total_usd": "0.0008133",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 608,
+        "output_words": 81,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcRIZR28RnLdIg8Qm31z2m8DnCvvr::focused-transition-v3-confirm::r1",
+      "phase": "story_continuation",
+      "stage": "failure-development-round4",
+      "source_case_id": "exec-chatcmpl-EcRIZR28RnLdIg8Qm31z2m8DnCvvr",
+      "variant": "focused-transition-v3-confirm",
+      "adapter": "append_system",
+      "repetition": 1,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "e177881fbe352bade312b8fbd622e9c801868afe9faac6933824ffdd027ef7bf",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "categorical_encoding": null,
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 9.406,
+      "content": "Lisa delivered the Commission’s interim report, marking staffing, turnout, and site details as unverified. The Commission accepted the closeout, ending the engagement.\n\nMinutes later, Helix BioMaterials, a six-person startup making biodegradable cosmetic packaging, requested help. Pilot batches crack in transit; a major retailer needs a production plan in ten days, and seed funding is nearly exhausted. Lisa requested batch and failure records. Marcos began mapping production; Oscar requested facility and packaging specifications. The team started scoping possible tests.",
+      "response_id": "chatcmpl-EeRLexR8ZFNprUWDh8PH4bOqwqLfQ",
+      "cost": {
+        "input_tokens": 12160,
+        "cached_input_tokens": 11706,
+        "cache_write_tokens": 0,
+        "output_tokens": 968,
+        "reasoning_tokens": 851,
+        "uncached_input_tokens": 454,
+        "input_usd": "0.0000454",
+        "cached_input_usd": "0.00011706",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.000484",
+        "total_usd": "0.00064646",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 576,
+        "output_words": 78,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcQKYjykI4QLV52ZcqZPyn2dzfo3w::focused-transition-v3-confirm::r1",
+      "phase": "story_continuation",
+      "stage": "failure-development-round4",
+      "source_case_id": "exec-chatcmpl-EcQKYjykI4QLV52ZcqZPyn2dzfo3w",
+      "variant": "focused-transition-v3-confirm",
+      "adapter": "append_system",
+      "repetition": 1,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "51964c31c4509debfda552da1112294c3b7e754255a2e3fd7618777675975695",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "categorical_encoding": null,
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 17.703,
+      "content": "Lisa delivers Cairn & Vale’s bounded closeout report, noting that firm records were not reviewed and no AI pilot is approved. The firm accepts it, ending the engagement. Minutes later, Eastbank Public School District, serving 8,000 students in 14 schools, asks for help: enrollment shifts have overcrowded some buildings and left others underused, while aging boilers and a state energy-grant deadline strain its capital budget. The team requests enrollment, facilities, maintenance, and grant records, and begins arranging school-site interviews.",
+      "response_id": "chatcmpl-EeRLnGQATeGUVsP7aZvkOCM8NWnos",
+      "cost": {
+        "input_tokens": 15169,
+        "cached_input_tokens": 14715,
+        "cache_write_tokens": 0,
+        "output_tokens": 1743,
+        "reasoning_tokens": 1609,
+        "uncached_input_tokens": 454,
+        "input_usd": "0.0000454",
+        "cached_input_usd": "0.00014715",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.0008715",
+        "total_usd": "0.00106405",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 547,
+        "output_words": 79,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcPvJQR9JkK8l4yUG6f1hHGcbhvPq::focused-transition-v3-confirm::r1",
+      "phase": "story_continuation",
+      "stage": "failure-development-round4",
+      "source_case_id": "exec-chatcmpl-EcPvJQR9JkK8l4yUG6f1hHGcbhvPq",
+      "variant": "focused-transition-v3-confirm",
+      "adapter": "append_system",
+      "repetition": 1,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "b2335bd284d199ed3c6afdeeecffad6d90c9532d4252a796f1ba697b2c83c57f",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "categorical_encoding": null,
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 11.625,
+      "content": "Lisa delivers High Plains’ preliminary framework; the authority accepts the evidence-limited closeout, ending the engagement without project rankings. Immediately, BrightCurrent Foods, a 28-person worker-owned seafood processor, asks Wild Advice Partners for urgent help. A temperature excursion puts a frozen-shellfish shipment on hold, but incomplete supplier and cold-chain logs obscure the scope. Retailers need answers before tomorrow’s dispatch. The team begins scoping, requesting lot records, sensor logs, recall procedures, and buyer deadlines, while identifying decision owners and missing evidence.",
+      "response_id": "chatcmpl-EeRM5Z4lSLk4VZAlGGOwhHTkaxttd",
+      "cost": {
+        "input_tokens": 13887,
+        "cached_input_tokens": 13433,
+        "cache_write_tokens": 0,
+        "output_tokens": 1147,
+        "reasoning_tokens": 1024,
+        "uncached_input_tokens": 454,
+        "input_usd": "0.0000454",
+        "cached_input_usd": "0.00013433",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.0005735",
+        "total_usd": "0.00075323",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 609,
+        "output_words": 78,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR::membership-plan-v2::r1",
+      "phase": "sampling_plan",
+      "stage": "failure-development-round4",
+      "source_case_id": "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR",
+      "variant": "membership-plan-v2",
+      "adapter": "indexed_sampling",
+      "repetition": 1,
+      "hypothesis": "Represent categorical subsets as one boolean per option, making duplicate selections impossible while retaining full meanings and exact reconstruction.",
+      "original_request_sha256": "6cf9a126ec0c3b4f43550e6de58a40071bb11645f9a27e91e0851dce322c634c",
+      "instruction_sha256": "583a9ad3cb32d304ebf9a8e9f7c434d8d80d5bee5fa66b568b1562073495ae8b",
+      "categorical_encoding": "membership",
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 48.109,
+      "content": "{\"sample_plan\":[{\"id\":1,\"subpopulation_description\":\"People ages 0–54 who enjoy reading for leisure or personal interest.\",\"quantity\":18,\"sampled_values\":{\"1\":[0,54],\"2\":{\"1\":true,\"2\":true,\"3\":true,\"4\":false,\"5\":false},\"3\":null,\"4\":null,\"5\":null,\"6\":null,\"7\":null,\"8\":null,\"9\":null,\"10\":null,\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"21\":null,\"22\":null,\"23\":null,\"24\":null,\"25\":null,\"26\":null,\"27\":null,\"28\":null,\"29\":null,\"30\":null,\"31\":null,\"32\":null,\"33\":null,\"34\":null,\"35\":null,\"36\":null,\"37\":null,\"38\":null,\"39\":null,\"40\":null,\"41\":null,\"42\":null,\"43\":null,\"44\":null,\"45\":null,\"46\":null,\"47\":null,\"48\":null,\"49\":null,\"50\":null,\"51\":null,\"52\":null,\"53\":null,\"54\":null,\"55\":null,\"56\":null,\"57\":null,\"58\":null,\"59\":null,\"60\":null,\"61\":null,\"62\":null,\"63\":null,\"64\":null,\"65\":null,\"66\":{\"1\":true,\"2\":false},\"67\":null,\"68\":null,\"69\":null,\"70\":null,\"71\":null,\"72\":null,\"73\":null,\"74\":null,\"75\":null,\"76\":null,\"77\":null,\"78\":null,\"79\":null,\"80\":null,\"81\":null,\"82\":null,\"83\":null,\"84\":null,\"85\":null}},{\"id\":2,\"subpopulation_description\":\"People ages 0–54 who do not identify reading as a leisure interest.\",\"quantity\":32,\"sampled_values\":{\"1\":[0,54],\"2\":{\"1\":true,\"2\":true,\"3\":true,\"4\":false,\"5\":false},\"3\":null,\"4\":null,\"5\":null,\"6\":null,\"7\":null,\"8\":null,\"9\":null,\"10\":null,\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"21\":null,\"22\":null,\"23\":null,\"24\":null,\"25\":null,\"26\":null,\"27\":null,\"28\":null,\"29\":null,\"30\":null,\"31\":null,\"32\":null,\"33\":null,\"34\":null,\"35\":null,\"36\":null,\"37\":null,\"38\":null,\"39\":null,\"40\":null,\"41\":null,\"42\":null,\"43\":null,\"44\":null,\"45\":null,\"46\":null,\"47\":null,\"48\":null,\"49\":null,\"50\":null,\"51\":null,\"52\":null,\"53\":null,\"54\":null,\"55\":null,\"56\":null,\"57\":null,\"58\":null,\"59\":null,\"60\":null,\"61\":null,\"62\":null,\"63\":null,\"64\":null,\"65\":null,\"66\":{\"1\":false,\"2\":true},\"67\":null,\"68\":null,\"69\":null,\"70\":null,\"71\":null,\"72\":null,\"73\":null,\"74\":null,\"75\":null,\"76\":null,\"77\":null,\"78\":null,\"79\":null,\"80\":null,\"81\":null,\"82\":null,\"83\":null,\"84\":null,\"85\":null}},{\"id\":3,\"subpopulation_description\":\"People ages 55 and above who enjoy reading for leisure or personal interest.\",\"quantity\":7,\"sampled_values\":{\"1\":[55,115],\"2\":{\"1\":false,\"2\":false,\"3\":false,\"4\":true,\"5\":true},\"3\":null,\"4\":null,\"5\":null,\"6\":null,\"7\":null,\"8\":null,\"9\":null,\"10\":null,\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"21\":null,\"22\":null,\"23\":null,\"24\":null,\"25\":null,\"26\":null,\"27\":null,\"28\":null,\"29\":null,\"30\":null,\"31\":null,\"32\":null,\"33\":null,\"34\":null,\"35\":null,\"36\":null,\"37\":null,\"38\":null,\"39\":null,\"40\":null,\"41\":null,\"42\":null,\"43\":null,\"44\":null,\"45\":null,\"46\":null,\"47\":null,\"48\":null,\"49\":null,\"50\":null,\"51\":null,\"52\":null,\"53\":null,\"54\":null,\"55\":null,\"56\":null,\"57\":null,\"58\":null,\"59\":null,\"60\":null,\"61\":null,\"62\":null,\"63\":null,\"64\":null,\"65\":null,\"66\":{\"1\":true,\"2\":false},\"67\":null,\"68\":null,\"69\":null,\"70\":null,\"71\":null,\"72\":null,\"73\":null,\"74\":null,\"75\":null,\"76\":null,\"77\":null,\"78\":null,\"79\":null,\"80\":null,\"81\":null,\"82\":null,\"83\":null,\"84\":null,\"85\":null}},{\"id\":4,\"subpopulation_description\":\"People ages 55 and above who do not identify reading as a leisure interest.\",\"quantity\":13,\"sampled_values\":{\"1\":[55,115],\"2\":{\"1\":false,\"2\":false,\"3\":false,\"4\":true,\"5\":true},\"3\":null,\"4\":null,\"5\":null,\"6\":null,\"7\":null,\"8\":null,\"9\":null,\"10\":null,\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"21\":null,\"22\":null,\"23\":null,\"24\":null,\"25\":null,\"26\":null,\"27\":null,\"28\":null,\"29\":null,\"30\":null,\"31\":null,\"32\":null,\"33\":null,\"34\":null,\"35\":null,\"36\":null,\"37\":null,\"38\":null,\"39\":null,\"40\":null,\"41\":null,\"42\":null,\"43\":null,\"44\":null,\"45\":null,\"46\":null,\"47\":null,\"48\":null,\"49\":null,\"50\":null,\"51\":null,\"52\":null,\"53\":null,\"54\":null,\"55\":null,\"56\":null,\"57\":null,\"58\":null,\"59\":null,\"60\":null,\"61\":null,\"62\":null,\"63\":null,\"64\":null,\"65\":null,\"66\":{\"1\":false,\"2\":true},\"67\":null,\"68\":null,\"69\":null,\"70\":null,\"71\":null,\"72\":null,\"73\":null,\"74\":null,\"75\":null,\"76\":null,\"77\":null,\"78\":null,\"79\":null,\"80\":null,\"81\":null,\"82\":null,\"83\":null,\"84\":null,\"85\":null}}]}",
+      "response_id": "chatcmpl-EeRMHmgTpmPuSi4MibF4R6aSUOpeB",
+      "cost": {
+        "input_tokens": 16680,
+        "cached_input_tokens": 0,
+        "cache_write_tokens": 16677,
+        "output_tokens": 6150,
+        "reasoning_tokens": 4486,
+        "uncached_input_tokens": 3,
+        "input_usd": "3E-7",
+        "cached_input_usd": "0.00",
+        "cache_write_usd": "0.002084625",
+        "output_usd": "0.003075",
+        "total_usd": "0.005159925",
+        "long_context": false
+      },
+      "reconstructed": {
+        "sample_plan": [
+          {
+            "id": 1,
+            "subpopulation_description": "People ages 0–54 who enjoy reading for leisure or personal interest.",
+            "quantity": 18,
+            "sampled_values": {
+              "age": [
+                0,
+                54
+              ],
+              "age_group": [
+                "A child or young adolescent aged 0–14, with age drawn within this band.",
+                "A teenager or young adult aged 15–24, including people in school, training, work, or transitions between them.",
+                "An adult aged 25–54, spanning early, mid-career, parenting, and other adult life circumstances."
+              ],
+              "interests_and_hobbies_reading": "Enjoys reading for leisure or personal interest."
+            }
+          },
+          {
+            "id": 2,
+            "subpopulation_description": "People ages 0–54 who do not identify reading as a leisure interest.",
+            "quantity": 32,
+            "sampled_values": {
+              "age": [
+                0,
+                54
+              ],
+              "age_group": [
+                "A child or young adolescent aged 0–14, with age drawn within this band.",
+                "A teenager or young adult aged 15–24, including people in school, training, work, or transitions between them.",
+                "An adult aged 25–54, spanning early, mid-career, parenting, and other adult life circumstances."
+              ],
+              "interests_and_hobbies_reading": "Does not identify reading as a leisure interest."
+            }
+          },
+          {
+            "id": 3,
+            "subpopulation_description": "People ages 55 and above who enjoy reading for leisure or personal interest.",
+            "quantity": 7,
+            "sampled_values": {
+              "age": [
+                55,
+                115
+              ],
+              "age_group": [
+                "An adult aged 55–64, potentially approaching retirement or continuing work and caregiving responsibilities.",
+                "An older adult aged 65 or above, with age drawn across the broad older-adult range."
+              ],
+              "interests_and_hobbies_reading": "Enjoys reading for leisure or personal interest."
+            }
+          },
+          {
+            "id": 4,
+            "subpopulation_description": "People ages 55 and above who do not identify reading as a leisure interest.",
+            "quantity": 13,
+            "sampled_values": {
+              "age": [
+                55,
+                115
+              ],
+              "age_group": [
+                "An adult aged 55–64, potentially approaching retirement or continuing work and caregiving responsibilities.",
+                "An older adult aged 65 or above, with age drawn across the broad older-adult range."
+              ],
+              "interests_and_hobbies_reading": "Does not identify reading as a leisure interest."
+            }
+          }
+        ]
+      },
+      "checks": {
+        "output_characters": 2062,
+        "output_words": 267,
+        "json_valid": true,
+        "directive_count": 4,
+        "quantities": [
+          18,
+          32,
+          7,
+          13
+        ],
+        "positive_integer_quantities": true,
+        "expected_total": 70,
+        "actual_total": 70,
+        "exact_total": true,
+        "sequential_directive_ids": true,
+        "unknown_dimensions": [],
+        "invalid_or_rewritten_sampled_values": [],
+        "reconstruction_valid": true,
+        "assignment_schema_valid": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcQoAeqqNKsUNJdJW4yPwzKCNo2mx::membership-plan-v2::r1",
+      "phase": "sampling_plan",
+      "stage": "failure-development-round4",
+      "source_case_id": "exec-chatcmpl-EcQoAeqqNKsUNJdJW4yPwzKCNo2mx",
+      "variant": "membership-plan-v2",
+      "adapter": "indexed_sampling",
+      "repetition": 1,
+      "hypothesis": "Represent categorical subsets as one boolean per option, making duplicate selections impossible while retaining full meanings and exact reconstruction.",
+      "original_request_sha256": "4c6a3f7ae7755252b50f7d00fa1d08c7cf60ea9ccce397cec695f0e8c7138abf",
+      "instruction_sha256": "583a9ad3cb32d304ebf9a8e9f7c434d8d80d5bee5fa66b568b1562073495ae8b",
+      "categorical_encoding": "membership",
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 59.063,
+      "content": "{\"sample_plan\":[{\"id\":1,\"subpopulation_description\":\"Parents or guardians aged 15–39 of a 4- or 5-year-old, sharing books with the child 0–3 days per week.\",\"quantity\":13,\"sampled_values\":{\"1\":[15,39],\"2\":[4,5],\"3\":[48,71],\"4\":null,\"5\":null,\"6\":null,\"7\":null,\"8\":null,\"9\":null,\"10\":null,\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"21\":null,\"22\":null,\"23\":null,\"24\":[0,3],\"25\":null,\"26\":null,\"27\":null,\"28\":null,\"29\":null}},{\"id\":2,\"subpopulation_description\":\"Parents or guardians aged 15–39 of a 4- or 5-year-old, sharing books with the child 4–7 days per week.\",\"quantity\":12,\"sampled_values\":{\"1\":[15,39],\"2\":[4,5],\"3\":[48,71],\"4\":null,\"5\":null,\"6\":null,\"7\":null,\"8\":null,\"9\":null,\"10\":null,\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"21\":null,\"22\":null,\"23\":null,\"24\":[4,7],\"25\":null,\"26\":null,\"27\":null,\"28\":null,\"29\":null}},{\"id\":3,\"subpopulation_description\":\"Parents or guardians aged 40–85, including older guardians where applicable, of a 4- or 5-year-old, sharing books with the child 0–3 days per week.\",\"quantity\":12,\"sampled_values\":{\"1\":[40,85],\"2\":[4,5],\"3\":[48,71],\"4\":null,\"5\":null,\"6\":null,\"7\":null,\"8\":null,\"9\":null,\"10\":null,\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"21\":null,\"22\":null,\"23\":null,\"24\":[0,3],\"25\":null,\"26\":null,\"27\":null,\"28\":null,\"29\":null}},{\"id\":4,\"subpopulation_description\":\"Parents or guardians aged 40–85, including older guardians where applicable, of a 4- or 5-year-old, sharing books with the child 4–7 days per week.\",\"quantity\":13,\"sampled_values\":{\"1\":[40,85],\"2\":[4,5],\"3\":[48,71],\"4\":null,\"5\":null,\"6\":null,\"7\":null,\"8\":null,\"9\":null,\"10\":null,\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"21\":null,\"22\":null,\"23\":null,\"24\":[4,7],\"25\":null,\"26\":null,\"27\":null,\"28\":null,\"29\":null}}]}",
+      "response_id": "chatcmpl-EeRN4gRMJBcq2pmwhl0GeHV1PcutT",
+      "cost": {
+        "input_tokens": 7773,
+        "cached_input_tokens": 0,
+        "cache_write_tokens": 7770,
+        "output_tokens": 6479,
+        "reasoning_tokens": 5683,
+        "uncached_input_tokens": 3,
+        "input_usd": "3E-7",
+        "cached_input_usd": "0.00",
+        "cache_write_usd": "0.00097125",
+        "output_usd": "0.0032395",
+        "total_usd": "0.00421105",
+        "long_context": false
+      },
+      "reconstructed": {
+        "sample_plan": [
+          {
+            "id": 1,
+            "subpopulation_description": "Parents or guardians aged 15–39 of a 4- or 5-year-old, sharing books with the child 0–3 days per week.",
+            "quantity": 13,
+            "sampled_values": {
+              "parent_age_years": [
+                15,
+                39
+              ],
+              "age_of_qualifying_child_years": [
+                4,
+                5
+              ],
+              "age_of_qualifying_child_months": [
+                48,
+                71
+              ],
+              "parent_child_shared_reading_frequency_days_per_week": [
+                0,
+                3
+              ]
+            }
+          },
+          {
+            "id": 2,
+            "subpopulation_description": "Parents or guardians aged 15–39 of a 4- or 5-year-old, sharing books with the child 4–7 days per week.",
+            "quantity": 12,
+            "sampled_values": {
+              "parent_age_years": [
+                15,
+                39
+              ],
+              "age_of_qualifying_child_years": [
+                4,
+                5
+              ],
+              "age_of_qualifying_child_months": [
+                48,
+                71
+              ],
+              "parent_child_shared_reading_frequency_days_per_week": [
+                4,
+                7
+              ]
+            }
+          },
+          {
+            "id": 3,
+            "subpopulation_description": "Parents or guardians aged 40–85, including older guardians where applicable, of a 4- or 5-year-old, sharing books with the child 0–3 days per week.",
+            "quantity": 12,
+            "sampled_values": {
+              "parent_age_years": [
+                40,
+                85
+              ],
+              "age_of_qualifying_child_years": [
+                4,
+                5
+              ],
+              "age_of_qualifying_child_months": [
+                48,
+                71
+              ],
+              "parent_child_shared_reading_frequency_days_per_week": [
+                0,
+                3
+              ]
+            }
+          },
+          {
+            "id": 4,
+            "subpopulation_description": "Parents or guardians aged 40–85, including older guardians where applicable, of a 4- or 5-year-old, sharing books with the child 4–7 days per week.",
+            "quantity": 13,
+            "sampled_values": {
+              "parent_age_years": [
+                40,
+                85
+              ],
+              "age_of_qualifying_child_years": [
+                4,
+                5
+              ],
+              "age_of_qualifying_child_months": [
+                48,
+                71
+              ],
+              "parent_child_shared_reading_frequency_days_per_week": [
+                4,
+                7
+              ]
+            }
+          }
+        ]
+      },
+      "checks": {
+        "output_characters": 1547,
+        "output_words": 159,
+        "json_valid": true,
+        "directive_count": 4,
+        "quantities": [
+          13,
+          12,
+          12,
+          13
+        ],
+        "positive_integer_quantities": true,
+        "expected_total": 50,
+        "actual_total": 50,
+        "exact_total": true,
+        "sequential_directive_ids": true,
+        "unknown_dimensions": [],
+        "invalid_or_rewritten_sampled_values": [],
+        "reconstruction_valid": true,
+        "assignment_schema_valid": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcOs5VaSzbXHC9ekPB4HoNqxQkMJ3::focused-transition-v3-confirm::r2",
+      "phase": "story_continuation",
+      "stage": "failure-development-round4",
+      "source_case_id": "exec-chatcmpl-EcOs5VaSzbXHC9ekPB4HoNqxQkMJ3",
+      "variant": "focused-transition-v3-confirm",
+      "adapter": "append_system",
+      "repetition": 2,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "073a72e473dc67f7f2d3495d99a208a7fa9cb96917e9846f9a968a354d10ab8c",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "categorical_encoding": null,
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 25.422,
+      "content": "The engineer sent civil defense the raw files, timestamps, and sensor limitations. Responders set an exclusion zone and moved the crowd inland. No injuries were reported. Before dawn, authorities had not verified an impact, so the beach stayed closed for daylight checks. The officer took their statements, then let them leave. The live broadcast was postponed. Zog learned that responsibility means admitting uncertainty and protecting others while facts are checked.",
+      "response_id": "chatcmpl-EeRK2QIuKIZTGURqp62UWhx3Nn7xc",
+      "cost": {
+        "input_tokens": 14948,
+        "cached_input_tokens": 14573,
+        "cache_write_tokens": 0,
+        "output_tokens": 1641,
+        "reasoning_tokens": 1536,
+        "uncached_input_tokens": 375,
+        "input_usd": "0.0000375",
+        "cached_input_usd": "0.00014573",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.0008205",
+        "total_usd": "0.00100373",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 468,
+        "output_words": 70,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcPQs4sN9jObydoOqqjACE8BvHuqm::focused-transition-v3-confirm::r2",
+      "phase": "story_continuation",
+      "stage": "failure-development-round4",
+      "source_case_id": "exec-chatcmpl-EcPQs4sN9jObydoOqqjACE8BvHuqm",
+      "variant": "focused-transition-v3-confirm",
+      "adapter": "append_system",
+      "repetition": 2,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "286eb1a7439b00d4bb11e91443b1ab972baf7bd3519d2a8d8360af5e470ddd2b",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "categorical_encoding": null,
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 29.406,
+      "content": "The representative checked the pilot calendar and said enrollment would pause until her team could document who saw the data and how people without smartphones could participate. The room began to empty, and the session ended without an endorsement of the app. One lesson remained: Julian’s correction did not erase the example’s usefulness, but changed what it could prove. Honest limits make learning trustworthy; real choices depend on circumstances.",
+      "response_id": "chatcmpl-EeRKJgVTBQBv1fldYH7RYfuXvfFmw",
+      "cost": {
+        "input_tokens": 15558,
+        "cached_input_tokens": 15183,
+        "cache_write_tokens": 0,
+        "output_tokens": 3087,
+        "reasoning_tokens": 2969,
+        "uncached_input_tokens": 375,
+        "input_usd": "0.0000375",
+        "cached_input_usd": "0.00015183",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.0015435",
+        "total_usd": "0.00173283",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 453,
+        "output_words": 69,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcPM5wjdBjFFpykUFm7dTTh4vr7SE::focused-transition-v3-confirm::r2",
+      "phase": "story_continuation",
+      "stage": "failure-development-round4",
+      "source_case_id": "exec-chatcmpl-EcPM5wjdBjFFpykUFm7dTTh4vr7SE",
+      "variant": "focused-transition-v3-confirm",
+      "adapter": "append_system",
+      "repetition": 2,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "cbd03ddc75bc8ae057b8f95840850fbfe9ab281b59b1e3d77d6d1d69e69119a6",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "categorical_encoding": null,
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 29.047,
+      "content": "Julian answered with a hypothetical, not a personal memory: a worker’s shift ends just as a sister asks them to collect their father’s prescription before the pharmacy closes. Leaving means lost pay; waiting may leave him without his evening dose. Zog asked which duty usually wins. Julian said urgency, transport, and other relatives all matter. At the café counter, a worker overheard and offered another complication: some families have no one available to cover either task. The example resisted a simple rule.",
+      "response_id": "chatcmpl-EeRKmyMErFxGnl9KWCTDJKM3p2rT9",
+      "cost": {
+        "input_tokens": 8227,
+        "cached_input_tokens": 7860,
+        "cache_write_tokens": 0,
+        "output_tokens": 2819,
+        "reasoning_tokens": 2680,
+        "uncached_input_tokens": 367,
+        "input_usd": "0.0000367",
+        "cached_input_usd": "0.0000786",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.0014095",
+        "total_usd": "0.0015248",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 514,
+        "output_words": 82,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcQoc8MNbyvjIPyhyahctBgDu7uUj::focused-transition-v3-confirm::r2",
+      "phase": "story_continuation",
+      "stage": "failure-development-round4",
+      "source_case_id": "exec-chatcmpl-EcQoc8MNbyvjIPyhyahctBgDu7uUj",
+      "variant": "focused-transition-v3-confirm",
+      "adapter": "append_system",
+      "repetition": 2,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "201423a61745e6756d7e73cf6b27a4199a09be058af9ea13432c75ca02e0cb1d",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "categorical_encoding": null,
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 25.391,
+      "content": "Cedar Reach received Lisa’s interim report, and the team closed the engagement. Scheduling data and workflow findings had not arrived, so no bottleneck or remedy was confirmed. Minutes later, Northstar Ports, a large private cargo-terminal operator, requested urgent help: storm damage and rising insurance costs were disrupting shipments. Its challenge was infrastructure resilience and freight reliability, not clinic access. The team began scoping, requesting outage, maintenance, and vessel-delay records while clarifying safety obligations, capital constraints, and recovery priorities.",
+      "response_id": "chatcmpl-EeRLF3K2y3ceMkBkgKxzX5ISRIzgl",
+      "cost": {
+        "input_tokens": 12094,
+        "cached_input_tokens": 11640,
+        "cache_write_tokens": 0,
+        "output_tokens": 3056,
+        "reasoning_tokens": 2914,
+        "uncached_input_tokens": 454,
+        "input_usd": "0.0000454",
+        "cached_input_usd": "0.0001164",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.001528",
+        "total_usd": "0.0016898",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 591,
+        "output_words": 78,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcRIZR28RnLdIg8Qm31z2m8DnCvvr::focused-transition-v3-confirm::r2",
+      "phase": "story_continuation",
+      "stage": "failure-development-round4",
+      "source_case_id": "exec-chatcmpl-EcRIZR28RnLdIg8Qm31z2m8DnCvvr",
+      "variant": "focused-transition-v3-confirm",
+      "adapter": "append_system",
+      "repetition": 2,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "e177881fbe352bade312b8fbd622e9c801868afe9faac6933824ffdd027ef7bf",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "categorical_encoding": null,
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 29.078,
+      "content": "Lisa delivered a closeout report to the Commission, noting that staffing, turnout, and site records had not arrived and no site-specific findings were verified. The Commission acknowledged it, and the engagement ended.\n\nMinutes later, Aster Vale Studios, an 18-person privately owned animation house, sought help after ransomware encrypted project files. Its distributor deadline was ten days away; backup integrity remained unknown. Lisa requested an incident timeline and backup inventory. Marcos began scoping recovery workflows, while Oscar requested a hardware inventory.",
+      "response_id": "chatcmpl-EeRLejm7XzUzmSjVShTNBBCQVqAjQ",
+      "cost": {
+        "input_tokens": 12160,
+        "cached_input_tokens": 11706,
+        "cache_write_tokens": 0,
+        "output_tokens": 3448,
+        "reasoning_tokens": 3300,
+        "uncached_input_tokens": 454,
+        "input_usd": "0.0000454",
+        "cached_input_usd": "0.00011706",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.001724",
+        "total_usd": "0.00188646",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 576,
+        "output_words": 80,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcQKYjykI4QLV52ZcqZPyn2dzfo3w::focused-transition-v3-confirm::r2",
+      "phase": "story_continuation",
+      "stage": "failure-development-round4",
+      "source_case_id": "exec-chatcmpl-EcQKYjykI4QLV52ZcqZPyn2dzfo3w",
+      "variant": "focused-transition-v3-confirm",
+      "adapter": "append_system",
+      "repetition": 2,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "51964c31c4509debfda552da1112294c3b7e754255a2e3fd7618777675975695",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "categorical_encoding": null,
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 11.954,
+      "content": "Lisa delivers Cairn & Vale’s preliminary report, noting requested records remain unreviewed and no tool or pilot is approved. The firm accepts the bounded framework, and the engagement closes.\n\nImmediately, North Shore Food Exchange, a 60-person regional food bank, requests help. Donations fluctuate as demand surges, and an aging freezer risks spoiling deliveries; grant funds cannot cover a replacement. The team requests inventory, temperature, delivery, and funding records, then starts mapping storage capacity and distribution constraints.",
+      "response_id": "chatcmpl-EeRM7DmVa6kUM3OCqNccQIRF6SHiL",
+      "cost": {
+        "input_tokens": 15169,
+        "cached_input_tokens": 14715,
+        "cache_write_tokens": 0,
+        "output_tokens": 1222,
+        "reasoning_tokens": 1101,
+        "uncached_input_tokens": 454,
+        "input_usd": "0.0000454",
+        "cached_input_usd": "0.00014715",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.000611",
+        "total_usd": "0.00080355",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 546,
+        "output_words": 76,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcPvJQR9JkK8l4yUG6f1hHGcbhvPq::focused-transition-v3-confirm::r2",
+      "phase": "story_continuation",
+      "stage": "failure-development-round4",
+      "source_case_id": "exec-chatcmpl-EcPvJQR9JkK8l4yUG6f1hHGcbhvPq",
+      "variant": "focused-transition-v3-confirm",
+      "adapter": "append_system",
+      "repetition": 2,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "b2335bd284d199ed3c6afdeeecffad6d90c9532d4252a796f1ba697b2c83c57f",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "categorical_encoding": null,
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 7.671,
+      "content": "High Plains accepts Lisa’s preliminary framework, which records the missing building, funding, and contractor evidence without ranking projects. The authority closes the engagement pending its internal reviews.\n\nImmediately, Bright Reel Pictures, a privately owned, nine-person documentary production company, requests help. Its distributor’s launch date is approaching, but archival-footage rights remain unresolved, post-production costs are rising, and a cash shortfall threatens delivery. The team begins scoping the challenge, requesting the distribution contract, rights log, budget, and delivery schedule before mapping options.",
+      "response_id": "chatcmpl-EeRMJKnOZNMdMyAepRhWOW31x6PeQ",
+      "cost": {
+        "input_tokens": 13887,
+        "cached_input_tokens": 13433,
+        "cache_write_tokens": 0,
+        "output_tokens": 628,
+        "reasoning_tokens": 512,
+        "uncached_input_tokens": 454,
+        "input_usd": "0.0000454",
+        "cached_input_usd": "0.00013433",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.000314",
+        "total_usd": "0.00049373",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 635,
+        "output_words": 80,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcNZrgB7NnHHQ32gLuD0kVWCH8bKw::membership-plan-v2::r1",
+      "phase": "sampling_plan",
+      "stage": "failure-development-round4",
+      "source_case_id": "exec-chatcmpl-EcNZrgB7NnHHQ32gLuD0kVWCH8bKw",
+      "variant": "membership-plan-v2",
+      "adapter": "indexed_sampling",
+      "repetition": 1,
+      "hypothesis": "Represent categorical subsets as one boolean per option, making duplicate selections impossible while retaining full meanings and exact reconstruction.",
+      "original_request_sha256": "edc96eb566fc36c7bb965267560a0c316df0c79e6baba4b63bc83a9b30f9957a",
+      "instruction_sha256": "583a9ad3cb32d304ebf9a8e9f7c434d8d80d5bee5fa66b568b1562073495ae8b",
+      "categorical_encoding": "membership",
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 55.672,
+      "content": "{\"sample_plan\":[{\"id\":1,\"subpopulation_description\":\"U.S. residents ages 0–14; age-group allocation follows the supplied marginal profile, with recreation preferences left open.\",\"quantity\":5,\"sampled_values\":{\"1\":[0,14],\"2\":{\"1\":true,\"2\":false,\"3\":false,\"4\":false,\"5\":false},\"3\":null,\"4\":null,\"5\":null,\"6\":null,\"7\":null,\"8\":null,\"9\":null,\"10\":null,\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"21\":null,\"22\":null,\"23\":null,\"24\":null,\"25\":null,\"26\":null,\"27\":null,\"28\":null,\"29\":null,\"30\":null,\"31\":null,\"32\":null,\"33\":null,\"34\":null,\"35\":null,\"36\":null,\"37\":null,\"38\":null,\"39\":null,\"40\":null,\"41\":null,\"42\":null,\"43\":null,\"44\":null,\"45\":null,\"46\":null,\"47\":null,\"48\":null,\"49\":null,\"50\":null,\"51\":null,\"52\":null,\"53\":null,\"54\":null,\"55\":null,\"56\":null,\"57\":null,\"58\":null,\"59\":null,\"60\":null,\"61\":null,\"62\":null,\"63\":null,\"64\":null,\"65\":null,\"66\":null,\"67\":null,\"68\":null,\"69\":null,\"70\":null,\"71\":null,\"72\":null,\"73\":null,\"74\":null,\"75\":null,\"76\":null,\"77\":null,\"78\":null}},{\"id\":2,\"subpopulation_description\":\"U.S. residents ages 15–24; age-group allocation follows the supplied marginal profile, with recreation preferences left open.\",\"quantity\":4,\"sampled_values\":{\"1\":[15,24],\"2\":{\"1\":false,\"2\":true,\"3\":false,\"4\":false,\"5\":false},\"3\":null,\"4\":null,\"5\":null,\"6\":null,\"7\":null,\"8\":null,\"9\":null,\"10\":null,\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"21\":null,\"22\":null,\"23\":null,\"24\":null,\"25\":null,\"26\":null,\"27\":null,\"28\":null,\"29\":null,\"30\":null,\"31\":null,\"32\":null,\"33\":null,\"34\":null,\"35\":null,\"36\":null,\"37\":null,\"38\":null,\"39\":null,\"40\":null,\"41\":null,\"42\":null,\"43\":null,\"44\":null,\"45\":null,\"46\":null,\"47\":null,\"48\":null,\"49\":null,\"50\":null,\"51\":null,\"52\":null,\"53\":null,\"54\":null,\"55\":null,\"56\":null,\"57\":null,\"58\":null,\"59\":null,\"60\":null,\"61\":null,\"62\":null,\"63\":null,\"64\":null,\"65\":null,\"66\":null,\"67\":null,\"68\":null,\"69\":null,\"70\":null,\"71\":null,\"72\":null,\"73\":null,\"74\":null,\"75\":null,\"76\":null,\"77\":null,\"78\":null}},{\"id\":3,\"subpopulation_description\":\"U.S. residents ages 25–54 in a balanced recreation-coverage stratum allowing fitness, team sports, or outdoor recreation preferences.\",\"quantity\":6,\"sampled_values\":{\"1\":[25,54],\"2\":{\"1\":false,\"2\":false,\"3\":true,\"4\":false,\"5\":false},\"3\":null,\"4\":null,\"5\":null,\"6\":null,\"7\":null,\"8\":null,\"9\":null,\"10\":null,\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"21\":null,\"22\":null,\"23\":null,\"24\":null,\"25\":null,\"26\":null,\"27\":null,\"28\":null,\"29\":null,\"30\":null,\"31\":null,\"32\":null,\"33\":null,\"34\":null,\"35\":null,\"36\":null,\"37\":null,\"38\":null,\"39\":null,\"40\":null,\"41\":null,\"42\":null,\"43\":{\"1\":false,\"2\":true,\"3\":true,\"4\":true,\"5\":false,\"6\":false},\"44\":null,\"45\":null,\"46\":null,\"47\":null,\"48\":null,\"49\":null,\"50\":null,\"51\":null,\"52\":null,\"53\":null,\"54\":null,\"55\":null,\"56\":null,\"57\":null,\"58\":null,\"59\":null,\"60\":null,\"61\":null,\"62\":null,\"63\":null,\"64\":null,\"65\":null,\"66\":null,\"67\":null,\"68\":null,\"69\":null,\"70\":null,\"71\":null,\"72\":null,\"73\":null,\"74\":null,\"75\":null,\"76\":null,\"77\":null,\"78\":null}},{\"id\":4,\"subpopulation_description\":\"U.S. residents ages 25–54 in a balanced recreation-coverage stratum allowing gentle recreation, sports spectating, or little interest in sport.\",\"quantity\":6,\"sampled_values\":{\"1\":[25,54],\"2\":{\"1\":false,\"2\":false,\"3\":true,\"4\":false,\"5\":false},\"3\":null,\"4\":null,\"5\":null,\"6\":null,\"7\":null,\"8\":null,\"9\":null,\"10\":null,\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"21\":null,\"22\":null,\"23\":null,\"24\":null,\"25\":null,\"26\":null,\"27\":null,\"28\":null,\"29\":null,\"30\":null,\"31\":null,\"32\":null,\"33\":null,\"34\":null,\"35\":null,\"36\":null,\"37\":null,\"38\":null,\"39\":null,\"40\":null,\"41\":null,\"42\":null,\"43\":{\"1\":true,\"2\":false,\"3\":false,\"4\":false,\"5\":true,\"6\":true},\"44\":null,\"45\":null,\"46\":null,\"47\":null,\"48\":null,\"49\":null,\"50\":null,\"51\":null,\"52\":null,\"53\":null,\"54\":null,\"55\":null,\"56\":null,\"57\":null,\"58\":null,\"59\":null,\"60\":null,\"61\":null,\"62\":null,\"63\":null,\"64\":null,\"65\":null,\"66\":null,\"67\":null,\"68\":null,\"69\":null,\"70\":null,\"71\":null,\"72\":null,\"73\":null,\"74\":null,\"75\":null,\"76\":null,\"77\":null,\"78\":null}},{\"id\":5,\"subpopulation_description\":\"U.S. residents ages 55–64; age-group allocation follows the supplied marginal profile, with recreation preferences left open.\",\"quantity\":4,\"sampled_values\":{\"1\":[55,64],\"2\":{\"1\":false,\"2\":false,\"3\":false,\"4\":true,\"5\":false},\"3\":null,\"4\":null,\"5\":null,\"6\":null,\"7\":null,\"8\":null,\"9\":null,\"10\":null,\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"21\":null,\"22\":null,\"23\":null,\"24\":null,\"25\":null,\"26\":null,\"27\":null,\"28\":null,\"29\":null,\"30\":null,\"31\":null,\"32\":null,\"33\":null,\"34\":null,\"35\":null,\"36\":null,\"37\":null,\"38\":null,\"39\":null,\"40\":null,\"41\":null,\"42\":null,\"43\":null,\"44\":null,\"45\":null,\"46\":null,\"47\":null,\"48\":null,\"49\":null,\"50\":null,\"51\":null,\"52\":null,\"53\":null,\"54\":null,\"55\":null,\"56\":null,\"57\":null,\"58\":null,\"59\":null,\"60\":null,\"61\":null,\"62\":null,\"63\":null,\"64\":null,\"65\":null,\"66\":null,\"67\":null,\"68\":null,\"69\":null,\"70\":null,\"71\":null,\"72\":null,\"73\":null,\"74\":null,\"75\":null,\"76\":null,\"77\":null,\"78\":null}},{\"id\":6,\"subpopulation_description\":\"U.S. residents ages 65 and older; age-group allocation follows the supplied marginal profile, with recreation preferences left open.\",\"quantity\":5,\"sampled_values\":{\"1\":[65,110],\"2\":{\"1\":false,\"2\":false,\"3\":false,\"4\":false,\"5\":true},\"3\":null,\"4\":null,\"5\":null,\"6\":null,\"7\":null,\"8\":null,\"9\":null,\"10\":null,\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"21\":null,\"22\":null,\"23\":null,\"24\":null,\"25\":null,\"26\":null,\"27\":null,\"28\":null,\"29\":null,\"30\":null,\"31\":null,\"32\":null,\"33\":null,\"34\":null,\"35\":null,\"36\":null,\"37\":null,\"38\":null,\"39\":null,\"40\":null,\"41\":null,\"42\":null,\"43\":null,\"44\":null,\"45\":null,\"46\":null,\"47\":null,\"48\":null,\"49\":null,\"50\":null,\"51\":null,\"52\":null,\"53\":null,\"54\":null,\"55\":null,\"56\":null,\"57\":null,\"58\":null,\"59\":null,\"60\":null,\"61\":null,\"62\":null,\"63\":null,\"64\":null,\"65\":null,\"66\":null,\"67\":null,\"68\":null,\"69\":null,\"70\":null,\"71\":null,\"72\":null,\"73\":null,\"74\":null,\"75\":null,\"76\":null,\"77\":null,\"78\":null}}]}",
+      "response_id": "chatcmpl-EeRMRy81W5TtKao25Lra1YJoryicG",
+      "cost": {
+        "input_tokens": 15673,
+        "cached_input_tokens": 0,
+        "cache_write_tokens": 15670,
+        "output_tokens": 8070,
+        "reasoning_tokens": 5682,
+        "uncached_input_tokens": 3,
+        "input_usd": "3E-7",
+        "cached_input_usd": "0.00",
+        "cache_write_usd": "0.00195875",
+        "output_usd": "0.004035",
+        "total_usd": "0.00599405",
+        "long_context": false
+      },
+      "reconstructed": {
+        "sample_plan": [
+          {
+            "id": 1,
+            "subpopulation_description": "U.S. residents ages 0–14; age-group allocation follows the supplied marginal profile, with recreation preferences left open.",
+            "quantity": 5,
+            "sampled_values": {
+              "age": [
+                0,
+                14
+              ],
+              "age_group": "Age 0–14, including infants, school-age children, and young teenagers; 18.6% of the supplied population profile."
+            }
+          },
+          {
+            "id": 2,
+            "subpopulation_description": "U.S. residents ages 15–24; age-group allocation follows the supplied marginal profile, with recreation preferences left open.",
+            "quantity": 4,
+            "sampled_values": {
+              "age": [
+                15,
+                24
+              ],
+              "age_group": "Age 15–24, including older teenagers, students, young workers, and people beginning independent adulthood; 13.1%."
+            }
+          },
+          {
+            "id": 3,
+            "subpopulation_description": "U.S. residents ages 25–54 in a balanced recreation-coverage stratum allowing fitness, team sports, or outdoor recreation preferences.",
+            "quantity": 6,
+            "sampled_values": {
+              "age": [
+                25,
+                54
+              ],
+              "age_group": "Age 25–54, spanning early adulthood through midlife, with wide variation in family and career circumstances; 39.4%.",
+              "sports_and_recreation_preferences": [
+                "Enjoys running, cycling, swimming, or regular fitness activities and pursues them enthusiastically.",
+                "Enjoys team sports such as basketball or football as a player, spectator, or both.",
+                "Prefers hiking, camping, fishing, or other outdoor recreation, from occasional outings to frequent trips."
+              ]
+            }
+          },
+          {
+            "id": 4,
+            "subpopulation_description": "U.S. residents ages 25–54 in a balanced recreation-coverage stratum allowing gentle recreation, sports spectating, or little interest in sport.",
+            "quantity": 6,
+            "sampled_values": {
+              "age": [
+                25,
+                54
+              ],
+              "age_group": "Age 25–54, spanning early adulthood through midlife, with wide variation in family and career circumstances; 39.4%.",
+              "sports_and_recreation_preferences": [
+                "Prefers walking, gardening, or other gentle recreation and may have limited mobility or stamina.",
+                "Enjoys sports mainly as a spectator and follows local, college, or professional teams.",
+                "Has little interest in exercise or sport and may avoid it because of preference, disability, cost, access, or health."
+              ]
+            }
+          },
+          {
+            "id": 5,
+            "subpopulation_description": "U.S. residents ages 55–64; age-group allocation follows the supplied marginal profile, with recreation preferences left open.",
+            "quantity": 4,
+            "sampled_values": {
+              "age": [
+                55,
+                64
+              ],
+              "age_group": "Age 55–64, including people approaching retirement as well as those continuing established careers; 12.9%."
+            }
+          },
+          {
+            "id": 6,
+            "subpopulation_description": "U.S. residents ages 65 and older; age-group allocation follows the supplied marginal profile, with recreation preferences left open.",
+            "quantity": 5,
+            "sampled_values": {
+              "age": [
+                65,
+                110
+              ],
+              "age_group": "Age 65 and older, including active older adults, retirees, and people who may need substantial support; 16.0%."
+            }
+          }
+        ]
+      },
+      "checks": {
+        "output_characters": 2835,
+        "output_words": 343,
+        "json_valid": true,
+        "directive_count": 6,
+        "quantities": [
+          5,
+          4,
+          6,
+          6,
+          4,
+          5
+        ],
+        "positive_integer_quantities": true,
+        "expected_total": 30,
+        "actual_total": 30,
+        "exact_total": true,
+        "sequential_directive_ids": true,
+        "unknown_dimensions": [],
+        "invalid_or_rewritten_sampled_values": [],
+        "reconstruction_valid": true,
+        "assignment_schema_valid": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcOs5VaSzbXHC9ekPB4HoNqxQkMJ3::focused-transition-v3-confirm::r3",
+      "phase": "story_continuation",
+      "stage": "failure-development-round4",
+      "source_case_id": "exec-chatcmpl-EcOs5VaSzbXHC9ekPB4HoNqxQkMJ3",
+      "variant": "focused-transition-v3-confirm",
+      "adapter": "append_system",
+      "repetition": 3,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "073a72e473dc67f7f2d3495d99a208a7fa9cb96917e9846f9a968a354d10ab8c",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "categorical_encoding": null,
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 29.891,
+      "content": "At the lifeguard station, civil defense logged MaréData’s timestamps but could not verify an impact. The second alert remained unexplained, so responders closed the beach overnight and scheduled a daylight survey. The officer warned the crowd away from the water; the communications manager ended the live feed and shared only confirmed details. As the officer guided them inland, Zog understood the lesson: honest uncertainty, shared calmly, can keep people safer than confident speculation.",
+      "response_id": "chatcmpl-EeRK2B9gvC3pmPnkNFjvtnmy0ITSd",
+      "cost": {
+        "input_tokens": 14948,
+        "cached_input_tokens": 14573,
+        "cache_write_tokens": 0,
+        "output_tokens": 2102,
+        "reasoning_tokens": 1984,
+        "uncached_input_tokens": 375,
+        "input_usd": "0.0000375",
+        "cached_input_usd": "0.00014573",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.001051",
+        "total_usd": "0.00123423",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 492,
+        "output_words": 73,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcPQs4sN9jObydoOqqjACE8BvHuqm::focused-transition-v3-confirm::r3",
+      "phase": "story_continuation",
+      "stage": "failure-development-round4",
+      "source_case_id": "exec-chatcmpl-EcPQs4sN9jObydoOqqjACE8BvHuqm",
+      "variant": "focused-transition-v3-confirm",
+      "adapter": "append_system",
+      "repetition": 3,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "286eb1a7439b00d4bb11e91443b1ab972baf7bd3519d2a8d8360af5e470ddd2b",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "categorical_encoding": null,
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 26.078,
+      "content": "Before leaving, the representative postponed pilot sign-ups until her team could review the privacy and access questions. The app might coordinate schedules, but it could not make every competing obligation painless. Julian’s correction sharpened the lesson: a plausible story can illustrate a choice, but cannot pass as someone’s testimony. His actual account described flexibility with limits; the earlier story did not describe his life. The conversation closed on a practical lesson: ask who has options, and how we know.",
+      "response_id": "chatcmpl-EeRKNdtQT5roWRrvWscJ7I75QLOLB",
+      "cost": {
+        "input_tokens": 15558,
+        "cached_input_tokens": 15183,
+        "cache_write_tokens": 0,
+        "output_tokens": 2688,
+        "reasoning_tokens": 2559,
+        "uncached_input_tokens": 375,
+        "input_usd": "0.0000375",
+        "cached_input_usd": "0.00015183",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.001344",
+        "total_usd": "0.00153333",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 525,
+        "output_words": 79,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcPM5wjdBjFFpykUFm7dTTh4vr7SE::focused-transition-v3-confirm::r3",
+      "phase": "story_continuation",
+      "stage": "failure-development-round4",
+      "source_case_id": "exec-chatcmpl-EcPM5wjdBjFFpykUFm7dTTh4vr7SE",
+      "variant": "focused-transition-v3-confirm",
+      "adapter": "append_system",
+      "repetition": 3,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "cbd03ddc75bc8ae057b8f95840850fbfe9ab281b59b1e3d77d6d1d69e69119a6",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "categorical_encoding": null,
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 33.172,
+      "content": "Julian answered with a hypothetical, not a claim about every household. “Suppose a worker’s shift ends at six, a child needs collecting, and a relative calls for help buying medicine. The cheaper pharmacy closes before the worker arrives by bus; a taxi would take money set aside for groceries. They might ask a neighbor to collect the child or postpone the errand, but either choice shifts a burden.” Zog asked what happens when no neighbor is free.",
+      "response_id": "chatcmpl-EeRKnnsWfByjWXxJdwIfiPSpCRj9a",
+      "cost": {
+        "input_tokens": 8227,
+        "cached_input_tokens": 7860,
+        "cache_write_tokens": 0,
+        "output_tokens": 1336,
+        "reasoning_tokens": 1222,
+        "uncached_input_tokens": 367,
+        "input_usd": "0.0000367",
+        "cached_input_usd": "0.0000786",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.000668",
+        "total_usd": "0.0007833",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 450,
+        "output_words": 77,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcQoc8MNbyvjIPyhyahctBgDu7uUj::focused-transition-v3-confirm::r3",
+      "phase": "story_continuation",
+      "stage": "failure-development-round4",
+      "source_case_id": "exec-chatcmpl-EcQoc8MNbyvjIPyhyahctBgDu7uUj",
+      "variant": "focused-transition-v3-confirm",
+      "adapter": "append_system",
+      "repetition": 3,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "201423a61745e6756d7e73cf6b27a4199a09be058af9ea13432c75ca02e0cb1d",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "categorical_encoding": null,
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 13.0,
+      "content": "Lisa delivered Cedar Reach’s closeout report, labeling it an interim assessment: scheduling and workflow evidence had not arrived, so it provided a privacy-conscious evaluation plan, not findings. Cedar Reach accepted the limited closeout, and the team ended the engagement. Minutes later, Northstar Electric Cooperative, a member-owned utility serving several counties, requested urgent help after storm outages and rising substation costs. The team began scoping, requesting outage logs, asset inventories, and maintenance budgets before evaluating reliability options.",
+      "response_id": "chatcmpl-EeRLKd5laLmUTw2Hr2dB8dn6oPeMj",
+      "cost": {
+        "input_tokens": 12094,
+        "cached_input_tokens": 11640,
+        "cache_write_tokens": 0,
+        "output_tokens": 1382,
+        "reasoning_tokens": 1262,
+        "uncached_input_tokens": 454,
+        "input_usd": "0.0000454",
+        "cached_input_usd": "0.0001164",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.000691",
+        "total_usd": "0.0008528",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 571,
+        "output_words": 76,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcRIZR28RnLdIg8Qm31z2m8DnCvvr::focused-transition-v3-confirm::r3",
+      "phase": "story_continuation",
+      "stage": "failure-development-round4",
+      "source_case_id": "exec-chatcmpl-EcRIZR28RnLdIg8Qm31z2m8DnCvvr",
+      "variant": "focused-transition-v3-confirm",
+      "adapter": "append_system",
+      "repetition": 3,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "e177881fbe352bade312b8fbd622e9c801868afe9faac6933824ffdd027ef7bf",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "categorical_encoding": null,
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 20.782,
+      "content": "The Commission accepted Lisa’s interim report, noting requested records and site reviews never arrived. It closed the engagement, leaving election-day decisions to its officials and making no site-specific recommendations.\n\nMinutes later, volunteer-run Kestrel Heritage Railway sought help. Its insurer may suspend service over a century-old bridge before tourist season, and donations cannot fund every proposed repair. Lisa requested inspection reports and budgets; Marcos began mapping service dependencies while Oscar reviewed available plans. They reserved structural judgments for a qualified engineer.",
+      "response_id": "chatcmpl-EeRLXvEKiaG3DlOMCFjkRsbTN0UQV",
+      "cost": {
+        "input_tokens": 12160,
+        "cached_input_tokens": 11706,
+        "cache_write_tokens": 0,
+        "output_tokens": 2013,
+        "reasoning_tokens": 1888,
+        "uncached_input_tokens": 454,
+        "input_usd": "0.0000454",
+        "cached_input_usd": "0.00011706",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.0010065",
+        "total_usd": "0.00116896",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 608,
+        "output_words": 80,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcQKYjykI4QLV52ZcqZPyn2dzfo3w::focused-transition-v3-confirm::r3",
+      "phase": "story_continuation",
+      "stage": "failure-development-round4",
+      "source_case_id": "exec-chatcmpl-EcQKYjykI4QLV52ZcqZPyn2dzfo3w",
+      "variant": "focused-transition-v3-confirm",
+      "adapter": "append_system",
+      "repetition": 3,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "51964c31c4509debfda552da1112294c3b7e754255a2e3fd7618777675975695",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "categorical_encoding": null,
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 10.797,
+      "content": "Lisa sends Cairn & Vale its preliminary report, clearly stating that missing records prevent conclusions about tool suitability or savings. The firm accepts the bounded deliverable, and the engagement closes. Immediately, Mesa Verde Water District, a municipal utility serving 110,000 residents, requests help. A prolonged drought, leaking mains, and strict conservation targets threaten supply; its rate-capped budget cannot fund every replacement. The team requests water-loss, maintenance, demand, reservoir, and capital-plan records, then begins mapping urgent risks and planning constraints.",
+      "response_id": "chatcmpl-EeRLsrtOV9EIzKMr9snGXQI4YEuXN",
+      "cost": {
+        "input_tokens": 15169,
+        "cached_input_tokens": 14715,
+        "cache_write_tokens": 0,
+        "output_tokens": 995,
+        "reasoning_tokens": 874,
+        "uncached_input_tokens": 454,
+        "input_usd": "0.0000454",
+        "cached_input_usd": "0.00014715",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.0004975",
+        "total_usd": "0.00069005",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 596,
+        "output_words": 79,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcPvJQR9JkK8l4yUG6f1hHGcbhvPq::focused-transition-v3-confirm::r3",
+      "phase": "story_continuation",
+      "stage": "failure-development-round4",
+      "source_case_id": "exec-chatcmpl-EcPvJQR9JkK8l4yUG6f1hHGcbhvPq",
+      "variant": "focused-transition-v3-confirm",
+      "adapter": "append_system",
+      "repetition": 3,
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "original_request_sha256": "b2335bd284d199ed3c6afdeeecffad6d90c9532d4252a796f1ba697b2c83c57f",
+      "instruction_sha256": "db40f948e3d464d614b230e712919a18c98a8b26560d777c5af7b7791546ed92",
+      "categorical_encoding": null,
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 9.453,
+      "content": "High Plains accepts Lisa’s preliminary framework as a bounded closeout; with requested records still absent, the team closes without ranking projects or claiming feasibility. Immediately, VelvetArc, a 70-person online ticketing startup, asks for help after a payment-system outage during a major concert presale. Refund exposure, angry customers, and an upcoming festival launch are straining its small support team. The consultants open a rapid operational review, requesting incident timelines, service metrics, refund obligations, and launch deadlines before mapping the scope.",
+      "response_id": "chatcmpl-EeRM36eZoUX50XUDEc6iSQSyM04bx",
+      "cost": {
+        "input_tokens": 13887,
+        "cached_input_tokens": 13433,
+        "cache_write_tokens": 0,
+        "output_tokens": 826,
+        "reasoning_tokens": 708,
+        "uncached_input_tokens": 454,
+        "input_usd": "0.0000454",
+        "cached_input_usd": "0.00013433",
+        "cache_write_usd": "0.000",
+        "output_usd": "0.000413",
+        "total_usd": "0.00059273",
+        "long_context": false
+      },
+      "checks": {
+        "output_characters": 580,
+        "output_words": 79,
+        "json_valid": false,
+        "json_required": false,
+        "within_100_words": true
+      }
+    },
+    {
+      "case_id": "exec-chatcmpl-EcPVXPdL4sj3j6kfDX47ef2fsDrvS::membership-plan-v2::r1",
+      "phase": "sampling_plan",
+      "stage": "failure-development-round4",
+      "source_case_id": "exec-chatcmpl-EcPVXPdL4sj3j6kfDX47ef2fsDrvS",
+      "variant": "membership-plan-v2",
+      "adapter": "indexed_sampling",
+      "repetition": 1,
+      "hypothesis": "Represent categorical subsets as one boolean per option, making duplicate selections impossible while retaining full meanings and exact reconstruction.",
+      "original_request_sha256": "10d5ccf2a878ca1821b2bb4a4572df3ca243de4fb57ef0f3a15bc6975f027048",
+      "instruction_sha256": "583a9ad3cb32d304ebf9a8e9f7c434d8d80d5bee5fa66b568b1562073495ae8b",
+      "categorical_encoding": "membership",
+      "source_selection": "Previously reviewed cases are development, regardless of earlier split labels.",
+      "status": "completed",
+      "elapsed_seconds": 75.437,
+      "content": "{\"sample_plan\":[{\"id\":1,\"subpopulation_description\":\"U.S. residents ages 0–14.\",\"quantity\":9,\"sampled_values\":{\"1\":{\"1\":true},\"2\":[0,14],\"3\":{\"1\":true,\"2\":false,\"3\":false,\"4\":false,\"5\":false},\"4\":null,\"5\":null,\"6\":null,\"7\":null,\"8\":null,\"9\":null,\"10\":null,\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"21\":null,\"22\":null,\"23\":null,\"24\":null,\"25\":null,\"26\":null,\"27\":null,\"28\":null,\"29\":null,\"30\":null,\"31\":null,\"32\":null,\"33\":null,\"34\":null,\"35\":null,\"36\":null,\"37\":null,\"38\":null,\"39\":null,\"40\":null,\"41\":null,\"42\":null,\"43\":null,\"44\":null,\"45\":null,\"46\":null,\"47\":null,\"48\":null,\"49\":null,\"50\":null,\"51\":null,\"52\":null,\"53\":null,\"54\":null,\"55\":null,\"56\":null,\"57\":null,\"58\":null,\"59\":null,\"60\":null,\"61\":null,\"62\":null,\"63\":null,\"64\":null,\"65\":null,\"66\":null,\"67\":null,\"68\":null,\"69\":null,\"70\":null,\"71\":null,\"72\":null,\"73\":null,\"74\":null,\"75\":null}},{\"id\":2,\"subpopulation_description\":\"U.S. residents ages 15–24 who enjoy reading as a leisure interest.\",\"quantity\":3,\"sampled_values\":{\"1\":{\"1\":true},\"2\":[15,24],\"3\":{\"1\":false,\"2\":true,\"3\":false,\"4\":false,\"5\":false},\"4\":null,\"5\":null,\"6\":null,\"7\":null,\"8\":null,\"9\":null,\"10\":null,\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"21\":null,\"22\":null,\"23\":null,\"24\":null,\"25\":null,\"26\":null,\"27\":null,\"28\":null,\"29\":null,\"30\":null,\"31\":null,\"32\":{\"1\":true,\"2\":false},\"33\":null,\"34\":null,\"35\":null,\"36\":null,\"37\":null,\"38\":null,\"39\":null,\"40\":null,\"41\":null,\"42\":null,\"43\":null,\"44\":null,\"45\":null,\"46\":null,\"47\":null,\"48\":null,\"49\":null,\"50\":null,\"51\":null,\"52\":null,\"53\":null,\"54\":null,\"55\":null,\"56\":null,\"57\":null,\"58\":null,\"59\":null,\"60\":null,\"61\":null,\"62\":null,\"63\":null,\"64\":null,\"65\":null,\"66\":null,\"67\":null,\"68\":null,\"69\":null,\"70\":null,\"71\":null,\"72\":null,\"73\":null,\"74\":null,\"75\":null}},{\"id\":3,\"subpopulation_description\":\"U.S. residents ages 15–24 who do not regularly identify reading as a leisure interest.\",\"quantity\":4,\"sampled_values\":{\"1\":{\"1\":true},\"2\":[15,24],\"3\":{\"1\":false,\"2\":true,\"3\":false,\"4\":false,\"5\":false},\"4\":null,\"5\":null,\"6\":null,\"7\":null,\"8\":null,\"9\":null,\"10\":null,\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"21\":null,\"22\":null,\"23\":null,\"24\":null,\"25\":null,\"26\":null,\"27\":null,\"28\":null,\"29\":null,\"30\":null,\"31\":null,\"32\":{\"1\":false,\"2\":true},\"33\":null,\"34\":null,\"35\":null,\"36\":null,\"37\":null,\"38\":null,\"39\":null,\"40\":null,\"41\":null,\"42\":null,\"43\":null,\"44\":null,\"45\":null,\"46\":null,\"47\":null,\"48\":null,\"49\":null,\"50\":null,\"51\":null,\"52\":null,\"53\":null,\"54\":null,\"55\":null,\"56\":null,\"57\":null,\"58\":null,\"59\":null,\"60\":null,\"61\":null,\"62\":null,\"63\":null,\"64\":null,\"65\":null,\"66\":null,\"67\":null,\"68\":null,\"69\":null,\"70\":null,\"71\":null,\"72\":null,\"73\":null,\"74\":null,\"75\":null}},{\"id\":4,\"subpopulation_description\":\"U.S. residents ages 25–64 who enjoy reading as a leisure interest.\",\"quantity\":10,\"sampled_values\":{\"1\":{\"1\":true},\"2\":[25,64],\"3\":{\"1\":false,\"2\":false,\"3\":true,\"4\":true,\"5\":false},\"4\":null,\"5\":null,\"6\":null,\"7\":null,\"8\":null,\"9\":null,\"10\":null,\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"21\":null,\"22\":null,\"23\":null,\"24\":null,\"25\":null,\"26\":null,\"27\":null,\"28\":null,\"29\":null,\"30\":null,\"31\":null,\"32\":{\"1\":true,\"2\":false},\"33\":null,\"34\":null,\"35\":null,\"36\":null,\"37\":null,\"38\":null,\"39\":null,\"40\":null,\"41\":null,\"42\":null,\"43\":null,\"44\":null,\"45\":null,\"46\":null,\"47\":null,\"48\":null,\"49\":null,\"50\":null,\"51\":null,\"52\":null,\"53\":null,\"54\":null,\"55\":null,\"56\":null,\"57\":null,\"58\":null,\"59\":null,\"60\":null,\"61\":null,\"62\":null,\"63\":null,\"64\":null,\"65\":null,\"66\":null,\"67\":null,\"68\":null,\"69\":null,\"70\":null,\"71\":null,\"72\":null,\"73\":null,\"74\":null,\"75\":null}},{\"id\":5,\"subpopulation_description\":\"U.S. residents ages 25–64 who do not regularly identify reading as a leisure interest.\",\"quantity\":16,\"sampled_values\":{\"1\":{\"1\":true},\"2\":[25,64],\"3\":{\"1\":false,\"2\":false,\"3\":true,\"4\":true,\"5\":false},\"4\":null,\"5\":null,\"6\":null,\"7\":null,\"8\":null,\"9\":null,\"10\":null,\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"21\":null,\"22\":null,\"23\":null,\"24\":null,\"25\":null,\"26\":null,\"27\":null,\"28\":null,\"29\":null,\"30\":null,\"31\":null,\"32\":{\"1\":false,\"2\":true},\"33\":null,\"34\":null,\"35\":null,\"36\":null,\"37\":null,\"38\":null,\"39\":null,\"40\":null,\"41\":null,\"42\":null,\"43\":null,\"44\":null,\"45\":null,\"46\":null,\"47\":null,\"48\":null,\"49\":null,\"50\":null,\"51\":null,\"52\":null,\"53\":null,\"54\":null,\"55\":null,\"56\":null,\"57\":null,\"58\":null,\"59\":null,\"60\":null,\"61\":null,\"62\":null,\"63\":null,\"64\":null,\"65\":null,\"66\":null,\"67\":null,\"68\":null,\"69\":null,\"70\":null,\"71\":null,\"72\":null,\"73\":null,\"74\":null,\"75\":null}},{\"id\":6,\"subpopulation_description\":\"U.S. residents ages 65–110 who enjoy reading as a leisure interest.\",\"quantity\":3,\"sampled_values\":{\"1\":{\"1\":true},\"2\":[65,110],\"3\":{\"1\":false,\"2\":false,\"3\":false,\"4\":false,\"5\":true},\"4\":null,\"5\":null,\"6\":null,\"7\":null,\"8\":null,\"9\":null,\"10\":null,\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"21\":null,\"22\":null,\"23\":null,\"24\":null,\"25\":null,\"26\":null,\"27\":null,\"28\":null,\"29\":null,\"30\":null,\"31\":null,\"32\":{\"1\":true,\"2\":false},\"33\":null,\"34\":null,\"35\":null,\"36\":null,\"37\":null,\"38\":null,\"39\":null,\"40\":null,\"41\":null,\"42\":null,\"43\":null,\"44\":null,\"45\":null,\"46\":null,\"47\":null,\"48\":null,\"49\":null,\"50\":null,\"51\":null,\"52\":null,\"53\":null,\"54\":null,\"55\":null,\"56\":null,\"57\":null,\"58\":null,\"59\":null,\"60\":null,\"61\":null,\"62\":null,\"63\":null,\"64\":null,\"65\":null,\"66\":null,\"67\":null,\"68\":null,\"69\":null,\"70\":null,\"71\":null,\"72\":null,\"73\":null,\"74\":null,\"75\":null}},{\"id\":7,\"subpopulation_description\":\"U.S. residents ages 65–110 who do not regularly identify reading as a leisure interest.\",\"quantity\":5,\"sampled_values\":{\"1\":{\"1\":true},\"2\":[65,110],\"3\":{\"1\":false,\"2\":false,\"3\":false,\"4\":false,\"5\":true},\"4\":null,\"5\":null,\"6\":null,\"7\":null,\"8\":null,\"9\":null,\"10\":null,\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"21\":null,\"22\":null,\"23\":null,\"24\":null,\"25\":null,\"26\":null,\"27\":null,\"28\":null,\"29\":null,\"30\":null,\"31\":null,\"32\":{\"1\":false,\"2\":true},\"33\":null,\"34\":null,\"35\":null,\"36\":null,\"37\":null,\"38\":null,\"39\":null,\"40\":null,\"41\":null,\"42\":null,\"43\":null,\"44\":null,\"45\":null,\"46\":null,\"47\":null,\"48\":null,\"49\":null,\"50\":null,\"51\":null,\"52\":null,\"53\":null,\"54\":null,\"55\":null,\"56\":null,\"57\":null,\"58\":null,\"59\":null,\"60\":null,\"61\":null,\"62\":null,\"63\":null,\"64\":null,\"65\":null,\"66\":null,\"67\":null,\"68\":null,\"69\":null,\"70\":null,\"71\":null,\"72\":null,\"73\":null,\"74\":null,\"75\":null}}]}",
+      "response_id": "chatcmpl-EeRMCVVK4vBlmbM139pZP4RMSIk5O",
+      "cost": {
+        "input_tokens": 18530,
+        "cached_input_tokens": 0,
+        "cache_write_tokens": 18527,
+        "output_tokens": 8594,
+        "reasoning_tokens": 5977,
+        "uncached_input_tokens": 3,
+        "input_usd": "3E-7",
+        "cached_input_usd": "0.00",
+        "cache_write_usd": "0.002315875",
+        "output_usd": "0.004297",
+        "total_usd": "0.006613175",
+        "long_context": false
+      },
+      "reconstructed": {
+        "sample_plan": [
+          {
+            "id": 1,
+            "subpopulation_description": "U.S. residents ages 0–14.",
+            "quantity": 9,
+            "sampled_values": {
+              "country_of_residence": "Lives in the United States of America, in one of its states or the District of Columbia; territory and overseas-residence cases are not separately specified in the supplied demographic data.",
+              "age": [
+                0,
+                14
+              ],
+              "age_group": "Age 0 to 14, including infants, school-age children, and young teenagers; 18.6% of the population in the supplied data."
+            }
+          },
+          {
+            "id": 2,
+            "subpopulation_description": "U.S. residents ages 15–24 who enjoy reading as a leisure interest.",
+            "quantity": 3,
+            "sampled_values": {
+              "country_of_residence": "Lives in the United States of America, in one of its states or the District of Columbia; territory and overseas-residence cases are not separately specified in the supplied demographic data.",
+              "age": [
+                15,
+                24
+              ],
+              "age_group": "Age 15 to 24, including older teenagers, students, and young adults entering work or independent life; 13.1%.",
+              "reading_interest": "Enjoys reading books, articles, or other written material for pleasure or personal interest; source reports 37%."
+            }
+          },
+          {
+            "id": 3,
+            "subpopulation_description": "U.S. residents ages 15–24 who do not regularly identify reading as a leisure interest.",
+            "quantity": 4,
+            "sampled_values": {
+              "country_of_residence": "Lives in the United States of America, in one of its states or the District of Columbia; territory and overseas-residence cases are not separately specified in the supplied demographic data.",
+              "age": [
+                15,
+                24
+              ],
+              "age_group": "Age 15 to 24, including older teenagers, students, and young adults entering work or independent life; 13.1%.",
+              "reading_interest": "Does not regularly identify reading as a leisure interest; complement of the supplied 37% figure."
+            }
+          },
+          {
+            "id": 4,
+            "subpopulation_description": "U.S. residents ages 25–64 who enjoy reading as a leisure interest.",
+            "quantity": 10,
+            "sampled_values": {
+              "country_of_residence": "Lives in the United States of America, in one of its states or the District of Columbia; territory and overseas-residence cases are not separately specified in the supplied demographic data.",
+              "age": [
+                25,
+                64
+              ],
+              "age_group": [
+                "Age 25 to 54, spanning early adulthood through midlife and a wide range of family and work situations; 39.4%.",
+                "Age 55 to 64, including people approaching retirement as well as those continuing full-time work or caregiving; 12.9%."
+              ],
+              "reading_interest": "Enjoys reading books, articles, or other written material for pleasure or personal interest; source reports 37%."
+            }
+          },
+          {
+            "id": 5,
+            "subpopulation_description": "U.S. residents ages 25–64 who do not regularly identify reading as a leisure interest.",
+            "quantity": 16,
+            "sampled_values": {
+              "country_of_residence": "Lives in the United States of America, in one of its states or the District of Columbia; territory and overseas-residence cases are not separately specified in the supplied demographic data.",
+              "age": [
+                25,
+                64
+              ],
+              "age_group": [
+                "Age 25 to 54, spanning early adulthood through midlife and a wide range of family and work situations; 39.4%.",
+                "Age 55 to 64, including people approaching retirement as well as those continuing full-time work or caregiving; 12.9%."
+              ],
+              "reading_interest": "Does not regularly identify reading as a leisure interest; complement of the supplied 37% figure."
+            }
+          },
+          {
+            "id": 6,
+            "subpopulation_description": "U.S. residents ages 65–110 who enjoy reading as a leisure interest.",
+            "quantity": 3,
+            "sampled_values": {
+              "country_of_residence": "Lives in the United States of America, in one of its states or the District of Columbia; territory and overseas-residence cases are not separately specified in the supplied demographic data.",
+              "age": [
+                65,
+                110
+              ],
+              "age_group": "Age 65 and older, including active older adults, retirees, and people with a wide range of health and support needs; 16.0%.",
+              "reading_interest": "Enjoys reading books, articles, or other written material for pleasure or personal interest; source reports 37%."
+            }
+          },
+          {
+            "id": 7,
+            "subpopulation_description": "U.S. residents ages 65–110 who do not regularly identify reading as a leisure interest.",
+            "quantity": 5,
+            "sampled_values": {
+              "country_of_residence": "Lives in the United States of America, in one of its states or the District of Columbia; territory and overseas-residence cases are not separately specified in the supplied demographic data.",
+              "age": [
+                65,
+                110
+              ],
+              "age_group": "Age 65 and older, including active older adults, retirees, and people with a wide range of health and support needs; 16.0%.",
+              "reading_interest": "Does not regularly identify reading as a leisure interest; complement of the supplied 37% figure."
+            }
+          }
+        ]
+      },
+      "checks": {
+        "output_characters": 4640,
+        "output_words": 635,
+        "json_valid": true,
+        "directive_count": 7,
+        "quantities": [
+          9,
+          3,
+          4,
+          10,
+          16,
+          3,
+          5
+        ],
+        "positive_integer_quantities": true,
+        "expected_total": 50,
+        "actual_total": 50,
+        "exact_total": true,
+        "sequential_directive_ids": true,
+        "unknown_dimensions": [],
+        "invalid_or_rewritten_sampled_values": [],
+        "reconstruction_valid": true,
+        "assignment_schema_valid": true
+      }
+    }
+  ]
+}

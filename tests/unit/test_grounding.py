@@ -17,6 +17,7 @@ from tinytroupe.agent.grounding import (
     WebPagesGroundingConnector
 )
 from tinytroupe.examples import create_oscar_the_architect
+from tinytroupe.agent import FilesAndWebGroundingFaculty, TinyPerson
 from testing_utils import *
 
 @pytest.fixture
@@ -55,6 +56,87 @@ def test_grounding_connector_abstract():
     
     with pytest.raises(NotImplementedError):
         connector.list_sources()
+
+@pytest.mark.core
+@pytest.mark.parametrize(
+    "content,target,found",
+    [
+        ("report.txt", "", True),
+        ("missing-report.txt", "", False),
+        ("Summarize the delivery reference.", "report.txt", False),
+    ],
+)
+def test_document_consultation_reports_actual_retrieval(setup, tmp_path, caplog, content, target, found):
+    """Empty retrievals must not be reported to the agent as successfully read documents."""
+    (tmp_path / "report.txt").write_text(
+        "The delivery reference is ORCHID-4729.", encoding="utf-8"
+    )
+    faculty = FilesAndWebGroundingFaculty(folders_paths=[str(tmp_path)])
+    person = TinyPerson("Document reader")
+
+    assert faculty.process_action(
+        person, {"type": "CONSULT", "content": content, "target": target}
+    )
+    thought = person.episodic_memory.retrieve_all()[-1]["content"]["stimuli"][0]["content"]
+
+    if found:
+        assert "ORCHID-4729" in thought
+        assert "I have read" in thought
+    else:
+        assert "I have read" not in thought
+        assert "can't find any document" in thought
+        assert '"content"' in thought
+        assert any("Cannot consult document" in record.message for record in caplog.records)
+
+
+@pytest.mark.core
+def test_agent_consults_named_document_with_real_model(setup, tmp_path):
+    """A real model must list, consult, and answer using the documented action fields."""
+    (tmp_path / "report.txt").write_text(
+        "The delivery reference is ORCHID-4729.", encoding="utf-8"
+    )
+    person = create_oscar_the_architect()
+    person.add_mental_faculty(FilesAndWebGroundingFaculty(folders_paths=[str(tmp_path)]))
+
+    person.listen(
+        "Use CONSULT to read report.txt before answering. "
+        "Tell me the exact delivery reference from that document."
+    )
+    actions = []
+    for _ in range(3):
+        actions.extend(person.act(return_actions=True))
+
+    assert any(
+        item["action"]["type"] == "CONSULT"
+        and item["action"]["content"] == "report.txt"
+        and item["action"]["target"] == ""
+        for item in actions
+    )
+    assert any(
+        item["action"]["type"] == "TALK"
+        and "ORCHID-4729" in item["action"]["content"]
+        for item in actions
+    )
+
+
+@pytest.mark.core
+@pytest.mark.parametrize("parent_name", ["visible-parent", ".hidden-parent"])
+def test_local_files_grounding_under_explicit_folder(tmp_path, parent_name):
+    """A hidden ancestor must not hide visible documents, or expose hidden children."""
+    folder = tmp_path / parent_name / "reports"
+    folder.mkdir(parents=True)
+    (folder / "report.txt").write_text(
+        "The example company reported revenue of 42 units.", encoding="utf-8"
+    )
+    (folder / ".private.txt").write_text(
+        "This hidden document must not be indexed.", encoding="utf-8"
+    )
+
+    connector = LocalFilesGroundingConnector(folders_paths=[str(folder)])
+
+    assert connector.list_sources() == ["report.txt"]
+    assert "revenue of 42 units" in "\n".join(connector.retrieve_by_name("report.txt"))
+
 
 def test_local_files_grounding_connector(temp_folder):
     """Test LocalFilesGroundingConnector functionality."""

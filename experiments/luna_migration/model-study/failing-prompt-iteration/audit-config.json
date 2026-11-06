@@ -1,0 +1,62 @@
+{
+  "model": "gpt-6-luna",
+  "reasoning_effort": "xhigh",
+  "prices": "../study-prices.json",
+  "batches": [
+    {
+      "name": "round1",
+      "cases": "round1/cases.jsonl",
+      "results": "round1-run/results.jsonl"
+    },
+    {
+      "name": "round2",
+      "cases": "round2/cases.jsonl",
+      "results": "round2-run/results.jsonl"
+    },
+    {
+      "name": "action-sampling-confirm",
+      "cases": "action-sampling-confirm/cases.jsonl",
+      "results": "action-sampling-confirm-run/results.jsonl"
+    },
+    {
+      "name": "story-confirm",
+      "cases": "story-confirm/cases.jsonl",
+      "results": "story-confirm-run/results.jsonl"
+    },
+    {
+      "name": "normalization-confirm",
+      "cases": "normalization-confirm/cases.jsonl",
+      "results": "normalization-confirm-run/results.jsonl"
+    },
+    {
+      "name": "round3",
+      "cases": "round3/cases.jsonl",
+      "results": "round3-run/results.jsonl"
+    },
+    {
+      "name": "large-plan",
+      "cases": "large-plan/cases.jsonl",
+      "results": "large-plan-run/results.jsonl"
+    },
+    {
+      "name": "large-chunks",
+      "cases": "large-chunks/cases.jsonl",
+      "results": "large-chunks-run/results.jsonl"
+    },
+    {
+      "name": "round4",
+      "cases": "round4/cases.jsonl",
+      "results": "round4-run/results.jsonl"
+    },
+    {
+      "name": "final-confirmation",
+      "cases": "final-confirmation/cases.jsonl",
+      "results": "final-confirmation-run/results.jsonl"
+    },
+    {
+      "name": "feasibility-v3",
+      "cases": "feasibility-v3/cases.jsonl",
+      "results": "feasibility-v3-run/results.jsonl"
+    }
+  ]
+}

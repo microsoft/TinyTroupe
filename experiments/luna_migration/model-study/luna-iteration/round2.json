@@ -1,0 +1,66 @@
+{
+  "order_seed": 281027,
+  "protocol": "Round 2 corrects the observed backlog-answering regression: identify the latest active conversational task, not all unanswered history. Retain the successful lean interaction, evidence and brainstorming changes. A second generation hypothesis prioritizes a concrete life course and consequential choices over a default prudent biography. Freeze before testing; no desired survey outcomes. Test all 20 cells once, plus two extra persona generations per constraint for a development diversity check.",
+  "imports": [{"path": "round1.json", "variants": ["diverge-before-select", "travel-format", "ranking-no-anchor", "lean-agent", "lean-ideas", "lean-travel", "lean-ranking", "public-evidence", "life-first"]}],
+  "variants": [
+    {
+      "id": "current-turn",
+      "parent": "lean-agent",
+      "hypothesis": "Explicit task selection prevents answering superseded introduction requests while keeping the current memory-based question active.",
+      "cases": ["chat-galette", "chat-design-tradeoff", "interview-evidence-pilot", "brainstorm-no-link-safeguard", "brainstorm-initial-lisa", "brainstorm-initial-oscar", "brainstorm-initial-marcos", "travel-affordable-trip", "travel-can-afford-luxury", "travel-modest-getaway", "children-ranking-collapse-1", "children-ranking-collapse-2", "gazpacho-underdispersion-1", "gazpacho-underdispersion-2"],
+      "operations": [
+        {"kind": "replace", "message": 0, "old": "Read the latest stimulus together with the recent interaction history. A question recorded in memory is still pending unless an action actually answered it. An internal THOUGHT about answering that question does not replace the question. Goals and attention describe the previous state; update them when the conversation moves to a new activity.", "new": "Identify the current task from the latest conversational request and its follow-up stimuli. If the latest stimulus is an internal THOUGHT, use the specific question it refers to, usually the most recent conversational request in memory. Answer that task, not a backlog of earlier requests. A new task supersedes an earlier introduction or questionnaire unless the speaker explicitly asks to combine them. The active question still needs a public answer even if it is recorded in memory. Goals and attention describe the previous state; update them when the activity changes.", "max_matches": 1},
+        {"kind": "replace", "message": 1, "old": "Continue the current interaction as this person. Resolve the pending request, including a question in memory that the latest internal thought is about. Give the public contribution in TALK, update the cognitive state, then finish with DONE.", "new": "Continue the latest active task as this person. If the latest stimulus is a THOUGHT, answer the question it refers to in memory. Do not revive superseded introductions or earlier survey tasks. Give the requested public contribution in TALK, update the cognitive state, then finish with DONE.", "max_matches": 1},
+        {"kind": "replace", "message": 0, "old": "If asked for an experience not recorded here, acknowledge the gap briefly and continue the conversation with what the person does know; do not let the acknowledgement become the whole reply.", "new": "When no specific episode is established, answer from the person's known habits or interests without pretending a dated event happened. Speak naturally about those habits; do not discuss what you can 'honestly claim', explain missing records, or repeat disclaimers. A lack of a detailed anecdote need not derail the social exchange.", "max_matches": 1}
+      ]
+    },
+    {
+      "id": "current-ideas", "parent": "current-turn",
+      "hypothesis": "Keep the successful divergence instruction with corrected task selection.",
+      "cases": ["brainstorm-initial-lisa", "brainstorm-initial-oscar", "brainstorm-initial-marcos"],
+      "operations_from": ["diverge-before-select"], "operations": []
+    },
+    {
+      "id": "current-travel", "parent": "current-turn",
+      "hypothesis": "Keep the unambiguous public answer format with corrected task selection.",
+      "cases": ["travel-affordable-trip", "travel-can-afford-luxury", "travel-modest-getaway"],
+      "operations_from": ["travel-format"], "operations": []
+    },
+    {
+      "id": "current-ranking", "parent": "current-turn",
+      "hypothesis": "Keep unanchored ranking format with corrected task selection.",
+      "cases": ["children-ranking-collapse-1", "children-ranking-collapse-2"],
+      "operations_from": ["ranking-no-anchor"], "operations": []
+    },
+    {
+      "id": "life-course", "parent": "life-first",
+      "hypothesis": "A life-course and concrete-choice emphasis reduces uniform sensible-moderate characterization without prescribing tastes.",
+      "cases": ["persona-grace", "persona-philip"],
+      "operations": [
+        {"kind": "append", "message": 1, "text": "\n\n## Build a life, not a model respondent\nBefore composing the fields, choose a particular life course compatible with the supplied constraints: how the person arrived at their present work and home, what currently matters to them, and a concrete choice they have made that reveals their priorities. Consider more than the first familiar demographic archetype. Let these choices give the profile its shape; do not attach the same generic lifestyle to a different occupation.\n\nWrite descriptive facts about what this person does, wants and spends time or money on, not advice about what would be sensible. Competence in one area does not imply perfect financial planning, gentle moderation, or careful research in every other area. A preference does not need to be immediately softened with a prudent qualification. If a past choice went badly, do not automatically add that the person learned the optimal lesson. Equally, do not add recklessness or a defect just to be different.\n\nMake a requested interest such as travel vivid through a desired experience and an actual decision: what mattered enough to choose, what they gave up, and how it felt. The same person can have different priorities across situations without being inconsistent. Avoid building the whole profile around minimizing cost and inconvenience unless that really follows from the life you chose. Leave the final purchase or survey decision open.", "max_matches": 1}
+      ]
+    }
+  ],
+  "selection": {
+    "chat-galette": "current-turn",
+    "chat-design-tradeoff": "current-turn",
+    "interview-evidence-pilot": "current-turn",
+    "brainstorm-no-link-safeguard": "current-turn",
+    "brainstorm-initial-lisa": "current-ideas",
+    "brainstorm-initial-oscar": "current-ideas",
+    "brainstorm-initial-marcos": "current-ideas",
+    "extraction-ricardo-original": "public-evidence",
+    "extraction-ricardo-public-only": "public-evidence",
+    "extraction-jolene-original": "public-evidence",
+    "extraction-jolene-public-only": "public-evidence",
+    "travel-affordable-trip": "current-travel",
+    "travel-can-afford-luxury": "current-travel",
+    "travel-modest-getaway": "current-travel",
+    "children-ranking-collapse-1": "current-ranking",
+    "children-ranking-collapse-2": "current-ranking",
+    "gazpacho-underdispersion-1": "current-turn",
+    "gazpacho-underdispersion-2": "current-turn",
+    "persona-grace": "life-course",
+    "persona-philip": "life-course"
+  }
+}

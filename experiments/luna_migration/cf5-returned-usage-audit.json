@@ -1,0 +1,95 @@
+{
+  "basis": "Saved standard list rates applied to owned unique returned responses. Full-run ownership is the exact cache difference from its copied CF4 source; the replay cache began empty and belongs solely to the 100-history replay. No invoice claim; failed/unreturned requests and core-suite usage are not included.",
+  "runs": {
+    "inv": {
+      "unique_saved_api_responses_in_run_window": 75,
+      "responses_missing_usage": 0,
+      "tokens": {
+        "prompt": 3035931,
+        "completion": 134143,
+        "cached": 21504,
+        "writes": 3014202
+      },
+      "usd": "0.444084290",
+      "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced.",
+      "ownership": "Exact new responses relative to the copied CF4 cache."
+    },
+    "kids": {
+      "unique_saved_api_responses_in_run_window": 246,
+      "responses_missing_usage": 0,
+      "tokens": {
+        "prompt": 1894974,
+        "completion": 530465,
+        "cached": 120300,
+        "writes": 1725345
+      },
+      "usd": "0.487036525",
+      "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced.",
+      "ownership": "Exact new responses relative to the copied CF4 cache."
+    },
+    "gaz": {
+      "unique_saved_api_responses_in_run_window": 251,
+      "responses_missing_usage": 0,
+      "tokens": {
+        "prompt": 2276716,
+        "completion": 436954,
+        "cached": 157433,
+        "writes": 2069800
+      },
+      "usd": "0.483724630",
+      "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced.",
+      "ownership": "Exact new responses relative to the copied CF4 cache."
+    },
+    "reextraction": {
+      "unique_saved_api_responses_in_run_window": 100,
+      "responses_missing_usage": 0,
+      "tokens": {
+        "prompt": 246375,
+        "completion": 16433,
+        "cached": 107359,
+        "writes": 138716
+      },
+      "usd": "0.026659590",
+      "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced.",
+      "ownership": "All 100 responses in the new isolated replay cache."
+    }
+  },
+  "extraction_prompt_trials": {
+    "extraction-done-boundary-trial": {
+      "unique_saved_api_responses_in_run_window": 3,
+      "responses_missing_usage": 0,
+      "tokens": {
+        "prompt": 6435,
+        "completion": 287,
+        "cached": 0,
+        "writes": 6426
+      },
+      "usd": "0.00094765",
+      "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+    },
+    "extraction-boundary-reasons-trial": {
+      "unique_saved_api_responses_in_run_window": 5,
+      "responses_missing_usage": 0,
+      "tokens": {
+        "prompt": 11657,
+        "completion": 639,
+        "cached": 1049,
+        "writes": 10593
+      },
+      "usd": "0.001655615",
+      "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+    },
+    "extraction-public-clauses-trial": {
+      "unique_saved_api_responses_in_run_window": 5,
+      "responses_missing_usage": 0,
+      "tokens": {
+        "prompt": 11957,
+        "completion": 887,
+        "cached": 3273,
+        "writes": 8669
+      },
+      "usd": "0.001561355",
+      "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+    }
+  }
+}

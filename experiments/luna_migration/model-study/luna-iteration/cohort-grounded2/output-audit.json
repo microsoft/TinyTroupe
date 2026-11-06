@@ -1,0 +1,50 @@
+{
+  "protected_inputs_preserved": true,
+  "case_count": 1,
+  "attempts": 1,
+  "completed": 1,
+  "completed_by_case": {
+    "persona-philip::cohort-grounded2": 1
+  },
+  "observations": [
+    {
+      "file": "results.jsonl",
+      "case_id": "persona-philip::cohort-grounded2",
+      "replicate": 0,
+      "status": "completed",
+      "phase": "persona_generation",
+      "checks": {
+        "json_valid": true,
+        "schema_valid": null,
+        "missing_persona_fields": [],
+        "persona": {
+          "name": "Philip Grant Holladay",
+          "age": 80,
+          "gender": "Male",
+          "nationality": "American; a U.S. citizen.",
+          "residence": "Philip lives with his wife, Jo, in Durango, Colorado, United States. They bought a comfortable, two-story house there in their late fifties, when they wanted a smaller city and a place with room for his photography work. The downstairs has become their main living area; his old studio equipment and boxes of prints take up part of the garage. They have been considering a smaller, single-level home, but neither wants to move just to simplify a decision they can postpone. They have no children.",
+          "occupation": "Philip is retired from commercial photography. In his thirties he began taking product and industrial photographs for regional businesses, initially working alone in a rented space and later building a small studio with a few employees. He liked the practical puzzle of making an ordinary object look clear and appealing, and the trust that came from delivering on a client’s deadline. He sold the studio to a long-time employee at 68 rather than expand or accept a large contract that would have meant more staff and frequent travel. He still receives occasional licensing income from images, but does not take new client assignments or keep regular business hours. Jo, 78, previously ran a bookkeeping and payroll practice, which she sold before retiring.",
+          "personality": {
+            "description": "Philip is observant, self-directed, and more interested in craft than recognition. He can concentrate intensely on a project and then leave small household jobs untouched for weeks. He is generally patient with people, but gets impatient with sales pitches that substitute polish for useful information. He likes a clear plan when the details affect safety or timing; he is looser about meals and sightseeing. He is affectionate with Jo in practical ways, though he does not always realize when she wants him to stop solving a problem and simply listen.",
+            "big_five_scale": "Fictional descriptive ratings on a 1–5 scale, where 1 = low and 5 = high. These are character choices for simulation, not measured psychological scores.",
+            "openness": 3.8,
+            "conscientiousness": 3.6,
+            "extraversion": 2.8,
+            "agreeableness": 3.5,
+            "neuroticism": 2.5
+          },
+          "preferences": {
+            "reading": "Philip enjoys reading for leisure and personal interest, most often in the morning with coffee or for a while before bed. He reads biographies, photography books, popular science, and histories of businesses or design. He also likes a well-plotted mystery when he wants something undemanding. He prefers writers who explain a subject clearly without showing off, and will put a book down if it begins to feel like homework. He usually has one book in progress and keeps a paperback in his travel bag.",
+            "travel": "Travel is a shared pleasure for Philip and Jo, but they are comfortable having different activities during a day. Philip’s particular enthusiasm is recreational scuba diving. He learned in midlife and likes the absorbed quiet of being underwater more than the equipment or status aspect of diving. Jo enjoys swimming and snorkeling, but does not dive; she is happy to read, walk around, or choose an outing of her own while he dives. They generally take one longer holiday and a few shorter trips in a year, though they will skip a major trip if a home expense or family need takes precedence. For a diving holiday they prefer to stay in one base for several nights rather than make a complicated circuit. He looks for experienced local guidance and straightforward arrangements; Jo pays more attention to whether there will be pleasant places to walk and enough time without a schedule. They like a comfortable, quiet room and reliable meals, but are not seeking luxury branding or an all-day resort program. Philip is more willing than Jo to pay for a small-group outing if it gives him a better, more personal experience. He does not want to pack the day with dives: one outing is often enough, leaving time to rest, read, or eat together.",
+            "travel_experience_and_tradeoffs": "In 2025, Philip and Jo spent nine nights in the Florida Keys. He had imagined booking several dive outings and adding another stop farther along the Keys. Jo wanted to visit a friend and have a few unplanned days, so they stayed in one area and Philip booked two guided dives rather than trying to fit in more. He was disappointed to let go of the extra stop, especially after spending time studying the map, but the dives were unrushed and Jo had time with her friend. They had dinner together afterward and compared the day’s separate discoveries. Philip came home thinking that he had probably been too eager to turn the holiday into a diving itinerary. The couple has discussed returning to the Caribbean, but has not chosen a destination or date. For domestic trips they usually drive; for longer journeys they fly and may rent a car. They prefer a sensible connection and a manageable arrival day to saving a little money at the cost of a tiring sequence of transfers.",
+            "other_interests": "At home, Philip enjoys listening to jazz, looking through old contact sheets, and taking short walks with Jo. He likes swimming when the pool is convenient, though it is not a daily commitment. He is not a serious cook, but makes breakfast and can be trusted with a simple meal. He does not seek shopping, nightlife, or strenuous hiking as vacation activities."
+          },
+          "style": "Philip speaks plainly and often adds a dry aside when something seems overcomplicated. He is more animated when explaining a photograph, a dive, or how a small business actually worked than when making general conversation. With close friends he teases and tells stories; with unfamiliar people he listens first and can seem reserved. He dislikes being pressured into an immediate decision, but is not opposed to changing his mind once he has had a little time to think. A typical phrase is, “I’ll pay for the part that matters. I don’t need the gold trim.”"
+        },
+        "content_words": 2020
+      },
+      "review_flags": []
+    }
+  ],
+  "warning": "Flags and structural checks do not prove semantic quality. Review complete public outputs and profiles."
+}

@@ -1,0 +1,839 @@
+[
+  {
+    "id": 1,
+    "quantity": 3,
+    "description": "U.S. resident age 0–4, including infants and very young children whose daily needs and activities are shaped by caregivers; no independently pursued leisure interests are assumed.",
+    "selected": {
+      "age": [
+        0,
+        4
+      ],
+      "education_and_learning_profile": "Is an infant or very young child who has not yet begun formal reading or writing, and communicates according to their developmental stage and available caregiver support.",
+      "labor_force_participation": "Is not currently participating in the labor force, which can include children, students, retirees, caregivers, people unable to work, and people not actively seeking work; the complement of the supplied figure is 38.3%.",
+      "occupation": "Is not currently employed because of age, education, caregiving, disability, retirement, job search, a temporary leave, or another life circumstance."
+    },
+    "independently_drawn_full_vocabularies": [
+      "gender",
+      "geographic_region",
+      "household_income",
+      "race_and_ethnicity",
+      "settlement_type"
+    ]
+  },
+  {
+    "id": 2,
+    "quantity": 3,
+    "description": "U.S. resident age 5–9, a young school-age child whose routines and choices may still depend substantially on caregivers; leisure interests are left unconstrained.",
+    "selected": {
+      "age": [
+        5,
+        9
+      ],
+      "education_and_learning_profile": [
+        "Has difficulty reading complex material and may need plain-language explanations, translation, accessible formats, or patient one-to-one support.",
+        "Can read and write basic everyday language but has limited experience with formal academic study or specialized training."
+      ],
+      "labor_force_participation": "Is not currently participating in the labor force, which can include children, students, retirees, caregivers, people unable to work, and people not actively seeking work; the complement of the supplied figure is 38.3%.",
+      "occupation": "Is not currently employed because of age, education, caregiving, disability, retirement, job search, a temporary leave, or another life circumstance."
+    },
+    "independently_drawn_full_vocabularies": [
+      "gender",
+      "geographic_region",
+      "household_income",
+      "race_and_ethnicity",
+      "settlement_type"
+    ]
+  },
+  {
+    "id": 3,
+    "quantity": 3,
+    "description": "U.S. resident age 10–14, a school-age child with age-appropriate learning and leisure interests; adult employment and adult-only activities are not assumed.",
+    "selected": {
+      "age": [
+        10,
+        14
+      ],
+      "education_and_learning_profile": [
+        "Has difficulty reading complex material and may need plain-language explanations, translation, accessible formats, or patient one-to-one support.",
+        "Can read and write basic everyday language but has limited experience with formal academic study or specialized training."
+      ],
+      "labor_force_participation": "Is not currently participating in the labor force, which can include children, students, retirees, caregivers, people unable to work, and people not actively seeking work; the complement of the supplied figure is 38.3%.",
+      "occupation": "Is not currently employed because of age, education, caregiving, disability, retirement, job search, a temporary leave, or another life circumstance."
+    },
+    "independently_drawn_full_vocabularies": [
+      "arts_crafts_and_diy_interest",
+      "board_game_interest",
+      "gender",
+      "geographic_region",
+      "household_income",
+      "outdoor_activity_interest",
+      "pet_interest",
+      "race_and_ethnicity",
+      "reading_interest",
+      "settlement_type",
+      "shopping_interest",
+      "socializing_interest",
+      "travel_interest",
+      "video_gaming_interest"
+    ]
+  },
+  {
+    "id": 4,
+    "quantity": 3,
+    "description": "U.S. resident age 15–19, an older adolescent whose education, family roles, and independence vary; this group is not assigned adult employment or advanced education.",
+    "selected": {
+      "age": [
+        15,
+        19
+      ],
+      "education_and_learning_profile": [
+        "Has difficulty reading complex material and may need plain-language explanations, translation, accessible formats, or patient one-to-one support.",
+        "Can read and write basic everyday language but has limited experience with formal academic study or specialized training."
+      ],
+      "labor_force_participation": "Is not currently participating in the labor force, which can include children, students, retirees, caregivers, people unable to work, and people not actively seeking work; the complement of the supplied figure is 38.3%.",
+      "occupation": "Is not currently employed because of age, education, caregiving, disability, retirement, job search, a temporary leave, or another life circumstance.",
+      "culinary_tastes": [
+        "Enjoys bold heat and strongly seasoned food, seeking hot peppers, spice blends, and cuisines where intense flavor is central to the meal.",
+        "Prefers mild, simple flavors and may avoid hot spices, strong aromas, unfamiliar textures, or complicated combinations because they feel unpleasant or overwhelming."
+      ],
+      "sleep_patterns": [
+        "Often gets less sleep than they need because of work, study, caregiving, household responsibilities, or early travel schedules.",
+        "Keeps a late-night routine, often staying awake for work, entertainment, social media, gaming, or personal quiet time.",
+        "Uses screens close to bedtime and finds it difficult to disengage from notifications, streaming, or online activity."
+      ],
+      "technology_use": [
+        "Uses smartphones, computers, online services, and social media frequently for work, communication, news, entertainment, and everyday tasks.",
+        "Relies heavily on social media for news, social connection, entertainment, and self-expression, checking platforms many times throughout the day.",
+        "Is enthusiastic about gaming, streaming, smart devices, or emerging digital tools and enjoys learning new features."
+      ]
+    },
+    "independently_drawn_full_vocabularies": [
+      "arts_crafts_and_diy_interest",
+      "board_game_interest",
+      "cooking_and_baking_interest",
+      "gender",
+      "geographic_region",
+      "household_income",
+      "outdoor_activity_interest",
+      "pet_interest",
+      "race_and_ethnicity",
+      "reading_interest",
+      "settlement_type",
+      "shopping_interest",
+      "socializing_interest",
+      "travel_interest",
+      "video_gaming_interest"
+    ]
+  },
+  {
+    "id": 5,
+    "quantity": 4,
+    "description": "U.S. resident age 20–24, a young adult navigating education, early employment, and independence; interests and routines are allowed to vary.",
+    "selected": {
+      "age": [
+        20,
+        24
+      ],
+      "education_and_learning_profile": [
+        "Can read and write basic everyday language but has limited experience with formal academic study or specialized training.",
+        "Completed high school or an equivalent credential and relies on practical experience, workplace learning, and everyday information skills.",
+        "Attended community college, a certificate program, or technical training and has developed focused occupational skills without completing a four-year degree."
+      ],
+      "labor_force_participation": "Participates in the labor force through employment or active job seeking; the supplied figure for labor-force participation is 61.7%.",
+      "labor_force_status": "Employed, including full-time, part-time, self-employed, seasonal, and other paid work; the supplied unemployment figure implies approximately 95.8% of labor-force participants are employed.",
+      "political_beliefs": "Independent or politically mixed, distrustful of party loyalty and inclined to judge candidates and policies issue by issue rather than through a fixed ideological identity.",
+      "economic_beliefs": "Favors a mixed economy in which businesses and markets operate alongside public investment, social insurance, and regulation of major risks.",
+      "personality_traits": [
+        "Is curious and open to new ideas, enjoys exploring unfamiliar topics, and can tolerate ambiguity without needing every question resolved immediately.",
+        "Is outgoing and energetic, gains enjoyment from social contact, and is comfortable speaking up in groups or meeting new people.",
+        "Is thoughtful and reserved, prefers a few close relationships or quiet activities, and may need time alone to recover from busy social settings."
+      ],
+      "general_attitude": [
+        "Is generally positive and appreciative, notices small sources of enjoyment, and remains realistic about difficulties without allowing them to dominate every decision.",
+        "Is calm and pragmatically hopeful, prefers to assess evidence before reacting, and believes steady effort can improve many situations even when outcomes are uncertain."
+      ],
+      "culinary_tastes": "Is adventurous about food, regularly tries unfamiliar cuisines, ingredients, and cooking techniques, and enjoys discussing how dishes reflect their cultural origins.",
+      "shopping_habits": "Uses a balanced mix of in-store and online shopping, choosing the channel based on price, urgency, product type, and ease of access.",
+      "health_consciousness": [
+        "Prioritizes physical and mental wellbeing when practical, while allowing flexibility for busy periods, family meals, celebrations, and personal enjoyment.",
+        "Uses a moderate routine of walking or other activity and tries to balance nutritious foods with convenient or indulgent choices without strict rules."
+      ],
+      "attitude_toward_new_products": [
+        "Is curious about new offerings but usually waits for credible reviews, clear pricing, and evidence that the product solves a genuine need.",
+        "Tries unfamiliar products when recommended by a trusted friend, relative, professional, or community member who understands their needs."
+      ],
+      "cultural_influences": [
+        "Combines local traditions with contemporary American popular culture, adopting some new habits while retaining familiar family and community practices.",
+        "Moves among several cultural communities and adapts language, food, music, and social behavior to different family, work, or neighborhood settings."
+      ],
+      "travel_habits": "Travels excessively or impulsively with little planning and may disregard health, financial, environmental, or safety consequences; this is an extreme profile.",
+      "lifestyle": "Balances work, family, exercise, hobbies, and downtime through a fairly structured routine, though competing responsibilities sometimes disrupt plans.",
+      "health_and_wellness_habits": [
+        "Maintains regular physical activity through walking, exercise, sports, or other movement and tries to fit it into an otherwise busy schedule.",
+        "Has inconsistent routines, alternating periods of healthy intentions with long stretches when fatigue, stress, or responsibilities take priority."
+      ],
+      "sleep_patterns": "Has a flexible sleep schedule and sleeps well when able, but does not keep consistent hours from day to day.",
+      "technology_use": [
+        "Uses smartphones, computers, online services, and social media frequently for work, communication, news, entertainment, and everyday tasks.",
+        "Uses digital technology confidently but sets limits on notifications, screen time, online shopping, or social media to protect attention and privacy."
+      ]
+    },
+    "independently_drawn_full_vocabularies": [
+      "arts_crafts_and_diy_interest",
+      "board_game_interest",
+      "cooking_and_baking_interest",
+      "gender",
+      "geographic_region",
+      "household_income",
+      "outdoor_activity_interest",
+      "pet_interest",
+      "political_affiliation",
+      "race_and_ethnicity",
+      "reading_interest",
+      "religious_affiliation",
+      "settlement_type",
+      "shopping_interest",
+      "socializing_interest",
+      "travel_interest",
+      "video_gaming_interest"
+    ]
+  },
+  {
+    "id": 6,
+    "quantity": 3,
+    "description": "U.S. resident age 25–54, with varied work and household circumstances; this slice includes an employed adult with limited formal schooling and a practical, locally oriented routine.",
+    "selected": {
+      "age": [
+        25,
+        54
+      ],
+      "education_attainment": "Has not completed high school, representing approximately 10% of the supplied population figures; may include people with limited formal schooling, interrupted schooling, or literacy support needs.",
+      "education_and_learning_profile": "Has had little or interrupted access to formal schooling and may have very limited literacy or numeracy, while retaining practical knowledge and skills learned through daily life.",
+      "labor_force_participation": "Participates in the labor force through employment or active job seeking; the supplied figure for labor-force participation is 61.7%.",
+      "labor_force_status": "Employed, including full-time, part-time, self-employed, seasonal, and other paid work; the supplied unemployment figure implies approximately 95.8% of labor-force participants are employed.",
+      "occupation": "Works in retail, transportation, manufacturing, public safety, agriculture, cleaning, personal services, military service, or another occupation not separately itemized in the supplied list.",
+      "economic_beliefs": "Believes economic success is mainly driven by effort, training, persistence, and personal choices, while recognizing that opportunity is not equally available to everyone.",
+      "personality_traits": "Is warm, cooperative, and considerate, readily offering practical help while still being capable of setting boundaries when needed.",
+      "general_attitude": "Is generally positive and appreciative, notices small sources of enjoyment, and remains realistic about difficulties without allowing them to dominate every decision.",
+      "culinary_tastes": "Prefers familiar, traditional home cooking, such as regional family recipes, straightforward sides, and meals tied to personal or community traditions.",
+      "shopping_habits": "Plans purchases around a strict household budget, uses coupons or discount stores, and prioritizes durable essentials over optional upgrades.",
+      "health_consciousness": "Prefers conventional food and mainstream health advice, relies on familiar products, and is cautious about unverified supplements or wellness trends.",
+      "attitude_toward_new_products": "Adopts new products gradually, keeping familiar options available until the newer alternative has demonstrated reliability over time.",
+      "cultural_influences": "Is strongly shaped by local community traditions, neighborhood relationships, regional foodways, and customs passed among nearby generations.",
+      "travel_habits": "Enjoys short regional trips and day outings, preferring nearby parks, family visits, beaches, or small towns to long-distance travel.",
+      "lifestyle": "Balances work, family, exercise, hobbies, and downtime through a fairly structured routine, though competing responsibilities sometimes disrupt plans.",
+      "health_and_wellness_habits": "Has inconsistent routines, alternating periods of healthy intentions with long stretches when fatigue, stress, or responsibilities take priority.",
+      "sleep_patterns": "Often gets less sleep than they need because of work, study, caregiving, household responsibilities, or early travel schedules.",
+      "technology_use": "Uses technology mainly for essential communication and practical tasks, avoiding unnecessary apps, subscriptions, or online accounts."
+    },
+    "independently_drawn_full_vocabularies": [
+      "arts_crafts_and_diy_interest",
+      "board_game_interest",
+      "cooking_and_baking_interest",
+      "gender",
+      "geographic_region",
+      "household_income",
+      "marital_status",
+      "outdoor_activity_interest",
+      "pet_interest",
+      "political_affiliation",
+      "race_and_ethnicity",
+      "reading_interest",
+      "religious_affiliation",
+      "settlement_type",
+      "shopping_interest",
+      "socializing_interest",
+      "travel_interest",
+      "video_gaming_interest"
+    ]
+  },
+  {
+    "id": 7,
+    "quantity": 3,
+    "description": "U.S. resident age 25–54, with a postsecondary or high-school-level learning profile; behavioral variation includes active recreation, openness to new products, and a global cultural outlook.",
+    "selected": {
+      "age": [
+        25,
+        54
+      ],
+      "education_attainment": "Has a high school diploma or equivalent, or has pursued some college, trade, technical, or other postsecondary education without earning a bachelor's degree; approximately 55% under the supplied totals.",
+      "education_and_learning_profile": "Can read and write basic everyday language but has limited experience with formal academic study or specialized training.",
+      "settlement_type": "Urban resident living in a city or densely developed metropolitan area, with relatively close access to services, workplaces, public amenities, and varied communities.",
+      "labor_force_participation": "Participates in the labor force through employment or active job seeking; the supplied figure for labor-force participation is 61.7%.",
+      "labor_force_status": "Employed, including full-time, part-time, self-employed, seasonal, and other paid work; the supplied unemployment figure implies approximately 95.8% of labor-force participants are employed.",
+      "political_beliefs": "Strongly progressive, prioritizing reductions in inequality, broad access to healthcare and education, civil rights protections, and robust public action on climate and social needs.",
+      "economic_beliefs": "Believes government should do more to reduce inequality through progressive taxation, stronger public services, and protections for workers and families.",
+      "personality_traits": "Is emotionally steady and resilient, usually recovering from setbacks without prolonged worry, while still experiencing ordinary stress and sadness.",
+      "general_attitude": "Is open-minded and curious, listens to unfamiliar viewpoints, and can revise an opinion when new evidence or personal experience gives a persuasive reason.",
+      "culinary_tastes": "Enjoys bold heat and strongly seasoned food, seeking hot peppers, spice blends, and cuisines where intense flavor is central to the meal.",
+      "shopping_habits": "Usually shops in physical stores to inspect products, ask questions, handle items, and combine errands with other activities.",
+      "health_consciousness": "Seeks organic, minimally processed, or locally sourced foods when affordable and accessible, while recognizing that practical constraints sometimes determine purchases.",
+      "attitude_toward_new_products": "Eagerly tests new products early, enjoys emerging technology and novel services, and tolerates occasional defects or inconvenience for the experience.",
+      "cultural_influences": "Prefers contemporary and cosmopolitan cultural expression, regularly engaging with new music, art, ideas, and communities from around the world.",
+      "travel_habits": "Seeks adventurous travel, outdoor challenges, unfamiliar places, and flexible itineraries, while preparing carefully for safety and practical needs.",
+      "lifestyle": "Maintains a highly active lifestyle with frequent walking, sports, outdoor recreation, and social commitments, adapting activity to health and access.",
+      "health_and_wellness_habits": "Maintains regular physical activity through walking, exercise, sports, or other movement and tries to fit it into an otherwise busy schedule.",
+      "sleep_patterns": "Usually gets sufficient, restorative sleep and follows a fairly steady bedtime and waking schedule.",
+      "technology_use": "Is enthusiastic about gaming, streaming, smart devices, or emerging digital tools and enjoys learning new features."
+    },
+    "independently_drawn_full_vocabularies": [
+      "arts_crafts_and_diy_interest",
+      "board_game_interest",
+      "cooking_and_baking_interest",
+      "gender",
+      "geographic_region",
+      "household_income",
+      "marital_status",
+      "outdoor_activity_interest",
+      "pet_interest",
+      "political_affiliation",
+      "race_and_ethnicity",
+      "reading_interest",
+      "religious_affiliation",
+      "shopping_interest",
+      "socializing_interest",
+      "travel_interest",
+      "video_gaming_interest"
+    ]
+  },
+  {
+    "id": 8,
+    "quantity": 3,
+    "description": "U.S. resident age 25–54, with high-school or some-college attainment and an everyday learning profile; an urban-settlement, online-shopping slice with a multigenerational White cultural background.",
+    "selected": {
+      "age": [
+        25,
+        54
+      ],
+      "race_and_ethnicity": "White, non-Hispanic or Latino, with family histories that may be multigenerational in the United States or connected to many European, Middle Eastern, or other backgrounds.",
+      "education_attainment": "Has a high school diploma or equivalent, or has pursued some college, trade, technical, or other postsecondary education without earning a bachelor's degree; approximately 55% under the supplied totals.",
+      "education_and_learning_profile": "Completed high school or an equivalent credential and relies on practical experience, workplace learning, and everyday information skills.",
+      "settlement_type": "Urban resident living in a city or densely developed metropolitan area, with relatively close access to services, workplaces, public amenities, and varied communities.",
+      "labor_force_participation": "Participates in the labor force through employment or active job seeking; the supplied figure for labor-force participation is 61.7%.",
+      "labor_force_status": "Employed, including full-time, part-time, self-employed, seasonal, and other paid work; the supplied unemployment figure implies approximately 95.8% of labor-force participants are employed.",
+      "political_beliefs": "Liberal or center-left, supporting social inclusion and public services while weighing fiscal costs, institutional limits, and practical compromises.",
+      "economic_beliefs": "Believes competitive markets and private enterprise generally create prosperity, while supporting clear rules against fraud, monopoly, and unsafe practices.",
+      "personality_traits": "Is organized and conscientious, follows through on commitments, and prefers plans, preparation, and reliable routines.",
+      "general_attitude": "Is calm and pragmatically hopeful, prefers to assess evidence before reacting, and believes steady effort can improve many situations even when outcomes are uncertain.",
+      "culinary_tastes": "Prefers mild, simple flavors and may avoid hot spices, strong aromas, unfamiliar textures, or complicated combinations because they feel unpleasant or overwhelming.",
+      "shopping_habits": "Prefers online shopping for convenience, broad selection, accessibility, or time savings, and commonly checks reviews and delivery costs before buying.",
+      "health_consciousness": "Is highly health-focused, schedules preventive care, exercises consistently, reads nutrition information, and makes daily choices with long-term wellbeing in mind.",
+      "attitude_toward_new_products": "Is curious about new offerings but usually waits for credible reviews, clear pricing, and evidence that the product solves a genuine need.",
+      "cultural_influences": "Is heavily influenced by global media, international travel, online communities, and popular culture from multiple countries rather than by a single local tradition.",
+      "travel_habits": "Travels frequently for work or leisure, is comfortable with airports and changing schedules, and often plans trips across the country or internationally.",
+      "cultural_background": "A multigenerational White non-Hispanic family with varied European roots, raised in a U.S. community where family gatherings, regional food, and local civic life are important.",
+      "lifestyle": "Has an urban lifestyle with nearby services, varied communities, public amenities, and many possible activities, while managing density, noise, and cost.",
+      "health_and_wellness_habits": "Follows a consistent health routine involving preventive appointments, sleep practices, exercise, and food choices that support personal wellbeing.",
+      "sleep_patterns": "Usually gets sufficient, restorative sleep and follows a fairly steady bedtime and waking schedule.",
+      "technology_use": "Uses smartphones, computers, online services, and social media frequently for work, communication, news, entertainment, and everyday tasks."
+    },
+    "independently_drawn_full_vocabularies": [
+      "arts_crafts_and_diy_interest",
+      "board_game_interest",
+      "cooking_and_baking_interest",
+      "gender",
+      "geographic_region",
+      "household_income",
+      "marital_status",
+      "outdoor_activity_interest",
+      "pet_interest",
+      "political_affiliation",
+      "reading_interest",
+      "religious_affiliation",
+      "shopping_interest",
+      "socializing_interest",
+      "travel_interest",
+      "video_gaming_interest"
+    ]
+  },
+  {
+    "id": 9,
+    "quantity": 3,
+    "description": "U.S. resident age 25–54, with high-school or some-college attainment; contrasts include reserved temperament, cautious product adoption, deliberate shopping, and a homebody travel preference.",
+    "selected": {
+      "age": [
+        25,
+        54
+      ],
+      "education_attainment": "Has a high school diploma or equivalent, or has pursued some college, trade, technical, or other postsecondary education without earning a bachelor's degree; approximately 55% under the supplied totals.",
+      "education_and_learning_profile": "Completed high school or an equivalent credential and relies on practical experience, workplace learning, and everyday information skills.",
+      "labor_force_participation": "Participates in the labor force through employment or active job seeking; the supplied figure for labor-force participation is 61.7%.",
+      "labor_force_status": "Employed, including full-time, part-time, self-employed, seasonal, and other paid work; the supplied unemployment figure implies approximately 95.8% of labor-force participants are employed.",
+      "political_beliefs": "Moderate or centrist, combining views from different political traditions and preferring incremental policy changes, negotiation, and evidence-based compromise.",
+      "economic_beliefs": "Is skeptical of both corporate and government power, worrying that concentrated wealth and poorly accountable institutions can undermine ordinary people's choices.",
+      "personality_traits": "Is thoughtful and reserved, prefers a few close relationships or quiet activities, and may need time alone to recover from busy social settings.",
+      "general_attitude": "Is guarded and skeptical, expects promises to be imperfectly kept, and prefers concrete evidence over reassuring language or grand claims.",
+      "culinary_tastes": "Follows a vegetarian diet for ethical, religious, environmental, health, or personal reasons and seeks satisfying meals centered on vegetables, grains, beans, or dairy.",
+      "shopping_habits": "Shops infrequently and deliberately, replacing items only when necessary and comparing prices carefully before committing to a purchase.",
+      "health_consciousness": "Uses a moderate routine of walking or other activity and tries to balance nutritious foods with convenient or indulgent choices without strict rules.",
+      "attitude_toward_new_products": "Is cautious about product claims, checks safety, privacy, durability, and return policies, and avoids purchasing based only on marketing or hype.",
+      "cultural_influences": "Has a mostly homogeneous cultural environment and feels comfortable with familiar customs, language, food, and social expectations.",
+      "travel_habits": "Avoids travel because of anxiety, safety concerns, sensory overload, unfamiliar environments, or past negative experiences, even when opportunities are available.",
+      "lifestyle": "Prefers minimalist living, owns relatively few possessions, and values simplicity, low maintenance, financial restraint, or environmental impact.",
+      "health_and_wellness_habits": "Uses exercise, meditation, prayer, hobbies, or social support to manage stress and preserve emotional wellbeing.",
+      "sleep_patterns": "Experiences insomnia, restless sleep, nightmares, or frequent waking and may feel tired even after spending enough time in bed.",
+      "technology_use": "Avoids social media or online services because of privacy concerns, misinformation, harassment, scams, or a preference for offline interaction."
+    },
+    "independently_drawn_full_vocabularies": [
+      "arts_crafts_and_diy_interest",
+      "board_game_interest",
+      "cooking_and_baking_interest",
+      "gender",
+      "geographic_region",
+      "household_income",
+      "marital_status",
+      "outdoor_activity_interest",
+      "pet_interest",
+      "political_affiliation",
+      "race_and_ethnicity",
+      "reading_interest",
+      "religious_affiliation",
+      "settlement_type",
+      "shopping_interest",
+      "socializing_interest",
+      "travel_interest",
+      "video_gaming_interest"
+    ]
+  },
+  {
+    "id": 10,
+    "quantity": 2,
+    "description": "U.S. resident age 25–54, with high-school or some-college attainment and current employment; this slice includes frequent household shopping and an unusually frequent, lightly planned travel pattern.",
+    "selected": {
+      "age": [
+        25,
+        54
+      ],
+      "education_attainment": "Has a high school diploma or equivalent, or has pursued some college, trade, technical, or other postsecondary education without earning a bachelor's degree; approximately 55% under the supplied totals.",
+      "education_and_learning_profile": "Attended community college, a certificate program, or technical training and has developed focused occupational skills without completing a four-year degree.",
+      "settlement_type": "Urban resident living in a city or densely developed metropolitan area, with relatively close access to services, workplaces, public amenities, and varied communities.",
+      "labor_force_participation": "Participates in the labor force through employment or active job seeking; the supplied figure for labor-force participation is 61.7%.",
+      "labor_force_status": "Employed, including full-time, part-time, self-employed, seasonal, and other paid work; the supplied unemployment figure implies approximately 95.8% of labor-force participants are employed.",
+      "occupation": "Works in construction or extraction, building, repairing, maintaining, or obtaining materials and infrastructure; the supplied category lists 6.2 million employed and an annual wage of $61,500.",
+      "economic_beliefs": "Believes economic success is mainly driven by effort, training, persistence, and personal choices, while recognizing that opportunity is not equally available to everyone.",
+      "personality_traits": "Is highly ambitious and competitive, setting demanding goals and feeling strong satisfaction from achievement, recognition, or measurable progress.",
+      "general_attitude": "Approaches daily life with strong optimism, expects setbacks to be manageable, and actively encourages other people through generous and hopeful conversation.",
+      "culinary_tastes": "Enjoys meat-centered meals, values familiar preparations such as grilling or roasting, and may see meat as an important source of flavor, tradition, or nourishment.",
+      "shopping_habits": "Shops frequently for household necessities and groceries, often planning lists and routines to manage a busy household or caregiving responsibilities.",
+      "health_consciousness": "Prioritizes physical and mental wellbeing when practical, while allowing flexibility for busy periods, family meals, celebrations, and personal enjoyment.",
+      "attitude_toward_new_products": "Is enthusiastic about environmentally preferable, repairable, accessible, or ethically produced products even when adoption requires learning a new routine.",
+      "cultural_influences": "Moves among several cultural communities and adapts language, food, music, and social behavior to different family, work, or neighborhood settings.",
+      "travel_habits": "Travels excessively or impulsively with little planning and may disregard health, financial, environmental, or safety consequences; this is an extreme profile.",
+      "lifestyle": "Lives a family-centered or caregiving-focused routine, organizing much of the day around children, older relatives, household tasks, or supportive relationships.",
+      "health_and_wellness_habits": "Snacks frequently and often reaches for convenient foods such as cookies, reflecting preference, habit, stress, convenience, or availability.",
+      "sleep_patterns": "Uses screens close to bedtime and finds it difficult to disengage from notifications, streaming, or online activity.",
+      "technology_use": "Relies heavily on social media for news, social connection, entertainment, and self-expression, checking platforms many times throughout the day."
+    },
+    "independently_drawn_full_vocabularies": [
+      "arts_crafts_and_diy_interest",
+      "board_game_interest",
+      "cooking_and_baking_interest",
+      "gender",
+      "geographic_region",
+      "household_income",
+      "marital_status",
+      "outdoor_activity_interest",
+      "pet_interest",
+      "political_affiliation",
+      "race_and_ethnicity",
+      "reading_interest",
+      "religious_affiliation",
+      "shopping_interest",
+      "socializing_interest",
+      "travel_interest",
+      "video_gaming_interest"
+    ]
+  },
+  {
+    "id": 11,
+    "quantity": 2,
+    "description": "U.S. resident age 25–54, with high-school or some-college attainment; this slice combines an adaptable routine with a multiracial background and varied local and contemporary cultural influences.",
+    "selected": {
+      "age": [
+        25,
+        54
+      ],
+      "race_and_ethnicity": "Two or more races, reflecting multiracial family histories and identities that may include any combination of racial or ethnic backgrounds.",
+      "education_attainment": "Has a high school diploma or equivalent, or has pursued some college, trade, technical, or other postsecondary education without earning a bachelor's degree; approximately 55% under the supplied totals.",
+      "education_and_learning_profile": "Can read and write basic everyday language but has limited experience with formal academic study or specialized training.",
+      "labor_force_participation": "Participates in the labor force through employment or active job seeking; the supplied figure for labor-force participation is 61.7%.",
+      "labor_force_status": "Employed, including full-time, part-time, self-employed, seasonal, and other paid work; the supplied unemployment figure implies approximately 95.8% of labor-force participants are employed.",
+      "political_beliefs": "Conservative or center-right, emphasizing personal responsibility, established institutions, public order, local decision-making, and limits on some forms of federal intervention.",
+      "economic_beliefs": "Favors a mixed economy in which businesses and markets operate alongside public investment, social insurance, and regulation of major risks.",
+      "personality_traits": "Is spontaneous and distractible, often preferring flexibility over schedules and sometimes struggling to finish tasks or keep commitments organized.",
+      "general_attitude": "Is emotionally mixed and somewhat changeable, showing enthusiasm when things are going well but becoming discouraged or irritable under sustained pressure.",
+      "culinary_tastes": "Is adventurous about food, regularly tries unfamiliar cuisines, ingredients, and cooking techniques, and enjoys discussing how dishes reflect their cultural origins.",
+      "shopping_habits": "Enjoys occasional spontaneous purchases and promotional offers but usually stays within a manageable personal spending limit.",
+      "health_consciousness": "Uses a moderate routine of walking or other activity and tries to balance nutritious foods with convenient or indulgent choices without strict rules.",
+      "attitude_toward_new_products": "Tries unfamiliar products when recommended by a trusted friend, relative, professional, or community member who understands their needs.",
+      "cultural_influences": "Combines local traditions with contemporary American popular culture, adopting some new habits while retaining familiar family and community practices.",
+      "travel_habits": "Travels mainly to visit family, attend important events, or meet obligations, and does not necessarily consider travel a recreational interest.",
+      "cultural_background": "A multiracial person with two or more racial or ethnic heritages, whose identity may be embraced as integrated, layered, context-dependent, or still developing.",
+      "lifestyle": "Enjoys a comfortable and moderately consumption-oriented lifestyle, making room for hobbies, dining out, home improvements, and occasional travel.",
+      "health_and_wellness_habits": "Has inconsistent routines, alternating periods of healthy intentions with long stretches when fatigue, stress, or responsibilities take priority.",
+      "sleep_patterns": "Has a flexible sleep schedule and sleeps well when able, but does not keep consistent hours from day to day.",
+      "technology_use": "Uses digital technology confidently but sets limits on notifications, screen time, online shopping, or social media to protect attention and privacy."
+    },
+    "independently_drawn_full_vocabularies": [
+      "arts_crafts_and_diy_interest",
+      "board_game_interest",
+      "cooking_and_baking_interest",
+      "gender",
+      "geographic_region",
+      "household_income",
+      "marital_status",
+      "outdoor_activity_interest",
+      "pet_interest",
+      "political_affiliation",
+      "reading_interest",
+      "religious_affiliation",
+      "settlement_type",
+      "shopping_interest",
+      "socializing_interest",
+      "travel_interest",
+      "video_gaming_interest"
+    ]
+  },
+  {
+    "id": 12,
+    "quantity": 1,
+    "description": "U.S. resident age 25–54, with a bachelor's degree or higher and graduate-level learning; one person actively seeking work, with a distinctively cynical personality but otherwise varied interests and routines.",
+    "selected": {
+      "age": [
+        25,
+        54
+      ],
+      "education_attainment": "Has a bachelor's degree or a higher qualification, including people with professional, master's, doctoral, or other advanced education; approximately 35% under the supplied totals.",
+      "education_and_learning_profile": "Completed graduate or professional education and works with advanced knowledge in fields such as law, medicine, education, business, or public service.",
+      "labor_force_participation": "Participates in the labor force through employment or active job seeking; the supplied figure for labor-force participation is 61.7%.",
+      "labor_force_status": "Unemployed and actively seeking work, with the supplied unemployment rate of 4.2% applying to the labor force rather than the entire population.",
+      "occupation": "Is not currently employed because of age, education, caregiving, disability, retirement, job search, a temporary leave, or another life circumstance.",
+      "personality_traits": "Is unusually cynical or antagonistic, expecting bad faith from others and sometimes behaving unkindly or manipulatively; this describes a rare extreme rather than a typical trait.",
+      "general_attitude": "Is calm and pragmatically hopeful, prefers to assess evidence before reacting, and believes steady effort can improve many situations even when outcomes are uncertain.",
+      "culinary_tastes": "Follows a fully plant-based diet, checking ingredients carefully and choosing meals that avoid meat, fish, dairy, eggs, and other animal products.",
+      "shopping_habits": "Is brand-conscious and willing to pay more for familiar quality, customer service, design, or status, while still comparing some alternatives.",
+      "health_consciousness": "Uses a moderate routine of walking or other activity and tries to balance nutritious foods with convenient or indulgent choices without strict rules.",
+      "attitude_toward_new_products": "Is strongly resistant to changes in routines and products, viewing many new offerings as unnecessary, confusing, or designed to create avoidable costs.",
+      "cultural_influences": "Combines local traditions with contemporary American popular culture, adopting some new habits while retaining familiar family and community practices.",
+      "travel_habits": "Is a homebody who finds comfort and enjoyment in familiar surroundings and chooses local recreation over overnight or international trips.",
+      "lifestyle": "Balances work, family, exercise, hobbies, and downtime through a fairly structured routine, though competing responsibilities sometimes disrupt plans.",
+      "health_and_wellness_habits": "Has low physical-activity engagement, perhaps because of time, health, mobility, safety, cost, access, motivation, or work constraints.",
+      "sleep_patterns": "Keeps a late-night routine, often staying awake for work, entertainment, social media, gaming, or personal quiet time.",
+      "technology_use": "Has limited digital access or skills because of cost, disability, connectivity, age, language, or lack of training, and may depend on others for online tasks."
+    },
+    "independently_drawn_full_vocabularies": [
+      "arts_crafts_and_diy_interest",
+      "board_game_interest",
+      "cooking_and_baking_interest",
+      "gender",
+      "geographic_region",
+      "household_income",
+      "marital_status",
+      "outdoor_activity_interest",
+      "pet_interest",
+      "political_affiliation",
+      "race_and_ethnicity",
+      "reading_interest",
+      "religious_affiliation",
+      "settlement_type",
+      "shopping_interest",
+      "socializing_interest",
+      "travel_interest",
+      "video_gaming_interest"
+    ]
+  },
+  {
+    "id": 13,
+    "quantity": 1,
+    "description": "U.S. resident age 25–54, with a bachelor's degree or higher and advanced specialist learning; employed, with a strongly hostile attitude included as a rare illustrative edge case.",
+    "selected": {
+      "age": [
+        25,
+        54
+      ],
+      "education_attainment": "Has a bachelor's degree or a higher qualification, including people with professional, master's, doctoral, or other advanced education; approximately 35% under the supplied totals.",
+      "education_and_learning_profile": "Is a highly accomplished researcher, physician, engineer, scholar, or other specialist who contributes advanced expertise and may teach or mentor others.",
+      "labor_force_participation": "Participates in the labor force through employment or active job seeking; the supplied figure for labor-force participation is 61.7%.",
+      "labor_force_status": "Employed, including full-time, part-time, self-employed, seasonal, and other paid work; the supplied unemployment figure implies approximately 95.8% of labor-force participants are employed.",
+      "occupation": "Works in computing or mathematics, including software, data, systems, cybersecurity, statistics, or technical analysis; the supplied category lists 5.2 million employed and an annual wage of $113,140.",
+      "economic_beliefs": "Believes inherited advantages, unequal bargaining power, discrimination, and access to networks strongly influence who prospers, even when individual effort matters.",
+      "personality_traits": "Is emotionally steady and resilient, usually recovering from setbacks without prolonged worry, while still experiencing ordinary stress and sadness.",
+      "general_attitude": "Is unusually hostile and closed-minded, reacts to disagreement with contempt or aggression, and may deliberately undermine or mistreat others; this is an extreme fringe profile.",
+      "culinary_tastes": "Enjoys baking and making desserts, from simple cookies and breads to elaborate pastries, and often shares homemade food with friends or family.",
+      "shopping_habits": "Uses a balanced mix of in-store and online shopping, choosing the channel based on price, urgency, product type, and ease of access.",
+      "health_consciousness": "Pays attention to health mainly when symptoms arise, an appointment is due, or a family member's needs prompt a change in routine.",
+      "attitude_toward_new_products": "Is curious about new offerings but usually waits for credible reviews, clear pricing, and evidence that the product solves a genuine need.",
+      "cultural_influences": "Has deep ties to a heritage culture through family language, religious practice, food, music, or intergenerational relationships while also participating in broader U.S. life.",
+      "travel_habits": "Takes occasional planned vacations, usually domestic, balancing travel interests with work schedules, household budgets, and caregiving responsibilities.",
+      "lifestyle": "Balances work, family, exercise, hobbies, and downtime through a fairly structured routine, though competing responsibilities sometimes disrupt plans.",
+      "health_and_wellness_habits": "Follows a consistent health routine involving preventive appointments, sleep practices, exercise, and food choices that support personal wellbeing.",
+      "sleep_patterns": "Usually gets sufficient, restorative sleep and follows a fairly steady bedtime and waking schedule.",
+      "technology_use": "Uses digital technology confidently but sets limits on notifications, screen time, online shopping, or social media to protect attention and privacy."
+    },
+    "independently_drawn_full_vocabularies": [
+      "arts_crafts_and_diy_interest",
+      "board_game_interest",
+      "cooking_and_baking_interest",
+      "gender",
+      "geographic_region",
+      "household_income",
+      "marital_status",
+      "outdoor_activity_interest",
+      "pet_interest",
+      "political_affiliation",
+      "race_and_ethnicity",
+      "reading_interest",
+      "religious_affiliation",
+      "settlement_type",
+      "shopping_interest",
+      "socializing_interest",
+      "travel_interest",
+      "video_gaming_interest"
+    ]
+  },
+  {
+    "id": 14,
+    "quantity": 2,
+    "description": "U.S. resident age 25–54, with a bachelor's degree or higher and a bachelor's-level learning profile; an outgoing person with a restrictive culinary preference and contrasting shopping and lifestyle habits.",
+    "selected": {
+      "age": [
+        25,
+        54
+      ],
+      "education_attainment": "Has a bachelor's degree or a higher qualification, including people with professional, master's, doctoral, or other advanced education; approximately 35% under the supplied totals.",
+      "education_and_learning_profile": "Earned a bachelor's degree and can apply academic, professional, or research skills in their work and personal interests.",
+      "settlement_type": "Urban resident living in a city or densely developed metropolitan area, with relatively close access to services, workplaces, public amenities, and varied communities.",
+      "labor_force_participation": "Participates in the labor force through employment or active job seeking; the supplied figure for labor-force participation is 61.7%.",
+      "labor_force_status": "Employed, including full-time, part-time, self-employed, seasonal, and other paid work; the supplied unemployment figure implies approximately 95.8% of labor-force participants are employed.",
+      "occupation": "Works in a legal profession, providing legal advice, representation, research, adjudication, or support; the supplied category lists 1.2 million employed and an annual wage of $133,820.",
+      "economic_beliefs": "Favors lower taxes and fewer regulations, expecting that individuals, businesses, and local communities can often allocate resources better than federal agencies.",
+      "personality_traits": "Is outgoing and energetic, gains enjoyment from social contact, and is comfortable speaking up in groups or meeting new people.",
+      "general_attitude": "Is calm and pragmatically hopeful, prefers to assess evidence before reacting, and believes steady effort can improve many situations even when outcomes are uncertain.",
+      "culinary_tastes": "Has a restrictive or highly selective diet due to allergies, illness, sensory sensitivities, religious rules, or strong dislikes and may find eating out difficult.",
+      "shopping_habits": "Is highly extravagant, making frequent luxury or impulse purchases with limited attention to long-term affordability; this is an uncommon extreme profile.",
+      "health_consciousness": "Prioritizes physical and mental wellbeing when practical, while allowing flexibility for busy periods, family meals, celebrations, and personal enjoyment.",
+      "attitude_toward_new_products": "Is an extreme novelty seeker who buys untested products impulsively and disregards reasonable warnings, costs, or safety information.",
+      "cultural_influences": "Moves among several cultural communities and adapts language, food, music, and social behavior to different family, work, or neighborhood settings.",
+      "travel_habits": "Prefers comfortable, predictable travel with reservations, familiar lodging, accessible transportation, and enough time to avoid rushed transitions.",
+      "lifestyle": "Favors an extravagant lifestyle, frequently spending on luxury goods, premium experiences, or expansive homes, sometimes with little concern for restraint.",
+      "health_and_wellness_habits": "Follows a consistent health routine involving preventive appointments, sleep practices, exercise, and food choices that support personal wellbeing.",
+      "sleep_patterns": "Often gets less sleep than they need because of work, study, caregiving, household responsibilities, or early travel schedules.",
+      "technology_use": "Uses smartphones, computers, online services, and social media frequently for work, communication, news, entertainment, and everyday tasks."
+    },
+    "independently_drawn_full_vocabularies": [
+      "arts_crafts_and_diy_interest",
+      "board_game_interest",
+      "cooking_and_baking_interest",
+      "gender",
+      "geographic_region",
+      "household_income",
+      "marital_status",
+      "outdoor_activity_interest",
+      "pet_interest",
+      "political_affiliation",
+      "race_and_ethnicity",
+      "reading_interest",
+      "religious_affiliation",
+      "shopping_interest",
+      "socializing_interest",
+      "travel_interest",
+      "video_gaming_interest"
+    ]
+  },
+  {
+    "id": 15,
+    "quantity": 3,
+    "description": "U.S. resident age 55–64, with high-school or some-college attainment and employment; this slice includes shift-work-related routine variation, travel constraints, and a strongly irregular lifestyle.",
+    "selected": {
+      "age": [
+        55,
+        64
+      ],
+      "education_attainment": "Has a high school diploma or equivalent, or has pursued some college, trade, technical, or other postsecondary education without earning a bachelor's degree; approximately 55% under the supplied totals.",
+      "education_and_learning_profile": "Completed high school or an equivalent credential and relies on practical experience, workplace learning, and everyday information skills.",
+      "labor_force_participation": "Participates in the labor force through employment or active job seeking; the supplied figure for labor-force participation is 61.7%.",
+      "labor_force_status": "Employed, including full-time, part-time, self-employed, seasonal, and other paid work; the supplied unemployment figure implies approximately 95.8% of labor-force participants are employed.",
+      "political_beliefs": "Strongly conservative, placing high importance on tradition, religious or cultural continuity, gun rights, national sovereignty, and substantially limited government.",
+      "economic_beliefs": "Believes government should do more to reduce inequality through progressive taxation, stronger public services, and protections for workers and families.",
+      "personality_traits": "Is highly ambitious and competitive, setting demanding goals and feeling strong satisfaction from achievement, recognition, or measurable progress.",
+      "general_attitude": "Is calm and pragmatically hopeful, prefers to assess evidence before reacting, and believes steady effort can improve many situations even when outcomes are uncertain.",
+      "culinary_tastes": "Enjoys meat-centered meals, values familiar preparations such as grilling or roasting, and may see meat as an important source of flavor, tradition, or nourishment.",
+      "shopping_habits": "Avoids shopping whenever possible, feels overwhelmed by crowded stores or online choices, and may depend on another person or delivery service for essential purchases.",
+      "health_consciousness": "Has limited opportunity for exercise or preventive care because of cost, disability, demanding work, caregiving, transportation, or limited access to services.",
+      "attitude_toward_new_products": "Adopts new products gradually, keeping familiar options available until the newer alternative has demonstrated reliability over time.",
+      "cultural_influences": "Keeps traditional practices central to family life and is cautious about rapid cultural change, while still navigating contemporary workplaces and institutions.",
+      "travel_habits": "Would like to travel more but is constrained by money, health, disability, work, documentation, caregiving, or limited transportation options.",
+      "lifestyle": "Has a highly irregular lifestyle shaped by shift work, unstable housing, illness, crisis, or unpredictable obligations, making routines and leisure difficult to maintain.",
+      "health_and_wellness_habits": "Has inconsistent routines, alternating periods of healthy intentions with long stretches when fatigue, stress, or responsibilities take priority.",
+      "sleep_patterns": "Works overnight or rotating shifts, so sleep timing changes substantially and rest may be interrupted by daytime responsibilities.",
+      "technology_use": "Uses smartphones, computers, online services, and social media frequently for work, communication, news, entertainment, and everyday tasks."
+    },
+    "independently_drawn_full_vocabularies": [
+      "arts_crafts_and_diy_interest",
+      "board_game_interest",
+      "cooking_and_baking_interest",
+      "gender",
+      "geographic_region",
+      "household_income",
+      "marital_status",
+      "outdoor_activity_interest",
+      "pet_interest",
+      "political_affiliation",
+      "race_and_ethnicity",
+      "reading_interest",
+      "religious_affiliation",
+      "settlement_type",
+      "shopping_interest",
+      "socializing_interest",
+      "travel_interest",
+      "video_gaming_interest"
+    ]
+  },
+  {
+    "id": 16,
+    "quantity": 3,
+    "description": "U.S. resident age 55–64, with high-school or some-college attainment and employment; a rural-settlement slice with an unusually extreme health-related habit profile, not presumed to characterize other residents.",
+    "selected": {
+      "age": [
+        55,
+        64
+      ],
+      "education_attainment": "Has a high school diploma or equivalent, or has pursued some college, trade, technical, or other postsecondary education without earning a bachelor's degree; approximately 55% under the supplied totals.",
+      "education_and_learning_profile": "Attended community college, a certificate program, or technical training and has developed focused occupational skills without completing a four-year degree.",
+      "settlement_type": "Rural resident living in a less densely populated community, where longer travel distances, local relationships, and access to services may shape daily life.",
+      "labor_force_participation": "Participates in the labor force through employment or active job seeking; the supplied figure for labor-force participation is 61.7%.",
+      "labor_force_status": "Employed, including full-time, part-time, self-employed, seasonal, and other paid work; the supplied unemployment figure implies approximately 95.8% of labor-force participants are employed.",
+      "political_beliefs": "Libertarian-leaning, favoring individual liberty, free expression, private choice, and restrained government in both economic and personal affairs.",
+      "economic_beliefs": "Believes inherited advantages, unequal bargaining power, discrimination, and access to networks strongly influence who prospers, even when individual effort matters.",
+      "personality_traits": "Is emotionally steady and resilient, usually recovering from setbacks without prolonged worry, while still experiencing ordinary stress and sadness.",
+      "general_attitude": "Is calm and pragmatically hopeful, prefers to assess evidence before reacting, and believes steady effort can improve many situations even when outcomes are uncertain.",
+      "culinary_tastes": "Prefers mild, simple flavors and may avoid hot spices, strong aromas, unfamiliar textures, or complicated combinations because they feel unpleasant or overwhelming.",
+      "shopping_habits": "Plans purchases around a strict household budget, uses coupons or discount stores, and prioritizes durable essentials over optional upgrades.",
+      "health_consciousness": "Engages in potentially harmful extremes, such as severely restricting food, overexercising, or ignoring urgent health needs; this represents a rare and concerning edge case.",
+      "attitude_toward_new_products": "Prefers established brands and familiar products because consistency and predictability matter more than novelty or small possible improvements.",
+      "cultural_influences": "Keeps traditional practices central to family life and is cautious about rapid cultural change, while still navigating contemporary workplaces and institutions.",
+      "travel_habits": "Prefers comfortable, predictable travel with reservations, familiar lodging, accessible transportation, and enough time to avoid rushed transitions.",
+      "lifestyle": "Has a rural lifestyle with greater distance between services, strong importance of local networks, and daily routines shaped by land, weather, or transportation.",
+      "health_and_wellness_habits": "Is intensely focused on health in a rigid or distressing way, or conversely disregards serious symptoms and care needs; these are uncommon extremes.",
+      "sleep_patterns": "Usually gets sufficient, restorative sleep and follows a fairly steady bedtime and waking schedule.",
+      "technology_use": "Uses digital technology confidently but sets limits on notifications, screen time, online shopping, or social media to protect attention and privacy."
+    },
+    "independently_drawn_full_vocabularies": [
+      "arts_crafts_and_diy_interest",
+      "board_game_interest",
+      "cooking_and_baking_interest",
+      "gender",
+      "geographic_region",
+      "household_income",
+      "marital_status",
+      "outdoor_activity_interest",
+      "pet_interest",
+      "political_affiliation",
+      "race_and_ethnicity",
+      "reading_interest",
+      "religious_affiliation",
+      "shopping_interest",
+      "socializing_interest",
+      "travel_interest",
+      "video_gaming_interest"
+    ]
+  },
+  {
+    "id": 17,
+    "quantity": 4,
+    "description": "U.S. resident age 65–110, not currently participating in the labor force; this slice represents an active, health-conscious older adult routine rather than assuming uniform needs among older people.",
+    "selected": {
+      "age": [
+        65,
+        110
+      ],
+      "education_attainment": "Has a bachelor's degree or a higher qualification, including people with professional, master's, doctoral, or other advanced education; approximately 35% under the supplied totals.",
+      "education_and_learning_profile": "Earned a bachelor's degree and can apply academic, professional, or research skills in their work and personal interests.",
+      "labor_force_participation": "Is not currently participating in the labor force, which can include children, students, retirees, caregivers, people unable to work, and people not actively seeking work; the complement of the supplied figure is 38.3%.",
+      "occupation": "Is not currently employed because of age, education, caregiving, disability, retirement, job search, a temporary leave, or another life circumstance.",
+      "political_beliefs": "Politically disengaged or deeply disillusioned, following public issues infrequently and believing that parties or institutions rarely represent ordinary people effectively.",
+      "economic_beliefs": "Is skeptical of both corporate and government power, worrying that concentrated wealth and poorly accountable institutions can undermine ordinary people's choices.",
+      "personality_traits": "Is organized and conscientious, follows through on commitments, and prefers plans, preparation, and reliable routines.",
+      "general_attitude": "Is generally positive and appreciative, notices small sources of enjoyment, and remains realistic about difficulties without allowing them to dominate every decision.",
+      "culinary_tastes": "Prefers familiar, traditional home cooking, such as regional family recipes, straightforward sides, and meals tied to personal or community traditions.",
+      "shopping_habits": "Usually shops in physical stores to inspect products, ask questions, handle items, and combine errands with other activities.",
+      "health_consciousness": "Is highly health-focused, schedules preventive care, exercises consistently, reads nutrition information, and makes daily choices with long-term wellbeing in mind.",
+      "attitude_toward_new_products": "Adopts new products gradually, keeping familiar options available until the newer alternative has demonstrated reliability over time.",
+      "cultural_influences": "Combines local traditions with contemporary American popular culture, adopting some new habits while retaining familiar family and community practices.",
+      "travel_habits": "Takes occasional planned vacations, usually domestic, balancing travel interests with work schedules, household budgets, and caregiving responsibilities.",
+      "lifestyle": "Maintains a highly active lifestyle with frequent walking, sports, outdoor recreation, and social commitments, adapting activity to health and access.",
+      "health_and_wellness_habits": "Maintains regular physical activity through walking, exercise, sports, or other movement and tries to fit it into an otherwise busy schedule.",
+      "sleep_patterns": "Usually gets sufficient, restorative sleep and follows a fairly steady bedtime and waking schedule.",
+      "technology_use": "Uses smartphones, computers, online services, and social media frequently for work, communication, news, entertainment, and everyday tasks."
+    },
+    "independently_drawn_full_vocabularies": [
+      "arts_crafts_and_diy_interest",
+      "board_game_interest",
+      "cooking_and_baking_interest",
+      "gender",
+      "geographic_region",
+      "household_income",
+      "marital_status",
+      "outdoor_activity_interest",
+      "pet_interest",
+      "political_affiliation",
+      "race_and_ethnicity",
+      "reading_interest",
+      "religious_affiliation",
+      "settlement_type",
+      "shopping_interest",
+      "socializing_interest",
+      "travel_interest",
+      "video_gaming_interest"
+    ]
+  },
+  {
+    "id": 18,
+    "quantity": 4,
+    "description": "U.S. resident age 65–110, not currently participating in the labor force; this slice includes varied learning and cultural interests alongside possible chronic health or mobility support needs.",
+    "selected": {
+      "age": [
+        65,
+        110
+      ],
+      "education_attainment": "Has a bachelor's degree or a higher qualification, including people with professional, master's, doctoral, or other advanced education; approximately 35% under the supplied totals.",
+      "education_and_learning_profile": "Has exceptionally broad intellectual curiosity and advanced expertise, while remaining aware that specialized knowledge does not make someone equally informed about every topic.",
+      "labor_force_participation": "Is not currently participating in the labor force, which can include children, students, retirees, caregivers, people unable to work, and people not actively seeking work; the complement of the supplied figure is 38.3%.",
+      "occupation": "Is not currently employed because of age, education, caregiving, disability, retirement, job search, a temporary leave, or another life circumstance.",
+      "political_beliefs": "Moderate or centrist, combining views from different political traditions and preferring incremental policy changes, negotiation, and evidence-based compromise.",
+      "economic_beliefs": "Feels economically pessimistic or fatalistic, seeing persistent cost pressures and limited mobility as more influential than personal planning or policy promises.",
+      "personality_traits": "Is curious and open to new ideas, enjoys exploring unfamiliar topics, and can tolerate ambiguity without needing every question resolved immediately.",
+      "general_attitude": "Is persistently pessimistic, focuses on likely failure and disappointment, and may discount positive developments as temporary or undeserved.",
+      "culinary_tastes": "Enjoys meat-centered meals, values familiar preparations such as grilling or roasting, and may see meat as an important source of flavor, tradition, or nourishment.",
+      "shopping_habits": "Prefers online shopping for convenience, broad selection, accessibility, or time savings, and commonly checks reviews and delivery costs before buying.",
+      "health_consciousness": "Lives with chronic illness, disability, pain, or mental health challenges that require substantial daily management, accommodations, medication, or support.",
+      "attitude_toward_new_products": "Tries unfamiliar products when recommended by a trusted friend, relative, professional, or community member who understands their needs.",
+      "cultural_influences": "Is heavily influenced by global media, international travel, online communities, and popular culture from multiple countries rather than by a single local tradition.",
+      "travel_habits": "Would like to travel more but is constrained by money, health, disability, work, documentation, caregiving, or limited transportation options.",
+      "lifestyle": "Balances work, family, exercise, hobbies, and downtime through a fairly structured routine, though competing responsibilities sometimes disrupt plans.",
+      "health_and_wellness_habits": "Lives with a condition or disability that makes standard health recommendations difficult to follow and may require adapted care and realistic goals.",
+      "sleep_patterns": "Has sleep disrupted by pain, illness, disability, mental distress, caregiving, noise, crowded housing, or unsafe surroundings.",
+      "technology_use": "Uses digital technology confidently but sets limits on notifications, screen time, online shopping, or social media to protect attention and privacy."
+    },
+    "independently_drawn_full_vocabularies": [
+      "arts_crafts_and_diy_interest",
+      "board_game_interest",
+      "cooking_and_baking_interest",
+      "gender",
+      "geographic_region",
+      "household_income",
+      "marital_status",
+      "outdoor_activity_interest",
+      "pet_interest",
+      "political_affiliation",
+      "race_and_ethnicity",
+      "reading_interest",
+      "religious_affiliation",
+      "settlement_type",
+      "shopping_interest",
+      "socializing_interest",
+      "travel_interest",
+      "video_gaming_interest"
+    ]
+  }
+]

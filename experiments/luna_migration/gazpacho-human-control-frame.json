@@ -1,0 +1,40 @@
+{
+  "rows": 50,
+  "columns": [
+    "Responder #",
+    "Vote",
+    "Explanation",
+    "Age Range",
+    "Gender Identity",
+    "Political Affiliation",
+    "Racial Or Ethnic Identity"
+  ],
+  "age_range_counts": {
+    "35-44": 19,
+    "25-34": 9,
+    "45-54": 9,
+    "55-64": 8,
+    "65+": 5
+  },
+  "vote_counts": {
+    "3": 13,
+    "1": 11,
+    "4": 10,
+    "2": 9,
+    "5": 7
+  },
+  "vote_mean": 2.86,
+  "vote_sd": 1.355412430643476,
+  "verified_provenance": {
+    "platform": "PickFu",
+    "respondents": "50 US-based respondents",
+    "completion_date": "2025-07-05",
+    "duration": "27 minutes",
+    "rating_question_matches_original_report": true,
+    "gazpacho_description_matches_original_report": true,
+    "source": "User-owned original PickFu export located through authorized Microsoft 365 retrieval, then checked against the original report.",
+    "access": "The original report is marked Private. Its access link is intentionally omitted from publishable artifacts.",
+    "filename_date_caveat": "The CSV filenames are dated July 19, 2025; the original report states completion on July 5, 2025."
+  },
+  "limitations": "PickFu origin and US-based participation are now verified, not inferred from demographics. Exact targeting and recruitment criteria, an age-25 eligibility filter, and national representativeness remain unverified. Observed ages describe the realized sample rather than establishing eligibility criteria."
+}

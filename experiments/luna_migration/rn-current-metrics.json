@@ -1,0 +1,1916 @@
+[
+  {
+    "notebook": "Bottled Gazpacho Market Research 5 (with behavior correction).ipynb",
+    "folder": "C:\\Users\\pdasilva\\.copilot\\session-state\\50a4ee6c-8971-4a79-8b88-aa0da7641d9e\\files\\rn-gaz",
+    "elapsed_seconds": 5998.72,
+    "model": "gpt-6-luna",
+    "effort": "xhigh",
+    "population": 50,
+    "public_talk_count": 49,
+    "agents_without_public_talk": [
+      "Olivia Hayes"
+    ],
+    "ages": {
+      "4": 1,
+      "32": 3,
+      "31": 3,
+      "106": 1,
+      "49": 6,
+      "40": 3,
+      "3": 4,
+      "10": 5,
+      "57": 2,
+      "62": 3,
+      "21": 4,
+      "89": 1,
+      "41": 3,
+      "20": 1,
+      "16": 3,
+      "58": 1,
+      "69": 3,
+      "91": 1,
+      "79": 1,
+      "78": 1
+    },
+    "minors": 13,
+    "response_counts": {
+      "2": 38,
+      "3": 9,
+      "1": 3
+    },
+    "response_checks": [
+      {
+        "name": "Olivia Hayes",
+        "extracted": "2",
+        "parsed_public": "N/A",
+        "matches": false
+      },
+      {
+        "name": "Reese Callahan",
+        "extracted": "2",
+        "parsed_public": null,
+        "matches": null
+      },
+      {
+        "name": "Emily Foster",
+        "extracted": "3",
+        "parsed_public": "3",
+        "matches": true
+      },
+      {
+        "name": "Eleanor Whitfield",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Angela Mercer",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Rachel Kim",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Casey Holloway",
+        "extracted": "2",
+        "parsed_public": null,
+        "matches": null
+      },
+      {
+        "name": "Darren Coleman",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Luca Bennett",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Sage Anderson",
+        "extracted": "1",
+        "parsed_public": "1",
+        "matches": true
+      },
+      {
+        "name": "Elijah Thompson",
+        "extracted": "2",
+        "parsed_public": null,
+        "matches": null
+      },
+      {
+        "name": "Monica Ellison",
+        "extracted": "3",
+        "parsed_public": "3",
+        "matches": true
+      },
+      {
+        "name": "Shannon McKenna",
+        "extracted": "3",
+        "parsed_public": "3",
+        "matches": true
+      },
+      {
+        "name": "Steven Marshall",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Tessa Whitcomb",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Susan McAllister",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Elliot Brooks",
+        "extracted": "1",
+        "parsed_public": "1",
+        "matches": true
+      },
+      {
+        "name": "Skyler Jameson",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Charlie Nguyen",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Margaret Louise Carver",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Jamie Ramirez",
+        "extracted": "3",
+        "parsed_public": "3",
+        "matches": true
+      },
+      {
+        "name": "Michelle Hargrove",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Theresa Gallagher",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Avery Carter",
+        "extracted": "1",
+        "parsed_public": null,
+        "matches": null
+      },
+      {
+        "name": "Madison Reed",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Zoe Martinez",
+        "extracted": "3",
+        "parsed_public": "3",
+        "matches": true
+      },
+      {
+        "name": "Riley Morgan",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Denise Palmer",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Jaden Alvarez",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Rowan Taylor",
+        "extracted": "3",
+        "parsed_public": null,
+        "matches": null
+      },
+      {
+        "name": "Kai Nakamura",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Cheryl Rasmussen",
+        "extracted": "3",
+        "parsed_public": null,
+        "matches": null
+      },
+      {
+        "name": "Lauren Whitmore",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Michael Lawson",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Leslie Warren",
+        "extracted": "2",
+        "parsed_public": null,
+        "matches": null
+      },
+      {
+        "name": "Kelly Donovan",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Avery Monroe",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Eric Sullivan",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Harper Collins",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Emerson Brooks",
+        "extracted": "2",
+        "parsed_public": null,
+        "matches": null
+      },
+      {
+        "name": "Quinn Parker",
+        "extracted": "3",
+        "parsed_public": null,
+        "matches": null
+      },
+      {
+        "name": "Dorothy Caldwell",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Natalie Chen",
+        "extracted": "2",
+        "parsed_public": null,
+        "matches": null
+      },
+      {
+        "name": "Jordan Ellis",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Morgan Fletcher",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Robert Whitaker",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Barbara Reynolds",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Cameron Hayes",
+        "extracted": "3",
+        "parsed_public": null,
+        "matches": null
+      },
+      {
+        "name": "Dana Mitchell",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      },
+      {
+        "name": "Patricia Bennett",
+        "extracted": "2",
+        "parsed_public": "2",
+        "matches": true
+      }
+    ],
+    "usage_cost": {
+      "unique_saved_api_responses_in_run_window": 399,
+      "responses_missing_usage": 0,
+      "tokens": {
+        "prompt": 2426953,
+        "completion": 973732,
+        "cached": 119016,
+        "writes": 2215518
+      },
+      "usd": "0.774237810",
+      "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+    },
+    "normalization_audit": {
+      "partitions": [
+        {
+          "labels": [
+            "Books, reading & libraries",
+            "Cooking, home & practical skills",
+            "Nature, outdoors & day trips",
+            "Music, arts & screen/audio media",
+            "Play, games, sports & making",
+            "Community, history & social life"
+          ],
+          "source_count": 969,
+          "assignment_calls": 5,
+          "largest_batch": 240,
+          "sources_per_group": {
+            "Books, reading & libraries": 103,
+            "Play, games, sports & making": 198,
+            "Nature, outdoors & day trips": 136,
+            "Music, arts & screen/audio media": 166,
+            "Cooking, home & practical skills": 187,
+            "Community, history & social life": 179
+          },
+          "samples": {
+            "Books, reading & libraries": [
+              "Picture books with repeated phrases and clear illustrations.",
+              "Stories about animals, especially dogs, cats, rabbits, and farm animals.",
+              "Visiting the library's children's area."
+            ],
+            "Cooking, home & practical skills": [
+              "Helping stir batter or rinse vegetables while an adult supervises.",
+              "Looking through neighborhood yard sales and secondhand shops.",
+              "Home cooking and baking as enjoyable, practical hobbies rather than professional ambitions"
+            ],
+            "Nature, outdoors & day trips": [
+              "Watching birds and squirrels from the window.",
+              "Looking for interesting leaves, sticks, and stones on walks.",
+              "The idea of pets and how people care for them."
+            ],
+            "Music, arts & screen/audio media": [
+              "Dancing in the living room when a familiar song comes on.",
+              "Listening to conversational podcasts about history, consumer issues, or ordinary work and family life.",
+              "Watching well-written crime and legal dramas without excessive gore."
+            ],
+            "Play, games, sports & making": [
+              "Pretend play involving a kitchen, a grocery store, a doctor's office, or a family.",
+              "Drawing people with large heads and lots of colored details.",
+              "Washable markers and chunky crayons."
+            ],
+            "Community, history & social life": [
+              "Noticing old houses, storefronts, and how neighborhoods have changed.",
+              "Going to local festivals for the music and people-watching rather than collecting merchandise.",
+              "Reading library-sale notices and community event calendars."
+            ]
+          }
+        },
+        {
+          "labels": [
+            "Early Development & Independence",
+            "Learning, Creativity & Recreation",
+            "Workplace & Technical Operations",
+            "Communication, Service & Relationships",
+            "Practical Life & Self-Management"
+          ],
+          "source_count": 753,
+          "assignment_calls": 4,
+          "largest_batch": 240,
+          "sources_per_group": {
+            "Early Development & Independence": 99,
+            "Workplace & Technical Operations": 193,
+            "Communication, Service & Relationships": 183,
+            "Practical Life & Self-Management": 204,
+            "Learning, Creativity & Recreation": 74
+          },
+          "samples": {
+            "Early Development & Independence": [
+              "Speaks in short conversational sentences and can describe immediate needs and familiar events.",
+              "Recognizes her own name and several letters that appear in it.",
+              "Counts small sets of objects, with occasional omissions or repetitions."
+            ],
+            "Learning, Creativity & Recreation": [
+              "Finding useful information through library databases, official websites, and local resources.",
+              "Recognizing many gospel and popular songs from their first few notes.",
+              "Taking clear phone photos and making simple edits or albums for family use."
+            ],
+            "Workplace & Technical Operations": [
+              "Working knowledge of medical billing, claims follow-up, and common insurance denial categories.",
+              "Certified medical coding knowledge within the limits of her role and training.",
+              "Careful review of patient account details, dates, authorizations, and claim histories."
+            ],
+            "Communication, Service & Relationships": [
+              "Professional phone and email communication with patients, insurers, and clinic staff.",
+              "Patient troubleshooting when an online system or claim workflow is confusing.",
+              "De-escalating routine frustration by acknowledging the problem and explaining realistic next steps."
+            ],
+            "Practical Life & Self-Management": [
+              "Budgeting recurring expenses and spotting avoidable fees.",
+              "Taking practical notes during appointments and family conversations.",
+              "Basic first aid and calm coordination in everyday, non-emergency situations."
+            ]
+          }
+        },
+        {
+          "labels": [
+            "Child Development & Guidance",
+            "Relationships, Family & Care",
+            "Work, Money & Everyday Security",
+            "Health, Aging & Wellbeing",
+            "Civic Life & Public Institutions",
+            "Personal Principles, Identity & Meaning"
+          ],
+          "source_count": 1906,
+          "assignment_calls": 8,
+          "largest_batch": 240,
+          "sources_per_group": {
+            "Child Development & Guidance": 351,
+            "Civic Life & Public Institutions": 273,
+            "Health, Aging & Wellbeing": 174,
+            "Work, Money & Everyday Security": 343,
+            "Personal Principles, Identity & Meaning": 450,
+            "Relationships, Family & Care": 315
+          },
+          "samples": {
+            "Child Development & Guidance": [
+              "Beliefs at four are concrete, changeable, and shaped by what Olivia sees adults do",
+              "These describe her current understanding rather than mature or settled opinions.",
+              "She expects her parents to come back after preschool, even though the separation can still feel hard in the moment."
+            ],
+            "Relationships, Family & Care": [
+              "An apology should name what happened and what will change, not just ask the other person to move on.",
+              "Families can love one another and still need boundaries.",
+              "Helping relatives is important, but one person should not automatically become the family's default problem-solver."
+            ],
+            "Work, Money & Everyday Security": [
+              "Work should be done carefully, but no job should require someone to sacrifice all of their personal life.",
+              "Being dependable is meaningful, but it does not mean being available at every hour.",
+              "It is reasonable to ask for a raise when responsibilities grow, even if asking feels uncomfortable."
+            ],
+            "Health, Aging & Wellbeing": [
+              "A person should not have to understand insurance jargon to be treated with basic respect.",
+              "A person can be anxious and still be competent.",
+              "Rest is a practical need, not a prize that must be earned through exhaustion."
+            ],
+            "Civic Life & Public Institutions": [
+              "People deserve clear explanations when a decision affects their money, health, or access to a service.",
+              "A policy can be necessary and still be badly designed or applied unfairly.",
+              "Accuracy matters more than sounding confident, especially in healthcare administration."
+            ],
+            "Personal Principles, Identity & Meaning": [
+              "A mistake deserves correction",
+              "whether it deserves punishment depends on what happened and what the person does next.",
+              "Kindness is more convincing when it is expressed through consistent behavior than through public declarations."
+            ]
+          }
+        },
+        {
+          "labels": [
+            "Food, drink & shared meals",
+            "Home comfort & everyday surroundings",
+            "Relationships, respect & recognition",
+            "Plans, clarity & personal agency",
+            "Leisure, learning & community outings",
+            "Practical resources, work & upkeep"
+          ],
+          "source_count": 1145,
+          "assignment_calls": 5,
+          "largest_batch": 240,
+          "sources_per_group": {
+            "Plans, clarity & personal agency": 140,
+            "Relationships, respect & recognition": 246,
+            "Food, drink & shared meals": 249,
+            "Home comfort & everyday surroundings": 211,
+            "Leisure, learning & community outings": 176,
+            "Practical resources, work & upkeep": 123
+          },
+          "samples": {
+            "Food, drink & shared meals": [
+              "Warm toast with butter.",
+              "Strawberries cut into small pieces.",
+              "Plain noodles with a little cheese."
+            ],
+            "Home comfort & everyday surroundings": [
+              "A soft blanket from home at bedtime.",
+              "The sound of rain when she is indoors with family.",
+              "A quiet first half-hour after waking up."
+            ],
+            "Relationships, respect & recognition": [
+              "Having a familiar adult sit nearby while she plays.",
+              "Being praised for a specific effort, such as fastening one shoe.",
+              "Small jobs that make her feel included, like carrying napkins."
+            ],
+            "Plans, clarity & personal agency": [
+              "Being offered two real choices rather than being asked an open-ended question when she is tired.",
+              "Knowing what is happening next.",
+              "A predictable goodbye ritual at preschool."
+            ],
+            "Leisure, learning & community outings": [
+              "A favorite bedtime story read more than once.",
+              "Seeing dogs on walks, from a comfortable distance.",
+              "The swings when they are not too crowded."
+            ],
+            "Practical resources, work & upkeep": [
+              "Neighborhoods where errands can be done without driving across town.",
+              "Comfortable shoes that last.",
+              "Being able to pay a bill a few days early."
+            ]
+          }
+        },
+        {
+          "labels": [
+            "Sensory & bodily comfort",
+            "Uncertainty, transitions & time pressure",
+            "Respectful communication & social trust",
+            "Autonomy, consent & imposed obligations",
+            "Administrative, financial & tech fricti",
+            "Waste, upkeep & impractical practices"
+          ],
+          "source_count": 1031,
+          "assignment_calls": 5,
+          "largest_batch": 240,
+          "sources_per_group": {
+            "Uncertainty, transitions & time pressure": 157,
+            "Sensory & bodily comfort": 235,
+            "Autonomy, consent & imposed obligations": 144,
+            "Respectful communication & social trust": 303,
+            "Administrative, financial & tech fricti": 89,
+            "Waste, upkeep & impractical practices": 103
+          },
+          "samples": {
+            "Sensory & bodily comfort": [
+              "Loud hand dryers in public bathrooms.",
+              "Vacuum cleaners when they start unexpectedly.",
+              "A crowded room where several people talk at once."
+            ],
+            "Uncertainty, transitions & time pressure": [
+              "Being hurried while she is putting on shoes or a coat.",
+              "A sudden change of plan without a brief explanation.",
+              "Being asked to stop playing without a warning."
+            ],
+            "Respectful communication & social trust": [
+              "Being told she is being silly when she is trying to explain something serious to her.",
+              "An adult correcting her in front of a group.",
+              "People who confuse confidence with expertise."
+            ],
+            "Autonomy, consent & imposed obligations": [
+              "Having a favorite toy taken without explanation.",
+              "Long adult conversations where she is expected to stay still.",
+              "Being made to hug or kiss someone when she does not want to."
+            ],
+            "Administrative, financial & tech fricti": [
+              "Companies that make it difficult to speak with a person about a problem.",
+              "Aggressive sales pitches and hidden fees.",
+              "Unclear fees or vague answers about what insurance may cover"
+            ],
+            "Waste, upkeep & impractical practices": [
+              "A phone call that could have been a clear two-sentence email.",
+              "Discarding a useful item just because a newer version exists.",
+              "Food waste and overly complicated grocery plans."
+            ]
+          }
+        },
+        {
+          "labels": [
+            "Personal routines & daily rhythms",
+            "Work, study & task commitments",
+            "Household operations & errands",
+            "Family care & coordination",
+            "Health, mobility & safety",
+            "Leisure, connection & restorative time"
+          ],
+          "source_count": 799,
+          "assignment_calls": 4,
+          "largest_batch": 240,
+          "sources_per_group": {
+            "Personal routines & daily rhythms": 238,
+            "Household operations & errands": 115,
+            "Work, study & task commitments": 199,
+            "Family care & coordination": 61,
+            "Leisure, connection & restorative time": 151,
+            "Health, mobility & safety": 35
+          },
+          "samples": {
+            "Personal routines & daily rhythms": [
+              "Usually wakes between 6:45 and 7:15 a.m., depending on the night.",
+              "Wants a parent nearby while she wakes fully and may ask what day it is.",
+              "Uses the bathroom with reminders and needs help with parts of dressing."
+            ],
+            "Work, study & task commitments": [
+              "You pack lunch from leftovers when there is something practical to bring",
+              "otherwise you buy a simple lunch near work.",
+              "You aim to leave with enough time for traffic but dislike arriving so early that you have to sit in the parking lot."
+            ],
+            "Household operations & errands": [
+              "You check that Nell has food and fresh water before leaving.",
+              "You cook a simple meal on most evenings when energy allows, and rely on leftovers, sandwiches, or takeout on harder days.",
+              "You prefer one planned errand block rather than several separate trips across town."
+            ],
+            "Family care & coordination": [
+              "You and Jordan usually compare schedules and decide who is handling dinner, although the plan is sometimes made later than either of you intended.",
+              "Uses breaks to return essential calls or check messages from her mother or son.",
+              "Checks in with her mother or son by call or text, though she tries not to turn every evening into an errand run."
+            ],
+            "Health, mobility & safety": [
+              "Sits at the edge of the bed before standing and waits until she feels steady.",
+              "Uses her walker to reach the bathroom and follows a familiar sequence for washing and dressing, with assistance for tasks that strain her balance.",
+              "Puts on her hearing aids and glasses after staff or a family member has helped check that they are clean and working."
+            ],
+            "Leisure, connection & restorative time": [
+              "You often watch one episode of a familiar show while folding laundry or cleaning up.",
+              "You visit family or meet a friend some weekends, but protect at least part of the weekend for being at home.",
+              "You and Jordan sometimes take a walk, pick up coffee, or browse a market without making the outing into a full-day event."
+            ]
+          }
+        },
+        {
+          "labels": [
+            "Practicality and follow-through",
+            "Care, loyalty, and connection",
+            "Emotional coping and self-view",
+            "Autonomy, fairness, and conflict",
+            "Curiosity, play, and engagement",
+            "Communication and personal style"
+          ],
+          "source_count": 783,
+          "assignment_calls": 4,
+          "largest_batch": 240,
+          "sources_per_group": {
+            "Curiosity, play, and engagement": 93,
+            "Care, loyalty, and connection": 160,
+            "Autonomy, fairness, and conflict": 165,
+            "Emotional coping and self-view": 140,
+            "Practicality and follow-through": 166,
+            "Communication and personal style": 59
+          },
+          "samples": {
+            "Practicality and follow-through": [
+              "Pragmatic: prefers a workable next step to an elaborate plan that depends on everything going perfectly.",
+              "Reliable: takes commitments seriously and feels uncomfortable leaving someone without an answer.",
+              "Skeptical of grand promises: trusts demonstrated follow-through more than confidence, charm, or impressive language."
+            ],
+            "Care, loyalty, and connection": [
+              "Affectionate with trusted people: often seeks a lap, hand, or quick hug on her own terms.",
+              "Empathetic in concrete ways: may bring a toy or ask whether someone is okay when she sees them crying.",
+              "Capable of repair after conflict: once calm, she may offer a toy, say sorry with prompting, or try again, though she does not always understand the other child's perspective yet."
+            ],
+            "Emotional coping and self-view": [
+              "Sensitive to correction: can interpret a sharp tone as a sign that an adult is displeased with her more broadly.",
+              "Proud of new abilities: likes an adult to notice when she manages a task independently.",
+              "Impatient when waiting: asks how long repeatedly and benefits from a concrete marker such as one more turn."
+            ],
+            "Autonomy, fairness, and conflict": [
+              "Strong-willed: has clear preferences and may resist a request that interrupts what she is doing.",
+              "Possessive about favorite items: understands taking turns in principle but finds it difficult when she is deeply attached to a particular toy.",
+              "Conflict-avoidant at first: will often try a polite reminder or a change of subject before directly confronting someone."
+            ],
+            "Curiosity, play, and engagement": [
+              "Curious: notices small changes in familiar places and asks what things are for.",
+              "Imaginative: turns ordinary objects into props for make-believe, though she can switch back to reality when reminded.",
+              "Cautious at first: watches unfamiliar people and activities before deciding whether to join."
+            ],
+            "Communication and personal style": [
+              "Quietly funny: uses dry humor to take the edge off ordinary frustrations.",
+              "You have a dry, affectionate sense of humor and sometimes use a joke to make an awkward moment less intense.",
+              "You are more confident in a small group than in a large gathering where you do not know the social expectations."
+            ]
+          }
+        },
+        {
+          "labels": [
+            "Practicality and follow-through",
+            "Care, loyalty, and fairness",
+            "Emotional awareness and regulation",
+            "Agency, boundaries, and self-respect",
+            "Social comfort and adaptability",
+            "Curiosity, play, and humor"
+          ],
+          "source_count": 770,
+          "assignment_calls": 4,
+          "largest_batch": 240,
+          "sources_per_group": {
+            "Curiosity, play, and humor": 88,
+            "Care, loyalty, and fairness": 171,
+            "Social comfort and adaptability": 78,
+            "Practicality and follow-through": 152,
+            "Agency, boundaries, and self-respect": 146,
+            "Emotional awareness and regulation": 135
+          },
+          "samples": {
+            "Practicality and follow-through": [
+              "Persistent: will return to a puzzle or drawing after a failed attempt if the task matters to her.",
+              "Pragmatic: prefers a workable next step to an elaborate plan that depends on everything going perfectly.",
+              "Reliable: takes commitments seriously and feels uncomfortable leaving someone without an answer."
+            ],
+            "Care, loyalty, and fairness": [
+              "Affectionate with trusted people: often seeks a lap, hand, or quick hug on her own terms.",
+              "Empathetic in concrete ways: may bring a toy or ask whether someone is okay when she sees them crying.",
+              "Capable of repair after conflict: once calm, she may offer a toy, say sorry with prompting, or try again, though she does not always understand the other child's perspective yet."
+            ],
+            "Emotional awareness and regulation": [
+              "Sensitive to correction: can interpret a sharp tone as a sign that an adult is displeased with her more broadly.",
+              "Impatient when waiting: asks how long repeatedly and benefits from a concrete marker such as one more turn.",
+              "Observant about adult moods: notices tension or hurried voices even when adults do not explain what is happening."
+            ],
+            "Agency, boundaries, and self-respect": [
+              "Strong-willed: has clear preferences and may resist a request that interrupts what she is doing.",
+              "Possessive about favorite items: understands taking turns in principle but finds it difficult when she is deeply attached to a particular toy.",
+              "Proud of new abilities: likes an adult to notice when she manages a task independently."
+            ],
+            "Social comfort and adaptability": [
+              "Cautious at first: watches unfamiliar people and activities before deciding whether to join.",
+              "Comfort-seeking when tired: becomes more clingy, less flexible, and more likely to ask for familiar routines.",
+              "You like familiar routines but enjoy occasional changes when they are chosen rather than imposed."
+            ],
+            "Curiosity, play, and humor": [
+              "Curious: notices small changes in familiar places and asks what things are for.",
+              "Imaginative: turns ordinary objects into props for make-believe, though she can switch back to reality when reminded.",
+              "Playful: enjoys silly voices, predictable jokes, and repeating a funny moment."
+            ]
+          }
+        }
+      ],
+      "total_distinct_sources_across_partitions": 8156,
+      "all_source_ids_covered": true,
+      "all_assignment_batches_at_most_240": true,
+      "global_theme_definitions_unchanged": true
+    },
+    "occupation_titles": {
+      "Preschooler": 1,
+      "Medical Billing and Claims Specialist": 1,
+      "Patient Services Coordinator and Front Office Lead": 1,
+      "Retired public-school secretary and library aide": 1,
+      "Lead Cafeteria Cook": 1,
+      "Payroll Specialist": 1,
+      "Insurance and patient accounts coordinator; informal front-office lead": 1,
+      "Water utility maintenance operations supervisor": 1,
+      "Preschool student; no employment": 1,
+      "Preschool-aged child; not employed": 1,
+      "Elementary school student": 2,
+      "Payroll and Benefits Coordinator": 3,
+      "Payroll and Benefits Administrator": 1,
+      "Facilities Maintenance Supervisor": 1,
+      "Insurance Claims Resolution Specialist": 1,
+      "Senior Client Service Coordinator and Licensed Property and Casualty Insurance Representative": 1,
+      "Preschool attendee; not employed": 1,
+      "Part-time grocery pickup clerk and cashier": 1,
+      "Student": 3,
+      "Retired public-school librarian and reading specialist": 1,
+      "Payroll and Benefits Technician": 1,
+      "Office Manager": 1,
+      "School cafeteria lead cook": 1,
+      "Preschooler; not employed": 1,
+      "Part-time grocery cashier and customer-service associate": 1,
+      "Community college student and part-time grocery cashier": 1,
+      "Lead cafeteria cook": 1,
+      "High-school student and part-time library page": 1,
+      "High-school student and part-time grocery courtesy clerk": 1,
+      "Office manager and payroll coordinator": 1,
+      "Front Office and Insurance Coordinator": 1,
+      "None": 2,
+      "Retired payroll and benefits coordinator; part-time nonprofit bookkeeper": 1,
+      "High school student and part-time grocery store cashier": 1,
+      "Commercial HVAC service technician": 1,
+      "Part-time grocery front-end clerk and community-college student": 1,
+      "Retired elementary-school secretary and attendance clerk": 1,
+      "Community Programs and Outreach Coordinator": 1,
+      "Payroll coordinator": 1,
+      "Operations and Scheduling Coordinator": 1,
+      "Retired public-school facilities supervisor; part-time hardware store associate": 1,
+      "Retired medical office administrator": 1,
+      "Auto insurance claims adjuster": 1,
+      "Retired public-school library media specialist": 1
+    },
+    "common_personality_labels": [
+      [
+        "observant",
+        24
+      ],
+      [
+        "practical",
+        21
+      ],
+      [
+        "fair-minded",
+        18
+      ],
+      [
+        "dependable",
+        17
+      ],
+      [
+        "protective",
+        15
+      ],
+      [
+        "dryly funny",
+        14
+      ],
+      [
+        "conflict-avoidant at first",
+        13
+      ],
+      [
+        "loyal",
+        13
+      ],
+      [
+        "private",
+        11
+      ],
+      [
+        "self-critical",
+        10
+      ],
+      [
+        "resourceful",
+        10
+      ],
+      [
+        "curious",
+        8
+      ],
+      [
+        "dryly humorous",
+        8
+      ],
+      [
+        "stubborn",
+        7
+      ],
+      [
+        "imaginative",
+        6
+      ]
+    ],
+    "score_mean": 2.12,
+    "score_sample_sd": 0.47979587496419046
+  },
+  {
+    "notebook": "Investment Firm.ipynb",
+    "folder": "C:\\Users\\pdasilva\\.copilot\\session-state\\50a4ee6c-8971-4a79-8b88-aa0da7641d9e\\files\\rn-other",
+    "elapsed_seconds": 1550.62,
+    "model": "gpt-6-luna",
+    "effort": "xhigh",
+    "population": 3,
+    "public_talk_count": 52,
+    "agents_without_public_talk": [],
+    "ages": {
+      "39": 1,
+      "44": 1,
+      "46": 1
+    },
+    "minors": 0,
+    "response_counts": {},
+    "response_checks": [],
+    "usage_cost": {
+      "unique_saved_api_responses_in_run_window": 89,
+      "responses_missing_usage": 0,
+      "tokens": {
+        "prompt": 3030666,
+        "completion": 166120,
+        "cached": 27648,
+        "writes": 2999695
+      },
+      "usd": "0.458630655",
+      "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+    },
+    "occupation_titles": {
+      "Senior Commodities Analyst": 1,
+      "Senior Financial Advisor": 1,
+      "Director of Procurement and Supply Planning": 1
+    },
+    "common_personality_labels": [
+      [
+        "independent-minded",
+        2
+      ],
+      [
+        "highly conscientious",
+        1
+      ],
+      [
+        "intellectually curious",
+        1
+      ],
+      [
+        "skeptical without being reflexively cynical",
+        1
+      ],
+      [
+        "patient with complexity, but impatient with avoidable confusion and unexamined assumptions.",
+        1
+      ],
+      [
+        "fairly emotionally steady in public; privately, she can ruminate over a forecast that missed or a conversation where she thinks she was too sharp.",
+        1
+      ],
+      [
+        "ambitious in a quiet, durable way. she wants authority earned through good work, not a conspicuous title.",
+        1
+      ],
+      [
+        "socially observant and a better listener than a natural entertainer.",
+        1
+      ],
+      [
+        "caring but not effusive. she is likely to solve a practical problem for someone before offering a long emotional speech.",
+        1
+      ],
+      [
+        "perfectionistic around client-facing work, with a tendency to spend too long polishing a sentence that is already clear.",
+        1
+      ],
+      [
+        "dryly funny, particularly about office habits, overconfident forecasts, and her own inability to pack lightly.",
+        1
+      ],
+      [
+        "protective of her independence and occasionally slow to ask for help.",
+        1
+      ],
+      [
+        "competitive with her own prior work more than with colleagues; she wants to know whether her reasoning improved.",
+        1
+      ],
+      [
+        "cautious about promises. she would rather disappoint someone with a realistic expectation than reassure them falsely.",
+        1
+      ],
+      [
+        "capable of becoming defensive if criticism is vague or delivered as a personal judgment, but usually returns later to consider specific feedback.",
+        1
+      ]
+    ]
+  },
+  {
+    "notebook": "AI-enabled Children Story Telling Market Research 2.ipynb",
+    "folder": "C:\\Users\\pdasilva\\.copilot\\session-state\\50a4ee6c-8971-4a79-8b88-aa0da7641d9e\\files\\rn-other",
+    "elapsed_seconds": 6410.7,
+    "model": "gpt-6-luna",
+    "effort": "xhigh",
+    "population": 50,
+    "public_talk_count": 50,
+    "agents_without_public_talk": [],
+    "ages": {
+      "27": 8,
+      "42": 7,
+      "66": 2,
+      "50": 2,
+      "37": 11,
+      "23": 3,
+      "32": 7,
+      "18": 1,
+      "51": 2,
+      "22": 1,
+      "33": 5,
+      "28": 1
+    },
+    "minors": 0,
+    "response_counts": {
+      "B-D-A-E-C": 6,
+      "B-D-E-A-C": 22,
+      "B-E-C-D-A": 7,
+      "B-E-D-C-A": 12,
+      "B-D-E-C-A": 2,
+      "B-A-D-E-C": 1
+    },
+    "response_checks": [
+      {
+        "name": "Tessa Langford",
+        "extracted": "B-D-A-E-C",
+        "parsed_public": "B-D-A-E-C",
+        "matches": true
+      },
+      {
+        "name": "Heather McKenzie",
+        "extracted": "B-D-E-A-C",
+        "parsed_public": "B-D-E-A-C",
+        "matches": true
+      },
+      {
+        "name": "Leslie Montgomery",
+        "extracted": "B-D-E-A-C",
+        "parsed_public": "B-D-E-A-C",
+        "matches": true
+      },
+      {
+        "name": "Sharon McBride",
+        "extracted": "B-D-E-A-C",
+        "parsed_public": "B-D-E-A-C",
+        "matches": true
+      },
+      {
+        "name": "Melanie Foster",
+        "extracted": "B-E-C-D-A",
+        "parsed_public": "B-E-C-D-A",
+        "matches": true
+      },
+      {
+        "name": "Kendall Reeves",
+        "extracted": "B-E-D-C-A",
+        "parsed_public": "B-E-D-C-A",
+        "matches": true
+      },
+      {
+        "name": "Rebecca Donnelly",
+        "extracted": "B-E-D-C-A",
+        "parsed_public": "B-E-D-C-A",
+        "matches": true
+      },
+      {
+        "name": "Sydney Calloway",
+        "extracted": "B-D-A-E-C",
+        "parsed_public": "B-D-A-E-C",
+        "matches": true
+      },
+      {
+        "name": "Bailey Hartwell",
+        "extracted": "B-D-E-A-C",
+        "parsed_public": "B-D-E-A-C",
+        "matches": true
+      },
+      {
+        "name": "Shiloh Ramirez",
+        "extracted": "B-D-A-E-C",
+        "parsed_public": "B-D-A-E-C",
+        "matches": true
+      },
+      {
+        "name": "Mark Ellison",
+        "extracted": "B-D-E-A-C",
+        "parsed_public": "B-D-E-A-C",
+        "matches": true
+      },
+      {
+        "name": "Lindsay Porter",
+        "extracted": "B-E-D-C-A",
+        "parsed_public": "B-E-D-C-A",
+        "matches": true
+      },
+      {
+        "name": "Brianna Cole",
+        "extracted": "B-D-E-C-A",
+        "parsed_public": "B-D-E-C-A",
+        "matches": true
+      },
+      {
+        "name": "Aubrey Sloan",
+        "extracted": "B-E-D-C-A",
+        "parsed_public": "B-E-D-C-A",
+        "matches": true
+      },
+      {
+        "name": "Emily Carver",
+        "extracted": "B-D-E-A-C",
+        "parsed_public": "B-D-E-A-C",
+        "matches": true
+      },
+      {
+        "name": "Jamie Alvarez",
+        "extracted": "B-E-D-C-A",
+        "parsed_public": "B-E-D-C-A",
+        "matches": true
+      },
+      {
+        "name": "Nicole Hensley",
+        "extracted": "B-E-D-C-A",
+        "parsed_public": "B-E-D-C-A",
+        "matches": true
+      },
+      {
+        "name": "Logan Pierce",
+        "extracted": "B-D-E-A-C",
+        "parsed_public": "B-D-E-A-C",
+        "matches": true
+      },
+      {
+        "name": "Cory Whitman",
+        "extracted": "B-D-A-E-C",
+        "parsed_public": "B-D-A-E-C",
+        "matches": true
+      },
+      {
+        "name": "Erica Vaughn",
+        "extracted": "B-D-E-A-C",
+        "parsed_public": "B-D-E-A-C",
+        "matches": true
+      },
+      {
+        "name": "Melissa Grant",
+        "extracted": "B-D-E-A-C",
+        "parsed_public": "B-D-E-A-C",
+        "matches": true
+      },
+      {
+        "name": "Jesse Whitmore",
+        "extracted": "B-E-C-D-A",
+        "parsed_public": "B-E-C-D-A",
+        "matches": true
+      },
+      {
+        "name": "Dana Whitfield",
+        "extracted": "B-D-A-E-C",
+        "parsed_public": "B-D-A-E-C",
+        "matches": true
+      },
+      {
+        "name": "Leah Pritchard",
+        "extracted": "B-D-E-A-C",
+        "parsed_public": "B-D-E-A-C",
+        "matches": true
+      },
+      {
+        "name": "Judith Langley",
+        "extracted": "B-D-E-A-C",
+        "parsed_public": "B-D-E-A-C",
+        "matches": true
+      },
+      {
+        "name": "Alexis Warren",
+        "extracted": "B-E-D-C-A",
+        "parsed_public": "B-E-D-C-A",
+        "matches": true
+      },
+      {
+        "name": "Natalie Gardner",
+        "extracted": "B-D-E-A-C",
+        "parsed_public": "B-D-E-A-C",
+        "matches": true
+      },
+      {
+        "name": "Shannon McAllister",
+        "extracted": "B-D-E-C-A",
+        "parsed_public": "B-D-E-C-A",
+        "matches": true
+      },
+      {
+        "name": "Lauren Mitchell",
+        "extracted": "B-D-E-A-C",
+        "parsed_public": "B-D-E-A-C",
+        "matches": true
+      },
+      {
+        "name": "Maya Thornton",
+        "extracted": "B-E-C-D-A",
+        "parsed_public": "B-E-C-D-A",
+        "matches": true
+      },
+      {
+        "name": "Robin Palmer",
+        "extracted": "B-D-E-A-C",
+        "parsed_public": "B-D-E-A-C",
+        "matches": true
+      },
+      {
+        "name": "Devon Fletcher",
+        "extracted": "B-D-E-A-C",
+        "parsed_public": "B-D-E-A-C",
+        "matches": true
+      },
+      {
+        "name": "Katherine Bell",
+        "extracted": "B-E-D-C-A",
+        "parsed_public": "B-E-D-C-A",
+        "matches": true
+      },
+      {
+        "name": "Erin Caldwell",
+        "extracted": "B-E-C-D-A",
+        "parsed_public": "B-E-C-D-A",
+        "matches": true
+      },
+      {
+        "name": "Sasha Whitlock",
+        "extracted": "B-E-D-C-A",
+        "parsed_public": "B-E-D-C-A",
+        "matches": true
+      },
+      {
+        "name": "Quinn Harper",
+        "extracted": "B-D-E-A-C",
+        "parsed_public": "B-D-E-A-C",
+        "matches": true
+      },
+      {
+        "name": "Finley Brooks",
+        "extracted": "B-A-D-E-C",
+        "parsed_public": "B-A-D-E-C",
+        "matches": true
+      },
+      {
+        "name": "Riley Dawson",
+        "extracted": "B-D-A-E-C",
+        "parsed_public": "B-D-A-E-C",
+        "matches": true
+      },
+      {
+        "name": "Drew Sullivan",
+        "extracted": "B-E-C-D-A",
+        "parsed_public": "B-E-C-D-A",
+        "matches": true
+      },
+      {
+        "name": "Kelsey Rowan",
+        "extracted": "B-D-E-A-C",
+        "parsed_public": "B-D-E-A-C",
+        "matches": true
+      },
+      {
+        "name": "Emerson Blake",
+        "extracted": "B-D-E-A-C",
+        "parsed_public": "B-D-E-A-C",
+        "matches": true
+      },
+      {
+        "name": "Parker Monroe",
+        "extracted": "B-E-C-D-A",
+        "parsed_public": "B-E-C-D-A",
+        "matches": true
+      },
+      {
+        "name": "Reese Callahan",
+        "extracted": "B-D-E-A-C",
+        "parsed_public": "B-D-E-A-C",
+        "matches": true
+      },
+      {
+        "name": "Avery Collins",
+        "extracted": "B-D-E-A-C",
+        "parsed_public": "B-D-E-A-C",
+        "matches": true
+      },
+      {
+        "name": "Jamie Whitaker",
+        "extracted": "B-E-D-C-A",
+        "parsed_public": "B-E-D-C-A",
+        "matches": true
+      },
+      {
+        "name": "Casey Lawson",
+        "extracted": "B-D-E-A-C",
+        "parsed_public": "B-D-E-A-C",
+        "matches": true
+      },
+      {
+        "name": "Taylor Bennett",
+        "extracted": "B-E-D-C-A",
+        "parsed_public": "B-E-D-C-A",
+        "matches": true
+      },
+      {
+        "name": "Cameron Hayes",
+        "extracted": "B-D-E-A-C",
+        "parsed_public": "B-D-E-A-C",
+        "matches": true
+      },
+      {
+        "name": "Jordan Mercer",
+        "extracted": "B-E-D-C-A",
+        "parsed_public": "B-E-D-C-A",
+        "matches": true
+      },
+      {
+        "name": "Morgan Ellis",
+        "extracted": "B-E-C-D-A",
+        "parsed_public": "B-E-C-D-A",
+        "matches": true
+      }
+    ],
+    "usage_cost": {
+      "unique_saved_api_responses_in_run_window": 400,
+      "responses_missing_usage": 0,
+      "tokens": {
+        "prompt": 2538585,
+        "completion": 1059774,
+        "cached": 154031,
+        "writes": 2287497
+      },
+      "usd": "0.827070135",
+      "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+    },
+    "normalization_audit": {
+      "partitions": [
+        {
+          "labels": [
+            "Reading, Books & Libraries",
+            "Audio, Screen & Spectator Media",
+            "Parenting, Children & Family Life",
+            "Food, Cooking & Casual Dining",
+            "Local Recreation, Outdoors & Connection",
+            "Practical Living & Household Management"
+          ],
+          "source_count": 920,
+          "assignment_calls": 4,
+          "largest_batch": 240,
+          "sources_per_group": {
+            "Reading, Books & Libraries": 222,
+            "Parenting, Children & Family Life": 109,
+            "Practical Living & Household Management": 169,
+            "Food, Cooking & Casual Dining": 95,
+            "Local Recreation, Outdoors & Connection": 182,
+            "Audio, Screen & Spectator Media": 143
+          },
+          "samples": {
+            "Reading, Books & Libraries": [
+              "Contemporary fiction with believable characters.",
+              "Mystery novels that are engaging without being excessively graphic.",
+              "Audiobooks during drives or household chores."
+            ],
+            "Audio, Screen & Spectator Media": [
+              "A few television dramas and light comedies after bedtime.",
+              "Podcasts about real-life stories, relationships, or consumer issues.",
+              "Music from the late 1990s through the present, especially familiar pop and mellow indie."
+            ],
+            "Parenting, Children & Family Life": [
+              "Parenting information that is practical rather than judgmental.",
+              "Quiet evenings at home with a book, a show, or a conversation after the children settle down.",
+              "Taking photographs at family gatherings, then sharing a few rather than posting everything."
+            ],
+            "Food, Cooking & Casual Dining": [
+              "Cooking ideas that use ordinary grocery-store ingredients.",
+              "Trying a new café or casual restaurant with a friend.",
+              "Cooking familiar meals and occasionally trying a new recipe that does not require unusual ingredients."
+            ],
+            "Local Recreation, Outdoors & Connection": [
+              "Local parks and easy walks suitable for a toddler.",
+              "Local community events that do not require extensive planning.",
+              "Seasonal activities such as pumpkin patches or summer farmers' markets."
+            ],
+            "Practical Living & Household Management": [
+              "Healthcare and everyday wellness topics, especially when explained clearly.",
+              "Home organization when it saves time rather than pursuing a perfect-looking house.",
+              "Thrift stores and secondhand children's clothing."
+            ]
+          }
+        },
+        {
+          "labels": [
+            "Administrative operations & accuracy",
+            "Communication & service interactions",
+            "Technology & information navigation",
+            "Product evaluation & user feedback",
+            "Caregiving & child engagement",
+            "Household management & practical skills"
+          ],
+          "source_count": 667,
+          "assignment_calls": 3,
+          "largest_batch": 240,
+          "sources_per_group": {
+            "Administrative operations & accuracy": 89,
+            "Communication & service interactions": 126,
+            "Technology & information navigation": 117,
+            "Product evaluation & user feedback": 143,
+            "Household management & practical skills": 134,
+            "Caregiving & child engagement": 58
+          },
+          "samples": {
+            "Administrative operations & accuracy": [
+              "Accurate data entry and careful handling of sensitive personal information through pharmacy work.",
+              "Familiarity with prescription-processing workflows, inventory routines, and common insurance claim issues.",
+              "Coordinates multiple calendars and appointment schedules while keeping track of urgent changes."
+            ],
+            "Communication & service interactions": [
+              "Ability to explain routine procedures in plain language without overstepping her professional role.",
+              "Good at remaining polite with frustrated people, though she knows when to ask a supervisor or pharmacist to step in.",
+              "Explains administrative procedures in calm, plain language to people who may be stressed or confused."
+            ],
+            "Technology & information navigation": [
+              "Comfort using scheduling systems, email, basic spreadsheets, mobile payment tools, and pharmacy software.",
+              "Uses clinic scheduling and records systems, email, shared calendars, spreadsheets, and standard office software.",
+              "Strong reference and information-search skills developed through a long public-library career."
+            ],
+            "Product evaluation & user feedback": [
+              "Good practical observation: she notices awkward packaging, confusing steps, and details that are easy to overlook during a quick demonstration.",
+              "Experience comparing household purchases by total cost, durability, convenience, and return conditions.",
+              "Able to give specific examples when asked how a product might fit into a real routine."
+            ],
+            "Caregiving & child engagement": [
+              "Competent at caring for a toddler, preparing simple meals, keeping track of appointments, and coordinating childcare.",
+              "Reads aloud expressively enough to keep a younger child engaged, changing pace and voice without making it theatrical.",
+              "Finds age-appropriate books and activities by asking librarians, teachers, and other parents rather than relying only on advertisements."
+            ],
+            "Household management & practical skills": [
+              "Basic household budgeting and bill tracking, though she does not use a sophisticated financial system.",
+              "Can manage ordinary family meals and adapt a recipe when ingredients are missing.",
+              "Uses basic budgeting habits, including checking account balances, comparing household bills, and planning for predictable expenses."
+            ]
+          }
+        },
+        {
+          "labels": [
+            "Practical product fit & usability",
+            "Affordability & purchase terms",
+            "Trust, safety & data practices",
+            "Ethical market research",
+            "Family life & personal wellbeing",
+            "Reading, books & literacy"
+          ],
+          "source_count": 1959,
+          "assignment_calls": 9,
+          "largest_batch": 240,
+          "sources_per_group": {
+            "Practical product fit & usability": 381,
+            "Affordability & purchase terms": 286,
+            "Trust, safety & data practices": 350,
+            "Ethical market research": 205,
+            "Family life & personal wellbeing": 399,
+            "Reading, books & literacy": 338
+          },
+          "samples": {
+            "Practical product fit & usability": [
+              "A useful product should make a real task easier, safer, faster, or less frustrating",
+              "novelty alone is not enough.",
+              "Clear instructions are part of product quality, not an optional extra."
+            ],
+            "Affordability & purchase terms": [
+              "A product can be well designed and still be too expensive for a household to justify.",
+              "The full cost matters more than the advertised starting price.",
+              "A recurring subscription should provide continuing value, not merely make a one-time purchase harder."
+            ],
+            "Trust, safety & data practices": [
+              "Products intended for families should not use parents' worries to create artificial urgency.",
+              "If a product is meant for use around children, safety information should be specific and easy to find.",
+              "Reviews can be helpful, but extreme reviews are not necessarily representative."
+            ],
+            "Ethical market research": [
+              "Being asked for honest feedback should mean that criticism is welcome.",
+              "Market-research participants should not have to pretend to like something to be considered helpful.",
+              "Survey and interview questions should allow mixed reactions"
+            ],
+            "Family life & personal wellbeing": [
+              "One person's household is not a universal model for all parents or consumers.",
+              "Time is a real household resource, especially when childcare and shift work are involved.",
+              "She trusts qualified healthcare professionals more than social-media anecdotes for medication questions."
+            ],
+            "Reading, books & literacy": [
+              "Children benefit from being read to, but reading together should feel like connection rather than another performance metric.",
+              "A child becoming a confident reader is more important than finishing a particular number of books.",
+              "Children's books can be fun and meaningful without needing to teach an explicit lesson every time."
+            ]
+          }
+        },
+        {
+          "labels": [
+            "Product usability, value & trust",
+            "Children's books and shared reading",
+            "Adult reading and book access",
+            "Child activities, care & routines",
+            "Everyday life, comfort & relationships",
+            "Research participation & feedback"
+          ],
+          "source_count": 1135,
+          "assignment_calls": 5,
+          "largest_batch": 240,
+          "sources_per_group": {
+            "Product usability, value & trust": 461,
+            "Everyday life, comfort & relationships": 229,
+            "Children's books and shared reading": 175,
+            "Adult reading and book access": 154,
+            "Research participation & feedback": 39,
+            "Child activities, care & routines": 77
+          },
+          "samples": {
+            "Product usability, value & trust": [
+              "Products with a clear purpose and instructions that make sense the first time.",
+              "A fair price shown plainly, including shipping, subscription fees, or required accessories.",
+              "Things that are sturdy enough to survive frequent use and occasional toddler handling."
+            ],
+            "Children's books and shared reading": [
+              "A quiet library visit with her daughter.",
+              "Picture books with warm illustrations, clear read-aloud rhythm, and a story that adults can tolerate repeating.",
+              "Children's books with humor, kindness, and characters who make mistakes and repair them."
+            ],
+            "Adult reading and book access": [
+              "Library apps and audiobooks because they make reading easier to fit in.",
+              "Nonfiction authors who explain complex topics without talking down to the reader.",
+              "Memoirs that feel candid and reflective rather than carefully polished to sell a life lesson."
+            ],
+            "Child activities, care & routines": [
+              "A household routine that gives her grandson some independence while keeping essentials predictable",
+              "Activities where her son can touch, move, sort, draw, or pretend rather than only watch.",
+              "Washable markers, chunky crayons, and paper that does not tear immediately."
+            ],
+            "Everyday life, comfort & relationships": [
+              "Food that is flavorful but not extremely spicy.",
+              "Coffee with milk, usually made at home or bought when she has time.",
+              "A warm breakfast on a day off, especially eggs or oatmeal."
+            ],
+            "Research participation & feedback": [
+              "A small, useful incentive for participating in a research study, provided the study is transparent about what it is collecting.",
+              "Research sessions with enough time to handle a sample and ask questions",
+              "Moderators who explain what will happen to recordings and personal information"
+            ]
+          }
+        },
+        {
+          "labels": [
+            "Pricing, claims & sales pressure",
+            "Product usability, quality & fit",
+            "Research participation & survey conduct",
+            "Respect, identity & parenting pressure",
+            "Books, media & child experience",
+            "Everyday logistics & sensory burdens"
+          ],
+          "source_count": 1058,
+          "assignment_calls": 5,
+          "largest_batch": 240,
+          "sources_per_group": {
+            "Pricing, claims & sales pressure": 263,
+            "Product usability, quality & fit": 348,
+            "Research participation & survey conduct": 85,
+            "Everyday logistics & sensory burdens": 95,
+            "Respect, identity & parenting pressure": 123,
+            "Books, media & child experience": 144
+          },
+          "samples": {
+            "Pricing, claims & sales pressure": [
+              "Surprise fees revealed late in checkout.",
+              "Subscriptions that are difficult to cancel or that renew without a clear reminder.",
+              "Vague claims such as 'revolutionary' or 'game-changing' without concrete details."
+            ],
+            "Product usability, quality & fit": [
+              "Instructions written in tiny print or filled with unexplained jargon.",
+              "Products that seem designed for a spotless, spacious home rather than a lived-in one.",
+              "Fragile items that require unusually careful handling."
+            ],
+            "Research participation & survey conduct": [
+              "Research questions that assume she already likes the product.",
+              "A long survey that repeats the same question in slightly different wording.",
+              "Research questions that make her feel there is a preferred or morally correct answer."
+            ],
+            "Respect, identity & parenting pressure": [
+              "People who offer parenting advice without being asked.",
+              "Being told that every inconvenience can be fixed by better organization.",
+              "Books or wellness programs that imply a parent can solve every family difficulty by following a perfect routine."
+            ],
+            "Books, media & child experience": [
+              "Nonfiction that makes confident claims but gives no clear source or caveat.",
+              "Children's books that are so relentlessly educational they stop feeling like stories.",
+              "Picture books with an overly preachy message or a forced moral at the end."
+            ],
+            "Everyday logistics & sensory burdens": [
+              "Overly loud restaurants when she is trying to talk.",
+              "Crowded stores with no easy place to pause with a stroller.",
+              "Food that is extremely spicy or unexpectedly sweet."
+            ]
+          }
+        },
+        {
+          "labels": [
+            "Morning launch & preparation",
+            "Workday duties & breaks",
+            "Evening family routines",
+            "Household upkeep & planning",
+            "Personal leisure & recovery",
+            "Outings & social connection"
+          ],
+          "source_count": 1048,
+          "assignment_calls": 5,
+          "largest_batch": 240,
+          "sources_per_group": {
+            "Morning launch & preparation": 228,
+            "Workday duties & breaks": 237,
+            "Household upkeep & planning": 151,
+            "Evening family routines": 205,
+            "Personal leisure & recovery": 124,
+            "Outings & social connection": 103
+          },
+          "samples": {
+            "Morning launch & preparation": [
+              "Wakes around 6:15 or 6:45 on workdays, depending on the shift and whether her daughter woke overnight.",
+              "Checks the weather and work schedule while the kettle or coffee maker is running.",
+              "Gets her daughter dressed and packs a daycare bag, sometimes discovering that a clean spare outfit is needed at the last minute."
+            ],
+            "Workday duties & breaks": [
+              "Works a four-shift week when scheduling allows, with duties moving between the counter, computer, inventory, and phone.",
+              "Keeps water nearby and tries to eat during her scheduled break, though a busy shift can disrupt the timing.",
+              "Uses short gaps to check family messages rather than scrolling continuously."
+            ],
+            "Evening family routines": [
+              "Shares pickup, dinner, bath, and bedtime responsibilities with Evan according to their work schedules.",
+              "Makes quick meals such as tacos, pasta, eggs, soup, or leftovers rather than elaborate recipes on weeknights.",
+              "Gets home in the late afternoon or early evening and shifts quickly into family logistics."
+            ],
+            "Household upkeep & planning": [
+              "Runs a small errand on the way home only if it is genuinely necessary",
+              "she avoids turning every workday into a string of tasks.",
+              "Resets a few practical things after bedtime, like daycare clothes or the kitchen counter, but does not reliably finish every chore."
+            ],
+            "Personal leisure & recovery": [
+              "Sometimes reads a few pages or listens to an audiobook",
+              "more often she watches something low-effort or goes to bed early.",
+              "Takes a little time to catch up on reading or a show during her daughter's nap when the household is quiet."
+            ],
+            "Outings & social connection": [
+              "Likes a park, library, farmers' market, or casual café outing if the weather and nap schedule cooperate.",
+              "Visits her mother or sees a close friend some weekends, but avoids making a full itinerary.",
+              "Takes the children to a library, park, sports activity, or a low-cost local event depending on the week's schedule."
+            ]
+          }
+        },
+        {
+          "labels": [
+            "Practical judgment & value choices",
+            "Reliability, initiative & adaptability",
+            "Care, fairness & supportive conduct",
+            "Emotional balance & self-perception",
+            "Social style & communication",
+            "Interests, aspirations & personal tastes"
+          ],
+          "source_count": 780,
+          "assignment_calls": 4,
+          "largest_batch": 240,
+          "sources_per_group": {
+            "Practical judgment & value choices": 206,
+            "Reliability, initiative & adaptability": 121,
+            "Social style & communication": 176,
+            "Care, fairness & supportive conduct": 137,
+            "Emotional balance & self-perception": 83,
+            "Interests, aspirations & personal tastes": 57
+          },
+          "samples": {
+            "Practical judgment & value choices": [
+              "Practical: you assess ideas by whether they solve a real problem in your actual routine, rather than by how impressive they sound.",
+              "Cautious with money: you are willing to pay for usefulness, but you notice recurring charges and small costs that accumulate.",
+              "Moderately skeptical: you listen to product claims but want to know what is included, what is excluded, and what the catch might be."
+            ],
+            "Reliability, initiative & adaptability": [
+              "Dependable: you show up for work, childcare commitments, and appointments, even when you are tired.",
+              "Adaptable: you can reorganize a day when childcare or work plans change, although you do not enjoy having to do it repeatedly.",
+              "Responsible: she follows through on commitments and is the family member who remembers forms, appointments, and permission slips."
+            ],
+            "Care, fairness & supportive conduct": [
+              "Patient in public: you try not to take a stressed customer's tone personally, but patience is harder to maintain when you have had a long shift.",
+              "Protective: your daughter's safety, privacy, and comfort carry more weight for you than convenience alone.",
+              "Fair-minded: you try to recognize that a product or service may suit another person even if it does not suit you."
+            ],
+            "Emotional balance & self-perception": [
+              "Self-questioning: you can spend too long wondering whether a choice was sensible after you have already made it.",
+              "Sensitive to overload: too many errands, notifications, and decisions can make you irritable or mentally foggy.",
+              "Self-critical: she sometimes interprets ordinary fatigue or a missed goal as evidence that she should be managing better."
+            ],
+            "Social style & communication": [
+              "Warm once settled: you are considerate and approachable, although you can seem quiet with strangers.",
+              "Conflict-avoidant but not passive: you will usually keep a conversation civil, then speak plainly if someone keeps ignoring a boundary.",
+              "Humorous in a dry, understated way: you sometimes make a small joke about the chaos of parenting, mostly with people you trust."
+            ],
+            "Interests, aspirations & personal tastes": [
+              "Quietly ambitious: you want a better work situation, but you are wary of chasing advancement that would make family life harder.",
+              "Quietly competitive: she likes doing a job well and notices when others overlook her contribution, but rarely seeks public recognition.",
+              "Curious in a grounded way: she enjoys learning about psychology, history, health, and how everyday systems work, but is wary of information presented as a miracle solution."
+            ]
+          }
+        },
+        {
+          "labels": [
+            "Midlife health and family worry",
+            "Parenting fatigue and everyday stress",
+            "Work-related aches and practical coping"
+          ],
+          "source_count": 4,
+          "assignment_calls": 1,
+          "largest_batch": 4,
+          "sources_per_group": {
+            "Midlife health and family worry": 1,
+            "Parenting fatigue and everyday stress": 2,
+            "Work-related aches and practical coping": 1
+          },
+          "samples": {
+            "Midlife health and family worry": [
+              "Generally in fair-to-good health. She has seasonal allergies that are manageable with over-the-counter medication and occasional knee stiffness after a long day on her feet. At a recent checkup, her clinician recommended continuing to watch cholesterol and blood pressure; she is making modest changes to meals and activity rather than following an extreme diet. She has occasional sleep disruption during stressful periods and experiences some familiar perimenopausal changes, but does not define her life around them. She has no known serious physical condition and takes prescribed medication only as directed. Emotionally, she has ordinary periods of worry, particularly about family finances and her daughter's transition toward adulthood. She is not currently in mental-health treatment and is generally functioning well, though she can ruminate after a difficult conversation. Walking, gardening, talking with Mark, and getting enough quiet time help her reset."
+            ],
+            "Parenting fatigue and everyday stress": [
+              "Generally in good physical health. She gets occasional tension headaches, especially after long stretches at a computer or a week of poor sleep, and manages them with breaks, water, and over-the-counter medication when appropriate. She has seasonal allergies in spring. Her sleep is often interrupted by the demands of parenting and she sometimes feels worn down, but she has no known serious medical condition or formal mental health diagnosis. She experiences ordinary periods of stress about balancing work, childcare, and household costs, and tends to feel better when she can get outside or talk with a trusted friend.",
+              "Generally in good physical health. You have mild seasonal allergies and occasional neck or shoulder stiffness after long stretches at a computer or checking stock on the warehouse floor. Sleep is sometimes interrupted by childcare, so you can feel tired or less patient after several broken nights. You do not have a known serious chronic condition and are not defined by a particular diagnosis. You try to stay active through walking and everyday tasks rather than following a strict exercise program. Stress tends to show up as jaw tension, late-night phone scrolling, or putting off personal paperwork. You are more likely to make practical adjustments, such as going to bed earlier or taking a walk, than to discuss stress at length unless someone asks directly."
+            ],
+            "Work-related aches and practical coping": [
+              "Generally in good physical health. He has occasional lower-back stiffness after long periods at a desk or lifting boxes at work and tries to stretch rather than making a consistent exercise routine. Seasonal allergies are bothersome in spring. He wears glasses for distance and sometimes gets eye strain after a long day looking at screens. His sleep is usually adequate but can be interrupted by a child waking or by thinking through work and household tasks. He experiences ordinary periods of stress and can become mentally preoccupied when several expenses arrive at once, but he has no known serious mental health diagnosis. He is more likely to manage stress through practical problem-solving, a walk, or talking with his partner than by seeking formal support. He does not smoke; he drinks occasionally in social settings."
+            ]
+          }
+        },
+        {
+          "labels": [
+            "Practical Judgment & Evidence",
+            "Resource and Constraint Management",
+            "Care, Reliability & Adaptability",
+            "Interpersonal Style & Boundaries",
+            "Emotional Resilience & Self-View",
+            "Drive, Interests & Personal Expression"
+          ],
+          "source_count": 761,
+          "assignment_calls": 4,
+          "largest_batch": 240,
+          "sources_per_group": {
+            "Practical Judgment & Evidence": 149,
+            "Care, Reliability & Adaptability": 183,
+            "Resource and Constraint Management": 96,
+            "Interpersonal Style & Boundaries": 154,
+            "Emotional Resilience & Self-View": 88,
+            "Drive, Interests & Personal Expression": 91
+          },
+          "samples": {
+            "Practical Judgment & Evidence": [
+              "Practical: you assess ideas by whether they solve a real problem in your actual routine, rather than by how impressive they sound.",
+              "Moderately skeptical: you listen to product claims but want to know what is included, what is excluded, and what the catch might be.",
+              "Fair-minded: you try to recognize that a product or service may suit another person even if it does not suit you."
+            ],
+            "Resource and Constraint Management": [
+              "Cautious with money: you are willing to pay for usefulness, but you notice recurring charges and small costs that accumulate.",
+              "Cautious with money: she can spend on something she believes is worthwhile, but wants a clear reason and dislikes recurring charges she did not anticipate.",
+              "Cautious with money: she can afford some conveniences, but compares price, durability, and replacement costs before committing."
+            ],
+            "Care, Reliability & Adaptability": [
+              "Dependable: you show up for work, childcare commitments, and appointments, even when you are tired.",
+              "Adaptable: you can reorganize a day when childcare or work plans change, although you do not enjoy having to do it repeatedly.",
+              "Protective: your daughter's safety, privacy, and comfort carry more weight for you than convenience alone."
+            ],
+            "Interpersonal Style & Boundaries": [
+              "Warm once settled: you are considerate and approachable, although you can seem quiet with strangers.",
+              "Patient in public: you try not to take a stressed customer's tone personally, but patience is harder to maintain when you have had a long shift.",
+              "Conflict-avoidant but not passive: you will usually keep a conversation civil, then speak plainly if someone keeps ignoring a boundary."
+            ],
+            "Emotional Resilience & Self-View": [
+              "Self-questioning: you can spend too long wondering whether a choice was sensible after you have already made it.",
+              "Sensitive to overload: too many errands, notifications, and decisions can make you irritable or mentally foggy.",
+              "Self-critical: she sometimes interprets ordinary fatigue or a missed goal as evidence that she should be managing better."
+            ],
+            "Drive, Interests & Personal Expression": [
+              "Quietly ambitious: you want a better work situation, but you are wary of chasing advancement that would make family life harder.",
+              "Humorous in a dry, understated way: you sometimes make a small joke about the chaos of parenting, mostly with people you trust.",
+              "Quietly competitive: she likes doing a job well and notices when others overlook her contribution, but rarely seeks public recognition."
+            ]
+          }
+        }
+      ],
+      "total_distinct_sources_across_partitions": 8332,
+      "all_source_ids_covered": true,
+      "all_assignment_batches_at_most_240": true,
+      "global_theme_definitions_unchanged": true
+    },
+    "occupation_titles": {
+      "Certified Pharmacy Technician": 1,
+      "Administrative coordinator": 2,
+      "Retired public library branch manager; part-time literacy volunteer": 1,
+      "Office and billing coordinator": 1,
+      "Dental office insurance and front-desk coordinator": 1,
+      "Part-time patient services receptionist": 1,
+      "Patient access representative": 1,
+      "Payroll and Benefits Coordinator": 2,
+      "Part-time grocery store front-end associate": 1,
+      "Purchasing Coordinator": 1,
+      "Patient Accounts Coordinator": 1,
+      "Dental office receptionist": 1,
+      "Dental front-desk receptionist and office assistant": 1,
+      "Patient coordinator and front-desk lead": 1,
+      "Medical billing and coding specialist": 1,
+      "Scheduling and billing coordinator": 1,
+      "Inventory coordinator": 1,
+      "Facilities maintenance planner": 1,
+      "Office manager at a family dental practice": 1,
+      "Office and purchasing coordinator": 1,
+      "Shipping and receiving coordinator": 1,
+      "Medical Billing and Patient Accounts Supervisor": 1,
+      "Patient services and administrative coordinator": 1,
+      "Retired public school librarian; part-time literacy volunteer": 1,
+      "Public library branch services coordinator": 1,
+      "Senior Administrative Assistant and Office Coordinator": 1,
+      "Front-desk coordinator": 1,
+      "Dental Front Office Coordinator": 1,
+      "Patient scheduling and records coordinator": 1,
+      "Billing Operations Coordinator": 1,
+      "Patient accounts representative": 1,
+      "Senior Property Claims Examiner": 1,
+      "Medical billing coordinator": 1,
+      "Patient access and billing coordinator": 1,
+      "Patient Scheduling Coordinator": 1,
+      "Accounts payable specialist": 1,
+      "Inventory and Purchasing Coordinator": 1,
+      "Dental office front desk coordinator": 1,
+      "Patient services coordinator": 1,
+      "Medical office coordinator": 1,
+      "Operations Coordinator": 1,
+      "Dental office receptionist and scheduling coordinator": 1,
+      "Elementary school office coordinator": 1,
+      "Payroll and benefits coordinator": 1,
+      "Health insurance claims specialist": 1,
+      "Operations supervisor": 1,
+      "Parts and Service Coordinator": 1,
+      "Patient Scheduling and Billing Coordinator": 1
+    },
+    "common_personality_labels": [
+      [
+        "practical",
+        45
+      ],
+      [
+        "observant",
+        30
+      ],
+      [
+        "fair-minded",
+        26
+      ],
+      [
+        "protective",
+        21
+      ],
+      [
+        "dependable",
+        20
+      ],
+      [
+        "adaptable",
+        19
+      ],
+      [
+        "responsible",
+        13
+      ],
+      [
+        "conflict-avoidant at first",
+        13
+      ],
+      [
+        "dryly humorous",
+        12
+      ],
+      [
+        "self-critical",
+        10
+      ],
+      [
+        "persistent",
+        9
+      ],
+      [
+        "quietly ambitious",
+        8
+      ],
+      [
+        "occasionally indecisive",
+        8
+      ],
+      [
+        "cautious with money",
+        7
+      ],
+      [
+        "budget-aware",
+        7
+      ]
+    ],
+    "first_choices": {
+      "B": 50
+    },
+    "borda": {
+      "B": 200,
+      "D": 123,
+      "A": 37,
+      "E": 112,
+      "C": 28
+    }
+  }
+]

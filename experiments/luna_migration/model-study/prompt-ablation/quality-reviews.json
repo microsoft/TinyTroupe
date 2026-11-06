@@ -1,0 +1,67 @@
+{
+  "summary": "The tests support explicit public-evidence boundaries and, more narrowly, explicit task-completion semantics. Separating idea generation from selection is promising for brainstorming. These are targeted improvements, not a general repair of realism or preference calibration. Both models used xhigh effort with preserved token budgets, personas, safety constraints and schemas. There are 124 completed observations (62 per model), plus one retained Terra transport timeout. No repository prompts were changed by this experiment.",
+  "hypotheses": [
+    {
+      "hypothesis": "Extract only publicly communicated evidence",
+      "luna": "Across two histories with three samples each, original prompts attributed private reasons in 6/6 outputs; public-only prompts correctly returned No public justification provided. in 6/6.",
+      "terra": "Same result: 6/6 unsupported public justifications with original prompts, 0/6 with public-only prompts. Both models retained the actual public No answer.",
+      "conclusion": "Strongest directly observed integrity improvement. This confirms the existing repaired-prompt intervention rather than a newly invented treatment. It repairs what the report claims was said, not the agent's preferences."
+    },
+    {
+      "hypothesis": "Make the pending task, public reply and DONE conditions explicit",
+      "luna": "The child gazpacho baseline already answered publicly in 3/3 samples; the revised prompt also answered in 3/3. Both adult samples answered. All 14 main action cases produced public replies in baseline and treatment; no clear incremental completeness benefit.",
+      "terra": "The child gazpacho baseline answered publicly in 1/3 samples, versus 3/3 with the task contract. The adult case changed from no public answer to an explicit score and reason (one sample per arm). All other main action cases retained public replies.",
+      "conclusion": "Supports the original hypothesis for a concrete missing-answer failure, especially on Terra, but not as a universal quality fix. One baseline child output ended with DONE: Waiting to share my answer. A revised output publicly said: 2. I probably wouldn't want it because it's cold soup with all the vegetables mixed together. Maybe I'd try a little first, though. It did not fix preference underdispersion or produce broader brainstorming by itself."
+    },
+    {
+      "hypothesis": "Generate distinct alternatives before selecting an idea",
+      "luna": "All three profession-specific treatments broadened the baseline emphasis on living evidence/decision documents. Marcos proposed a clinical timeline, an uncertainty/counterargument workbench, and a patient/family follow-up document. Oscar separated traceable requirements, apartment alternatives, and change-impact navigation.",
+      "terra": "Baselines already contained two developed ideas. Treatments produced three differentiated mechanisms per case: for example, Marcos separated evidence reconstruction, reasoning challenges, and pre-visit history gathering; Lisa separated intent rehearsal, relevance experiments, and evidence-aware writing.",
+      "conclusion": "Promising improvement in breadth, clearest for Luna. Different mechanisms matter more than the requested idea count. Some overlap remains, and a single initial turn cannot establish that the group avoids convergence later. The outputs describe speculative features, not established product capabilities."
+    },
+    {
+      "hypothesis": "Express persona style naturally instead of exaggerating every trait",
+      "luna": "Chat remained coherent; the interview remained detailed and conditional. No consistent improvement over already usable baselines. Some responses were less reciprocal despite sounding natural.",
+      "terra": "No decisive improvement across the three cases. Lisa still could not recall a specific cooking anecdote, and the interview was still a substantial consultant-style response. Identity and knowledge constraints were deliberately retained.",
+      "conclusion": "Inconclusive. More readable instructions are not themselves evidence of improved simulated behavior. Do not deploy this as a proven realism fix on these observations alone."
+    },
+    {
+      "hypothesis": "Remove the Yes/No-only versus explain-why contradiction",
+      "luna": "All three fresh baselines already included a public No and a reason; all three format treatments did too.",
+      "terra": "All three fresh baselines and all three format treatments publicly explained their No decisions.",
+      "conclusion": "The instruction is clearer, but the original failure did not reproduce in this fresh three-case sample. No measured improvement in answer completeness can be attributed to this edit here."
+    },
+    {
+      "hypothesis": "Use neutral travel-product and deliberation wording",
+      "luna": "All three neutral-wording treatments remained No, as did their travel-format parents. Reasons remained budget, trip style and alternative destinations.",
+      "terra": "All three remained No. Some responses acknowledged uncertainty about price or conditional interest, but the parent condition already contained similar qualifications.",
+      "conclusion": "No demonstrated repair of the observed convergence. Negative answers are not errors. This wording changes the survey instrument and must remain a separately labeled condition, not silently replace an empirically validated questionnaire."
+    },
+    {
+      "hypothesis": "Remove ranking examples that anchor both answers on option B",
+      "luna": "Both baselines ranked B (no AI device) first, and both no-anchor treatments still ranked B first. Lower positions shifted, but the two treatment rankings became identical: B,D,E,A,C.",
+      "terra": "Both baselines ranked C first. Both no-anchor treatments ranked E first and produced the identical E,C,B,D,A order. All orders were valid permutations.",
+      "conclusion": "Answer changes show sensitivity, not better calibration or diversity. Luna's first-choice convergence remained; Terra changed from one shared top choice to another. Terra's discussion of parent trials/checks also leaves an independent-use premise concern. No desired ordering was prescribed."
+    },
+    {
+      "hypothesis": "Replace persona length quotas with relevant, nonredundant detail",
+      "luna": "Across two persona pairs, completion tokens fell from 17,716 to 15,849 (10.5%); content word counts fell from 10,642 to 7,506 (29.5%). All required top-level fields remained present. Both still described cautious, practical travelers.",
+      "terra": "Completion tokens fell from 22,641 to 13,999 (38.2%); content word counts fell from 13,446 to 6,734 (49.9%). Required fields remained present. Nuanced flaws appeared, but the practical, cost-aware travel archetype remained.",
+      "conclusion": "Supported as a concision and generation-cost improvement, not a demonstrated population-diversity improvement. Word counts cover serialized output, and completion-token counts include reasoning. There were no downstream simulations of the newly generated personas."
+    }
+  ],
+  "limitations": [
+    "This is an exploratory, unblinded review of 20 deliberately mined diagnostic calls, not a representative benchmark or a human-grounded calibration study.",
+    "Each model received 20 fresh baselines plus 30 treatment requests. The six preselected reliability cells had three completed samples each; most cells had only one.",
+    "Request order was fixed-seed shuffled for Luna and reversed for Terra. Model identity was not randomized; no significance or population-effect claim is warranted.",
+    "The task-contract and persona-relevance treatments each change a coherent group of instructions. Their individual clauses were not independently ablated.",
+    "Travel-neutral is an incremental comparison against travel-format. It must not be interpreted as a single isolated change against the untouched baseline.",
+    "Original and public-only extraction prompts were pre-existing corpus pairs. Fresh repeated calls test that intervention; their historical responses are not counted as new observations.",
+    "One Terra task-contract request timed out after 300 seconds. Its identical-request retry completed, and the failed attempt remains in the raw results. There are 125 attempts, 124 completed observations, and no usage record for the timeout.",
+    "Recorded usage-based list-price cost is $0.111551570 for Luna and $1.12276970 for Terra, totaling $1.234321270. The timeout's potential charge is unknown, not zero; these are not invoice-confirmed totals.",
+    "All 124 completed outputs parsed as JSON; the 92 outputs requesting strict schemas validated. Syntax and schema success do not establish semantic quality.",
+    "The API experiment spanned approximately 25 minutes 10 seconds, excluding design and final review. Calls ran sequentially within each model and concurrently across models; the Terra recovery followed the main run.",
+    "A public response is only a completeness measure. Scores remained low, travel decisions remained No, and rankings remained clustered; none of those distributions has been calibrated here against real respondents.",
+    "All experiment artifacts are separate from repository runtime prompts and notebooks. Production rollout and end-to-end notebook validation of these prompt changes were not part of this test."
+  ]
+}

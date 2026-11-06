@@ -1,0 +1,246 @@
+{
+  "schema_file": "model-case-schemas.json",
+  "selection": "Purposive diagnostic sample, not a random benchmark. All originals are Luna; mini outputs are contextual comparisons only.",
+  "cases": [
+    {
+      "case_id": "chat-galette",
+      "cache": "notebook-comparison/gpt-6-luna/api.cache.json",
+      "response_id": "chatcmpl-EcOTGXabzyblZAPp4hdMXW8GzEtzo",
+      "phase": "agent_action",
+      "group": "casual-dialogue",
+      "assessment": {
+        "label": "positive",
+        "finding": "Natural reciprocal conversation and plausible fictional anecdote; fixed-order scenario repair confounds model attribution.",
+        "criterion": "Preserve role, respond to latest partner input, avoid unsolicited consulting and repeated introductions. Fictional anecdote is not a verified biography."
+      }
+    },
+    {
+      "case_id": "chat-design-tradeoff",
+      "cache": "notebook-comparison/gpt-6-luna/api.cache.json",
+      "response_id": "chatcmpl-EcOUUTnqYD2W48Jj1Wg0pQ9NosR8y",
+      "phase": "agent_action",
+      "group": "casual-dialogue",
+      "assessment": {
+        "label": "positive",
+        "finding": "Architect explains a concrete flexibility/affordability tradeoff with light humor.",
+        "criterion": "Specific role-consistent reasoning, reciprocal follow-up and concise natural voice; not simply maximum politeness."
+      }
+    },
+    {
+      "case_id": "interview-evidence-pilot",
+      "cache": "lx01/api.cache.json",
+      "response_id": "chatcmpl-EcOYYZPYmzspk2IBYHEMMue73vQBq",
+      "phase": "agent_action",
+      "group": "customer-interview",
+      "assessment": {
+        "label": "positive_with_caveat",
+        "finding": "Evidence-selected reversible pilot rather than invented customer baselines or arbitrary launch promises; governance-heavy voice remains.",
+        "criterion": "Respect limited authority and unavailable evidence; give useful bounded plans without inventing operational results."
+      }
+    },
+    {
+      "case_id": "brainstorm-no-link-safeguard",
+      "cache": "notebook-comparison/luna-brainstorm/api.cache.json",
+      "response_id": "chatcmpl-EcOTtV7Q0y6Nd6q3wV723q1XrotzE",
+      "phase": "agent_action",
+      "group": "brainstorming",
+      "assessment": {
+        "label": "positive",
+        "finding": "Explicitly distinguishes no recorded link from lack of support or incorrectness.",
+        "criterion": "Do not treat incomplete annotations as proof of false claims; retain practical incremental usage."
+      }
+    },
+    {
+      "case_id": "brainstorm-initial-lisa",
+      "cache": "notebook-comparison/luna-brainstorm/api.cache.json",
+      "response_id": "chatcmpl-EcORjjJhHwps9gwvnwNeQKgMppBWd",
+      "phase": "agent_action",
+      "group": "brainstorming",
+      "assessment": {
+        "label": "group_level_concern",
+        "finding": "All three final first ideas are evidence/traceability document variants, despite different professions. Each idea is sensible alone.",
+        "criterion": "Score jointly for distinct mechanisms and profession-specific perspectives; do not mark a single evidence-linked idea wrong or force disagreement."
+      }
+    },
+    {
+      "case_id": "brainstorm-initial-oscar",
+      "cache": "notebook-comparison/luna-brainstorm/api.cache.json",
+      "response_id": "chatcmpl-EcORjIHezECvdryVavWkqw92gFIJJ",
+      "phase": "agent_action",
+      "group": "brainstorming",
+      "assessment": {
+        "label": "group_level_concern",
+        "finding": "All three final first ideas are evidence/traceability document variants, despite different professions. Each idea is sensible alone.",
+        "criterion": "Score jointly for distinct mechanisms and profession-specific perspectives; do not mark a single evidence-linked idea wrong or force disagreement."
+      }
+    },
+    {
+      "case_id": "brainstorm-initial-marcos",
+      "cache": "notebook-comparison/luna-brainstorm/api.cache.json",
+      "response_id": "chatcmpl-EcORjUUuuTIwkqtHnPlHJhwBdV9WD",
+      "phase": "agent_action",
+      "group": "brainstorming",
+      "assessment": {
+        "label": "group_level_concern",
+        "finding": "All three final first ideas are evidence/traceability document variants, despite different professions. Each idea is sensible alone.",
+        "criterion": "Score jointly for distinct mechanisms and profession-specific perspectives; do not mark a single evidence-linked idea wrong or force disagreement."
+      }
+    },
+    {
+      "case_id": "extraction-ricardo-original",
+      "cache": "lx15/api.cache.json",
+      "response_id": "chatcmpl-EdP5wZD7ZIxsqk5dKgBDxQjKtEHBd",
+      "phase": "extraction",
+      "group": "public-grounding-ricardo",
+      "assessment": {
+        "label": "failure",
+        "finding": "The public answer was only No. Original extraction inferred reasons from private thoughts; repaired prompt returns No public justification provided.",
+        "criterion": "Decision must be No; public-only rationale must not be invented. Pair uses the same recorded interaction history but a changed extraction instruction, not a pure model comparison."
+      }
+    },
+    {
+      "case_id": "extraction-ricardo-public-only",
+      "cache": "lx15/api.cache.json",
+      "response_id": "chatcmpl-EdPLf1F2I4H0ScsBYbLxwN01jsrg9",
+      "phase": "extraction",
+      "group": "public-grounding-ricardo",
+      "assessment": {
+        "label": "positive_repaired_prompt",
+        "finding": "The public answer was only No. Original extraction inferred reasons from private thoughts; repaired prompt returns No public justification provided.",
+        "criterion": "Decision must be No; public-only rationale must not be invented. Pair uses the same recorded interaction history but a changed extraction instruction, not a pure model comparison."
+      }
+    },
+    {
+      "case_id": "extraction-jolene-original",
+      "cache": "lx15/api.cache.json",
+      "response_id": "chatcmpl-EdP9tCsYrVM8eLv0tOBHYWon2IrvE",
+      "phase": "extraction",
+      "group": "public-grounding-jolene",
+      "assessment": {
+        "label": "failure",
+        "finding": "The public answer was only No. Original extraction inferred reasons from private thoughts; repaired prompt returns No public justification provided.",
+        "criterion": "Decision must be No; public-only rationale must not be invented. Pair uses the same recorded interaction history but a changed extraction instruction, not a pure model comparison."
+      }
+    },
+    {
+      "case_id": "extraction-jolene-public-only",
+      "cache": "lx15/api.cache.json",
+      "response_id": "chatcmpl-EdPLnpM7VkpRyhtwQGisNW7VrA742",
+      "phase": "extraction",
+      "group": "public-grounding-jolene",
+      "assessment": {
+        "label": "positive_repaired_prompt",
+        "finding": "The public answer was only No. Original extraction inferred reasons from private thoughts; repaired prompt returns No public justification provided.",
+        "criterion": "Decision must be No; public-only rationale must not be invented. Pair uses the same recorded interaction history but a changed extraction instruction, not a pure model comparison."
+      }
+    },
+    {
+      "case_id": "travel-affordable-trip",
+      "cache": "lx15/api.cache.json",
+      "response_id": "chatcmpl-EdQ5eru0ne0f3J0RJjljJzBIDO6Nl",
+      "phase": "agent_action",
+      "group": "travel-preference-collapse",
+      "assessment": {
+        "label": "group_level_concern",
+        "finding": "Final N150 cohort unanimously rejects the service; these are illustrative members, not a representative sample. An individual No can be entirely valid.",
+        "criterion": "Judge persona consistency separately from group diversity. Never reward Yes merely because historical outputs or an evaluator prefer more buyers."
+      }
+    },
+    {
+      "case_id": "travel-can-afford-luxury",
+      "cache": "lx15/api.cache.json",
+      "response_id": "chatcmpl-EdQ6D2iYULBSdC2LsRUgc92VYTw3p",
+      "phase": "agent_action",
+      "group": "travel-preference-collapse",
+      "assessment": {
+        "label": "group_level_concern",
+        "finding": "Final N150 cohort unanimously rejects the service; these are illustrative members, not a representative sample. An individual No can be entirely valid.",
+        "criterion": "Judge persona consistency separately from group diversity. Never reward Yes merely because historical outputs or an evaluator prefer more buyers."
+      }
+    },
+    {
+      "case_id": "travel-modest-getaway",
+      "cache": "lx15/api.cache.json",
+      "response_id": "chatcmpl-EdQ6DTx1Jxqazohv8Sax4XUHAhXYZ",
+      "phase": "agent_action",
+      "group": "travel-preference-collapse",
+      "assessment": {
+        "label": "group_level_concern",
+        "finding": "Final N150 cohort unanimously rejects the service; these are illustrative members, not a representative sample. An individual No can be entirely valid.",
+        "criterion": "Judge persona consistency separately from group diversity. Never reward Yes merely because historical outputs or an evaluator prefer more buyers."
+      }
+    },
+    {
+      "case_id": "children-ranking-collapse-1",
+      "cache": "lx20/api.cache.json",
+      "response_id": "chatcmpl-EdNhJkpY35lizVveXrx5Zu2yte7P6",
+      "phase": "agent_action",
+      "group": "children-ranking-collapse",
+      "assessment": {
+        "label": "group_level_concern",
+        "finding": "Illustrates the reviewed narrow group response pattern; single response is not objectively false. Selection is purposive and may include minors.",
+        "criterion": "Preserve supplied persona and survey conditions; evaluate complete populations for dispersion and empirical agreement, not these selected snippets alone."
+      }
+    },
+    {
+      "case_id": "children-ranking-collapse-2",
+      "cache": "lx20/api.cache.json",
+      "response_id": "chatcmpl-EdNhgQgMWPN3dmLZ7lYD3897lVtcO",
+      "phase": "agent_action",
+      "group": "children-ranking-collapse",
+      "assessment": {
+        "label": "group_level_concern",
+        "finding": "Illustrates the reviewed narrow group response pattern; single response is not objectively false. Selection is purposive and may include minors.",
+        "criterion": "Preserve supplied persona and survey conditions; evaluate complete populations for dispersion and empirical agreement, not these selected snippets alone."
+      }
+    },
+    {
+      "case_id": "gazpacho-underdispersion-1",
+      "cache": "lx16/api.cache.json",
+      "response_id": "chatcmpl-EcQM8TrHuVeG6go2hg9hctK0v1Jhz",
+      "phase": "agent_action",
+      "group": "gazpacho-underdispersion",
+      "assessment": {
+        "label": "group_level_concern",
+        "finding": "Illustrates the reviewed narrow group response pattern; single response is not objectively false. Selection is purposive and may include minors.",
+        "criterion": "Preserve supplied persona and survey conditions; evaluate complete populations for dispersion and empirical agreement, not these selected snippets alone."
+      }
+    },
+    {
+      "case_id": "gazpacho-underdispersion-2",
+      "cache": "lx16/api.cache.json",
+      "response_id": "chatcmpl-EcQM9qFYbTV7WJSNow1HdPmMTcAiB",
+      "phase": "agent_action",
+      "group": "gazpacho-underdispersion",
+      "assessment": {
+        "label": "group_level_concern",
+        "finding": "Illustrates the reviewed narrow group response pattern; single response is not objectively false. Selection is purposive and may include minors.",
+        "criterion": "Preserve supplied persona and survey conditions; evaluate complete populations for dispersion and empirical agreement, not these selected snippets alone."
+      }
+    },
+    {
+      "case_id": "persona-grace",
+      "cache": "lx15/api.cache.json",
+      "response_id": "chatcmpl-EdN8vsKdPiDiZJcIckbwEASPIBGxp",
+      "phase": "persona_generation",
+      "group": "travel-persona-convergence",
+      "assessment": {
+        "label": "group_level_concern",
+        "finding": "Original persona before the final decisions. 117 of the full 150 people include a Practical-labelled trait; two personas alone cannot establish that prevalence.",
+        "criterion": "Follow sampled demographics and constraints without collapsing unrelated people to the same personality. No target purchase answer or desired trait quota is supplied."
+      }
+    },
+    {
+      "case_id": "persona-philip",
+      "cache": "lx15/api.cache.json",
+      "response_id": "chatcmpl-EdOFxr8BWisdAhtNUyLzXNY4jERKF",
+      "phase": "persona_generation",
+      "group": "travel-persona-convergence",
+      "assessment": {
+        "label": "group_level_concern",
+        "finding": "Original persona before the final decisions. 117 of the full 150 people include a Practical-labelled trait; two personas alone cannot establish that prevalence.",
+        "criterion": "Follow sampled demographics and constraints without collapsing unrelated people to the same personality. No target purchase answer or desired trait quota is supplied."
+      }
+    }
+  ]
+}

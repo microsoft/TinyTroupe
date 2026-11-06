@@ -1,0 +1,203 @@
+{
+  "updated_at": "2026-10-30T03:56:52.754913+00:00",
+  "runs": [
+    {
+      "name": "Bottled Gazpacho Market Research 5 (with behavior correction)",
+      "folder": "rn-gaz",
+      "status": "completed",
+      "elapsed_seconds": 5998.72,
+      "current_cell": 61,
+      "started_at": "2026-10-30T01:43:17.430299+00:00",
+      "library_sha256": "76231ca41842dfdf03b5b234bf32db5d62edbcbe99bdc9b03ff420923c904ebc",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {
+        "df": {
+          "rows": 50,
+          "columns": [
+            "name",
+            "response",
+            "justification"
+          ]
+        },
+        "_23": {
+          "rows": 50,
+          "columns": [
+            "name",
+            "response",
+            "justification"
+          ]
+        },
+        "df_for_validation": {
+          "rows": 50,
+          "columns": [
+            "name",
+            "response",
+            "justification",
+            "Vote"
+          ]
+        }
+      },
+      "execution_audit_passed": true
+    },
+    {
+      "name": "Investment Firm",
+      "folder": "rn-other",
+      "status": "completed",
+      "elapsed_seconds": 1550.62,
+      "current_cell": 29,
+      "started_at": "2026-10-30T01:43:17.390092+00:00",
+      "library_sha256": "76231ca41842dfdf03b5b234bf32db5d62edbcbe99bdc9b03ff420923c904ebc",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {},
+      "execution_audit_passed": true
+    },
+    {
+      "name": "AI-enabled Children Story Telling Market Research 2",
+      "folder": "rn-other",
+      "status": "completed",
+      "elapsed_seconds": 6410.7,
+      "current_cell": 59,
+      "started_at": "2026-10-30T02:09:29.171393+00:00",
+      "library_sha256": "76231ca41842dfdf03b5b234bf32db5d62edbcbe99bdc9b03ff420923c904ebc",
+      "expected_model": true,
+      "library_matches": true,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {
+        "_": {
+          "rows": 5,
+          "columns": [
+            "Option",
+            "Control_Borda",
+            "Treatment_Borda",
+            "Control_Borda_Norm",
+            "Treatment_Borda_Norm",
+            "Norm_Diff"
+          ]
+        },
+        "__": {
+          "rows": 5,
+          "columns": [
+            "Option",
+            "Control_FirstChoice",
+            "Treatment_FirstChoice"
+          ]
+        },
+        "df": {
+          "rows": 50,
+          "columns": [
+            "name",
+            "response",
+            "justification"
+          ]
+        },
+        "_21": {
+          "rows": 50,
+          "columns": [
+            "name",
+            "response",
+            "justification"
+          ]
+        },
+        "df_control": {
+          "rows": 50,
+          "columns": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "Age Range",
+            "Gender Identity"
+          ]
+        },
+        "_27": {
+          "rows": 5,
+          "columns": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "Age Range",
+            "Gender Identity"
+          ]
+        },
+        "control_rank_df": {
+          "rows": 50,
+          "columns": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ]
+        },
+        "treatment_rank_df": {
+          "rows": 50,
+          "columns": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ]
+        },
+        "comparison": {
+          "rows": 5,
+          "columns": [
+            "Option",
+            "Control_FirstChoice",
+            "Treatment_FirstChoice"
+          ]
+        },
+        "_38": {
+          "rows": 5,
+          "columns": [
+            "Option",
+            "Control_FirstChoice",
+            "Treatment_FirstChoice"
+          ]
+        },
+        "borda_df": {
+          "rows": 5,
+          "columns": [
+            "Option",
+            "Control_Borda",
+            "Treatment_Borda",
+            "Control_Borda_Norm",
+            "Treatment_Borda_Norm",
+            "Norm_Diff"
+          ]
+        },
+        "_39": {
+          "rows": 5,
+          "columns": [
+            "Option",
+            "Control_Borda",
+            "Treatment_Borda",
+            "Control_Borda_Norm",
+            "Treatment_Borda_Norm",
+            "Norm_Diff"
+          ]
+        }
+      },
+      "execution_audit_passed": true
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "status": "Passed",
+  "passed": 429,
+  "deselected": 440,
+  "warnings": 7,
+  "elapsed_seconds": 2413.37,
+  "library_sha256": "fca0c6b13bdbfb88a0856955384530f42bed3f2b8bee350bb23dccbe5d8375cd",
+  "library_still_matches": true,
+  "command": "pytest -s --use_cache -m \"core and not slow\""
+}

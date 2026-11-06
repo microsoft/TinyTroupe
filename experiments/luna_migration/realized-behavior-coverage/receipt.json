@@ -1,0 +1,16 @@
+{
+  "status": "Two plans returned; coverage audited and semantic review still required.",
+  "returned_responses": 2,
+  "returned_usage_estimate": {
+    "unique_saved_api_responses_in_run_window": 2,
+    "responses_missing_usage": 0,
+    "tokens": {
+      "prompt": 43833,
+      "completion": 96054,
+      "cached": 0,
+      "writes": 43827
+    },
+    "usd": "0.053505975",
+    "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+  }
+}

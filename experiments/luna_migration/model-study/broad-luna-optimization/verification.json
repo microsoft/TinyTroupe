@@ -1,0 +1,48 @@
+{
+  "verified_at": "2026-10-29T15:37:50.405883-03:00",
+  "elapsed_wall_minutes": 41.93,
+  "calls": 106,
+  "unique_source_inputs": 52,
+  "stage_source_cells": 54,
+  "response_ids_unique": true,
+  "exact_source_nonmessage_parameters_preserved": true,
+  "exact_non_system_evidence_preserved_in_normalization_variants": true,
+  "append_only_evidence_preservation_for_primary_pairs": true,
+  "baseline_requests_exactly_original": true,
+  "reserved_instructions_match_initial_freeze": true,
+  "optimization_validation_request_overlap": 0,
+  "optimization_validation_scenario_group_overlap": 0,
+  "independent_decimal_cost_bounds_usd": [
+    "0.300867915",
+    "0.301187190"
+  ],
+  "unknown_cache_write_cases": [
+    "exec-chatcmpl-EcNVwRIxueKWARHYS216W9KPpUR40::task-clarity-v1",
+    "exec-chatcmpl-EcNpo829pgb4qFBKvziofgJrdWMza::task-clarity-v1",
+    "exec-chatcmpl-EcNVwRIxueKWARHYS216W9KPpUR40::baseline",
+    "exec-chatcmpl-EcNpo829pgb4qFBKvziofgJrdWMza::baseline"
+  ],
+  "offline_tests_passed": 66,
+  "runtime_deployment": false,
+  "statuses": {
+    "completed": 106
+  },
+  "family_unique_sources": {
+    "agent_action": 6,
+    "content_enrichment": 2,
+    "extraction": 2,
+    "memory_consolidation": 6,
+    "name_generation_conditioned": 1,
+    "name_generation_unique": 5,
+    "normalization": 3,
+    "persona_generation": 6,
+    "persona_summary": 6,
+    "persona_validation": 2,
+    "proposition_scoring": 2,
+    "sampling_dimensions": 1,
+    "sampling_plan": 1,
+    "story_continuation": 6,
+    "text_consolidation": 2,
+    "vision_perception": 1
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "stage": "frozen-final-confirmation",
+  "corpora": [
+    "..\\broad-luna-optimization\\development\\sources.jsonl",
+    "..\\broad-luna-optimization\\validation\\sources.jsonl",
+    "confirmation-sources.jsonl",
+    "fresh-confirmation-sources.jsonl"
+  ],
+  "recipes": [
+    {
+      "id": "focused-transition-v3-fresh",
+      "instruction_file": "story-v3.txt",
+      "focus_user_prefix_before": "Please propose a continuation",
+      "cases": [
+        "exec-chatcmpl-EcPHAlRM1eYH3uyS4L7lioSu2IQkb",
+        "exec-chatcmpl-EcPUazJhlcNPIeZyFpCOb7FiRYGIg",
+        "exec-chatcmpl-EcPhm8qPWF8o7oeffJulXI7zoFr0G"
+      ],
+      "hypothesis": "Aim for 65-80 words and repeat the original current request verbatim after the long history, avoiding latest-memory drift and accidental refusal of explicitly delegated narrative actions.",
+      "repetitions": 1
+    },
+    {
+      "id": "membership-plan-v2-confirm",
+      "instruction_file": "sampling-membership-v2.txt",
+      "adapter": "indexed_sampling",
+      "cases": [
+        "exec-chatcmpl-EcRNO1vm2NvqrbvpUFPzLURt5AYlR",
+        "exec-chatcmpl-EcNZrgB7NnHHQ32gLuD0kVWCH8bKw",
+        "exec-chatcmpl-EcPVXPdL4sj3j6kfDX47ef2fsDrvS",
+        "exec-chatcmpl-EcQoAeqqNKsUNJdJW4yPwzKCNo2mx"
+      ],
+      "hypothesis": "Represent categorical subsets as one boolean per option, making duplicate selections impossible while retaining full meanings and exact reconstruction.",
+      "categorical_encoding": "membership",
+      "repetitions": 3
+    },
+    {
+      "id": "membership-plan-v2-fresh",
+      "instruction_file": "sampling-membership-v2.txt",
+      "adapter": "indexed_sampling",
+      "cases": [
+        "exec-chatcmpl-EdMnHggNcBaYKck4FEBp4D2YjA1I6",
+        "exec-chatcmpl-EcOxD2opspEiQDwf3tfIPzZqewtnr",
+        "exec-chatcmpl-EcPUnJ9jpREY6PPoDNYxBQdjCEh59"
+      ],
+      "hypothesis": "Represent categorical subsets as one boolean per option, making duplicate selections impossible while retaining full meanings and exact reconstruction.",
+      "categorical_encoding": "membership"
+    }
+  ]
+}

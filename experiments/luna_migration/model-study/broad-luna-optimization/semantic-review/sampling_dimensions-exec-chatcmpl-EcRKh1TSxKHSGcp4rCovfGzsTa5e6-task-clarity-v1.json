@@ -1,0 +1,677 @@
+{
+  "sampling_space_description": "A sampling space for people in the United States across all ages and demographic segments. The supplied figures are retained as reported; their sources span different years and sometimes use unspecified or different denominators, so they should not be treated as one harmonized, current survey or as joint distributions. Separate indicators such as political affiliation and hobbies can overlap and must not be combined into exclusive categories. Where a residual is shown, it accounts for a reported total below 100% or for rounding, not a newly measured population group. Personality prevalence and broad ideological prevalence were not supplied, so those dimensions provide coverage options without invented weights. Supplied state-level personality associations are not used as population quotas or as assumptions about any individual. Cultural, political, economic, personality, and preference attributes are not inferred from one another.",
+  "dimensions": [
+    {
+      "name": "age_years",
+      "range": [
+        0,
+        120
+      ]
+    },
+    {
+      "name": "age_group",
+      "values": {
+        "0–14 years": 0.186,
+        "15–24 years": 0.131,
+        "25–54 years": 0.394,
+        "55–64 years": 0.129,
+        "65 years and older": 0.16
+      }
+    },
+    {
+      "name": "reported_gender_distribution",
+      "values": {
+        "Male, as categorized in the supplied figures": 0.492,
+        "Female, as categorized in the supplied figures": 0.508
+      }
+    },
+    {
+      "name": "gender_identity_detail",
+      "values": [
+        "Identifies as a man; the supplied male/female figures do not establish whether they measure sex or gender identity.",
+        "Identifies as a woman; the supplied male/female figures do not establish whether they measure sex or gender identity.",
+        "Identifies as nonbinary, genderqueer, or another gender; no prevalence is supplied.",
+        "Uses a gender identity not captured by the listed categories, or prefers not to disclose it; no prevalence is supplied."
+      ]
+    },
+    {
+      "name": "race_and_ethnicity",
+      "values": {
+        "Non-Hispanic White": 0.571,
+        "Hispanic or Latino, of any race": 0.194,
+        "Black or African American": 0.121,
+        "Asian": 0.07,
+        "Two or more races": 0.029,
+        "American Indian or Alaska Native": 0.013,
+        "Native Hawaiian or Pacific Islander": 0.002
+      }
+    },
+    {
+      "name": "cultural_background",
+      "values": {
+        "Non-Hispanic White (57.1% in supplied figures): May have family roots in many European, Middle Eastern, or other backgrounds, such as Irish, Italian, German, Polish, English, Scandinavian, or Lebanese heritage. A person's family history, language, religion, regional identity, and relationship to these traditions vary widely; none is implied by this broad category.": 0.571,
+        "Hispanic or Latino, of any race (19.4%): May identify with Mexican, Puerto Rican, Cuban, Dominican, Salvadoran, Guatemalan, Colombian, or many other Latin American, Caribbean, and U.S. Latino heritages. Individuals and families vary in national and Indigenous ancestry, language use, migration history, and cultural practices.": 0.194,
+        "Black or African American (12.1%): May have longstanding African American family and regional histories, recent or multigenerational African or Caribbean ancestry, or other Black diasporic backgrounds. These experiences and cultural affiliations are diverse and are not determined by this category.": 0.121,
+        "Asian (7.0%): May have ancestry connected to East, South, or Southeast Asia, including Chinese, Indian, Filipino, Vietnamese, Korean, Japanese, Pakistani, or many other communities. U.S.-born and immigrant histories, languages, religions, and cultural practices vary substantially.": 0.07,
+        "Two or more races (2.9%): Identifies with more than one racial background and may have varied family histories, cultural affiliations, and relationships to each part of their heritage.": 0.029,
+        "American Indian or Alaska Native (1.3%): May identify with a specific Tribal Nation, Alaska Native community, or other Indigenous heritage. Nations, languages, community ties, and individual identities are distinct and should not be collapsed into one culture.": 0.013,
+        "Native Hawaiian or Pacific Islander (0.2%): May identify with Native Hawaiian, Samoan, Chamorro, Tongan, or another Pacific Islander heritage, among many distinct communities and cultural traditions.": 0.002
+      }
+    },
+    {
+      "name": "country",
+      "values": [
+        "United States of America"
+      ]
+    },
+    {
+      "name": "geographic_region",
+      "values": {
+        "Northeast": 0.171,
+        "Midwest": 0.208,
+        "South": 0.383,
+        "West": 0.238
+      }
+    },
+    {
+      "name": "settlement_type",
+      "values": {
+        "Urban": 0.83,
+        "Rural": 0.17
+      }
+    },
+    {
+      "name": "state_or_district_of_residence",
+      "values": [
+        "Alabama",
+        "Alaska",
+        "Arizona",
+        "Arkansas",
+        "California",
+        "Colorado",
+        "Connecticut",
+        "Delaware",
+        "District of Columbia",
+        "Florida",
+        "Georgia",
+        "Hawaii",
+        "Idaho",
+        "Illinois",
+        "Indiana",
+        "Iowa",
+        "Kansas",
+        "Kentucky",
+        "Louisiana",
+        "Maine",
+        "Maryland",
+        "Massachusetts",
+        "Michigan",
+        "Minnesota",
+        "Mississippi",
+        "Missouri",
+        "Montana",
+        "Nebraska",
+        "Nevada",
+        "New Hampshire",
+        "New Jersey",
+        "New Mexico",
+        "New York",
+        "North Carolina",
+        "North Dakota",
+        "Ohio",
+        "Oklahoma",
+        "Oregon",
+        "Pennsylvania",
+        "Rhode Island",
+        "South Carolina",
+        "South Dakota",
+        "Tennessee",
+        "Texas",
+        "Utah",
+        "Vermont",
+        "Virginia",
+        "Washington",
+        "West Virginia",
+        "Wisconsin",
+        "Wyoming"
+      ]
+    },
+    {
+      "name": "educational_attainment_in_reporting_population",
+      "values": {
+        "Less than high school graduate (derived as the complement of the supplied 90% high-school-or-higher figure)": 0.1,
+        "High school graduate or some postsecondary education, without a bachelor's degree (derived as the difference between the supplied 90% high-school-or-higher and 35% bachelor's-or-higher figures)": 0.55,
+        "Bachelor's degree or higher": 0.35
+      }
+    },
+    {
+      "name": "education_detail",
+      "values": [
+        "Did not complete high school and may have had limited access to formal education or later opportunities to return to study.",
+        "Completed high school or an equivalent credential and may have entered work, caregiving, military service, or further education.",
+        "Completed vocational, technical, apprenticeship, or other occupational training.",
+        "Completed some college or an associate degree without a bachelor's degree.",
+        "Completed a bachelor's degree, with fields ranging across the humanities, sciences, professions, and applied disciplines.",
+        "Completed graduate or professional education, such as a master's, doctoral, medical, or law degree.",
+        "Is currently enrolled in school, college, vocational training, or adult education."
+      ]
+    },
+    {
+      "name": "household_income_financial_situation",
+      "values": {
+        "Household income under $25,000 USD": 0.172,
+        "Household income from $25,000 to $49,999 USD": 0.223,
+        "Household income from $50,000 to $99,999 USD": 0.293,
+        "Household income from $100,000 to $199,999 USD": 0.235,
+        "Household income of $200,000 USD or more": 0.077
+      }
+    },
+    {
+      "name": "marital_status_in_reporting_population",
+      "values": {
+        "Never married": 0.331,
+        "Married": 0.482,
+        "Divorced": 0.13,
+        "Widowed": 0.057
+      }
+    },
+    {
+      "name": "marital_and_relationship_detail",
+      "values": [
+        "A minor or otherwise not married; the supplied marital-status proportions are not specified for children.",
+        "An adult who has never married and may be single, dating, partnered, or living with a partner.",
+        "Married, with household and family circumstances that may vary substantially.",
+        "Divorced, with or without a current partner or subsequent marriage.",
+        "Widowed, with or without a current partner.",
+        "Separated, in a domestic partnership, or in another relationship status not separately quantified in the supplied figures."
+      ]
+    },
+    {
+      "name": "labor_force_participation_as_reported",
+      "values": {
+        "Participates in the labor force, using the supplied rate and its unspecified denominator": 0.617,
+        "Not in the labor force, complement of the supplied participation rate": 0.383
+      }
+    },
+    {
+      "name": "employment_status_among_labor_force",
+      "values": {
+        "Employed, complement of the supplied 4.2% unemployment rate": 0.958,
+        "Unemployed and in the labor force": 0.042
+      }
+    },
+    {
+      "name": "occupation_or_daily_role",
+      "values": [
+        "Management occupation; the supplied overview reports 10.5 million workers and an annual wage of $137,750 USD.",
+        "Business or financial occupation; 10.1 million workers and an annual wage of $90,580 USD in the supplied overview.",
+        "Computer or mathematical occupation; 5.2 million workers and an annual wage of $113,140 USD.",
+        "Architecture or engineering occupation; 2.5 million workers and an annual wage of $99,090 USD.",
+        "Life or physical sciences occupation; 1.4 million workers and an annual wage of $87,870 USD.",
+        "Community or social service occupation; 2.4 million workers and an annual wage of $58,980 USD.",
+        "Legal occupation; 1.2 million workers and an annual wage of $133,820 USD.",
+        "Education or library occupation; 8.7 million workers and an annual wage of $66,400 USD.",
+        "Arts or media occupation; 2.1 million workers and an annual wage of $75,520 USD.",
+        "Healthcare practitioner occupation; 9.3 million workers and an annual wage of $102,060 USD.",
+        "Healthcare support occupation; 7.1 million workers and an annual wage of $38,220 USD.",
+        "Food preparation occupation; 13.2 million workers and an annual wage of $34,490 USD.",
+        "Construction or extraction occupation; 6.2 million workers and an annual wage of $61,500 USD.",
+        "Another occupation not enumerated in the supplied overview, including other service, sales, production, transportation, maintenance, or public-sector work.",
+        "Not currently employed because of unemployment, retirement, study, caregiving, disability, or another circumstance; children and other people outside the labor force are also represented."
+      ]
+    },
+    {
+      "name": "religious_affiliation",
+      "values": {
+        "Christian, all traditions combined in the supplied aggregate": 0.63,
+        "Unaffiliated, including people who identify as atheist, agnostic, or nothing in particular": 0.28,
+        "Jewish": 0.02,
+        "Muslim": 0.01,
+        "Buddhist": 0.01,
+        "Hindu": 0.01,
+        "Other non-Christian religion": 0.01,
+        "Unaccounted-for or unclassified residual in the supplied figures; included because the listed aggregate shares total 97%": 0.03
+      }
+    },
+    {
+      "name": "reported_christian_tradition_detail",
+      "values": [
+        "Protestant tradition; the supplied overview reports 33%, but its Christian subcategory percentages do not reconcile with the supplied 63% Christian aggregate.",
+        "Catholic tradition; the supplied overview reports 22%, with the same aggregate inconsistency noted for the Christian subcategories.",
+        "Mormon tradition; the supplied overview reports 1%, with the same aggregate inconsistency noted for the Christian subcategories.",
+        "Other Christian tradition; the supplied overview reports 11%, with the same aggregate inconsistency noted for the Christian subcategories.",
+        "Another Christian tradition or no specified denomination; no separate prevalence is supplied."
+      ]
+    },
+    {
+      "name": "political_affiliation_independent_indicator",
+      "values": {
+        "Identifies as Independent, according to the supplied figure": 0.43,
+        "Does not report Independent identification or is outside the reported category": 0.57
+      }
+    },
+    {
+      "name": "political_affiliation_democratic_indicator",
+      "values": {
+        "Identifies as Democrat, according to the supplied figure": 0.451,
+        "Does not report Democratic identification or is outside the reported category": 0.549
+      }
+    },
+    {
+      "name": "political_affiliation_republican_indicator",
+      "values": {
+        "Identifies as Republican, according to the supplied figure": 0.36,
+        "Does not report Republican identification or is outside the reported category": 0.64
+      }
+    },
+    {
+      "name": "political_beliefs",
+      "values": [
+        "Progressive or liberal outlook, potentially emphasizing civil rights, social inclusion, public services, and reducing economic inequality; positions can differ by issue.",
+        "Moderate or centrist outlook, often favoring compromise or evaluating policies issue by issue rather than adhering to one party platform.",
+        "Conservative outlook, potentially emphasizing tradition, local institutions, personal responsibility, or limited government; positions can differ by issue.",
+        "Libertarian outlook, often emphasizing individual liberty and limits on government power, with views that may vary between economic and social issues.",
+        "Populist, labor-focused, environmental, religious, or other movement-based outlook that does not fit neatly into a single left-right label.",
+        "Politically independent, weakly affiliated, disengaged, undecided, or not comfortable with the available ideological labels."
+      ]
+    },
+    {
+      "name": "personality_openness_to_experience",
+      "values": [
+        "High openness: curious, imaginative, and interested in unfamiliar ideas, experiences, or forms of creative expression.",
+        "Moderate openness: comfortable with some novelty and experimentation while also valuing familiar routines and proven approaches.",
+        "Low openness: prefers predictability, practical tasks, and familiar ideas, while remaining capable of curiosity in personally meaningful areas."
+      ]
+    },
+    {
+      "name": "personality_conscientiousness",
+      "values": [
+        "High conscientiousness: organized, dependable, and deliberate about plans, commitments, and details.",
+        "Moderate conscientiousness: generally follows through, but varies between careful planning and a more flexible approach.",
+        "Low conscientiousness: tends to be spontaneous or less structured, and may find routines, deadlines, or long-term planning difficult."
+      ]
+    },
+    {
+      "name": "personality_extraversion",
+      "values": [
+        "High extraversion: gains energy from social contact, group activities, conversation, and active environments.",
+        "Moderate extraversion: enjoys socializing in some settings while also needing quiet or solitary time.",
+        "Low extraversion: reserved or inward-focused, preferring smaller gatherings, one-to-one contact, or time alone."
+      ]
+    },
+    {
+      "name": "personality_agreeableness",
+      "values": [
+        "High agreeableness: considerate, cooperative, and inclined to preserve trust and mutual understanding.",
+        "Moderate agreeableness: seeks cooperation but can disagree directly or set firm boundaries when needed.",
+        "Low agreeableness: skeptical, competitive, or blunt in disagreement, and may prioritize candor or personal goals over harmony."
+      ]
+    },
+    {
+      "name": "personality_emotional_reactivity",
+      "values": [
+        "Higher emotional reactivity: more sensitive to uncertainty or setbacks and may experience worry or stress intensely.",
+        "Moderate emotional reactivity: experiences ordinary ups and downs and generally regains equilibrium after stress.",
+        "Lower emotional reactivity: tends to remain calm under pressure, while still experiencing a full range of emotions."
+      ]
+    },
+    {
+      "name": "economic_beliefs",
+      "values": [
+        "Favors a larger public role in providing services and reducing economic insecurity, while differing on which programs are most effective.",
+        "Favors a mixed economy in which markets and public programs both have important roles, with judgments made policy by policy.",
+        "Favors a smaller public role and greater reliance on private enterprise, competition, and individual choice.",
+        "Emphasizes worker bargaining power, social insurance, or stronger protections against economic concentration.",
+        "Emphasizes entrepreneurship, business investment, lower regulatory burdens, or incentives for economic growth.",
+        "Is uncertain, politically disengaged, or holds different views across taxes, wages, healthcare, and other economic issues."
+      ]
+    },
+    {
+      "name": "economic_outlook_perception",
+      "values": {
+        "Views the economy as poor": 0.33,
+        "Views the economy as not so good": 0.35,
+        "Views the economy as good": 0.27,
+        "Views the economy as excellent": 0.05
+      }
+    },
+    {
+      "name": "preferences_and_tastes",
+      "values": [
+        "Enjoys cooking or baking, from quick everyday meals to experimenting with recipes and preparing food for others.",
+        "Enjoys reading fiction, nonfiction, news, or other material, either regularly or occasionally.",
+        "Likes having pets or spending time with animals, though access, housing, health, or personal preference may limit pet ownership.",
+        "Enjoys video games on a console, computer, or mobile device, ranging from occasional casual play to regular gaming.",
+        "Enjoys outdoor activities such as walking, running, cycling, hiking, camping, fishing, or spending time in parks.",
+        "Enjoys shopping for necessities or personal interests, whether in stores, online, or infrequently.",
+        "Enjoys travel, from local outings and domestic trips to international travel when circumstances allow.",
+        "Enjoys arts, crafts, do-it-yourself projects, making, repairing, or other hands-on creative activities.",
+        "Enjoys socializing with friends, relatives, neighbors, or community groups, while social energy and preferred group size vary.",
+        "Enjoys board or tabletop games, puzzles, or other in-person games.",
+        "Prefers quiet or solitary leisure, or has limited interest in organized hobbies or social activities.",
+        "Avoids particular activities because of cost, disability, time constraints, sensory preferences, access, or lack of interest."
+      ]
+    },
+    {
+      "name": "interest_in_cooking_and_baking",
+      "values": {
+        "Reports cooking or baking as an interest": 0.41,
+        "Does not report cooking or baking as an interest": 0.59
+      }
+    },
+    {
+      "name": "interest_in_reading",
+      "values": {
+        "Reports reading as an interest": 0.37,
+        "Does not report reading as an interest": 0.63
+      }
+    },
+    {
+      "name": "interest_in_pets",
+      "values": {
+        "Reports an interest in pets": 0.35,
+        "Does not report an interest in pets": 0.65
+      }
+    },
+    {
+      "name": "interest_in_video_gaming",
+      "values": {
+        "Reports video gaming as an interest": 0.33,
+        "Does not report video gaming as an interest": 0.67
+      }
+    },
+    {
+      "name": "interest_in_outdoor_activities",
+      "values": {
+        "Reports outdoor activities as an interest": 0.3,
+        "Does not report outdoor activities as an interest": 0.7
+      }
+    },
+    {
+      "name": "interest_in_shopping",
+      "values": {
+        "Reports shopping as an interest": 0.3,
+        "Does not report shopping as an interest": 0.7
+      }
+    },
+    {
+      "name": "interest_in_travel",
+      "values": {
+        "Reports traveling as an interest": 0.29,
+        "Does not report traveling as an interest": 0.71
+      }
+    },
+    {
+      "name": "interest_in_arts_crafts_and_diy",
+      "values": {
+        "Reports arts, crafts, or do-it-yourself activities as an interest": 0.25,
+        "Does not report these activities as an interest": 0.75
+      }
+    },
+    {
+      "name": "interest_in_socializing",
+      "values": {
+        "Reports socializing as an interest": 0.26,
+        "Does not report socializing as an interest": 0.74
+      }
+    },
+    {
+      "name": "interest_in_board_games",
+      "values": {
+        "Reports board games as an interest": 0.26,
+        "Does not report board games as an interest": 0.74
+      }
+    },
+    {
+      "name": "other_interests_and_hobbies",
+      "values": [
+        "Sports and recreation, including walking, running, cycling, basketball, football, hiking, camping, or fishing; the supplied overview does not provide separate prevalence for these activities.",
+        "Entertainment such as television, streaming, music, drama, comedy, or reality TV; formats and frequency vary.",
+        "Technology use and gaming, including console, mobile, or PC games and social media.",
+        "Reading and learning through fiction, nonfiction, news, or online courses.",
+        "Travel and dining, including domestic or international travel, dining out, and trying new cuisines."
+      ]
+    },
+    {
+      "name": "favorite_snack_cookie_preference",
+      "values": {
+        "Cookies are a preferred snack, according to the supplied figure": 0.59,
+        "Does not report cookies as a preferred snack or is outside that reported category": 0.41
+      }
+    },
+    {
+      "name": "health_and_daily_habits",
+      "values": [
+        "Has a regular, accessible pattern of physical activity suited to their age, health, abilities, and circumstances.",
+        "Has low physical-activity engagement, potentially because of time, health, accessibility, cost, safety, or personal preference.",
+        "Frequently snacks or eats between meals, with varied food choices and circumstances.",
+        "Has relatively regular sleep and bedtime routines.",
+        "Often gets insufficient sleep or keeps late-night hours, potentially because of work schedules, caregiving, health, or personal habits.",
+        "Uses exercise, meditation, or other practices to manage stress.",
+        "Relies on social support to manage stress.",
+        "May cope with stress through comfort eating, smoking, inactivity, or other less healthy habits; no prevalence is supplied for any particular coping behavior."
+      ]
+    },
+    {
+      "name": "financial_habits",
+      "values": [
+        "Saves regularly and maintains some capacity to handle unexpected expenses.",
+        "Wants to save but finds it difficult because of housing, healthcare, debt, caregiving, or other costs.",
+        "Has inadequate savings or little financial cushion, consistent with the qualitative claim in the supplied overview but not assigned a prevalence.",
+        "Usually plans purchases and limits discretionary spending.",
+        "Sometimes makes unplanned or impulse purchases; frequency and financial impact vary."
+      ]
+    },
+    {
+      "name": "technology_and_media_habits",
+      "values": [
+        "Uses screens and digital services frequently for work, school, communication, entertainment, or daily tasks.",
+        "Uses social media frequently, occasionally, or not at all, depending on access and personal preference.",
+        "Limits screen time or avoids some platforms because of privacy, health, accessibility, or personal concerns.",
+        "Has limited or unreliable access to devices, broadband, or digital services."
+      ]
+    },
+    {
+      "name": "economic_concern_inflation",
+      "values": {
+        "Views inflation as a very big problem, according to the supplied 2023 figure": 0.7,
+        "Does not select very big problem or gives another response": 0.3
+      }
+    },
+    {
+      "name": "public_concern_healthcare_affordability",
+      "values": {
+        "Views healthcare affordability as a very big problem, according to the supplied 2024 figure": 0.57,
+        "Does not select very big problem or gives another response": 0.43
+      }
+    },
+    {
+      "name": "public_concern_drug_addiction",
+      "values": {
+        "Views drug addiction as a very big problem, according to the supplied 2024 figure": 0.55,
+        "Does not select very big problem or gives another response": 0.45
+      }
+    },
+    {
+      "name": "public_concern_federal_budget_deficit",
+      "values": {
+        "Views the federal budget deficit as a very big problem, according to the supplied 2024 figure": 0.53,
+        "Does not select very big problem or gives another response": 0.47
+      }
+    },
+    {
+      "name": "public_concern_illegal_immigration",
+      "values": {
+        "Views illegal immigration as a very big problem, according to the supplied 2024 figure": 0.51,
+        "Does not select very big problem or gives another response": 0.49
+      }
+    },
+    {
+      "name": "public_concern_gun_violence",
+      "values": {
+        "Views gun violence as a very big problem, according to the supplied 2024 figure": 0.49,
+        "Does not select very big problem or gives another response": 0.51
+      }
+    },
+    {
+      "name": "public_concern_violent_crime",
+      "values": {
+        "Views violent crime as a very big problem, according to the supplied 2024 figure": 0.48,
+        "Does not select very big problem or gives another response": 0.52
+      }
+    },
+    {
+      "name": "public_concern_state_of_moral_values",
+      "values": {
+        "Views the state of moral values as a very big problem, according to the supplied 2024 figure": 0.46,
+        "Does not select very big problem or gives another response": 0.54
+      }
+    },
+    {
+      "name": "public_concern_partisan_cooperation",
+      "values": {
+        "Views lack of partisan cooperation as a very big problem, according to the supplied 2023 figure": 0.65,
+        "Does not select very big problem or gives another response": 0.35
+      }
+    },
+    {
+      "name": "climate_change_top_policy_priority_among_democrats",
+      "values": {
+        "Selects climate change as a top policy priority, according to the supplied 2020 figure for Democrats": 0.78,
+        "Does not select it as a top priority or gives another response": 0.22
+      }
+    },
+    {
+      "name": "climate_change_top_policy_priority_among_republicans",
+      "values": {
+        "Selects climate change as a top policy priority, according to the supplied 2020 figure for Republicans": 0.21,
+        "Does not select it as a top priority or gives another response": 0.79
+      }
+    },
+    {
+      "name": "political_belief_government_responsibility_for_healthcare",
+      "values": {
+        "Believes government should provide healthcare, according to the supplied 2018 figure": 0.6,
+        "Does not select that response or gives another response": 0.4
+      }
+    },
+    {
+      "name": "abortion_legality_opinion",
+      "values": {
+        "Believes abortion should be legal in all cases, according to the supplied 2024 figure": 0.33,
+        "Believes abortion should be legal in most cases": 0.33,
+        "Believes abortion should be illegal in most cases": 0.25,
+        "Believes abortion should be illegal in all cases": 0.05,
+        "Other response, undecided, or unreported residual because the listed figures total 96%": 0.04
+      }
+    },
+    {
+      "name": "immigration_policy_support_for_path_to_legal_status",
+      "values": {
+        "Supports a path to legal status for some immigrants, according to the supplied 2024 figure": 0.56,
+        "Does not select that response or gives another response": 0.44
+      }
+    },
+    {
+      "name": "immigration_policy_support_for_deportation",
+      "values": {
+        "Supports deportation, according to the supplied 2024 figure": 0.4,
+        "Does not select that response or gives another response": 0.6
+      }
+    },
+    {
+      "name": "economic_belief_and_concern_about_pandemic_policy_impact",
+      "values": {
+        "Reports concern about economic impact in the supplied pandemic-policy item": 0.8,
+        "Does not report that concern or gives another response": 0.2
+      }
+    },
+    {
+      "name": "difficulty_affording_healthcare",
+      "values": {
+        "Reports difficulty affording healthcare, according to the supplied 2022 figure": 0.47,
+        "Does not report difficulty or gives another response": 0.53
+      }
+    },
+    {
+      "name": "support_for_closing_gun_show_loophole",
+      "values": {
+        "Supports closing the gun-show loophole, according to the supplied 2019 figure": 0.83,
+        "Does not support it or gives another response": 0.17
+      }
+    },
+    {
+      "name": "support_for_red_flag_laws",
+      "values": {
+        "Supports red-flag laws, according to the supplied 2019 figure": 0.72,
+        "Does not support them or gives another response": 0.28
+      }
+    },
+    {
+      "name": "support_for_mental_health_funding",
+      "values": {
+        "Supports mental-health funding as a gun-violence measure, according to the supplied 2019 figure": 0.89,
+        "Does not support it or gives another response": 0.11
+      }
+    },
+    {
+      "name": "perception_of_threat_to_democracy",
+      "values": {
+        "Views democracy as very threatened, according to the supplied 2024 figure": 0.39,
+        "Views democracy as somewhat threatened": 0.34,
+        "Other response, less-threatened view, or nonresponse not distinguished in the supplied figures": 0.27
+      }
+    },
+    {
+      "name": "confidence_in_election_fairness",
+      "values": {
+        "Very confident elections are fair, according to the supplied 2024 figure": 0.35,
+        "Somewhat confident": 0.32,
+        "Not very confident": 0.21,
+        "Not at all confident": 0.1,
+        "Other response or rounding residual because the listed figures total 98%": 0.02
+      }
+    },
+    {
+      "name": "concern_about_post_election_violence",
+      "values": {
+        "Reports concern about post-election violence, according to the supplied 2024 figure": 0.7,
+        "Does not report concern or gives another response": 0.3
+      }
+    },
+    {
+      "name": "family_financial_situation_compared_with_four_years_earlier",
+      "values": {
+        "Reports the family's financial situation is worse": 0.47,
+        "Reports it is about the same": 0.29,
+        "Reports it is better": 0.24
+      }
+    },
+    {
+      "name": "inflation_hardship",
+      "values": {
+        "Reports severe hardship from inflation": 0.22,
+        "Reports moderate hardship from inflation": 0.53,
+        "Reports no hardship from inflation": 0.24,
+        "Other response or rounding residual because the listed figures total 99%": 0.01
+      }
+    },
+    {
+      "name": "support_for_israel_opinion",
+      "values": {
+        "Thinks U.S. support for Israel is too strong, according to the supplied 2024 figure": 0.31,
+        "Thinks the level of support is about right": 0.3,
+        "Thinks support is not strong enough": 0.31,
+        "Other response or unreported residual because the listed figures total 92%": 0.08
+      }
+    },
+    {
+      "name": "trust_in_supreme_court",
+      "values": {
+        "Approves of the Supreme Court, according to the supplied 2024 figure": 0.36,
+        "Disapproves": 0.59,
+        "Other response or unreported residual because the listed figures total 95%": 0.05
+      }
+    }
+  ]
+}

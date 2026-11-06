@@ -1,0 +1,244 @@
+{
+  "tinytroupe.agent.CognitiveActionsModel": {
+    "type": "json_schema",
+    "json_schema": {
+      "schema": {
+        "$defs": {
+          "Action": {
+            "properties": {
+              "type": {
+                "title": "Type",
+                "type": "string"
+              },
+              "content": {
+                "title": "Content",
+                "type": "string"
+              },
+              "target": {
+                "title": "Target",
+                "type": "string"
+              },
+              "images": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Images"
+              }
+            },
+            "required": [
+              "type",
+              "content",
+              "target",
+              "images"
+            ],
+            "title": "Action",
+            "type": "object",
+            "additionalProperties": false
+          },
+          "CognitiveState": {
+            "properties": {
+              "goals": {
+                "title": "Goals",
+                "type": "string"
+              },
+              "context": {
+                "items": {
+                  "type": "string"
+                },
+                "title": "Context",
+                "type": "array"
+              },
+              "attention": {
+                "title": "Attention",
+                "type": "string"
+              },
+              "emotions": {
+                "title": "Emotions",
+                "type": "string"
+              }
+            },
+            "required": [
+              "goals",
+              "context",
+              "attention",
+              "emotions"
+            ],
+            "title": "CognitiveState",
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        "properties": {
+          "actions": {
+            "items": {
+              "$ref": "#/$defs/Action"
+            },
+            "title": "Actions",
+            "type": "array"
+          },
+          "cognitive_state": {
+            "$ref": "#/$defs/CognitiveState"
+          }
+        },
+        "required": [
+          "actions",
+          "cognitive_state"
+        ],
+        "title": "CognitiveActionsModel",
+        "type": "object",
+        "additionalProperties": false
+      },
+      "name": "CognitiveActionsModel",
+      "strict": true
+    }
+  },
+  "tinytroupe.utils.llm.LLMStringWithJustificationResponse": {
+    "type": "json_schema",
+    "json_schema": {
+      "schema": {
+        "properties": {
+          "justification": {
+            "title": "Justification",
+            "type": "string"
+          },
+          "value": {
+            "title": "Value",
+            "type": "string"
+          },
+          "confidence": {
+            "title": "Confidence",
+            "type": "number"
+          }
+        },
+        "required": [
+          "justification",
+          "value",
+          "confidence"
+        ],
+        "title": "LLMStringWithJustificationResponse",
+        "type": "object",
+        "additionalProperties": false
+      },
+      "name": "LLMStringWithJustificationResponse",
+      "strict": true
+    }
+  },
+  "tinytroupe.utils.llm.LLMIntegerWithJustificationAndReasoningResponse": {
+    "type": "json_schema",
+    "json_schema": {
+      "schema": {
+        "properties": {
+          "reasoning": {
+            "title": "Reasoning",
+            "type": "string"
+          },
+          "justification": {
+            "title": "Justification",
+            "type": "string"
+          },
+          "value": {
+            "title": "Value",
+            "type": "integer"
+          },
+          "confidence": {
+            "title": "Confidence",
+            "type": "number"
+          }
+        },
+        "required": [
+          "reasoning",
+          "justification",
+          "value",
+          "confidence"
+        ],
+        "title": "LLMIntegerWithJustificationAndReasoningResponse",
+        "type": "object",
+        "additionalProperties": false
+      },
+      "name": "LLMIntegerWithJustificationAndReasoningResponse",
+      "strict": true
+    }
+  },
+  "tinytroupe.validation.tiny_person_validator.ValidationResponse": {
+    "type": "json_schema",
+    "json_schema": {
+      "schema": {
+        "description": "Response structure for the validation process",
+        "properties": {
+          "questions": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Questions"
+          },
+          "next_phase_description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Phase Description"
+          },
+          "score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Score"
+          },
+          "justification": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Justification"
+          },
+          "is_complete": {
+            "default": false,
+            "title": "Is Complete",
+            "type": "boolean"
+          }
+        },
+        "title": "ValidationResponse",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "questions",
+          "next_phase_description",
+          "score",
+          "justification",
+          "is_complete"
+        ]
+      },
+      "name": "ValidationResponse",
+      "strict": true
+    }
+  }
+}

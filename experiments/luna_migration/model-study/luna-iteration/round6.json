@@ -1,0 +1,18 @@
+{
+  "order_seed": 281032,
+  "protocol": "Repair a factual error in Philip's third explicit-constraint confirmation: a future total solar eclipse was placed in northern Spain in 2027, whereas NASA lists southern Spain. Preserve that failed output. Add a general external-fact boundary, not the correct eclipse answer, and confirm the affected source case with three new adaptive profiles. Grace's three successful explicit-constraint profiles retain their own frozen recipe.",
+  "imports": [{"path": "round5.json", "variants": ["life-first", "life-course", "explicit-particularities"]}],
+  "variants": [{
+    "id": "external-fact-boundary",
+    "parent": "explicit-particularities",
+    "hypothesis": "Separate inventable personal biography from externally fixed facts and avoid unnecessary unsupported event-calendar claims.",
+    "cases": ["persona-philip"],
+    "operations": [{
+      "kind": "append",
+      "message": 1,
+      "max_matches": 1,
+      "text": "\n\n## Fictional biography and real-world facts\nYou may invent this fictional person's experiences, relationships and desires. That freedom does not extend to inventing the geography, calendar, eligibility rules or capabilities of real-world places, institutions, events and services. A richly specific person does not require unsupported external facts.\n\nFor a future trip or activity, describe the experience the person wants and the practical trade-offs. Do not assign a specific year, date or host location to a real scheduled event unless those details were supplied in the input as verified facts. Leave such arrangements undecided rather than treating a plausible event calendar as known. Prior fictional drafts are not verified sources for external facts. Apply the same distinction to past biography: ordinary invented personal experiences are fine, but do not add unnecessary claims about an actual organization's program or a named event's schedule. Check any external premise on which a major preference depends; if the input does not establish it, remove that premise or express the interest without it."
+    }]
+  }],
+  "selection": {"persona-philip": "external-fact-boundary"}
+}

@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "previous_library_sha256": "000fcfb488ab982f259f778def4269a13e6972f0113eb5046d7c0f45a6b6fbd8",
+  "current_library_sha256": "8c6a0a640111c4c219a1dfa06e8bcee99621fd03c1d45a0bf3871c50f28b8333",
+  "only_library_files_changed_since_434": [
+    "factory\\sampling.py",
+    "factory\\prompts\\sampling_plan.system.mustache"
+  ],
+  "proof": "Restoring only the two exact snapshotted pre-change files in memory reconstructs the previously validated 434-case library.",
+  "experimental_messages_and_schema_match_integrated_factory": true,
+  "saved_79_dimension_50_person_native_response_reconstructs_exactly": true,
+  "public_sampling_plan_shape_unchanged": true,
+  "tests": {
+    "sampling-coverage-targeted": {
+      "status": "passed",
+      "passed": 42,
+      "deselected": 28,
+      "warnings": 1,
+      "elapsed_seconds": 71.62
+    },
+    "sampling-coverage-core": {
+      "status": "passed",
+      "passed": 444,
+      "deselected": 440,
+      "warnings": 7,
+      "elapsed_seconds": 1844.96
+    }
+  },
+  "scientific_scope": "A selection-validity and contrast-coverage repair, not a demonstrated survey-calibration repair. The prior six-person screen predates integration and retains its separate lineage."
+}

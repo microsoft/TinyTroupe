@@ -1,11 +1,2 @@
-Produce UP TO {{n}} normalized (canonical) categories covering ALL the inputs below. You MUST NOT output more than {{n}} categories. If fewer than {{n}} distinct semantic groups, return only that smaller number. Avoid near-duplicate outputs.
-
-Return as a JSON object where each key is a canonical category name and each value is an array of original input elements that belong to that category.
-{{#max_length}}
-Remember: each canonical category name MUST be <= {{max_length}} characters.
-{{/max_length}}
-
-INPUT ELEMENTS:
-{{#elements}}
-  - {{.}}
-{{/elements}}
+Input (JSON):
+{{{payload}}}

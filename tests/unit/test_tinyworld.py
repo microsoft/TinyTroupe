@@ -26,6 +26,7 @@ def test_run(setup, focus_group_world):
 
     # check integrity of conversation
     for agent in world_2.agents:
+        conversation = agent.pretty_current_interactions()
         for msg in agent.episodic_memory.retrieve_all():
             if 'action' in msg['content'] and 'target' in msg['content']['action']:
                 assert msg['content']['action']['target'] != agent.name, f"{agent.name} should not have any messages with itself as the target."
@@ -34,7 +35,11 @@ def test_run(setup, focus_group_world):
             if 'action' in msg['content'] and msg['content']['action'].get('type') == 'TALK':
                 action_content = msg['content']['action'].get('content', '')
                 if action_content:  # Only check if there's content
-                    assert proposition_holds(action_content + " - The message relates to AI products, technology, or innovation")
+                    assert proposition_holds(
+                        "The message below is a relevant contribution to the discussion of AI products, "
+                        "technology, or innovation in the supplied conversation.\n\n"
+                        f"## Conversation\n{conversation}\n\n## Message\n{action_content}"
+                    ), f"{agent.name} made an off-topic contribution: {action_content}"
             
             # TODO stimulus integrity check?
         
@@ -97,5 +102,4 @@ def test_decode_complete_state(setup, focus_group_world):
     assert world_2 is not None, "The world should not be None."
     assert world_2.name == name_1, "The world should have the same name."
     assert len(world_2.agents) == n_agents_1, "The world should have the same number of agents."
-
 

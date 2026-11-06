@@ -1,0 +1,26 @@
+{
+  "hypothesis": "The example's exhaustive private deliberation and autobiographical introduction may change the decision task relative to the original human questionnaire, rather than merely eliciting a faithful response.",
+  "model": "gpt-6-luna",
+  "effort": "xhigh",
+  "persona_source": "crossed-persona-mini-generation\\selection-mini.json",
+  "unchanged": [
+    "Eight complete persona biographies",
+    "Original gazpacho description, rating question, and scale",
+    "Quality checks, thresholds, regeneration policy, and public-evidence extraction",
+    "Production library and prompt files"
+  ],
+  "conditions": {
+    "original": "Existing crossed-mini-personas-luna baseline: original introduction and private thought.",
+    "natural-thought": "Original introduction; replace exhaustive private deliberation with natural-survey-thought.txt.",
+    "neutral-introduction": "Replace the top-ten-interests introduction with neutral-survey-introduction.txt; retain original private thought.",
+    "both": "Use both explicitly recorded replacements."
+  },
+  "acceptance": [
+    "Changes must be reported as experimental conditions, not original-notebook reruns.",
+    "A higher mean alone does not establish a successful repair.",
+    "Check public/extracted agreement and no invented guarantees or purchase histories.",
+    "If a condition is promising, validate on a held-out panel and separate positive/negative controls before integration.",
+    "Do not change production effort or use human vote quotas."
+  ],
+  "new_provenance": "The original PickFu report confirms 50 US-based respondents and matching public question/context. It reports completion on July 5, 2025, despite the July 19 date in the exported filenames. The source is a private user-owned report; do not publish its access link or assume a nationally representative recruitment design or an age-25 eligibility filter."
+}

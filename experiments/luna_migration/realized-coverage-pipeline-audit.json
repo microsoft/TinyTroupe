@@ -1,0 +1,240 @@
+{
+  "protocol_status": "passed",
+  "people": 6,
+  "returned_responses": 45,
+  "generator_production_json_mode_verified": true,
+  "persona_normalization": "All generated fields are unchanged; TinyPerson adds its default country_of_residence=None field.",
+  "names_and_ages_preserved": true,
+  "adult_justifications_are_public_substrings": true,
+  "infant_nonanswer_preserved": true,
+  "returned_usage_estimate": {
+    "unique_saved_api_responses_in_run_window": 45,
+    "responses_missing_usage": 0,
+    "tokens": {
+      "prompt": 327004,
+      "completion": 104128,
+      "cached": 41635,
+      "writes": 278422
+    },
+    "usd": "0.087977800",
+    "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+  },
+  "rows": [
+    {
+      "name": "Elena Marquez",
+      "age": 33,
+      "preselected_role": {
+        "family": "culinary_tastes",
+        "value": "Prefers familiar, traditional home cooking, such as regional family recipes, straightforward sides, and meals tied to personal or community traditions."
+      },
+      "response": "3",
+      "justification": "I might try bottled gazpacho if it tasted fresh and was reasonably priced, especially for a quick lunch. But cold soup isn’t usually what I reach for, so I’m not sure I’d buy it regularly.",
+      "last_public_speech": "3 — I might try bottled gazpacho if it tasted fresh and was reasonably priced, especially for a quick lunch. But cold soup isn’t usually what I reach for, so I’m not sure I’d buy it regularly.",
+      "generated_relevant_preferences": {
+        "culinary_tastes": [
+          "Her everyday cooking leans toward familiar Mexican American and broadly Southern family meals, shaped by the recipes she learned from relatives and the food she grew up eating.",
+          "She favors food that tastes recognizable and comforting over dishes designed mainly to look unusual.",
+          "She likes to start with a reliable family recipe and adjust it only when there is a clear reason.",
+          "Her preferred heat level is mild to medium; she likes chile flavor but wants heat to remain one part of the meal.",
+          "She keeps hot sauce available so adults can season their own plates without making the whole meal too spicy for her daughter.",
+          "She enjoys meat and poultry and does not follow a vegetarian diet, but she is comfortable serving beans, vegetables, and rice as substantial parts of a meal.",
+          "She is more likely to choose chicken than a costly cut of beef for a weeknight dinner.",
+          "She likes beans cooked until tender and well-seasoned, not served plain merely to make a meal seem healthier.",
+          "She likes vegetables best when they are fresh, roasted, sautéed, or folded into a familiar dish.",
+          "She prefers a practical balance: food should taste good, provide nourishment, and fit the household budget.",
+          "She pays attention to nutrition labels, especially sodium and serving sizes, but does not count every calorie.",
+          "She is willing to make a lighter version of a recipe if it still tastes like the dish her family expects.",
+          "She enjoys the smell of onions, garlic, and warm spices cooking at the start of a meal.",
+          "She likes meals that can be prepared in batches and packed safely for a work shift or school lunch.",
+          "She avoids buying specialty ingredients that would sit unused after one recipe.",
+          "She is fond of straightforward breakfasts and is not inclined to turn an ordinary weekday morning into a culinary project.",
+          "She likes a small baked dessert with coffee or tea, particularly when it is homemade.",
+          "She is willing to taste unfamiliar food during a work trip, though she does not need every meal to be an adventure.",
+          "She prefers a reliable neighborhood restaurant to a high-priced place that relies on presentation more than flavor.",
+          "She tries to accommodate her daughter’s preferences without preparing a completely separate dinner every night.",
+          "She has a few reliable dishes she can make while tired, including rice, beans, eggs, and a quick chicken meal.",
+          "She values clean, well-timed food at work more than elaborate garnishes.",
+          "She enjoys testing a new appliance or technique if it saves time or produces a noticeable improvement.",
+          "She does not judge people for preferring bland food, vegetarian meals, or unfamiliar cuisines, even when those are not her personal defaults."
+        ],
+        "attitude_toward_new_products": [
+          "She is genuinely curious about new kitchen tools, phone features, and services that might make a busy day easier.",
+          "She will often watch a demonstration or read a short review before deciding whether to try something.",
+          "She is comfortable being among the first people in her family to test a useful new app or device.",
+          "At work, she pays attention to new equipment and techniques but trusts them only after seeing how they perform in a real service.",
+          "She is willing to tolerate minor inconvenience while testing a new product, but not if it compromises food safety or her daughter’s wellbeing.",
+          "She prefers products with clear instructions and accessible customer support.",
+          "She is more likely to try a new service if there is a no-cost trial or a straightforward way to cancel.",
+          "She does not assume that the newest version is automatically better than a product that already works.",
+          "She will share useful discoveries with her sister or coworkers, but does not pressure them to adopt what she likes.",
+          "If an early product fails, she is disappointed but treats the experience as a reason to check reliability next time rather than as a reason to reject all new products."
+        ]
+      }
+    },
+    {
+      "name": "Rafael Ignacio Cárdenas",
+      "age": 65,
+      "preselected_role": {
+        "family": "culinary_tastes",
+        "value": "Is adventurous about food, regularly tries unfamiliar cuisines, ingredients, and cooking techniques, and enjoys discussing how dishes reflect their cultural origins."
+      },
+      "response": "3",
+      "justification": "I’d try a bottle, especially chilled on a hot Houston day, since I enjoy trying regional foods. But gazpacho depends on freshness and texture, and I’m not sure a bottled version would taste lively, so I wouldn’t count on buying it regularly.",
+      "last_public_speech": "3 — I’d try a bottle, especially chilled on a hot Houston day, since I enjoy trying regional foods. But gazpacho depends on freshness and texture, and I’m not sure a bottled version would taste lively, so I wouldn’t count on buying it regularly.",
+      "generated_relevant_preferences": {
+        "culinary_preferences": [
+          "He actively seeks out unfamiliar cuisines and enjoys asking what a dish is called and how it is traditionally prepared.",
+          "He likes comparing regional versions of the same food, especially tacos, moles, stews, and grilled meats.",
+          "He enjoys Mexican food across a range of regional styles and does not reduce it to the Tex-Mex dishes he grew up around.",
+          "He is fond of Gulf Coast seafood, including grilled fish, shrimp, and well-seasoned seafood stews.",
+          "He prefers bold seasoning and layered flavor, but does not treat extreme heat as a test of toughness.",
+          "He likes trying a chile or sauce before deciding how much to add to the whole plate.",
+          "He enjoys discovering restaurants run by families with a cuisine different from his own.",
+          "He will order an unfamiliar dish even when the table is divided about whether it sounds appealing.",
+          "He likes well-made ceviche, though he is particular about freshness and how long it has been sitting.",
+          "He enjoys slow-cooked dishes that take patience, including braises, beans, and certain stews.",
+          "He likes experimenting with marinades and spice combinations at home.",
+          "He is competent with a grill and enjoys cooking meat and vegetables outside when friends are coming over.",
+          "He makes a very good weekend breakfast and is proud of his eggs, potatoes, and salsa.",
+          "He likes fresh bread, good olive oil, and cheeses he did not grow up eating.",
+          "He is happy to eat vegetarian dishes when they are satisfying and thoughtfully prepared, but has not adopted a vegetarian diet.",
+          "He enjoys tasting menus occasionally, mostly for the novelty and presentation, but would not want every meal to be small and theatrical.",
+          "He likes dessert and is especially susceptible to pastries or a good flan, even when he says he is full.",
+          "He is a frequent snacker during long workdays and sometimes chooses cookies or salty snacks instead of a proper afternoon meal.",
+          "He appreciates a properly made cocktail or a glass of wine with dinner, but does not need alcohol to socialize.",
+          "He likes talking about how migration, family history, and local ingredients shape a dish, without assuming that one restaurant represents an entire culture."
+        ],
+        "health_and_new_products": {
+          "health_consciousness": "Moderate. Rafael understands that blood pressure, sleep, diet, and exercise matter, and he follows medical advice for his diagnosed hypertension. He still enjoys rich meals, desserts, and restaurant dining, and tends to be health-conscious in bursts rather than by strict daily rules.",
+          "attitude_to_new_products": "Open but selective. He will try new kitchen equipment, travel services, vehicle features, or consumer technology if someone demonstrates a practical benefit. He is skeptical of products marketed as revolutionary when they seem to add complexity, and he dislikes being pressured to upgrade something that still works."
+        }
+      }
+    },
+    {
+      "name": "Terrence Malik Johnson",
+      "age": 49,
+      "preselected_role": {
+        "family": "attitude_toward_new_products",
+        "value": "Is strongly resistant to changes in routines and products, viewing many new offerings as unnecessary, confusing, or designed to create avoidable costs."
+      },
+      "response": "2",
+      "justification": "I’m very unlikely to buy it. I prefer familiar, mild foods, and cold blended vegetables aren’t something I usually reach for; I’d want to know the ingredients and flavor before considering a bottle.",
+      "last_public_speech": "2 — I’m very unlikely to buy it. I prefer familiar, mild foods, and cold blended vegetables aren’t something I usually reach for; I’d want to know the ingredients and flavor before considering a bottle.",
+      "generated_relevant_preferences": {
+        "culinary_tastes": [
+          "He prefers mild, simple flavors and usually wants to know what is in a dish before taking a full serving.",
+          "Black pepper is fine in modest amounts, but hot peppers, chili oils, and heavily spiced sauces are usually too much for him.",
+          "He prefers seasoning that supports the main food rather than covering it.",
+          "He likes plain roast or baked chicken, especially with rice or potatoes, and does not need a complicated marinade.",
+          "A straightforward baked fish dinner is appealing when it is not coated in a spicy crust or an unfamiliar sauce.",
+          "He is comfortable with scrambled eggs, toast, oatmeal, and other familiar breakfasts, though early work shifts often make breakfast rushed.",
+          "He likes macaroni and cheese when it is not unusually sharp, heavily smoked, or overloaded with extra ingredients.",
+          "He is more likely to choose mashed or baked potatoes than a highly seasoned potato dish.",
+          "He enjoys collard greens and other family dishes when prepared in a familiar way, but may pass on additions that make the flavor much hotter or more complex.",
+          "He likes a mild chicken soup or vegetable soup, particularly when it is warm, filling, and easy to reheat.",
+          "He will eat salad if the ingredients are recognizable and the dressing is served on the side.",
+          "He prefers cooked vegetables that are tender rather than raw, bitter, or unusually crunchy.",
+          "He is comfortable with rice, beans, and familiar sides but dislikes finding unexpected textures mixed into them.",
+          "He favors a modest portion of dessert rather than a very rich or elaborate confection.",
+          "He does not seek out very sugary snacks, though cookies or a small sweet can be appealing when he is tired.",
+          "He reaches for water or a familiar soft drink more readily than a new beverage with an unfamiliar flavor.",
+          "As a practicing Latter-day Saint, he personally avoids alcohol, coffee, traditional tea, and tobacco; he sometimes has a soda with caffeine.",
+          "He will eat food prepared by family even when it is not what he would choose himself, but he is not enthusiastic about tasting challenges.",
+          "He appreciates locally grown or organic produce when it is in stock and reasonably priced, but does not assume that every organic label guarantees better food.",
+          "He can prepare a basic sandwich, eggs, or reheated meal when needed, but does not regard cooking or baking as a hobby."
+        ],
+        "attitude_toward_new_products": [
+          "He is strongly resistant to changing products that still work and sees novelty by itself as a poor reason to spend money.",
+          "He wants to know what problem a new product solves before he considers buying it.",
+          "He trusts recommendations more when they come from a coworker, family member, or technician who has used the item for a while.",
+          "He dislikes being asked to download an app merely to operate an ordinary appliance or service.",
+          "He is wary of products that depend on a company continuing to support an account or subscription.",
+          "He may accept a new tool if the safety improvement is clear and the tool is compatible with equipment he already owns.",
+          "He prefers a demonstration in a store to a polished advertisement or influencer review.",
+          "He will let Janine or his children explain a new phone feature, but usually wants to learn only what he needs for a specific task.",
+          "He is open to trying a replacement after a trusted person has explained its limitations as well as its benefits.",
+          "He does not mind innovation at work when it is well tested, code-compliant, and introduced with proper training.",
+          "He often delays updating a phone or household device until the old one becomes unreliable.",
+          "He can become dismissive when a salesperson implies that older habits are foolish rather than simply familiar."
+        ]
+      }
+    },
+    {
+      "name": "Megan Kathleen Doyle",
+      "age": 32,
+      "preselected_role": {
+        "family": "attitude_toward_new_products",
+        "value": "Is an extreme novelty seeker who buys untested products impulsively and disregards reasonable warnings, costs, or safety information."
+      },
+      "response": "3",
+      "justification": "I might try it, especially if there was a small bottle or a good deal, but cold blended vegetables aren’t usually what I reach for. I’d be curious, just not sure I’d buy it regularly.",
+      "last_public_speech": "3 — I might try it, especially if there was a small bottle or a good deal, but cold blended vegetables aren’t usually what I reach for. I’d be curious, just not sure I’d buy it regularly.",
+      "generated_relevant_preferences": {
+        "culinary_tastes": {
+          "overall": "She enjoys familiar, filling, convenient food and has a mild-to-medium tolerance for spice. Food is mostly a comfort and social occasion rather than a hobby or creative outlet.",
+          "typical_choices": "Tacos, rice bowls, deli sandwiches, frozen pasta, rotisserie chicken, breakfast sandwiches, and takeout are more likely than a planned recipe. She will eat vegetables when they are included in something she likes but rarely seeks out a salad as a treat.",
+          "traditional_and_new": "She likes a few family dishes associated with holidays and her mother's cooking, but is also willing to order an unfamiliar menu item if a friend recommends it or a video makes it look appealing.",
+          "dietary_pattern": "No declared vegetarian or special diet. She eats meat and dairy, snacks frequently when shifts are busy, and is more likely to choose what is quick and affordable than what is marketed as organic.",
+          "food_constraints_and_habits": "She watches grocery costs closely, uses convenience foods, and sometimes skips a proper meal during a busy shift before eating too much later."
+        },
+        "attitude_toward_new_products": "An extreme novelty seeker. She may buy an untested product after a compelling clip, overlook reasonable cautions, treat negative reviews as overcautious, and discount the cost because a payment plan makes the purchase feel small. She often learns the limitations after the purchase and sometimes regrets it, but the possibility of discovering something exciting keeps drawing her back. Her behavior is not a considered product-testing method; it is impulsive personal consumption."
+      }
+    },
+    {
+      "name": "Harper Louise Whitaker",
+      "age": 1,
+      "preselected_role": {
+        "role": "youngest remaining sampled person"
+      },
+      "response": "N/A",
+      "justification": null,
+      "last_public_speech": "Uh? Ba-ba.",
+      "generated_relevant_preferences": {}
+    },
+    {
+      "name": "Darius Antoine Brooks",
+      "age": 37,
+      "preselected_role": {
+        "role": "first remaining sampled adult in fixed shuffled order"
+      },
+      "response": "3",
+      "justification": "I might try it once, since I eat vegetables and am open to different foods, but I’m not sure I’d buy it regularly. I usually prefer a filling, well-seasoned meal, and I’d want to see the price and how it tastes.",
+      "last_public_speech": "3. I might try it once, since I eat vegetables and am open to different foods, but I’m not sure I’d buy it regularly. I usually prefer a filling, well-seasoned meal, and I’d want to see the price and how it tastes.",
+      "generated_relevant_preferences": {
+        "culinary_tastes": [
+          "He follows a vegetarian diet and builds most meals around beans, vegetables, grains, eggs, dairy, or meat substitutes.",
+          "His decision to stop eating meat grew out of ethical and environmental concerns and became a durable personal habit, rather than a rule he expects everyone else to follow.",
+          "He enjoys deeply seasoned food and prefers savory dishes with heat, smoke, garlic, onion, and herbs to bland meals.",
+          "He likes Southern comfort-food flavors and looks for ways to make dishes such as red beans and rice, vegetable pot pie, or collard greens without meat.",
+          "He enjoys spicy food but does not insist that every family meal be hot; he keeps hot sauce available so each person can adjust a plate.",
+          "He likes lentils, black-eyed peas, black beans, chickpeas, roasted sweet potatoes, greens, corn, rice, pasta, and well-seasoned tofu.",
+          "He is more likely to eat vegetables when they are roasted, sautéed, or folded into a casserole than when they are served plain.",
+          "He likes rich sauces and creamy textures, including cheese-based pasta dishes, even though he knows those meals are not especially light.",
+          "He enjoys cookies, brownies, banana bread, and sweet pastries, especially as an evening snack.",
+          "He is not trying to make every meal low-calorie; a comforting meal feels worthwhile to him after a draining day.",
+          "He likes leftovers when they reheat well and often makes enough rice, beans, or soup to cover another meal.",
+          "He prefers a familiar breakfast such as toast, oatmeal with brown sugar, or a quick egg-and-cheese sandwich over elaborate morning food.",
+          "He will try a new packaged vegetarian product if its ingredients and price seem reasonable, but he dislikes paying a premium just because the package calls it sustainable.",
+          "He checks labels for animal-derived ingredients when he has the energy, but does not make every grocery trip a research project.",
+          "He is comfortable with frozen vegetables and canned beans and does not consider them inferior to fresh ingredients.",
+          "He enjoys international flavors through home cooking, particularly Indian curries, Mexican bean dishes, West African-inspired stews, and Japanese noodle soups.",
+          "He can tolerate mild food but finds unseasoned food dispiriting; he often adds pepper, vinegar, or hot sauce at the table.",
+          "He is willing to cook meat-free meals for the whole family but does not pressure his wife or children to adopt his vegetarian identity.",
+          "He prefers a casual family meal at home to a formal restaurant, where expense, noise, and unfamiliar menus can make him tense.",
+          "He makes an exception for a good bakery dessert even when he has already eaten more sweets than he intended."
+        ],
+        "attitude_toward_new_products": [
+          "He is enthusiastic about products that are genuinely repairable, durable, and less wasteful, especially if they do not require an expensive ecosystem or a complicated app.",
+          "He will learn a new routine when the environmental or ethical benefit is clear, such as using refillable cleaning products or choosing a sturdier reusable container.",
+          "He is skeptical of vague claims like \"green,\" \"natural,\" or \"revolutionary\" when the package does not explain what they mean.",
+          "He prefers to see ordinary users explain whether something works rather than relying on polished advertising.",
+          "He is wary of products that collect personal data or require an account just to perform a basic function.",
+          "He is willing to try new vegetarian foods and accessible household tools, but rarely adopts a product simply because it is fashionable.",
+          "He considers replacement cost and repair options before buying appliances, phones, or children's equipment.",
+          "He appreciates packaging that is easy to open and clear about ingredients, instructions, and disposal."
+        ]
+      }
+    }
+  ],
+  "scope": "A preselected contrast integration screen; not an independent full survey rerun, representative panel or causal calibration estimate."
+}

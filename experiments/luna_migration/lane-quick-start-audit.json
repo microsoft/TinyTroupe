@@ -1,0 +1,385 @@
+{
+  "updated_at": "2026-10-24T05:06:37.574243+00:00",
+  "runs": [
+    {
+      "name": "DnD Adventure with Vision (image modality)",
+      "folder": "lx04",
+      "status": "completed",
+      "elapsed_seconds": 301.3,
+      "current_cell": 16,
+      "started_at": "2026-10-24T04:38:07.010541+00:00",
+      "library_sha256": "380d22a2d5ab791abf0f09f3cdc3589211a5b89418897a361bbe771947acc0a7",
+      "expected_model": true,
+      "library_matches": false,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {},
+      "execution_audit_passed": false
+    },
+    {
+      "name": "Simple Chat",
+      "folder": "notebook-comparison\\gpt-6-luna",
+      "status": "completed",
+      "elapsed_seconds": 189.08,
+      "current_cell": 10,
+      "started_at": "2026-10-24T04:43:13.825794+00:00",
+      "library_sha256": "380d22a2d5ab791abf0f09f3cdc3589211a5b89418897a361bbe771947acc0a7",
+      "expected_model": true,
+      "library_matches": false,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {},
+      "execution_audit_passed": false
+    },
+    {
+      "name": "Create Ad for Apartment",
+      "folder": "notebook-comparison\\gpt-6-luna-recheck",
+      "status": "completed",
+      "elapsed_seconds": 127.8,
+      "current_cell": 12,
+      "started_at": "2026-10-24T04:46:27.582968+00:00",
+      "library_sha256": "380d22a2d5ab791abf0f09f3cdc3589211a5b89418897a361bbe771947acc0a7",
+      "expected_model": true,
+      "library_matches": false,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {},
+      "execution_audit_passed": false
+    },
+    {
+      "name": "Product Brainstorming",
+      "folder": "notebook-comparison\\luna-brainstorm",
+      "status": "completed",
+      "elapsed_seconds": 299.58,
+      "current_cell": 24,
+      "started_at": "2026-10-24T04:48:40.041103+00:00",
+      "library_sha256": "380d22a2d5ab791abf0f09f3cdc3589211a5b89418897a361bbe771947acc0a7",
+      "expected_model": true,
+      "library_matches": false,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {},
+      "execution_audit_passed": false
+    },
+    {
+      "name": "Word Processor Tool Usage",
+      "folder": "wp6",
+      "status": "completed",
+      "elapsed_seconds": 103.55,
+      "current_cell": 9,
+      "started_at": "2026-10-24T04:53:49.115028+00:00",
+      "library_sha256": "380d22a2d5ab791abf0f09f3cdc3589211a5b89418897a361bbe771947acc0a7",
+      "expected_model": true,
+      "library_matches": false,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {},
+      "execution_audit_passed": false
+    },
+    {
+      "name": "Interview with Customer",
+      "folder": "lx01",
+      "status": "running",
+      "elapsed_seconds": 191.41,
+      "current_cell": 11,
+      "started_at": "2026-10-24T04:55:37.995429+00:00",
+      "library_sha256": "380d22a2d5ab791abf0f09f3cdc3589211a5b89418897a361bbe771947acc0a7",
+      "expected_model": true,
+      "library_matches": false
+    },
+    {
+      "name": "Synthetic Data Generation",
+      "folder": "lx07",
+      "status": "completed",
+      "elapsed_seconds": 344.59,
+      "current_cell": 17,
+      "started_at": "2026-10-24T02:56:57.727807+00:00",
+      "library_sha256": null,
+      "expected_model": true,
+      "library_matches": false,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {
+        "_": {
+          "rows": 11,
+          "columns": [
+            "author",
+            "content"
+          ]
+        },
+        "df": {
+          "rows": 11,
+          "columns": [
+            "author",
+            "content"
+          ]
+        },
+        "_11": {
+          "rows": 11,
+          "columns": [
+            "author",
+            "content"
+          ]
+        }
+      },
+      "execution_audit_passed": false
+    },
+    {
+      "name": "Synthetic Data Generation 1",
+      "folder": "lx06",
+      "status": "completed",
+      "elapsed_seconds": 155.12,
+      "current_cell": 17,
+      "started_at": "2026-10-24T03:31:33.545267+00:00",
+      "library_sha256": null,
+      "expected_model": true,
+      "library_matches": false,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {
+        "_": {
+          "rows": 11,
+          "columns": [
+            "author",
+            "content"
+          ]
+        },
+        "df": {
+          "rows": 11,
+          "columns": [
+            "author",
+            "content"
+          ]
+        },
+        "_11": {
+          "rows": 11,
+          "columns": [
+            "author",
+            "content"
+          ]
+        }
+      },
+      "execution_audit_passed": false
+    },
+    {
+      "name": "Political Compass (customizing agents with fragments)",
+      "folder": "lx03",
+      "status": "completed",
+      "elapsed_seconds": 395.58,
+      "current_cell": 14,
+      "started_at": "2026-10-24T03:14:55.698779+00:00",
+      "library_sha256": null,
+      "expected_model": true,
+      "library_matches": false,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {},
+      "execution_audit_passed": false
+    },
+    {
+      "name": "Creating and Validating Agents",
+      "folder": "lx02",
+      "status": "completed",
+      "elapsed_seconds": 508.94,
+      "current_cell": 28,
+      "started_at": "2026-10-24T03:25:51.047575+00:00",
+      "library_sha256": null,
+      "expected_model": true,
+      "library_matches": false,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {},
+      "execution_audit_passed": false
+    },
+    {
+      "name": "Story telling (long narratives)",
+      "folder": "lx10",
+      "status": "running",
+      "elapsed_seconds": 731.34,
+      "current_cell": 19,
+      "started_at": "2026-10-24T03:34:26.766396+00:00",
+      "library_sha256": null,
+      "expected_model": true,
+      "library_matches": false
+    },
+    {
+      "name": "Product Brainstorming (with behavior correction)",
+      "folder": "lx11",
+      "status": "not_started"
+    },
+    {
+      "name": "Vision for Product, Diagnosis and Appreciation Feedback (image modality)",
+      "folder": "lx05",
+      "status": "completed",
+      "elapsed_seconds": 767.0,
+      "current_cell": 19,
+      "started_at": "2026-10-24T02:22:53.337633+00:00",
+      "library_sha256": null,
+      "expected_model": true,
+      "library_matches": false,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {},
+      "execution_audit_passed": false
+    },
+    {
+      "name": "Synthetic Data Generation 2 (tool usage)",
+      "folder": "lx09",
+      "status": "running",
+      "elapsed_seconds": 311.12,
+      "current_cell": 21,
+      "started_at": "2026-10-24T03:38:06.812477+00:00",
+      "library_sha256": null,
+      "expected_model": true,
+      "library_matches": false
+    },
+    {
+      "name": "Bottled Gazpacho Market Research 5b",
+      "folder": "lx18",
+      "status": "running",
+      "elapsed_seconds": 527.69,
+      "current_cell": 20,
+      "started_at": "2026-10-24T04:44:42.350758+00:00",
+      "library_sha256": "380d22a2d5ab791abf0f09f3cdc3589211a5b89418897a361bbe771947acc0a7",
+      "expected_model": true,
+      "library_matches": false
+    },
+    {
+      "name": "Bottled Gazpacho Market Research 5c",
+      "folder": "lx19",
+      "status": "completed",
+      "elapsed_seconds": 1591.84,
+      "current_cell": 67,
+      "started_at": "2026-10-24T02:28:05.075990+00:00",
+      "library_sha256": null,
+      "expected_model": true,
+      "library_matches": false,
+      "instrumentation_identified": true,
+      "source_matches": true,
+      "all_code_executed": true,
+      "errors": [],
+      "simulation_errors": [],
+      "tables": {
+        "df": {
+          "rows": 15,
+          "columns": [
+            "name",
+            "response",
+            "justification"
+          ]
+        },
+        "_20": {
+          "rows": 15,
+          "columns": [
+            "name",
+            "response",
+            "justification"
+          ]
+        },
+        "df_for_validation": {
+          "rows": 15,
+          "columns": [
+            "name",
+            "response",
+            "justification",
+            "Vote"
+          ]
+        }
+      },
+      "execution_audit_passed": false
+    },
+    {
+      "name": "Bottled Gazpacho Market Research 5",
+      "folder": "lx16",
+      "status": "not_started"
+    },
+    {
+      "name": "Bottled Gazpacho Market Research 5 (with behavior correction)",
+      "folder": "lx17",
+      "status": "not_started"
+    },
+    {
+      "name": "AI-enabled Children Story Telling Market Research",
+      "folder": "lx20",
+      "status": "not_started"
+    },
+    {
+      "name": "AI-enabled Children Story Telling Market Research 2",
+      "folder": "lx21",
+      "status": "not_started"
+    },
+    {
+      "name": "Investment Firm",
+      "folder": "lx08",
+      "status": "running",
+      "elapsed_seconds": 1093.45,
+      "current_cell": 26,
+      "started_at": "2026-10-24T04:38:01.293134+00:00",
+      "library_sha256": "380d22a2d5ab791abf0f09f3cdc3589211a5b89418897a361bbe771947acc0a7",
+      "expected_model": true,
+      "library_matches": false
+    },
+    {
+      "name": "Advertisement for TV",
+      "folder": "lx12",
+      "status": "running",
+      "elapsed_seconds": 117.88,
+      "current_cell": 21,
+      "started_at": "2026-10-24T04:18:49.251697+00:00",
+      "library_sha256": "91883e0534c2a2d2b815165d88087f1f9745f97b4cef77ee2bb69bcadbb2372f",
+      "expected_model": true,
+      "library_matches": false
+    },
+    {
+      "name": "Tendencia de Compra en eComerce Colombia (Spanish)",
+      "folder": "lx14",
+      "status": "not_started"
+    },
+    {
+      "name": "Online Advertisement for Travel",
+      "folder": "lx13",
+      "status": "running",
+      "elapsed_seconds": 150.25,
+      "current_cell": 16,
+      "started_at": "2026-10-24T03:02:48.687599+00:00",
+      "library_sha256": null,
+      "expected_model": true,
+      "library_matches": false
+    },
+    {
+      "name": "Travel Product Market Research",
+      "folder": "lx15",
+      "status": "not_started"
+    }
+  ]
+}

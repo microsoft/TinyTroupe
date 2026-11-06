@@ -1,0 +1,30 @@
+{
+  "status": "Rejected by the unchanged production validator; no repair or redraw.",
+  "condition": "concrete_contrast_coverage_v2",
+  "response_id": "chatcmpl-EfvROaLIdtXDgoySYOBIPPKTPGsr8",
+  "finish_reason": "stop",
+  "request_fidelity": "Strict production schema, original input and recorded paragraph verified.",
+  "rejection": "Categorical selections cannot be empty.",
+  "empty_categorical_selections": [
+    {
+      "directive": 5,
+      "dimension": "political_beliefs"
+    }
+  ],
+  "observed_transport_timeout_before_returned_retry": 1,
+  "returned_responses": 1,
+  "returned_usage_estimate": {
+    "unique_saved_api_responses_in_run_window": 1,
+    "responses_missing_usage": 0,
+    "tokens": {
+      "prompt": 22031,
+      "completion": 62496,
+      "cached": 22028,
+      "writes": 0
+    },
+    "usd": "0.03146858",
+    "basis": "Saved standard API list rates and returned usage; not an invoice. Responses grouped by server creation time and notebook run window. Failed requests without saved responses are not priced."
+  },
+  "unreturned_attempt_cost": "Unknown; not included in returned-usage estimate.",
+  "production_changed": false
+}

@@ -1,0 +1,115 @@
+[
+  {
+    "old_public_substring": "The route and staffing records haven’t reached me yet",
+    "original_prompt_contained_forced_talking": false,
+    "corrective_instruction": "Continue the simulation with your existing persona and evidence. Discuss the client problems and propose useful solutions using your expertise, but do not repeat unchanged requests, assurances, or agreement. If no new information or useful progress is available, finish your turn with DONE and wait. Do not invent records, completed work, or outcomes.",
+    "reply": {
+      "actions": [
+        {
+          "type": "THINK",
+          "content": "Marcos’s mapping plan is clear. The useful addition is to make the eventual analysis distinguish scheduled service from what actually happened, so we can locate whether delays are emerging in staffing, dispatch, or site operations without treating correlation as cause. The records still aren’t available, so any interventions must remain conditional.",
+          "target": "",
+          "images": null
+        },
+        {
+          "type": "TALK",
+          "content": "One useful structure for the map would be a route-day view linking scheduled and actual dispatch and arrival times with staffing availability, substitutions or cancellations, and any documented dispatch changes. That should help separate where delays arise from where they’re simply recorded. Once coverage is known, we can compare late-arrival rates using a consistent denominator and look at rural and accessibility-related impacts only where privacy-safe data supports it. Options such as targeted schedule buffers or backup-driver coverage would then be hypotheses to test against the evidence and site constraints—not assumptions about the cause.",
+          "target": "Marcos Almeida",
+          "images": null
+        },
+        {
+          "type": "DONE",
+          "content": "Waiting for the requested records; no findings or operational recommendations can be confirmed yet.",
+          "target": "",
+          "images": null
+        }
+      ],
+      "cognitive_state": {
+        "goals": "Assess East Borough arrival reliability using evidence while protecting accessibility, rural service, privacy, and the fixed budget; wait for records before making recommendations.",
+        "context": [
+          "The route and staffing records have not yet been received, so source coverage and gaps remain unknown.",
+          "Marcos is mapping dispatch from available records and will keep student-identifying information out of the working summary.",
+          "Oscar is assessing school-site pickup constraints; his findings and underlying data are not yet available.",
+          "I suggested an analytical structure linking scheduled and actual service events, with any interventions treated as hypotheses pending evidence and feasibility review."
+        ],
+        "attention": "Awaiting route and staffing records; focus on separating staffing, dispatch, and site factors and evaluating arrival reliability with privacy-safe equity checks.",
+        "emotions": "Focused and collaborative, with care not to overstate what the evidence can support."
+      }
+    }
+  },
+  {
+    "old_public_substring": "I’ll keep the site review on hold until the school information is in",
+    "original_prompt_contained_forced_talking": false,
+    "corrective_instruction": "Continue the simulation with your existing persona and evidence. Discuss the client problems and propose useful solutions using your expertise, but do not repeat unchanged requests, assurances, or agreement. If no new information or useful progress is available, finish your turn with DONE and wait. Do not invent records, completed work, or outcomes.",
+    "reply": {
+      "actions": [
+        {
+          "type": "THINK",
+          "content": "This confirms the handoff but adds no route records or school-site details. There is no new finding I can substantiate.",
+          "target": "",
+          "images": null
+        },
+        {
+          "type": "TALK",
+          "content": "This update doesn’t add route records or school-site details, so I don’t have a substantiated site finding to add yet.",
+          "target": "Marcos Almeida",
+          "images": null
+        },
+        {
+          "type": "DONE",
+          "content": "Waiting for the evidence needed to assess site constraints.",
+          "target": "",
+          "images": null
+        }
+      ],
+      "cognitive_state": {
+        "goals": "Assess school-site pickup constraints against route, staffing, and dispatch evidence without compromising accessibility or rural service.",
+        "context": [
+          "East Borough reports late arrivals associated with driver shortages and fragmented routing; these pressures have not been verified in the evidence available here.",
+          "No school-site information, route or staffing records, or dispatch map has been provided for review.",
+          "Marcos will connect documented dispatch handoffs with sourced site constraints when the records and school information become available."
+        ],
+        "attention": "Await sourced site information and route, staffing, and dispatch records; distinguish confirmed conditions from open questions and avoid unsupported conclusions.",
+        "emotions": "Calm, focused, and cautious about drawing conclusions without evidence."
+      }
+    }
+  },
+  {
+    "old_public_substring": "I’ll keep school-staff-confirmation items clearly marked",
+    "original_prompt_contained_forced_talking": false,
+    "corrective_instruction": "Continue the simulation with your existing persona and evidence. Discuss the client problems and propose useful solutions using your expertise, but do not repeat unchanged requests, assurances, or agreement. If no new information or useful progress is available, finish your turn with DONE and wait. Do not invent records, completed work, or outcomes.",
+    "reply": {
+      "actions": [
+        {
+          "type": "THINK",
+          "content": "There’s no new evidence to assess, so I shouldn’t imply any dispatch finding. I can still help the review by separating possible sources of delay; different causes would call for different remedies, and a routing change alone may not address a staffing or pickup-handoff problem.",
+          "target": "",
+          "images": null
+        },
+        {
+          "type": "TALK",
+          "content": "One useful way to structure the East Borough review is to distinguish delays associated with driver availability or dispatch release from those emerging during route sequencing or at school pickup handoffs. Those are hypotheses to test, not findings yet: timestamped dispatch and arrival records, staffing assignments, and documented handoffs would help tell them apart. A route adjustment might help a sequencing issue, while a coverage gap would need a different response; any pilot should also check accessible loading and rural-service impacts before being treated as workable.",
+          "target": "Oscar",
+          "images": null
+        },
+        {
+          "type": "DONE",
+          "content": "Waiting for the route, staffing, and school-site evidence before drawing conclusions.",
+          "target": "",
+          "images": null
+        }
+      ],
+      "cognitive_state": {
+        "goals": "Map East Borough dispatch from route and staffing evidence, then compare documented school-specific pickup points and handoffs with Oscar’s site review while keeping accessibility, rural coverage, privacy, and the fixed budget in view.",
+        "context": [
+          "East Borough serves 34,000 students; late arrivals, driver shortages, and fragmented routing are reported, but underlying route and staffing records are not yet available.",
+          "Lisa will share source coverage and missing dates or decision details alongside the records in a privacy-conscious summary.",
+          "Oscar will keep site observations sourced, flag details needing school-staff confirmation, and compare site constraints with the dispatch map when the necessary information is available.",
+          "No school-specific dispatch pinch points, causes of delay, or feasibility conclusions are established; possible delay mechanisms remain hypotheses."
+        ],
+        "attention": "Distinguishing potential staffing, dispatch-release, route-sequencing, and school-handoff delays without presenting any as established; preserving accessibility and rural-service considerations.",
+        "emotions": "Calm, focused, and cooperative; attentive to equitable service for students with disabilities and rural families."
+      }
+    }
+  }
+]

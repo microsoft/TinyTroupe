@@ -7,6 +7,7 @@ import threading
 from typing import Any
 
 import chevron  # to parse Mustache templates
+import tiktoken
 from rich import print
 
 import tinytroupe.utils as utils
@@ -309,6 +310,7 @@ class TinyPerson(JsonSerializableRegistry):
         self._persona["name"] = self.name
 
     def generate_agent_system_prompt(self):
+        """Render the persona and current cognitive state in the configured template."""
         with open(
             self._prompt_template_path, "r", encoding="utf-8", errors="replace"
         ) as f:
@@ -316,6 +318,7 @@ class TinyPerson(JsonSerializableRegistry):
 
         # let's operate on top of a copy of the configuration, because we'll need to add more variables, etc.
         template_variables = self._persona.copy()
+        template_variables.update(self._mental_state)
         template_variables["persona"] = json.dumps(self._persona.copy(), indent=4)
 
         # add mental state to the template variables
@@ -357,16 +360,18 @@ class TinyPerson(JsonSerializableRegistry):
 
     def _render_recent_episodic_memories_for_prompt(self) -> str:
         """
-        Builds a concise text block describing recent episodic events (oldest to newest),
-        suitable to be embedded inside the system prompt.
+        Render the selected episodic events, oldest to newest, for the system prompt.
+        Preserve their content independently of console-display limits.
         """
-        max_len = config_manager.get("max_content_display_length")
-        episodes = self.retrieve_recent_memories(max_content_length=max_len)
+        episodes = self.retrieve_recent_memories()
         if not episodes:
             return "(No recent episodic memories available)"
 
         lines = []
         for msg in episodes:
+            if msg == EpisodicMemory.MEMORY_BLOCK_OMISSION_INFO:
+                lines.append(f"- [MEMORY GAP]: {msg['content']}")
+                continue
             try:
                 role = msg.get("role")
                 timestamp = msg.get("simulation_timestamp", None)
@@ -375,9 +380,7 @@ class TinyPerson(JsonSerializableRegistry):
                     for s in msg.get("content", {}).get("stimuli", []):
                         src = s.get("source") or "ENV"
                         typ = s.get("type", "?")
-                        cnt = utils.break_text_at_length(
-                            s.get("content", ""), max_length=max_len
-                        )
+                        cnt = utils.break_text_at_length(s.get("content", ""))
                         # Note image IDs without re-injecting actual image data
                         image_ids = s.get("images")
                         img_note = f" [images: {', '.join(image_ids)}]" if image_ids else ""
@@ -388,9 +391,7 @@ class TinyPerson(JsonSerializableRegistry):
                     action = msg.get("content", {}).get("action", {}) or {}
                     typ = action.get("type", "?")
                     tgt = action.get("target") or ""
-                    cnt = utils.break_text_at_length(
-                        action.get("content", "") or "", max_length=max_len
-                    )
+                    cnt = utils.break_text_at_length(action.get("content", "") or "")
                     target_str = f" to {tgt}" if tgt else ""
                     lines.append(f"- [ACTION:{typ}]{target_str}{timestamp_str}: {cnt}")
                 # system messages are ignored in the episodic memory prompt
@@ -738,7 +739,7 @@ class TinyPerson(JsonSerializableRegistry):
                 self._update_cognitive_state(
                     goals=cognitive_state.get("goals", None),
                     context=cognitive_state.get("context", None),
-                    attention=cognitive_state.get("emotions", None),
+                    attention=cognitive_state.get("attention", None),
                     emotions=cognitive_state.get("emotions", None),
                 )
 
@@ -1371,6 +1372,11 @@ class TinyPerson(JsonSerializableRegistry):
         """
         if agent in self._accessible_agents:
             self._accessible_agents.remove(agent)
+            self._mental_state["accessible_agents"] = [
+                contact
+                for contact in self._mental_state["accessible_agents"]
+                if contact["name"] != agent.name
+            ]
         else:
             logger.warning(
                 f"[{self.name}] Agent {agent.name} is already inaccessible to {self.name}."
@@ -1639,9 +1645,16 @@ class TinyPerson(JsonSerializableRegistry):
         recent_memories_list = self.retrieve_memories(
             first_n=10, last_n=20, max_content_length=500
         )
-        recent_memories = "\n".join(
-            [f"  - {m.get('content', '')}" for m in recent_memories_list]
-        )
+        memory_previews = []
+        for memory in recent_memories_list:
+            content = memory.get("content", "")
+            if isinstance(content, dict):
+                content = {
+                    key: value for key, value in content.items()
+                    if key != "cognitive_state"
+                }
+            memory_previews.append(f"  - {content}")
+        recent_memories = "\n".join(memory_previews)
 
         # Build contextual target for memory retrieval using textwrap.dedent for cleaner formatting
         target = textwrap.dedent(
@@ -1654,6 +1667,22 @@ class TinyPerson(JsonSerializableRegistry):
         {recent_memories}
         """
         ).strip()
+
+        # OpenAI embedding models use cl100k_base and accept at most 8192 input tokens.
+        encoding = tiktoken.get_encoding("cl100k_base")
+        tokens = encoding.encode(target, disallowed_special=())
+        if len(tokens) > 8000:
+            logger.warning(
+                "[%s] Contextual retrieval cue has %s tokens; shortening only the "
+                "embedding query, not stored or model-visible episodic memories.",
+                self.name, len(tokens),
+            )
+            # Reserve room for the marker; retain current state and the latest event previews.
+            target = (
+                encoding.decode(tokens[:2000])
+                + "\n[Middle of retrieval cue omitted.]\n"
+                + encoding.decode(tokens[-6000:])
+            )
 
         logger.debug(
             f"[{self.name}] Retrieving relevant memories for contextual target: {target}"
