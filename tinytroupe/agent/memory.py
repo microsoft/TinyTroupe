@@ -303,10 +303,11 @@ class EpisodicMemory(TinyMemory):
         self.episodic_buffer = []
 
         # then clears the memory according to the parameters
-        if max_prefix_to_clear is not None:
+        # note: zero is a no-op, avoiding the `[:-0]` slice that would empty the whole memory
+        if max_prefix_to_clear is not None and max_prefix_to_clear > 0:
             self.memory = self.memory[max_prefix_to_clear:]
 
-        if max_suffix_to_clear is not None:
+        if max_suffix_to_clear is not None and max_suffix_to_clear > 0:
             self.memory = self.memory[:-max_suffix_to_clear]
 
         if max_prefix_to_clear is None and max_suffix_to_clear is None:
