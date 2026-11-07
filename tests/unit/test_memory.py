@@ -271,6 +271,26 @@ class TestEpisodicMemory:
         assert len(memory.memory) == 5
         assert memory.memory[-1]["content"] == "test7"
 
+    def test_clear_zero_suffix_and_prefix(self, setup):
+        """Clearing 0 values from either end must be a no-op, not a full wipe."""
+        memory = EpisodicMemory()
+
+        for i in range(5):
+            memory.store({"content": f"test{i}", "type": "stimulus"})
+        memory.commit_episode()
+
+        memory.clear(max_suffix_to_clear=0)
+        assert len(memory.memory) == 5
+
+        memory.clear(max_prefix_to_clear=0)
+        assert len(memory.memory) == 5
+        assert memory.memory[0]["content"] == "test0"
+
+        # regular clearing still works
+        memory.clear(max_suffix_to_clear=2)
+        assert len(memory.memory) == 3
+        assert memory.memory[-1]["content"] == "test2"
+
     def test_retrieve_first_and_last(self, setup):
         """Test retrieving first and last n items"""
         memory = EpisodicMemory()
