@@ -272,7 +272,7 @@ def merge_dicts(current, additions, overwrite=False, error_on_conflict=True, rem
 def remove_duplicate_items(lst):
         """
         Removes duplicates from a list while preserving order.
-        Handles unhashable elements by using a list comprehension.
+        Handles unhashable elements by falling back to equality comparison.
 
         Parameters:
         - lst (list): The list to remove duplicates from.
@@ -283,13 +283,25 @@ def remove_duplicate_items(lst):
         seen = []
         result = []
         for item in lst:
-            if isinstance(item, dict):
-                # Convert dict to a frozenset of its items to make it hashable
-                item_key = frozenset(item.items())
-            else:
-                item_key = item
+            item_key = None
+            hashable = True
+            try:
+                if isinstance(item, dict):
+                    # Convert dict to a frozenset of its items to make it hashable.
+                    # This still fails when the values themselves are unhashable
+                    # (e.g., nested lists or dicts), which is ordinary JSON data.
+                    item_key = frozenset(item.items())
+                else:
+                    item_key = item
+            except TypeError:
+                hashable = False
 
-            if item_key not in seen:
-                seen.append(item_key)
-                result.append(item)
+            if hashable:
+                if item_key not in seen:
+                    seen.append(item_key)
+                    result.append(item)
+            else:
+                # Unhashable item: compare by equality while preserving order.
+                if item not in result:
+                    result.append(item)
         return result
