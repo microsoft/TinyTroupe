@@ -7,7 +7,7 @@ sys.path.insert(0, '..')
 sys.path.insert(0, '../../')
 sys.path.insert(0, '../../tinytroupe/')
 
-from tinytroupe.utils import name_or_empty, extract_json, repeat_on_error
+from tinytroupe.utils import merge_dicts, name_or_empty, extract_json, repeat_on_error, remove_duplicate_items
 from testing_utils import *
 from tinytroupe.utils.llm import llm
 
@@ -238,3 +238,36 @@ def test_llm_decorator():
     response = lucky_number()
     print("Lucky number response:", response)
     assert isinstance(response, int)
+
+
+@pytest.mark.core
+def test_merge_dicts_nested_list_items():
+    # List items whose dict values are themselves unhashable (ordinary nested
+    # JSON data) must not crash frozenset-based deduplication.
+    current = {"interests": [{"name": "hiking", "tags": ["outdoor", "nature"]}]}
+    additions = {"interests": [{"name": "hiking", "tags": ["outdoor", "nature"]}]}
+
+    merged = merge_dicts(current, additions)
+    assert merged == {"interests": [{"name": "hiking", "tags": ["outdoor", "nature"]}]}
+
+    # Distinct items are both kept, in order.
+    current = {"items": [{"a": {"b": [1]}}]}
+    additions = {"items": [{"a": {"b": [2]}}]}
+    merged = merge_dicts(current, additions)
+    assert merged == {"items": [{"a": {"b": [1]}}, {"a": {"b": [2]}}]}
+
+    # remove_duplicates=False keeps both even when equal.
+    merged = merge_dicts(current, additions, remove_duplicates=False)
+    assert len(merged["items"]) == 2
+
+    # Hashable items keep the existing frozenset semantics (order-insensitive dict equality).
+    merged = merge_dicts({"x": [{"a": 1, "b": 2}]}, {"x": [{"b": 2, "a": 1}]})
+    assert merged == {"x": [{"a": 1, "b": 2}]}
+
+
+@pytest.mark.core
+def test_remove_duplicate_items_unhashable():
+    assert remove_duplicate_items([{"a": [1, 2]}, {"a": [1, 2]}, {"a": [3]}]) == [{"a": [1, 2]}, {"a": [3]}]
+    assert remove_duplicate_items([[1, 2], [1, 2], [3]]) == [[1, 2], [3]]
+    assert remove_duplicate_items([{"a": 1}, {"a": 1}, {"a": 2}]) == [{"a": 1}, {"a": 2}]
+    assert remove_duplicate_items([]) == []
