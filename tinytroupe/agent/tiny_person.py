@@ -2299,8 +2299,14 @@ class TinyPerson(JsonSerializableRegistry):
         self.episodic_memory = EpisodicMemory.from_json(state["episodic_memory"])
         self.semantic_memory = SemanticMemory.from_json(state["semantic_memory"])
 
-        for i, faculty in enumerate(self._mental_faculties):
-            faculty = faculty.from_json(state["_mental_faculties"][i])
+        # Rebuild the faculties from the serialized state (the same way the
+        # memories right above are restored), instead of mutating the current
+        # list: `from_json` returns a new instance, and in the cache-restore
+        # path the current list is empty, so nothing would be restored.
+        self._mental_faculties = [
+            JsonSerializableRegistry.from_json(faculty_state)
+            for faculty_state in state["_mental_faculties"]
+        ]
 
         # delete fields already present in the state
         del state["_accessible_agents"]
