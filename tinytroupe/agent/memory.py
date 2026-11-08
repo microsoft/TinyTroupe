@@ -535,47 +535,47 @@ class SemanticMemory(TinyMemory):
             }
 
             # Refine the content of the engram is built based on the type of the value to make it more meaningful.
-            if value["type"] == "action":
+            if engram["type"] == "action":
                 engram["content"] = (
                     f"# Action performed\n"
-                    + f"I have performed the following action at date and time {value['simulation_timestamp']}:\n\n"
+                    + f"I have performed the following action at date and time {engram['simulation_timestamp']}:\n\n"
                     + f" {value['content']}"
                 )
 
-            elif value["type"] == "stimulus":
+            elif engram["type"] == "stimulus":
                 engram["content"] = (
                     f"# Stimulus\n"
-                    + f"I have received the following stimulus at date and time {value['simulation_timestamp']}:\n\n"
+                    + f"I have received the following stimulus at date and time {engram['simulation_timestamp']}:\n\n"
                     + f" {value['content']}"
                 )
-            elif value["type"] == "feedback":
+            elif engram["type"] == "feedback":
                 engram["content"] = (
                     f"# Feedback\n"
-                    + f"I have received the following feedback at date and time {value['simulation_timestamp']}:\n\n"
+                    + f"I have received the following feedback at date and time {engram['simulation_timestamp']}:\n\n"
                     + f" {value['content']}"
                 )
-            elif value["type"] == "consolidated":
+            elif engram["type"] == "consolidated":
                 engram["content"] = (
                     f"# Consolidated Memory\n"
-                    + f"I have consolidated the following memory at date and time {value['simulation_timestamp']}:\n\n"
+                    + f"I have consolidated the following memory at date and time {engram['simulation_timestamp']}:\n\n"
                     + f" {value['content']}"
                 )
-            elif value["type"] == "reflection":
+            elif engram["type"] == "reflection":
                 engram["content"] = (
                     f"# Reflection\n"
-                    + f"I have reflected on the following memory at date and time {value['simulation_timestamp']}:\n\n"
+                    + f"I have reflected on the following memory at date and time {engram['simulation_timestamp']}:\n\n"
                     + f" {value['content']}"
                 )
-            elif value["type"] == "image_description":
+            elif engram["type"] == "image_description":
                 engram["content"] = (
                     f"# Image Description\n"
-                    + f"I have seen the following image(s) at date and time {value['simulation_timestamp']}:\n\n"
+                    + f"I have seen the following image(s) at date and time {engram['simulation_timestamp']}:\n\n"
                     + f" {value['content']}"
                 )
             else:
                 engram["content"] = (
                     f"# Information\n"
-                    + f"I have obtained following information at date and time {value['simulation_timestamp']}:\n\n"
+                    + f"I have obtained following information at date and time {engram['simulation_timestamp']}:\n\n"
                     + f" {value['content']}"
                 )
 
