@@ -67,9 +67,12 @@ class JsonSerializableRegistry:
                     result[attr_renamed] = aux_serialize_item(value)
 
         if file_path:
-            # Create directories if they do not exist
+            # Create directories if they do not exist. A bare filename has no
+            # directory component, and os.makedirs("") would fail.
             import os
-            os.makedirs(os.path.dirname(file_path), exist_ok=True)
+            dir_name = os.path.dirname(file_path)
+            if dir_name:
+                os.makedirs(dir_name, exist_ok=True)
             with open(file_path, 'w', encoding='utf-8', errors='replace') as f:
                 json.dump(result, f, indent=4)
         
