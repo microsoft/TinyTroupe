@@ -67,9 +67,12 @@ class JsonSerializableRegistry:
                     result[attr_renamed] = aux_serialize_item(value)
 
         if file_path:
-            # Create directories if they do not exist
+            # Create directories if they do not exist. A bare filename has no
+            # directory component, and os.makedirs("") would fail.
             import os
-            os.makedirs(os.path.dirname(file_path), exist_ok=True)
+            dir_name = os.path.dirname(file_path)
+            if dir_name:
+                os.makedirs(dir_name, exist_ok=True)
             with open(file_path, 'w', encoding='utf-8', errors='replace') as f:
                 json.dump(result, f, indent=4)
         
@@ -244,7 +247,7 @@ def merge_dicts(current, additions, overwrite=False, error_on_conflict=True, rem
                 merged[key] = additions[key]
             # If both values are dictionaries, merge them recursively
             elif isinstance(merged[key], dict) and isinstance(additions[key], dict):
-                merged[key] = merge_dicts(merged[key], additions[key], overwrite, error_on_conflict)
+                merged[key] = merge_dicts(merged[key], additions[key], overwrite, error_on_conflict, remove_duplicates)
             # If both values are lists, concatenate them and remove duplicates
             elif isinstance(merged[key], list) and isinstance(additions[key], list):
                 merged[key].extend(additions[key])
