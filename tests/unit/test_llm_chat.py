@@ -334,6 +334,10 @@ class TestLLMChat:
         assert chat._coerce_to_integer("The answer is 42") == 42  # embedded number
         assert chat._coerce_to_integer(25) == 25  # already int
         assert chat._coerce_to_integer(3.0) == 3  # float that's whole number
+        # Decimals elsewhere in the text must not hide the integer answer.
+        assert chat._coerce_to_integer("There are 3 cats, and each weighs 0.5 kg") == 3
+        assert chat._coerce_to_integer("Score = 5 (out of 9). Version 1.5") == 5
+        assert chat._coerce_to_integer("The answer is 42.") == 42
 
     def test_coerce_to_integer_invalid_inputs(self):
         """Test integer coercion with invalid inputs."""
