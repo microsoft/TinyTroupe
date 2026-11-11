@@ -247,7 +247,9 @@ def merge_dicts(current, additions, overwrite=False, error_on_conflict=True, rem
                 merged[key] = merge_dicts(merged[key], additions[key], overwrite, error_on_conflict)
             # If both values are lists, concatenate them and remove duplicates
             elif isinstance(merged[key], list) and isinstance(additions[key], list):
-                merged[key].extend(additions[key])
+                # Build a new list instead of extending in place: `merged` is a
+                # shallow copy, so extending would also mutate `current`.
+                merged[key] = merged[key] + additions[key]
                 # Remove duplicates while preserving order
                 if remove_duplicates:
                     merged[key] = remove_duplicate_items(merged[key])

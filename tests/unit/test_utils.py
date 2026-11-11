@@ -7,9 +7,33 @@ sys.path.insert(0, '..')
 sys.path.insert(0, '../../')
 sys.path.insert(0, '../../tinytroupe/')
 
-from tinytroupe.utils import name_or_empty, extract_json, repeat_on_error
+from tinytroupe.utils import name_or_empty, extract_json, repeat_on_error, merge_dicts
 from testing_utils import *
 from tinytroupe.utils.llm import llm
+
+
+@pytest.mark.core
+def test_merge_dicts_does_not_mutate_the_inputs():
+    # merge_dicts documents that it returns a new dictionary and does not alter
+    # the inputs; extending the shallow-copied lists in place used to mutate
+    # both the original values and the nested dictionaries.
+    current = {"likes": ["cats", "tea"], "nested": {"tags": ["x"]}, "name": "Alice"}
+    additions = {"likes": ["dogs"], "nested": {"tags": ["y"]}}
+
+    merged = merge_dicts(current, additions)
+
+    assert merged == {
+        "likes": ["cats", "tea", "dogs"],
+        "nested": {"tags": ["x", "y"]},
+        "name": "Alice",
+    }
+    assert current == {
+        "likes": ["cats", "tea"],
+        "nested": {"tags": ["x"]},
+        "name": "Alice",
+    }, f"merge_dicts mutated its input: {current}"
+    assert additions == {"likes": ["dogs"], "nested": {"tags": ["y"]}}
+
 
 @pytest.mark.core
 def test_extract_json():
