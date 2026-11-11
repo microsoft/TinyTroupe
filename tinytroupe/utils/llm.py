@@ -904,15 +904,10 @@ class LLMChat:
         # using a regular expression
         import re
 
-        # Match integers that are not part of a decimal number
-        # First check if the string contains a decimal point - if so, reject it for integer coercion
-        if "." in llm_output_str and any(
-            c.isdigit() for c in llm_output_str.split(".")[1]
-        ):
-            # This looks like a decimal number, not a pure integer
-            raise ValueError("Cannot convert the LLM output to an integer value.")
-
-        match = re.search(r"-?\b\d+\b", llm_output_str)
+        # Match integers that are not part of a decimal number. Checking for
+        # any '.' elsewhere in the output would reject a valid integer answer
+        # such as "There are 3 cats, and each weighs 0.5 kg".
+        match = re.search(r"(?<![\d.])(-?\d+)(?!\d|\.\d)", llm_output_str)
         if match:
             return int(match.group(0))
 
