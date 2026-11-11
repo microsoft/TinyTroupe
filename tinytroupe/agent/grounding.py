@@ -360,6 +360,10 @@ class LocalFilesGroundingConnector(BaseSemanticGroundingConnector):
         
         logger.debug(f"Adding the following file to grounding index: {new_files}")
         BaseSemanticGroundingConnector._set_internal_id_to_documents(new_files, "file_name")
+
+        # The documents have to be indexed, otherwise the file is read and
+        # discarded and retrieval stays empty (add_folder does this too).
+        self.add_documents(new_files)
     
     def _mark_folder_as_loaded(self, folder_path:str) -> None:
         if folder_path not in self.loaded_folders_paths:

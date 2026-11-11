@@ -19,6 +19,27 @@ from tinytroupe.agent.grounding import (
 from tinytroupe.examples import create_oscar_the_architect
 from testing_utils import *
 
+def test_add_file_path_indexes_the_document(tmp_path, monkeypatch):
+    # add_file_path read the file and set the internal ids but never added the
+    # documents to the index, so the connector stayed empty.
+    from llama_index.core import Settings
+    from llama_index.core.embeddings import MockEmbedding
+
+    monkeypatch.setattr(Settings, "embed_model", MockEmbedding(embed_dim=4))
+
+    file_path = tmp_path / "fact.txt"
+    file_path.write_text("The capital of France is Paris.", encoding="utf-8")
+
+    connector = LocalFilesGroundingConnector("Local Files")
+    connector.add_file_path(str(file_path))
+
+    assert len(connector.documents) == 1
+    assert connector.documents[0].text == "The capital of France is Paris."
+    assert connector.name_to_document["fact.txt"] is not None
+    assert connector.list_sources() == ["fact.txt"]
+    assert "The capital of France is Paris." in connector.retrieve_by_name("fact.txt")[0]
+
+
 @pytest.fixture
 def temp_folder():
     """Create a temporary folder with sample files for testing."""
