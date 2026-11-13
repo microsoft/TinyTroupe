@@ -394,11 +394,12 @@ class StatisticalTester:
         Returns:
             dict: Dictionary with results of assumption checks for each treatment.
         """
-        if metric not in self.control_experiment_data:
+        control_metrics = next(iter(self.control_experiment_data.values()))
+        if metric not in control_metrics:
             raise ValueError(f"Metric '{metric}' not found in control data")
-            
+
         results = {}
-        control_values = np.array(self.control_experiment_data[metric], dtype=float)
+        control_values = np.array(control_metrics[metric], dtype=float)
         
         # Check normality of control
         control_shapiro = stats.shapiro(control_values)
