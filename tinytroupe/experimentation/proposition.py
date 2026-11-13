@@ -567,10 +567,11 @@ def compute_score(
         return_full_response (bool): whether to return the full response from the LLM, including justification and confidence
 
     Returns:
-        bool: whether the proposition holds for the given target(s)
+        int or dict: the score of the proposition, or the full response when
+            ``return_full_response`` is True
     """
 
     score = Proposition(claim, target, first_n=first_n, last_n=last_n)
-    return score.compute(
+    return score.score(
         additional_context=additional_context, return_full_response=return_full_response
     )
