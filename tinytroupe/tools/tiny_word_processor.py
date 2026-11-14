@@ -1,8 +1,49 @@
+import json
+import re
 
 from tinytroupe.tools import logger, TinyTool
 
 
 import tinytroupe.utils as utils
+
+
+def _extract_document_spec_fallback(raw: str) -> dict | None:
+    """
+    Fallback when extract_json fails on WRITE_DOCUMENT content (common with
+    truncated or poorly escaped LLM output). Tries repair + regex extraction.
+    """
+    if not raw or not isinstance(raw, str):
+        return None
+    raw = raw.strip()
+    # Try repairing truncated JSON (model often cuts off mid-string)
+    for suffix in ['"', '"}', '"}]', '" }', '" }']:
+        repaired = raw + suffix
+        parsed = utils.extract_json(repaired)
+        if parsed and isinstance(parsed, dict) and parsed.get("title"):
+            return parsed
+    # Regex fallback: extract title and content
+    title_m = re.search(r'"title"\s*:\s*"([^"]*)"', raw)
+    if not title_m:
+        return None
+    title = title_m.group(1)
+    content_m = re.search(r'"content"\s*:\s*"((?:[^"\\]|\\.)*)"', raw, re.DOTALL)
+    if content_m:
+        content = content_m.group(1)
+    else:
+        # Truncated JSON: content may lack closing quote; take from "content": " to end
+        prefix = re.search(r'"content"\s*:\s*"', raw)
+        content = raw[prefix.end() :] if prefix else ""
+    # Unescape common JSON escapes (do \\ first to avoid double-converting)
+    if content:
+        content = (
+            content.replace("\\\\", "\x00")  # temp placeholder
+            .replace("\\n", "\n")
+            .replace("\\t", "\t")
+            .replace('\\"', '"')
+            .replace("\x00", "\\")
+        )
+    return {"title": title, "content": content or "(content could not be extracted)", "author": None}
+
 
 class TinyWordProcessor(TinyTool):
 
@@ -37,23 +78,39 @@ class TinyWordProcessor(TinyTool):
             self.exporter.export(artifact_name=artifact_name, artifact_data= json_doc, content_type="Document", content_format="md", target_format="json")
 
     def _process_action(self, agent, action) -> bool:
-        if action['type'] == "WRITE_DOCUMENT" and action['content'] is not None:
-            # parse content json
-            if isinstance(action['content'], str):
-                doc_spec = utils.extract_json(action['content'])
+        try:
+            if action['type'] == "WRITE_DOCUMENT" and action['content'] is not None:
+                # parse content json
+                if isinstance(action['content'], str):
+                    doc_spec = utils.extract_json(action['content'])
+                    if doc_spec is None:
+                        doc_spec = _extract_document_spec_fallback(action['content'])
+                else:
+                    doc_spec = action['content']
+
+                if doc_spec is None:
+                    logger.error("Could not parse WRITE_DOCUMENT content as JSON")
+                    return False
+
+                # Use agent name when author is missing (fallback parsing often omits it)
+                if doc_spec.get("author") is None and agent is not None:
+                    doc_spec = {**doc_spec, "author": agent.name}
+                # Ensure content exists (model sometimes returns only title)
+                if doc_spec.get("content") is None or doc_spec.get("content") == "":
+                    doc_spec = {**doc_spec, "content": f"# {doc_spec.get('title', 'Document')}\n\n(Content not provided)"}
+
+                # checks whether there are any kwargs that are not valid
+                valid_keys = ["title", "content", "author"]
+                utils.check_valid_fields(doc_spec, valid_keys)
+
+                # uses the kwargs to create a new document
+                self.write_document(**doc_spec)
+
+                return True
             else:
-                doc_spec = action['content']
-            
-            # checks whether there are any kwargs that are not valid
-            valid_keys = ["title", "content", "author"]
-            utils.check_valid_fields(doc_spec, valid_keys)
-
-            # uses the kwargs to create a new document
-            self.write_document(**doc_spec)
-
-            return True
-
-        else:
+                return False
+        except Exception as e:
+            logger.error(f"Error processing action: {e}")
             return False
 
     def actions_definitions_prompt(self) -> str:

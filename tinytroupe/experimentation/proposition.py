@@ -4,7 +4,6 @@ from chevron import render
 
 from tinytroupe import config_manager
 from tinytroupe.agent import TinyPerson
-from tinytroupe.environment import TinyWorld
 from tinytroupe.experimentation import logger
 from tinytroupe.utils import LLMChat, indent_at_current_level
 
@@ -396,38 +395,43 @@ class Proposition:
 
     def recommendations_for_improvement(self):
         """
-        Get recommendations for improving the proposition.
+        Get recommendations for improving the proposition score. Requires prior evaluation
+        via score() or holds(). Returns LLM-generated recommendations or a placeholder if
+        evaluation has not been performed.
         """
+        if self.llm_chat is None:
+            return (
+                "No evaluation has been performed yet. Call score() or holds() before "
+                "getting recommendations."
+            )
 
-        # TODO this is not working, let's try something else
-        #
-        # if self.llm_chat is None:
-        #    raise ValueError("No evaluation has been performed yet. Please evaluate the proposition before getting recommendations.")
-        #
-        # self.llm_chat.add_system_message(\
-        #    """
-        #    You will now act as a system that provides recommendations for the improvement of the scores previously assigned to propositions.
-        #    You will now output text that contains analysises, recommendations and other information as requested by the user.
-        #    """)
-        #
-        # self.llm_chat.add_user_message(\
-        #    """
-        #    To help improve the score next time, please list the following in as much detail as possible:
-        #      - all recommendations for improvements based on the current score.
-        #      - all criteria you are using to assign scores, and how to best satisfy them
-        #
-        #    For both cases:
-        #      - besides guidelines, make sure to provide plenty of concrete examples of what to be done in order to maximize each criterion.
-        #      - avoid being generic or abstract. Instead, all of your criteria and recommendations should be given in very concrete terms that would work specifically for the case just considered.
-        #
-        #    Note that your output is a TEXT with the various recommendations, information and tips, not a JSON object.
-        #
-        #    Recommendations:
-        #    """)
-        #
-        # recommendation = self.llm_chat(output_type=str, enable_json_output_format=False)
-        recommendation = "No additional recommendations at this time."
-        return recommendation
+        self.llm_chat.add_system_message(
+            """
+            You will now act as a system that provides recommendations for the improvement
+            of the scores previously assigned to propositions. Output text that contains
+            analyses, recommendations, and other information as requested by the user.
+            """
+        )
+        self.llm_chat.add_user_message(
+            """
+            To help improve the score next time, please list the following in as much detail as possible:
+              - all recommendations for improvements based on the current score.
+              - all criteria you are using to assign scores, and how to best satisfy them.
+
+            For both cases:
+              - besides guidelines, make sure to provide plenty of concrete examples of what to be done in order to maximize each criterion.
+              - avoid being generic or abstract. Instead, all of your criteria and recommendations should be given in very concrete terms that would work specifically for the case just considered.
+
+            Note that your output is a TEXT with the various recommendations, information and tips, not a JSON object.
+
+            Recommendations:
+            """
+        )
+        try:
+            recommendation = self.llm_chat(output_type=None, enable_json_output_format=False)
+            return str(recommendation) if recommendation is not None else "No additional recommendations at this time."
+        except Exception as e:
+            return f"No additional recommendations at this time. (LLM call failed: {e})"
 
     def _model(self, use_reasoning_model):
         if use_reasoning_model:
@@ -457,6 +461,7 @@ class Proposition:
                 return self.targets
 
     def _build_context(self, current_targets):
+        from tinytroupe.environment import TinyWorld
 
         #
         # build the context with the appropriate targets
@@ -498,6 +503,8 @@ class Proposition:
         return context
 
     def _target_as_list(self, target):
+        from tinytroupe.environment import TinyWorld
+
         if target is None:
             return None
         elif isinstance(target, TinyWorld) or isinstance(target, TinyPerson):

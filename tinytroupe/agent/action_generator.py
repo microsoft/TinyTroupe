@@ -1,5 +1,6 @@
 import json
-import statistics  # Add this import
+import statistics
+import time
 
 import tinytroupe.utils as utils
 from tinytroupe.clients import client
@@ -16,7 +17,7 @@ class ActionGenerator(JsonSerializableRegistry):
         max_attempts=2,
         enable_quality_checks=True,
         enable_regeneration=True,
-        enable_direct_correction=False,  # TODO enable_direct_correction not working very well yet
+        enable_direct_correction=False,  # Experimental; regeneration is preferred
         enable_quality_check_for_persona_adherence=True,
         enable_quality_check_for_selfconsistency=True,
         enable_quality_check_for_fluency=True,
@@ -36,7 +37,7 @@ class ActionGenerator(JsonSerializableRegistry):
             enable_quality_checks (bool): Whether to perform quality checks on the generated action. If False, the first action generated
               is returned without any checks.
             enable_regeneration (bool): Whether to try to make the agent regenerate the action if the first attempt fails.
-            enable_direct_correction (bool): Whether to directly correct the action if the first attempt fails, without asking the agent to regenerate it.
+            enable_direct_correction (bool): Whether to directly correct the action if the first attempt fails. Experimental; regeneration is preferred.
             enable_quality_check_for_persona_adherence (bool): Whether to check the action for persona adherence.
             enable_quality_check_for_selfconsistency (bool): Whether to check the action for self-consistency.
             enable_quality_check_for_fluency (bool): Whether to check the action for fluency.
@@ -173,18 +174,6 @@ class ActionGenerator(JsonSerializableRegistry):
             previous_llm_content=None,
         )
 
-        # TODO obsolete?
-        #
-        # If model returned multi-action payload, we will score based on the first action
-        # def pick_reference_action_for_scoring(tentative_action_or_actions):
-        #    if (
-        #        isinstance(tentative_action_or_actions, list)
-        #        and tentative_action_or_actions
-        #    ):
-        #        # Prefer first action
-        #        return tentative_action_or_actions[0]
-        #    return tentative_action_or_actions
-
         def remove_done_actions(tentative_action_or_actions):
             if isinstance(tentative_action_or_actions, list):
                 return [
@@ -194,9 +183,7 @@ class ActionGenerator(JsonSerializableRegistry):
                 ]
             return tentative_action_or_actions
 
-        tentative_action_for_quality = remove_done_actions(
-            tentative  # TODO remove pick_reference_action_for_scoring(tentative)
-        )
+        tentative_action_for_quality = remove_done_actions(tentative)
 
         if self.enable_quality_checks:
             # First quality check (single-action proxy)
@@ -233,9 +220,7 @@ class ActionGenerator(JsonSerializableRegistry):
                     logger.debug(f"[{agent.name}] Tentative action: {tentative}")
                     self.regeneration_attempts += 1
 
-                    tentative_action_for_quality = remove_done_actions(
-                        tentative
-                    )  # TODO remove pick_reference_action_for_scoring(tentative)
+                    tentative_action_for_quality = remove_done_actions(tentative)
 
                     good_quality, total_score, cur_feedback_single = (
                         self._check_action_quality(
@@ -259,9 +244,7 @@ class ActionGenerator(JsonSerializableRegistry):
             if self.enable_direct_correction:
                 for attempt in range(self.max_attempts):
                     # Only meaningful for single action, so pick the last action for correction
-                    last_action = remove_done_actions(
-                        tentative
-                    )  # TODO remove pick_reference_action_for_scoring(tentative)
+                    last_action = remove_done_actions(tentative)
                     corrected_action, role, content = self._correct_action(
                         last_action,
                         feedback=cur_feedback,
@@ -380,20 +363,6 @@ class ActionGenerator(JsonSerializableRegistry):
                 response_format = CognitiveActionsModel
             else:
                 response_format = CognitiveActionModel
-
-            # If messages contain multimodal content, we must use the vision model and
-            # disable dedenting (because content is a list, not a string).
-            has_multimodal = self._has_multimodal_content(current_messages_context)
-            send_kwargs = {"response_format": response_format}
-            if has_multimodal:
-                from tinytroupe import config_manager as _cm
-                send_kwargs["model"] = _cm.get_with_fallback("vision_model", "model")
-                send_kwargs["dedent_messages"] = False
-
-            next_message = client().send_message(
-                current_messages_context, **send_kwargs
-            )
-
         else:
             current_messages_context.append(
                 {
@@ -406,26 +375,78 @@ class ActionGenerator(JsonSerializableRegistry):
             else:
                 response_format = CognitiveActionModelWithReasoning
 
-            has_multimodal = self._has_multimodal_content(current_messages_context)
-            send_kwargs = {"response_format": response_format}
-            if has_multimodal:
-                from tinytroupe import config_manager as _cm
-                send_kwargs["model"] = _cm.get_with_fallback("vision_model", "model")
-                send_kwargs["dedent_messages"] = False
+        # If messages contain multimodal content, we must use the vision model and
+        # disable dedenting (because content is a list, not a string).
+        has_multimodal = self._has_multimodal_content(current_messages_context)
+        send_kwargs = {"response_format": response_format}
+        if has_multimodal:
+            from tinytroupe import config_manager as _cm
+            send_kwargs["model"] = _cm.get_with_fallback("vision_model", "model")
+            send_kwargs["dedent_messages"] = False
 
+        # Retry up to 2 times on empty, unparseable, or wrong-format responses (e.g. model echoes "stimuli" instead of "actions")
+        _max_empty_retries = 2
+        _stimuli_echo_reminder = (
+            "CRITICAL: Your response must have 'actions' (list) and 'cognitive_state' keys, or 'action' and 'cognitive_state'. "
+            "Do NOT output 'stimuli' - that is the INPUT format you receive. You must OUTPUT your actions, not echo the input."
+        )
+        for _empty_attempt in range(_max_empty_retries + 1):
             next_message = client().send_message(
                 current_messages_context,
                 **send_kwargs,
             )
+            logger.debug(f"[{agent.name}] Received message: {next_message}")
 
-        logger.debug(f"[{agent.name}] Received message: {next_message}")
+            if next_message is None:
+                raw_content = ""
+                logger.warning(
+                    f"[{agent.name}] LLM API returned None (rate limit, quota, or network error)"
+                )
+            else:
+                raw_content = next_message.get("content") or ""
+            content = utils.extract_json(raw_content)
 
-        role, content = next_message["role"], utils.extract_json(
-            next_message["content"]
-        )
+            # Reject stimulus-echo: model returned input format (stimuli) instead of output (action/actions)
+            _is_stimuli_echo = (
+                isinstance(content, dict)
+                and "stimuli" in content
+                and "action" not in content
+                and "actions" not in content
+            )
+            if content is not None and not _is_stimuli_echo:
+                break
+
+            if _is_stimuli_echo:
+                logger.warning(
+                    f"[{agent.name}] LLM echoed 'stimuli' (input format) instead of 'actions'; adding corrective reminder"
+                )
+                current_messages_context.append(
+                    {"role": "user", "content": f"[SYSTEM REMINDER] {_stimuli_echo_reminder}\n\nYour previous response incorrectly had 'stimuli'. Please try again with the correct output format."}
+                )
+                current_messages_context.append(
+                    {"role": "assistant", "content": raw_content or "{}"}
+                )
+            elif _empty_attempt < _max_empty_retries:
+                logger.warning(
+                    f"[{agent.name}] LLM returned empty/unparseable response, retrying ({_empty_attempt + 1}/{_max_empty_retries})"
+                )
+            time.sleep(1)  # Brief pause before retry
+
+            if _empty_attempt >= _max_empty_retries:
+                if _is_stimuli_echo:
+                    raise ValueError(
+                        f"LLM repeatedly echoed 'stimuli' (input format) instead of producing 'actions' after {_max_empty_retries + 1} attempts. "
+                        "Model may be too small or prompt may need strengthening."
+                    )
+                raise ValueError(
+                    f"LLM returned empty or unparseable response (content={raw_content!r}). "
+                    "Possible causes: model hit token limit, timeout, or model too small for task."
+                )
+
+        role = next_message["role"]
 
         # Support both single-action and multi-action payloads
-        if "actions" in content:
+        if isinstance(content, dict) and "actions" in content:
             actions_val = content["actions"]
             if isinstance(actions_val, list):
                 actions = actions_val
@@ -435,17 +456,47 @@ class ActionGenerator(JsonSerializableRegistry):
             else:
                 logger.warning(f"[{agent.name}] 'actions' key present but not a list or dict: {type(actions_val)}. Falling back to DONE.")
                 actions = [{"type": "DONE", "content": "", "target": ""}]
+            
             # Ensure the sequence ends with DONE
             if not actions or actions[-1].get("type") != "DONE":
                 actions.append({"type": "DONE", "content": "", "target": ""})
             return actions, role, content
-        elif "action" in content:
+        elif isinstance(content, dict) and "action" in content:
             action = content["action"]
             return action, role, content
+        elif isinstance(content, dict) and "type" in content and "content" in content:
+            atype = content.get("type")
+            # Salvage flattened structure only when type looks like a valid action
+            if isinstance(atype, str) and atype.isupper():
+                action = {
+                    "type": atype,
+                    "content": content["content"],
+                    "target": content.get("target", ""),
+                }
+                fallback_content = {
+                    "action": action,
+                    "cognitive_state": content.get("cognitive_state") or {},
+                }
+                logger.info(f"[{agent.name}] Salvaged flattened action structure (type={atype})")
+                return action, role, fallback_content
+        elif isinstance(content, str) and content.strip():
+            # Fallback: model returned plain text instead of JSON (common with local models)
+            talk_content = content.strip().strip('"').strip("'")
+            if len(talk_content) > 500:
+                talk_content = talk_content[:497] + "..."
+            fallback_content = {
+                "action": {"type": "TALK", "content": talk_content, "target": ""},
+                "cognitive_state": {"goals": [], "context": [], "attention": "", "emotions": ""},
+            }
+            logger.info(
+                f"[{agent.name}] Model returned plain text; wrapping as TALK action (len={len(talk_content)})"
+            )
+            return {"type": "TALK", "content": talk_content, "target": ""}, role, fallback_content
         else:
             # Neither key present — log and raise so @repeat_on_error can retry
-            logger.warning(f"[{agent.name}] Response missing both 'actions' and 'action' keys. Content keys: {list(content.keys())}")
-            raise KeyError(f"Response missing both 'actions' and 'action' keys: {list(content.keys())}")
+            keys = list(content.keys()) if isinstance(content, dict) else []
+            logger.warning(f"[{agent.name}] Response missing both 'actions' and 'action' keys. Content keys: {keys}")
+            raise KeyError(f"Response missing both 'actions' and 'action' keys: {keys}")
 
     ###############################################################################################
     # Multimodal / vision helpers
@@ -504,6 +555,7 @@ class ActionGenerator(JsonSerializableRegistry):
     def _has_multimodal_content(messages: list) -> bool:
         """Return True if any message has list-typed (multimodal) content."""
         return any(isinstance(m.get("content"), list) for m in messages)
+
 
     ###############################################################################################
     # Quality evaluation methods

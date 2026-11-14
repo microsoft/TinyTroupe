@@ -12,6 +12,22 @@ from tinytroupe.clients import client, force_api_cache
 from tinytroupe import config_manager
 
 
+def _missing_live_llm_backend():
+    api_type = (config_manager.get("api_type") or "").lower()
+    if api_type == "openai":
+        return not os.environ.get("OPENAI_API_KEY")
+    if api_type == "azure":
+        return not os.environ.get("AZURE_OPENAI_API_KEY")
+    return False
+
+
+requires_live_llm = pytest.mark.skipif(
+    _missing_live_llm_backend(),
+    reason="Live API cache integration test requires credentials, or use TINYTROUPE_CONFIG=tests/config_ollama.ini",
+)
+
+
+@requires_live_llm
 class TestAPICacheIntegration:
     """Integration tests for API caching with real API calls."""
 

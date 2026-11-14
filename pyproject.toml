@@ -32,11 +32,16 @@ dependencies = [
     "llama-index", "llama-index-embeddings-huggingface", "llama-index-readers-web", "llama-index-embeddings-azure-openai",
     "pypandoc", "python-docx", "markdown",
     "jupyter",
+    "fastapi",
+    "uvicorn",
     "matplotlib",
     "seaborn",
     "pydantic>=2.5.0",
     "textdistance",
-    "scipy"
+    "scipy",
+    "nbformat",
+    "nbconvert",
+    "ipython"
 ]
 
 [project.urls]

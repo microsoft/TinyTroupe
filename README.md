@@ -39,6 +39,7 @@ We are releasing *TinyTroupe* at a relatively early stage, with considerable wor
 
 - 📰 [Latest News](#latest-news)
 - 📚 [Examples](#examples)
+- 🧪 [Experiments Index](#experiments-index)
 - 🛠️ [Pre-requisites](#pre-requisites)
 - 📥 [Installation](#installation)
 - 🌟 [Principles](#principles)
@@ -197,6 +198,44 @@ Using Borda count and first-choice share analysis, we can compare how well the s
 
 You can find other examples in the [examples/](./examples/) folder.
 
+### Experiments Index
+
+**[EXPERIMENTS_INDEX.md](./EXPERIMENTS_INDEX.md)** is the reference for consolidated experiments, simulation scripts, and provenance from multiple clones. Use it to locate TheatreCompany, aethelburg_scenario, epic simulations, ROVODEV docs, and more.
+
+## API Dashboard (experimental)
+
+TinyTroupe now ships with an optional FastAPI-based dashboard that lets you load
+agents, inspect their personas, and interact with them from a browser. The GUI
+is backed by the same REST endpoints, so you can also orchestrate simulations
+from other tools.
+
+To start the dashboard after installing the package:
+
+```bash
+python -m tinytroupe.ui.api_dashboard
+```
+
+This launches a local server on <http://localhost:8000>. The landing page shows
+three panes: one to load the bundled examples or register your own personas,
+one to review every active agent, and one to chat with the currently selected
+agent. The UI calls a few REST endpoints that are automatically exposed:
+
+- `GET /api/agents` – list active agents along with high-level persona and
+  memory metadata.
+- `POST /api/agents` – register a new agent from either a JSON payload or from a
+  path to a `.agent.json` specification file.
+- `POST /api/agents/load_examples` – bulk load every agent found under
+  `examples/agents` (or a custom folder of your choice).
+- `POST /api/agents/{name}/message` – deliver a message to an agent and receive
+  its next action.
+- `GET /api/agents/{name}/persona` – inspect the persona data backing the agent.
+- `GET /api/agents/{name}/conversation` – fetch the full chat log maintained by
+  the dashboard.
+
+Because the dashboard is implemented in `tinytroupe.ui.api_dashboard`, you can
+also embed it inside existing applications by importing `create_dashboard_app`
+or `TinyTroupeDashboard` directly.
+
 
 ## Pre-requisites
 
@@ -206,6 +245,7 @@ To run the library, you need:
   - Access to Azure OpenAI Service or Open AI GPT-4 APIs. You can get access to the Azure OpenAI Service [here](https://azure.microsoft.com/en-us/products/ai-services/openai-service), and to the OpenAI API [here](https://platform.openai.com/). 
       * For Azure OpenAI Service, you will need to set the `AZURE_OPENAI_KEY` and `AZURE_OPENAI_ENDPOINT` environment variables to your API key and endpoint, respectively.
       * For OpenAI, you will need to set the `OPENAI_API_KEY` environment variable to your API key.
+      * For a local Ollama instance, set `OLLAMA_BASE_URL` (defaults to `http://localhost:11434/v1`) and optionally `OLLAMA_API_KEY` if required by your setup.
       * For example, on Linux/macOS: `export OPENAI_API_KEY=your-key-here`, or on Windows (PowerShell): `$env:OPENAI_API_KEY="your-key-here"`. To persist it, add it to your shell profile or use `setx OPENAI_API_KEY "your-key-here"` on Windows.
   - By default, TinyTroupe `config.ini` is set to use OpenAI API with `gpt-5-mini` as the main model. The previous default (`gpt-4.1-mini`) is now considered legacy but is still expected to work. You can customize these values by including your own `config.ini` file in the same folder as the program or notebook you are running. An example of a `config.ini` file is provided in the [examples/](./examples/) folder.
 
@@ -574,7 +614,7 @@ TinyTroupe provides a Jupyter widget for interactive conversations with agents, 
 from tinytroupe.ui import AgentChatJupyterWidget
 
 chat_interface = AgentChatJupyterWidget(people)  # pass a list of agents
-chat_interface.display()
+chat_interface by.display()
 ```
 
 This displays a chat interface with a dropdown to select agents and send messages interactively.
@@ -699,7 +739,7 @@ LLM API caching, when enabled, works at a lower and simpler level than simulatio
 
 ### Config.ini
 
-The `config.ini` file contains various parameters that can be used to customize the behavior of the library, such as model parameters and logging level. Please pay special attention to the `API_TYPE` parameter, which defines whether you are using the Azure OpenAI Service or the OpenAI API. The current default is set to `openai` (OpenAI API).
+The `config.ini` file contains various parameters that can be used to customize the behavior of the library, such as model parameters and logging level. Please pay special attention to the `API_TYPE` parameter, which defines the backend. Options now include `openai`, `azure`, and `ollama` for a locally hosted [Ollama](https://ollama.ai) instance. The current default is `openai`.
 
 Key configuration sections include:
 - **[OpenAI]**: API settings, model selection, and parameters

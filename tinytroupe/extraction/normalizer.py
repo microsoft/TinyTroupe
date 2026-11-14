@@ -208,8 +208,7 @@ class Normalizer:
             if self.verbose:
                 print(f"Applier rendering configs: {rendering_configs}")
 
-            # For now, use the manual template method for the applier due to LLMChat issues
-            # TODO: Debug and fix LLMChat template rendering for applier templates
+            # Use manual template method; LLMChat template rendering has known issues for applier templates
             logger.debug("Using manual template method for applier (LLMChat has template rendering issues)")
             
             messages = utils.compose_initial_LLM_messages_with_templates(

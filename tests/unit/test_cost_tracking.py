@@ -1,4 +1,5 @@
 import logging
+import os
 
 import pytest
 
@@ -13,8 +14,24 @@ sys.path.insert(0, "..")
 from testing_utils import *
 
 from tinytroupe.agent import TinyPerson
+from tinytroupe import config_manager
 from tinytroupe.clients import client
 from tinytroupe.environment import TinyWorld
+
+
+def _missing_live_llm_backend():
+    api_type = (config_manager.get("api_type") or "").lower()
+    if api_type == "openai":
+        return not os.environ.get("OPENAI_API_KEY")
+    if api_type == "azure":
+        return not os.environ.get("AZURE_OPENAI_API_KEY")
+    return False
+
+
+requires_live_llm = pytest.mark.skipif(
+    _missing_live_llm_backend(),
+    reason="Live cost tracking test requires credentials, or use TINYTROUPE_CONFIG=tests/config_ollama.ini",
+)
 
 
 def test_openai_client_cost_tracking_methods_exist(setup):
@@ -155,6 +172,7 @@ def test_tinyperson_get_global_cost_stats_structure(setup):
     assert "output_tokens" in stats["base_stats"], "Missing output_tokens in base_stats"
 
 
+@requires_live_llm
 def test_cost_tracking_with_minimal_simulation(setup):
     """Test that cost tracking works with a minimal simulation that actually uses tokens."""
     # Reset cost stats to start fresh
@@ -188,6 +206,7 @@ def test_cost_tracking_with_minimal_simulation(setup):
     ), "Should have made at least one call"
 
 
+@requires_live_llm
 def test_world_cost_tracking_with_simulation_steps(setup):
     """Test that TinyWorld tracks simulation steps and computes per-step statistics."""
     # Reset cost stats
@@ -232,6 +251,7 @@ def test_world_cost_tracking_with_simulation_steps(setup):
         ), "Per-agent-per-step tokens should be positive"
 
 
+@requires_live_llm
 def test_derivative_stats_with_multiple_agents(setup):
     """Test derivative statistics calculation with multiple agents."""
     # Reset cost stats
@@ -271,6 +291,7 @@ def test_derivative_stats_with_multiple_agents(setup):
         ), "Per-agent calculation should divide total by number of agents"
 
 
+@requires_live_llm
 def test_global_stats_aggregation(setup):
     """Test that global statistics aggregate correctly across worlds and agents."""
     # Reset cost stats

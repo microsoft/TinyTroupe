@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd /Users/pup/TinyTroupe
+exec python3 -m tinytroupe.ui.hermes_gui "$@"

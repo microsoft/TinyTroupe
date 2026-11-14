@@ -1,0 +1,254 @@
+{
+  "scenario": {
+    "title": "TechCorp AI Platform Crisis & Recovery",
+    "context": "\nCRISIS: TechCorp's flagship AI platform suffered major outage. 50M users affected. \n$500M revenue at risk. Competitors capitalizing. Media scrutiny intense.\n\nFACTS:\n- Outage: 18 hours, 50M users, $2M/hour revenue loss\n- Cause: AI model hallucination cascade + infrastructure failure  \n- Customer impact: 3 enterprise clients threatening contract termination\n- Media: Negative coverage trending, stock down 15%\n- Competition: Microsoft, Google announcing competing products\n- Timeline: Board meeting in 48 hours, need recovery plan\n\nSTAKEHOLDERS:\n- Internal: C-suite, engineering, operations, sales, support\n- External: Customers, investors, media, regulators\n- Board: Emergency session, potential leadership changes\n\nOBJECTIVES:\n1. Immediate: Restore service, customer retention, damage control\n2. Short-term: Root cause analysis, process improvement, communication\n3. Long-term: Platform resilience, competitive positioning, growth recovery\n            ",
+    "phases": [
+      {
+        "name": "Crisis Response",
+        "duration": "0-6 hours",
+        "participants": [
+          "ceo",
+          "cto",
+          "ops_director",
+          "head_comms"
+        ],
+        "objectives": [
+          "Service restoration",
+          "Customer communication",
+          "Media response"
+        ]
+      },
+      {
+        "name": "Damage Assessment",
+        "duration": "6-12 hours",
+        "participants": [
+          "cfo",
+          "head_sales",
+          "customer_success",
+          "data_analyst"
+        ],
+        "objectives": [
+          "Financial impact",
+          "Customer retention",
+          "Market analysis"
+        ]
+      },
+      {
+        "name": "Technical Investigation",
+        "duration": "12-24 hours",
+        "participants": [
+          "cto",
+          "lead_engineer",
+          "ai_researcher",
+          "security_specialist"
+        ],
+        "objectives": [
+          "Root cause analysis",
+          "Fix implementation",
+          "Prevention measures"
+        ]
+      },
+      {
+        "name": "Strategic Planning",
+        "duration": "24-36 hours",
+        "participants": [
+          "ceo",
+          "cfo",
+          "cmo",
+          "vp_product",
+          "external_consultant"
+        ],
+        "objectives": [
+          "Recovery strategy",
+          "Competitive response",
+          "Investment priorities"
+        ]
+      },
+      {
+        "name": "Board Presentation",
+        "duration": "36-48 hours",
+        "participants": [
+          "ceo",
+          "cfo",
+          "cto",
+          "board_members",
+          "investor_rep"
+        ],
+        "objectives": [
+          "Accountability",
+          "Recovery plan approval",
+          "Resource allocation"
+        ]
+      }
+    ]
+  },
+  "agents": [
+    {
+      "name": "Sarah Chen",
+      "role": "CEO"
+    },
+    {
+      "name": "Marcus Rodriguez",
+      "role": "CTO"
+    },
+    {
+      "name": "Jennifer Walsh",
+      "role": "CMO"
+    },
+    {
+      "name": "David Kim",
+      "role": "CFO"
+    },
+    {
+      "name": "Lisa Thompson",
+      "role": "VP Product"
+    },
+    {
+      "name": "Michael Chang",
+      "role": "VP Operations"
+    },
+    {
+      "name": "Rachel Green",
+      "role": "VP Sales"
+    },
+    {
+      "name": "James Wilson",
+      "role": "VP Engineering"
+    },
+    {
+      "name": "Anna Kowalski",
+      "role": "Head of Customer Success"
+    },
+    {
+      "name": "Robert Taylor",
+      "role": "Head of Communications"
+    },
+    {
+      "name": "Maria Gonzalez",
+      "role": "Head of Data Science"
+    },
+    {
+      "name": "Thomas Anderson",
+      "role": "Head of Security"
+    },
+    {
+      "name": "Emily Davis",
+      "role": "Senior UX Designer"
+    },
+    {
+      "name": "Kevin Liu",
+      "role": "Senior Project Manager"
+    },
+    {
+      "name": "Sophie Martin",
+      "role": "Senior AI Researcher"
+    },
+    {
+      "name": "Daniel Brown",
+      "role": "Senior DevOps Engineer"
+    },
+    {
+      "name": "Dr. Patricia Williams",
+      "role": "External Crisis Consultant"
+    },
+    {
+      "name": "Jonathan Miller",
+      "role": "Board Member & Investor"
+    },
+    {
+      "name": "Catherine Lee",
+      "role": "Enterprise Customer Rep"
+    },
+    {
+      "name": "Alex Johnson",
+      "role": "Regulatory Affairs Specialist"
+    }
+  ],
+  "phases": [
+    {
+      "phase_name": "Crisis Response",
+      "phase_number": 1,
+      "participants": [
+        "Sarah Chen",
+        "Marcus Rodriguez",
+        "Jennifer Walsh",
+        "David Kim"
+      ],
+      "interactions": [],
+      "objectives_addressed": [
+        "Service restoration",
+        "Customer communication",
+        "Media response"
+      ]
+    },
+    {
+      "phase_name": "Damage Assessment",
+      "phase_number": 2,
+      "participants": [
+        "Sarah Chen",
+        "Marcus Rodriguez",
+        "Jennifer Walsh",
+        "David Kim"
+      ],
+      "interactions": [],
+      "objectives_addressed": [
+        "Financial impact",
+        "Customer retention",
+        "Market analysis"
+      ]
+    },
+    {
+      "phase_name": "Technical Investigation",
+      "phase_number": 3,
+      "participants": [
+        "Sarah Chen",
+        "Marcus Rodriguez",
+        "Jennifer Walsh",
+        "David Kim"
+      ],
+      "interactions": [],
+      "objectives_addressed": [
+        "Root cause analysis",
+        "Fix implementation",
+        "Prevention measures"
+      ]
+    },
+    {
+      "phase_name": "Strategic Planning",
+      "phase_number": 4,
+      "participants": [
+        "Sarah Chen",
+        "Marcus Rodriguez",
+        "Jennifer Walsh",
+        "David Kim"
+      ],
+      "interactions": [],
+      "objectives_addressed": [
+        "Recovery strategy",
+        "Competitive response",
+        "Investment priorities"
+      ]
+    },
+    {
+      "phase_name": "Board Presentation",
+      "phase_number": 5,
+      "participants": [
+        "Sarah Chen",
+        "Marcus Rodriguez",
+        "Jennifer Walsh",
+        "David Kim"
+      ],
+      "interactions": [],
+      "objectives_addressed": [
+        "Accountability",
+        "Recovery plan approval",
+        "Resource allocation"
+      ]
+    }
+  ],
+  "interactions": [],
+  "start_time": "2025-07-18T16:00:26.317919",
+  "total_simulation_time": 6.080106019973755,
+  "total_interactions": 0,
+  "end_time": "2025-07-18T16:00:31.341390"
+}

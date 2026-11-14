@@ -19,5 +19,39 @@ Example usage:
 """
 
 from .jupyter_widgets import AgentChatJupyterWidget
+from .api_dashboard import (
+    TinyTroupeDashboard,
+    create_dashboard_app,
+    run_dashboard,
+)
 
-__all__ = ['AgentChatJupyterWidget']
+__all__ = [
+    'AgentChatJupyterWidget',
+    'TinyTroupeDashboard',
+    'create_dashboard_app',
+    'run_dashboard',
+    'HermesTurn',
+    'HermesChatRequest',
+    'HermesChatResponse',
+    'create_hermes_gui_app',
+    'run_hermes_gui',
+]
+
+
+def __getattr__(name):
+    if name in {'HermesTurn', 'HermesChatRequest', 'HermesChatResponse', 'create_hermes_gui_app', 'run_hermes_gui'}:
+        from .hermes_gui import (
+            HermesChatRequest,
+            HermesChatResponse,
+            HermesTurn,
+            create_hermes_gui_app,
+            run_hermes_gui,
+        )
+        return {
+            'HermesTurn': HermesTurn,
+            'HermesChatRequest': HermesChatRequest,
+            'HermesChatResponse': HermesChatResponse,
+            'create_hermes_gui_app': create_hermes_gui_app,
+            'run_hermes_gui': run_hermes_gui,
+        }[name]
+    raise AttributeError(name)

@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="/Users/pup/TinyTroupe"
+LOG_FILE="${TMPDIR:-/tmp}/hermes-gui.log"
+PORT="8787"
+URL="http://127.0.0.1:${PORT}"
+LIVE_URL="$URL/screen?rev=$(date +%s)"
+
+if curl -fsS "$URL/health" >/dev/null 2>&1; then
+  echo "Hermes GUI already running at $URL"
+else
+  cd "$ROOT_DIR"
+  nohup python3 -m tinytroupe.ui.hermes_gui --host 127.0.0.1 --port "$PORT" >"$LOG_FILE" 2>&1 &
+  echo $! > "${TMPDIR:-/tmp}/hermes-gui.pid"
+
+  for _ in 1 2 3 4 5 6 7 8 9 10; do
+    if curl -fsS "$URL/health" >/dev/null 2>&1; then
+      break
+    fi
+    sleep 0.4
+  done
+fi
+
+open "$LIVE_URL" >/dev/null 2>&1 || true
+echo "Hermes GUI launched at $LIVE_URL"
