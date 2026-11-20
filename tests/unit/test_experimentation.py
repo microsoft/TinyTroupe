@@ -1,4 +1,5 @@
 import pytest
+import random
 
 import sys
 # Insert paths at the beginning of sys.path (position 0)
@@ -11,6 +12,27 @@ from testing_utils import *
 from tinytroupe.experimentation import ABRandomizer
 from tinytroupe.experimentation import Proposition, check_proposition
 from tinytroupe.examples import create_oscar_the_architect, create_oscar_the_architect_2, create_lisa_the_data_scientist, create_lisa_the_data_scientist_2
+
+
+def test_randomizer_advances_seeded_sequence():
+    randomizer = ABRandomizer(random_seed=42)
+    pairs = [randomizer.randomize(i, "control", "treatment") for i in range(32)]
+
+    assert set(pairs) == {("control", "treatment"), ("treatment", "control")}
+    for i, pair in enumerate(pairs):
+        assert randomizer.derandomize(i, *pair) == ("control", "treatment")
+
+
+def test_randomizer_seed_is_reproducible_and_isolated():
+    first = ABRandomizer(random_seed=42)
+    second = ABRandomizer(random_seed=42)
+    other_seed = ABRandomizer(random_seed=43)
+    global_state = random.getstate()
+
+    first_pairs = [first.randomize(i, "a", "b") for i in range(32)]
+    assert first_pairs == [second.randomize(i, "a", "b") for i in range(32)]
+    assert first_pairs != [other_seed.randomize(i, "a", "b") for i in range(32)]
+    assert random.getstate() == global_state
 
 
 def test_randomize():

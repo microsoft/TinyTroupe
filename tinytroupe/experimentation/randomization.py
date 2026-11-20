@@ -32,6 +32,7 @@ class ABRandomizer():
         self.blind_name_b = blind_name_b
         self.passtrough_name = passtrough_name
         self.random_seed = random_seed
+        self._random = random.Random(random_seed)
 
     def randomize(self, i, a, b):
         """
@@ -45,7 +46,7 @@ class ABRandomizer():
             b (str): second choice
         """
         # use the seed
-        if random.Random(self.random_seed).random() < 0.5:
+        if self._random.random() < 0.5:
             self.choices[i] = (0, 1)
             return a, b
             
