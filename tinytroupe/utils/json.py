@@ -269,6 +269,26 @@ def merge_dicts(current, additions, overwrite=False, error_on_conflict=True, rem
 
     return merged
 
+def _hashable_repr(item):
+        """
+        Returns a hashable, order-insensitive stand-in for an item, recursing
+        into dicts, lists, tuples and sets so nested configuration values can
+        be compared.
+
+        Parameters:
+        - item: The value to make hashable.
+
+        Returns:
+        - A hashable representation of the item.
+        """
+        if isinstance(item, dict):
+            return frozenset((k, _hashable_repr(v)) for k, v in item.items())
+        if isinstance(item, (list, tuple)):
+            return tuple(_hashable_repr(x) for x in item)
+        if isinstance(item, set):
+            return frozenset(_hashable_repr(x) for x in item)
+        return item
+
 def remove_duplicate_items(lst):
         """
         Removes duplicates from a list while preserving order.
@@ -284,8 +304,9 @@ def remove_duplicate_items(lst):
         result = []
         for item in lst:
             if isinstance(item, dict):
-                # Convert dict to a frozenset of its items to make it hashable
-                item_key = frozenset(item.items())
+                # Convert dict to a hashable stand-in that also supports
+                # unhashable values (nested lists and dicts).
+                item_key = _hashable_repr(item)
             else:
                 item_key = item
 
