@@ -904,15 +904,12 @@ class LLMChat:
         # using a regular expression
         import re
 
-        # Match integers that are not part of a decimal number
-        # First check if the string contains a decimal point - if so, reject it for integer coercion
-        if "." in llm_output_str and any(
-            c.isdigit() for c in llm_output_str.split(".")[1]
-        ):
-            # This looks like a decimal number, not a pure integer
-            raise ValueError("Cannot convert the LLM output to an integer value.")
-
-        match = re.search(r"-?\b\d+\b", llm_output_str)
+        # Match the first integer that is not part of a decimal number:
+        # (?<!\d\.) rejects the fractional part "5" of "3.5" (digit-dot-digit
+        # immediately before), and (?!\.\d) rejects the integer part "3" of
+        # "3.5". A period that merely ends a sentence ("42. Next round ...")
+        # does not reject the integer before it.
+        match = re.search(r"(?<!\d\.)-?\b\d+\b(?!\.\d)", llm_output_str)
         if match:
             return int(match.group(0))
 
