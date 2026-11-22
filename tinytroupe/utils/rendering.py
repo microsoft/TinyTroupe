@@ -23,8 +23,11 @@ def inject_html_css_style_prefix(html, style_prefix_attributes):
 def break_text_at_length(text: Union[str, dict], max_length: int=None) -> str:
     """
     Breaks the text (or JSON) at the specified length, inserting a "(...)" string at the break point.
-    If the maximum length is `None`, the content is returned as is.
+    If the maximum length is `None`, the content is returned as is. A `None`
+    content (e.g. a JSON-null action payload) renders as an empty string.
     """
+    if text is None:
+        return ""
     if isinstance(text, dict):
         text = json.dumps(text, indent=4)
 
