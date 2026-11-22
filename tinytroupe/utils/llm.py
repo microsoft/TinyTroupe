@@ -980,11 +980,19 @@ class LLMChat:
         """
 
         # let's extract the first occurrence of one of the specified options in the LLM output.
-        # using a regular expression
+        # Options are literals, so they must be escaped; alternatives are tried
+        # longest-first so that e.g. "cats" wins when "cat" is also an option.
+        # (?<!\w)/(?!\w) replace \b because options (or the text around them)
+        # may end in non-word characters like %, +, . or $.
         import re
 
+        escaped_options = sorted(
+            (re.escape(option) for option in options), key=len, reverse=True
+        )
         match = re.search(
-            r"\b(?:" + "|".join(options) + r")\b", llm_output, re.IGNORECASE
+            r"(?<!\w)(?:" + "|".join(escaped_options) + r")(?!\w)",
+            llm_output,
+            re.IGNORECASE,
         )
         if match:
             # Return the canonical option (from the options list) instead of the matched text
