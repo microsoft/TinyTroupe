@@ -1072,12 +1072,38 @@ class LLMChat:
         if isinstance(llm_output, list):
             return llm_output
 
-        # must make sure there's actually a list. Let's start with regex
-        import re
-
-        match = re.search(r"\[.*\]", llm_output)
-        if match:
-            return json.loads(match.group(0))
+        # Scan for bracket-balanced candidates and parse the first one that
+        # is a valid list. Unlike a greedy regex this survives prose around
+        # the list, several lists in one output, multiline formatting and
+        # single-quoted (Python-style) literals.
+        start = llm_output.find("[")
+        while start != -1:
+            depth = 0
+            quote = None
+            for index in range(start, len(llm_output)):
+                char = llm_output[index]
+                if quote:
+                    if char == quote and llm_output[index - 1] != "\\":
+                        quote = None
+                elif char in "\"'":
+                    quote = char
+                elif char == "[":
+                    depth += 1
+                elif char == "]":
+                    depth -= 1
+                    if depth == 0:
+                        candidate = llm_output[start : index + 1]
+                        try:
+                            parsed = json.loads(candidate, strict=False)
+                        except json.JSONDecodeError:
+                            try:
+                                parsed = ast.literal_eval(candidate)
+                            except Exception:
+                                break  # not parseable; look for the next '['
+                        if isinstance(parsed, list):
+                            return parsed
+                        break
+            start = llm_output.find("[", start + 1)
 
         raise ValueError("Cannot convert the LLM output to a list.")
 
