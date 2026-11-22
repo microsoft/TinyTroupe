@@ -948,12 +948,14 @@ class LLMChat:
             return float(llm_output)
 
         # let's extract the first occurrence of a number (float or int) in the LLM output.
-        # using a regular expression that handles negative numbers and both int/float formats
+        # using a regular expression that handles negative numbers and both int/float formats.
+        # Numbers with thousands separators ("1,000.50") are tried first, so the
+        # whole number is matched instead of just the digits before the first comma.
         import re
 
-        match = re.search(r"-?\b\d+(?:\.\d+)?\b", llm_output)
+        match = re.search(r"-?\b\d{1,3}(?:,\d{3})+(?:\.\d+)?\b|-?\b\d+(?:\.\d+)?\b", llm_output)
         if match:
-            return float(match.group(0))
+            return float(match.group(0).replace(",", ""))
 
         raise ValueError("Cannot convert the LLM output to a float value.")
 
