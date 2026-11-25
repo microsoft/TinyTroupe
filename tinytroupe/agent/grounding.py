@@ -66,7 +66,8 @@ class BaseSemanticGroundingConnector(GroundingConnector):
         This will run after __init__, since the class has the @post_init decorator.
         It is convenient to separate some of the initialization processes to make deserialize easier.
         """
-        self.index = None
+        if not hasattr(self, 'index'):
+            self.index = None
 
         if not hasattr(self, 'documents') or self.documents is None:
             self.documents = []
