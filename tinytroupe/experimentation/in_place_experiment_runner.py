@@ -28,6 +28,7 @@ class InPlaceExperimentRunner:
             logger.info(f"Experiment '{experiment_name}' already exists, nothihg to add.")
         else:
             self.experiment_config["experiments"][experiment_name] = {}
+            self.experiment_config["finished_all_experiments"] = False
             self._save_config()
     
     def activate_next_experiment(self):

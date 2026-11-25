@@ -64,6 +64,25 @@ def test_experiment_runner_add_experiment(temp_config_file):
     runner.add_experiment(experiment_name)  # Should handle gracefully
     assert experiment_name in runner.experiment_config["experiments"]
 
+
+def test_new_experiment_after_completion_is_activated_after_reload(temp_config_file):
+    runner = InPlaceExperimentRunner(config_file_path=temp_config_file)
+    runner.add_experiment("control")
+    runner.activate_next_experiment()
+    assert runner.finish_active_experiment()
+    assert runner.has_finished_all_experiments()
+
+    runner.add_experiment("control")
+    assert runner.has_finished_all_experiments()
+
+    runner.add_experiment("follow_up")
+    restored = InPlaceExperimentRunner(config_file_path=temp_config_file)
+    assert not restored.has_finished_all_experiments()
+    restored.activate_next_experiment()
+    assert restored.get_active_experiment() == "follow_up"
+    assert restored.experiment_config["finished_experiments"] == ["control"]
+
+
 def test_experiment_runner_activate_next_experiment(temp_config_file):
     """Test activating experiments in sequence."""
     
