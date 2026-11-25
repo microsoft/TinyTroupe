@@ -119,7 +119,7 @@ class Normalizer:
                     # Add overflow items into the sole kept cluster
                     mapping[merged_label].extend(other_bucket)
             else:
-                mapping["Other"] = other_bucket
+                mapping.setdefault("Other", []).extend(other_bucket)
 
         # Safety: if still somehow > n (edge race), truncate deterministically
         if len(mapping) > self.n:
