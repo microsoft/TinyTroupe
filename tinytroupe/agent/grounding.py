@@ -343,10 +343,9 @@ class LocalFilesGroundingConnector(BaseSemanticGroundingConnector):
         """
 
         if folder_path not in self.loaded_folders_paths:
-            self._mark_folder_as_loaded(folder_path)
-
             # for PDF files, please note that the document will be split into pages: https://github.com/run-llama/llama_index/issues/15903
             new_files = SimpleDirectoryReader(folder_path).load_data()
+            self._mark_folder_as_loaded(folder_path)
             BaseSemanticGroundingConnector._set_internal_id_to_documents(new_files, "file_name")
 
             self.add_documents(new_files)
